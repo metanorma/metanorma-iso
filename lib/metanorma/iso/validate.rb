@@ -92,11 +92,11 @@ module Metanorma
 
       def term_xrefs_validate1(xref, termids)
         closest_id = xref.xpath("./ancestor::*[@id]")&.last or return
-        (termids[xref["target"]] && !termids[closest_id["id"]]) and
+        termids[xref["target"]] && !termids[closest_id["id"]] and
           @log.add("Style", xref,
                    "only terms clauses can cross-reference terms clause " \
                    "(#{xref['target']})")
-        (!termids[xref["target"]] && termids[closest_id["id"]]) and
+        !termids[xref["target"]] && termids[closest_id["id"]] and
           @log.add("Style", xref,
                    "non-terms clauses cannot cross-reference terms clause " \
                    "(#{xref['target']})")

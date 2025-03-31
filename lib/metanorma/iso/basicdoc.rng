@@ -382,39 +382,42 @@ in a document (e.g. sourcecode annotations)</a:documentation>
     <a:documentation>Block intended to capture reviewer comments about some text in the document</a:documentation>
     <element name="review">
       <ref name="RequiredId"/>
-      <attribute name="reviewer">
-        <a:documentation>The party who has offered the comment</a:documentation>
-      </attribute>
-      <optional>
-        <attribute name="type">
-          <a:documentation>The type of reviewer comment</a:documentation>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="date">
-          <a:documentation>The date when the comment was made</a:documentation>
-          <data type="dateTime"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="from">
-          <a:documentation>Identifier for the start of the text or point in the text to which the comment applies.
-If not provided, the comment applies in the vicinity of the place it has been inserted into the text</a:documentation>
-          <data type="IDREF"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="to">
-          <a:documentation>Identifier for the end of the text to which the comment applies</a:documentation>
-          <data type="IDREF"/>
-        </attribute>
-      </optional>
+      <ref name="ReviewAttributes"/>
       <oneOrMore>
         <ref name="paragraph">
           <a:documentation>Reviewer comments content</a:documentation>
         </ref>
       </oneOrMore>
     </element>
+  </define>
+  <define name="ReviewAttributes">
+    <attribute name="reviewer">
+      <a:documentation>The party who has offered the comment</a:documentation>
+    </attribute>
+    <optional>
+      <attribute name="type">
+        <a:documentation>The type of reviewer comment</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="date">
+        <a:documentation>The date when the comment was made</a:documentation>
+        <data type="dateTime"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="from">
+        <a:documentation>Identifier for the start of the text or point in the text to which the comment applies.
+If not provided, the comment applies in the vicinity of the place it has been inserted into the text</a:documentation>
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="to">
+        <a:documentation>Identifier for the end of the text to which the comment applies</a:documentation>
+        <data type="IDREF"/>
+      </attribute>
+    </optional>
   </define>
   <define name="NumberingAttributes">
     <optional>

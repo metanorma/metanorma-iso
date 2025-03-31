@@ -1287,6 +1287,11 @@ numbers</a:documentation>
           <a:documentation>Colophon or postface material</a:documentation>
         </ref>
       </optional>
+      <optional>
+        <ref name="review-container">
+          <a:documentation>Annotations to the document</a:documentation>
+        </ref>
+      </optional>
     </element>
   </define>
   <define name="misccontainer">
@@ -1294,6 +1299,13 @@ numbers</a:documentation>
     <element name="metanorma-extension">
       <oneOrMore>
         <ref name="AnyElement"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="review-container">
+    <element name="review-container">
+      <oneOrMore>
+        <ref name="review"/>
       </oneOrMore>
     </element>
   </define>
