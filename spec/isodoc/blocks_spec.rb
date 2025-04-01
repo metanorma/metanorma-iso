@@ -31,7 +31,7 @@ RSpec.describe IsoDoc do
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">EXAMPLE</span>
                       </span>
-                      <span class="fmt-caption-delim"> — </span>
+                      <span class="fmt-caption-delim"> &#x2014; </span>
                       <semx element="name" source="_">Title</semx>
                    </fmt-name>
                    <fmt-xref-label>
@@ -168,7 +168,7 @@ RSpec.describe IsoDoc do
                          <span class="fmt-element-name">EXAMPLE</span>
                          <semx element="autonum" source="samplecode2">2</semx>
                       </span>
-                      <span class="fmt-caption-delim"> — </span>
+                      <span class="fmt-caption-delim"> &#x2014; </span>
                       <semx element="name" source="_">Title</semx>
                    </fmt-name>
                    <fmt-xref-label>
@@ -286,7 +286,7 @@ RSpec.describe IsoDoc do
           <name id="_">CAUTION</name>
             <fmt-name>
                   <semx element="name" source="_">CAUTION</semx>
-               <span class="fmt-label-delim"> — </span>
+               <span class="fmt-label-delim"> &#x2014; </span>
             </fmt-name>
                   <p id='_'>Only use paddy or parboiled rice for the
                  determination of husked rice yield.
@@ -301,7 +301,7 @@ RSpec.describe IsoDoc do
         <h1 class='ForewordTitle'>Foreword</h1>
         <div id='_' class='Admonition'>
           <p>
-             CAUTION — Only use paddy or parboiled rice for the
+             CAUTION &#x2014; Only use paddy or parboiled rice for the
             determination of husked rice yield.
           </p>
           <p id='_'>Para 2.</p>
@@ -373,28 +373,34 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
     presxml = <<~INPUT
-          <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
-             <fmt-title depth="1">Contents</fmt-title>
-           </clause>
-          <foreword displayorder="2" id="_">
-                   <title id="_">Foreword</title>
-         <fmt-title depth="1">
-               <semx element="title" source="_">Foreword</semx>
-         </fmt-title>
-          <admonition id="_" type="caution">
-          <name id="_">Title</name>
-            <fmt-name>
-                  <semx element="name" source="_">Title</semx>
-            </fmt-name>
-          <ul>
-          <li>List</li>
-          </ul>
-        <p id="_">Only use paddy or parboiled rice for the determination of husked rice yield.</p>
-      </admonition>
-          </foreword></preface>
-          </iso-standard>
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword id="_" displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Foreword</semx>
+                </fmt-title>
+                <admonition id="_" type="caution">
+                   <name id="_">Title</name>
+                   <fmt-name>
+                      <semx element="name" source="_">Title</semx>
+                   </fmt-name>
+                   <ul>
+                      <li>
+                         <fmt-name>
+                            <semx element="autonum" source="">&#x2014;</semx>
+                         </fmt-name>
+                         List
+                      </li>
+                   </ul>
+                   <p id="_">Only use paddy or parboiled rice for the determination of husked rice yield.</p>
+                </admonition>
+             </foreword>
+          </preface>
+       </iso-standard>
     INPUT
     output = <<~OUTPUT
       <div id="_">
@@ -449,7 +455,7 @@ RSpec.describe IsoDoc do
                </span>
             </span>
             <span class="fmt-label-delim">
-               <strong> — </strong>
+               <strong> &#x2014; </strong>
             </span>
          </fmt-name>
              <p id="_">
@@ -508,7 +514,7 @@ RSpec.describe IsoDoc do
                <span class="fmt-caption-label">
                   <span class="fmt-element-name">EDITORIAL NOTE</span>
                </span>
-               <span class="fmt-label-delim"> — </span>
+               <span class="fmt-label-delim"> &#x2014; </span>
             </fmt-name>
                          <p id="_">Only use paddy or parboiled rice for the
                  determination of husked rice yield.
@@ -524,7 +530,7 @@ RSpec.describe IsoDoc do
              <div id="_">
                <h1 class='ForewordTitle'>Foreword</h1>
                <div id='_' class='zzHelp'>
-                 <p>EDITORIAL NOTE — Only use paddy or parboiled rice for the
+                 <p>EDITORIAL NOTE &#x2014; Only use paddy or parboiled rice for the
                    determination of husked rice yield.
                  </p>
                  <p id='_'>Para 2.</p>
@@ -548,7 +554,7 @@ RSpec.describe IsoDoc do
           <div id="_">
             <h1 class='ForewordTitle'>Foreword</h1>
             <div id='_' class='zzHelp'>
-              <p>EDITORIAL NOTE — Only use paddy or parboiled rice for the determination of husked rice yield. </p>
+              <p>EDITORIAL NOTE &#x2014; Only use paddy or parboiled rice for the determination of husked rice yield. </p>
               <p class='ForewordText' id='_'>Para 2.</p>
             </div>
           </div>
@@ -913,99 +919,99 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-          <preface>
-             <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
-             </clause>
-          </preface>
-          <sections>
-             <clause id="widgets" displayorder="2">
-                <title id="_">Widgets</title>
-                <fmt-title depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="autonum" source="widgets">1</semx>
-                   </span>
-                   <span class="fmt-caption-delim">
-                      <tab/>
-                   </span>
-                   <semx element="title" source="_">Widgets</semx>
-                </fmt-title>
-                <fmt-xref-label>
-                   <span class="fmt-element-name">Clause</span>
-                   <semx element="autonum" source="widgets">1</semx>
-                </fmt-xref-label>
-                <figure id="N" autonum="1">
-                   <name id="_">Figure 1</name>
-                   <fmt-name>
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Figure</span>
-                         <semx element="autonum" source="N">1</semx>
-                      </span>
-                      <span class="fmt-caption-delim"> — </span>
-                      <semx element="name" source="_">Figure 1</semx>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Figure</span>
-                      <semx element="autonum" source="N">1</semx>
-                   </fmt-xref-label>
-                   <image src="rice_images/rice_image1.png" id="_" mimetype="image/png"/>
-                   <note id="A" autonum="1">
-                      <fmt-name>
-                         <span class="fmt-caption-label">
-                            <span class="fmt-element-name">NOTE</span>
-                            <semx element="autonum" source="A">1</semx>
-                         </span>
-                         <span class="fmt-label-delim">
-                            <tab/>
-                         </span>
-                      </fmt-name>
-                      <fmt-xref-label>
-                         <span class="fmt-element-name">Note</span>
-                         <semx element="autonum" source="A">1</semx>
-                      </fmt-xref-label>
-                      <fmt-xref-label container="widgets">
-                         <span class="fmt-xref-container">
-                            <span class="fmt-element-name">Clause</span>
-                            <semx element="autonum" source="widgets">1</semx>
-                         </span>
-                         <span class="fmt-comma">,</span>
-                         <span class="fmt-element-name">Note</span>
-                         <semx element="autonum" source="A">1</semx>
-                      </fmt-xref-label>
-                      Note 1
-                   </note>
-                   <note id="B" type="units">Units in mm</note>
-                   <note id="C" autonum="2">
-                      <fmt-name>
-                         <span class="fmt-caption-label">
-                            <span class="fmt-element-name">NOTE</span>
-                            <semx element="autonum" source="C">2</semx>
-                         </span>
-                         <span class="fmt-label-delim">
-                            <tab/>
-                         </span>
-                      </fmt-name>
-                      <fmt-xref-label>
-                         <span class="fmt-element-name">Note</span>
-                         <semx element="autonum" source="C">2</semx>
-                      </fmt-xref-label>
-                      <fmt-xref-label container="widgets">
-                         <span class="fmt-xref-container">
-                            <span class="fmt-element-name">Clause</span>
-                            <semx element="autonum" source="widgets">1</semx>
-                         </span>
-                         <span class="fmt-comma">,</span>
-                         <span class="fmt-element-name">Note</span>
-                         <semx element="autonum" source="C">2</semx>
-                      </fmt-xref-label>
-                      Note 2
-                   </note>
-                   <note id="D" type="units">Other units in sec</note>
-                </figure>
-             </clause>
-          </sections>
-       </iso-standard>
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <preface>
+            <clause type="toc" id="_" displayorder="1">
+               <fmt-title depth="1">Contents</fmt-title>
+            </clause>
+         </preface>
+         <sections>
+            <clause id="widgets" displayorder="2">
+               <title id="_">Widgets</title>
+               <fmt-title depth="1">
+                  <span class="fmt-caption-label">
+                     <semx element="autonum" source="widgets">1</semx>
+                  </span>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Widgets</semx>
+               </fmt-title>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Clause</span>
+                  <semx element="autonum" source="widgets">1</semx>
+               </fmt-xref-label>
+               <figure id="N" autonum="1">
+                  <name id="_">Figure 1</name>
+                  <fmt-name>
+                     <span class="fmt-caption-label">
+                        <span class="fmt-element-name">Figure</span>
+                        <semx element="autonum" source="N">1</semx>
+                     </span>
+                     <span class="fmt-caption-delim"> &#x2014; </span>
+                     <semx element="name" source="_">Figure 1</semx>
+                  </fmt-name>
+                  <fmt-xref-label>
+                     <span class="fmt-element-name">Figure</span>
+                     <semx element="autonum" source="N">1</semx>
+                  </fmt-xref-label>
+                  <image src="rice_images/rice_image1.png" id="_" mimetype="image/png"/>
+                  <note id="A" autonum="1">
+                     <fmt-name>
+                        <span class="fmt-caption-label">
+                           <span class="fmt-element-name">NOTE</span>
+                           <semx element="autonum" source="A">1</semx>
+                        </span>
+                        <span class="fmt-label-delim">
+                           <tab/>
+                        </span>
+                     </fmt-name>
+                     <fmt-xref-label>
+                        <span class="fmt-element-name">Note</span>
+                        <semx element="autonum" source="A">1</semx>
+                     </fmt-xref-label>
+                     <fmt-xref-label container="widgets">
+                        <span class="fmt-xref-container">
+                           <span class="fmt-element-name">Clause</span>
+                           <semx element="autonum" source="widgets">1</semx>
+                        </span>
+                        <span class="fmt-comma">,</span>
+                        <span class="fmt-element-name">Note</span>
+                        <semx element="autonum" source="A">1</semx>
+                     </fmt-xref-label>
+                     Note 1
+                  </note>
+                  <note id="B" type="units">Units in mm</note>
+                  <note id="C" autonum="2">
+                     <fmt-name>
+                        <span class="fmt-caption-label">
+                           <span class="fmt-element-name">NOTE</span>
+                           <semx element="autonum" source="C">2</semx>
+                        </span>
+                        <span class="fmt-label-delim">
+                           <tab/>
+                        </span>
+                     </fmt-name>
+                     <fmt-xref-label>
+                        <span class="fmt-element-name">Note</span>
+                        <semx element="autonum" source="C">2</semx>
+                     </fmt-xref-label>
+                     <fmt-xref-label container="widgets">
+                        <span class="fmt-xref-container">
+                           <span class="fmt-element-name">Clause</span>
+                           <semx element="autonum" source="widgets">1</semx>
+                        </span>
+                        <span class="fmt-comma">,</span>
+                        <span class="fmt-element-name">Note</span>
+                        <semx element="autonum" source="C">2</semx>
+                     </fmt-xref-label>
+                     Note 2
+                  </note>
+                  <note id="D" type="units">Other units in sec</note>
+               </figure>
+            </clause>
+         </sections>
+      </iso-standard>
     OUTPUT
     html = <<~OUTPUT
           #{HTML_HDR}
@@ -1021,7 +1027,7 @@ RSpec.describe IsoDoc do
                 <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
                 <div id="A" class="Note"><p><span class="note_label">NOTE  1  </span></p>Note 1</div>
                 <div id="C" class="Note"><p><span class="note_label">NOTE  2  </span></p>Note 2</div>
-                <p class="FigureTitle" style="text-align:center;">Figure 1 — Figure 1</p>
+                <p class="FigureTitle" style="text-align:center;">Figure 1 &#x2014; Figure 1</p>
               </div>
             </div>
           </div>
@@ -1061,7 +1067,7 @@ RSpec.describe IsoDoc do
                 <img src="rice_images/rice_image1.png"/>
                 <div id="A" class="Note"><p class="Note"><span class="note_label">NOTE  1<span style="mso-tab-count:1">  </span></span></p>Note 1</div>
                 <div id="C" class="Note"><p class="Note"><span class="note_label">NOTE  2<span style="mso-tab-count:1">  </span></span></p>Note 2</div>
-                <p class="FigureTitle" style="text-align:center;">Figure 1 — Figure 1</p>
+                <p class="FigureTitle" style="text-align:center;">Figure 1 &#x2014; Figure 1</p>
               </div>
             </div>
           </div>
@@ -1115,96 +1121,96 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-           <preface>
-              <clause type="toc" id="_" displayorder="1">
-                 <fmt-title depth="1">Contents</fmt-title>
-              </clause>
-              <foreword id="A" displayorder="2">
-                 <title id="_">Foreword</title>
-                 <fmt-title depth="1">
-                    <semx element="title" source="_">Foreword</semx>
-                 </fmt-title>
-                 <formula id="_" unnumbered="true">
-                    <stem type="AsciiMath" id="_">r = 1 %</stem>
-                    <fmt-stem type="AsciiMath">
-                       <semx element="stem" source="_">r = 1 %</semx>
-                    </fmt-stem>
-                    <p keep-with-next="true">where</p>
-                    <dl id="_" class="formula_dl">
-                       <dt>
-                          <stem type="AsciiMath" id="_">r</stem>
-                          <fmt-stem type="AsciiMath">
-                             <semx element="stem" source="_">r</semx>
-                          </fmt-stem>
-                       </dt>
-                       <dd>
-                          <p id="_">is the repeatability limit.</p>
-                       </dd>
-                       <dt>
-                          <stem type="AsciiMath" id="_">s_1</stem>
-                          <fmt-stem type="AsciiMath">
-                             <semx element="stem" source="_">s_1</semx>
-                          </fmt-stem>
-                       </dt>
-                       <dd>
-                          <p id="_">is the other repeatability limit.</p>
-                       </dd>
-                    </dl>
-                    <note id="_" autonum="">
-                       <fmt-name>
-                          <span class="fmt-caption-label">
-                             <span class="fmt-element-name">NOTE</span>
-                          </span>
-                          <span class="fmt-label-delim">
-                             <tab/>
-                          </span>
-                       </fmt-name>
-                       <fmt-xref-label>
-                          <span class="fmt-element-name">Note</span>
-                       </fmt-xref-label>
-                       <fmt-xref-label container="A">
-                          <span class="fmt-xref-container">
-                             <semx element="foreword" source="A">Foreword</semx>
-                          </span>
-                          <span class="fmt-comma">,</span>
-                          <span class="fmt-element-name">Note</span>
-                       </fmt-xref-label>
-                       <p id="_">[durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
-                    </note>
-                 </formula>
-                 <formula id="_" autonum="1">
-                    <fmt-name>
-                       <span class="fmt-caption-label">
-                          <span class="fmt-autonum-delim">(</span>
-                          1
-                          <span class="fmt-autonum-delim">)</span>
-                       </span>
-                    </fmt-name>
-                    <fmt-xref-label>
-                       <span class="fmt-element-name">Formula</span>
-                       <span class="fmt-autonum-delim">(</span>
-                       <semx element="autonum" source="_">1</semx>
-                       <span class="fmt-autonum-delim">)</span>
-                    </fmt-xref-label>
-                    <fmt-xref-label container="A">
-                       <span class="fmt-xref-container">
-                          <semx element="foreword" source="A">Foreword</semx>
-                       </span>
-                       <span class="fmt-comma">,</span>
-                       <span class="fmt-element-name">Formula</span>
-                       <span class="fmt-autonum-delim">(</span>
-                       <semx element="autonum" source="_">1</semx>
-                       <span class="fmt-autonum-delim">)</span>
-                    </fmt-xref-label>
-                    <stem type="AsciiMath" id="_">r = 1 %</stem>
-                    <fmt-stem type="AsciiMath">
-                       <semx element="stem" source="_">r = 1 %</semx>
-                    </fmt-stem>
-                 </formula>
-              </foreword>
-           </preface>
-        </iso-standard>
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <preface>
+            <clause type="toc" id="_" displayorder="1">
+               <fmt-title depth="1">Contents</fmt-title>
+            </clause>
+            <foreword id="A" displayorder="2">
+               <title id="_">Foreword</title>
+               <fmt-title depth="1">
+                  <semx element="title" source="_">Foreword</semx>
+               </fmt-title>
+               <formula id="_" unnumbered="true">
+                  <stem type="AsciiMath" id="_">r = 1 %</stem>
+                  <fmt-stem type="AsciiMath">
+                     <semx element="stem" source="_">r = 1 %</semx>
+                  </fmt-stem>
+                  <p keep-with-next="true">where</p>
+                  <dl id="_" class="formula_dl">
+                     <dt>
+                        <stem type="AsciiMath" id="_">r</stem>
+                        <fmt-stem type="AsciiMath">
+                           <semx element="stem" source="_">r</semx>
+                        </fmt-stem>
+                     </dt>
+                     <dd>
+                        <p id="_">is the repeatability limit.</p>
+                     </dd>
+                     <dt>
+                        <stem type="AsciiMath" id="_">s_1</stem>
+                        <fmt-stem type="AsciiMath">
+                           <semx element="stem" source="_">s_1</semx>
+                        </fmt-stem>
+                     </dt>
+                     <dd>
+                        <p id="_">is the other repeatability limit.</p>
+                     </dd>
+                  </dl>
+                  <note id="_" autonum="">
+                     <fmt-name>
+                        <span class="fmt-caption-label">
+                           <span class="fmt-element-name">NOTE</span>
+                        </span>
+                        <span class="fmt-label-delim">
+                           <tab/>
+                        </span>
+                     </fmt-name>
+                     <fmt-xref-label>
+                        <span class="fmt-element-name">Note</span>
+                     </fmt-xref-label>
+                     <fmt-xref-label container="A">
+                        <span class="fmt-xref-container">
+                           <semx element="foreword" source="A">Foreword</semx>
+                        </span>
+                        <span class="fmt-comma">,</span>
+                        <span class="fmt-element-name">Note</span>
+                     </fmt-xref-label>
+                     <p id="_">[durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
+                  </note>
+               </formula>
+               <formula id="_" autonum="1">
+                  <fmt-name>
+                     <span class="fmt-caption-label">
+                        <span class="fmt-autonum-delim">(</span>
+                        1
+                        <span class="fmt-autonum-delim">)</span>
+                     </span>
+                  </fmt-name>
+                  <fmt-xref-label>
+                     <span class="fmt-element-name">Formula</span>
+                     <span class="fmt-autonum-delim">(</span>
+                     <semx element="autonum" source="_">1</semx>
+                     <span class="fmt-autonum-delim">)</span>
+                  </fmt-xref-label>
+                  <fmt-xref-label container="A">
+                     <span class="fmt-xref-container">
+                        <semx element="foreword" source="A">Foreword</semx>
+                     </span>
+                     <span class="fmt-comma">,</span>
+                     <span class="fmt-element-name">Formula</span>
+                     <span class="fmt-autonum-delim">(</span>
+                     <semx element="autonum" source="_">1</semx>
+                     <span class="fmt-autonum-delim">)</span>
+                  </fmt-xref-label>
+                  <stem type="AsciiMath" id="_">r = 1 %</stem>
+                  <fmt-stem type="AsciiMath">
+                     <semx element="stem" source="_">r = 1 %</semx>
+                  </fmt-stem>
+               </formula>
+            </foreword>
+         </preface>
+      </iso-standard>
     OUTPUT
 
     html = <<~OUTPUT
@@ -1351,83 +1357,83 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-           <preface>
-              <clause type="toc" id="_" displayorder="1">
-                 <fmt-title depth="1">Contents</fmt-title>
-              </clause>
-              <foreword id="_" displayorder="2">
-                 <title id="_">Foreword</title>
-                 <fmt-title depth="1">
-                    <semx element="title" source="_">Foreword</semx>
-                 </fmt-title>
-                 <formula id="_" unnumbered="true">
-                    <stem type="AsciiMath" id="_">r = 1 %</stem>
-                    <fmt-stem type="AsciiMath">
-                       <semx element="stem" source="_">r = 1 %</semx>
-                    </fmt-stem>
-                    <p>
-                       where
-                       <stem type="AsciiMath" id="_">r</stem>
-                       <fmt-stem type="AsciiMath">
-                          <semx element="stem" source="_">r</semx>
-                       </fmt-stem>
-                       is the repeatability limit.
-                    </p>
-                    <note id="_" autonum="">
-                       <fmt-name>
-                          <span class="fmt-caption-label">
-                             <span class="fmt-element-name">NOTE</span>
-                          </span>
-                          <span class="fmt-label-delim">
-                             <tab/>
-                          </span>
-                       </fmt-name>
-                       <fmt-xref-label>
-                          <span class="fmt-element-name">Note</span>
-                       </fmt-xref-label>
-                       <fmt-xref-label container="_">
-                          <span class="fmt-xref-container">
-                             <semx element="foreword" source="_">Foreword</semx>
-                          </span>
-                          <span class="fmt-comma">,</span>
-                          <span class="fmt-element-name">Note</span>
-                       </fmt-xref-label>
-                       <p id="_">[durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
-                    </note>
-                 </formula>
-                 <formula id="_" autonum="1">
-                    <fmt-name>
-                       <span class="fmt-caption-label">
-                          <span class="fmt-autonum-delim">(</span>
-                          1
-                          <span class="fmt-autonum-delim">)</span>
-                       </span>
-                    </fmt-name>
-                    <fmt-xref-label>
-                       <span class="fmt-element-name">Formula</span>
-                       <span class="fmt-autonum-delim">(</span>
-                       <semx element="autonum" source="_">1</semx>
-                       <span class="fmt-autonum-delim">)</span>
-                    </fmt-xref-label>
-                    <fmt-xref-label container="_">
-                       <span class="fmt-xref-container">
-                          <semx element="foreword" source="_">Foreword</semx>
-                       </span>
-                       <span class="fmt-comma">,</span>
-                       <span class="fmt-element-name">Formula</span>
-                       <span class="fmt-autonum-delim">(</span>
-                       <semx element="autonum" source="_">1</semx>
-                       <span class="fmt-autonum-delim">)</span>
-                    </fmt-xref-label>
-                    <stem type="AsciiMath" id="_">r = 1 %</stem>
-                    <fmt-stem type="AsciiMath">
-                       <semx element="stem" source="_">r = 1 %</semx>
-                    </fmt-stem>
-                 </formula>
-              </foreword>
-           </preface>
-        </iso-standard>
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword id="_" displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Foreword</semx>
+                </fmt-title>
+                <formula id="_" unnumbered="true">
+                   <stem type="AsciiMath" id="_">r = 1 %</stem>
+                   <fmt-stem type="AsciiMath">
+                      <semx element="stem" source="_">r = 1 %</semx>
+                   </fmt-stem>
+                   <p>
+                      where
+                      <stem type="AsciiMath" id="_">r</stem>
+                      <fmt-stem type="AsciiMath">
+                         <semx element="stem" source="_">r</semx>
+                      </fmt-stem>
+                      is the repeatability limit.
+                   </p>
+                   <note id="_" autonum="">
+                      <fmt-name>
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                         </span>
+                         <span class="fmt-label-delim">
+                            <tab/>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                      </fmt-xref-label>
+                      <fmt-xref-label container="_">
+                         <span class="fmt-xref-container">
+                            <semx element="foreword" source="_">Foreword</semx>
+                         </span>
+                         <span class="fmt-comma">,</span>
+                         <span class="fmt-element-name">Note</span>
+                      </fmt-xref-label>
+                      <p id="_">[durationUnits] is essentially a duration statement without the "P" prefix. "P" is unnecessary because between "G" and "U" duration is always expressed.</p>
+                   </note>
+                </formula>
+                <formula id="_" autonum="1">
+                   <fmt-name>
+                      <span class="fmt-caption-label">
+                         <span class="fmt-autonum-delim">(</span>
+                         1
+                         <span class="fmt-autonum-delim">)</span>
+                      </span>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Formula</span>
+                      <span class="fmt-autonum-delim">(</span>
+                      <semx element="autonum" source="_">1</semx>
+                      <span class="fmt-autonum-delim">)</span>
+                   </fmt-xref-label>
+                   <fmt-xref-label container="_">
+                      <span class="fmt-xref-container">
+                         <semx element="foreword" source="_">Foreword</semx>
+                      </span>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Formula</span>
+                      <span class="fmt-autonum-delim">(</span>
+                      <semx element="autonum" source="_">1</semx>
+                      <span class="fmt-autonum-delim">)</span>
+                   </fmt-xref-label>
+                   <stem type="AsciiMath" id="_">r = 1 %</stem>
+                   <fmt-stem type="AsciiMath">
+                      <semx element="stem" source="_">r = 1 %</semx>
+                   </fmt-stem>
+                </formula>
+             </foreword>
+          </preface>
+       </iso-standard>
     OUTPUT
     html = <<~"OUTPUT"
       #{HTML_HDR}
@@ -1532,223 +1538,223 @@ RSpec.describe IsoDoc do
             </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-          <preface>
-             <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
-             </clause>
-             <foreword id="_" displayorder="2">
-                <title id="_">Foreword</title>
-                <fmt-title depth="1">
-                   <semx element="title" source="_">Foreword</semx>
-                </fmt-title>
-                <figure id="figureA-1" keep-with-next="true" keep-lines-together="true" autonum="1">
-                   <name id="_">
-                      Split-it-right
-                      <em>sample</em>
-                      divider
-                      <fn reference="1" original-reference="1" target="_" original-id="_">
-                         <p>X</p>
-                         <fmt-fn-label>
-                            <sup>
-                               <semx element="autonum" source="_">1</semx>
-                               <span class="fmt-label-delim">)</span>
-                            </sup>
-                         </fmt-fn-label>
-                      </fn>
-                   </name>
-                   <fmt-name>
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Figure</span>
-                         <semx element="autonum" source="figureA-1">1</semx>
-                      </span>
-                      <span class="fmt-caption-delim"> — </span>
-                      <semx element="name" source="_">
-                         Split-it-right
-                         <em>sample</em>
-                         divider
-                         <fn reference="1" original-reference="1" id="_" target="_">
-                            <p>X</p>
-                            <fmt-fn-label>
-                               <sup>
-                                  <semx element="autonum" source="_">1</semx>
-                                  <span class="fmt-label-delim">)</span>
-                               </sup>
-                            </fmt-fn-label>
-                         </fn>
-                      </semx>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Figure</span>
-                      <semx element="autonum" source="figureA-1">1</semx>
-                   </fmt-xref-label>
-                   <image src="rice_images/rice_image1.png" height="20" width="30" id="_" mimetype="image/png" alt="alttext" title="titletxt"/>
-                   <image src="rice_images/rice_image1.png" height="20" width="auto" id="_" mimetype="image/png"/>
-                   <image src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" height="20" width="auto" id="_" mimetype="image/png"/>
-                   <image src="data:application/xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjw/eG1sLXN0eWxlc2hlZXQgdHlwZT0idGV4dC94c2wiIGhyZWY9Ii4uLy4uLy4uL3hzbC9yZXNfZG9jL2ltZ2ZpbGUueHNsIj8+CjwhRE9DVFlQRSBpbWdmaWxlLmNvbnRlbnQgU1lTVEVNICIuLi8uLi8uLi9kdGQvdGV4dC5lbnQiPgo8aW1nZmlsZS5jb250ZW50IG1vZHVsZT0iZnVuZGFtZW50YWxzX29mX3Byb2R1Y3RfZGVzY3JpcHRpb25fYW5kX3N1cHBvcnQiIGZpbGU9ImFjdGlvbl9zY2hlbWFleHBnMS54bWwiPgo8aW1nIHNyYz0iYWN0aW9uX3NjaGVtYWV4cGcxLmdpZiI+CjxpbWcuYXJlYSBzaGFwZT0icmVjdCIgY29vcmRzPSIyMTAsMTg2LDM0MywyMjciIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9iYXNpY19hdHRyaWJ1dGVfc2NoZW1hL2Jhc2ljX2F0dHJpYnV0ZV9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMTAsMTAsOTYsNTEiIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9hY3Rpb25fc2NoZW1hL2FjdGlvbl9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMjEwLDI2NCwzNTgsMzA1IiBocmVmPSIuLi8uLi9yZXNvdXJjZXMvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEueG1sIiAvPgo8L2ltZz4KPC9pbWdmaWxlLmNvbnRlbnQ+Cg==" height="20" width="auto" id="_" mimetype="application/xml"/>
-                   <fn reference="a" id="_" target="_">
-                      <p original-id="_">
-                         The time
-                         <stem type="AsciiMath" id="_">t_90</stem>
-                         <fmt-stem type="AsciiMath">
-                            <semx element="stem" source="_">t_90</semx>
-                         </fmt-stem>
-                         was estimated to be 18,2 min for this example.
-                      </p>
-                      <fmt-fn-label>
-                         <sup>
-                            <semx element="autonum" source="_">a</semx>
-                         </sup>
-                      </fmt-fn-label>
-                   </fn>
-                   <p keep-with-next="true">
-                      <strong>Key</strong>
-                   </p>
-                   <dl class="formula_dl">
-                      <dt>
-                         <p>
-                            <fmt-fn-label>
-                               <sup>
-                                  <semx element="autonum" source="_">a</semx>
-                               </sup>
-                            </fmt-fn-label>
-                         </p>
-                      </dt>
-                      <dd>
-                         <fmt-fn-body id="_" target="_" reference="a">
-                            <semx element="fn" source="_">
-                               <p id="_">
-                                  The time
-                                  <stem type="AsciiMath" id="_">t_90</stem>
-                                  <fmt-stem type="AsciiMath">
-                                     <semx element="stem" source="_">t_90</semx>
-                                  </fmt-stem>
-                                  was estimated to be 18,2 min for this example.
-                               </p>
-                            </semx>
-                         </fmt-fn-body>
-                      </dd>
-                      <dt>A</dt>
-                      <dd>
-                         <p>B</p>
-                      </dd>
-                   </dl>
-                   <source status="generalisation">
-                      [SOURCE:
-                      <origin bibitemid="ISO712" type="inline" citeas="ISO 712" id="_">
-                         <localityStack>
-                            <locality type="section">
-                               <referenceFrom>1</referenceFrom>
-                            </locality>
-                         </localityStack>
-                      </origin>
-                      <semx element="origin" source="_">
-                         <fmt-xref type="inline" target="ISO712">
-                            <span class="stdpublisher">ISO </span>
-                            <span class="stddocNumber">712</span>
-                            , Section 1
-                         </fmt-xref>
-                      </semx>
-                      —
-                      <semx element="modification" source="_">with adjustments</semx>
-                      ;
-                      <origin bibitemid="ISO712" type="inline" citeas="ISO 712" id="_">
-                         <localityStack>
-                            <locality type="section">
-                               <referenceFrom>2</referenceFrom>
-                            </locality>
-                         </localityStack>
-                      </origin>
-                      <semx element="origin" source="_">
-                         <fmt-xref type="inline" target="ISO712">
-                            <span class="stdpublisher">ISO </span>
-                            <span class="stddocNumber">712</span>
-                            , Section 2
-                         </fmt-xref>
-                      </semx>
-                      ]
-                   </source>
-                </figure>
-                <figure id="figure-B" autonum="2">
-                   <fmt-name>
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Figure</span>
-                         <semx element="autonum" source="figure-B">2</semx>
-                      </span>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Figure</span>
-                      <semx element="autonum" source="figure-B">2</semx>
-                   </fmt-xref-label>
-                   <pre alt="A B">A &lt;
-         B</pre>
-                </figure>
-                <figure id="figure-C" unnumbered="true">
-                   <pre>A &lt;
-         B</pre>
-                </figure>
-             </foreword>
-          </preface>
-          <sections>
-             <references id="_" obligation="informative" normative="true" displayorder="3">
-                <title id="_">Normative References</title>
-                <fmt-title depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="autonum" source="_">1</semx>
-                   </span>
-                   <span class="fmt-caption-delim">
-                      <tab/>
-                   </span>
-                   <semx element="title" source="_">Normative References</semx>
-                </fmt-title>
-                <fmt-xref-label>
-                   <span class="fmt-element-name">Clause</span>
-                   <semx element="autonum" source="_">1</semx>
-                </fmt-xref-label>
-                <bibitem id="ISO712" type="standard">
-                   <formattedref>
-                      <em>
-                         <span class="stddocTitle">Cereals and cereal products</span>
-                      </em>
-                   </formattedref>
-                   <title format="text/plain">Cereals or cereal products</title>
-                   <title type="main" format="text/plain">Cereals and cereal products</title>
-                   <docidentifier type="ISO">ISO 712</docidentifier>
-                   <docidentifier scope="biblio-tag">ISO 712</docidentifier>
-                   <contributor>
-                      <role type="publisher"/>
-                      <organization>
-                         <name>International Organization for Standardization</name>
-                      </organization>
-                   </contributor>
-                   <biblio-tag>
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">712</span>
-                      ,
-                   </biblio-tag>
-                </bibitem>
-             </references>
-          </sections>
-          <bibliography>
-             </bibliography>
-          <fmt-footnote-container>
-             <fmt-fn-body id="_" target="_" reference="1">
-                <semx element="fn" source="_">
-                   <p>
-                      <fmt-fn-label>
-                         <sup>
-                            <semx element="autonum" source="_">1</semx>
-                         </sup>
-                         <span class="fmt-caption-delim">
-                            <tab/>
-                         </span>
-                      </fmt-fn-label>
-                      X
-                   </p>
-                </semx>
-             </fmt-fn-body>
-          </fmt-footnote-container>
-       </iso-standard>
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <preface>
+            <clause type="toc" id="_" displayorder="1">
+               <fmt-title depth="1">Contents</fmt-title>
+            </clause>
+            <foreword id="_" displayorder="2">
+               <title id="_">Foreword</title>
+               <fmt-title depth="1">
+                  <semx element="title" source="_">Foreword</semx>
+               </fmt-title>
+               <figure id="figureA-1" keep-with-next="true" keep-lines-together="true" autonum="1">
+                  <name id="_">
+                     Split-it-right
+                     <em>sample</em>
+                     divider
+                     <fn reference="1" original-reference="1" target="_" original-id="_">
+                        <p>X</p>
+                        <fmt-fn-label>
+                           <sup>
+                              <semx element="autonum" source="_">1</semx>
+                              <span class="fmt-label-delim">)</span>
+                           </sup>
+                        </fmt-fn-label>
+                     </fn>
+                  </name>
+                  <fmt-name>
+                     <span class="fmt-caption-label">
+                        <span class="fmt-element-name">Figure</span>
+                        <semx element="autonum" source="figureA-1">1</semx>
+                     </span>
+                     <span class="fmt-caption-delim"> &#x2014; </span>
+                     <semx element="name" source="_">
+                        Split-it-right
+                        <em>sample</em>
+                        divider
+                        <fn reference="1" original-reference="1" id="_" target="_">
+                           <p>X</p>
+                           <fmt-fn-label>
+                              <sup>
+                                 <semx element="autonum" source="_">1</semx>
+                                 <span class="fmt-label-delim">)</span>
+                              </sup>
+                           </fmt-fn-label>
+                        </fn>
+                     </semx>
+                  </fmt-name>
+                  <fmt-xref-label>
+                     <span class="fmt-element-name">Figure</span>
+                     <semx element="autonum" source="figureA-1">1</semx>
+                  </fmt-xref-label>
+                  <image src="rice_images/rice_image1.png" height="20" width="30" id="_" mimetype="image/png" alt="alttext" title="titletxt"/>
+                  <image src="rice_images/rice_image1.png" height="20" width="auto" id="_" mimetype="image/png"/>
+                  <image src="data:image/gif;base64,R0lGODlhEAAQAMQAAORHHOVSKudfOulrSOp3WOyDZu6QdvCchPGolfO0o/XBs/fNwfjZ0frl3/zy7////wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAkAABAALAAAAAAQABAAAAVVICSOZGlCQAosJ6mu7fiyZeKqNKToQGDsM8hBADgUXoGAiqhSvp5QAnQKGIgUhwFUYLCVDFCrKUE1lBavAViFIDlTImbKC5Gm2hB0SlBCBMQiB0UjIQA7" height="20" width="auto" id="_" mimetype="image/png"/>
+                  <image src="data:application/xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIj8+Cjw/eG1sLXN0eWxlc2hlZXQgdHlwZT0idGV4dC94c2wiIGhyZWY9Ii4uLy4uLy4uL3hzbC9yZXNfZG9jL2ltZ2ZpbGUueHNsIj8+CjwhRE9DVFlQRSBpbWdmaWxlLmNvbnRlbnQgU1lTVEVNICIuLi8uLi8uLi9kdGQvdGV4dC5lbnQiPgo8aW1nZmlsZS5jb250ZW50IG1vZHVsZT0iZnVuZGFtZW50YWxzX29mX3Byb2R1Y3RfZGVzY3JpcHRpb25fYW5kX3N1cHBvcnQiIGZpbGU9ImFjdGlvbl9zY2hlbWFleHBnMS54bWwiPgo8aW1nIHNyYz0iYWN0aW9uX3NjaGVtYWV4cGcxLmdpZiI+CjxpbWcuYXJlYSBzaGFwZT0icmVjdCIgY29vcmRzPSIyMTAsMTg2LDM0MywyMjciIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9iYXNpY19hdHRyaWJ1dGVfc2NoZW1hL2Jhc2ljX2F0dHJpYnV0ZV9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMTAsMTAsOTYsNTEiIGhyZWY9Ii4uLy4uL3Jlc291cmNlcy9hY3Rpb25fc2NoZW1hL2FjdGlvbl9zY2hlbWEueG1sIiAvPgo8aW1nLmFyZWEgc2hhcGU9InJlY3QiIGNvb3Jkcz0iMjEwLDI2NCwzNTgsMzA1IiBocmVmPSIuLi8uLi9yZXNvdXJjZXMvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEvc3VwcG9ydF9yZXNvdXJjZV9zY2hlbWEueG1sIiAvPgo8L2ltZz4KPC9pbWdmaWxlLmNvbnRlbnQ+Cg==" height="20" width="auto" id="_" mimetype="application/xml"/>
+                  <fn reference="a" id="_" target="_">
+                     <p original-id="_">
+                        The time
+                        <stem type="AsciiMath" id="_">t_90</stem>
+                        <fmt-stem type="AsciiMath">
+                           <semx element="stem" source="_">t_90</semx>
+                        </fmt-stem>
+                        was estimated to be 18,2 min for this example.
+                     </p>
+                     <fmt-fn-label>
+                        <sup>
+                           <semx element="autonum" source="_">a</semx>
+                        </sup>
+                     </fmt-fn-label>
+                  </fn>
+                  <p keep-with-next="true">
+                     <strong>Key</strong>
+                  </p>
+                  <dl class="formula_dl">
+                     <dt>
+                        <p>
+                           <fmt-fn-label>
+                              <sup>
+                                 <semx element="autonum" source="_">a</semx>
+                              </sup>
+                           </fmt-fn-label>
+                        </p>
+                     </dt>
+                     <dd>
+                        <fmt-fn-body id="_" target="_" reference="a">
+                           <semx element="fn" source="_">
+                              <p id="_">
+                                 The time
+                                 <stem type="AsciiMath" id="_">t_90</stem>
+                                 <fmt-stem type="AsciiMath">
+                                    <semx element="stem" source="_">t_90</semx>
+                                 </fmt-stem>
+                                 was estimated to be 18,2 min for this example.
+                              </p>
+                           </semx>
+                        </fmt-fn-body>
+                     </dd>
+                     <dt>A</dt>
+                     <dd>
+                        <p>B</p>
+                     </dd>
+                  </dl>
+                  <source status="generalisation">
+                     [SOURCE:
+                     <origin bibitemid="ISO712" type="inline" citeas="ISO 712" id="_">
+                        <localityStack>
+                           <locality type="section">
+                              <referenceFrom>1</referenceFrom>
+                           </locality>
+                        </localityStack>
+                     </origin>
+                     <semx element="origin" source="_">
+                        <fmt-xref type="inline" target="ISO712">
+                           <span class="stdpublisher">ISO </span>
+                           <span class="stddocNumber">712</span>
+                           , Section 1
+                        </fmt-xref>
+                     </semx>
+                     &#x2014;
+                     <semx element="modification" source="_">with adjustments</semx>
+                     ;
+                     <origin bibitemid="ISO712" type="inline" citeas="ISO 712" id="_">
+                        <localityStack>
+                           <locality type="section">
+                              <referenceFrom>2</referenceFrom>
+                           </locality>
+                        </localityStack>
+                     </origin>
+                     <semx element="origin" source="_">
+                        <fmt-xref type="inline" target="ISO712">
+                           <span class="stdpublisher">ISO </span>
+                           <span class="stddocNumber">712</span>
+                           , Section 2
+                        </fmt-xref>
+                     </semx>
+                     ]
+                  </source>
+               </figure>
+               <figure id="figure-B" autonum="2">
+                  <fmt-name>
+                     <span class="fmt-caption-label">
+                        <span class="fmt-element-name">Figure</span>
+                        <semx element="autonum" source="figure-B">2</semx>
+                     </span>
+                  </fmt-name>
+                  <fmt-xref-label>
+                     <span class="fmt-element-name">Figure</span>
+                     <semx element="autonum" source="figure-B">2</semx>
+                  </fmt-xref-label>
+                  <pre alt="A B">A &lt;
+        B</pre>
+               </figure>
+               <figure id="figure-C" unnumbered="true">
+                  <pre>A &lt;
+        B</pre>
+               </figure>
+            </foreword>
+         </preface>
+         <sections>
+            <references id="_" obligation="informative" normative="true" displayorder="3">
+               <title id="_">Normative References</title>
+               <fmt-title depth="1">
+                  <span class="fmt-caption-label">
+                     <semx element="autonum" source="_">1</semx>
+                  </span>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Normative References</semx>
+               </fmt-title>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Clause</span>
+                  <semx element="autonum" source="_">1</semx>
+               </fmt-xref-label>
+               <bibitem id="ISO712" type="standard">
+                  <formattedref>
+                     <em>
+                        <span class="stddocTitle">Cereals and cereal products</span>
+                     </em>
+                  </formattedref>
+                  <title format="text/plain">Cereals or cereal products</title>
+                  <title type="main" format="text/plain">Cereals and cereal products</title>
+                  <docidentifier type="ISO">ISO 712</docidentifier>
+                  <docidentifier scope="biblio-tag">ISO 712</docidentifier>
+                  <contributor>
+                     <role type="publisher"/>
+                     <organization>
+                        <name>International Organization for Standardization</name>
+                     </organization>
+                  </contributor>
+                  <biblio-tag>
+                     <span class="stdpublisher">ISO </span>
+                     <span class="stddocNumber">712</span>
+                     ,
+                  </biblio-tag>
+               </bibitem>
+            </references>
+         </sections>
+         <bibliography>
+            </bibliography>
+         <fmt-footnote-container>
+            <fmt-fn-body id="_" target="_" reference="1">
+               <semx element="fn" source="_">
+                  <p>
+                     <fmt-fn-label>
+                        <sup>
+                           <semx element="autonum" source="_">1</semx>
+                        </sup>
+                        <span class="fmt-caption-delim">
+                           <tab/>
+                        </span>
+                     </fmt-fn-label>
+                     X
+                  </p>
+               </semx>
+            </fmt-fn-body>
+         </fmt-footnote-container>
+      </iso-standard>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
        .new(presxml_options)
@@ -1794,63 +1800,187 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~INPUT
-              <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
-        <preface>
-           <clause type="toc" id="_" displayorder="1"> 
-          <fmt-title depth="1">Contents</fmt-title>
-          </clause>
-          <foreword displayorder='2' id="A">
-                   <title id="_">Foreword</title>
-         <fmt-title depth="1">
-               <semx element="title" source="_">Foreword</semx>
-         </fmt-title>
-            <ol type='alphabet' id="B">
-              <li id="_" label="a">
-                <p>A</p>
-              </li>
-              <li id="_" label="b">
-                <p>B</p>
-              </li>
-              <li id="_" label="c">
-                <ol type='arabic' id="C">
-                  <li id="_" label="1">C</li>
-                  <li id="_" label="2">D</li>
-                  <li id="_" label="3">
-                    <ol type='roman' id="D">
-                      <li id="_" label="i">E</li>
-                      <li id="_" label="ii">F</li>
-                      <li id="_" label="iii">
-                        <ol type='alphabet_upper' id="E">
-                          <li id="_" label="A">G</li>
-                          <li id="_" label="B">H</li>
-                          <li id="_" label="C">
-                            <ol type='roman_upper' id="F">
-                              <li id="_" label="I">I</li>
-                              <li id="_" label="II">J</li>
-                              <li id="_" label="III">
-                                <ol type='alphabet' id="G">
-                                  <li id="_" label="a">K</li>
-                                  <li id="_" label="b">L</li>
-                                  <li id="_" label="c">M</li>
-                                </ol>
-                              </li>
-                              <li id="_" label="IV">N</li>
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword id="A" displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Foreword</semx>
+                </fmt-title>
+                <ol id="B" type="alphabet">
+                   <li id="_">
+                      <fmt-name>
+                         <semx element="autonum" source="_">a</semx>
+                         <span class="fmt-label-delim">)</span>
+                      </fmt-name>
+                      <p>A</p>
+                   </li>
+                   <li id="_">
+                      <fmt-name>
+                         <semx element="autonum" source="_">b</semx>
+                         <span class="fmt-label-delim">)</span>
+                      </fmt-name>
+                      <p>B</p>
+                   </li>
+                   <li id="_">
+                      <fmt-name>
+                         <semx element="autonum" source="_">c</semx>
+                         <span class="fmt-label-delim">)</span>
+                      </fmt-name>
+                      <ol id="C" type="arabic">
+                         <li id="_">
+                            <fmt-name>
+                               <semx element="autonum" source="_">1</semx>
+                               <span class="fmt-label-delim">)</span>
+                            </fmt-name>
+                            C
+                         </li>
+                         <li id="_">
+                            <fmt-name>
+                               <semx element="autonum" source="_">2</semx>
+                               <span class="fmt-label-delim">)</span>
+                            </fmt-name>
+                            D
+                         </li>
+                         <li id="_">
+                            <fmt-name>
+                               <semx element="autonum" source="_">3</semx>
+                               <span class="fmt-label-delim">)</span>
+                            </fmt-name>
+                            <ol id="D" type="roman">
+                               <li id="_">
+                                  <fmt-name>
+                                     <semx element="autonum" source="_">i</semx>
+                                     <span class="fmt-label-delim">)</span>
+                                  </fmt-name>
+                                  E
+                               </li>
+                               <li id="_">
+                                  <fmt-name>
+                                     <semx element="autonum" source="_">ii</semx>
+                                     <span class="fmt-label-delim">)</span>
+                                  </fmt-name>
+                                  F
+                               </li>
+                               <li id="_">
+                                  <fmt-name>
+                                     <semx element="autonum" source="_">iii</semx>
+                                     <span class="fmt-label-delim">)</span>
+                                  </fmt-name>
+                                  <ol id="E" type="alphabet_upper">
+                                     <li id="_">
+                                        <fmt-name>
+                                           <semx element="autonum" source="_">A</semx>
+                                           <span class="fmt-label-delim">.</span>
+                                        </fmt-name>
+                                        G
+                                     </li>
+                                     <li id="_">
+                                        <fmt-name>
+                                           <semx element="autonum" source="_">B</semx>
+                                           <span class="fmt-label-delim">.</span>
+                                        </fmt-name>
+                                        H
+                                     </li>
+                                     <li id="_">
+                                        <fmt-name>
+                                           <semx element="autonum" source="_">C</semx>
+                                           <span class="fmt-label-delim">.</span>
+                                        </fmt-name>
+                                        <ol id="F" type="roman_upper">
+                                           <li id="_">
+                                              <fmt-name>
+                                                 <semx element="autonum" source="_">I</semx>
+                                                 <span class="fmt-label-delim">.</span>
+                                              </fmt-name>
+                                              I
+                                           </li>
+                                           <li id="_">
+                                              <fmt-name>
+                                                 <semx element="autonum" source="_">II</semx>
+                                                 <span class="fmt-label-delim">.</span>
+                                              </fmt-name>
+                                              J
+                                           </li>
+                                           <li id="_">
+                                              <fmt-name>
+                                                 <semx element="autonum" source="_">III</semx>
+                                                 <span class="fmt-label-delim">.</span>
+                                              </fmt-name>
+                                              <ol id="G" type="alphabet">
+                                                 <li id="_">
+                                                    <fmt-name>
+                                                       <semx element="autonum" source="_">a</semx>
+                                                       <span class="fmt-label-delim">)</span>
+                                                    </fmt-name>
+                                                    K
+                                                 </li>
+                                                 <li id="_">
+                                                    <fmt-name>
+                                                       <semx element="autonum" source="_">b</semx>
+                                                       <span class="fmt-label-delim">)</span>
+                                                    </fmt-name>
+                                                    L
+                                                 </li>
+                                                 <li id="_">
+                                                    <fmt-name>
+                                                       <semx element="autonum" source="_">c</semx>
+                                                       <span class="fmt-label-delim">)</span>
+                                                    </fmt-name>
+                                                    M
+                                                 </li>
+                                              </ol>
+                                           </li>
+                                           <li id="_">
+                                              <fmt-name>
+                                                 <semx element="autonum" source="_">IV</semx>
+                                                 <span class="fmt-label-delim">.</span>
+                                              </fmt-name>
+                                              N
+                                           </li>
+                                        </ol>
+                                     </li>
+                                     <li id="_">
+                                        <fmt-name>
+                                           <semx element="autonum" source="_">D</semx>
+                                           <span class="fmt-label-delim">.</span>
+                                        </fmt-name>
+                                        O
+                                     </li>
+                                  </ol>
+                               </li>
+                               <li id="_">
+                                  <fmt-name>
+                                     <semx element="autonum" source="_">iv</semx>
+                                     <span class="fmt-label-delim">)</span>
+                                  </fmt-name>
+                                  P
+                               </li>
                             </ol>
-                          </li>
-                          <li id="_" label="D">O</li>
-                        </ol>
-                      </li>
-                      <li id="_" label="iv">P</li>
-                    </ol>
-                  </li>
-                  <li id="_" label="4">Q</li>
+                         </li>
+                         <li id="_">
+                            <fmt-name>
+                               <semx element="autonum" source="_">4</semx>
+                               <span class="fmt-label-delim">)</span>
+                            </fmt-name>
+                            Q
+                         </li>
+                      </ol>
+                   </li>
+                   <li id="_">
+                      <fmt-name>
+                         <semx element="autonum" source="_">d</semx>
+                         <span class="fmt-label-delim">)</span>
+                      </fmt-name>
+                      R
+                   </li>
                 </ol>
-              </li>
-              <li id="_" label="d">R</li>
-            </ol>
-          </foreword>
-        </preface>
-      </iso-standard>
+             </foreword>
+          </preface>
+       </iso-standard>
     INPUT
     html = <<~OUTPUT
       #{HTML_HDR}
@@ -1939,21 +2069,27 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~INPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type='presentation'>
-         <preface>
-           <clause type="toc" id="_" displayorder="1"> 
-          <fmt-title depth="1">Contents</fmt-title>
-          </clause>
-           <foreword id="A" displayorder='2'>
-                    <title id="_">Foreword</title>
-         <fmt-title depth="1">
-               <semx element="title" source="_">Foreword</semx>
-         </fmt-title>
-             <ol start='4' id="B" type='alphabet'>
-               <li id="_" label="d">List</li>
-             </ol>
-           </foreword>
-         </preface>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword id="A" displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Foreword</semx>
+                </fmt-title>
+                <ol start="4" id="B" type="alphabet">
+                   <li id="_">
+                      <fmt-name>
+                         <semx element="autonum" source="_">d</semx>
+                         <span class="fmt-label-delim">)</span>
+                      </fmt-name>
+                      List
+                   </li>
+                </ol>
+             </foreword>
+          </preface>
        </iso-standard>
     INPUT
     html = <<~OUTPUT
@@ -2024,31 +2160,291 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~INPUT
-      <iso-standard xmlns='http://riboseinc.com/isoxml' type='presentation'>
-         <preface>
-           <clause type="toc" id="_" displayorder="1"> 
-          <fmt-title depth="1">Contents</fmt-title>
-          </clause>
-           <foreword id="A" displayorder='2'>
-                    <title id="_">Foreword</title>
-         <fmt-title depth="1">
-               <semx element="title" source="_">Foreword</semx>
-         </fmt-title>
-             <ul>
-               <li>A</li>
-               <li>
-                 <ol id="B" type='alphabet'>
-                   <li id="_" label="a">List</li>
-                 </ol>
-               </li>
-             </ul>
-           </foreword>
-         </preface>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+             <foreword id="A" displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">
+                   <semx element="title" source="_">Foreword</semx>
+                </fmt-title>
+                <ul>
+                   <li>
+                      <fmt-name>
+                         <semx element="autonum" source="">&#x2014;</semx>
+                      </fmt-name>
+                      A
+                   </li>
+                   <li>
+                      <fmt-name>
+                         <semx element="autonum" source="">&#x2014;</semx>
+                      </fmt-name>
+                      <ol id="B" type="alphabet">
+                         <li id="_">
+                            <fmt-name>
+                               <semx element="autonum" source="_">a</semx>
+                               <span class="fmt-label-delim">)</span>
+                            </fmt-name>
+                            List
+                         </li>
+                      </ol>
+                   </li>
+                </ul>
+             </foreword>
+          </preface>
        </iso-standard>
     INPUT
     expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))))
+      .to be_equivalent_to Xml::C14n.format(presxml)
+  end
+
+  it "processes unordered lists" do
+    input = <<~INPUT
+          <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <preface>
+          <clause type="toc" id="_" displayorder="1"> <fmt-title depth="1">Table of contents</fmt-title> </clause>
+          <foreword displayorder="2" id="fwd"><fmt-title>Foreword</fmt-title>
+          <ul id="_61961034-0fb1-436b-b281-828857a59ddb"  keep-with-next="true" keep-lines-together="true">
+          <name>Caption</name>
+        <li>
+          <p id="_cb370dd3-8463-4ec7-aa1a-96f644e2e9a2">updated normative references;</p>
+        </li>
+        <li>
+          <p id="_60eb765c-1f6c-418a-8016-29efa06bf4f9">deletion of 4.3.</p>
+          <ul id="_61961034-0fb1-436b-b281-828857a59ddc"  keep-with-next="true" keep-lines-together="true">
+          <li>
+          <p id="_cb370dd3-8463-4ec7-aa1a-96f644e2e9a3">updated normative references;</p>
+        </li>
+          </ul>
+        </li>
+      </ul>
+      </foreword></preface>
+      </iso-standard>
+    INPUT
+    presxml = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <preface>
+            <foreword displayorder="1" id="fwd">
+               <title id="_">Foreword</title>
+               <fmt-title depth="1">Foreword</fmt-title>
+               <ul id="_" keep-with-next="true" keep-lines-together="true">
+                  <name id="_">Caption</name>
+                  <fmt-name>
+                     <semx element="name" source="_">Caption</semx>
+                  </fmt-name>
+                  <li>
+                     <fmt-name>
+                        <semx element="autonum" source="">&#x2014;</semx>
+                     </fmt-name>
+                     <p id="_">updated normative references;</p>
+                  </li>
+                  <li>
+                     <fmt-name>
+                        <semx element="autonum" source="">&#x2014;</semx>
+                     </fmt-name>
+                     <p id="_">deletion of 4.3.</p>
+                     <ul id="_" keep-with-next="true" keep-lines-together="true">
+                        <li>
+                           <fmt-name>
+                              <semx element="autonum" source="">&#x2014;</semx>
+                           </fmt-name>
+                           <p id="_">updated normative references;</p>
+                        </li>
+                     </ul>
+                  </li>
+               </ul>
+            </foreword>
+            <clause type="toc" id="_" displayorder="2">
+               <fmt-title depth="1">Table of contents</fmt-title>
+            </clause>
+         </preface>
+      </iso-standard>
+    INPUT
+    pres_output = IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output
+      .sub(%r{<metanorma-extension>.*</metanorma-extension>}m, ""))))
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    presxml = <<~INPUT
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <foreword displayorder="1" id="fwd">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1">Foreword</fmt-title>
+                <ul id="_" keep-with-next="true" keep-lines-together="true">
+                   <name id="_">Caption</name>
+                   <fmt-name>
+                      <semx element="name" source="_">Caption</semx>
+                   </fmt-name>
+                   <li>
+                      <fmt-name>
+                         <semx element="autonum" source="">&#x2013;</semx>
+                      </fmt-name>
+                      <p id="_">updated normative references;</p>
+                   </li>
+                   <li>
+                      <fmt-name>
+                         <semx element="autonum" source="">&#x2013;</semx>
+                      </fmt-name>
+                      <p id="_">deletion of 4.3.</p>
+                      <ul id="_" keep-with-next="true" keep-lines-together="true">
+                         <li>
+                            <fmt-name>
+                               <semx element="autonum" source="">&#x2013;</semx>
+                            </fmt-name>
+                            <p id="_">updated normative references;</p>
+                         </li>
+                      </ul>
+                   </li>
+                </ul>
+             </foreword>
+             <clause type="toc" id="_" displayorder="2">
+                <fmt-title depth="1">Table of contents</fmt-title>
+             </clause>
+          </preface>
+       </iso-standard>
+    INPUT
+    input = input.sub("<preface>",
+               "<metanorma-extension><presentation-metadata><name>document-scheme</name><value>1951</value></presentation-metadata></metanorma-extension><preface>")
+    pres_output = IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output
+      .sub(%r{<metanorma-extension>.*</metanorma-extension>}m, ""))))
+      .to be_equivalent_to Xml::C14n.format(presxml)
+  end
+
+  it "processes ordered lists" do
+    input = <<~INPUT
+          <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <preface>
+          <foreword id="_" displayorder="2">
+          <ol id="_ae34a226-aab4-496d-987b-1aa7b6314026" type="alphabet"  keep-with-next="true" keep-lines-together="true">
+          <name>Caption</name>
+        <li>
+          <p id="_0091a277-fb0e-424a-aea8-f0001303fe78">all information necessary for the complete identification of the sample;</p>
+        <ol>
+        <li>
+          <p id="_8a7b6299-db05-4ff8-9de7-ff019b9017b2">a reference to this document (i.e. ISO 17301-1);</p>
+        <ol>
+        <li>
+          <p id="_ea248b7f-839f-460f-a173-a58a830b2abe">the sampling method used;</p>
+        </li>
+        </ol>
+        </li>
+        </ol>
+        </li>
+      </ol>
+      </foreword></preface>
+      </iso-standard>
+    INPUT
+    presxml = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <preface>
+            <clause type="toc" id="_" displayorder="1">
+               <fmt-title depth="1">Contents</fmt-title>
+            </clause>
+            <foreword id="_" displayorder="2">
+               <title id="_">Foreword</title>
+               <fmt-title depth="1">
+                  <semx element="title" source="_">Foreword</semx>
+               </fmt-title>
+               <ol id="_" type="alphabet" keep-with-next="true" keep-lines-together="true" autonum="">
+                  <name id="_">Caption</name>
+                  <fmt-name>
+                     <semx element="name" source="_">Caption</semx>
+                  </fmt-name>
+                  <li id="_">
+                     <fmt-name>
+                        <semx element="autonum" source="_">a</semx>
+                        <span class="fmt-label-delim">)</span>
+                     </fmt-name>
+                     <p id="_">all information necessary for the complete identification of the sample;</p>
+                     <ol type="arabic">
+                        <li id="_">
+                           <fmt-name>
+                              <semx element="autonum" source="_">1</semx>
+                              <span class="fmt-label-delim">)</span>
+                           </fmt-name>
+                           <p id="_">a reference to this document (i.e. ISO 17301-1);</p>
+                           <ol type="roman">
+                              <li id="_">
+                                 <fmt-name>
+                                    <semx element="autonum" source="_">i</semx>
+                                    <span class="fmt-label-delim">)</span>
+                                 </fmt-name>
+                                 <p id="_">the sampling method used;</p>
+                              </li>
+                           </ol>
+                        </li>
+                     </ol>
+                  </li>
+               </ol>
+            </foreword>
+         </preface>
+      </iso-standard>
+    INPUT
+    pres_output = IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output
+      .sub(%r{<metanorma-extension>.*</metanorma-extension>}m, ""))))
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    presxml = <<~INPUT
+        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+           <preface>
+              <clause type="toc" id="_" displayorder="1">
+                 <fmt-title depth="1">Contents</fmt-title>
+            </clause>
+            <foreword id="_" displayorder="2">
+               <title id="_">Foreword</title>
+               <fmt-title depth="1">
+                  <semx element="title" source="_">Foreword</semx>
+               </fmt-title>
+               <ol id="_" type="alphabet" keep-with-next="true" keep-lines-together="true" autonum="">
+                  <name id="_">Caption</name>
+                  <fmt-name>
+                     <semx element="name" source="_">Caption</semx>
+                  </fmt-name>
+                  <li id="_">
+                     <fmt-name>
+                        <span class="fmt-label-delim">(</span>
+                        <semx element="autonum" source="_">a</semx>
+                        <span class="fmt-label-delim">)</span>
+                     </fmt-name>
+                     <p id="_">all information necessary for the complete identification of the sample;</p>
+                     <ol type="arabic">
+                        <li id="_">
+                           <fmt-name>
+                              <semx element="autonum" source="_">1</semx>
+                              <span class="fmt-label-delim">)</span>
+                           </fmt-name>
+                           <p id="_">a reference to this document (i.e. ISO 17301-1);</p>
+                           <ol type="roman">
+                              <li id="_">
+                                 <fmt-name>
+                                    <semx element="autonum" source="_">i</semx>
+                                    <span class="fmt-label-delim">)</span>
+                                 </fmt-name>
+                                 <p id="_">the sampling method used;</p>
+                              </li>
+                           </ol>
+                        </li>
+                     </ol>
+                  </li>
+               </ol>
+            </foreword>
+         </preface>
+      </iso-standard>
+    INPUT
+    input = input.sub("<preface>",
+               "<metanorma-extension><presentation-metadata><name>document-scheme</name><value>1951</value></presentation-metadata></metanorma-extension><preface>")
+    pres_output = IsoDoc::Iso::PresentationXMLConvert.new({})
+      .convert("test", input, true)
+    expect(Xml::C14n.format(strip_guid(pres_output
+      .sub(%r{<metanorma-extension>.*</metanorma-extension>}m, ""))))
       .to be_equivalent_to Xml::C14n.format(presxml)
   end
 end

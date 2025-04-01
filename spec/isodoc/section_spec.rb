@@ -1448,175 +1448,208 @@ RSpec.describe IsoDoc do
       </bipm-standard>
     INPUT
     presxml = <<~OUTPUT
-        <iso-standard xmlns="https://open.ribose.com/standards/bipm" type="presentation">
-           <bibdata>
-              <language current="true">en</language>
-              <script current="true">Latn</script>
-           </bibdata>
-           <preface>
-              <clause type="toc" id="_" displayorder="1">
-                 <fmt-title depth="1">Contents</fmt-title>
-              </clause>
-           </preface>
-           <sections>
-              <clause id="A" displayorder="2">
-                 <fmt-title depth="1">
-                    <span class="fmt-caption-label">
-                       <semx element="autonum" source="A">1</semx>
-                    </span>
-                 </fmt-title>
-                 <fmt-xref-label>
-                    <span class="fmt-element-name">Clause</span>
-                    <semx element="autonum" source="A">1</semx>
-                 </fmt-xref-label>
-                 <p>A</p>
-                 <bookmark id="_"/>
-                 <bookmark id="_"/>
-                 <bookmark id="_"/>
-                 <bookmark id="_"/>
-                 <bookmark id="_"/>
-                 <clause id="B" inline-header="true">
-                    <fmt-title depth="2">
-                       <span class="fmt-caption-label">
-                          <semx element="autonum" source="A">1</semx>
-                          <span class="fmt-autonum-delim">.</span>
-                          <semx element="autonum" source="B">1</semx>
-                       </span>
-                    </fmt-title>
-                    <fmt-xref-label>
-                       <semx element="autonum" source="A">1</semx>
-                       <span class="fmt-autonum-delim">.</span>
-                       <semx element="autonum" source="B">1</semx>
-                    </fmt-xref-label>
-                    <p>B</p>
-                    <bookmark id="_"/>
-                    <bookmark id="_"/>
-                    <bookmark id="_"/>
-                    <bookmark id="_"/>
-                 </clause>
-              </clause>
-           </sections>
-           <indexsect id="_" displayorder="3">
-              <title>Index</title>
-              <ul>
-                 <li>
-                    <em>Dasein</em>
-                    , see
-                    <em>Eman</em>
-                    cipation, être
-                 </li>
-                 <li>
-                    élongé,
-                    <xref target="_" pagenumber="true" id="_"/>
-                    <semx element="xref" source="_">
-                       <fmt-xref target="_" pagenumber="true">
-                          <span class="fmt-element-name">Clause</span>
-                          <semx element="autonum" source="A">1</semx>
-                       </fmt-xref>
-                    </semx>
-                 </li>
-                 <li>
-                    <em>Eman</em>
-                    cipation,
-                    <xref target="_" pagenumber="true" id="_"/>
-                    <semx element="xref" source="_">
-                       <fmt-xref target="_" pagenumber="true">
-                          <span class="fmt-element-name">Clause</span>
-                          <semx element="autonum" source="A">1</semx>
-                       </fmt-xref>
-                    </semx>
-                    ,
-                    <xref target="_" pagenumber="true" id="_"/>
-                    <semx element="xref" source="_">
-                       <fmt-xref target="_" pagenumber="true">
-                          <semx element="autonum" source="A">1</semx>
-                          <span class="fmt-autonum-delim">.</span>
-                          <semx element="autonum" source="B">1</semx>
-                       </fmt-xref>
-                    </semx>
-                    <ul>
-                       <li>
-                          dans la France,
-                          <xref target="_" pagenumber="true" id="_"/>
-                          <semx element="xref" source="_">
-                             <fmt-xref target="_" pagenumber="true">
-                                <span class="fmt-element-name">Clause</span>
-                                <semx element="autonum" source="A">1</semx>
-                             </fmt-xref>
-                          </semx>
-                          <ul>
-                             <li>
-                                à Paris,
-                                <xref target="_" pagenumber="true" id="_"/>
-                                <semx element="xref" source="_">
-                                   <fmt-xref target="_" pagenumber="true">
-                                      <semx element="autonum" source="A">1</semx>
-                                      <span class="fmt-autonum-delim">.</span>
-                                      <semx element="autonum" source="B">1</semx>
-                                   </fmt-xref>
-                                </semx>
-                             </li>
-                             <li>
-                                en Bretagne,
-                                <xref target="_" pagenumber="true" id="_"/>
-                                <semx element="xref" source="_">
-                                   <fmt-xref target="_" pagenumber="true">
-                                      <span class="fmt-element-name">Clause</span>
-                                      <semx element="autonum" source="A">1</semx>
-                                   </fmt-xref>
-                                </semx>
-                             </li>
-                          </ul>
-                       </li>
-                       <li>
-                          dans les États-Unis,
-                          <xref target="_" pagenumber="true" id="_"/>
-                          <semx element="xref" source="_">
-                             <fmt-xref target="_" pagenumber="true">
-                                <semx element="autonum" source="A">1</semx>
-                                <span class="fmt-autonum-delim">.</span>
-                                <semx element="autonum" source="B">1</semx>
-                             </fmt-xref>
-                          </semx>
-                       </li>
-                    </ul>
-                 </li>
-                 <li>
-                    être
-                    <ul>
-                       <li>
-                          Husserl, see zebra, see also
-                          <em>Eman</em>
-                          cipation, zebra
-                          <ul>
-                             <li>
-                                en allemand,
-                                <xref target="_" pagenumber="true" id="_"/>
-                                <semx element="xref" source="_">
-                                   <fmt-xref target="_" pagenumber="true">
-                                      <span class="fmt-element-name">Clause</span>
-                                      <semx element="autonum" source="A">1</semx>
-                                   </fmt-xref>
-                                </semx>
-                             </li>
-                          </ul>
-                       </li>
-                    </ul>
-                 </li>
-                 <li>
-                    zebra,
-                    <xref target="_" pagenumber="true" id="_"/>
-                    <semx element="xref" source="_">
-                       <fmt-xref target="_" pagenumber="true">
-                          <semx element="autonum" source="A">1</semx>
-                          <span class="fmt-autonum-delim">.</span>
-                          <semx element="autonum" source="B">1</semx>
-                       </fmt-xref>
-                    </semx>
-                 </li>
-              </ul>
-           </indexsect>
-        </iso-standard>
+      <iso-standard xmlns="https://open.ribose.com/standards/bipm" type="presentation">
+          <bibdata>
+             <language current="true">en</language>
+             <script current="true">Latn</script>
+          </bibdata>
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1">Contents</fmt-title>
+             </clause>
+          </preface>
+          <sections>
+             <clause id="A" displayorder="2">
+                <fmt-title depth="1">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="A">1</semx>
+                   </span>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="A">1</semx>
+                </fmt-xref-label>
+                <p>A</p>
+                <bookmark id="_"/>
+                <bookmark id="_"/>
+                <bookmark id="_"/>
+                <bookmark id="_"/>
+                <bookmark id="_"/>
+                <clause id="B" inline-header="true">
+                   <fmt-title depth="2">
+                      <span class="fmt-caption-label">
+                         <semx element="autonum" source="A">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="B">1</semx>
+                      </span>
+                   </fmt-title>
+                   <fmt-xref-label>
+                      <semx element="autonum" source="A">1</semx>
+                      <span class="fmt-autonum-delim">.</span>
+                      <semx element="autonum" source="B">1</semx>
+                   </fmt-xref-label>
+                   <p>B</p>
+                   <bookmark id="_"/>
+                   <bookmark id="_"/>
+                   <bookmark id="_"/>
+                   <bookmark id="_"/>
+                </clause>
+             </clause>
+          </sections>
+          <indexsect id="_" displayorder="3">
+             <title>Index</title>
+             <ul>
+                <li>
+                   <fmt-name>
+                      <semx element="autonum" source="">—</semx>
+                   </fmt-name>
+                   <em>Dasein</em>
+                   , see
+                   <em>Eman</em>
+                   cipation, être
+                </li>
+                <li>
+                   <fmt-name>
+                      <semx element="autonum" source="">—</semx>
+                   </fmt-name>
+                   élongé,
+                   <xref target="_" pagenumber="true" id="_"/>
+                   <semx element="xref" source="_">
+                      <fmt-xref target="_" pagenumber="true">
+                         <span class="fmt-element-name">Clause</span>
+                         <semx element="autonum" source="A">1</semx>
+                      </fmt-xref>
+                   </semx>
+                </li>
+                <li>
+                   <fmt-name>
+                      <semx element="autonum" source="">—</semx>
+                   </fmt-name>
+                   <em>Eman</em>
+                   cipation,
+                   <xref target="_" pagenumber="true" id="_"/>
+                   <semx element="xref" source="_">
+                      <fmt-xref target="_" pagenumber="true">
+                         <span class="fmt-element-name">Clause</span>
+                         <semx element="autonum" source="A">1</semx>
+                      </fmt-xref>
+                   </semx>
+                   ,
+                   <xref target="_" pagenumber="true" id="_"/>
+                   <semx element="xref" source="_">
+                      <fmt-xref target="_" pagenumber="true">
+                         <semx element="autonum" source="A">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="B">1</semx>
+                      </fmt-xref>
+                   </semx>
+                   <ul>
+                      <li>
+                         <fmt-name>
+                            <semx element="autonum" source="">—</semx>
+                         </fmt-name>
+                         dans la France,
+                         <xref target="_" pagenumber="true" id="_"/>
+                         <semx element="xref" source="_">
+                            <fmt-xref target="_" pagenumber="true">
+                               <span class="fmt-element-name">Clause</span>
+                               <semx element="autonum" source="A">1</semx>
+                            </fmt-xref>
+                         </semx>
+                         <ul>
+                            <li>
+                               <fmt-name>
+                                  <semx element="autonum" source="">—</semx>
+                               </fmt-name>
+                               à Paris,
+                               <xref target="_" pagenumber="true" id="_"/>
+                               <semx element="xref" source="_">
+                                  <fmt-xref target="_" pagenumber="true">
+                                     <semx element="autonum" source="A">1</semx>
+                                     <span class="fmt-autonum-delim">.</span>
+                                     <semx element="autonum" source="B">1</semx>
+                                  </fmt-xref>
+                               </semx>
+                            </li>
+                            <li>
+                               <fmt-name>
+                                  <semx element="autonum" source="">—</semx>
+                               </fmt-name>
+                               en Bretagne,
+                               <xref target="_" pagenumber="true" id="_"/>
+                               <semx element="xref" source="_">
+                                  <fmt-xref target="_" pagenumber="true">
+                                     <span class="fmt-element-name">Clause</span>
+                                     <semx element="autonum" source="A">1</semx>
+                                  </fmt-xref>
+                               </semx>
+                            </li>
+                         </ul>
+                      </li>
+                      <li>
+                         <fmt-name>
+                            <semx element="autonum" source="">—</semx>
+                         </fmt-name>
+                         dans les États-Unis,
+                         <xref target="_" pagenumber="true" id="_"/>
+                         <semx element="xref" source="_">
+                            <fmt-xref target="_" pagenumber="true">
+                               <semx element="autonum" source="A">1</semx>
+                               <span class="fmt-autonum-delim">.</span>
+                               <semx element="autonum" source="B">1</semx>
+                            </fmt-xref>
+                         </semx>
+                      </li>
+                   </ul>
+                </li>
+                <li>
+                   <fmt-name>
+                      <semx element="autonum" source="">—</semx>
+                   </fmt-name>
+                   être
+                   <ul>
+                      <li>
+                         <fmt-name>
+                            <semx element="autonum" source="">—</semx>
+                         </fmt-name>
+                         Husserl, see zebra, see also
+                         <em>Eman</em>
+                         cipation, zebra
+                         <ul>
+                            <li>
+                               <fmt-name>
+                                  <semx element="autonum" source="">—</semx>
+                               </fmt-name>
+                               en allemand,
+                               <xref target="_" pagenumber="true" id="_"/>
+                               <semx element="xref" source="_">
+                                  <fmt-xref target="_" pagenumber="true">
+                                     <span class="fmt-element-name">Clause</span>
+                                     <semx element="autonum" source="A">1</semx>
+                                  </fmt-xref>
+                               </semx>
+                            </li>
+                         </ul>
+                      </li>
+                   </ul>
+                </li>
+                <li>
+                   <fmt-name>
+                      <semx element="autonum" source="">—</semx>
+                   </fmt-name>
+                   zebra,
+                   <xref target="_" pagenumber="true" id="_"/>
+                   <semx element="xref" source="_">
+                      <fmt-xref target="_" pagenumber="true">
+                         <semx element="autonum" source="A">1</semx>
+                         <span class="fmt-autonum-delim">.</span>
+                         <semx element="autonum" source="B">1</semx>
+                      </fmt-xref>
+                   </semx>
+                </li>
+             </ul>
+          </indexsect>
+       </iso-standard>
     OUTPUT
     html = <<~OUTPUT
           <html lang='en'>
