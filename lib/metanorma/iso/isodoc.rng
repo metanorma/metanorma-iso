@@ -72,9 +72,6 @@ This is done if the footnote reference is already presented in some other form, 
         </oneOrMore>
       </element>
     </define>
-    <define name="ReviewAttributes" combine="interleave">
-      <ref name="RequiredId"/>
-    </define>
     <define name="section-title">
       <a:documentation>Title(s) of a clause</a:documentation>
       <element name="title">
