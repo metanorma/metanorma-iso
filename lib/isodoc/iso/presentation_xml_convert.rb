@@ -179,7 +179,7 @@ module IsoDoc
         end
       end
 
-      def ul_label_list
+      def ul_label_list(_elem)
         if @docscheme == "1951"
           %w(&#x2013;)
         else
