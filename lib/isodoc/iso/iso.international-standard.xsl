@@ -155,6 +155,8 @@
 	<xsl:variable name="stagename" select="normalize-space(/iso:metanorma/iso:bibdata/iso:ext/iso:stagename)"/>
 	<xsl:variable name="stagename_abbreviation" select="normalize-space(/iso:metanorma/iso:bibdata/iso:ext/iso:stagename/@abbreviation)"/>
 	<xsl:variable name="stagename_localized" select="normalize-space(/iso:metanorma/iso:bibdata/iso:status/iso:stage[@language = $lang])"/>
+	<xsl:variable name="stagename_localized_coverpage"><xsl:copy-of select="/iso:metanorma/iso:bibdata/iso:status/iso:stage[@language = $lang and @type = 'coverpage']/node()"/></xsl:variable>
+	<xsl:variable name="stagename_localized_firstpage"><xsl:copy-of select="/iso:metanorma/iso:bibdata/iso:status/iso:stage[@language = $lang and @type = 'firstpage']/node()"/></xsl:variable>
 	<xsl:variable name="abbreviation" select="normalize-space(/iso:metanorma/iso:bibdata/iso:status/iso:stage/@abbreviation)"/>
 	<xsl:variable name="abbreviation_uppercased" select="java:toUpperCase(java:java.lang.String.new($abbreviation))"/>
 
@@ -1871,17 +1873,9 @@
 													<xsl:choose>
 														<xsl:when test="$stage-abbreviation = 'DIS'"> <!--  or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM' -->
 															<xsl:choose>
-																<xsl:when test="$stagename_localized != '' and contains($stagename_localized, ' ')">
-																	<!-- Draft International Standard to DRAFT -->
-																	<xsl:value-of select="java:toUpperCase(java:java.lang.String.new(substring-before($stagename_localized, ' ')))"/>
-																	<xsl:value-of select="$linebreak"/>
-																	<xsl:value-of select="substring-after($stagename_localized, ' ')"/>
-																</xsl:when>
-																<xsl:when test="contains($stagename, ' ')">
-																	<!-- Draft International Standard to DRAFT -->
-																	<xsl:value-of select="java:toUpperCase(java:java.lang.String.new(substring-before($stagename, ' ')))"/>
-																	<xsl:value-of select="$linebreak"/>
-																	<xsl:value-of select="substring-after($stagename, ' ')"/>
+																<xsl:when test="normalize-space($stagename_localized_coverpage) != ''">
+																	<!-- DRAFT<br/>International Standard-->
+																	<xsl:apply-templates select="xalan:nodeset($stagename_localized_coverpage)/node()"/>
 																</xsl:when>
 																<xsl:otherwise>
 																	<xsl:value-of select="java:toUpperCase(java:java.lang.String.new($stagename))"/>
@@ -4878,6 +4872,7 @@
 												<xsl:when test="$layoutVersion = '2024'">
 													<xsl:choose>
 														<xsl:when test="$doctype = 'committee-document'"><xsl:value-of select="$doctype_localized"/></xsl:when>
+														<xsl:when test="normalize-space($stagename_localized_firstpage) != ''"><xsl:apply-templates select="xalan:nodeset($stagename_localized_firstpage)/node()"/></xsl:when>
 														<xsl:otherwise><xsl:value-of select="$stagename-header-firstpage"/></xsl:otherwise>
 													</xsl:choose>
 												</xsl:when>
