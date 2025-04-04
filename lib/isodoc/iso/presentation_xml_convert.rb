@@ -95,12 +95,7 @@ module IsoDoc
 
       def ol_depth(node)
         depth = node.ancestors(@iso_class ? "ol" : "ul, ol").size + 1
-        type = :alphabet
-        type = :arabic if [2, 7].include? depth
-        type = :roman if [3, 8].include? depth
-        type = :alphabet_upper if [4, 9].include? depth
-        type = :roman_upper if [5, 10].include? depth
-        type
+        @counter.ol_type(node, depth)
       end
 
       def note1(elem)
@@ -182,6 +177,23 @@ module IsoDoc
         else
           ""
         end
+      end
+
+      def ul_label_list(_elem)
+        if @docscheme == "1951"
+          %w(&#x2013;)
+        else
+          %w(&#x2014;)
+        end
+      end
+
+      def ol_label_template(_elem)
+        ret = super
+        @docscheme == "1951" and
+          ret[:alphabet] = <<~SPAN.strip
+            <span class="fmt-label-delim">(</span>%<span class="fmt-label-delim">)</span>
+          SPAN
+        ret
       end
 
       def fn_ref_label(fnote)
