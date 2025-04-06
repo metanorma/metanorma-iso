@@ -193,15 +193,12 @@ module Metanorma
         end
       end
 
-      def validate(doc)
-        content_validate(doc)
-        schema = case @doctype
-                 when "amendment", "technical-corrigendum" # @amd
-                   "isostandard-amd.rng"
-                 else "isostandard-compile.rng"
-                 end
-        schema_validate(formattedstr_strip(doc.dup),
-                        File.join(File.dirname(__FILE__), schema))
+      def schema_file
+        case @doctype
+        when "amendment", "technical-corrigendum" # @amd
+          "isostandard-amd.rng"
+        else "isostandard-compile.rng"
+        end
       end
     end
   end

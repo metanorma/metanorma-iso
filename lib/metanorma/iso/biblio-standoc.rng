@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0">
-  <!--
-    Add-ons to biblio.rnc for standoc model: defines the extension point BibDataExtensionType
-    of relaton
-    
-    Specialisations as for biblio.rnc. Extension point can be redefined completely for a flavour of standoc
-    (SDO); but other elements in Bibdata can only be extended (more specialised vocabularies for Bibdata)
-  -->
   <include href="biblio.rng">
+    <!-- ALERT: we cannot have comments on root element, as they intervene with https://github.com/metanorma/metanorma/issues/437 fix -->
+    <!--
+      Add-ons to biblio.rnc for standoc model: defines the extension point BibDataExtensionType
+      of relaton
+      
+      Specialisations as for biblio.rnc. Extension point can be redefined completely for a flavour of standoc
+      (SDO); but other elements in Bibdata can only be extended (more specialised vocabularies for Bibdata)
+    -->
     <define name="BibData">
       <a:documentation>The bibliographic description of a standardisation document</a:documentation>
       <ref name="StandardBibliographicItem"/>

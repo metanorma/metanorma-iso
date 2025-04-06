@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <define name="requirement">
+    <element name="requirement">
+      <ref name="RequirementType"/>
+    </element>
+  </define>
+  <!-- ALERT: cannot have root comments, because of https://github.com/metanorma/metanorma/issues/437 -->
   <!--
     Presupposes isodoc.rnc, is included in it
     include "isodoc.rnc" { }
@@ -7,14 +13,9 @@
     This is the Metanorma default provisions model; it is overridden by other provisions models,
     such as Modspec
   -->
-  <define name="requirement">
+  <define name="recommendation">
     <a:documentation>Specification of an attribute of a subject that is required.
 NOTE: A requirement can contain other requirements</a:documentation>
-    <element name="requirement">
-      <ref name="RequirementType"/>
-    </element>
-  </define>
-  <define name="recommendation">
     <a:documentation>Specification of an attribute of a subject that is recommended</a:documentation>
     <element name="recommendation">
       <ref name="RequirementType"/>
