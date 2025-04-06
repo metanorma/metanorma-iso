@@ -437,7 +437,7 @@ RSpec.describe Metanorma::Iso do
     expect(File.read("test.err.html")).to include("invalid subcommittee type")
   end
 
-  it "validates document against ISO XML schema" do
+  it "validates document against Metanorma XML schema" do
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
 
