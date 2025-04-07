@@ -1,24 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  instantiations of this grammar may replace leaf strings
-  with more elaborated types; e.g. title (text) replaced with
-  title-main, title-intro, title-part; type replaced with
-  enum.
-  
-  some renaming at leaf nodes is permissible
-  
-  obligations can change both from optional to mandatory,
-  and from mandatory to optional; optional elements may
-  be omitted; freely positioned alternatives may be replaced
-  with strict ordering
-  
-  DO NOT introduce a namespace here. We do not want a distinct namespace
-  for these elements, and a distinct namespace for any grammar inheriting
-  these elements; we just want one namespace for any child grammars
-  of this.
--->
-<!-- VERSION v2.0.3 -->
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<!-- VERSION v2.0.3 -->
+
+  <!--
+    ALERT: cannot have root comments, because of https://github.com/metanorma/metanorma/issues/437
+    
+    instantiations of this grammar may replace leaf strings
+    with more elaborated types; e.g. title (text) replaced with
+    title-main, title-intro, title-part; type replaced with
+    enum.
+    
+    some renaming at leaf nodes is permissible
+    
+    obligations can change both from optional to mandatory,
+    and from mandatory to optional; optional elements may
+    be omitted; freely positioned alternatives may be replaced
+    with strict ordering
+    
+    DO NOT introduce a namespace here. We do not want a distinct namespace
+    for these elements, and a distinct namespace for any grammar inheriting
+    these elements; we just want one namespace for any child grammars
+    of this.
+  -->
   <include href="reqt.rng"/>
   <include href="basicdoc.rng">
     <define name="amend">
