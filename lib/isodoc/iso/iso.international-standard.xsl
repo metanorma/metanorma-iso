@@ -86,14 +86,15 @@
 		<xsl:value-of select="$i18n_all_rights_reserved"/>
 	</xsl:variable>
 
+	<xsl:variable name="iso_reference_" select="normalize-space(/iso:metanorma/iso:bibdata/iso:docidentifier[@type = 'iso-reference'])"/>
+	<xsl:variable name="iso_reference"><xsl:value-of select="$iso_reference_"/><xsl:if test="$iso_reference_ = ''"><xsl:value-of select="$docidentifier_iso"/></xsl:if></xsl:variable>
+
 	<xsl:variable name="docidentifier_iso_with_lang_" select="normalize-space(/iso:metanorma/iso:bibdata/iso:docidentifier[@type = 'iso-with-lang'])"/>
-	<xsl:variable name="docidentifier_iso_with_lang"><xsl:value-of select="$docidentifier_iso_with_lang_"/><xsl:if test="$docidentifier_iso_with_lang_ = ''"><xsl:value-of select="$docidentifier_iso"/></xsl:if></xsl:variable>
+	<xsl:variable name="docidentifier_iso_with_lang"><xsl:value-of select="$docidentifier_iso_with_lang_"/><xsl:if test="$docidentifier_iso_with_lang_ = ''"><xsl:value-of select="$iso_reference"/></xsl:if></xsl:variable>
 
 	<xsl:variable name="lang-1st-letter_tmp" select="substring-before(substring-after($docidentifier_iso_with_lang, '('), ')')"/>
 	<xsl:variable name="lang-1st-letter" select="concat('(', $lang-1st-letter_tmp , ')')"/>
 
-	<xsl:variable name="iso_reference_" select="normalize-space(/iso:metanorma/iso:bibdata/iso:docidentifier[@type = 'iso-reference'])"/>
-	<xsl:variable name="iso_reference"><xsl:value-of select="$iso_reference_"/><xsl:if test="$iso_reference_ = ''"><xsl:value-of select="$docidentifier_iso"/></xsl:if></xsl:variable>
 	<xsl:variable name="anotherNumbers">
 		<xsl:variable name="year_iso_reference" select="concat(':',substring-after($iso_reference,':'))"/>
 		<xsl:for-each select="/iso:metanorma/iso:bibdata/iso:docidentifier[@type != '' and @type != 'ISO' and not(starts-with(@type, 'iso-')) and @type != 'URN']">
@@ -2171,6 +2172,7 @@
 									<fo:table-row height="13mm">
 										<fo:table-cell number-columns-spanned="2" border-right="{$cover_page_border}" display-align="after" padding-bottom="-1mm" line-height="1.1">&gt;
 											<fo:block font-size="10pt">
+												<!-- Reference number -->
 												<xsl:value-of select="$i18n_reference_number"/>
 											</fo:block>
 											<fo:block font-size="10pt">
