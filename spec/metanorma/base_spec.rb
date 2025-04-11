@@ -247,7 +247,7 @@ RSpec.describe Metanorma::Iso do
         </copyright>
         <ext>
           <doctype>standard</doctype>
-                <flavor>iso</flavor>
+          <flavor>iso</flavor>
           <horizontal>true</horizontal>
           <editorialgroup>
            <agency>ISO</agency>

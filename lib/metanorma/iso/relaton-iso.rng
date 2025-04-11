@@ -1,37 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
   <include href="biblio-standoc.rng">
-    <define name="BibDataExtensionType">
+    <define name="BibDataExtensionType" combine="interleave">
       <optional>
-        <attribute name="schema-version"/>
-      </optional>
-      <ref name="doctype"/>
-      <optional>
-        <ref name="docsubtype"/>
-      </optional>
-      <ref name="flavor"/>
-      <optional>
-        <ref name="horizontal"/>
-      </optional>
-      <ref name="editorialgroup"/>
-      <optional>
-        <ref name="approvalgroup"/>
-      </optional>
-      <zeroOrMore>
-        <ref name="ics"/>
-      </zeroOrMore>
-      <ref name="structuredidentifier"/>
-      <optional>
-        <ref name="stagename"/>
+        <ref name="horizontal">
+          <a:documentation>Whether the document is a horizontal standard</a:documentation>
+        </ref>
       </optional>
       <optional>
-        <ref name="updates_document_type"/>
+        <ref name="stagename">
+          <a:documentation>Human-readable name of the stage of publication, corresponding to the numeric stage code given in `/bibdata/status/stage`</a:documentation>
+        </ref>
       </optional>
       <optional>
-        <ref name="fast_track"/>
+        <ref name="updates_document_type">
+          <a:documentation>If this is an update to another document (e.g. an amendment), the `doctype` will not indicate what type of
+document is being updated (e.g. that this is an amendment to a technical report, as opposed to an amendment to a technical standard).
+The `updates-document-type` value indicates the document type of the document being updated; this may be needed for proper rendering, or
+to formulate the document identifier properly</a:documentation>
+        </ref>
       </optional>
       <optional>
-        <ref name="price-code"/>
+        <ref name="fast_track">
+          <a:documentation>Whether this is a fast-track standard</a:documentation>
+        </ref>
+      </optional>
+      <optional>
+        <ref name="price-code">
+          <a:documentation>The price code of the standard, as documented in https://www.iec.ch/members_experts/tools/pdf/IEC_DATA_FEEDS.pdf
+Used for legacy ISO documents</a:documentation>
+        </ref>
       </optional>
     </define>
     <define name="bdate">
@@ -104,6 +102,9 @@
       <element name="editorialgroup">
         <ref name="ISOProjectGroup"/>
       </element>
+      <optional>
+        <ref name="approvalgroup"/>
+      </optional>
     </define>
   </include>
   <define name="updates_document_type">

@@ -1248,7 +1248,7 @@ numbers</a:documentation>
       </choice>
     </attribute>
     <attribute name="flavor">
-      <a:documentation>Metanorma flavor, indicating SDO whose requiremnts the realisation aligns to</a:documentation>
+      <a:documentation>Metanorma flavor, indicating SDO whose requirements the realisation aligns to</a:documentation>
     </attribute>
   </define>
   <define name="standard-document">
@@ -1258,6 +1258,11 @@ numbers</a:documentation>
       <ref name="bibdata">
         <a:documentation>Bibliographic description of the document itself, expressed in the Relaton model</a:documentation>
       </ref>
+      <zeroOrMore>
+        <ref name="termdocsource">
+          <a:documentation>Source for term definitions in the document</a:documentation>
+        </ref>
+      </zeroOrMore>
       <optional>
         <ref name="misccontainer">
           <a:documentation>Extension point for extraneous elements that need to be added to standards document as data</a:documentation>
@@ -1268,40 +1273,43 @@ numbers</a:documentation>
           <a:documentation>Front matter that is repeated at the start of documents issued from an SDO, with content not specific to the document</a:documentation>
         </ref>
       </optional>
-      <optional>
-        <ref name="preface">
-          <a:documentation>Prefatory sections</a:documentation>
-        </ref>
-      </optional>
-      <ref name="sections">
-        <a:documentation>Main body of document</a:documentation>
-      </ref>
-      <zeroOrMore>
-        <ref name="annex">
-          <a:documentation>Annex sections</a:documentation>
-        </ref>
-      </zeroOrMore>
-      <optional>
-        <ref name="bibliography">
-          <a:documentation>Bibliographic sections</a:documentation>
-        </ref>
-      </optional>
-      <zeroOrMore>
-        <ref name="indexsect">
-          <a:documentation>Index of the document</a:documentation>
-        </ref>
-      </zeroOrMore>
-      <optional>
-        <ref name="colophon">
-          <a:documentation>Colophon or postface material</a:documentation>
-        </ref>
-      </optional>
+      <ref name="DocumentBody"/>
       <optional>
         <ref name="review-container">
           <a:documentation>Annotations to the document</a:documentation>
         </ref>
       </optional>
     </element>
+  </define>
+  <define name="DocumentBody">
+    <optional>
+      <ref name="preface">
+        <a:documentation>Prefatory sections</a:documentation>
+      </ref>
+    </optional>
+    <ref name="sections">
+      <a:documentation>Main body of document</a:documentation>
+    </ref>
+    <zeroOrMore>
+      <ref name="annex">
+        <a:documentation>Annex sections</a:documentation>
+      </ref>
+    </zeroOrMore>
+    <optional>
+      <ref name="bibliography">
+        <a:documentation>Bibliographic sections</a:documentation>
+      </ref>
+    </optional>
+    <zeroOrMore>
+      <ref name="indexsect">
+        <a:documentation>Index of the document</a:documentation>
+      </ref>
+    </zeroOrMore>
+    <optional>
+      <ref name="colophon">
+        <a:documentation>Colophon or postface material</a:documentation>
+      </ref>
+    </optional>
   </define>
   <define name="misccontainer">
     <a:documentation>Elements added to metanorma-extension are open-ended, and constitute source data</a:documentation>
@@ -1617,9 +1625,7 @@ used in document amendments</a:documentation>
   <define name="term">
     <a:documentation>Terminology entry with its definition</a:documentation>
     <element name="term">
-      <ref name="OptionalId"/>
-      <ref name="LocalizedStringAttributes"/>
-      <ref name="BlockAttributes"/>
+      <ref name="TermAttributes"/>
       <oneOrMore>
         <ref name="preferred">
           <a:documentation>One or more names under which the term being defined is canonically known</a:documentation>
@@ -1670,6 +1676,11 @@ used in document amendments</a:documentation>
         <a:documentation>Bibliographic references for the managed term</a:documentation>
       </ref>
     </element>
+  </define>
+  <define name="TermAttributes">
+    <ref name="OptionalId"/>
+    <ref name="LocalizedStringAttributes"/>
+    <ref name="BlockAttributes"/>
   </define>
   <define name="preferred">
     <element name="preferred">
@@ -2332,25 +2343,31 @@ links within an SVG file, so that the SVG file can hyperlink to anchors within t
     </element>
   </define>
   <define name="ul_li">
-    <a:documentation>Unorderd list item for standards documents</a:documentation>
+    <a:documentation>Unordered list item for standards documents</a:documentation>
     <element name="li">
       <ref name="OptionalId"/>
-      <optional>
-        <attribute name="uncheckedcheckbox">
-          <a:documentation>Include a checkbox for the list item</a:documentation>
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="checkedcheckbox">
-          <a:documentation>Check the checkbox for the list item</a:documentation>
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <oneOrMore>
-        <ref name="BasicBlock"/>
-      </oneOrMore>
+      <ref name="UlLiAttributes"/>
+      <ref name="UlLiBody"/>
     </element>
+  </define>
+  <define name="UlLiBody">
+    <oneOrMore>
+      <ref name="BasicBlock"/>
+    </oneOrMore>
+  </define>
+  <define name="UlLiAttributes">
+    <optional>
+      <attribute name="uncheckedcheckbox">
+        <a:documentation>Include a checkbox for the list item</a:documentation>
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="checkedcheckbox">
+        <a:documentation>Check the checkbox for the list item</a:documentation>
+        <data type="boolean"/>
+      </attribute>
+    </optional>
   </define>
   <define name="floating-title">
     <a:documentation>A floating title, outside of the clause hierarchy of the document</a:documentation>

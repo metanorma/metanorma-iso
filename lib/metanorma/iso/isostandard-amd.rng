@@ -37,9 +37,10 @@
           <ref name="boilerplate"/>
         </optional>
         <ref name="preface"/>
-        <oneOrMore>
-          <ref name="sections"/>
-        </oneOrMore>
+        <ref name="sections"/>
+        <optional>
+          <ref name="review-container"/>
+        </optional>
       </element>
     </define>
   </include>

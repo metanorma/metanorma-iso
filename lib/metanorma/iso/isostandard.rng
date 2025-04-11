@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<grammar xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <include href="isodoc.rng">
     <define name="sections">
       <element name="sections">
@@ -29,30 +29,7 @@
       </element>
     </define>
     <define name="Clause-Section">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="language"/>
-      </optional>
-      <optional>
-        <attribute name="script"/>
-      </optional>
-      <optional>
-        <attribute name="inline-header">
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="obligation">
-          <choice>
-            <value>normative</value>
-            <value>informative</value>
-          </choice>
-        </attribute>
-      </optional>
+      <ref name="Section-Attributes"/>
       <optional>
         <attribute name="type"/>
       </optional>
@@ -73,18 +50,7 @@
     </define>
     <define name="term">
       <element name="term">
-        <optional>
-          <attribute name="id">
-            <data type="ID"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="language"/>
-        </optional>
-        <optional>
-          <attribute name="script"/>
-        </optional>
-        <ref name="BlockAttributes"/>
+        <ref name="TermAttributes"/>
         <ref name="preferred"/>
         <zeroOrMore>
           <ref name="admitted"/>
@@ -112,30 +78,7 @@
     </define>
     <define name="annex">
       <element name="annex">
-        <optional>
-          <attribute name="id">
-            <data type="ID"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="language"/>
-        </optional>
-        <optional>
-          <attribute name="script"/>
-        </optional>
-        <optional>
-          <attribute name="inline-header">
-            <data type="boolean"/>
-          </attribute>
-        </optional>
-        <optional>
-          <attribute name="obligation">
-            <choice>
-              <value>normative</value>
-              <value>informative</value>
-            </choice>
-          </attribute>
-        </optional>
+        <ref name="Annex-Section-Attributes"/>
         <optional>
           <ref name="section-title"/>
         </optional>
@@ -186,36 +129,7 @@
       </element>
     </define>
     <define name="Content-Section">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="language"/>
-      </optional>
-      <optional>
-        <attribute name="script"/>
-      </optional>
-      <optional>
-        <attribute name="inline-header">
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="obligation">
-          <choice>
-            <value>normative</value>
-            <value>informative</value>
-          </choice>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="number"/>
-      </optional>
-      <optional>
-        <attribute name="branch-number"/>
-      </optional>
+      <ref name="Section-Attributes"/>
       <optional>
         <attribute name="type"/>
       </optional>
@@ -231,64 +145,11 @@
         </oneOrMore>
       </choice>
     </define>
-    <!--
-      We display the Normative References between scope and terms; but to keep the
-      grammar simple, we keep the references together
-    -->
-    <define name="standard-document">
-      <element name="metanorma">
-        <ref name="Root-Attributes"/>
-        <ref name="bibdata"/>
-        <zeroOrMore>
-          <ref name="termdocsource"/>
-        </zeroOrMore>
-        <optional>
-          <ref name="misccontainer"/>
-        </optional>
-        <optional>
-          <ref name="boilerplate"/>
-        </optional>
-        <ref name="preface"/>
-        <oneOrMore>
-          <ref name="sections"/>
-        </oneOrMore>
-        <zeroOrMore>
-          <ref name="annex"/>
-        </zeroOrMore>
-        <ref name="bibliography"/>
-        <zeroOrMore>
-          <ref name="indexsect"/>
-        </zeroOrMore>
-      </element>
-    </define>
   </include>
   <!-- end overrides -->
   <define name="clause-hanging-paragraph-with-footnote">
     <element name="clause">
-      <optional>
-        <attribute name="id">
-          <data type="ID"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="language"/>
-      </optional>
-      <optional>
-        <attribute name="script"/>
-      </optional>
-      <optional>
-        <attribute name="inline-header">
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-      <optional>
-        <attribute name="obligation">
-          <choice>
-            <value>normative</value>
-            <value>informative</value>
-          </choice>
-        </attribute>
-      </optional>
+      <ref name="Section-Attributes"/>
       <optional>
         <ref name="section-title"/>
       </optional>
