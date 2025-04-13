@@ -92,6 +92,9 @@ a standards definition organization</a:documentation>
         <a:documentation>Representation of the identifier for the standardisation document, giving its individual semantic components</a:documentation>
       </ref>
     </zeroOrMore>
+    <ref name="DocumentImages">
+      <a:documentation>Coverpage and other images to be rendered with document</a:documentation>
+    </ref>
   </define>
   <define name="doctype">
     <a:documentation>Classification of the standardisation document</a:documentation>
@@ -268,6 +271,32 @@ and not those document components</a:documentation>
         </element>
       </optional>
     </element>
+  </define>
+  <define name="DocumentImages">
+    <zeroOrMore>
+      <element name="coverpage-image">
+        <a:documentation>Images to be displayed on the coverpage of the document</a:documentation>
+        <ref name="image-no-id"/>
+      </element>
+    </zeroOrMore>
+    <zeroOrMore>
+      <element name="innercoverpage-image">
+        <a:documentation>Images to be displayed on the inner coverpage of the document</a:documentation>
+        <ref name="image-no-id"/>
+      </element>
+    </zeroOrMore>
+    <zeroOrMore>
+      <element name="tocside-image">
+        <a:documentation>Images to be displayed on the Table of Contents page of the document</a:documentation>
+        <ref name="image-no-id"/>
+      </element>
+    </zeroOrMore>
+    <zeroOrMore>
+      <element name="backpage-image">
+        <a:documentation>Images to be displayed on the backpage of the document</a:documentation>
+        <ref name="image-no-id"/>
+      </element>
+    </zeroOrMore>
   </define>
   <define name="StandardBibliographicItem">
     <ref name="BibliographicItem"/>
