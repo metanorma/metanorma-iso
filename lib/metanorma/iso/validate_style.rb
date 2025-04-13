@@ -30,15 +30,17 @@ module Metanorma
       # ISO/IEC DIR 2, 13.2
       def introduction_style(node)
         @novalid and return
-        r = requirement_check(extract_text(node))
-        style_warning(node, "Introduction may contain requirement", r) if r
+        r = requirement_check(extract_text(node)) and
+          style_warning(node, "Introduction may contain requirement", r,
+                        display: false)
       end
 
       # ISO/IEC DIR 2, 16.5.6
       def definition_style(node)
         @novalid and return
-        r = requirement_check(extract_text(node))
-        style_warning(node, "Definition may contain requirement", r) if r
+        r = requirement_check(extract_text(node)) and
+          style_warning(node, "Definition may contain requirement", r,
+                        display: false)
       end
 
       # ISO/IEC DIR 2, 16.5.7
@@ -70,8 +72,7 @@ module Metanorma
       # style check with a regex on a token
       # and a negative match on its preceding token
       def style_two_regex_not_prev(n, text, regex, re_prev, warning)
-        return if text.nil?
-
+        text.nil? and return
         arr = Tokenizer::WhitespaceTokenizer.new.tokenize(text)
         arr.each_index do |i|
           m = regex.match arr[i]
@@ -108,7 +109,8 @@ module Metanorma
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-might
       def style_ambig_words(node, text)
         r = ambig_words_check(text) and
-          style_warning(node, "may contain ambiguous provision", r)
+          style_warning(node, "may contain ambiguous provision", r,
+                        display: false)
         @lang == "en" and style_regex(/\b(?<num>billions?)\b/i,
                                       "ambiguous number", node, text)
       end
@@ -208,12 +210,11 @@ module Metanorma
         end
       end
 
-      def style_warning(node, msg, text = nil)
-        return if @novalid
-
+      def style_warning(node, msg, text = nil, display: true)
+        @novalid and return
         w = msg
         w += ": #{text}" if text
-        @log.add("Style", node, w)
+        @log.add("Style", node, w, display:)
       end
 
       ASSETS_TO_STYLE =
