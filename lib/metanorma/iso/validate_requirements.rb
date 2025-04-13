@@ -124,12 +124,15 @@ module Metanorma
 
       def style_no_guidance(node, text, docpart)
         @lang == "en" or return
-        r = requirement_check(text)
-        style_warning(node, "#{docpart} may contain requirement", r) if r
-        r = permission_check(text)
-        style_warning(node, "#{docpart} may contain permission", r) if r
-        r = recommendation_check(text)
-        style_warning(node, "#{docpart} may contain recommendation", r) if r
+        r = requirement_check(text) and
+          style_warning(node, "#{docpart} may contain requirement", r,
+                        display: false)
+        r = permission_check(text) and
+          style_warning(node, "#{docpart} may contain permission", r,
+                        display: false)
+        r = recommendation_check(text) and
+          style_warning(node, "#{docpart} may contain recommendation", r,
+                        display: false)
       end
     end
   end
