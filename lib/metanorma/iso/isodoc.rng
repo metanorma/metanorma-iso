@@ -36,15 +36,6 @@
         </zeroOrMore>
       </element>
     </define>
-    <define name="fn" combine="interleave">
-      <optional>
-        <attribute name="hiddenref">
-          <a:documentation>If true, number the footnote as normal, but suppress display of the footnote reference in the document body.
-This is done if the footnote reference is already presented in some other form, e.g. within a figure image.</a:documentation>
-          <data type="boolean"/>
-        </attribute>
-      </optional>
-    </define>
     <define name="index-primary">
       <element name="primary">
         <oneOrMore>
@@ -426,20 +417,6 @@ normative or informative references, some split references into sections organiz
         </oneOrMore>
       </choice>
     </define>
-    <define name="TdAttributes" combine="interleave">
-      <optional>
-        <attribute name="style">
-          <a:documentation>CSS style: only background-color supported</a:documentation>
-        </attribute>
-      </optional>
-    </define>
-    <define name="ThAttributes" combine="interleave">
-      <optional>
-        <attribute name="style">
-          <a:documentation>CSS style: only background-color supported</a:documentation>
-        </attribute>
-      </optional>
-    </define>
     <define name="TrAttributes">
       <optional>
         <attribute name="style">
@@ -509,6 +486,29 @@ gives an explicit page orientation</a:documentation>
     </define>
   </include>
   <!-- end overrides -->
+  <define name="fn" combine="interleave">
+    <optional>
+      <attribute name="hiddenref">
+        <a:documentation>If true, number the footnote as normal, but suppress display of the footnote reference in the document body.
+This is done if the footnote reference is already presented in some other form, e.g. within a figure image.</a:documentation>
+        <data type="boolean"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="TdAttributes" combine="interleave">
+    <optional>
+      <attribute name="style">
+        <a:documentation>CSS style: only background-color supported</a:documentation>
+      </attribute>
+    </optional>
+  </define>
+  <define name="ThAttributes" combine="interleave">
+    <optional>
+      <attribute name="style">
+        <a:documentation>CSS style: only background-color supported</a:documentation>
+      </attribute>
+    </optional>
+  </define>
   <define name="NumberingAttributes" combine="interleave">
     <optional>
       <attribute name="number">
