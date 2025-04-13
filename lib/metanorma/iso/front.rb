@@ -16,7 +16,6 @@ module Metanorma
       end
 
       def metadata_ext_iso(node, xml)
-        structured_id(node, xml)
         a = node.attr("horizontal") and xml.horizontal a
         metadata_stage(node, xml)
         @amd && a = node.attr("updates-document-type") and
