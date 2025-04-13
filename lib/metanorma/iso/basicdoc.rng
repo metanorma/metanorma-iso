@@ -1701,15 +1701,21 @@ which can be bookmarks as well as block or section references</a:documentation>
     <a:documentation>Inline reference to a paragraph or paragraphs, appearing as a footnote.
 The target of a footnote is the location it is embedded in within the text</a:documentation>
     <element name="fn">
-      <attribute name="reference">
-        <a:documentation>The number of the footnote, used to identify it visually</a:documentation>
-      </attribute>
-      <oneOrMore>
-        <ref name="paragraph">
-          <a:documentation>The content of the footnote</a:documentation>
-        </ref>
-      </oneOrMore>
+      <ref name="FnAttributes"/>
+      <ref name="FnBody"/>
     </element>
+  </define>
+  <define name="FnBody">
+    <oneOrMore>
+      <ref name="paragraph">
+        <a:documentation>The content of the footnote</a:documentation>
+      </ref>
+    </oneOrMore>
+  </define>
+  <define name="FnAttributes">
+    <attribute name="reference">
+      <a:documentation>The number of the footnote, used to identify it visually</a:documentation>
+    </attribute>
   </define>
   <define name="callout">
     <a:documentation>Inline reference to a paragraph or paragraphs, appearing as annotation of source code</a:documentation>

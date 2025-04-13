@@ -1243,6 +1243,11 @@ Refer to `BibliographicItem` for definitions</a:documentation>
   </define>
   <define name="formattedref">
     <element name="formattedref">
+      <optional>
+        <attribute name="format">
+          <a:documentation>format of formatted reference; Metanorma assumes references are formatted as Metanorma XML</a:documentation>
+        </attribute>
+      </optional>
       <oneOrMore>
         <ref name="TextElement"/>
       </oneOrMore>
@@ -1814,6 +1819,11 @@ May be used to differentiate rendering of notes in bibliographies</a:documentati
     <a:documentation>Abstract of bibliographic item</a:documentation>
     <element name="abstract">
       <ref name="LocalizedStringAttributes"/>
+      <optional>
+        <attribute name="format">
+          <a:documentation>What format the formatted abstract is in. In Metanorma, assumed to be Metanorma XML</a:documentation>
+        </attribute>
+      </optional>
       <choice>
         <oneOrMore>
           <ref name="BasicBlockNoId">
