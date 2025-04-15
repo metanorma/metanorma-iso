@@ -9912,7 +9912,7 @@
 		<xsl:variable name="target" select="@target"/>
 		<xsl:choose>
 			<!-- case for footnotes in Requirement tables (https://github.com/metanorma/metanorma-ogc/issues/791) -->
-			<xsl:when test="not(ancestor::*[local-name() = 'table'][1]/*[local-name() = 'fmt-footnote-container']/*[local-name() = 'fmt-fn-body'][@id = $target]) and        $footnotes/*[local-name() = 'fmt-fn-body'][@id = $target]">
+			<xsl:when test="not(ancestor::*[local-name() = 'table'][1]//*[local-name() = 'fmt-footnote-container']/*[local-name() = 'fmt-fn-body'][@id = $target]) and        $footnotes/*[local-name() = 'fmt-fn-body'][@id = $target]">
 				<xsl:call-template name="fn">
 					<xsl:with-param name="footnote_body_from_table">true</xsl:with-param>
 				</xsl:call-template>
