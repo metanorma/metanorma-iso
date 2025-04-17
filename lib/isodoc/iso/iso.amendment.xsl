@@ -3416,7 +3416,20 @@
 	</xsl:template>
 
 	<xsl:template match="iso:pagebreak" priority="2">
-		<xsl:copy-of select="."/>
+		<xsl:choose>
+			<xsl:when test="ancestor::*[local-name() = 'annex']">
+				<xsl:variable name="annex_id" select="ancestor::*[local-name() = 'annex']/@id"/>
+				<xsl:choose>
+					<xsl:when test="following::*[ancestor::*[local-name() = 'annex'][@id = $annex_id]]">
+						<xsl:copy-of select="."/>
+					</xsl:when>
+					<xsl:otherwise><!-- skip --></xsl:otherwise>
+				</xsl:choose>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:copy-of select="."/>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template name="insertListOf_Title">
@@ -17810,28 +17823,56 @@
 	<xsl:template match="*[local-name() = 'stem']" mode="update_xml_step1"/>
 	<xsl:template match="*[local-name() = 'stem']" mode="update_xml_pres"/>
 
-	<xsl:template match="*[local-name() = 'fmt-stem'][not(.//*[local-name() = 'passthrough']) and not(.//*[@linebreak])]" mode="update_xml_step1">
+	<xsl:template match="*[local-name() = 'fmt-stem']" mode="update_xml_step1">
 		<xsl:element name="stem" namespace="{$namespace_full}">
 			<xsl:copy-of select="@*"/>
 			<xsl:choose>
 				<xsl:when test="*[local-name() = 'semx'] and count(node()) = 1">
-					<xsl:copy-of select="*[local-name() = 'semx']/node()"/>
+					<xsl:choose>
+						<xsl:when test="not(.//*[local-name() = 'passthrough']) and not(.//*[@linebreak])">
+							<xsl:copy-of select="*[local-name() = 'semx']/node()"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:apply-templates select="*[local-name() = 'semx']/node()" mode="update_xml_step1"/>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:copy-of select="node()"/>
+					<xsl:choose>
+						<xsl:when test="not(.//*[local-name() = 'passthrough']) and not(.//*[@linebreak])">
+							<xsl:copy-of select="node()"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:apply-templates select="node()" mode="update_xml_step1"/>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:element>
 	</xsl:template>
-	<xsl:template match="*[local-name() = 'fmt-stem'][not(.//*[local-name() = 'passthrough']) and not(.//*[@linebreak])]" mode="update_xml_pres">
+	<xsl:template match="*[local-name() = 'fmt-stem']" mode="update_xml_pres">
 		<xsl:element name="stem" namespace="{$namespace_full}">
 			<xsl:copy-of select="@*"/>
 			<xsl:choose>
 				<xsl:when test="*[local-name() = 'semx'] and count(node()) = 1">
-					<xsl:copy-of select="*[local-name() = 'semx']/node()"/>
+					<xsl:choose>
+						<xsl:when test="not(.//*[local-name() = 'passthrough']) and not(.//*[@linebreak])">
+							<xsl:copy-of select="*[local-name() = 'semx']/node()"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:apply-templates select="*[local-name() = 'semx']/node()" mode="update_xml_pres"/>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:when>
 				<xsl:otherwise>
-					<xsl:copy-of select="node()"/>
+					<xsl:choose>
+						<xsl:when test="not(.//*[local-name() = 'passthrough']) and not(.//*[@linebreak])">
+							<xsl:copy-of select="node()"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:apply-templates select="node()" mode="update_xml_pres"/>
+						</xsl:otherwise>
+					</xsl:choose>
 				</xsl:otherwise>
 			</xsl:choose>
 		</xsl:element>
