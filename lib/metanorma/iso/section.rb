@@ -3,8 +3,10 @@ require "uri" if /^2\./.match?(RUBY_VERSION)
 
 module Metanorma
   module Iso
-    class Converter < Standoc::Converter
-      def clause_parse(attrs, xml, node)
+    class Converter < Standoc::ConverterA
+
+      # KILL
+      def clause_parsex(attrs, xml, node)
         node.option? "appendix" and return appendix_parse(attrs, xml, node)
         super
       end
@@ -14,13 +16,18 @@ module Metanorma
         clause_parse(attrs, xml, node)
       end
 
-      def appendix_parse(attrs, xml, node)
+      # KILL
+      def appendix_parsex(attrs, xml, node)
         attrs[:"inline-header"] = node.option? "inline-header"
         set_obligation(attrs, node)
         xml.appendix **attr_code(attrs) do |xml_section|
           xml_section.title { |name| name << node.title }
           xml_section << node.content
         end
+      end
+
+      def support_appendix?(_node)
+        true
       end
 
       def patent_notice_parse(xml, node)

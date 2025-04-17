@@ -14,6 +14,7 @@ module IsoDoc
       end
 
       # terms not defined in standoc
+      # KILL
       def error_parse(node, out)
         case node.name
         when "appendix" then clause_parse(node, out)

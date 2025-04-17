@@ -51,7 +51,7 @@ module IsoDoc
       # Redo Amendment annex subclause titles as numbered
       def clause(docxml)
         super
-        docxml.xpath(ns("//annex//appendix")).each { |f| clause1(f) }
+        # docxml.xpath(ns("//annex//appendix")).each { |f| clause1(f) }
         amd?(docxml) or return
         @suppressheadingnumbers = @oldsuppressheadingnumbers
         docxml.xpath(ns("//annex//clause | //annex//appendix")).each do |f|
