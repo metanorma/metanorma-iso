@@ -3,7 +3,7 @@ require "uri" if /^2\./.match?(RUBY_VERSION)
 
 module Metanorma
   module Iso
-    class Converter < Standoc::ConverterA
+    class Converter < Standoc::Converter
 
       # KILL
       def clause_parsex(attrs, xml, node)
