@@ -11057,7 +11057,7 @@
 	<!-- ================= -->
 
 	<!-- highlight text -->
-	<xsl:template match="*[local-name()='hi']">
+	<xsl:template match="*[local-name()='hi'] | *[local-name() = 'span'][@class = 'fmt-hi']" priority="3">
 		<fo:inline background-color="yellow">
 			<xsl:apply-templates/>
 		</fo:inline>
@@ -17866,7 +17866,7 @@
 	</xsl:template>
 
 	<!-- Example with 'class': <span class="stdpublisher">ISO</span> <span class="stddocNumber">10303</span>-<span class="stddocPartNumber">1</span>:<span class="stdyear">1994</span> -->
-	<xsl:template match="*[local-name() = 'span'][@style or @class = 'stdpublisher' or @class = 'stddocNumber' or @class = 'stddocPartNumber' or @class = 'stdyear' or @class = 'horizontal' or @class = 'norotate' or @class = 'halffontsize']" mode="update_xml_step1" priority="2">
+	<xsl:template match="*[local-name() = 'span'][@style or @class = 'stdpublisher' or @class = 'stddocNumber' or @class = 'stddocPartNumber' or @class = 'stdyear' or @class = 'fmt-hi' or @class = 'horizontal' or @class = 'norotate' or @class = 'halffontsize']" mode="update_xml_step1" priority="2">
 		<xsl:copy>
 			<xsl:copy-of select="@*"/>
 			<xsl:apply-templates mode="update_xml_step1"/>
