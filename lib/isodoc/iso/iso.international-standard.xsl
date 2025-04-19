@@ -3938,6 +3938,7 @@
 			</xsl:when>
 			<xsl:otherwise>
 				<fo:block font-size="16pt" text-align="center" margin-bottom="48pt" keep-with-next="always" role="H1">
+					<xsl:call-template name="setIDforNamedDestination"/>
 					<xsl:if test="$layoutVersion = '2024'">
 						<xsl:attribute name="line-height">1.1</xsl:attribute>
 						<!-- <xsl:attribute name="margin-bottom">52pt</xsl:attribute> -->
@@ -4050,8 +4051,6 @@
 				<xsl:otherwise>fo:block</xsl:otherwise>
 			</xsl:choose>
 		</xsl:variable>
-
-		<xsl:call-template name="setNamedDestination"/>
 
 		<xsl:choose>
 			<xsl:when test="(($layoutVersion = '1987' and $doctype = 'technical-report') or ($layoutVersion = '1979' and $doctype = 'addendum')) and parent::iso:foreword"><!-- skip Foreword title --></xsl:when>
@@ -4289,6 +4288,7 @@
 			<xsl:call-template name="getId"/>
 		</xsl:variable> id="{$id}"  -->
 		<fo:block font-size="11pt" font-style="italic" margin-bottom="12pt" keep-with-next="always">
+			<xsl:call-template name="setIDforNamedDestination"/>
 			<!-- <xsl:if test="$layoutVersion = '2024'">
 				<xsl:attribute name="font-size">10.5pt</xsl:attribute>
 			</xsl:if> -->
@@ -8264,6 +8264,10 @@
 			<xsl:call-template name="setNamedDestination"/>
 
 			<fo:block-container xsl:use-attribute-sets="table-container-style" role="SKIP">
+
+				<xsl:for-each select="*[local-name() = 'name']">
+					<xsl:call-template name="setIDforNamedDestination"/>
+				</xsl:for-each>
 
 				<xsl:call-template name="refine_table-container-style">
 					<xsl:with-param name="margin-side" select="$margin-side"/>
@@ -12743,7 +12747,7 @@
 		<xsl:variable name="level">
 			<xsl:call-template name="getLevel"/>
 		</xsl:variable>
-		<fo:inline role="H{$level}"><xsl:apply-templates/></fo:inline>
+		<fo:inline role="H{$level}"><xsl:call-template name="setIDforNamedDestination"/><xsl:apply-templates/></fo:inline>
 	</xsl:template>
 	<!-- ======================== -->
 	<!-- END Appendix processing -->
@@ -12875,9 +12879,7 @@
 							</fo:block>
 						</fo:table-cell>
 						<fo:table-cell display-align="center">
-							<xsl:for-each select="../*[local-name() = 'name']">
-								<xsl:call-template name="setNamedDestination"/>
-							</xsl:for-each>
+
 							<fo:block xsl:use-attribute-sets="formula-stem-number-style" role="SKIP">
 
 								<xsl:for-each select="../*[local-name() = 'name']">
@@ -13174,10 +13176,6 @@
 			<xsl:variable name="show_figure_key_in_block_container">
 				true
 			</xsl:variable>
-
-			<xsl:for-each select="*[local-name() = 'name']"> <!-- set context -->
-				<xsl:call-template name="setNamedDestination"/>
-			</xsl:for-each>
 
 			<fo:block xsl:use-attribute-sets="figure-style" role="SKIP">
 
@@ -16043,9 +16041,7 @@
 		<fo:block font-size="{normalize-space($font-size)}" role="H{$levelTerm}" xsl:use-attribute-sets="preferred-block-style">
 
 			<xsl:if test="parent::*[local-name() = 'term'] and not(preceding-sibling::*[local-name() = 'preferred'])"> <!-- if first preffered in term, then display term's name -->
-				<xsl:for-each select="ancestor::*[local-name() = 'term'][1]/*[local-name() = 'name']"><!-- change context -->
-					<xsl:call-template name="setNamedDestination"/>
-				</xsl:for-each>
+
 				<fo:block xsl:use-attribute-sets="term-name-style" role="SKIP">
 
 					<xsl:for-each select="ancestor::*[local-name() = 'term'][1]/*[local-name() = 'name']"><!-- change context -->
@@ -16292,6 +16288,7 @@
 
 				<fo:block break-after="page"/>
 				<xsl:call-template name="setNamedDestination"/>
+
 				<fo:block id="{@id}">
 
 					<xsl:call-template name="setBlockSpanAll"/>
@@ -18201,6 +18198,7 @@
 		<xsl:variable name="named_dest_">
 			<xsl:choose>
 				<xsl:when test="count(ancestor::*[local-name() = 'figure']) &gt; 1"/> <!-- prevent id 'a)' -->
+				<xsl:when test="ancestor::*[local-name() = 'note'] or ancestor::*[local-name() = 'example'] or        ancestor::*[local-name() = 'termnote'] or ancestor::*[local-name() = 'termexample']"/>
 				<xsl:when test="$caption_label = '' and parent::*[local-name() = 'foreword']">Foreword</xsl:when>
 				<xsl:when test="$caption_label = '' and parent::*[local-name() = 'introduction']">Introduction</xsl:when>
 				<xsl:when test="$caption_label = ''"/>
@@ -19852,9 +19850,11 @@
 		<xsl:if test="@id and      normalize-space(java:matches(java:java.lang.String.new(@id), '_[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}')) = 'false'">
 			<fox:destination internal-destination="{@id}"/>
 		</xsl:if>
-		<xsl:if test="@named_dest">
-			<fox:destination internal-destination="{@named_dest}"/>
-		</xsl:if>
+		<xsl:for-each select=". | *[local-name() = 'title'] | *[local-name() = 'name']">
+			<xsl:if test="@named_dest">
+				<fox:destination internal-destination="{@named_dest}"/>
+			</xsl:if>
+		</xsl:for-each>
 	</xsl:template>
 
 	<xsl:template name="add-letter-spacing">
