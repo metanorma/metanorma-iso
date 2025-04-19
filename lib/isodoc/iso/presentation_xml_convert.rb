@@ -100,7 +100,12 @@ module IsoDoc
 
       def note1(elem)
         elem["type"] == "units" and return
+        elem["type"] == "requirement" and return requirement_note1(elem)
         super
+      end
+
+      def requirement_note1(elem)
+        elem["unnumbered"] = "true"
       end
 
       def formula_where(dlist)

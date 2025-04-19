@@ -235,7 +235,8 @@ module IsoDoc
       end
 
       def uncountable_note?(note)
-        @anchors[note["id"]] || blank?(note["id"]) || note["type"] == "units"
+        @anchors[note["id"]] || blank?(note["id"]) || note["type"] == "units" ||
+          note["type"] == "requirement"
       end
 
       def note_anchor_names1(notes, counter)
