@@ -61,7 +61,7 @@ module Metanorma
         when ":", "" then list_after_colon_punctuation(list, entries)
         when "." then entries.each { |li| list_full_sentence(li) }
         else style_warning(list, "All lists must be preceded by " \
-                                 "colon or full stop", prectext)
+                                 "colon or full stop", prectext, display: false)
         end
       end
 
@@ -81,7 +81,7 @@ module Metanorma
         text = elem.text.strip
         starts_lowercase?(text) or
           style_warning(elem, "List entry of broken up sentence must start " \
-                              "with lowercase letter", text)
+                              "with lowercase letter", text, display: false)
         list_semicolon_phrase_punct(elem, text, last)
       end
 
@@ -90,11 +90,12 @@ module Metanorma
         if last
           punct == "." or
             style_warning(elem, "Final list entry of broken up " \
-                                "sentence must end with full stop", text)
+                                "sentence must end with full stop", text,
+                          display: false)
         else
           punct == ";" or
             style_warning(elem, "List entry of broken up sentence must " \
-                                "end with semicolon", text)
+                                "end with semicolon", text, display: false)
         end
       end
 
@@ -103,11 +104,11 @@ module Metanorma
         text = elem.text.strip
         starts_uppercase?(text) or
           style_warning(elem, "List entry of separate sentences must start " \
-                              "with uppercase letter", text)
+                              "with uppercase letter", text, display: false)
         punct = text.strip.sub(/^.*?(\S)$/m, "\\1")
         punct == "." or
           style_warning(elem, "List entry of separate sentences must " \
-                              "end with full stop", text)
+                              "end with full stop", text, display: false)
       end
 
       # allow that all-caps word (acronym) is agnostic as to lowercase
