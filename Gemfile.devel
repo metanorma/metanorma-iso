@@ -1,0 +1,2 @@
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "fix/xml-rationalise-apr2025"
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "fix/xml-rationalise-apr2025"

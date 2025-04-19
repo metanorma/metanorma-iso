@@ -7,19 +7,20 @@ module IsoDoc
         clause.at(ns("./clause")) and
           @anchors[clause["id"]] = { label: nil, level: 1, type: "clause",
                                      xref: clause.at(ns("./title"))&.text }
-        #i = Counter.new(0, prefix: "0")
         i = clause_counter(0)
         clause.xpath(ns("./clause")).each do |c|
           section_names1(c, semx(clause, "0"), i.increment(c).print, 2)
         end
       end
 
-      def annex_names(clause, num)
+      # KILL
+      def annex_namesx(clause, num)
         appendix_names(clause, num)
         super
       end
 
-      def appendix_names(clause, _num)
+      # KILL
+      def appendix_namesx(clause, _num)
         i = clause_counter(0)
         clause.xpath(ns("./appendix")).each do |c|
           i.increment(c)
@@ -65,8 +66,8 @@ module IsoDoc
         @anchors[clause["id"]] = ret.merge(ret2)
       end
 
-      def appendix_names1(clause, parentnum, num, level, container)
-        #num = labelled_autonum(@labels["appendix"], num)
+      # KILL
+      def appendix_names1x(clause, parentnum, num, level, container)
         num = clause_number_semx(parentnum, clause, num)
         @anchors[clause["id"]] = { label: num, xref: num, level: level,
                                    container: container }
