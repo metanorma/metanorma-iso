@@ -220,8 +220,7 @@ RSpec.describe IsoDoc do
                          </fmt-origin>
                       </semx>
                       —
-                      <semx element="modification" source="_">with adjustments</semx>
-                      ]
+                      with adjustments]
                    </source>
                    <note type="requirement" unnumbered="true">
                   <p>This is a requirement about rice</p>
