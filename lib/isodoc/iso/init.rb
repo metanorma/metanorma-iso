@@ -63,7 +63,8 @@ module IsoDoc
       end
 
       def std_docid_semantic1(id)
-        ids = id.split(/(\p{Zs})/)
+        id1 = id.sub(%r{\p{Zs}\(all\p{Zs}parts\)}, "###ALLPARTS###")
+        ids = id1.split(/(\p{Zs})/)
         agency?(ids[0].sub(%r{^([^/]+)/.*$}, "\\1")) or return id
         ids.map! do |i|
           if %w(GUIDE TR TS DIR).include?(i)
@@ -72,6 +73,7 @@ module IsoDoc
           else std_docid_semantic_full(i)
           end
         end.join.gsub(%r{</span>(\p{Zs}+)<}, "\\1</span><")
+          .sub("###ALLPARTS###", " (all parts)")
       end
 
       def std_docid_semantic_full(ident)
