@@ -1,3 +1,2 @@
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "fix/all_parts_citations"
 gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "main"
-em "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "fix/redundant-space-before-lines-run"

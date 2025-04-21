@@ -1656,8 +1656,7 @@ RSpec.describe IsoDoc do
                         </fmt-xref>
                      </semx>
                      &#x2014;
-                     <semx element="modification" source="_">with adjustments</semx>
-                     ;
+                     with adjustments;
                      <origin bibitemid="ISO712" type="inline" citeas="ISO 712" id="_">
                         <localityStack>
                            <locality type="section">

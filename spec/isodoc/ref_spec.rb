@@ -184,9 +184,7 @@ RSpec.describe IsoDoc do
                       <fmt-xref target="ISO16634">
                          <span class="stdpublisher">ISO </span>
                          <span class="stddocNumber">16634</span>
-                         :-- 
-                         <span class="stdpublisher">(all </span>
-                         <span class="stdpublisher">parts)</span>
+                         :--
                       </fmt-xref>
                    </semx>
                    <eref bibitemid="ref1" id="_"/>
@@ -269,9 +267,7 @@ RSpec.describe IsoDoc do
                    <biblio-tag>
                       <span class="stdpublisher">ISO </span>
                       <span class="stddocNumber">16634</span>
-                      :-- 
-                      <span class="stdpublisher">(all </span>
-                      <span class="stdpublisher">parts)</span>
+                      :-- (all parts)
                       <fn reference="1" original-reference="1" id="_" target="_">
                          <p>Under preparation. (Stage at the time of publication ISO/DIS 16634)</p>
                          <fmt-fn-label>
@@ -525,9 +521,7 @@ RSpec.describe IsoDoc do
                       <a href="#ISO16634">
                          <span class="stdpublisher">ISO </span>
                          <span class="stddocNumber">16634</span>
-                         :-- 
-                         <span class="stdpublisher">(all </span>
-                         <span class="stdpublisher">parts)</span>
+                         :--
                       </a>
                       <a href="#ref1">ICC 167</a>
                       <a href="#ref10">[4]</a>
@@ -548,9 +542,7 @@ RSpec.describe IsoDoc do
                    <p id="ISO16634" class="NormRef">
                       <span class="stdpublisher">ISO </span>
                       <span class="stddocNumber">16634</span>
-                      :-- 
-                      <span class="stdpublisher">(all </span>
-                      <span class="stdpublisher">parts)</span>
+                      :-- (all parts)
                       <a class="FootnoteRef" href="#fn:1">
                          <sup>1</sup>
                       </a>
