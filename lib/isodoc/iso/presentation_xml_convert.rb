@@ -162,7 +162,7 @@ module IsoDoc
 
       def twitter_cldr_localiser_symbols
         { group: "&#xA0;", fraction_group: "&#xA0;",
-          fraction_group_digits: 3 }
+          fraction_group_digits: 3, decimal: "," }
       end
 
       def implicit_reference(bib)
