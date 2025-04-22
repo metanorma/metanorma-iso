@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-<!-- VERSION v2.0.3 -->
+<!-- VERSION v2.0.4 -->
 
   <!--
     ALERT: cannot have root comments, because of https://github.com/metanorma/metanorma/issues/437
@@ -1328,6 +1328,7 @@ numbers</a:documentation>
           <ref name="foreword"/>
           <ref name="introduction"/>
           <ref name="acknowledgements"/>
+          <ref name="executivesummary"/>
         </choice>
       </oneOrMore>
     </element>
@@ -1348,6 +1349,11 @@ numbers</a:documentation>
   <define name="introduction">
     <a:documentation>Introduction of document</a:documentation>
     <element name="introduction">
+      <ref name="Content-Section"/>
+    </element>
+  </define>
+  <define name="executivesummary">
+    <element name="executivesummary">
       <ref name="Content-Section"/>
     </element>
   </define>
@@ -1576,6 +1582,15 @@ used in document amendments</a:documentation>
   <define name="annex">
     <element name="annex">
       <ref name="Annex-Section"/>
+      <zeroOrMore>
+        <ref name="annex-appendix"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="annex-appendix">
+    <a:documentation>Appendix, distinct subclause type for annexes (annex to annex, rather than subclause to annex)</a:documentation>
+    <element name="appendix">
+      <ref name="Clause-Section"/>
     </element>
   </define>
   <define name="terms">

@@ -162,9 +162,4 @@
       </zeroOrMore>
     </element>
   </define>
-  <define name="annex-appendix">
-    <element name="appendix">
-      <ref name="Clause-Section"/>
-    </element>
-  </define>
 </grammar>
