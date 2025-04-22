@@ -288,7 +288,7 @@ RSpec.describe IsoDoc do
     INPUT
 
     output = <<~OUTPUT
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <bibdata>
              <title language="en">test</title>
              <language current="true">en</language>
@@ -297,7 +297,7 @@ RSpec.describe IsoDoc do
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
              </clause>
-             <p displayorder="2" id="_">
+             <p id="_" displayorder="2">
                 <stem type="MathML" id="_">
                    <math xmlns="http://www.w3.org/1998/Math/MathML">
                       <mn>30000</mn>
@@ -315,7 +315,7 @@ RSpec.describe IsoDoc do
                 </stem>
                 <fmt-stem type="MathML">
                    <semx element="stem" source="_">
-               3 000.000 3
+               3 000,000 3
              </semx>
                 </fmt-stem>
                 <stem type="MathML" id="_">
@@ -325,7 +325,7 @@ RSpec.describe IsoDoc do
                 </stem>
                 <fmt-stem type="MathML">
                    <semx element="stem" source="_">
-               3 000 000.000 000 3
+               3 000 000,000 000 3
              </semx>
                 </fmt-stem>
                 <stem type="MathML" id="_">
@@ -335,7 +335,7 @@ RSpec.describe IsoDoc do
                 </stem>
                 <fmt-stem type="MathML">
                    <semx element="stem" source="_">
-               0.000 3
+               0,000 3
              </semx>
                 </fmt-stem>
                 <stem type="MathML" id="_">
@@ -345,7 +345,7 @@ RSpec.describe IsoDoc do
                 </stem>
                 <fmt-stem type="MathML">
                    <semx element="stem" source="_">
-               0.000 000 3
+               0,000 000 3
              </semx>
                 </fmt-stem>
                 <stem type="MathML" id="_">
@@ -495,7 +495,7 @@ RSpec.describe IsoDoc do
                             <mtable>
                                <mtr>
                                   <mtd>
-                                     <mn>0.000 1</mn>
+                                     <mn>0,000 1</mn>
                                   </mtd>
                                </mtr>
                                <mtr>
@@ -517,7 +517,7 @@ RSpec.describe IsoDoc do
                             <mrow>
                                <mfenced close=")" open="(">
                                   <mrow>
-                                     <mn>1 000.000 01</mn>
+                                     <mn>1 000,000 01</mn>
                                      <mo>−</mo>
                                      <mi>p</mi>
                                   </mrow>
@@ -525,7 +525,7 @@ RSpec.describe IsoDoc do
                             </mrow>
                             <mrow>
                                <mrow>
-                                  <mn>1.003</mn>
+                                  <mn>1,003</mn>
                                   <mo>−</mo>
                                   <mi>j</mi>
                                </mrow>
