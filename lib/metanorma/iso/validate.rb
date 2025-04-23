@@ -14,16 +14,14 @@ module Metanorma
     class Converter < Standoc::Converter
       def isosubgroup_validate(root)
         root.xpath("//technical-committee/@type").each do |t|
-          unless %w{TC PC JTC JPC}.include? t.text
+          %w{TC PC JTC JPC}.include?(t.text) or
             @log.add("Document Attributes", nil,
                      "invalid technical committee type #{t}")
-          end
         end
         root.xpath("//subcommittee/@type").each do |t|
-          unless %w{SC JSC}.include? t.text
+          %w{SC JSC}.include?(t.text) or
             @log.add("Document Attributes", nil,
                      "invalid subcommittee type #{t}")
-          end
         end
       end
 

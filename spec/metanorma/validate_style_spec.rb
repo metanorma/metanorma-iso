@@ -879,6 +879,26 @@ RSpec.describe Metanorma::Iso do
 
       == Clause
 
+      <<Form01;to!Form03>>
+
+      [[Form01]]
+      [stem]
+      ++++
+      A
+      ++++
+
+      [[Form02]]
+      [stem]
+      ++++
+      A
+      ++++
+
+      [[Form03]]
+      [stem]
+      ++++
+      A
+      ++++
+
       [[Form1]]
       [stem]
       ++++
@@ -990,6 +1010,12 @@ RSpec.describe Metanorma::Iso do
       .not_to include("Annex AnnB1 has not been cross-referenced within document")
     expect(f)
       .not_to include("Annex AnnC has not been cross-referenced within document")
+    expect(f)
+      .not_to include("Formula Form01 has not been cross-referenced within document")
+    expect(f)
+      .not_to include("Formula Form02 has not been cross-referenced within document")
+    expect(f)
+      .not_to include("Formula Form03 has not been cross-referenced within document")
 
     input += <<~INPUT
 
