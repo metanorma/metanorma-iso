@@ -117,8 +117,7 @@ module IsoDoc
 
       def authority_cleanup(docxml)
         super
-        if @meta.get[:stage_int].to_s[0] == "9" ||
-            @meta.get[:stage_int].to_s[0] == "6"
+        if ["9", "6"].include?(@meta.get[:stage_int].to_s[0])
           copyright_prf(docxml)
         else
           copyright_dis(docxml)
@@ -141,6 +140,14 @@ module IsoDoc
           p.replace(to_xml(p).gsub(%r{<br/>}, "</p>\n<p class='zzCopyright'>"))
         end
         docxml.xpath("//p[@class = 'zzCopyrightHdr']")&.each(&:remove)
+      end
+
+      def list_title_parse(node, out)
+        name = node.at(ns("./fmt-name")) or return
+        klass = node["key"] == "true" ? "KeyTitle" : "ListTitle"
+        out.p class: klass do |p|
+          name.children&.each { |n| parse(n, p) }
+        end
       end
     end
   end

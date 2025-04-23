@@ -1222,6 +1222,10 @@ RSpec.describe IsoDoc do
         <th>E</th><td><p>F</p></td>
         </tr>
         </tfoot>
+        <dl key="true">
+        <fmt-name>Key</fmt-name>
+        <dt>E</dt><dd>eee</dd>
+        </dl>
         </table>
         <table class="rouge-line-table"><tbody><tr id="line-1" class="lineno"><td class="rouge-gutter gl" style="-moz-user-select: none;-ms-user-select: none;-webkit-user-select: none;user-select: none;"><pre>1</pre></td><td class="rouge-code"><sourcecode><span class="p">{</span></sourcecode></td></tr><tr id="line-2" class="lineno"><td class="rouge-gutter gl" style="-moz-user-select: none;-ms-user-select: none;-webkit-user-select: none;user-select: none;"><pre>2</pre></td><td class="rouge-code"><sourcecode><span class="w">  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://json-schema.org/draft/2019-09/schema"</span><span class="p">,</span></sourcecode></td></tr></table>
         </clause>
@@ -1229,7 +1233,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~WORD
-      <div class="WordSection3">
+       <div class="WordSection3">
           <div>
              <a name="A" id="A"/>
              <h1/>
@@ -1259,11 +1263,23 @@ RSpec.describe IsoDoc do
                    </tbody>
                    <tfoot>
                       <tr>
-                         <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
+                         <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;page-break-after:auto;">
                             <div class="Tablebody" style="page-break-after:auto">E</div>
                          </th>
-                         <td style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
+                         <td style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:0pt;mso-border-bottom-alt:0pt;page-break-after:auto;">
                             <p class="Tablebody" style="page-break-after:auto">F</p>
+                         </td>
+                      </tr>
+                      <tr>
+                         <td colspan="2" style="border-top:0pt;mso-border-top-alt:0pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">
+                            <div class="Tablebody">
+                               <p class="KeyTitle">Key</p>
+                               <p style="text-indent: -2.0cm; margin-left: 2.0cm; tab-stops: 2.0cm;" class="MsoBodyText">
+                                  E
+                                  <span style="mso-tab-count:1">  </span>
+                                  eee
+                               </p>
+                            </div>
                          </td>
                       </tr>
                    </tfoot>
@@ -1332,40 +1348,57 @@ RSpec.describe IsoDoc do
         <note id="C"><fmt-name>FIGURENOTE<span class="fmt-label-delim"><tab/></span></fmt-name>
         <p>Note</p></note>
         <example id="D"><p>Example</p></example>
+        <dl key="true">
+        <fmt-name>Key</fmt-name>
+        <dt>E</dt><dd>eee</dd>
+        </dl>
         </figure>
         </clause>
         </sections>
       </iso-standard>
     INPUT
     word = <<~WORD
-      <div class='WordSection3'>
-        <div>
-          <a name='A' id='A'/>
-          <h1/>
-          <div class='figure'>
-            <a name='B' id='B'/>
-            <p class='FigureGraphic'>
-              <img src='_.gif' height='20' width='20'/>
-            </p>
-            <div class='Figurenote'>
-              <a name='C' id='C'/>
-              <p class='Figurenote'>
-                FIGURENOTE
-                <span style='mso-tab-count:1'>  </span>
-                Note
-              </p>
-            </div>
-            <div class="Figureexample" style='page-break-after:avoid;'>
-              <a name='D' id='D'/>
-              <p class='Figureexample'>
-                <span style='mso-tab-count:1'>  </span>
-                Example
-              </p>
-            </div>
-            <p class='Figuretitle' style='text-align:center;'>Table1</p>
+       <div class="WordSection3">
+          <div>
+             <a name="A" id="A"/>
+             <h1/>
+             <div class="figure">
+                <a name="B" id="B"/>
+                <p class="FigureGraphic">
+                   <img src="_.gif" height="20" width="20"/>
+                </p>
+                <div class="Figurenote">
+                   <a name="C" id="C"/>
+                   <p class="Figurenote">
+                      FIGURENOTE
+                      <span style="mso-tab-count:1">  </span>
+                      Note
+                   </p>
+                </div>
+                <div class="Figureexample">
+                   <a name="D" id="D"/>
+                   <p class="Figureexample">
+                      <span style="mso-tab-count:1">  </span>
+                      Example
+                   </p>
+                </div>
+                <p class="KeyTitle">Key</p>
+                <div class="figdl" style="page-break-after:avoid;page-break-after:avoid;">
+                   <table class="figdl">
+                      <tr>
+                         <td valign="top" align="left">
+                            <p align="left" style="margin-left:0pt;text-align:left;" class="Tablebody">E</p>
+                         </td>
+                         <td valign="top">
+                            <div class="Tablebody">eee</div>
+                         </td>
+                      </tr>
+                   </table>
+                </div>
+                <p class="Figuretitle" style="text-align:center;">Table1</p>
+             </div>
           </div>
-        </div>
-      </div>
+       </div>
     WORD
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
