@@ -10052,6 +10052,10 @@
 		<!-- <dl><xsl:copy-of select="."/></dl> -->
 		<fo:block-container xsl:use-attribute-sets="dl-block-style" role="SKIP">
 
+			<xsl:if test="@key = 'true' and ancestor::*[local-name() = 'figure']">
+				<xsl:attribute name="keep-together.within-column">always</xsl:attribute>
+			</xsl:if>
+
 			<xsl:call-template name="setBlockSpanAll"/>
 
 					<xsl:if test="not(ancestor::*[local-name() = 'quote'])">
@@ -10353,7 +10357,7 @@
 
 	<!-- caption for figure key and another caption, https://github.com/metanorma/isodoc/issues/607 -->
 	<xsl:template match="*[local-name() = 'figure']/*[local-name() = 'p'][@keep-with-next = 'true' and *[local-name() = 'strong']]" priority="3">
-		<fo:block text-align="left" margin-bottom="12pt" keep-with-next="always">
+		<fo:block text-align="left" margin-bottom="12pt" keep-with-next="always" keep-with-previous="always">
 			<xsl:call-template name="refine_figure_key_style"/>
 			<xsl:apply-templates/>
 		</fo:block>
