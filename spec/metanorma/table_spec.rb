@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Metanorma::Iso do
   it "processes basic tables" do
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       .Table Name
       |===
@@ -11,6 +11,7 @@ RSpec.describe Metanorma::Iso do
       h|1 |2 |3
       |===
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <table id="_">
@@ -33,10 +34,12 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+.to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "inserts header rows in a table with a name and no header" do
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [headerrows=2]
       .Table Name
@@ -46,6 +49,7 @@ RSpec.describe Metanorma::Iso do
       h|1 |2 |3
       |===
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <table id="_">
@@ -73,10 +77,12 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+.to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "inserts header rows in a table without a name and no header" do
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [headerrows=2]
       |===
@@ -85,6 +91,7 @@ RSpec.describe Metanorma::Iso do
       h|1 |2 |3
       |===
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <table id="_">
@@ -111,6 +118,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+.to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes complex tables" do
@@ -152,7 +161,14 @@ RSpec.describe Metanorma::Iso do
              <thead>
                <tr>
                  <th valign="top" rowspan="2" align="left">Defect</th>
-                 <th colspan="4" valign="top" align="center">Maximum permissible mass fraction of defects in husked rice<br/><stem type="MathML" block="false"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><msub><mi>w</mi><mi>max</mi></msub></mstyle></math><asciimath>w_max</asciimath></stem></th>
+                 <th colspan="4" valign="top" align="center">Maximum permissible mass fraction of defects in husked rice<br/><stem type="MathML" block="false"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false">
+            <msub><mi>w</mi>
+            <mrow>
+              <mo rspace="thickmathspace"/>
+              <mi>max</mi>
+            </mrow>
+            </msub>
+              </mstyle></math><asciimath>w_max</asciimath></stem></th>
                </tr>
                <tr>
                  <th valign="top" align="left">in husked rice</th>
