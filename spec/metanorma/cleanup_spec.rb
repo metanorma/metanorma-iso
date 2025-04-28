@@ -374,14 +374,14 @@ RSpec.describe Metanorma::Iso do
             <p id='_'>Definition</p>
           </verbal-definition>
         </definition>
-        <termsource status='identical' type='authoritative'>
+        <source status='identical' type='authoritative'>
                 <origin bibitemid="ISO2191" citeas="" type="inline">
                   <localityStack>
                     <locality type="section">
                       <referenceFrom>1</referenceFrom></locality>
                   </localityStack>
                 </origin>
-              </termsource>
+              </source>
             </term>
           </terms>
         </sections>
