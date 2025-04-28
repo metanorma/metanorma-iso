@@ -236,7 +236,7 @@ module IsoDoc
 
       def table_parse_tail(node, out)
         (dl = node.at(ns("./dl"))) && parse(dl, out)
-        node.xpath(ns("./source")).each { |n| parse(n, out) }
+        node.xpath(ns("./fmt-source")).each { |n| parse(n, out) }
         node.xpath(ns("./note[not(@type = 'units')]"))
           .each { |n| parse(n, out) }
         node.xpath(ns("./fmt-footnote-container/fmt-fn-body"))
