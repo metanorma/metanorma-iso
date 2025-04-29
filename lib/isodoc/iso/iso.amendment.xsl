@@ -4167,9 +4167,7 @@
 						</xsl:choose>
 					</xsl:if>
 
-					<xsl:if test="@named_dest">
-						<fo:inline><xsl:call-template name="setIDforNamedDestination"/></fo:inline>
-					</xsl:if>
+					<xsl:call-template name="setIDforNamedDestinationInline"/>
 
 					<xsl:choose>
 						<xsl:when test="$layoutVersion = '1951' and ((ancestor::iso:preface and $level  = 1) or (parent::iso:introduction and $revision_date_num &lt; 19680101))">
@@ -4251,15 +4249,16 @@
 					</xsl:choose>
 					<xsl:apply-templates select="following-sibling::*[1][local-name() = 'variant-title'][@type = 'sub']" mode="subtitle"/>
 
-					<!-- becaise @id applied above -->
-					<xsl:if test="$layoutVersion = '1951' or $layoutVersion = '1972' or $layoutVersion = '1979' or $layoutVersion = '1987' or $layoutVersion = '1989' or        @type = 'floating-title' or @type = 'section-title'">
+					<!-- because @id from preceding clause applied, see above -->
+					<!-- <xsl:if test="$layoutVersion = '1951' or $layoutVersion = '1972' or $layoutVersion = '1979' or $layoutVersion = '1987' or $layoutVersion = '1989' or
+							@type = 'floating-title' or @type = 'section-title'">
 						<xsl:if test="@named_dest">
 							<fo:inline>
 								<xsl:call-template name="setIDforNamedDestination"/>
 								<xsl:value-of select="$zero_width_space"/>
 							</fo:inline>
 						</xsl:if>
-					</xsl:if>
+					</xsl:if> -->
 				</xsl:element>
 
 				<xsl:if test="$element-name = 'fo:inline' and not(following-sibling::iso:p)">
@@ -18235,8 +18234,14 @@
 			<xsl:choose>
 				<xsl:when test="count(ancestor::*[local-name() = 'figure']) &gt; 1"/> <!-- prevent id 'a)' -->
 				<xsl:when test="ancestor::*[local-name() = 'note'] or ancestor::*[local-name() = 'example'] or        ancestor::*[local-name() = 'termnote'] or ancestor::*[local-name() = 'termexample']"/>
-				<xsl:when test="$caption_label = '' and parent::*[local-name() = 'foreword']">Foreword</xsl:when>
-				<xsl:when test="$caption_label = '' and parent::*[local-name() = 'introduction']">Introduction</xsl:when>
+				<xsl:when test="$caption_label = '' and parent::*[local-name() = 'foreword']">
+					<xsl:variable name="foreword_number"><xsl:number count="*[local-name() = 'foreword']" level="any"/></xsl:variable>
+					<xsl:if test="$foreword_number = 1">Foreword</xsl:if>
+				</xsl:when>
+				<xsl:when test="$caption_label = '' and parent::*[local-name() = 'introduction']">
+					<xsl:variable name="introduction_number"><xsl:number count="*[local-name() = 'introduction']" level="any"/></xsl:variable>
+					<xsl:if test="$introduction_number = 1">Introduction</xsl:if>
+				</xsl:when>
 				<xsl:when test="$caption_label = ''"/>
 				<xsl:when test="../@unnumbered = 'true'"/>
 				<xsl:otherwise>
@@ -19879,6 +19884,12 @@
 	<xsl:template name="setIDforNamedDestination">
 		<xsl:if test="@named_dest">
 			<xsl:attribute name="id"><xsl:value-of select="@named_dest"/></xsl:attribute>
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:template name="setIDforNamedDestinationInline">
+		<xsl:if test="@named_dest">
+			<fo:inline><xsl:call-template name="setIDforNamedDestination"/></fo:inline>
 		</xsl:if>
 	</xsl:template>
 
