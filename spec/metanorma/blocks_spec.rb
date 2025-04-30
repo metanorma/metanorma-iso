@@ -517,14 +517,14 @@ RSpec.describe Metanorma::Iso do
             <p id='_'>Definition</p>
           </verbal-definition>
         </definition>
-        <termsource status='identical' type='authoritative'>
+        <source status='identical' type='authoritative'>
                 <origin bibitemid="ISO2191" citeas="" type="inline">
                   <localityStack>
                     <locality type="section">
                       <referenceFrom>1</referenceFrom></locality>
                   </localityStack>
                 </origin>
-              </termsource>
+              </source>
             </term>
           </terms>
         </sections>
@@ -559,7 +559,7 @@ RSpec.describe Metanorma::Iso do
             <p id='_'>Definition</p>
           </verbal-definition>
         </definition>
-        <termsource status='modified' type='authoritative'>
+        <source status='modified' type='authoritative'>
                 <origin bibitemid="ISO2191" citeas="" type="inline">
                   <localityStack>
                     <locality type="section">
@@ -569,7 +569,7 @@ RSpec.describe Metanorma::Iso do
                 <modification>
                   <p id="_">with adjustments</p>
                 </modification>
-              </termsource>
+              </source>
             </term>
           </terms>
         </sections>

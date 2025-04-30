@@ -117,7 +117,7 @@ module IsoDoc
           num = num + 1
           clause_name(clause, clause&.at(ns("./fmt-title")), div, nil)
           clause.elements.each do |e|
-            parse(e, div) unless %w{fmt-title source}.include? e.name
+            parse(e, div) unless %w{fmt-title fmt-source}.include? e.name
           end
         end
       end
@@ -139,7 +139,7 @@ module IsoDoc
 
       def table_parse_tail(node, out)
         (dl = node.at(ns("./dl"))) && parse(dl, out)
-        node.xpath(ns("./source")).each { |n| parse(n, out) }
+        node.xpath(ns("./fmt-source")).each { |n| parse(n, out) }
         node.xpath(ns("./note[not(@type = 'units')]")).each do |n|
           parse(n, out)
         end

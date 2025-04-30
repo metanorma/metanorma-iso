@@ -91,7 +91,7 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
@@ -200,31 +200,46 @@ RSpec.describe IsoDoc do
                       <dt>Drago</dt>
                       <dd>A type of rice</dd>
                    </dl>
-                   <source status="generalisation">
-                      [SOURCE:
-                      <origin bibitemid="ISO712" type="inline" citeas="" id="_">
+                   <source status="generalisation" id="_">
+                      <origin bibitemid="ISO712" type="inline" citeas="">
                          <localityStack>
                             <locality type="section">
                                <referenceFrom>1</referenceFrom>
                             </locality>
                          </localityStack>
                       </origin>
-                      <semx element="origin" source="_">
-                         <fmt-origin bibitemid="ISO712" type="inline" citeas="">
+                      <modification id="_">
+                         <p original-id="_">with adjustments</p>
+                      </modification>
+                   </source>
+                   <fmt-source>
+                      [SOURCE:
+                      <semx element="source" source="_">
+                         <origin bibitemid="ISO712" type="inline" citeas="" id="_">
                             <localityStack>
                                <locality type="section">
                                   <referenceFrom>1</referenceFrom>
                                </locality>
                             </localityStack>
-                            , Section 1
-                         </fmt-origin>
+                         </origin>
+                         <semx element="origin" source="_">
+                            <fmt-origin bibitemid="ISO712" type="inline" citeas="">
+                               <localityStack>
+                                  <locality type="section">
+                                     <referenceFrom>1</referenceFrom>
+                                  </locality>
+                               </localityStack>
+                               , Section 1
+                            </fmt-origin>
+                         </semx>
+                         —
+                         <semx element="modification" source="_">with adjustments</semx>
                       </semx>
-                      —
-                      with adjustments]
-                   </source>
+                      ]
+                   </fmt-source>
                    <note type="requirement" unnumbered="true">
-                  <p>This is a requirement about rice</p>
-                </note>
+                      <p>This is a requirement about rice</p>
+                   </note>
                    <note>
                       <fmt-name>
                          <span class="fmt-caption-label">

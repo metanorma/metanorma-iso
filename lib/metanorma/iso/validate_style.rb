@@ -218,7 +218,7 @@ module Metanorma
       end
 
       ASSETS_TO_STYLE =
-        "//termsource | //formula | //termnote | " \
+        "//term//source | //formula | //termnote | " \
         "//p[not(ancestor::boilerplate)] | //li[not(p)] | //dt | " \
         "//dd[not(p)] | //td[not(p)] | //th[not(p)]".freeze
 

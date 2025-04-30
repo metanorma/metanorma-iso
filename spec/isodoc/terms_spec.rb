@@ -22,12 +22,12 @@ RSpec.describe IsoDoc do
                 </ul>
               </termexample>
 
-              <termsource status="modified">
+              <source status="modified">
                 <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></origin>
                   <modification>
                   <p id="_e73a417d-ad39-417d-a4c8-20e4e2529489">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</p>
                 </modification>
-              </termsource>
+              </source>
             </term>
 
             <term id="paddy">
@@ -48,9 +48,9 @@ RSpec.describe IsoDoc do
               <ul><li>A</li></ul>
                 <p id="_19830f33-e46c-42cc-94ca-a5ef101132d5">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
               </termnote>
-              <termsource status="identical">
+              <source status="identical">
                 <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011"><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></origin>
-              </termsource>
+              </source>
             </term>
             <term id="A">
               <preferred><expression><name>term1</name></expression></preferred>
@@ -188,7 +188,7 @@ RSpec.describe IsoDoc do
                           </li>
                        </ul>
                     </termexample>
-                    <termsource status="modified" id="_">
+                    <source status="modified" id="_">
                        <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011">
                           <locality type="clause">
                              <referenceFrom>3.1</referenceFrom>
@@ -197,10 +197,10 @@ RSpec.describe IsoDoc do
                        <modification id="_">
                           <p original-id="_">The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here</p>
                        </modification>
-                    </termsource>
+                    </source>
                     <fmt-termsource status="modified">
                        [SOURCE:
-                       <semx element="termsource" source="_">
+                       <semx element="source" source="_">
                           <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011" id="_">
                              <locality type="clause">
                                 <referenceFrom>3.1</referenceFrom>
@@ -374,16 +374,16 @@ RSpec.describe IsoDoc do
                        </ul>
                        <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
                     </termnote>
-                    <termsource status="identical" id="_">
+                    <source status="identical" id="_">
                        <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011">
                           <locality type="clause">
                              <referenceFrom>3.1</referenceFrom>
                           </locality>
                        </origin>
-                    </termsource>
+                    </source>
                     <fmt-termsource status="identical">
                        [SOURCE:
-                       <semx element="termsource" source="_">
+                       <semx element="source" source="_">
                           <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011" id="_">
                              <locality type="clause">
                                 <referenceFrom>3.1</referenceFrom>
@@ -861,45 +861,45 @@ RSpec.describe IsoDoc do
           <p>For the purposes of this document, the following terms and definitions apply.</p>
       <term id="paddy1"><preferred><expression><name>paddy</name></expression></preferred>
       <definition><verbal-definition><p id="_eb29b35e-123e-4d1c-b50b-2714d41e747f">rice retaining its husk after threshing</p></verbal-definition></definition>
-        <termsource status='identical'>
+        <source status='identical'>
           <origin citeas=''>
             <termref base='IEV' target='xyz'>t1</termref>
           </origin>
           <modification>
             <p id='_'>with adjustments</p>
           </modification>
-        </termsource>
-        <termsource status='adapted'>
+        </source>
+        <source status='adapted'>
           <origin citeas=''>
             <termref base='IEV' target='xyz'/>
           </origin>
           <modification>
             <p id='_'>with adjustments</p>
           </modification>
-        </termsource>
-        <termsource status='modified'>
+        </source>
+        <source status='modified'>
           <origin citeas=''>
             <termref base='IEV' target='xyz'/>
           </origin>
           <modification>
             <p id='_'>with adjustments</p>
           </modification>
-        </termsource>
-        <termsource status='identical'>
+        </source>
+        <source status='identical'>
           <origin citeas=''>
             <termref base='IEV' target='xyz'>t1</termref>
           </origin>
-        </termsource>
-        <termsource status='adapted'>
+        </source>
+        <source status='adapted'>
           <origin citeas=''>
             <termref base='IEV' target='xyz'/>
           </origin>
-        </termsource>
-        <termsource status='modified'>
+        </source>
+        <source status='modified'>
           <origin citeas=''>
             <termref base='IEV' target='xyz'/>
           </origin>
-        </termsource>
+        </source>
       </term>
     INPUT
     output = <<~OUTPUT
@@ -954,48 +954,48 @@ RSpec.describe IsoDoc do
                    <p id="_">rice retaining its husk after threshing</p>
                 </semx>
              </fmt-definition>
-             <termsource status="identical" id="_">
+             <source status="identical" id="_">
                 <origin citeas="">
                    <termref base="IEV" target="xyz">t1</termref>
                 </origin>
                 <modification id="_">
                    <p original-id="_">with adjustments</p>
                 </modification>
-             </termsource>
-             <termsource status="adapted" id="_">
+             </source>
+             <source status="adapted" id="_">
                 <origin citeas="">
                    <termref base="IEV" target="xyz"/>
                 </origin>
                 <modification id="_">
                    <p original-id="_">with adjustments</p>
                 </modification>
-             </termsource>
-             <termsource status="modified" id="_">
+             </source>
+             <source status="modified" id="_">
                 <origin citeas="">
                    <termref base="IEV" target="xyz"/>
                 </origin>
                 <modification id="_">
                    <p original-id="_">with adjustments</p>
                 </modification>
-             </termsource>
-             <termsource status="identical" id="_">
+             </source>
+             <source status="identical" id="_">
                 <origin citeas="">
                    <termref base="IEV" target="xyz">t1</termref>
                 </origin>
-             </termsource>
-             <termsource status="adapted" id="_">
+             </source>
+             <source status="adapted" id="_">
                 <origin citeas="">
                    <termref base="IEV" target="xyz"/>
                 </origin>
-             </termsource>
-             <termsource status="modified" id="_">
+             </source>
+             <source status="modified" id="_">
                 <origin citeas="">
                    <termref base="IEV" target="xyz"/>
                 </origin>
-             </termsource>
+             </source>
              <fmt-termsource status="identical">
                 [SOURCE:
-                <semx element="termsource" source="_">
+                <semx element="source" source="_">
                    <origin citeas="" id="_">
                       <termref base="IEV" target="xyz">t1</termref>
                    </origin>
@@ -1008,7 +1008,7 @@ RSpec.describe IsoDoc do
                    <semx element="modification" source="_">with adjustments</semx>
                 </semx>
                 ;
-                <semx element="termsource" source="_">
+                <semx element="source" source="_">
                    <origin citeas="" id="_">
                       <termref base="IEV" target="xyz"/>
                    </origin>
@@ -1021,7 +1021,7 @@ RSpec.describe IsoDoc do
                    <semx element="modification" source="_">with adjustments</semx>
                 </semx>
                 ;
-                <semx element="termsource" source="_">
+                <semx element="source" source="_">
                    <origin citeas="" id="_">
                       <termref base="IEV" target="xyz"/>
                    </origin>
@@ -1034,7 +1034,7 @@ RSpec.describe IsoDoc do
                    <semx element="modification" source="_">with adjustments</semx>
                 </semx>
                 ;
-                <semx element="termsource" source="_">
+                <semx element="source" source="_">
                    <origin citeas="" id="_">
                       <termref base="IEV" target="xyz">t1</termref>
                    </origin>
@@ -1045,7 +1045,7 @@ RSpec.describe IsoDoc do
                    </semx>
                 </semx>
                 ;
-                <semx element="termsource" source="_">
+                <semx element="source" source="_">
                    <origin citeas="" id="_">
                       <termref base="IEV" target="xyz"/>
                    </origin>
@@ -1057,7 +1057,7 @@ RSpec.describe IsoDoc do
                    , modified
                 </semx>
                 ;
-                <semx element="termsource" source="_">
+                <semx element="source" source="_">
                    <origin citeas="" id="_">
                       <termref base="IEV" target="xyz"/>
                    </origin>
