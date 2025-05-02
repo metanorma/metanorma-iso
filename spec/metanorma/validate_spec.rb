@@ -457,7 +457,7 @@ RSpec.describe Metanorma::Iso do
       * [[[ISO8,ISO 8:--]]], _Title_
     INPUT
     expect(File.read("test.err.html"))
-      .to include("Reference ISO8 does not have an associated footnote " \
+      .to include("Reference does not have an associated footnote " \
                   "indicating unpublished status")
   end
 

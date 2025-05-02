@@ -101,7 +101,7 @@ RSpec.describe Metanorma::Iso do
     expect(Xml::C14n.format(strip_guid(output))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
       #{BLANK_HDR}
         <sections>
-          <ul id="id">
+          <ul id="_" anchor="id">
             <li>
               <p id="_">First</p>
             </li>
@@ -111,7 +111,7 @@ RSpec.describe Metanorma::Iso do
               <p id="_">entry2</p>
             </li>
           </ul>
-          <ol id="id1" type="alphabet">
+          <ol id="_" anchor="id1" type="alphabet">
             <li>
               <p id="_">First</p>
             </li>
@@ -182,12 +182,12 @@ RSpec.describe Metanorma::Iso do
     INPUT
       #{BLANK_HDR}
         <sections>
-          <ul id="id1">
-            <li id="id2">
+          <ul id="_" anchor="id1">
+            <li id="_" anchor="id2">
               <p id="_">List item</p>
             </li>
             <li>
-              <p id="_">Hello <bookmark id="id3"/> List item</p>
+              <p id="_">Hello <bookmark id="_" anchor="id3"/> List item</p>
             </li>
           </ul>
         </sections>

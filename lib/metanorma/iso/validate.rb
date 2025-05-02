@@ -31,8 +31,8 @@ module Metanorma
         @lang == "en" or return
         root.xpath("//xref").each do |t|
           preceding = t.at("./preceding-sibling::text()[last()]")
-          next unless !preceding.nil? &&
-            /\b(see| refer to)\p{Zs}*\Z/mi.match(preceding)
+          !preceding.nil? &&
+            /\b(see| refer to)\p{Zs}*\Z/mi.match(preceding) or next
 
           (target = root.at("//*[@id = '#{t['target']}']")) || next
           target.at("./ancestor-or-self::*[@obligation = 'normative']") &&
@@ -48,7 +48,7 @@ module Metanorma
         root.xpath("//eref").each do |t|
           prec = t.at("./preceding-sibling::text()[last()]")
           !prec.nil? && /\b(see|refer to)\p{Zs}*\Z/mi.match(prec) or next
-          unless target = root.at("//*[@id = '#{t['bibitemid']}']")
+          unless target = root.at("//bibitem[@id = '#{t['bibitemid']}']")
             @log.add("Bibliography", t,
                      "'#{t} is not pointing to a real reference")
             next
@@ -81,7 +81,7 @@ module Metanorma
           .xpath("//sections/terms | //sections/clause[.//terms] | " \
                  "//annex[.//terms]").each_with_object({}) do |t, m|
           t.xpath(".//*/@id").each { |a| m[a.text] = true }
-          t.name == "terms" and m[t["id"]] = true
+          t.name == "terms" and m[t["anchor"]] = true
         end
         xmldoc.xpath(".//xref").each do |x|
           term_xrefs_validate1(x, termids)
@@ -90,14 +90,15 @@ module Metanorma
 
       def term_xrefs_validate1(xref, termids)
         closest_id = xref.xpath("./ancestor::*[@id]")&.last or return
+        dest = @doc_ids.dig(xref["target"], :anchor)
         termids[xref["target"]] && !termids[closest_id["id"]] and
           @log.add("Style", xref,
                    "only terms clauses can cross-reference terms clause " \
-                   "(#{xref['target']})")
+                   "(#{dest})")
         !termids[xref["target"]] && termids[closest_id["id"]] and
           @log.add("Style", xref,
                    "non-terms clauses cannot cross-reference terms clause " \
-                   "(#{xref['target']})")
+                   "(#{dest})")
       end
 
       # require that all assets of a particular type be cross-referenced
@@ -115,7 +116,7 @@ module Metanorma
         (xmldoc.xpath(xpath) - xmldoc.xpath(exc)).each do |x|
           x["unnumbered"] == "true" and next
           @doc_xrefs[x["id"]] or
-            @log.add("Style", x, "#{name} #{x['id']} has not been " \
+            @log.add("Style", x, "#{name} #{x['anchor']} has not been " \
                                  "cross-referenced within document",
                      severity: xpath == "//formula" ? 2 : 1)
         end
@@ -186,7 +187,7 @@ module Metanorma
         xmldoc.xpath("//bibitem[date/on = '–']").each do |b|
           b.at("./note[@type = 'Unpublished-Status']") or
             @log.add("Style", b,
-                     "Reference #{b&.at('./@id')&.text} does not have an " \
+                     "Reference does not have an " \
                      "associated footnote indicating unpublished status")
         end
       end

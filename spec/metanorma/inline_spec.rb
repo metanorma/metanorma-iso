@@ -77,7 +77,7 @@ RSpec.describe Metanorma::Iso do
     INPUT
       #{BLANK_HDR}
         <sections>
-          <p id="_">Text <bookmark id="bookmark"/> Text</p>
+          <p id="_">Text <bookmark id="_" anchor="bookmark"/> Text</p>
         </sections>
       </metanorma>
     OUTPUT
@@ -96,12 +96,12 @@ RSpec.describe Metanorma::Iso do
     INPUT
       #{BLANK_HDR}
         <sections>
-          <clause id="reference" inline-header="false" obligation="normative">
+          <clause id="_" anchor="reference" inline-header="false" obligation="normative">
             <title>Section</title>
-            <p id="_">Inline Reference to <xref target="reference"/>
-              Footnoted Reference to <xref target="reference"/>
-              Inline Reference with Text to <xref target="reference"><display-text>text</display-text></xref>
-              Footnoted Reference with Text to <xref target="reference"><display-text>text</display-text></xref></p>
+            <p id="_">Inline Reference to <xref target="_"/>
+              Footnoted Reference to <xref target="_"/>
+              Inline Reference with Text to <xref target="_"><display-text>text</display-text></xref>
+              Footnoted Reference with Text to <xref target="_"><display-text>text</display-text></xref></p>
           </clause>
         </sections>
       </metanorma>
@@ -123,14 +123,14 @@ RSpec.describe Metanorma::Iso do
 
         </sections>
         <bibliography>
-          <references id="_" normative="true" obligation="informative">
+          <references id="_" anchor="_normative_references" normative="true" obligation="informative">
             <title>Normative references</title>
             <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-            <bibitem id="ISO712">
+            <bibitem id="_" anchor="ISO712">
               <formattedref format="application/x-isodoc+xml">Reference</formattedref>
               <docidentifier>x</docidentifier>
             </bibitem>
-            <bibitem id="ISO713">
+            <bibitem id="_" anchor="ISO713">
               <formattedref format="application/x-isodoc+xml">Reference</formattedref>
               <docidentifier>ISO713</docidentifier>
               <docnumber>713</docnumber>

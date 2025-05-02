@@ -42,10 +42,10 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
           <sections>
-             <p id="foreword">Foreword</p>
+             <p id="_" anchor="foreword">Foreword</p>
           </sections>
           <review-container>
-             <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="foreword" to="foreword">
+             <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="_" to="_">
                 <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
                 <p id="_">
                    For further information on the Foreword, see
@@ -83,10 +83,10 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
        <metanorma>
           <sections>
-             <p id="foreword">Foreword</p>
+             <p id="_" anchor="foreword">Foreword</p>
           </sections>
           <review-container>
-             <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="foreword" to="foreword">
+             <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="_" to="_">
                 <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
                 <p id="_">
                    For further information on the Foreword, see
@@ -113,10 +113,10 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
         #{BLANK_HDR}
         <sections>
-          <terms id="_" obligation="normative">
+          <terms id="_" anchor="_terms_and_definitions" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-Term1">
+            <term id="_" anchor="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
               <termnote id="_">
                 <p id="_">This is a note</p></termnote>
@@ -257,10 +257,10 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <terms id="_" obligation="normative">
+          <terms id="_" anchor="_terms_and_definitions" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-Term1">
+            <term id="_" anchor="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
               <termexample id="_">
                 <p id="_">This is an example</p></termexample>
@@ -313,7 +313,7 @@ RSpec.describe Metanorma::Iso do
           </foreword>
         </preface>
         <sections>
-          <clause id="_" inline-header="false" obligation="normative">
+          <clause id="_" anchor="_section_1" inline-header="false" obligation="normative">
             <title>Section 1</title>
           </clause>
         </sections>
@@ -507,10 +507,10 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <terms id="_" obligation="normative">
+          <terms id="_" anchor="_terms_and_definitions" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-Term1">
+            <term id="_" anchor="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
                       <definition>
           <verbal-definition>
@@ -549,10 +549,10 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <terms id="_" obligation="normative">
+          <terms id="_" anchor="_terms_and_definitions" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-Term1">
+            <term id="_" anchor="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
                       <definition>
           <verbal-definition>

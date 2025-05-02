@@ -69,7 +69,14 @@ def strip_guid(xml)
     .gsub(%r{ schema-version="[^"]+"}, "")
     .gsub(%r[ _Ref\d+{8,10}], " _Ref")
     .gsub(%r[:_Ref\d+{8,10}], ":_Ref")
+  .gsub(%r( bibitemid="_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"), ' bibitemid="_"')
 end
+
+ def mock_preserve_idrefs
+    allow_any_instance_of(Metanorma::Standoc::Cleanup)
+      .to receive(:contenthash_id_update_idrefs) do |_instance, doc, *_args|
+      end
+  end
 
 def metadata(hash)
   hash.sort.to_h.delete_if do |_, v|

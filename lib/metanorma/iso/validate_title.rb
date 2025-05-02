@@ -82,7 +82,7 @@ module Metanorma
         withtitle = false
         xpath.each do |s|
           title_all_siblings(s.xpath("./clause | ./terms | ./references"),
-                             s&.at("./title")&.text || s["id"])
+                             s&.at("./title")&.text || s["anchor"])
           subtitle = s.at("./title")
           notitle = notitle || (!subtitle || subtitle.text.empty?)
           withtitle = withtitle || (subtitle && !subtitle.text.empty?)
