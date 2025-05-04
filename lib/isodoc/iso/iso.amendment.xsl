@@ -18077,6 +18077,9 @@
 	<xsl:template match="*[local-name() = 'quote']/*[local-name() = 'author']" mode="update_xml_pres"/>
 	<xsl:template match="*[local-name() = 'amend']" mode="update_xml_step1"/>
 	<xsl:template match="*[local-name() = 'amend']" mode="update_xml_pres"/>
+	<!-- https://github.com/metanorma/isodoc/issues/687 -->
+	<xsl:template match="*[local-name() = 'source']" mode="update_xml_step1"/>
+	<xsl:template match="*[local-name() = 'source']" mode="update_xml_pres"/>
 
 	<xsl:template match="*[local-name() = 'metanorma-extension']/*[local-name() = 'attachment']" mode="update_xml_step1">
 		<xsl:copy>
@@ -18389,6 +18392,20 @@
 	</xsl:template>
 	<xsl:template match="*[local-name() = 'fmt-termsource']" mode="update_xml_pres">
 		<xsl:element name="termsource" namespace="{$namespace_full}">
+			<xsl:copy-of select="@*"/>
+			<xsl:apply-templates mode="update_xml_pres"/>
+		</xsl:element>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'fmt-source']"/>
+	<xsl:template match="*[local-name() = 'fmt-source']" mode="update_xml_step1">
+		<xsl:element name="source" namespace="{$namespace_full}">
+			<xsl:copy-of select="@*"/>
+			<xsl:apply-templates mode="update_xml_step1"/>
+		</xsl:element>
+	</xsl:template>
+	<xsl:template match="*[local-name() = 'fmt-source']" mode="update_xml_pres">
+		<xsl:element name="source" namespace="{$namespace_full}">
 			<xsl:copy-of select="@*"/>
 			<xsl:apply-templates mode="update_xml_pres"/>
 		</xsl:element>
