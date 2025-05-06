@@ -25,9 +25,8 @@ module Metanorma
         end
       end
 
-      # ISO/IEC DIR 2, 15.5.3, 20.2
-      # does not deal with preceding text marked up
-      def see_xrefs_validate(root)
+      # KILL
+      def see_xrefs_validatex(root)
         @lang == "en" or return
         root.xpath("//xref").each do |t|
           preceding = t.at("./preceding-sibling::text()[last()]")
@@ -42,21 +41,63 @@ module Metanorma
         end
       end
 
+      # ISO/IEC DIR 2, 15.5.3, 20.2
+      # does not deal with preceding text marked up
+      def see_xrefs_validate(root)
+        @lang == "en" or return
+        anchors = extract_anchor_norm(root)
+        root.xpath("//xref").each do |t|
+          preceding = t.at("./preceding-sibling::text()[last()]")
+          !preceding.nil? &&
+            /\b(see| refer to)\p{Zs}*\Z/mi.match(preceding) or next
+          anchors[t["target"]] and
+            @log.add("Style", t,
+                     "'see #{t['target']}' is pointing to a normative section")
+        end
+      end
+
+      def extract_anchor_norm(root)
+        nodes = root.xpath("//annex[@obligation = 'normative'] | " \
+          "//references[@obligation = 'normative']")
+        ret = nodes.each_with_object({}) do |n, m|
+          n["anchor"] and m[n["anchor"]] = true
+        end
+        nodes.each do |n|
+          n.xpath(".//*[@anchor]").each { |n1| ret[n1["anchor"]] = true }
+        end
+        ret
+      end
+
       # ISO/IEC DIR 2, 15.5.3
       def see_erefs_validate(root)
         @lang == "en" or return
+        bibitemids = extract_bibitem_anchors(root)
         root.xpath("//eref").each do |t|
           prec = t.at("./preceding-sibling::text()[last()]")
           !prec.nil? && /\b(see|refer to)\p{Zs}*\Z/mi.match(prec) or next
-          unless target = root.at("//bibitem[@anchor = '#{t['bibitemid']}']")
+          unless target = bibitemids[t["bibitemid"]]
+            #unless target = root.at("//bibitem[@anchor = '#{t['bibitemid']}']")
             @log.add("Bibliography", t,
                      "'#{t} is not pointing to a real reference")
             next
           end
-          target.at("./ancestor::references[@normative = 'true']") and
+          #target.at("./ancestor::references[@normative = 'true']") and
+          target[:norm] and
             @log.add("Style", t,
                      "'see #{t}' is pointing to a normative reference")
         end
+      end
+
+      def extract_bibitem_anchors(root)
+        ret = root.xpath("//references[@normative = 'true']//bibitem")
+          .each_with_object({}) do |b, m|
+          m[b["anchor"]] = { bib: b, norm: true }
+        end
+        root.xpath("//references[not(@normative = 'true')]//bibitem")
+          .each do |b|
+          ret[b["anchor"]] = { bib: b, norm: false }
+        end
+        ret
       end
 
       # ISO/IEC DIR 2, 10.4
