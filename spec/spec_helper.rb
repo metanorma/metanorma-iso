@@ -69,14 +69,8 @@ def strip_guid(xml)
     .gsub(%r{ schema-version="[^"]+"}, "")
     .gsub(%r[ _Ref\d+{8,10}], " _Ref")
     .gsub(%r[:_Ref\d+{8,10}], ":_Ref")
-  .gsub(%r( bibitemid="_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"), ' bibitemid="_"')
+    .gsub(%r( bibitemid="_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"), ' bibitemid="_"')
 end
-
- def mock_preserve_idrefs
-    allow_any_instance_of(Metanorma::Standoc::Cleanup)
-      .to receive(:contenthash_id_update_idrefs) do |_instance, doc, *_args|
-      end
-  end
 
 def metadata(hash)
   hash.sort.to_h.delete_if do |_, v|
@@ -171,8 +165,8 @@ def boilerplate(xmldoc, lang: "en")
   file = File.join(File.dirname(__FILE__), "..", "lib", "metanorma", "iso",
                    "boilerplate#{lang}.adoc")
   ret = Nokogiri::XML(boilerplate_read(
-                        File.read(file, encoding: "utf-8"), xmldoc
-                      ))
+    File.read(file, encoding: "utf-8"), xmldoc
+  ))
   ret.xpath("//passthrough").each(&:remove)
   strip_guid(ret.root.to_xml(encoding: "UTF-8", indent: 2,
                              save_with: Nokogiri::XML::Node::SaveOptions::AS_XML))

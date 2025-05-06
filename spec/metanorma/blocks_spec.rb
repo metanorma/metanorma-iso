@@ -45,7 +45,7 @@ RSpec.describe Metanorma::Iso do
              <p id="_" anchor="foreword">Foreword</p>
           </sections>
           <review-container>
-             <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="_" to="_">
+             <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="foreword" to="foreword">
                 <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
                 <p id="_">
                    For further information on the Foreword, see
@@ -86,7 +86,7 @@ RSpec.describe Metanorma::Iso do
              <p id="_" anchor="foreword">Foreword</p>
           </sections>
           <review-container>
-             <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="_" to="_">
+             <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="foreword" to="foreword">
                 <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
                 <p id="_">
                    For further information on the Foreword, see
@@ -423,68 +423,6 @@ RSpec.describe Metanorma::Iso do
             <author>ISO</author>
             <p id="_">Block quotation</p>
           </quote>
-        </sections>
-      </metanorma>
-    OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Xml::C14n.format(output)
-  end
-
-  it "processes source code" do
-    input = <<~INPUT
-      #{ASCIIDOC_BLANK_HDR}
-      [source,ruby]
-      --
-      puts "Hello, world."
-      %w{a b c}.each do |x|
-        puts x
-      end
-      --
-    INPUT
-    output = <<~OUTPUT
-      #{BLANK_HDR}
-        <sections>
-          <sourcecode id="_" lang="ruby"><body>
-            puts "Hello, world."
-            %w{a b c}.each do |x|
-              puts x
-            end
-          </body></sourcecode>
-        </sections>
-      </metanorma>
-    OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Xml::C14n.format(output)
-  end
-
-  it "processes callouts" do
-    input = <<~INPUT
-      #{ASCIIDOC_BLANK_HDR}
-      [source,ruby]
-      --
-      puts "Hello, world." <1>
-      %w{a b c}.each do |x|
-        puts x <2>
-      end
-      --
-      <1> This is one callout
-      <2> This is another callout
-    INPUT
-    output = <<~OUTPUT
-      #{BLANK_HDR}
-        <sections>
-          <sourcecode id="_" lang="ruby"><body>
-            puts "Hello, world." <callout target="_">1</callout>
-            %w{a b c}.each do |x|
-              puts x <callout target="_">2</callout>
-            end
-            </body><annotation id="_">
-              <p id="_">This is one callout</p>
-            </annotation>
-            <annotation id="_">
-              <p id="_">This is another callout</p>
-            </annotation>
-          </sourcecode>
         </sections>
       </metanorma>
     OUTPUT

@@ -34,7 +34,7 @@ module Metanorma
           !preceding.nil? &&
             /\b(see| refer to)\p{Zs}*\Z/mi.match(preceding) or next
 
-          (target = root.at("//*[@id = '#{t['target']}']")) || next
+          (target = root.at("//*[@anchor = '#{t['target']}']")) || next
           target.at("./ancestor-or-self::*[@obligation = 'normative']") &&
             !target.at("./ancestor::sections") and
             @log.add("Style", t,
@@ -48,7 +48,7 @@ module Metanorma
         root.xpath("//eref").each do |t|
           prec = t.at("./preceding-sibling::text()[last()]")
           !prec.nil? && /\b(see|refer to)\p{Zs}*\Z/mi.match(prec) or next
-          unless target = root.at("//bibitem[@id = '#{t['bibitemid']}']")
+          unless target = root.at("//bibitem[@anchor = '#{t['bibitemid']}']")
             @log.add("Bibliography", t,
                      "'#{t} is not pointing to a real reference")
             next
@@ -80,7 +80,7 @@ module Metanorma
         termids = xmldoc
           .xpath("//sections/terms | //sections/clause[.//terms] | " \
                  "//annex[.//terms]").each_with_object({}) do |t, m|
-          t.xpath(".//*/@id").each { |a| m[a.text] = true }
+          t.xpath(".//*/@anchor").each { |a| m[a.text] = true }
           t.name == "terms" and m[t["anchor"]] = true
         end
         xmldoc.xpath(".//xref").each do |x|
@@ -89,16 +89,15 @@ module Metanorma
       end
 
       def term_xrefs_validate1(xref, termids)
-        closest_id = xref.xpath("./ancestor::*[@id]")&.last or return
-        dest = @doc_ids.dig(xref["target"], :anchor)
-        termids[xref["target"]] && !termids[closest_id["id"]] and
+        closest_id = xref.xpath("./ancestor::*[@anchor]")&.last or return
+        termids[xref["target"]] && !termids[closest_id["anchor"]] and
           @log.add("Style", xref,
                    "only terms clauses can cross-reference terms clause " \
-                   "(#{dest})")
-        !termids[xref["target"]] && termids[closest_id["id"]] and
+                   "(#{xref['target']})")
+        !termids[xref["target"]] && termids[closest_id["anchor"]] and
           @log.add("Style", xref,
                    "non-terms clauses cannot cross-reference terms clause " \
-                   "(#{dest})")
+                   "(#{xref['target']})")
       end
 
       # require that all assets of a particular type be cross-referenced
@@ -115,7 +114,7 @@ module Metanorma
           .join(" | ")
         (xmldoc.xpath(xpath) - xmldoc.xpath(exc)).each do |x|
           x["unnumbered"] == "true" and next
-          @doc_xrefs[x["id"]] or
+          @doc_xrefs[x["anchor"]] or
             @log.add("Style", x, "#{name} #{x['anchor']} has not been " \
                                  "cross-referenced within document",
                      severity: xpath == "//formula" ? 2 : 1)

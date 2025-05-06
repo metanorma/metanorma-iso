@@ -212,7 +212,7 @@ RSpec.describe Metanorma::Iso do
           <foreword id="_" obligation="informative">
             <title>Foreword</title>
             <p id="_">
-              <eref bibitemid="_" citeas="ISO&#xa0;216:2001" type="inline"/>
+              <eref bibitemid="iso216" citeas="ISO&#xa0;216:2001" type="inline"/>
             </p>
           </foreword>
         </preface>
@@ -260,7 +260,7 @@ RSpec.describe Metanorma::Iso do
           <foreword id="_" obligation="informative">
             <title>Foreword</title>
             <p id="_">
-              <eref bibitemid="_" citeas="ISO&#xa0;216" type="inline">
+              <eref type="inline" bibitemid="iso216" citeas="ISO 216">
                 <localityStack>
                   <locality type="whole"/>
                   <locality type="clause">
@@ -319,7 +319,7 @@ RSpec.describe Metanorma::Iso do
           <foreword id="_" obligation="informative">
             <title>Foreword</title>
             <p id="_">
-              <eref bibitemid="_" citeas="ISO&#xa0;216" type="inline"/>
+              <eref bibitemid="iso216" citeas="ISO&#xa0;216" type="inline"/>
             </p>
           </foreword>
         </preface>
@@ -1099,7 +1099,6 @@ RSpec.describe Metanorma::Iso do
          </bibliography>
        </metanorma>
     OUTPUT
-    mock_preserve_idrefs
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
   end
