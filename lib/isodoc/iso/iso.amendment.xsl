@@ -14502,11 +14502,11 @@
 	</xsl:template>
 
 	<!-- figure/fn -->
-	<xsl:template match="*[local-name() = 'figure']/*[local-name() = 'fn']" priority="2"/>
+	<xsl:template match="*[local-name() = 'figure'][not(@class = 'pseudocode')]/*[local-name() = 'fn']" priority="2"/>
 	<!-- figure/note -->
-	<xsl:template match="*[local-name() = 'figure']/*[local-name() = 'note']" priority="2"/>
+	<xsl:template match="*[local-name() = 'figure'][not(@class = 'pseudocode')]/*[local-name() = 'note']" priority="2"/>
 	<!-- figure/example -->
-	<xsl:template match="*[local-name() = 'figure']/*[local-name() = 'example']" priority="2"/>
+	<xsl:template match="*[local-name() = 'figure'][not(@class = 'pseudocode')]/*[local-name() = 'example']" priority="2"/>
 
 	<!-- figure/note[@type = 'units'] -->
 	<!-- image/note[@type = 'units'] -->
