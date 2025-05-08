@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe Metanorma::Iso do
   it "processes inline_quoted formatting" do
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
       [alt]#alt#
       [deprecated]#deprecated#
@@ -10,6 +10,7 @@ RSpec.describe Metanorma::Iso do
       [strike]#strike#
       [smallcap]#smallcap#
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <admitted>
@@ -28,11 +29,14 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes breaks" do
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
+
       Line break +
       line break
 
@@ -40,6 +44,7 @@ RSpec.describe Metanorma::Iso do
 
       <<<
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <p id="_">Line break
@@ -50,15 +55,19 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes links" do
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
+
       mailto:fred@example.com
       http://example.com[]
       http://example.com[Link]
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <p id="_">mailto:fred@example.com
@@ -68,24 +77,31 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes bookmarks" do
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
+
       Text [[bookmark]] Text
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <p id="_">Text <bookmark id="bookmark"/> Text</p>
+          <p id="_">Text <bookmark id="_" anchor="bookmark"/> Text</p>
         </sections>
       </metanorma>
     OUTPUT
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes crossreferences" do
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
+
       [[reference]]
       == Section
 
@@ -94,9 +110,10 @@ RSpec.describe Metanorma::Iso do
       Inline Reference with Text to <<reference,text>>
       Footnoted Reference with Text to <<reference,fn: text>>
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <clause id="reference" inline-header="false" obligation="normative">
+          <clause id="_" anchor="reference" inline-header="false" obligation="normative">
             <title>Section</title>
             <p id="_">Inline Reference to <xref target="reference"/>
               Footnoted Reference to <xref target="reference"/>
@@ -106,11 +123,14 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes bibliographic anchors" do
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
+
       [bibliography]
       == Normative References
 
@@ -118,19 +138,20 @@ RSpec.describe Metanorma::Iso do
       * [[[ISO713]]] Reference
 
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
 
         </sections>
         <bibliography>
-          <references id="_" normative="true" obligation="informative">
+          <references id="_" anchor="_normative_references" normative="true" obligation="informative">
             <title>Normative references</title>
             <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-            <bibitem id="ISO712">
+            <bibitem id="_" anchor="ISO712">
               <formattedref format="application/x-isodoc+xml">Reference</formattedref>
               <docidentifier>x</docidentifier>
             </bibitem>
-            <bibitem id="ISO713">
+            <bibitem id="_" anchor="ISO713">
               <formattedref format="application/x-isodoc+xml">Reference</formattedref>
               <docidentifier>ISO713</docidentifier>
               <docnumber>713</docnumber>
@@ -139,13 +160,17 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes footnotes" do
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
+    input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
+
       Hello!footnote:[Footnote text]
     INPUT
+    output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
           <p id="_">Hello!
@@ -155,5 +180,7 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
+    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 end

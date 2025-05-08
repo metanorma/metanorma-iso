@@ -54,97 +54,99 @@ RSpec.describe Metanorma::Iso do
     INPUT
     output = <<~OUTPUT
       #{BLANK_HDR}
-        <preface>
-          <foreword id="_" obligation="informative">
-            <title>Foreword</title>
-            <p id="_">Text</p>
-          </foreword>
-          <introduction id="_" obligation="informative">
-            <title>Introduction</title>
-            <clause id="_" inline-header="false" obligation="informative">
-              <title>Introduction Subsection</title>
-            </clause>
-          </introduction>
-          <acknowledgements id="_" obligation="informative">
-            <title>Acknowledgements</title>
-          </acknowledgements>
-        </preface>
-        <sections>
-          <clause id="_" inline-header="false" obligation="normative" type="scope">
-            <title>Scope</title>
-            <p id="_">Text</p>
-          </clause>
-          <clause id="_" obligation="normative" type="terms">
-            <title>Terms, definitions, symbols and abbreviated terms</title>
-                         <terms id="_" obligation="normative">
-               <title>Terms and definitions</title>
-               <p id="_">For the purposes of this document,
-           the following terms and definitions apply.</p>
-               <p id="_">ISO and IEC maintain terminology databases for use in
-       standardization at the following addresses:</p>
-               <ul id="_">
-                 <li>
-                   <p id="_">ISO Online browsing platform: available at
-         <link target="https://www.iso.org/obp"/></p>
-                 </li>
-                 <li>
-                   <p id="_">IEC Electropedia: available at
-       <link target="https://www.electropedia.org"/></p>
-                 </li>
-               </ul>
-               <term id="term-Term2">
-                 <preferred>
-                   <expression>
-                     <name>Term2</name>
-                   </expression>
-                 </preferred>
-               </term>
+          <preface>
+             <foreword id="_" anchor="_foreword" obligation="informative">
+                <title>Foreword</title>
+                <p id="_">Text</p>
+             </foreword>
+             <introduction id="_" anchor="_introduction" obligation="informative">
+                <title>Introduction</title>
+                <clause id="_" anchor="_introduction_subsection" inline-header="false" obligation="informative">
+                   <title>Introduction Subsection</title>
+                </clause>
+             </introduction>
+             <acknowledgements id="_" anchor="_acknowledgements" obligation="informative">
+                <title>Acknowledgements</title>
+             </acknowledgements>
+          </preface>
+          <sections>
+             <clause id="_" anchor="_scope" type="scope" inline-header="false" obligation="normative">
+                <title>Scope</title>
+                <p id="_">Text</p>
+             </clause>
+             <clause id="_" anchor="_terms_definitions_symbols_and_abbreviated_terms" obligation="normative" type="terms">
+                <title>Terms, definitions, symbols and abbreviated terms</title>
+                <terms id="_" anchor="_normal_terms" obligation="normative">
+                   <title>Terms and definitions</title>
+                   <p id="_">For the purposes of this document, the following terms and definitions apply.</p>
+                   <p id="_">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
+                   <ul id="_">
+                      <li>
+                         <p id="_">
+                            ISO Online browsing platform: available at
+                            <link target="https://www.iso.org/obp"/>
+                         </p>
+                      </li>
+                      <li>
+                         <p id="_">
+                            IEC Electropedia: available at
+                            <link target="https://www.electropedia.org"/>
+                         </p>
+                      </li>
+                   </ul>
+                   <term id="_" anchor="term-Term2">
+                      <preferred>
+                         <expression>
+                            <name>Term2</name>
+                         </expression>
+                      </preferred>
+                   </term>
+                </terms>
+                <definitions id="_" anchor="_symbols_and_abbreviated_terms" obligation="normative">
+                   <title>Symbols and Abbreviated Terms</title>
+                </definitions>
+             </clause>
+             <definitions id="_" anchor="_symbols_and_abbreviated_terms_2" obligation="normative">
+                <title>Symbols and Abbreviated Terms</title>
+             </definitions>
+             <clause id="_" anchor="_clause_4" inline-header="false" obligation="normative">
+                <title>Clause 4</title>
+                <clause id="_" anchor="_introduction_2" inline-header="false" obligation="normative">
+                   <title>Introduction</title>
+                </clause>
+                <clause id="_" anchor="_clause_4_2" inline-header="false" obligation="normative">
+                   <title>Clause 4.2</title>
+                </clause>
+             </clause>
+             <terms id="_" anchor="_terms_and_definitions" obligation="normative">
+                <title>Terms and Definitions</title>
              </terms>
-            <definitions id="_" obligation="normative">
-              <title>Symbols and Abbreviated Terms</title>
-            </definitions>
-          </clause>
-          <definitions id="_" obligation="normative">
-            <title>Symbols and Abbreviated Terms</title>
-          </definitions>
-          <clause id="_" inline-header="false" obligation="normative">
-            <title>Clause 4</title>
-            <clause id="_" inline-header="false" obligation="normative">
-              <title>Introduction</title>
-            </clause>
-            <clause id="_" inline-header="false" obligation="normative">
-              <title>Clause 4.2</title>
-            </clause>
-          </clause>
-          <terms id="_" obligation="normative">
-            <title>Terms and Definitions</title>
-          </terms>
-        </sections>
-        <annex id="_" inline-header="false" obligation="normative">
-          <title>Annex</title>
-          <clause id="_" inline-header="false" obligation="normative">
-            <title>Annex A.1</title>
-          </clause>
-          <appendix id="_" inline-header="false" obligation="normative">
-            <title>Appendix 1</title>
-            <clause id="_" inline-header="false" obligation="normative">
-              <title>Appendix subclause</title>
-            </clause>
-          </appendix>
-        </annex>
-        <bibliography>
-          <references id="_" normative="true" obligation="informative">
-            <title>Normative references</title>
-            <p id="_">There are no normative references in this document.</p>
-          </references>
-          <clause id="_" obligation="informative">
-            <title>Bibliography</title>
-            <references id="_" normative="false" obligation="informative">
-              <title>Bibliography Subsection</title>
-            </references>
-          </clause>
-        </bibliography>
-      </metanorma>
+          </sections>
+          <annex id="_" anchor="_annex" inline-header="false" obligation="normative">
+             <title>Annex</title>
+             <clause id="_" anchor="_annex_a_1" inline-header="false" obligation="normative">
+                <title>Annex A.1</title>
+             </clause>
+             <appendix id="_" anchor="_appendix_1" inline-header="false" obligation="normative">
+                <title>Appendix 1</title>
+                <clause id="_" anchor="_appendix_subclause" inline-header="false" obligation="normative">
+                   <title>Appendix subclause</title>
+                </clause>
+             </appendix>
+          </annex>
+          <bibliography>
+             <references id="_" anchor="_normative_references" normative="true" obligation="informative">
+                <title>Normative references</title>
+                <p id="_">There are no normative references in this document.</p>
+             </references>
+             <clause id="_" anchor="_bibliography" obligation="informative">
+                <title>Bibliography</title>
+                <references id="_" anchor="_bibliography_subsection" normative="false" obligation="informative">
+                   <title>Bibliography Subsection</title>
+                </references>
+             </clause>
+          </bibliography>
+       </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Xml::C14n.format(output)
@@ -167,17 +169,17 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <clause id="_" inline-header="false" obligation="informative">
+          <clause id="_" anchor="_clause_1" inline-header="false" obligation="informative">
             <title>Clause 1</title>
-            <clause id="_" inline-header="false" obligation="informative">
+            <clause id="_" anchor="_clause_1a" inline-header="false" obligation="informative">
               <title>Clause 1a</title>
             </clause>
           </clause>
-          <clause id="_" inline-header="false" obligation="normative">
+          <clause id="_" anchor="_clause_2" inline-header="false" obligation="normative">
             <title>Clause 2</title>
           </clause>
         </sections>
-        <annex id="_" inline-header="false" obligation="informative">
+        <annex id="_" anchor="_annex" inline-header="false" obligation="informative">
           <title>Annex</title>
         </annex>
       </metanorma>
@@ -203,16 +205,16 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <clause id="_" inline-header="false" obligation="normative">
+          <clause id="_" anchor="_clause_1" inline-header="false" obligation="normative">
             <title>Clause 1</title>
-            <clause id="_" inline-header="true" obligation="normative">
+            <clause id="_" anchor="_clause_1a" inline-header="true" obligation="normative">
               <title>Clause 1a</title>
             </clause>
           </clause>
         </sections>
-        <annex id="_" inline-header="false" obligation="normative">
+        <annex id="_" anchor="_annex_a" inline-header="false" obligation="normative">
           <title>Annex A</title>
-          <clause id="_" inline-header="true" obligation="normative">
+          <clause id="_" anchor="_clause_aa" inline-header="true" obligation="normative">
             <title>Clause Aa</title>
           </clause>
         </annex>
@@ -233,7 +235,7 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <clause id="_" inline-header="false" obligation="normative">
+          <clause id="_" anchor="_clause_1" inline-header="false" obligation="normative">
             <title>Clause 1</title>
             <clause id="_" inline-header="false" obligation="normative"/>
           </clause>
@@ -269,7 +271,7 @@ RSpec.describe Metanorma::Iso do
           </foreword>
         </preface>
                   <sections>
-             <terms id="_" obligation="normative">
+             <terms id="_" anchor="_terms_and_definitions" obligation="normative">
                 <title>Terms and definitions</title>
                 <p id="_">
                    For the purposes of this document, the terms and definitions given in
@@ -293,7 +295,7 @@ RSpec.describe Metanorma::Iso do
                       </p>
                    </li>
                 </ul>
-                <term id="term-Term1">
+                <term id="_" anchor="term-Term1">
                    <preferred>
                       <expression>
                          <name>Term1</name>
@@ -303,13 +305,13 @@ RSpec.describe Metanorma::Iso do
              </terms>
           </sections>
           <bibliography>
-             <references id="_" normative="false" obligation="informative">
+             <references id="_" anchor="_bibliography" normative="false" obligation="informative">
                 <title>Bibliography</title>
-                <bibitem id="iso1234">
+                <bibitem id="_" anchor="iso1234">
                    <formattedref format="application/x-isodoc+xml">[NO INFORMATION AVAILABLE]</formattedref>
                    <docidentifier>A</docidentifier>
                 </bibitem>
-                <bibitem id="iso5678">
+                <bibitem id="_" anchor="iso5678">
                    <formattedref format="application/x-isodoc+xml">[NO INFORMATION AVAILABLE]</formattedref>
                    <docidentifier>B</docidentifier>
                 </bibitem>
@@ -340,7 +342,7 @@ RSpec.describe Metanorma::Iso do
           </foreword>
         </preface>
         <sections>
-          <terms id='_' obligation='normative'>
+          <terms id='_' anchor="_terms_and_definitions" obligation='normative'>
             <title>Terms and definitions</title>
             <p id='_'>No terms and definitions are listed in this document.</p>
             <p id='_'>
@@ -393,7 +395,7 @@ RSpec.describe Metanorma::Iso do
           </foreword>
         </preface>
                   <sections>
-             <terms id="_" obligation="normative">
+             <terms anchor="_terms_and_definitions" id="_" obligation="normative">
                 <title>Terms and definitions</title>
                 <p id="_">
                    For the purposes of this document, the terms and definitions given in
@@ -420,13 +422,13 @@ RSpec.describe Metanorma::Iso do
              </terms>
           </sections>
           <bibliography>
-             <references id="_" normative="false" obligation="informative">
+             <references id="_" anchor="_bibliography" normative="false" obligation="informative">
                 <title>Bibliography</title>
-                <bibitem id="iso1234">
+                <bibitem id="_" anchor="iso1234">
                    <formattedref format="application/x-isodoc+xml">[NO INFORMATION AVAILABLE]</formattedref>
                    <docidentifier>A</docidentifier>
                 </bibitem>
-                <bibitem id="iso5678">
+                <bibitem id="_" anchor="iso5678">
                    <formattedref format="application/x-isodoc+xml">[NO INFORMATION AVAILABLE]</formattedref>
                    <docidentifier>B</docidentifier>
                 </bibitem>
@@ -504,7 +506,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR.sub(%r{<doctype>standard</doctype>},
                       '<doctype>standard</doctype><subdoctype>vocabulary</subdoctype>')}
                <sections>
-           <terms id='_' obligation='normative'>
+           <terms id='_' anchor="_terms_and_definitions" obligation='normative'>
              <title>Terms and Definitions</title>
              <p id='_'>No terms and definitions are listed in this document.</p>
              <p id='_'>ISO and IEC maintain terminology databases for use in standardization
@@ -523,10 +525,10 @@ RSpec.describe Metanorma::Iso do
                </li>
              </ul>
            </terms>
-           <clause id='_' inline-header='false' obligation='normative'>
+           <clause id='_' anchor="_clause" inline-header='false' obligation='normative'>
              <title>Clause</title>
            </clause>
-           <terms id='_' obligation='normative'>
+           <terms id='_' anchor="_more_terms" obligation='normative'>
              <title>More terms</title>
            </terms>
          </sections>

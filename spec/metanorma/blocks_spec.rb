@@ -42,7 +42,7 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
           <sections>
-             <p id="foreword">Foreword</p>
+             <p id="_" anchor="foreword">Foreword</p>
           </sections>
           <review-container>
              <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="foreword" to="foreword">
@@ -83,7 +83,7 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
        <metanorma>
           <sections>
-             <p id="foreword">Foreword</p>
+             <p id="_" anchor="foreword">Foreword</p>
           </sections>
           <review-container>
              <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="foreword" to="foreword">
@@ -113,10 +113,10 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
         #{BLANK_HDR}
         <sections>
-          <terms id="_" obligation="normative">
+          <terms id="_" anchor="_terms_and_definitions" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-Term1">
+            <term id="_" anchor="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
               <termnote id="_">
                 <p id="_">This is a note</p></termnote>
@@ -257,10 +257,10 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <terms id="_" obligation="normative">
+          <terms id="_" anchor="_terms_and_definitions" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-Term1">
+            <term id="_" anchor="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
               <termexample id="_">
                 <p id="_">This is an example</p></termexample>
@@ -313,7 +313,7 @@ RSpec.describe Metanorma::Iso do
           </foreword>
         </preface>
         <sections>
-          <clause id="_" inline-header="false" obligation="normative">
+          <clause id="_" anchor="_section_1" inline-header="false" obligation="normative">
             <title>Section 1</title>
           </clause>
         </sections>
@@ -430,68 +430,6 @@ RSpec.describe Metanorma::Iso do
       .to be_equivalent_to Xml::C14n.format(output)
   end
 
-  it "processes source code" do
-    input = <<~INPUT
-      #{ASCIIDOC_BLANK_HDR}
-      [source,ruby]
-      --
-      puts "Hello, world."
-      %w{a b c}.each do |x|
-        puts x
-      end
-      --
-    INPUT
-    output = <<~OUTPUT
-      #{BLANK_HDR}
-        <sections>
-          <sourcecode id="_" lang="ruby"><body>
-            puts "Hello, world."
-            %w{a b c}.each do |x|
-              puts x
-            end
-          </body></sourcecode>
-        </sections>
-      </metanorma>
-    OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Xml::C14n.format(output)
-  end
-
-  it "processes callouts" do
-    input = <<~INPUT
-      #{ASCIIDOC_BLANK_HDR}
-      [source,ruby]
-      --
-      puts "Hello, world." <1>
-      %w{a b c}.each do |x|
-        puts x <2>
-      end
-      --
-      <1> This is one callout
-      <2> This is another callout
-    INPUT
-    output = <<~OUTPUT
-      #{BLANK_HDR}
-        <sections>
-          <sourcecode id="_" lang="ruby"><body>
-            puts "Hello, world." <callout target="_">1</callout>
-            %w{a b c}.each do |x|
-              puts x <callout target="_">2</callout>
-            end
-            </body><annotation id="_">
-              <p id="_">This is one callout</p>
-            </annotation>
-            <annotation id="_">
-              <p id="_">This is another callout</p>
-            </annotation>
-          </sourcecode>
-        </sections>
-      </metanorma>
-    OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Xml::C14n.format(output)
-  end
-
   it "processes unmodified term sources" do
     input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
@@ -507,10 +445,10 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <terms id="_" obligation="normative">
+          <terms id="_" anchor="_terms_and_definitions" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-Term1">
+            <term id="_" anchor="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
                       <definition>
           <verbal-definition>
@@ -549,10 +487,10 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <terms id="_" obligation="normative">
+          <terms id="_" anchor="_terms_and_definitions" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
-            <term id="term-Term1">
+            <term id="_" anchor="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
                       <definition>
           <verbal-definition>

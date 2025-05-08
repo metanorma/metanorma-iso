@@ -687,6 +687,20 @@ titlecase, or lowercase</a:documentation>
       </attribute>
     </optional>
   </define>
+  <define name="RequiredId" combine="interleave">
+    <optional>
+      <attribute name="anchor">
+        <a:documentation> User-supplied anchor of element; replaced by content-based id, with all references to the anchor updated accordingly</a:documentation>
+      </attribute>
+    </optional>
+  </define>
+  <define name="OptionalId" combine="interleave">
+    <optional>
+      <attribute name="anchor">
+        <a:documentation> User-supplied anchor of element; replaced by content-based id, with all references to the anchor updated accordingly</a:documentation>
+      </attribute>
+    </optional>
+  </define>
   <define name="ObligationType">
     <a:documentation>The force of a clause in a standard document: whether it has normative or informative effect</a:documentation>
     <choice>

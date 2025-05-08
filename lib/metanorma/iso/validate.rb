@@ -25,16 +25,15 @@ module Metanorma
         end
       end
 
-      # ISO/IEC DIR 2, 15.5.3, 20.2
-      # does not deal with preceding text marked up
-      def see_xrefs_validate(root)
+      # KILL
+      def see_xrefs_validatex(root)
         @lang == "en" or return
         root.xpath("//xref").each do |t|
           preceding = t.at("./preceding-sibling::text()[last()]")
-          next unless !preceding.nil? &&
-            /\b(see| refer to)\p{Zs}*\Z/mi.match(preceding)
+          !preceding.nil? &&
+            /\b(see| refer to)\p{Zs}*\Z/mi.match(preceding) or next
 
-          (target = root.at("//*[@id = '#{t['target']}']")) || next
+          (target = root.at("//*[@anchor = '#{t['target']}']")) || next
           target.at("./ancestor-or-self::*[@obligation = 'normative']") &&
             !target.at("./ancestor::sections") and
             @log.add("Style", t,
@@ -42,21 +41,63 @@ module Metanorma
         end
       end
 
+      # ISO/IEC DIR 2, 15.5.3, 20.2
+      # does not deal with preceding text marked up
+      def see_xrefs_validate(root)
+        @lang == "en" or return
+        anchors = extract_anchor_norm(root)
+        root.xpath("//xref").each do |t|
+          preceding = t.at("./preceding-sibling::text()[last()]")
+          !preceding.nil? &&
+            /\b(see| refer to)\p{Zs}*\Z/mi.match(preceding) or next
+          anchors[t["target"]] and
+            @log.add("Style", t,
+                     "'see #{t['target']}' is pointing to a normative section")
+        end
+      end
+
+      def extract_anchor_norm(root)
+        nodes = root.xpath("//annex[@obligation = 'normative'] | " \
+          "//references[@obligation = 'normative']")
+        ret = nodes.each_with_object({}) do |n, m|
+          n["anchor"] and m[n["anchor"]] = true
+        end
+        nodes.each do |n|
+          n.xpath(".//*[@anchor]").each { |n1| ret[n1["anchor"]] = true }
+        end
+        ret
+      end
+
       # ISO/IEC DIR 2, 15.5.3
       def see_erefs_validate(root)
         @lang == "en" or return
+        bibitemids = extract_bibitem_anchors(root)
         root.xpath("//eref").each do |t|
           prec = t.at("./preceding-sibling::text()[last()]")
           !prec.nil? && /\b(see|refer to)\p{Zs}*\Z/mi.match(prec) or next
-          unless target = root.at("//*[@id = '#{t['bibitemid']}']")
+          unless target = bibitemids[t["bibitemid"]]
+            #unless target = root.at("//bibitem[@anchor = '#{t['bibitemid']}']")
             @log.add("Bibliography", t,
                      "'#{t} is not pointing to a real reference")
             next
           end
-          target.at("./ancestor::references[@normative = 'true']") and
+          #target.at("./ancestor::references[@normative = 'true']") and
+          target[:norm] and
             @log.add("Style", t,
                      "'see #{t}' is pointing to a normative reference")
         end
+      end
+
+      def extract_bibitem_anchors(root)
+        ret = root.xpath("//references[@normative = 'true']//bibitem")
+          .each_with_object({}) do |b, m|
+          m[b["anchor"]] = { bib: b, norm: true }
+        end
+        root.xpath("//references[not(@normative = 'true')]//bibitem")
+          .each do |b|
+          ret[b["anchor"]] = { bib: b, norm: false }
+        end
+        ret
       end
 
       # ISO/IEC DIR 2, 10.4
@@ -80,8 +121,8 @@ module Metanorma
         termids = xmldoc
           .xpath("//sections/terms | //sections/clause[.//terms] | " \
                  "//annex[.//terms]").each_with_object({}) do |t, m|
-          t.xpath(".//*/@id").each { |a| m[a.text] = true }
-          t.name == "terms" and m[t["id"]] = true
+          t.xpath(".//*/@anchor").each { |a| m[a.text] = true }
+          t.name == "terms" and m[t["anchor"]] = true
         end
         xmldoc.xpath(".//xref").each do |x|
           term_xrefs_validate1(x, termids)
@@ -89,12 +130,12 @@ module Metanorma
       end
 
       def term_xrefs_validate1(xref, termids)
-        closest_id = xref.xpath("./ancestor::*[@id]")&.last or return
-        termids[xref["target"]] && !termids[closest_id["id"]] and
+        closest_id = xref.xpath("./ancestor::*[@anchor]")&.last or return
+        termids[xref["target"]] && !termids[closest_id["anchor"]] and
           @log.add("Style", xref,
                    "only terms clauses can cross-reference terms clause " \
                    "(#{xref['target']})")
-        !termids[xref["target"]] && termids[closest_id["id"]] and
+        !termids[xref["target"]] && termids[closest_id["anchor"]] and
           @log.add("Style", xref,
                    "non-terms clauses cannot cross-reference terms clause " \
                    "(#{xref['target']})")
@@ -114,8 +155,8 @@ module Metanorma
           .join(" | ")
         (xmldoc.xpath(xpath) - xmldoc.xpath(exc)).each do |x|
           x["unnumbered"] == "true" and next
-          @doc_xrefs[x["id"]] or
-            @log.add("Style", x, "#{name} #{x['id']} has not been " \
+          @doc_xrefs[x["anchor"]] or
+            @log.add("Style", x, "#{name} #{x['anchor']} has not been " \
                                  "cross-referenced within document",
                      severity: xpath == "//formula" ? 2 : 1)
         end
@@ -186,7 +227,7 @@ module Metanorma
         xmldoc.xpath("//bibitem[date/on = '–']").each do |b|
           b.at("./note[@type = 'Unpublished-Status']") or
             @log.add("Style", b,
-                     "Reference #{b&.at('./@id')&.text} does not have an " \
+                     "Reference does not have an " \
                      "associated footnote indicating unpublished status")
         end
       end

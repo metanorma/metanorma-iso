@@ -54,6 +54,7 @@ end
 def strip_guid(xml)
   xml.gsub(%r{ id=['"]_[^"']+['"]}, ' id="_"')
     .gsub(%r{ id="(fn:|ftn)_[^"]+"}, ' id="fn:_"')
+    .gsub(%r{ semx-id="[^"]*"}, '')
     .gsub(%r{ name="_[^"]+"}, ' name="_"')
     .gsub(%r{ from="_[^"]+"}, ' from="_"')
     .gsub(%r{ to="_[^"]+"}, ' to="_"')
@@ -69,6 +70,7 @@ def strip_guid(xml)
     .gsub(%r{ schema-version="[^"]+"}, "")
     .gsub(%r[ _Ref\d+{8,10}], " _Ref")
     .gsub(%r[:_Ref\d+{8,10}], ":_Ref")
+    .gsub(%r( bibitemid="_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}"), ' bibitemid="_"')
 end
 
 def metadata(hash)
@@ -164,8 +166,8 @@ def boilerplate(xmldoc, lang: "en")
   file = File.join(File.dirname(__FILE__), "..", "lib", "metanorma", "iso",
                    "boilerplate#{lang}.adoc")
   ret = Nokogiri::XML(boilerplate_read(
-                        File.read(file, encoding: "utf-8"), xmldoc
-                      ))
+    File.read(file, encoding: "utf-8"), xmldoc
+  ))
   ret.xpath("//passthrough").each(&:remove)
   strip_guid(ret.root.to_xml(encoding: "UTF-8", indent: 2,
                              save_with: Nokogiri::XML::Node::SaveOptions::AS_XML))

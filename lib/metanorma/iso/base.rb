@@ -65,9 +65,8 @@ module Metanorma
       end
 
       def ol_attrs(node)
-        attr_code(keep_attrs(node)
-                  .merge(id: ::Metanorma::Utils::anchor_or_uuid(node),
-                         "explicit-type": olist_style(node.attributes[1]),
+        attr_code(keep_attrs(node).merge(id_attr(node))
+                  .merge("explicit-type": olist_style(node.attributes[1]),
                          start: node.attr("start")))
       end
 

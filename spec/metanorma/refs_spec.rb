@@ -31,7 +31,7 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <clause id="_" inline-header="false" obligation="normative">
+          <clause id="_" anchor="_clause" inline-header="false" obligation="normative">
             <title>Clause</title>
             <p id="_">
               <eref bibitemid="iso123" citeas="ISO&#xa0;123:--" type="inline"/>
@@ -48,7 +48,7 @@ RSpec.describe Metanorma::Iso do
           </clause>
         </sections>
         <bibliography>
-          <references id="_" normative="true" obligation="informative">
+          <references id="_" anchor="_normative_references" normative="true" obligation="informative">
             <title>Normative references</title>
             <p id="_">The following documents are referred to in the text in such a way that
                        some or all of their content constitutes requirements of this document.
@@ -56,7 +56,7 @@ RSpec.describe Metanorma::Iso do
                        references, the latest edition of the referenced document (including any
                        amendments) applies.
                      </p>
-            <bibitem id="iso123" type="standard">
+            <bibitem id="_" anchor="iso123" type="standard">
               <title format="text/plain">Standard</title>
               <docidentifier type="ISO">ISO 123:—</docidentifier>
               <docnumber>123</docnumber>
@@ -72,7 +72,7 @@ RSpec.describe Metanorma::Iso do
               </contributor>
               <note format="text/plain" type="Unpublished-Status">The standard is in press</note>
             </bibitem>
-            <bibitem id="fdis" type="standard">
+            <bibitem id="_" anchor="fdis" type="standard">
               <fetched/>
               <title format="text/plain" language="fr" script="Latn" type="title-intro">Traitement de produits de soins de santé</title>
               <title format="text/plain" language="fr" script="Latn" type="title-main">Informations relatives au traitement des dispositifs médicaux à
@@ -195,7 +195,7 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <clause id="_" inline-header="false" obligation="normative">
+          <clause id="_" anchor="_clause" inline-header="false" obligation="normative">
             <title>Clause</title>
             <p id="_">
               <eref bibitemid="iso123" citeas="ISO&#xa0;123:1066" type="inline"/>
@@ -203,10 +203,10 @@ RSpec.describe Metanorma::Iso do
           </clause>
         </sections>
         <bibliography>
-          <references id="_" normative="true" obligation="informative">
+          <references id="_" anchor="_normative_references" normative="true" obligation="informative">
             <title>Normative references</title>
             <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-            <bibitem id="iso123" type="standard">
+            <bibitem id="_" anchor="iso123" type="standard">
               <title format="text/plain">Standard</title>
               <docidentifier>ISO 123:1066 (all parts)</docidentifier>
               <docnumber>123</docnumber>
@@ -246,10 +246,10 @@ RSpec.describe Metanorma::Iso do
 
         </sections>
         <bibliography>
-          <references id="_" normative="true" obligation="informative">
+          <references id="_" anchor="_normative_references" normative="true" obligation="informative">
             <title>Normative references</title>
             <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-            <bibitem id="iso123">
+            <bibitem id="_" anchor="iso123">
               <formattedref format="application/x-isodoc+xml">
                 <em>Standard</em>
               </formattedref>
@@ -278,9 +278,9 @@ RSpec.describe Metanorma::Iso do
 
         </sections>
         <bibliography>
-          <references id="_" normative="false" obligation="informative">
+          <references id="_" anchor="_bibliography" normative="false" obligation="informative">
             <title>Bibliography</title>
-            <bibitem id="iso123">
+            <bibitem id="_" anchor="iso123">
               <formattedref format="application/x-isodoc+xml">
                 <em>Standard</em>
               </formattedref>
@@ -309,9 +309,9 @@ RSpec.describe Metanorma::Iso do
             #{BLANK_HDR}
               <sections> </sections>
         <bibliography>
-          <references id='_' normative='false' obligation='informative'>
+          <references id='_' anchor="_bibliography" normative='false' obligation='informative'>
             <title>Bibliography</title>
-            <bibitem id='iso4' type='standard'>
+            <bibitem id="_" anchor="iso4" type='standard'>
               <docidentifier>ISO 9</docidentifier>
               <docnumber>9</docnumber>
               <contributor>
@@ -322,7 +322,7 @@ RSpec.describe Metanorma::Iso do
                 </organization>
               </contributor>
             </bibitem>
-            <bibitem id='iso3' type='standard'>
+            <bibitem id="_" anchor="iso3" type='standard'>
               <docidentifier>ISO 8000-8</docidentifier>
               <docnumber>8000-8</docnumber>
               <contributor>
@@ -333,7 +333,7 @@ RSpec.describe Metanorma::Iso do
                 </organization>
               </contributor>
             </bibitem>
-            <bibitem id='iso2' type='standard'>
+            <bibitem id="_" anchor="iso2" type='standard'>
               <docidentifier>ISO 8000-61</docidentifier>
               <docnumber>8000-61</docnumber>
               <contributor>
@@ -344,7 +344,7 @@ RSpec.describe Metanorma::Iso do
                 </organization>
               </contributor>
             </bibitem>
-            <bibitem id='iso1' type='standard'>
+            <bibitem id="_" anchor="iso1" type='standard'>
               <docidentifier>ISO 8000-110</docidentifier>
               <docnumber>8000-110</docnumber>
               <contributor>
@@ -409,9 +409,9 @@ RSpec.describe Metanorma::Iso do
           </preface>
           <sections/>
           <bibliography>
-            <references id="_" normative="false" obligation="informative">
+            <references id="_" anchor="_bibliography" normative="false" obligation="informative">
               <title>Bibliography</title>
-              <bibitem id="iso2" type="standard">
+              <bibitem id="_" anchor="iso2" type="standard">
                 <fetched/>
                 <title type="title-main" format="text/plain" language="en" script="Latn">Quantities and units</title>
                 <title type="title-part" format="text/plain" language="en" script="Latn">Part 0: General principles</title>
@@ -563,7 +563,7 @@ RSpec.describe Metanorma::Iso do
                 </relation>
                 <place>Geneva</place>
               </bibitem>
-              <bibitem id="iso1" type="standard">
+              <bibitem id="_" anchor="iso1" type="standard">
                 <fetched/>
                 <title type="title-main" format="text/plain" language="en" script="Latn">Heat-treatable steels, alloy steels and free-cutting steels</title>
                 <title type="title-part" format="text/plain" language="en" script="Latn">Part 3: Case-hardening steels</title>
@@ -637,7 +637,7 @@ RSpec.describe Metanorma::Iso do
     expect(RelatonIso::IsoBibliography).to receive(:get)
       .with("ISO/FDIS 17664-1", nil, anything) do
       RelatonIsoBib::XMLParser.from_xml(<<~"OUTPUT")
-        <bibitem id="x" type="standard">
+        <bibitem id="_" anchor="x" type="standard">
           <fetched>#{Date.today}</fetched>
           <title format="text/plain" language="fr" script="Latn" type="title-intro">Traitement de produits de soins de santé</title>
           <title format="text/plain" language="fr" script="Latn" type="title-main">Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif</title>
