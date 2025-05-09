@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-<!-- VERSION v2.0.4 -->
+<!-- VERSION v2.0.5 -->
 
   <!--
     ALERT: cannot have root comments, because of https://github.com/metanorma/metanorma/issues/437
@@ -35,6 +35,12 @@
           </ref>
         </zeroOrMore>
       </element>
+    </define>
+    <define name="IdRefType">
+      <a:documentation>Cross-references are not normalised to xsd:IDREF in Semantic XML: that is deferred to Presentation XML.
+All IdRefType instances point not to `@id` in Semantic XML, which is the Content GUID for an element,
+but to `@anchor`, the user-supplied cross-reference</a:documentation>
+      <text/>
     </define>
     <define name="index-primary">
       <element name="primary">
@@ -238,7 +244,7 @@
           <a:documentation>Notes specific to this block</a:documentation>
         </ref>
       </zeroOrMore>
-      <ref name="TermSource">
+      <ref name="BlockSource">
         <a:documentation>A source for the table</a:documentation>
       </ref>
     </define>
@@ -262,9 +268,111 @@ and is intended to be referenced by a callout within the source code</a:document
           <a:documentation>Notes whose scope is the current block</a:documentation>
         </ref>
       </zeroOrMore>
-      <ref name="TermSource">
+      <ref name="BlockSource">
         <a:documentation>A source for the block</a:documentation>
       </ref>
+    </define>
+    <define name="FigureBody">
+      <optional>
+        <ref name="tname">
+          <a:documentation>The caption of the block</a:documentation>
+        </ref>
+      </optional>
+      <choice>
+        <a:documentation>Content of the figure</a:documentation>
+        <ref name="image"/>
+        <ref name="video"/>
+        <ref name="audio"/>
+        <ref name="pre"/>
+        <oneOrMore>
+          <ref name="paragraph-with-footnote"/>
+        </oneOrMore>
+        <zeroOrMore>
+          <ref name="figure"/>
+        </zeroOrMore>
+      </choice>
+      <zeroOrMore>
+        <ref name="fn">
+          <a:documentation>Footnotes specific to the figure</a:documentation>
+        </ref>
+      </zeroOrMore>
+      <optional>
+        <ref name="dl">
+          <a:documentation>An optional definitions list defining any symbols used in the figure</a:documentation>
+        </ref>
+      </optional>
+      <zeroOrMore>
+        <ref name="note">
+          <a:documentation>Notes whose scope is the current block</a:documentation>
+        </ref>
+      </zeroOrMore>
+      <ref name="BlockSource">
+        <a:documentation>A source for the block</a:documentation>
+      </ref>
+    </define>
+    <define name="FigureNoIdBody">
+      <optional>
+        <ref name="source">
+          <a:documentation>A URI or other reference intended to link to an externally hosted image (or equivalent)</a:documentation>
+        </ref>
+      </optional>
+      <optional>
+        <ref name="tname">
+          <a:documentation>The caption of the block</a:documentation>
+        </ref>
+      </optional>
+      <choice>
+        <a:documentation>Content of the figure</a:documentation>
+        <ref name="image-no-id"/>
+        <ref name="video-no-id"/>
+        <ref name="audio-no-id"/>
+        <ref name="pre-no-id"/>
+        <oneOrMore>
+          <ref name="paragraph-with-footnote-no-id"/>
+        </oneOrMore>
+        <zeroOrMore>
+          <ref name="figure-no-id"/>
+        </zeroOrMore>
+      </choice>
+      <zeroOrMore>
+        <ref name="fn">
+          <a:documentation>Footnotes specific to the figure</a:documentation>
+        </ref>
+      </zeroOrMore>
+      <optional>
+        <ref name="dl-no-id">
+          <a:documentation>An optional definitions list defining any symbols used in the figure</a:documentation>
+        </ref>
+      </optional>
+      <zeroOrMore>
+        <ref name="note-no-id">
+          <a:documentation>Notes whose scope is the current block</a:documentation>
+        </ref>
+      </zeroOrMore>
+      <ref name="BlockSource">
+        <a:documentation>A source for the block</a:documentation>
+      </ref>
+    </define>
+    <define name="source">
+      <element name="source">
+        <attribute name="status">
+          <a:documentation>The status of the term as it is used in this document, relative to its definition in the original document</a:documentation>
+          <ref name="SourceStatusType"/>
+        </attribute>
+        <attribute name="type">
+          <a:documentation>The type of the managed term in the present context</a:documentation>
+          <ref name="SourceTypeType"/>
+        </attribute>
+        <ref name="origin">
+          <a:documentation>The original document and location where the term definition has been obtained from</a:documentation>
+        </ref>
+        <optional>
+          <ref name="modification">
+            <a:documentation>Any changes that the definition of the term has undergone relative to the original document,
+in order to be applicable in this standardisation document</a:documentation>
+          </ref>
+        </optional>
+      </element>
     </define>
     <define name="sourcecodebody">
       <a:documentation>The computer code or other such text presented in the block, as a single unformatted string. 
@@ -690,7 +798,7 @@ titlecase, or lowercase</a:documentation>
   <define name="RequiredId" combine="interleave">
     <optional>
       <attribute name="anchor">
-        <a:documentation> User-supplied anchor of element; replaced by content-based id, with all references to the anchor updated accordingly</a:documentation>
+        <a:documentation>User-supplied anchor of element; replaced by content-based id, with all references to the anchor updated accordingly</a:documentation>
       </attribute>
     </optional>
   </define>
@@ -1095,7 +1203,7 @@ That concept may be defined as a term within the current document, or it may be 
     <element name="label">
       <!-- Identifier of form input element that this element is a label of -->
       <attribute name="for">
-        <data type="IDREF"/>
+        <ref name="IdRefType"/>
       </attribute>
       <zeroOrMore>
         <ref name="PureTextElement"/>
@@ -2135,7 +2243,7 @@ used in document amendments</a:documentation>
   </define>
   <define name="termsource">
     <a:documentation>The bibliographic source where a term is defined in the sense applicable in this standardisation document</a:documentation>
-    <element name="termsource">
+    <element name="source">
       <attribute name="status">
         <a:documentation>The status of the term as it is used in this document, relative to its definition in the original document</a:documentation>
         <ref name="SourceStatusType"/>
@@ -2515,6 +2623,11 @@ Normative References contents contain normative references, but as a clause in t
   <define name="TermSource">
     <zeroOrMore>
       <ref name="termsource"/>
+    </zeroOrMore>
+  </define>
+  <define name="BlockSource">
+    <zeroOrMore>
+      <ref name="source"/>
     </zeroOrMore>
   </define>
   <start>
