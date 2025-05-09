@@ -3497,61 +3497,69 @@
 	<xsl:template match="iso:bibdata/iso:title[@type = 'title-part']">
 		<xsl:param name="curr_lang" select="$lang"/>
 		<xsl:param name="isMainLang">false</xsl:param>
-		<xsl:if test="$part != ''">
-			<!-- <xsl:text> — </xsl:text> -->
-			<xsl:choose>
-				<xsl:when test="$layoutVersion = '1951'"/>
-				<xsl:otherwise><xsl:text> — </xsl:text></xsl:otherwise>
-			</xsl:choose>
-			<xsl:variable name="part-word">
+		<xsl:choose>
+			<xsl:when test="$part != ''">
+				<!-- <xsl:text> — </xsl:text> -->
+				<xsl:choose>
+					<xsl:when test="$layoutVersion = '1951'"/>
+					<xsl:otherwise><xsl:text> — </xsl:text></xsl:otherwise>
+				</xsl:choose>
+				<xsl:variable name="part-word">
+					<xsl:choose>
+						<xsl:when test="$isMainLang = 'true'">
+							<xsl:value-of select="concat($i18n_locality_part, ' ', $part, ':')"/>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="java:replaceAll(java:java.lang.String.new($titles/title-part[@lang=$curr_lang]),'#',$part)"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</xsl:variable>
 				<xsl:choose>
 					<xsl:when test="$isMainLang = 'true'">
-						<xsl:value-of select="concat($i18n_locality_part, ' ', $part, ':')"/>
+						<xsl:choose>
+							<xsl:when test="$layoutVersion = '1951'">
+								<xsl:value-of select="$part-word"/>
+								<xsl:apply-templates/>
+							</xsl:when>
+							<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1979'">
+								<fo:block font-weight="bold" role="SKIP">
+									<xsl:value-of select="$part-word"/>
+									<xsl:text> </xsl:text>
+									<xsl:apply-templates/>
+								</fo:block>
+							</xsl:when>
+							<xsl:when test="$layoutVersion = '1987'">
+								<fo:block font-weight="bold" margin-top="12pt" role="SKIP">
+									<xsl:value-of select="$part-word"/>
+								</fo:block>
+							</xsl:when>
+							<xsl:otherwise>
+							<fo:block font-weight="normal" margin-top="6pt" role="SKIP">
+								<xsl:value-of select="$part-word"/>
+							</fo:block>
+							</xsl:otherwise>
+						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:value-of select="java:replaceAll(java:java.lang.String.new($titles/title-part[@lang=$curr_lang]),'#',$part)"/>
+						<!-- <xsl:value-of select="$linebreak"/> -->
+						<xsl:choose>
+							<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1979'"/>
+							<xsl:otherwise>
+								<fo:block font-size="1pt" margin-top="5pt" role="SKIP"> </fo:block>
+							</xsl:otherwise>
+						</xsl:choose>
+						<xsl:value-of select="$part-word"/>
+						<xsl:text> </xsl:text>
 					</xsl:otherwise>
 				</xsl:choose>
-			</xsl:variable>
-			<xsl:choose>
-				<xsl:when test="$isMainLang = 'true'">
-					<xsl:choose>
-						<xsl:when test="$layoutVersion = '1951'">
-							<xsl:value-of select="$part-word"/>
-							<xsl:apply-templates/>
-						</xsl:when>
-						<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1979'">
-							<fo:block font-weight="bold" role="SKIP">
-								<xsl:value-of select="$part-word"/>
-								<xsl:text> </xsl:text>
-								<xsl:apply-templates/>
-							</fo:block>
-						</xsl:when>
-						<xsl:when test="$layoutVersion = '1987'">
-							<fo:block font-weight="bold" margin-top="12pt" role="SKIP">
-								<xsl:value-of select="$part-word"/>
-							</fo:block>
-						</xsl:when>
-						<xsl:otherwise>
-						<fo:block font-weight="normal" margin-top="6pt" role="SKIP">
-							<xsl:value-of select="$part-word"/>
-						</fo:block>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:when>
-				<xsl:otherwise>
-					<!-- <xsl:value-of select="$linebreak"/> -->
-					<xsl:choose>
-						<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1979'"/>
-						<xsl:otherwise>
-							<fo:block font-size="1pt" margin-top="5pt" role="SKIP"> </fo:block>
-						</xsl:otherwise>
-					</xsl:choose>
-					<xsl:value-of select="$part-word"/>
-					<xsl:text> </xsl:text>
-				</xsl:otherwise>
-			</xsl:choose>
-		</xsl:if>
+			</xsl:when>
+			<xsl:otherwise> <!-- $part = '' -->
+				<xsl:choose>
+					<xsl:when test="$layoutVersion = '1951'"/>
+					<xsl:otherwise><xsl:text> — </xsl:text></xsl:otherwise>
+				</xsl:choose>
+			</xsl:otherwise>
+		</xsl:choose>
 		<xsl:choose>
 			<xsl:when test="$layoutVersion = '1951'"><fo:inline font-weight="normal"><xsl:apply-templates/></fo:inline></xsl:when>
 			<xsl:when test="($layoutVersion = '1972' or $layoutVersion = '1979') and $isMainLang = 'true'"/>
