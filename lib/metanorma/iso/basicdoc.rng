@@ -267,6 +267,10 @@ in a document (e.g. sourcecode annotations)</a:documentation>
       <value>justified</value>
     </choice>
   </define>
+  <define name="IdRefType">
+    <a:documentation>Type of cross-references to elements. In BasicDoc, these always point to id { xsd:ID } </a:documentation>
+    <data type="IDREF"/>
+  </define>
   <define name="RequiredId">
     <a:documentation>Mandatory anchor of element, to be used for cross-references within the document</a:documentation>
     <attribute name="id">
@@ -409,13 +413,13 @@ in a document (e.g. sourcecode annotations)</a:documentation>
       <attribute name="from">
         <a:documentation>Identifier for the start of the text or point in the text to which the comment applies.
 If not provided, the comment applies in the vicinity of the place it has been inserted into the text</a:documentation>
-        <data type="IDREF"/>
+        <ref name="IdRefType"/>
       </attribute>
     </optional>
     <optional>
       <attribute name="to">
         <a:documentation>Identifier for the end of the text to which the comment applies</a:documentation>
-        <data type="IDREF"/>
+        <ref name="IdRefType"/>
       </attribute>
     </optional>
   </define>
@@ -1504,7 +1508,7 @@ Restricted recursively to contain only other such inline elements with no identi
         <attribute name="to">
           <a:documentation>A reference to an anchor element (typically a bookmark), 
 to indicate that the index range covers a range of locations between the current index element and the `to` anchor</a:documentation>
-          <data type="IDREF"/>
+          <ref name="IdRefType"/>
         </attribute>
       </optional>
       <ref name="index-primary">
@@ -1662,7 +1666,7 @@ which can be bookmarks as well as block or section references</a:documentation>
   <define name="XrefAttributes">
     <attribute name="target">
       <a:documentation>The identifier of a section, block or inlined element being referenced</a:documentation>
-      <data type="IDREF"/>
+      <ref name="IdRefType"/>
     </attribute>
     <optional>
       <attribute name="type">
@@ -1723,7 +1727,7 @@ The target of a footnote is the location it is embedded in within the text</a:do
       <attribute name="target">
         <a:documentation>The target of the callout is understood to be the location of the callout within the source code; 
 the extent of the target is not expressed overtly</a:documentation>
-        <data type="IDREF"/>
+        <ref name="IdRefType"/>
       </attribute>
       <text>
         <a:documentation>The label of the callout, used to identify its target within the source code</a:documentation>
