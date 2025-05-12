@@ -1226,7 +1226,7 @@ RSpec.describe IsoDoc do
           </iso-standard>
     INPUT
 presxml = <<~INPUT
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title depth="1">Contents</fmt-title>
@@ -1238,37 +1238,43 @@ presxml = <<~INPUT
                 </fmt-title>
                 <p>
                    A.
-                   <fn reference="1" original-reference="2" id="_" target="_">
+                   <fn reference="1" id="_" original-reference="2" target="_">
                       <p original-id="_">Formerly denoted as 15 % (m/m).</p>
                       <fmt-fn-label>
-                         <sup>
-                            <semx element="autonum" source="_">1</semx>
-                            <span class="fmt-label-delim">)</span>
-                         </sup>
+                         <span class="fmt-caption-label">
+                            <sup>
+                               <semx element="autonum" source="_">1</semx>
+                               <span class="fmt-label-delim">)</span>
+                            </sup>
+                         </span>
                       </fmt-fn-label>
                    </fn>
                 </p>
                 <p>
                    B.
-                   <fn reference="1" original-reference="2" id="_" target="_">
+                   <fn reference="1" id="_" original-reference="2" target="_">
                       <p id="_">Formerly denoted as 15 % (m/m).</p>
                       <fmt-fn-label>
-                         <sup>
-                            <semx element="autonum" source="_">1</semx>
-                            <span class="fmt-label-delim">)</span>
-                         </sup>
+                         <span class="fmt-caption-label">
+                            <sup>
+                               <semx element="autonum" source="_">1</semx>
+                               <span class="fmt-label-delim">)</span>
+                            </sup>
+                         </span>
                       </fmt-fn-label>
                    </fn>
                 </p>
                 <p>
                    C.
-                   <fn reference="2" original-reference="1" id="_" target="_">
+                   <fn reference="2" id="_" original-reference="1" target="_">
                       <p original-id="_">Hello! denoted as 15 % (m/m).</p>
                       <fmt-fn-label>
-                         <sup>
-                            <semx element="autonum" source="_">2</semx>
-                            <span class="fmt-label-delim">)</span>
-                         </sup>
+                         <span class="fmt-caption-label">
+                            <sup>
+                               <semx element="autonum" source="_">2</semx>
+                               <span class="fmt-label-delim">)</span>
+                            </sup>
+                         </span>
                       </fmt-fn-label>
                    </fn>
                 </p>
@@ -1286,25 +1292,29 @@ presxml = <<~INPUT
                    <semx element="autonum" source="A">2</semx>
                 </fmt-xref-label>
                 A.
-                <fn reference="4" original-reference="42" id="_" target="_">
+                <fn reference="4" id="_" original-reference="42" target="_">
                    <p original-id="_">Third footnote.</p>
                    <fmt-fn-label>
-                      <sup>
-                         <semx element="autonum" source="_">4</semx>
-                         <span class="fmt-label-delim">)</span>
-                      </sup>
+                      <span class="fmt-caption-label">
+                         <sup>
+                            <semx element="autonum" source="_">4</semx>
+                            <span class="fmt-label-delim">)</span>
+                         </sup>
+                      </span>
                    </fmt-fn-label>
                 </fn>
              </clause>
              <p displayorder="3">
                 B.
-                <fn reference="1" original-reference="2" id="_" target="_">
+                <fn reference="1" id="_" original-reference="2" target="_">
                    <p id="_">Formerly denoted as 15 % (m/m).</p>
                    <fmt-fn-label>
-                      <sup>
-                         <semx element="autonum" source="_">1</semx>
-                         <span class="fmt-label-delim">)</span>
-                      </sup>
+                      <span class="fmt-caption-label">
+                         <sup>
+                            <semx element="autonum" source="_">1</semx>
+                            <span class="fmt-label-delim">)</span>
+                         </sup>
+                      </span>
                    </fmt-fn-label>
                 </fn>
              </p>
@@ -1329,13 +1339,15 @@ presxml = <<~INPUT
                       <em>
                          <span class="stddocTitle">
                             Cereals and cereal products
-                            <fn reference="3" original-reference="7" id="_" target="_">
+                            <fn reference="3" id="_" original-reference="7" target="_">
                                <p original-id="_">ISO is a standards organisation.</p>
                                <fmt-fn-label>
-                                  <sup>
-                                     <semx element="autonum" source="_">3</semx>
-                                     <span class="fmt-label-delim">)</span>
-                                  </sup>
+                                  <span class="fmt-caption-label">
+                                     <sup>
+                                        <semx element="autonum" source="_">3</semx>
+                                        <span class="fmt-label-delim">)</span>
+                                     </sup>
+                                  </span>
                                </fmt-fn-label>
                             </fn>
                          </span>
@@ -1344,13 +1356,15 @@ presxml = <<~INPUT
                    <title format="text/plain">Cereals or cereal products</title>
                    <title type="main" format="text/plain">
                       Cereals and cereal products
-                      <fn reference="3" original-reference="7" id="_" target="_">
+                      <fn reference="3" id="_" original-reference="7" target="_">
                          <p id="_">ISO is a standards organisation.</p>
                          <fmt-fn-label>
-                            <sup>
-                               <semx element="autonum" source="_">3</semx>
-                               <span class="fmt-label-delim">)</span>
-                            </sup>
+                            <span class="fmt-caption-label">
+                               <sup>
+                                  <semx element="autonum" source="_">3</semx>
+                                  <span class="fmt-label-delim">)</span>
+                               </sup>
+                            </span>
                          </fmt-fn-label>
                       </fn>
                    </title>
@@ -1377,9 +1391,11 @@ presxml = <<~INPUT
                 <semx element="fn" source="_">
                    <p id="_">
                       <fmt-fn-label>
-                         <sup>
-                            <semx element="autonum" source="_">1</semx>
-                         </sup>
+                         <span class="fmt-caption-label">
+                            <sup>
+                               <semx element="autonum" source="_">1</semx>
+                            </sup>
+                         </span>
                          <span class="fmt-caption-delim">
                             <tab/>
                          </span>
@@ -1392,9 +1408,11 @@ presxml = <<~INPUT
                 <semx element="fn" source="_">
                    <p id="_">
                       <fmt-fn-label>
-                         <sup>
-                            <semx element="autonum" source="_">2</semx>
-                         </sup>
+                         <span class="fmt-caption-label">
+                            <sup>
+                               <semx element="autonum" source="_">2</semx>
+                            </sup>
+                         </span>
                          <span class="fmt-caption-delim">
                             <tab/>
                          </span>
@@ -1407,9 +1425,11 @@ presxml = <<~INPUT
                 <semx element="fn" source="_">
                    <p id="_">
                       <fmt-fn-label>
-                         <sup>
-                            <semx element="autonum" source="_">3</semx>
-                         </sup>
+                         <span class="fmt-caption-label">
+                            <sup>
+                               <semx element="autonum" source="_">3</semx>
+                            </sup>
+                         </span>
                          <span class="fmt-caption-delim">
                             <tab/>
                          </span>
@@ -1422,9 +1442,11 @@ presxml = <<~INPUT
                 <semx element="fn" source="_">
                    <p id="_">
                       <fmt-fn-label>
-                         <sup>
-                            <semx element="autonum" source="_">4</semx>
-                         </sup>
+                         <span class="fmt-caption-label">
+                            <sup>
+                               <semx element="autonum" source="_">4</semx>
+                            </sup>
+                         </span>
                          <span class="fmt-caption-delim">
                             <tab/>
                          </span>

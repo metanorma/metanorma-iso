@@ -135,9 +135,11 @@ RSpec.describe IsoDoc do
                             <fn reference="a" id="_" target="_">
                                <p original-id="_">Parboiled rice.</p>
                                <fmt-fn-label>
-                                  <sup>
-                                     <semx element="autonum" source="_">a</semx>
-                                  </sup>
+                                  <span class="fmt-caption-label">
+                                     <sup>
+                                        <semx element="autonum" source="_">a</semx>
+                                     </sup>
+                                  </span>
                                </fmt-fn-label>
                             </fn>
                          </td>
@@ -146,9 +148,11 @@ RSpec.describe IsoDoc do
                             <fn reference="a" id="_" target="_">
                                <p id="_">Parboiled rice.</p>
                                <fmt-fn-label>
-                                  <sup>
-                                     <semx element="autonum" source="_">a</semx>
-                                  </sup>
+                                  <span class="fmt-caption-label">
+                                     <sup>
+                                        <semx element="autonum" source="_">a</semx>
+                                     </sup>
+                                  </span>
                                </fmt-fn-label>
                             </fn>
                          </td>
@@ -256,9 +260,11 @@ RSpec.describe IsoDoc do
                          <semx element="fn" source="_">
                             <p id="_">
                                <fmt-fn-label>
-                                  <sup>
-                                     <semx element="autonum" source="_">a</semx>
-                                  </sup>
+                                  <span class="fmt-caption-label">
+                                     <sup>
+                                        <semx element="autonum" source="_">a</semx>
+                                     </sup>
+                                  </span>
                                   <span class="fmt-caption-delim">
                                      <tab/>
                                   </span>
