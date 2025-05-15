@@ -427,20 +427,13 @@ RSpec.describe Metanorma::Iso do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include("Scope must occur before Terms and Definitions")
+      .not_to include("Scope must not occur after Terms and Definitions")
 
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :doctype: amendment
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
 
       .Foreword
       Foreword
-
-      == Scope
 
       [bibliography]
       == Normative References
@@ -453,7 +446,31 @@ RSpec.describe Metanorma::Iso do
 
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include("Scope must occur before Terms and Definitions")
+      .to include("Scope must not occur after Terms and Definitions")
+
+    Asciidoctor.convert(<<~INPUT, *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :no-isobib:
+      :doctype: amendment
+
+      .Foreword
+      Foreword
+
+      [bibliography]
+      == Normative References
+
+      == Terms and Definitions
+
+      == Clause
+
+      == Scope
+
+    INPUT
+    expect(File.read("test.err.html"))
+      .not_to include("Scope must not occur after Terms and Definitions")
   end
 
   it "Warning if Symbols and Abbreviated Terms does not occur immediately " \
@@ -607,7 +624,7 @@ RSpec.describe Metanorma::Iso do
     expect(File.read("test.err.html"))
       .not_to include("Only annexes and references can follow clauses")
     expect(File.read("test.err.html"))
-      .not_to include("Scope must occur before Terms and Definitions")
+      .not_to include("Scope must not occur after Terms and Definitions")
     expect(File.read("test.err.html"))
       .to include("Only annexes and references can follow terms and clauses")
   end

@@ -118,17 +118,17 @@ module Metanorma
         if elem.nil? || elem.name != "clause"
           @log.add("Style", elem, "Document must contain at least one clause")
         end
-        elem&.at("./self::clause") ||
+        elem&.at("./self::clause") or
           @log.add("Style", elem, "Document must contain clause after " \
                                   "Terms and Definitions")
-        elem&.at("./self::clause[@type = 'scope']") &&
+        elem&.at("./self::clause[@type = 'scope']") and
           @log.add("Style", elem,
-                   "Scope must occur before Terms and Definitions")
+                   "Scope must not occur after Terms and Definitions")
         elem = names.shift
         while elem&.name == "clause"
-          elem&.at("./self::clause[@type = 'scope']")
-          @log.add("Style", elem,
-                   "Scope must occur before Terms and Definitions")
+          elem&.at("./self::clause[@type = 'scope']") and
+            @log.add("Style", elem,
+                     "Scope must not occur after Terms and Definitions")
           elem = names.shift
         end
         %w(annex references).include? elem&.name or
