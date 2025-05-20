@@ -321,9 +321,19 @@ RSpec.describe Metanorma::Iso do
       :approval-subcommittee-number: 2
       :approval-workgroup: ApprovWorkg
       :approval-workgroup-number: 3
+      :title-main-en: Main Title -- Title
+      :title-complementary-en: Title Complement
+      :title-main-fr: Titre Principal
+      :title-complementary-fr: Complement du Titre
     INPUT
     output = <<~OUTPUT
            <bibdata type="standard">
+             <title language="en" format="text/plain" type="main">Main Title — Title — Title Complement</title>
+            <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
+            <title language="en" format="text/plain" type="title-complementary">Title Complement</title>
+            <title language="fr" format="text/plain" type="main">Titre Principal — Complement du Titre</title>
+            <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
+            <title language="fr" format="text/plain" type="title-complementary">Complement du Titre</title>
              <docidentifier type='ISO' primary="true">IEC/IETF/ISO TR 1000-1-1:2001</docidentifier>
              <docidentifier type='iso-reference'>IEC/IETF/ISO TR 1000-1-1:2001()</docidentifier>
              <docidentifier type='URN'>urn:iso:std:iec-ietf-iso:tr:1000:-1-1:stage-60.60:el</docidentifier>

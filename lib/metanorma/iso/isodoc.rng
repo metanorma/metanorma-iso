@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-<!-- VERSION v2.0.5 -->
+<!-- VERSION v2.0.6 -->
 
   <!--
     ALERT: cannot have root comments, because of https://github.com/metanorma/metanorma/issues/437
@@ -801,11 +801,23 @@ titlecase, or lowercase</a:documentation>
         <a:documentation>User-supplied anchor of element; replaced by content-based id, with all references to the anchor updated accordingly</a:documentation>
       </attribute>
     </optional>
+    <optional>
+      <attribute name="source">
+        <a:documentation>Sourcing of the current element in an external data model</a:documentation>
+        <ref name="IdRefType"/>
+      </attribute>
+    </optional>
   </define>
   <define name="OptionalId" combine="interleave">
     <optional>
       <attribute name="anchor">
         <a:documentation> User-supplied anchor of element; replaced by content-based id, with all references to the anchor updated accordingly</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="source">
+        <a:documentation>Sourcing of the current element in an external data model</a:documentation>
+        <ref name="IdRefType"/>
       </attribute>
     </optional>
   </define>
@@ -954,6 +966,7 @@ titlecase, or lowercase</a:documentation>
 is used in particular to capture mutually agreed definitions of codepoints in Unicode Private Use Area</a:documentation>
         </attribute>
       </optional>
+      <ref name="OptionalId"/>
       <oneOrMore>
         <ref name="TextElement">
           <a:documentation>Textual content of span</a:documentation>
