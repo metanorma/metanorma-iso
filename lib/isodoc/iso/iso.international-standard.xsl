@@ -1585,6 +1585,7 @@
 
 										<xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-intro']"/>
 										<xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-main']"/>
+										<xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-complementary']"/>
 										<fo:block font-size="11pt" text-transform="uppercase" margin-top="2mm">
 											<xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-part']/node()"/>
 										</fo:block>
@@ -1744,7 +1745,7 @@
 
 							<fo:block margin-top="6mm" font-weight="bold">
 								<xsl:call-template name="printEdition"/>
-								<xsl:text> — </xsl:text>
+								<xsl:value-of select="$nonbreak_space_em_dash_space"/>
 								<xsl:value-of select="/iso:metanorma/iso:bibdata/iso:version/iso:revision-date"/>
 							</fo:block>
 
@@ -3009,6 +3010,7 @@
 	<xsl:template name="insertTitlesLangMain">
 		<xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-intro']"/>
 		<xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-main']"/>
+		<xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-complementary']"/>
 		<xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-part']">
 			<xsl:with-param name="isMainLang">true</xsl:with-param>
 		</xsl:apply-templates>
@@ -3021,6 +3023,7 @@
 		<xsl:param name="lang_other"/>
 		<xsl:apply-templates select="$XML/iso:metanorma/iso:bibdata/iso:title[@language = $lang_other and @type = 'title-intro']"/>
 		<xsl:apply-templates select="$XML/iso:metanorma/iso:bibdata/iso:title[@language = $lang_other and @type = 'title-main']"/>
+		<xsl:apply-templates select="$XML/iso:metanorma/iso:bibdata/iso:title[@language = $lang_other and @type = 'title-complementary']"/>
 		<xsl:apply-templates select="$XML/iso:metanorma/iso:bibdata/iso:title[@language = $lang_other and @type = 'title-part']">
 			<xsl:with-param name="curr_lang" select="$lang_other"/>
 		</xsl:apply-templates>
@@ -3463,10 +3466,10 @@
 		<xsl:choose>
 			<xsl:when test="$layoutVersion = '1951'">
 				<fo:block text-transform="uppercase"><xsl:apply-templates/></fo:block>
-				</xsl:when>
+			</xsl:when>
 			<xsl:otherwise>
 				<xsl:apply-templates/>
-				<xsl:text> — </xsl:text>
+				<xsl:value-of select="$nonbreak_space_em_dash_space"/>
 			</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
@@ -3494,6 +3497,12 @@
 		</xsl:choose>
 	</xsl:template>
 
+	<xsl:template match="iso:bibdata/iso:title[@type = 'title-complementary']">
+		<xsl:param name="body">false</xsl:param>
+		<xsl:value-of select="$nonbreak_space_em_dash_space"/>
+		<xsl:apply-templates/>
+	</xsl:template>
+
 	<xsl:template match="iso:bibdata/iso:title[@type = 'title-part']">
 		<xsl:param name="curr_lang" select="$lang"/>
 		<xsl:param name="isMainLang">false</xsl:param>
@@ -3502,7 +3511,7 @@
 				<!-- <xsl:text> — </xsl:text> -->
 				<xsl:choose>
 					<xsl:when test="$layoutVersion = '1951'"/>
-					<xsl:otherwise><xsl:text> — </xsl:text></xsl:otherwise>
+					<xsl:otherwise><xsl:value-of select="$nonbreak_space_em_dash_space"/></xsl:otherwise>
 				</xsl:choose>
 				<xsl:variable name="part-word">
 					<xsl:choose>
@@ -3556,7 +3565,7 @@
 			<xsl:otherwise> <!-- $part = '' -->
 				<xsl:choose>
 					<xsl:when test="$layoutVersion = '1951'"/>
-					<xsl:otherwise><xsl:text> — </xsl:text></xsl:otherwise>
+					<xsl:otherwise><xsl:value-of select="$nonbreak_space_em_dash_space"/></xsl:otherwise>
 				</xsl:choose>
 			</xsl:otherwise>
 		</xsl:choose>
@@ -3625,6 +3634,7 @@
 						<xsl:when test="$revision_date_num &gt;= 19680101">
 							<fo:block font-weight="normal"><xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-intro']"/></fo:block>
 							<fo:block space-before="24pt"><xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-main']"/></fo:block>
+							<fo:block space-before="24pt"><xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-complementary']"/></fo:block>
 						</xsl:when>
 						<xsl:otherwise>
 
@@ -3632,6 +3642,7 @@
 							<xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-main']">
 								<xsl:with-param name="body">true</xsl:with-param>
 							</xsl:apply-templates>
+							<xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-complementary']"/>
 							<fo:block font-size="11pt" text-transform="uppercase" margin-top="2mm">
 								<xsl:apply-templates select="/iso:metanorma/iso:bibdata/iso:title[@language = $lang and @type = 'title-part']/node()"/>
 							</fo:block>
@@ -6000,6 +6011,7 @@
 	<xsl:variable name="hair_space"> </xsl:variable>
 	<xsl:variable name="en_dash">–</xsl:variable>
 	<xsl:variable name="em_dash">—</xsl:variable>
+	<xsl:variable name="nonbreak_space_em_dash_space"> — </xsl:variable>
 	<xsl:variable name="cr">&#13;</xsl:variable>
 	<xsl:variable name="lf">
 </xsl:variable>
