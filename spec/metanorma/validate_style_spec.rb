@@ -272,6 +272,48 @@ RSpec.describe Metanorma::Iso do
     INPUT
     r = File.read("test.err.html")
     expect(r).not_to include("number not broken up in threes")
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      ====
+      12121
+      ====
+    INPUT
+    r = File.read("test.err.html")
+    expect(r).to include("number not broken up in threes")
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      ====
+      ----
+      12121
+      ----
+      ====
+    INPUT
+    r = File.read("test.err.html")
+    expect(r).not_to include("number not broken up in threes")
+
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      ====
+      12121
+      ----
+      12121
+      ----
+      ====
+    INPUT
+    r = File.read("test.err.html")
+    expect(r).to include("number not broken up in threes")
   end
 
   it "gives Style warning if number not broken up in threes looks like year" do

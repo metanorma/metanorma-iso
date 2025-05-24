@@ -8,8 +8,8 @@ module Metanorma
       def extract_text(node)
         node.nil? and return ""
         node1 = Nokogiri::XML.fragment(node.to_s)
-        node1.xpath(".//link | .//locality | .//localityStack | .//stem")
-          .each(&:remove)
+        node1.xpath(".//link | .//locality | .//localityStack | " \
+          ".//stem | .//sourcecode").each(&:remove)
         ret = ""
         node1.traverse { |x| ret += x.text if x.text? }
         HTMLEntities.new.decode(ret)
