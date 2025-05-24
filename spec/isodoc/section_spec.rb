@@ -1340,7 +1340,7 @@ RSpec.describe IsoDoc do
       OUTPUT
   end
 
-  it "processes middle title" do
+  it "processes middle title, intro + part" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
@@ -1394,6 +1394,83 @@ RSpec.describe IsoDoc do
                <span class="boldtitle">Introduction — Main Title — Title — </span>
                <span class="nonboldtitle">Part 1:</span>
                <span class="boldtitle">Title Part</span>
+             </p>
+             <div id="A">
+               <h1>1</h1>
+             </div>
+           </div>
+         </body>
+       </html>
+    OUTPUT
+    pres_output = IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true)
+    xml = Nokogiri::XML(pres_output)
+    xml.at("//xmlns:localized-strings")&.remove
+    xml.at("//xmlns:boilerplate")&.remove
+    xml.at("//xmlns:metanorma-extension")&.remove
+    expect(strip_guid(Xml::C14n.format(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true))))
+      .to be_equivalent_to Xml::C14n.format(html)
+  end
+
+  it "processes middle title, complementary" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+          <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
+          <title format="text/plain" language="en" type="title-complementary">Title Complement</title>
+          <ext>
+            <structuredidentifier>
+              <project-number origyr="2016-05-01" part="1">17301</project-number>
+            </structuredidentifier>
+          </ext>
+        </bibdata>
+        <sections>
+        <clause id="A"/>
+        </sections>
+      </iso-standard>
+    INPUT
+    presxml = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <bibdata>
+           <title format="text/plain" language="en" type="title-main">Main Title&#x2009;&#x2014;&#x2009;Title</title>
+           <title format="text/plain" language="en" type="title-complementary">Title Complement</title>
+           <ext>
+             <structuredidentifier>
+               <project-number origyr="2016-05-01" part="1">17301</project-number>
+             </structuredidentifier>
+           </ext>
+         </bibdata>
+       <preface> <clause type="toc" id="_" displayorder="1">
+            <fmt-title depth="1">Contents</fmt-title>
+          </clause> </preface>
+         <sections>
+            <p class="zzSTDTitle1" displayorder="2">
+                <span class="boldtitle">Main Title — Title — </span>
+                <span class="boldtitle">Title Complement</span>
+             </p>
+         <clause id="A" displayorder="3">
+                  <fmt-title depth="1">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="A">1</semx>
+            </span>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="A">1</semx>
+         </fmt-xref-label>
+          </clause>
+         </sections>
+       </iso-standard>
+    INPUT
+    html = <<~OUTPUT
+      #{HTML_HDR}
+                   <p class="zzSTDTitle1">
+                 <span class="boldtitle">Main Title — Title — </span>
+              <span class="boldtitle">Title Complement</span>
              </p>
              <div id="A">
                <h1>1</h1>

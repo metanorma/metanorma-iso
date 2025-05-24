@@ -30,11 +30,14 @@
    name="CVP_Secretariat_Loca">{{ labels["secretariat"] }}</a>: {{ secretariat }}</p>
 {% endif %}
 
-<div class="doctitle-en"><div><span class="title">{{ doctitleintro }}{% if doctitleintro and doctitlemain %} &#x2014; {% endif %}</span><span class="subtitle">{{ doctitlemain }}{% if doctitlemain and doctitlepart %} &#x2014;{% endif %}</span>
+<div class="doctitle-en"><div><span class="title">{{ doctitleintro }}{% if doctitleintro and doctitlemain %} &#x2014; {% endif %}</span><span class="subtitle">{{ doctitlemain }}{% if doctitlemain and (doctitlepart or doctitlecomplementary) %} &#x2014;{% endif %}</span>
   {% if doctitlepart %}
 </div><div class="doctitle-part">
   {% if doctitlepartlabel %}<span class="partlabel">{{ doctitlepartlabel }}: </span>{% endif %}
   <span class="part">{{ doctitlepart }}</span>
+  {% endif %}
+  {% if doctitlecomplementary %}
+  <span class="part">{{ doctitlecomplementary }}</span>
   {% endif %}
 </div>
 {% if doctitleamdlabel %}
@@ -48,11 +51,14 @@
 {% endif %}
 </div>
 
-<div class="doctitle-fr"><div><span class="title">{{ docsubtitleintro }}{% if docsubtitleintro and docsubtitlemain %} &#x2014; {% endif %}</span><span class="subtitle">{{ docsubtitlemain }}{% if docsubtitlemain and docsubtitlepart %} &#x2014;{% endif %}</span>
+<div class="doctitle-fr"><div><span class="title">{{ docsubtitleintro }}{% if docsubtitleintro and docsubtitlemain %} &#x2014; {% endif %}</span><span class="subtitle">{{ docsubtitlemain }}{% if docsubtitlemain and (docsubtitlepart or docsubtitlecomplementary) %} &#x2014;{% endif %}</span>
   {% if docsubtitlepart %}
   </div><div>
   {% if docsubtitlepartlabel %}<span class="partlabel">{{ docsubtitlepartlabel }}: </span>{% endif %}
   <span class="part">{{ docsubtitlepart }}</span>
+  {% endif %}
+  {% if docsubtitlecomplementary %}
+  <span class="part">{{ docsubtitlecomplementary }}</span>
   {% endif %}
 </div>
 {% if docsubtitleamdlabel %}
