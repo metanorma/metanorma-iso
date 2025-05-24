@@ -98,7 +98,8 @@ module IsoDoc
         @meta.get[:doctitleintro] && @meta.get[:doctitlemain] and
           ret += " &#x2014; "
         ret += @meta.get[:doctitlemain]
-        @meta.get[:doctitlemain] && @meta.get[:doctitlepart] and
+        @meta.get[:doctitlemain] &&
+          (@meta.get[:doctitlepart] || @meta.get[:doctitlecomplementary]) and
           ret += " &#x2014; "
         ret += "</span>#{middle_title_part}"
         "<p class='zzSTDTitle1'>#{ret}</p>"
@@ -106,7 +107,9 @@ module IsoDoc
 
       def middle_title_part
         ret = ""
-        if a = @meta.get[:doctitlepart]
+        if a = @meta.get[:doctitlecomplementary]
+          ret += "<span class='boldtitle'>#{a}</span>"
+        elsif a = @meta.get[:doctitlepart]
           b = @meta.get[:doctitlepartlabel] and
             ret += "<span class='nonboldtitle'>#{b}:</span> "
           ret += "<span class='boldtitle'>#{a}</span>"

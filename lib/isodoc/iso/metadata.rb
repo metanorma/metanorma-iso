@@ -11,8 +11,7 @@ module IsoDoc
       end
 
       def status_abbrev(stage, _substage, iter, draft, doctype)
-        return "" unless stage
-
+        stage or return ""
         if %w(technical-report technical-specification).include?(doctype)
           stage = "DTS" if stage == "DIS"
           stage = "FDTS" if stage == "FDIS"
@@ -103,16 +102,16 @@ module IsoDoc
       end
 
       def compose_title(tparts, tnums, lang)
-        main = ""
-        tparts[:main].nil? or
-          main = tparts[:main].children.to_xml
+        t = tparts[:main].nil? ? "" :  tparts[:main].children.to_xml
         tparts[:intro] and
-          main = "#{tparts[:intro].children.to_xml}&#xa0;&#x2014; #{main}"
+          t = "#{tparts[:intro].children.to_xml}&#xa0;&#x2014; #{t}"
+        tparts[:complementary] and
+          t = "#{t}&#xa0;&#x2014; #{tparts[:complementary].children.to_xml}"
         if tparts[:part]
           suffix = part_title(tparts[:part], tnums, lang)
-          main = "#{main}&#xa0;&#x2014; #{suffix}"
+          t = "#{t}&#xa0;&#x2014; #{suffix}"
         end
-        main
+        t
       end
 
       def title_nums(isoxml)
@@ -125,16 +124,10 @@ module IsoDoc
       end
 
       def title_parts(isoxml, lang)
-        { intro: isoxml.at(ns("//bibdata/title[@type='title-intro' and " \
-                              "@language='#{lang}']")),
-          main: isoxml.at(ns("//bibdata/title[@type='title-main' and " \
-                             "@language='#{lang}']")),
-          part: isoxml.at(ns("//bibdata/title[@type='title-part' and " \
-                             "@language='#{lang}']")),
-          amd: isoxml.at(ns("//bibdata/title[@type='title-amd' and " \
-                            "@language='#{lang}']")),
-          add: isoxml.at(ns("//bibdata/title[@type='title-add' and " \
-                            "@language='#{lang}']")) }
+        %w(intro main complementary part amd add).each_with_object({}) do |w, m|
+          m[w.to_sym] = isoxml.at(ns("//bibdata/title[@type='title-#{w}' and " \
+                              "@language='#{lang}']"))
+        end
       end
 
       def title(isoxml, _out)
@@ -142,13 +135,15 @@ module IsoDoc
                when "fr", "ru" then @lang
                else "en"
                end
-        # intro, main, part, amd = title_parts(isoxml, lang)
+        # intro, main, complementary, part, amd = title_parts(isoxml, lang)
         tp = title_parts(isoxml, lang)
         tn = title_nums(isoxml)
         set(:doctitlemain, tp[:main] ? tp[:main].children.to_xml : "")
         main = compose_title(tp, tn, lang)
         set(:doctitle, main)
         tp[:intro] and set(:doctitleintro, tp[:intro].children.to_xml)
+        tp[:complementary] and
+          set(:doctitlecomplementary, tp[:complementary].children.to_xml)
         set(:doctitlepartlabel, part_prefix(tn, lang))
         set(:doctitlepart, tp[:part].children.to_xml) if tp[:part]
         set(:doctitleamdlabel, amd_prefix(tn, lang)) if tn[:amd]
@@ -167,6 +162,8 @@ module IsoDoc
         main = compose_title(tp, tn, lang)
         set(:docsubtitle, main)
         tp[:intro] and set(:docsubtitleintro, tp[:intro].children.to_xml)
+        tp[:complementary] and
+          set(:docsubtitlecomplementary, tp[:complementary].children.to_xml)
         set(:docsubtitlepartlabel, part_prefix(tn, lang))
         tp[:part] and set(:docsubtitlepart, tp[:part].children.to_xml)
         set(:docsubtitleamdlabel, amd_prefix(tn, lang)) if tn[:amd]
