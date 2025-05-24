@@ -113,7 +113,7 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
         #{BLANK_HDR}
         <sections>
-          <terms id="_" anchor="_terms_and_definitions" obligation="normative">
+          <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
             <term id="_" anchor="term-Term1">
@@ -257,7 +257,7 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <terms id="_" anchor="_terms_and_definitions" obligation="normative">
+          <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
             <term id="_" anchor="term-Term1">
@@ -313,7 +313,7 @@ RSpec.describe Metanorma::Iso do
           </foreword>
         </preface>
         <sections>
-          <clause id="_" anchor="_section_1" inline-header="false" obligation="normative">
+          <clause id="_" inline-header="false" obligation="normative">
             <title>Section 1</title>
           </clause>
         </sections>
@@ -445,7 +445,7 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <terms id="_" anchor="_terms_and_definitions" obligation="normative">
+          <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
             <term id="_" anchor="term-Term1">
@@ -487,7 +487,7 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR}
         <sections>
-          <terms id="_" anchor="_terms_and_definitions" obligation="normative">
+          <terms id="_" obligation="normative">
             <title>Terms and definitions</title>
             #{TERM_BOILERPLATE}
             <term id="_" anchor="term-Term1">

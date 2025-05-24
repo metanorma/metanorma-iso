@@ -57,72 +57,72 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       #{BLANK_HDR.sub(%r{<doctype>standard</doctype>}, '<doctype>amendment</doctype>').sub(%r{<stagename>International Standard</stagename>}, '<stagename/>')}
            <sections>
-             <clause id="_" anchor="_foreword" obligation="normative">
+             <clause id="_" obligation="normative">
                 <title>Foreword</title>
                 <p id="_">Text</p>
              </clause>
-             <clause id="_" anchor="_introduction" obligation="normative">
+             <clause id="_" obligation="normative">
                 <title>Introduction</title>
-                <clause id="_" anchor="_introduction_subsection" obligation="normative">
+                <clause id="_" obligation="normative">
                    <title>Introduction Subsection</title>
                 </clause>
              </clause>
-             <clause id="_" anchor="_scope" obligation="normative">
+             <clause id="_" obligation="normative">
                 <title>Scope</title>
                 <p id="_">Text</p>
              </clause>
-             <clause id="_" anchor="_acknowledgements" obligation="normative">
+             <clause id="_" obligation="normative">
                 <title>Acknowledgements</title>
              </clause>
-             <clause id="_" anchor="_normative_references" obligation="normative">
+             <clause id="_" obligation="normative">
                 <title>Normative References</title>
              </clause>
-             <clause id="_" anchor="_terms_and_definitions" obligation="normative">
+             <clause id="_" obligation="normative">
                 <title>Terms and Definitions</title>
-                <clause id="_" anchor="_term1" obligation="normative">
+                <clause id="_" obligation="normative">
                    <title>Term1</title>
                 </clause>
              </clause>
-             <clause id="_" anchor="_terms_definitions_symbols_and_abbreviated_terms" obligation="normative">
+             <clause id="_" obligation="normative">
                 <title>Terms, Definitions, Symbols and Abbreviated Terms</title>
-                <clause id="_" anchor="_normal_terms" obligation="normative">
+                <clause id="_" obligation="normative">
                    <title>Normal Terms</title>
-                   <clause id="_" anchor="_term2" obligation="normative">
+                   <clause id="_" obligation="normative">
                       <title>Term2</title>
                    </clause>
                 </clause>
-                <clause id="_" anchor="_symbols_and_abbreviated_terms" obligation="normative">
+                <clause id="_" obligation="normative">
                    <title>Symbols and Abbreviated Terms</title>
                 </clause>
              </clause>
-             <clause id="_" anchor="_symbols_and_abbreviated_terms_2" obligation="normative">
+             <clause id="_" obligation="normative">
                 <title>Symbols and Abbreviated Terms</title>
              </clause>
-             <clause id="_" anchor="_clause_4" obligation="normative">
+             <clause id="_" obligation="normative">
                 <title>Clause 4</title>
-                <clause id="_" anchor="_introduction_2" obligation="normative">
+                <clause id="_" obligation="normative">
                    <title>Introduction</title>
                 </clause>
-                <clause id="_" anchor="_clause_4_2" obligation="normative">
+                <clause id="_" obligation="normative">
                    <title>Clause 4.2</title>
                 </clause>
              </clause>
-             <clause id="_" anchor="_terms_and_definitions_2" obligation="normative">
+             <clause id="_" obligation="normative">
                 <title>Terms and Definitions</title>
              </clause>
-             <clause id="_" anchor="_bibliography" obligation="normative">
+             <clause id="_" obligation="normative">
                 <title>Bibliography</title>
-                <clause id="_" anchor="_bibliography_subsection" obligation="normative">
+                <clause id="_" obligation="normative">
                    <title>Bibliography Subsection</title>
                 </clause>
              </clause>
           </sections>
-          <annex id="_" anchor="_annex" obligation="normative">
+          <annex id="_" obligation="normative">
              <title>Annex</title>
-             <clause id="_" anchor="_annex_a_1" obligation="normative">
+             <clause id="_" obligation="normative">
                 <title>Annex A.1</title>
              </clause>
-             <appendix id="_" anchor="_appendix_1" obligation="normative">
+             <appendix id="_" obligation="normative">
                 <title>Appendix 1</title>
              </appendix>
           </annex>
