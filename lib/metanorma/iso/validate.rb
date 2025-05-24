@@ -25,22 +25,6 @@ module Metanorma
         end
       end
 
-      # KILL
-      def see_xrefs_validatex(root)
-        @lang == "en" or return
-        root.xpath("//xref").each do |t|
-          preceding = t.at("./preceding-sibling::text()[last()]")
-          !preceding.nil? &&
-            /\b(see| refer to)\p{Zs}*\Z/mi.match(preceding) or next
-
-          (target = root.at("//*[@anchor = '#{t['target']}']")) || next
-          target.at("./ancestor-or-self::*[@obligation = 'normative']") &&
-            !target.at("./ancestor::sections") and
-            @log.add("Style", t,
-                     "'see #{t['target']}' is pointing to a normative section")
-        end
-      end
-
       # ISO/IEC DIR 2, 15.5.3, 20.2
       # does not deal with preceding text marked up
       def see_xrefs_validate(root)
@@ -122,7 +106,8 @@ module Metanorma
           .xpath("//sections/terms | //sections/clause[.//terms] | " \
                  "//annex[.//terms]").each_with_object({}) do |t, m|
           t.xpath(".//*/@anchor").each { |a| m[a.text] = true }
-          t.name == "terms" and m[t["anchor"]] = true
+          t.xpath(".//*/@id").each { |a| m[a.text] = true }
+          t.name == "terms" and m[t["anchor"] || t["id"]] = true
         end
         xmldoc.xpath(".//xref").each do |x|
           term_xrefs_validate1(x, termids)
@@ -130,12 +115,12 @@ module Metanorma
       end
 
       def term_xrefs_validate1(xref, termids)
-        closest_id = xref.xpath("./ancestor::*[@anchor]")&.last or return
-        termids[xref["target"]] && !termids[closest_id["anchor"]] and
+        closest_id = xref.xpath("./ancestor::*[@id]")&.last or return
+        termids[xref["target"]] && !termids[closest_id["id"]] and
           @log.add("Style", xref,
                    "only terms clauses can cross-reference terms clause " \
                    "(#{xref['target']})")
-        !termids[xref["target"]] && termids[closest_id["anchor"]] and
+        !termids[xref["target"]] && termids[closest_id["id"]] and
           @log.add("Style", xref,
                    "non-terms clauses cannot cross-reference terms clause " \
                    "(#{xref['target']})")
