@@ -71,7 +71,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
       <foreword displayorder="2" id="_">
           <title id="_">Foreword</title>
-          <fmt-title depth="1">
+          <fmt-title id="_" depth="1">
              <semx element="title" source="_">Foreword</semx>
           </fmt-title>
           <p>
@@ -250,7 +250,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
        <foreword displayorder="2" id="_">
            <title id="_">Foreword</title>
-           <fmt-title depth="1">
+           <fmt-title id="_" depth="1">
               <semx element="title" source="_">Foreword</semx>
            </fmt-title>
            <p>
@@ -432,7 +432,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
        <foreword displayorder="2" id="_">
            <title id="_">Foreword</title>
-           <fmt-title depth="1">
+           <fmt-title id="_" depth="1">
               <semx element="title" source="_">Foreword</semx>
            </fmt-title>
            <p>
@@ -608,7 +608,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
        <foreword displayorder="2" id="_">
           <title id="_">Foreword</title>
-          <fmt-title depth="1">
+          <fmt-title id="_" depth="1">
              <semx element="title" source="_">Foreword</semx>
           </fmt-title>
           <p>
@@ -856,7 +856,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
        <foreword displayorder="2" id="_">
           <title id="_">Foreword</title>
-          <fmt-title depth="1">
+          <fmt-title id="_" depth="1">
              <semx element="title" source="_">Foreword</semx>
           </fmt-title>
           <p>
@@ -1025,7 +1025,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
        <foreword displayorder="2" id="_">
           <title id="_">Avant-propos</title>
-          <fmt-title depth="1">
+          <fmt-title id="_" depth="1">
              <semx element="title" source="_">Avant-propos</semx>
           </fmt-title>
           <p>
@@ -1193,7 +1193,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
        <foreword displayorder="2" id="_">
           <title id="_">Foreword</title>
-          <fmt-title depth="1">
+          <fmt-title id="_" depth="1">
              <semx element="title" source="_">Foreword</semx>
           </fmt-title>
           <p>
@@ -1361,7 +1361,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
         <foreword displayorder="2" id="_">
            <title id="_">Foreword</title>
-           <fmt-title depth="1">
+           <fmt-title id="_" depth="1">
               <semx element="title" source="_">Foreword</semx>
            </fmt-title>
            <p>
@@ -1529,7 +1529,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
        <foreword displayorder="2" id="_">
            <title id="_">Foreword</title>
-           <fmt-title depth="1">
+           <fmt-title id="_" depth="1">
               <semx element="title" source="_">Foreword</semx>
            </fmt-title>
            <p>
@@ -1697,7 +1697,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
         <foreword displayorder="2" id="_">
            <title id="_">Foreword</title>
-           <fmt-title depth="1">
+           <fmt-title id="_" depth="1">
               <semx element="title" source="_">Foreword</semx>
            </fmt-title>
            <p>
@@ -1852,7 +1852,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
        <foreword displayorder="2" id="_">
           <title id="_">Foreword</title>
-          <fmt-title depth="1">
+          <fmt-title id="_" depth="1">
              <semx element="title" source="_">Foreword</semx>
           </fmt-title>
           <p>
@@ -2046,7 +2046,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
         <foreword displayorder="2" id="_">
            <title id="_">Foreword</title>
-           <fmt-title depth="1">
+           <fmt-title id="_" depth="1">
               <semx element="title" source="_">Foreword</semx>
            </fmt-title>
            <p>
@@ -2214,7 +2214,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     output = <<~OUTPUT
         <foreword displayorder="2" id="_">
            <title id="_">Foreword</title>
-           <fmt-title depth="1">
+           <fmt-title id="_" depth="1">
               <semx element="title" source="_">Foreword</semx>
            </fmt-title>
            <p>
