@@ -15,16 +15,16 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <table id="_">
-            <name>Table Name</name>
+            <name id="_">Table Name</name>
             <thead>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">A</th>
                 <th id="_" align="left" valign="top">B</th>
                 <th id="_" align="left" valign="top">C</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">1</th>
                 <td id="_" align="left" valign="top">2</td>
                 <td id="_" align="left" valign="top">3</td>
@@ -53,21 +53,21 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <table id="_">
-            <name>Table Name</name>
+            <name id="_">Table Name</name>
             <thead>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">A</th>
                 <th id="_" align="left" valign="top">B</th>
                 <th id="_" align="left" valign="top">C</th>
               </tr>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">1</th>
                 <th id="_" align="left" valign="top">2</th>
                 <th id="_" align="left" valign="top">3</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">1</th>
                 <td id="_" align="left" valign="top">2</td>
                 <td id="_" align="left" valign="top">3</td>
@@ -96,19 +96,19 @@ RSpec.describe Metanorma::Iso do
         <sections>
           <table id="_">
             <thead>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">A</th>
                 <th id="_" align="left" valign="top">B</th>
                 <th id="_" align="left" valign="top">C</th>
               </tr>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">1</th>
                 <th id="_" align="left" valign="top">2</th>
                 <th id="_" align="left" valign="top">3</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">1</th>
                 <td id="_" align="left" valign="top">2</td>
                 <td id="_" align="left" valign="top">3</td>
@@ -157,9 +157,9 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
                <sections>
            <table id="_">
-             <name>Maximum permissible mass fraction of defects</name>
+             <name id="_">Maximum permissible mass fraction of defects</name>
              <thead>
-               <tr>
+               <tr id="_">
                  <th id="_" valign="top" rowspan="2" align="left">Defect</th>
                  <th id="_" colspan="4" valign="top" align="center">Maximum permissible mass fraction of defects in husked rice<br/><stem type="MathML" block="false"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false">
             <msub><mi>w</mi>
@@ -170,7 +170,7 @@ RSpec.describe Metanorma::Iso do
             </msub>
               </mstyle></math><asciimath>w_max</asciimath></stem></th>
                </tr>
-               <tr>
+               <tr id="_">
                  <th id="_" valign="top" align="left">in husked rice</th>
                  <th id="_" valign="top" align="center">in milled rice (non-glutinous)</th>
                  <th id="_" valign="top" align="center">in husked parboiled rice</th>
@@ -178,121 +178,121 @@ RSpec.describe Metanorma::Iso do
                </tr>
              </thead>
              <tbody>
-               <tr>
-                 <td id="_" valign="top" align="left">Extraneous matter: organic<fn reference="a"><p id="_">Organic extraneous matter includes foreign seeds, husks, bran, parts of straw, etc.</p></fn></td>
+               <tr id="_">
+                 <td id="_" valign="top" align="left">Extraneous matter: organic<fn id="_" reference="a"><p id="_">Organic extraneous matter includes foreign seeds, husks, bran, parts of straw, etc.</p></fn></td>
                  <td id="_" valign="top" align="center">1,0</td>
                  <td id="_" valign="top" align="center">0,5</td>
                  <td id="_" valign="top" align="center">1,0</td>
                  <td id="_" valign="top" align="center">0,5</td>
                </tr>
-               <tr>
-                 <td id="_" valign="top" align="left">Extraneous matter: inorganic<fn reference="b"><p id="_">Inorganic extraneous matter includes stones, sand, dust, etc.</p></fn></td>
+               <tr id="_">
+                 <td id="_" valign="top" align="left">Extraneous matter: inorganic<fn id="_" reference="b"><p id="_">Inorganic extraneous matter includes stones, sand, dust, etc.</p></fn></td>
                  <td id="_" valign="top" align="center">0,5</td>
                  <td id="_" valign="top" align="center">0,5</td>
                  <td id="_" valign="top" align="center">0,5</td>
                  <td id="_" valign="top" align="center">0,5</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">Paddy</td>
                  <td id="_" valign="top" align="center">2,5</td>
                  <td id="_" valign="top" align="center">0,3</td>
                  <td id="_" valign="top" align="center">2,5</td>
                  <td id="_" valign="top" align="center">0,3</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">Husked rice, non-parboiled</td>
                  <td id="_" valign="top" align="center">Not applicable</td>
                  <td id="_" valign="top" align="center">1,0</td>
                  <td id="_" valign="top" align="center">1,0</td>
                  <td id="_" valign="top" align="center">1,0</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">Milled rice, non-parboiled</td>
                  <td id="_" valign="top" align="center">1,0</td>
                  <td id="_" valign="top" align="center">Not applicable</td>
                  <td id="_" valign="top" align="center">1,0</td>
                  <td id="_" valign="top" align="center">1,0</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">Husked rice, parboiled</td>
                  <td id="_" valign="top" align="center">1,0</td>
                  <td id="_" valign="top" align="center">1,0</td>
                  <td id="_" valign="top" align="center">Not applicable</td>
                  <td id="_" valign="top" align="center">1,0</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">Milled rice, parboiled</td>
                  <td id="_" valign="top" align="center">1,0</td>
                  <td id="_" valign="top" align="center">1,0</td>
                  <td id="_" valign="top" align="center">1,0</td>
                  <td id="_" valign="top" align="center">Not applicable</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">Chips</td>
                  <td id="_" valign="top" align="center">0,1</td>
                  <td id="_" valign="top" align="center">0,1</td>
                  <td id="_" valign="top" align="center">0,1</td>
                  <td id="_" valign="top" align="center">0,1</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">HDK</td>
-                 <td id="_" valign="top" align="center">2,0<fn reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
+                 <td id="_" valign="top" align="center">2,0<fn id="_" reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
                  <td id="_" valign="top" align="center">2,0</td>
-                 <td id="_" valign="top" align="center">2,0<fn reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
+                 <td id="_" valign="top" align="center">2,0<fn id="_" reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
                  <td id="_" valign="top" align="center">2,0</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">Damaged kernels</td>
                  <td id="_" valign="top" align="center">4,0</td>
                  <td id="_" valign="top" align="center">3,0</td>
                  <td id="_" valign="top" align="center">4,0</td>
                  <td id="_" valign="top" align="center">3,0</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">Immature and/or malformed kernels</td>
                  <td id="_" valign="top" align="center">8,0</td>
                  <td id="_" valign="top" align="center">2,0</td>
                  <td id="_" valign="top" align="center">8,0</td>
                  <td id="_" valign="top" align="center">2,0</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">Chalky kernels</td>
-                 <td id="_" valign="top" align="center">5,0<fn reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
+                 <td id="_" valign="top" align="center">5,0<fn id="_" reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
                  <td id="_" valign="top" align="center">5,0</td>
                  <td id="_" valign="top" align="center">Not applicable</td>
                  <td id="_" valign="top" align="center">Not applicable</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">Red kernels and red-streaked kernels</td>
                  <td id="_" valign="top" align="center">12,0</td>
                  <td id="_" valign="top" align="center">12,0</td>
-                 <td id="_" valign="top" align="center">12,0<fn reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
+                 <td id="_" valign="top" align="center">12,0<fn id="_" reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
                  <td id="_" valign="top" align="center">12,0</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">Partly gelatinized kernels</td>
                  <td id="_" valign="top" align="center">Not applicable</td>
                  <td id="_" valign="top" align="center">Not applicable</td>
-                 <td id="_" valign="top" align="center">11,0<fn reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
+                 <td id="_" valign="top" align="center">11,0<fn id="_" reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
                  <td id="_" valign="top" align="center">11,0</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">Pecks</td>
                  <td id="_" valign="top" align="center">Not applicable</td>
                  <td id="_" valign="top" align="center">Not applicable</td>
                  <td id="_" valign="top" align="center">4,0</td>
                  <td id="_" valign="top" align="center">2,0</td>
                </tr>
-               <tr>
+               <tr id="_">
                  <td id="_" valign="top" align="left">Waxy rice</td>
-                 <td id="_" valign="top" align="center">1,0<fn reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
+                 <td id="_" valign="top" align="center">1,0<fn id="_" reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
                  <td id="_" valign="top" align="center">1,0</td>
-                 <td id="_" valign="top" align="center">1,0<fn reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
+                 <td id="_" valign="top" align="center">1,0<fn id="_" reference="c"><p id="_">The maximum permissible mass fraction of defects shall be determined with respect to the mass fraction obtained after milling.</p></fn></td>
                  <td id="_" valign="top" align="center">1,0</td>
                </tr>
              </tbody>
              <tfoot>
-               <tr>
+               <tr id="_">
                  <td id="_" colspan="5" valign="top" align="left">
                    <p id="_">Live insects shall not be present. Dead insects shall be included in extraneous matter.</p>
                  </td>

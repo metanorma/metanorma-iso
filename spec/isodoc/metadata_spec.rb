@@ -544,7 +544,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </bibdata>
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
+                <fmt-title id="_" depth="1">Contents</fmt-title>
              </clause>
           </preface>
           <sections>
@@ -559,7 +559,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
                    <fmt-review-end id="_" source="C" target="_" start="C" author="" date="1"/>
                    <fmt-review-end id="_" source="C" target="_" start="C" author="" date="#{Date.today}"/>
                 </title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="C">1</semx>
                    </span>
@@ -638,7 +638,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </bibdata>
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
+                <fmt-title id="_" depth="1">Contents</fmt-title>
              </clause>
           </preface>
           <sections>
@@ -651,7 +651,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
                    Clause 1
                    <fmt-review-end id="_" source="C" target="_" start="C" author="" date="#{Date.today}"/>
                 </title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="C">1</semx>
                    </span>
@@ -724,7 +724,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </bibdata>
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
+                <fmt-title id="_" depth="1">Contents</fmt-title>
              </clause>
           </preface>
           <sections>
@@ -737,7 +737,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
                    Clause 1
                    <fmt-review-end id="_" source="C" target="_" start="C" author="" date="#{Date.today}"/>
                 </title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="C">1</semx>
                    </span>
@@ -814,7 +814,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </bibdata>
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
+                <fmt-title id="_" depth="1">Contents</fmt-title>
              </clause>
           </preface>
           <sections>
@@ -823,7 +823,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
              </p>
              <clause id="_" displayorder="3">
                 <title id="_">Clause 1</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="_">1</semx>
                    </span>
@@ -882,7 +882,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </bibdata>
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
+                <fmt-title id="_" depth="1">Contents</fmt-title>
              </clause>
           </preface>
           <sections>
@@ -891,7 +891,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
              </p>
              <clause id="_" displayorder="3">
                 <title id="_">Clause 1</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
                       <semx element="autonum" source="_">1</semx>
                    </span>

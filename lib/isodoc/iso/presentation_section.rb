@@ -28,9 +28,8 @@ module IsoDoc
 
       def warning_for_missing_metadata_post(docxml, ret)
         from = docxml.at(ns("//sections/*/@id"))&.text or return
-        id = UUIDTools::UUID.random_create
         ret = <<~REVIEW
-          <review date='#{Date.today}' reviewer='Metanorma' id='_#{id}' from='#{from}' to='#{from}'>
+          <review date='#{Date.today}' reviewer='Metanorma' #{add_id_text} from='#{from}' to='#{from}'>
           <p><strong>Metadata warnings:</strong></p> #{ret}
           </review>
         REVIEW

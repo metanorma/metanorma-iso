@@ -94,11 +94,11 @@ RSpec.describe IsoDoc do
        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
+                <fmt-title id="_" depth="1">Contents</fmt-title>
              </clause>
              <foreword id="_" displayorder="2">
                 <title id="_">Foreword</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Foreword</semx>
                 </fmt-title>
                 <table alt="tool tip" id="tableD-1" summary="long desc" autonum="1">
@@ -107,7 +107,7 @@ RSpec.describe IsoDoc do
                       <em>husked</em>
                       rice yield
                    </name>
-                   <fmt-name>
+                   <fmt-name id="_">
                       <span class="fmt-caption-label">
                          <span class="fmt-element-name">Table</span>
                          <semx element="autonum" source="tableD-1">1</semx>
@@ -198,7 +198,7 @@ RSpec.describe IsoDoc do
                    </tfoot>
                    <dl key="true">
                       <name id="_">Key</name>
-                      <fmt-name>
+                      <fmt-name id="_">
                          <semx element="name" source="_">Key</semx>
                       </fmt-name>
                       <dt>Drago</dt>
@@ -213,7 +213,7 @@ RSpec.describe IsoDoc do
                          </localityStack>
                       </origin>
                       <modification id="_">
-                         <p original-id="_">with adjustments</p>
+                         <p id="_">with adjustments</p>
                       </modification>
                    </source>
                    <fmt-source>
@@ -245,7 +245,7 @@ RSpec.describe IsoDoc do
                       <p>This is a requirement about rice</p>
                    </note>
                    <note>
-                      <fmt-name>
+                      <fmt-name id="_">
                          <span class="fmt-caption-label">
                             <span class="fmt-element-name">NOTE</span>
                          </span>
@@ -281,7 +281,7 @@ RSpec.describe IsoDoc do
              <title id="_">
                 <strong>Annex</strong>
              </title>
-             <fmt-title>
+             <fmt-title id="_">
                 <strong>
                    <span class="fmt-caption-label">
                       <span class="fmt-element-name">Annex</span>
@@ -304,7 +304,7 @@ RSpec.describe IsoDoc do
              </fmt-xref-label>
              <table id="AnnexTable" autonum="A.1">
                 <name id="_">Another table</name>
-                <fmt-name>
+                <fmt-name id="_">
                    <span class="fmt-caption-label">
                       <span class="fmt-element-name">Table</span>
                       <semx element="autonum" source="Annex">A</semx>
@@ -632,11 +632,11 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
          <preface>
             <clause type="toc" id="_" displayorder="1">
-               <fmt-title depth="1">Contents</fmt-title>
+               <fmt-title id="_" depth="1">Contents</fmt-title>
             </clause>
             <foreword id="_" displayorder="2">
                <title id="_">Foreword</title>
-               <fmt-title depth="1">
+               <fmt-title id="_" depth="1">
                   <semx element="title" source="_">Foreword</semx>
                </fmt-title>
                <table id="tableD-1" autonum="1">
@@ -645,7 +645,7 @@ RSpec.describe IsoDoc do
                      <em>husked</em>
                      rice yield
                   </name>
-                  <fmt-name>
+                  <fmt-name id="_">
                      <span class="fmt-caption-label">
                         <span class="fmt-element-name">Table</span>
                         <semx element="autonum" source="tableD-1">1</semx>
@@ -682,7 +682,7 @@ RSpec.describe IsoDoc do
                      <dd>A type of rice</dd>
                   </dl>
                   <note id="A" autonum="1">
-                     <fmt-name>
+                     <fmt-name id="_">
                         <span class="fmt-caption-label">
                            <span class="fmt-element-name">NOTE</span>
                            <semx element="autonum" source="A">1</semx>
@@ -707,7 +707,7 @@ RSpec.describe IsoDoc do
                   </note>
                   <note id="B" type="units">Units in mm</note>
                   <note id="C" autonum="2">
-                     <fmt-name>
+                     <fmt-name id="_">
                         <span class="fmt-caption-label">
                            <span class="fmt-element-name">NOTE</span>
                            <semx element="autonum" source="C">2</semx>

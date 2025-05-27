@@ -114,7 +114,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <clause id="_" anchor="reference" inline-header="false" obligation="normative">
-            <title>Section</title>
+            <title id="_">Section</title>
             <p id="_">Inline Reference to <xref target="reference"/>
               Footnoted Reference to <xref target="reference"/>
               Inline Reference with Text to <xref target="reference"><display-text>text</display-text></xref>
@@ -145,7 +145,7 @@ RSpec.describe Metanorma::Iso do
         </sections>
         <bibliography>
           <references id="_" normative="true" obligation="informative">
-            <title>Normative references</title>
+            <title id="_">Normative references</title>
             <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
             <bibitem id="_" anchor="ISO712">
               <formattedref format="application/x-isodoc+xml">Reference</formattedref>
@@ -174,7 +174,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <p id="_">Hello!
-            <fn reference="1">
+            <fn id="_" reference="1">
               <p id="_">Footnote text</p></fn>
           </p>
         </sections>

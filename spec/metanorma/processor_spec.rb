@@ -20,14 +20,14 @@ RSpec.describe Metanorma::Iso::Processor do
     <contributor>
     <role type="author"/>
     <organization>
-    <name>International Organization for Standardization</name>
+    <name id="_">International Organization for Standardization</name>
     <abbreviation>ISO</abbreviation>
     </organization>
     </contributor>
     <contributor>
     <role type="publisher"/>
     <organization>
-    <name>International Organization for Standardization</name>
+    <name id="_">International Organization for Standardization</name>
     <abbreviation>ISO</abbreviation>
     </organization>
     </contributor>
@@ -41,7 +41,7 @@ RSpec.describe Metanorma::Iso::Processor do
     <from>#{Time.new.year}</from>
     <owner>
     <organization>
-    <name>International Organization for Standardization</name>
+    <name id="_">International Organization for Standardization</name>
     <abbreviation>ISO</abbreviation>
     </organization>
     </owner>

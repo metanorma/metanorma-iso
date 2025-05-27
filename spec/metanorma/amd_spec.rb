@@ -58,72 +58,72 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR.sub(%r{<doctype>standard</doctype>}, '<doctype>amendment</doctype>').sub(%r{<stagename>International Standard</stagename>}, '<stagename/>')}
            <sections>
              <clause id="_" obligation="normative">
-                <title>Foreword</title>
+                <title id="_">Foreword</title>
                 <p id="_">Text</p>
              </clause>
              <clause id="_" obligation="normative">
-                <title>Introduction</title>
+                <title id="_">Introduction</title>
                 <clause id="_" obligation="normative">
-                   <title>Introduction Subsection</title>
+                   <title id="_">Introduction Subsection</title>
                 </clause>
              </clause>
              <clause id="_" obligation="normative">
-                <title>Scope</title>
+                <title id="_">Scope</title>
                 <p id="_">Text</p>
              </clause>
              <clause id="_" obligation="normative">
-                <title>Acknowledgements</title>
+                <title id="_">Acknowledgements</title>
              </clause>
              <clause id="_" obligation="normative">
-                <title>Normative References</title>
+                <title id="_">Normative References</title>
              </clause>
              <clause id="_" obligation="normative">
-                <title>Terms and Definitions</title>
+                <title id="_">Terms and Definitions</title>
                 <clause id="_" obligation="normative">
-                   <title>Term1</title>
+                   <title id="_">Term1</title>
                 </clause>
              </clause>
              <clause id="_" obligation="normative">
-                <title>Terms, Definitions, Symbols and Abbreviated Terms</title>
+                <title id="_">Terms, Definitions, Symbols and Abbreviated Terms</title>
                 <clause id="_" obligation="normative">
-                   <title>Normal Terms</title>
+                   <title id="_">Normal Terms</title>
                    <clause id="_" obligation="normative">
-                      <title>Term2</title>
+                      <title id="_">Term2</title>
                    </clause>
                 </clause>
                 <clause id="_" obligation="normative">
-                   <title>Symbols and Abbreviated Terms</title>
+                   <title id="_">Symbols and Abbreviated Terms</title>
                 </clause>
              </clause>
              <clause id="_" obligation="normative">
-                <title>Symbols and Abbreviated Terms</title>
+                <title id="_">Symbols and Abbreviated Terms</title>
              </clause>
              <clause id="_" obligation="normative">
-                <title>Clause 4</title>
+                <title id="_">Clause 4</title>
                 <clause id="_" obligation="normative">
-                   <title>Introduction</title>
+                   <title id="_">Introduction</title>
                 </clause>
                 <clause id="_" obligation="normative">
-                   <title>Clause 4.2</title>
+                   <title id="_">Clause 4.2</title>
                 </clause>
              </clause>
              <clause id="_" obligation="normative">
-                <title>Terms and Definitions</title>
+                <title id="_">Terms and Definitions</title>
              </clause>
              <clause id="_" obligation="normative">
-                <title>Bibliography</title>
+                <title id="_">Bibliography</title>
                 <clause id="_" obligation="normative">
-                   <title>Bibliography Subsection</title>
+                   <title id="_">Bibliography Subsection</title>
                 </clause>
              </clause>
           </sections>
           <annex id="_" obligation="normative">
-             <title>Annex</title>
+             <title id="_">Annex</title>
              <clause id="_" obligation="normative">
-                <title>Annex A.1</title>
+                <title id="_">Annex A.1</title>
              </clause>
              <appendix id="_" obligation="normative">
-                <title>Appendix 1</title>
+                <title id="_">Appendix 1</title>
              </appendix>
           </annex>
        </metanorma>

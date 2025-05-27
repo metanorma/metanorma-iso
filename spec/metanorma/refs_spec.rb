@@ -32,15 +32,15 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>Clause</title>
+            <title id="_">Clause</title>
             <p id="_">
               <eref bibitemid="iso123" citeas="ISO&#xa0;123:--" type="inline"/>
-              <fn reference="1"><p id="_">The standard is in press</p></fn>
+              <fn id="_" reference="1"><p id="_">The standard is in press</p></fn>
               <eref bibitemid="iso123" citeas="ISO&#xa0;123:--" type="inline"/>A.
-              <fn reference="2">
+              <fn id="_" reference="2">
                 <p id="_">a footnote</p></fn>
               <eref bibitemid="fdis" citeas="ISO/FDIS&#xa0;17664-1" type="inline"/>
-              <fn reference="3">
+              <fn id="_" reference="3">
                 <p id="_">Under preparation. (Stage at the time of publication ISO/FDIS 17664-1).</p>
               </fn>
               <eref bibitemid="fdis" citeas="ISO/FDIS&#xa0;17664-1" type="inline"/>
@@ -49,7 +49,7 @@ RSpec.describe Metanorma::Iso do
         </sections>
         <bibliography>
           <references id="_" normative="true" obligation="informative">
-            <title>Normative references</title>
+            <title id="_">Normative references</title>
             <p id="_">The following documents are referred to in the text in such a way that
                        some or all of their content constitutes requirements of this document.
                        For dated references, only the edition cited applies. For undated
@@ -196,7 +196,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>Clause</title>
+            <title id="_">Clause</title>
             <p id="_">
               <eref bibitemid="iso123" citeas="ISO&#xa0;123:1066" type="inline"/>
             </p>
@@ -204,7 +204,7 @@ RSpec.describe Metanorma::Iso do
         </sections>
         <bibliography>
           <references id="_" normative="true" obligation="informative">
-            <title>Normative references</title>
+            <title id="_">Normative references</title>
             <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
             <bibitem id="_" anchor="iso123" type="standard">
               <title format="text/plain">Standard</title>
@@ -247,7 +247,7 @@ RSpec.describe Metanorma::Iso do
         </sections>
         <bibliography>
           <references id="_" normative="true" obligation="informative">
-            <title>Normative references</title>
+            <title id="_">Normative references</title>
             <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
             <bibitem id="_" anchor="iso123">
               <formattedref format="application/x-isodoc+xml">
@@ -279,7 +279,7 @@ RSpec.describe Metanorma::Iso do
         </sections>
         <bibliography>
           <references id="_" normative="false" obligation="informative">
-            <title>Bibliography</title>
+            <title id="_">Bibliography</title>
             <bibitem id="_" anchor="iso123">
               <formattedref format="application/x-isodoc+xml">
                 <em>Standard</em>
@@ -310,7 +310,7 @@ RSpec.describe Metanorma::Iso do
               <sections> </sections>
         <bibliography>
           <references id='_' normative='false' obligation='informative'>
-            <title>Bibliography</title>
+            <title id="_">Bibliography</title>
             <bibitem id="_" anchor="iso4" type='standard'>
               <docidentifier>ISO 9</docidentifier>
               <docnumber>9</docnumber>
@@ -382,7 +382,7 @@ RSpec.describe Metanorma::Iso do
           #{BLANK_HDR}
                    <preface>
             <foreword id="_" obligation="informative">
-              <title>Foreword</title>
+              <title id="_">Foreword</title>
               <p id="_">
                 <eref type="inline" bibitemid="iso1" citeas="ISO 683-3:2019">
                   <localityStack>
@@ -391,7 +391,7 @@ RSpec.describe Metanorma::Iso do
                     </locality>
                   </localityStack>
                 </eref>
-                <fn reference="1">
+                <fn id="_" reference="1">
                   <p id="_">Cancelled and replaced by ISO 683-3:2022.</p>
                 </fn>
                 <eref type="inline" bibitemid="iso2" citeas="ISO 31-0">
@@ -401,7 +401,7 @@ RSpec.describe Metanorma::Iso do
                     </locality>
                   </localityStack>
                 </eref>
-                <fn reference="2">
+                <fn id="_" reference="2">
                   <p id="_">Cancelled and replaced by ISO 80000-1:2009.</p>
                 </fn>
               </p>
@@ -410,7 +410,7 @@ RSpec.describe Metanorma::Iso do
           <sections/>
           <bibliography>
             <references id="_" normative="false" obligation="informative">
-              <title>Bibliography</title>
+              <title id="_">Bibliography</title>
               <bibitem id="_" anchor="iso2" type="standard">
                 <fetched/>
                 <title type="title-main" format="text/plain" language="en" script="Latn">Quantities and units</title>
