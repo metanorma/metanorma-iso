@@ -4888,6 +4888,9 @@
 			<xsl:choose>
 				<xsl:when test="$stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM' or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM'">
 					<fo:block-container height="24mm" display-align="before">
+						<xsl:if test="$layoutVersion = '2024'">
+							<xsl:attribute name="height">23mm</xsl:attribute>
+						</xsl:if>
 						<fo:block font-size="{$font-size_header}" font-weight="bold" text-align="right" padding-top="12.5mm" line-height="1.1">
 							<xsl:call-template name="insertLayoutVersionAttributesTop"/>
 							<xsl:value-of select="$ISOnumber"/>
@@ -19597,7 +19600,25 @@
 
 										<xsl:choose>
 											<xsl:when test="*[local-name() = 'title'][@language = $lang and @type = 'main']">
-												<xsl:value-of select="*[local-name() = 'title'][@language = $lang and @type = 'main']"/>
+												<!-- <xsl:value-of select="*[local-name() = 'title'][@language = $lang and @type = 'main']"/> -->
+												<xsl:variable name="bibdata_doctype" select="*[local-name() = 'ext']/*[local-name() = 'doctype']"/>
+												<xsl:if test="$bibdata_doctype = 'amendment'">
+													<xsl:variable name="bibdata_doctype_localized" select="*[local-name() = 'ext']/*[local-name() = 'doctype'][@language = $lang]"/>
+													<xsl:variable name="bibdata_amendment_number" select="*[local-name() = 'ext']/*[local-name() = 'structuredidentifier']/*[local-name() = 'project-number']/@amendment"/>
+													<xsl:value-of select="normalize-space(concat($bibdata_doctype_localized, ' ', $bibdata_amendment_number))"/>
+													<xsl:text> — </xsl:text>
+												</xsl:if>
+												<xsl:variable name="partnumber" select="*[local-name() = 'ext']/*[local-name() = 'structuredidentifier']/*[local-name() = 'project-number']/@part"/>
+												<xsl:for-each select="*[local-name() = 'title'][@language = $lang and @type = 'title-intro'] |                *[local-name() = 'title'][@language = $lang and @type = 'title-main'] |                *[local-name() = 'title'][@language = $lang and @type = 'title-complementary'] |                *[local-name() = 'title'][@language = $lang and @type = 'title-part']">
+													<xsl:if test="@type = 'title-part'">
+														<xsl:call-template name="getLocalizedString"><xsl:with-param name="key">locality.part</xsl:with-param></xsl:call-template>
+														<xsl:text> </xsl:text>
+														<xsl:value-of select="$partnumber"/>
+														<xsl:text>: </xsl:text>
+													</xsl:if>
+													<xsl:value-of select="."/>
+													<xsl:if test="position() != last()"><xsl:text> — </xsl:text></xsl:if>
+												</xsl:for-each>
 											</xsl:when>
 											<xsl:otherwise>
 												<xsl:value-of select="*[local-name() = 'title'][@language = $lang and @type = 'title-main']"/>
@@ -19623,7 +19644,7 @@
 						<xsl:for-each select="(//*[local-name() = 'metanorma'])[1]/*[local-name() = 'bibdata']">
 
 									<rdf:Seq>
-										<xsl:for-each select="*[local-name() = 'contributor'][*[local-name() = 'role']/@type='author']">
+										<xsl:for-each select="*[local-name() = 'contributor'][*[local-name() = 'role'][not(*[local-name() = 'description'])]/@type='author']">
 											<rdf:li>
 												<xsl:value-of select="*[local-name() = 'organization']/*[local-name() = 'name']"/>
 											</rdf:li>
