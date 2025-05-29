@@ -73,6 +73,7 @@ module Metanorma
           fn = n.children.to_xml
           n.elements&.first&.name == "p" or fn = "<p>#{fn}</p>"
           e.next = "<fn>#{fn}</fn>"
+          add_id(e.next)
         end
       end
 

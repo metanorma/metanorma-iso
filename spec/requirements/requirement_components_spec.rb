@@ -37,11 +37,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
+                <fmt-title id="_" depth="1">Contents</fmt-title>
              </clause>
              <foreword id="A" displayorder="2">
                 <title id="_">Preface</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Preface</semx>
                 </fmt-title>
                 <recommendation model="ogc" autonum="1" original-id="_">
@@ -61,7 +61,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <identifier id="_">/ogc/recommendation/wfs/2</identifier>
                    <inherit id="_">/ss/584/2015/level/1</inherit>
                    <subject id="_">user</subject>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>1</em>
@@ -71,7 +71,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="test-purpose" original-id="A1">
                       <p>TEST PURPOSE</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>2</em>
@@ -81,7 +81,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="guidance" original-id="A7">
                       <p>GUIDANCE #1</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>2a</em>
@@ -91,7 +91,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="conditions" original-id="A2">
                       <p>CONDITIONS</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>3</em>
@@ -101,7 +101,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="part" original-id="A3">
                       <p>FIRST PART</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>4</em>
@@ -111,7 +111,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="part" original-id="A4">
                       <p>SECOND PART</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>5</em>
@@ -121,7 +121,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="test-method" original-id="A5">
                       <p>TEST METHOD</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>6</em>
@@ -131,17 +131,17 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="part" original-id="A6">
                       <p>THIRD PART</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>7</em>
                          .
                       </p>
                    </description>
-                   <component class="guidance" original-id="A8">
+                   <component class="guidance" id="A8">
                       <p>GUIDANCE #2</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>7a</em>
@@ -151,16 +151,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="panda GHz express" original-id="A7">
                       <p>PANDA PART</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>8</em>
                          .
                       </p>
                    </description>
-                   <fmt-provision>
+                   <fmt-provision id="_">
                       <table id="_" type="recommend" class="modspec" autonum="1">
-                         <fmt-name>
+                         <fmt-name id="_">
                             <span class="fmt-caption-label">
                                <span class="fmt-element-name">Table</span>
                                <semx element="autonum" source="_">1</semx>
@@ -421,11 +421,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
+                <fmt-title id="_" depth="1">Contents</fmt-title>
              </clause>
              <foreword id="A" displayorder="2">
                 <title id="_">Preface</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Preface</semx>
                 </fmt-title>
                 <recommendation model="ogc" type="class" autonum="1" original-id="_">
@@ -445,7 +445,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <identifier id="_">/ogc/recommendation/wfs/2</identifier>
                    <inherit id="_">/ss/584/2015/level/1</inherit>
                    <subject id="_">user</subject>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>1</em>
@@ -455,7 +455,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="test-purpose" original-id="A1">
                       <p>TEST PURPOSE</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>2</em>
@@ -465,7 +465,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="conditions" original-id="A2">
                       <p>CONDITIONS</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>3</em>
@@ -475,7 +475,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="part" original-id="A3">
                       <p>FIRST PART</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>4</em>
@@ -485,7 +485,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="part" original-id="A4">
                       <p>SECOND PART</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>5</em>
@@ -495,7 +495,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="test-method" original-id="A5">
                       <p>TEST METHOD</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>6</em>
@@ -505,7 +505,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="part" original-id="A6">
                       <p>THIRD PART</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>7</em>
@@ -515,16 +515,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component class="panda GHz express" original-id="A7">
                       <p>PANDA PART</p>
                    </component>
-                   <description original-id="_">
+                   <description id="_">
                       <p original-id="_">
                          I recommend
                          <em>8</em>
                          .
                       </p>
                    </description>
-                   <fmt-provision>
+                   <fmt-provision id="_">
                       <table id="_" type="recommendclass" class="modspec" autonum="1">
-                         <fmt-name>
+                         <fmt-name id="_">
                             <span class="fmt-caption-label">
                                <span class="fmt-element-name">Table</span>
                                <semx element="autonum" source="_">1</semx>
@@ -765,11 +765,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <fmt-title depth="1">Contents</fmt-title>
+                <fmt-title id="_" depth="1">Contents</fmt-title>
              </clause>
              <foreword id="A" displayorder="2">
                 <title id="_">Preface</title>
-                <fmt-title depth="1">
+                <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Preface</semx>
                 </fmt-title>
                 <requirement model="ogc" autonum="1" original-id="A1">
@@ -786,16 +786,16 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <component exclude="false" class="test-method" original-id="_">
                       <p original-id="1">
                          <component exclude="false" class="step" id="_">
-                            <p original-id="2">For each UML class defined or referenced in the Tunnel Package:</p>
+                            <p id="2">For each UML class defined or referenced in the Tunnel Package:</p>
                             <component exclude="false" class="step" id="_">
-                               <p original-id="3">
+                               <p id="3">
                    Validate that the Implementation Specification contains a data
                    element which represents the same concept as that defined for
                    the UML class.
                  </p>
                             </component>
                             <component exclude="false" class="step" id="_">
-                               <p original-id="4">
+                               <p id="4">
                    Validate that the data element has the same relationships with
                    other elements as those defined for the UML class. Validate that
                    those relationships have the same source, target, direction,
@@ -806,9 +806,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                          </component>
                       </p>
                    </component>
-                   <fmt-provision>
+                   <fmt-provision id="_">
                       <table id="A1" type="recommend" class="modspec" autonum="1">
-                         <fmt-name>
+                         <fmt-name id="_">
                             <span class="fmt-caption-label">
                                <span class="fmt-element-name">Table</span>
                                <semx element="autonum" source="A1">1</semx>
@@ -911,11 +911,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
            <preface>
               <clause type="toc" id="_" displayorder="1">
-                 <fmt-title depth="1">Contents</fmt-title>
+                 <fmt-title id="_" depth="1">Contents</fmt-title>
               </clause>
               <foreword id="A" displayorder="2">
                  <title id="_">Preface</title>
-                 <fmt-title depth="1">
+                 <fmt-title id="_" depth="1">
                     <semx element="title" source="_">Preface</semx>
                  </fmt-title>
                  <requirement model="ogc" type="general" autonum="1" original-id="A1">
@@ -934,9 +934,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                     </fmt-xref-label>
                     <title>First</title>
                     <identifier id="_">/ogc/recommendation/wfs/1</identifier>
-                    <fmt-provision>
+                    <fmt-provision id="_">
                        <table id="A1" type="recommend" class="modspec" autonum="1">
-                          <fmt-name>
+                          <fmt-name id="_">
                              <span class="fmt-caption-label">
                                 <span class="fmt-element-name">Table</span>
                                 <semx element="autonum" source="A1">1</semx>
@@ -1003,9 +1003,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                        <tag>target</tag>
                        <value id="_">/ogc/recommendation/wfs/1</value>
                     </classification>
-                    <fmt-provision>
+                    <fmt-provision id="_">
                        <table id="A2" type="recommendtest" class="modspec" autonum="2">
-                          <fmt-name>
+                          <fmt-name id="_">
                              <span class="fmt-caption-label">
                                 <span class="fmt-element-name">Table</span>
                                 <semx element="autonum" source="A2">2</semx>
@@ -1068,9 +1068,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                     </fmt-xref-label>
                     <title>Third</title>
                     <identifier id="_">/ogc/recommendation/wfs/3</identifier>
-                    <fmt-provision>
+                    <fmt-provision id="_">
                        <table id="A3" type="recommendclass" class="modspec" autonum="3">
-                          <fmt-name>
+                          <fmt-name id="_">
                              <span class="fmt-caption-label">
                                 <span class="fmt-element-name">Table</span>
                                 <semx element="autonum" source="A3">3</semx>
@@ -1137,9 +1137,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                        <tag>target</tag>
                        <value id="_">/ogc/recommendation/wfs/3</value>
                     </classification>
-                    <fmt-provision>
+                    <fmt-provision id="_">
                        <table id="A4" type="recommendclass" class="modspec" autonum="4">
-                          <fmt-name>
+                          <fmt-name id="_">
                              <span class="fmt-caption-label">
                                 <span class="fmt-element-name">Table</span>
                                 <semx element="autonum" source="A4">4</semx>

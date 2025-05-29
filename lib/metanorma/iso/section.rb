@@ -5,25 +5,9 @@ module Metanorma
   module Iso
     class Converter < Standoc::Converter
 
-      # KILL
-      def clause_parsex(attrs, xml, node)
-        node.option? "appendix" and return appendix_parse(attrs, xml, node)
-        super
-      end
-
       def scope_parse(attrs, xml, node)
         attrs = attrs.merge(type: "scope") unless @amd
         clause_parse(attrs, xml, node)
-      end
-
-      # KILL
-      def appendix_parsex(attrs, xml, node)
-        attrs[:"inline-header"] = node.option? "inline-header"
-        set_obligation(attrs, node)
-        xml.appendix **attr_code(attrs) do |xml_section|
-          xml_section.title { |name| name << node.title }
-          xml_section << node.content
-        end
       end
 
       def support_appendix?(_node)

@@ -96,7 +96,7 @@ RSpec.describe Metanorma::Standoc do
               </bibdata>
               <sections>
                 <clause id="_" anchor='clause1' inline-header='false' obligation='normative'>
-                  <title>Clause 1</title>
+                  <title id="_">Clause 1</title>
                 </clause>
               </sections>
       </standard-standard>

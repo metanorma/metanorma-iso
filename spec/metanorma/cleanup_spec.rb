@@ -30,12 +30,12 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
-            <title>Terms and definitions</title>#{TERM_BOILERPLATE}
+            <title id="_">Terms and definitions</title>#{TERM_BOILERPLATE}
 
             <term id="_" anchor="term-_relativity_-Tempus">
               <preferred><expression><name>Tempus</name></expression></preferred>
               <domain>relativity</domain>
-              <definition><verbal-definition>
+              <definition id="_"><verbal-definition id="_">
                 <p id="_">Time</p></verbal-definition></definition>
             </term>
           </terms>
@@ -74,7 +74,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
-            <title>Terms and definitions</title>
+            <title id="_">Terms and definitions</title>
             #{TERM_BOILERPLATE}
                          <term id="_" anchor="term-t_90">
                <preferred>
@@ -94,8 +94,8 @@ RSpec.describe Metanorma::Iso do
                    </name>
                  </letter-symbol>
                </preferred>
-               <definition>
-                 <verbal-definition>
+               <definition id="_">
+                 <verbal-definition id="_">
                    <formula id="_">
                      <stem type="MathML" block="true">
                        <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -138,7 +138,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
-            <title>Terms and definitions</title>#{TERM_BOILERPLATE}
+            <title id="_">Terms and definitions</title>#{TERM_BOILERPLATE}
 
             <p id="_">I am boilerplate</p>
             <ul id="_">
@@ -147,7 +147,7 @@ RSpec.describe Metanorma::Iso do
             </ul>
             <term id="_" anchor="term-Time">
               <preferred><expression><name>Time</name></expression></preferred>
-              <definition><verbal-definition>
+              <definition id="_"><verbal-definition id="_">
                 <p id="_">This paragraph is extraneous</p>
               </verbal-definition></definition>
             </term>
@@ -176,7 +176,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
-            <title>Terms and definitions</title>#{TERM_BOILERPLATE}
+            <title id="_">Terms and definitions</title>#{TERM_BOILERPLATE}
 
             <p id="_">I am boilerplate</p>
             <ul id="_">
@@ -185,7 +185,7 @@ RSpec.describe Metanorma::Iso do
             </ul>
             <term id="_" anchor="term-Time">
               <preferred><expression><name>Time</name></expression></preferred>
-              <definition><verbal-definition>
+              <definition id="_"><verbal-definition id="_">
                 <p id="_">This paragraph is extraneous</p>
               </verbal-definition></definition>
             </term>
@@ -210,7 +210,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <preface>
           <foreword id="_" obligation="informative">
-            <title>Foreword</title>
+            <title id="_">Foreword</title>
             <p id="_">
               <eref bibitemid="iso216" citeas="ISO&#xa0;216:2001" type="inline"/>
             </p>
@@ -220,7 +220,7 @@ RSpec.describe Metanorma::Iso do
         </sections>
         <bibliography>
           <references id="_" normative="true" obligation="informative">
-            <title>Normative references</title>
+            <title id="_">Normative references</title>
             <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
             <bibitem id="_" anchor="iso216" type="standard">
               <title format="text/plain">Reference</title>
@@ -258,7 +258,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <preface>
           <foreword id="_" obligation="informative">
-            <title>Foreword</title>
+            <title id="_">Foreword</title>
             <p id="_">
               <eref type="inline" bibitemid="iso216" citeas="ISO 216">
                 <localityStack>
@@ -282,7 +282,7 @@ RSpec.describe Metanorma::Iso do
         </sections>
         <bibliography>
           <references id="_" normative="true" obligation="informative">
-            <title>Normative references</title>
+            <title id="_">Normative references</title>
             <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
             <bibitem id="_" anchor="iso216" type="standard">
               <title format="text/plain">Reference</title>
@@ -317,7 +317,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <preface>
           <foreword id="_" obligation="informative">
-            <title>Foreword</title>
+            <title id="_">Foreword</title>
             <p id="_">
               <eref bibitemid="iso216" citeas="ISO&#xa0;216" type="inline"/>
             </p>
@@ -327,7 +327,7 @@ RSpec.describe Metanorma::Iso do
         </sections>
         <bibliography>
           <references id="_" normative="false" obligation="informative">
-            <title>Bibliography</title>
+            <title id="_">Bibliography</title>
             <bibitem id="_" anchor="iso216" type="standard">
               <title format="text/plain">Reference</title>
               <docidentifier>ISO 216</docidentifier>
@@ -364,12 +364,12 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
-            <title>Terms and definitions</title>
+            <title id="_">Terms and definitions</title>
             #{TERM_BOILERPLATE}
             <term id="_" anchor="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
-                      <definition>
-          <verbal-definition>
+                      <definition id="_">
+          <verbal-definition id="_">
             <p id='_'>Definition</p>
           </verbal-definition>
         </definition>
@@ -405,7 +405,7 @@ RSpec.describe Metanorma::Iso do
         <sections></sections>
         <bibliography>
           <references id="_" normative="true" obligation="informative">
-            <title>Normative references</title>
+            <title id="_">Normative references</title>
             <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
             <bibitem id="_" anchor="iso216" type="standard">
               <title format="text/plain">Reference</title>
@@ -443,7 +443,7 @@ RSpec.describe Metanorma::Iso do
         <sections>
           <table id="_">
             <tbody>
-              <tr>
+              <tr id="_">
                 <td id="_" align="left" valign="top">a</td>
                 <td id="_" align="left" valign="top">b</td>
                 <td id="_" align="left" valign="top">c</td>
@@ -451,7 +451,7 @@ RSpec.describe Metanorma::Iso do
             </tbody>
             <dl id="_" key="true">
               <dt>a</dt>
-              <dd>
+              <dd id="_">
                 <p id="_">b</p>
               </dd>
             </dl>
@@ -479,24 +479,24 @@ RSpec.describe Metanorma::Iso do
         <sections>
           <table id="_">
             <thead>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">a</th>
                 <th id="_" align="left" valign="top">b</th>
                 <th id="_" align="left" valign="top">c</th>
               </tr>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">a</th>
                 <th id="_" align="left" valign="top">b</th>
                 <th id="_" align="left" valign="top">c</th>
               </tr>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">a</th>
                 <th id="_" align="left" valign="top">b</th>
                 <th id="_" align="left" valign="top">c</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr id="_">
                 <td id="_" align="left" valign="top">a</td>
                 <td id="_" align="left" valign="top">b</td>
                 <td id="_" align="left" valign="top">c</td>
@@ -527,24 +527,24 @@ RSpec.describe Metanorma::Iso do
         <sections>
           <table id="_">
             <thead>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">a</th>
                 <th id="_" align="left" valign="top">b</th>
                 <th id="_" align="left" valign="top">c</th>
               </tr>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">a</th>
                 <th id="_" align="left" valign="top">b</th>
                 <th id="_" align="left" valign="top">c</th>
               </tr>
-              <tr>
+              <tr id="_">
                 <th id="_" align="left" valign="top">a</th>
                 <th id="_" align="left" valign="top">b</th>
                 <th id="_" align="left" valign="top">c</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr id="_">
                 <td id="_" align="left" valign="top">a</td>
                 <td id="_" align="left" valign="top">b</td>
                 <td id="_" align="left" valign="top">c</td>
@@ -574,7 +574,7 @@ RSpec.describe Metanorma::Iso do
         <sections>
           <table id="_">
             <tbody>
-              <tr>
+              <tr id="_">
                 <td id="_" align="left" valign="top">a</td>
                 <td id="_" align="left" valign="top">b</td>
                 <td id="_" align="left" valign="top">c</td>
@@ -627,7 +627,7 @@ RSpec.describe Metanorma::Iso do
             </stem>
             <dl id="_" key="true">
               <dt>a</dt>
-              <dd>
+              <dd id="_">
                 <p id="_">b</p>
               </dd>
             </dl>
@@ -653,10 +653,10 @@ RSpec.describe Metanorma::Iso do
         <sections>
           <figure id="_">
             <image height="auto" id="_" mimetype="image/png" src="spec/examples/rice_images/rice_image1.png" width="auto"/>
-            <fn reference="a">
+            <fn id="_" reference="a">
               <p id="_">This is a footnote to a figure</p>
             </fn>
-            <fn reference="b">
+            <fn id="_" reference="b">
               <p id="_">This is another footnote to a figure</p>
             </fn>
           </figure>
@@ -683,7 +683,7 @@ RSpec.describe Metanorma::Iso do
             <image height="auto" id="_" mimetype="image/png" src="spec/examples/rice_images/rice_image1.png" width="auto"/>
             <dl id="_" key="true">
               <dt>a</dt>
-              <dd>
+              <dd id="_">
                 <p id="_">b</p>
               </dd>
             </dl>
@@ -712,9 +712,9 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <preface>
           <foreword id="_" obligation="informative">
-            <title>Foreword</title>
+            <title id="_">Foreword</title>
             <p id="_">
-              <fn reference="1">
+              <fn id="_" reference="1">
                 <p id="_">Footnote</p>
               </fn>
             </p>
@@ -722,9 +722,9 @@ RSpec.describe Metanorma::Iso do
         </preface>
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>Clause</title>
+            <title id="_">Clause</title>
             <p id="_">
-              <fn reference="2">
+              <fn id="_" reference="2">
                 <p id="_">Footnote2</p>
               </fn>
             </p>
@@ -732,7 +732,7 @@ RSpec.describe Metanorma::Iso do
         </sections>
         <bibliography>
           <references id="_" normative="true" obligation="informative">
-            <title>Normative references</title>
+            <title id="_">Normative references</title>
             <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
             <bibitem id="_" anchor="iso123" type="standard">
               <title format="text/plain">Standard</title>
@@ -774,12 +774,12 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>Clause</title>
+            <title id="_">Clause</title>
             <p id="_">Text</p>
           </clause>
         </sections>
         <annex id="_" inline-header="false" obligation="normative">
-          <title>Clause</title>
+          <title id="_">Clause</title>
           <p id="_">Text</p>
         </annex>
       </metanorma>
@@ -821,30 +821,30 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
            <sections>
               <clause id="_" inline-header="false" obligation="normative">
-                 <title>Clause1</title>
+                 <title id="_">Clause1</title>
                  <clause id="_" inline-header="false" obligation="normative">
-                    <title>Clause2</title>
+                    <title id="_">Clause2</title>
                     <clause id="_" inline-header="false" obligation="normative">
-                       <title>Clause3</title>
+                       <title id="_">Clause3</title>
                        <clause id="_" inline-header="false" obligation="normative">
-                          <title>Clause4</title>
+                          <title id="_">Clause4</title>
                           <clause id="_" inline-header="false" obligation="normative">
-                             <title>Clause 5</title>
+                             <title id="_">Clause 5</title>
                              <clause id="_" inline-header="false" obligation="normative">
-                                <title>Clause 6</title>
+                                <title id="_">Clause 6</title>
                                 <clause id="_" inline-header="false" obligation="normative">
-                                   <title>Clause 7A</title>
+                                   <title id="_">Clause 7A</title>
                                 </clause>
                                 <clause id="_" inline-header="false" obligation="normative">
-                                   <title>Clause 7B</title>
+                                   <title id="_">Clause 7B</title>
                                 </clause>
                              </clause>
                              <clause id="_" inline-header="false" obligation="normative">
-                                <title>Clause 6B</title>
+                                <title id="_">Clause 6B</title>
                              </clause>
                           </clause>
                           <clause id="_" inline-header="false" obligation="normative">
-                             <title>Clause 5B</title>
+                             <title id="_">Clause 5B</title>
                           </clause>
                        </clause>
                     </clause>
@@ -904,7 +904,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
                <sections>
            <clause id='_' inline-header='false' obligation='normative'>
-             <title>Clause 1</title>
+             <title id="_">Clause 1</title>
              <p id='_'>
                <eref type='inline' bibitemid='ref1' citeas='ISO&#xa0;123'/>
                <eref type='inline' bibitemid='ref1a' citeas='ISO&#xa0;123-100'/>
@@ -923,9 +923,9 @@ RSpec.describe Metanorma::Iso do
          </sections>
          <bibliography>
            <clause id='_' obligation='informative'>
-             <title>Bibliography</title>
+             <title id="_">Bibliography</title>
              <references id='_' normative='false' obligation='informative'>
-               <title>Clause 1</title>
+               <title id="_">Clause 1</title>
                <bibitem id="_" anchor="ref1" type='standard'>
                  <title format='text/plain'>Standard ISO 123</title>
                  <docidentifier>ISO 123</docidentifier>
@@ -1116,7 +1116,7 @@ RSpec.describe Metanorma::Iso do
         #{BLANK_HDR}
         <sections>
           <terms id='_' obligation='normative'>
-            <title>Terms and definitions</title>
+            <title id="_">Terms and definitions</title>
             <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
             <p id='_'>
               ISO and IEC maintain terminology databases for use in standardization
@@ -1165,7 +1165,7 @@ RSpec.describe Metanorma::Iso do
         #{BLANK_HDR}
             <sections>
               <clause id="_" obligation="normative" type="terms">
-                 <title>Terms and definitions</title>
+                 <title id="_">Terms and definitions</title>
                  <p id="_">For the purposes of this document, the following terms and definitions apply.</p>
                  <p id="_">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
                  <ul id="_">
@@ -1183,7 +1183,7 @@ RSpec.describe Metanorma::Iso do
                     </li>
                  </ul>
                  <terms id="_" obligation="normative">
-                    <title>Normal Terms</title>
+                    <title id="_">Normal Terms</title>
                     <term id="_" anchor="term-Term1">
                        <preferred>
                           <expression>
@@ -1193,7 +1193,7 @@ RSpec.describe Metanorma::Iso do
                     </term>
                  </terms>
                  <terms id="_" obligation="normative">
-                    <title>Abnormal terms</title>
+                    <title id="_">Abnormal terms</title>
                     <term id="_" anchor="term-Term-2">
                        <preferred>
                           <expression>
@@ -1232,9 +1232,9 @@ RSpec.describe Metanorma::Iso do
         #{BLANK_HDR}
            <sections>
               <clause id="_" obligation="normative" type="terms">
-                 <title>Terms, definitions, symbols and abbreviated terms</title>
+                 <title id="_">Terms, definitions, symbols and abbreviated terms</title>
                  <clause id="_" obligation="normative" type="terms">
-                    <title>Terms and definitions</title>
+                    <title id="_">Terms and definitions</title>
                     <p id="_">For the purposes of this document, the following terms and definitions apply.</p>
                     <p id="_">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
                     <ul id="_">
@@ -1252,7 +1252,7 @@ RSpec.describe Metanorma::Iso do
                        </li>
                     </ul>
                     <terms id="_" obligation="normative">
-                       <title>Normal Terms</title>
+                       <title id="_">Normal Terms</title>
                        <term id="_" anchor="term-Term1">
                           <preferred>
                              <expression>
@@ -1262,7 +1262,7 @@ RSpec.describe Metanorma::Iso do
                        </term>
                     </terms>
                     <terms id="_" obligation="normative">
-                       <title>Abnormal terms</title>
+                       <title id="_">Abnormal terms</title>
                        <term id="_" anchor="term-Term-2">
                           <preferred>
                              <expression>
@@ -1273,7 +1273,7 @@ RSpec.describe Metanorma::Iso do
                     </terms>
                  </clause>
                  <definitions id="_" obligation="normative">
-                    <title>Symbols and abbreviated terms</title>
+                    <title id="_">Symbols and abbreviated terms</title>
                  </definitions>
               </clause>
            </sections>
@@ -1304,9 +1304,9 @@ RSpec.describe Metanorma::Iso do
         #{BLANK_HDR}
           <sections>
             <clause id='_' obligation='normative' type="terms">
-              <title>Terms, definitions, symbols and abbreviated terms</title>
+              <title id="_">Terms, definitions, symbols and abbreviated terms</title>
               <terms id='_' obligation='normative'>
-                <title>Terms and definitions</title>
+                <title id="_">Terms and definitions</title>
                 <p id='_'>For the purposes of this document, the following terms and definitions apply.</p>
                 <p id='_'>
                   ISO and IEC maintain terminology databases for use in
@@ -1331,13 +1331,13 @@ RSpec.describe Metanorma::Iso do
                 </term>
               </terms>
               <terms id='_' obligation='normative'>
-                <title>Other Terms</title>
+                <title id="_">Other Terms</title>
                 <term id="_" anchor="term-Term-2">
                   <preferred><expression><name>Term 2</name></expression></preferred>
                 </term>
               </terms>
               <definitions id='_' obligation='normative'>
-                <title>Symbols and abbreviated terms</title>
+                <title id="_">Symbols and abbreviated terms</title>
               </definitions>
             </clause>
           </sections>
@@ -1371,7 +1371,7 @@ RSpec.describe Metanorma::Iso do
         #{BLANK_HDR}
            <sections>
               <clause id="_" obligation="normative" type="terms">
-                 <title>Terms, definitions, symbols and abbreviated terms</title>
+                 <title id="_">Terms, definitions, symbols and abbreviated terms</title>
                  <p id="_">For the purposes of this document, the following terms and definitions apply.</p>
                  <p id="_">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
                  <ul id="_">
@@ -1389,10 +1389,10 @@ RSpec.describe Metanorma::Iso do
                     </li>
                  </ul>
                  <clause id="_" inline-header="false" obligation="normative">
-                    <title>Prefatory clause</title>
+                    <title id="_">Prefatory clause</title>
                  </clause>
                  <terms id="_" obligation="normative">
-                    <title>Terms and definitions</title>
+                    <title id="_">Terms and definitions</title>
                     <term id="_" anchor="term-Term1">
                        <preferred>
                           <expression>
@@ -1402,7 +1402,7 @@ RSpec.describe Metanorma::Iso do
                     </term>
                  </terms>
                  <terms id="_" obligation="normative">
-                    <title>Other Terms</title>
+                    <title id="_">Other Terms</title>
                     <term id="_" anchor="term-Term-2">
                        <preferred>
                           <expression>
@@ -1412,7 +1412,7 @@ RSpec.describe Metanorma::Iso do
                     </term>
                  </terms>
                  <definitions id="_" obligation="normative">
-                    <title>Symbols and abbreviated terms</title>
+                    <title id="_">Symbols and abbreviated terms</title>
                  </definitions>
               </clause>
            </sections>
@@ -1441,13 +1441,13 @@ RSpec.describe Metanorma::Iso do
         #{BLANK_HDR}
            <sections>
               <clause id="_" type="section" inline-header="false" obligation="normative">
-                 <title>General</title>
+                 <title id="_">General</title>
                  <clause id="_" type="scope" inline-header="false" obligation="normative">
-                    <title>Scope</title>
+                    <title id="_">Scope</title>
                     <p id="_">This part of ISO 7005 for a single of flanges</p>
                  </clause>
                  <references id="_" normative="true" obligation="informative">
-                    <title>Normative references</title>
+                    <title id="_">Normative references</title>
                     <p id="_">There are no normative references in this document.</p>
                  </references>
               </clause>
@@ -1482,13 +1482,13 @@ RSpec.describe Metanorma::Iso do
         #{BLANK_HDR}
             <sections>
               <clause id="_" type="section" inline-header="false" obligation="normative">
-                 <title>General</title>
+                 <title id="_">General</title>
                  <clause id="_" type="scope" inline-header="false" obligation="normative">
-                    <title>Scope</title>
+                    <title id="_">Scope</title>
                     <p id="_">This part of ISO 7005 for a single of flanges</p>
                  </clause>
                  <references id="_" normative="true" obligation="informative">
-                    <title>Normative references</title>
+                    <title id="_">Normative references</title>
                     <p id="_">The following standards contain provisions</p>
                  </references>
               </clause>
@@ -1517,7 +1517,7 @@ RSpec.describe Metanorma::Iso do
         #{BLANK_HDR.sub(%r{</doctype>}, '</doctype><subdoctype>vocabulary</subdoctype>')}
         <sections>
           <terms id='_' obligation='normative'>
-            <title>Terms and definitions</title>
+            <title id="_">Terms and definitions</title>
             <p id='_'>
               ISO and IEC maintain terminology databases for use in standardization
               at the following addresses:
@@ -1568,7 +1568,7 @@ RSpec.describe Metanorma::Iso do
          #{BLANK_HDR}
            <sections>
               <terms id="_" obligation="normative">
-                 <title>Terms and definitions</title>
+                 <title id="_">Terms and definitions</title>
                  <p id="_">For the purposes of this document, the following terms and definitions apply.</p>
                  <p id="_">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
                  <ul id="_">
@@ -1593,7 +1593,7 @@ RSpec.describe Metanorma::Iso do
                     </preferred>
                  </term>
                  <terms id="_" obligation="normative">
-                    <title>Term2</title>
+                    <title id="_">Term2</title>
                     <term id="_" anchor="term-Term2a">
                        <preferred>
                           <expression>
@@ -1645,7 +1645,7 @@ RSpec.describe Metanorma::Iso do
          #{BLANK_HDR}
            <sections>
               <terms id="_" obligation="normative">
-                 <title>Terms and definitions</title>
+                 <title id="_">Terms and definitions</title>
                  <p id="_">For the purposes of this document, the following terms and definitions apply.</p>
                  <p id="_">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
                  <ul id="_">
@@ -1675,8 +1675,8 @@ RSpec.describe Metanorma::Iso do
                           <name>Term2-Hierarchical</name>
                        </expression>
                     </preferred>
-                    <definition>
-                       <verbal-definition>
+                    <definition id="_">
+                       <verbal-definition id="_">
                           <p id="_">Definition</p>
                        </verbal-definition>
                     </definition>
@@ -1689,7 +1689,7 @@ RSpec.describe Metanorma::Iso do
                     </term>
                  </term>
                  <terms id="_" obligation="normative">
-                    <title>Term3-Grouping</title>
+                    <title id="_">Term3-Grouping</title>
                     <term id="_" anchor="term-Term3a">
                        <preferred>
                           <expression>
@@ -1699,7 +1699,7 @@ RSpec.describe Metanorma::Iso do
                     </term>
                  </terms>
                  <terms id="_" obligation="normative">
-                    <title>Term4-Hierarchical</title>
+                    <title id="_">Term4-Hierarchical</title>
                     <p id="_">Definition</p>
                     <term id="_" anchor="term-Term4a">
                        <preferred>

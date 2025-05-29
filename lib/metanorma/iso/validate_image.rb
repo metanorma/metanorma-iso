@@ -77,8 +77,7 @@ module Metanorma
       def image_name_validate(xmldoc)
         prefix = image_name_prefix(xmldoc) or return
         xmldoc.xpath("//image").each do |i|
-          next if i["src"].start_with?("data:")
-
+          i["src"].start_with?("data:") and next
           case File.basename(i["src"])
           when /^ISO_\d+_/
           when /^(SL)?#{prefix}fig/ then image_name_validate1(i, prefix)

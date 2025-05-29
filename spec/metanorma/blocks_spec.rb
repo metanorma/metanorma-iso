@@ -114,7 +114,7 @@ RSpec.describe Metanorma::Iso do
         #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
-            <title>Terms and definitions</title>
+            <title id="_">Terms and definitions</title>
             #{TERM_BOILERPLATE}
             <term id="_" anchor="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
@@ -223,7 +223,7 @@ RSpec.describe Metanorma::Iso do
         #{BLANK_HDR}
         <sections>
           <admonition id="_" type="safety precautions">
-            <name>Safety Precautions</name>
+            <name id="_">Safety Precautions</name>
             <p id="_">While werewolves are hardy community members, keep in mind the following dietary concerns:</p>
             <ol id="_">
               <li>
@@ -258,7 +258,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
-            <title>Terms and definitions</title>
+            <title id="_">Terms and definitions</title>
             #{TERM_BOILERPLATE}
             <term id="_" anchor="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
@@ -308,13 +308,13 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <preface>
           <foreword id="_" obligation="informative">
-            <title>Foreword</title>
+            <title id="_">Foreword</title>
             <p id="_">This is a preamble</p>
           </foreword>
         </preface>
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
-            <title>Section 1</title>
+            <title id="_">Section 1</title>
           </clause>
         </sections>
       </metanorma>
@@ -334,7 +334,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <figure id="_">
-            <name>Split-it-right sample divider</name>
+            <name id="_">Split-it-right sample divider</name>
             <image height="auto" id="_" mimetype="image/png" src="spec/examples/rice_images/rice_image1.png" width="auto"/>
           </figure>
         </sections>
@@ -446,12 +446,12 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
-            <title>Terms and definitions</title>
+            <title id="_">Terms and definitions</title>
             #{TERM_BOILERPLATE}
             <term id="_" anchor="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
-                      <definition>
-          <verbal-definition>
+                      <definition id="_">
+          <verbal-definition id="_">
             <p id='_'>Definition</p>
           </verbal-definition>
         </definition>
@@ -488,12 +488,12 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <terms id="_" obligation="normative">
-            <title>Terms and definitions</title>
+            <title id="_">Terms and definitions</title>
             #{TERM_BOILERPLATE}
             <term id="_" anchor="term-Term1">
               <preferred><expression><name>Term1</name></expression></preferred>
-                      <definition>
-          <verbal-definition>
+                      <definition id="_">
+          <verbal-definition id="_">
             <p id='_'>Definition</p>
           </verbal-definition>
         </definition>
