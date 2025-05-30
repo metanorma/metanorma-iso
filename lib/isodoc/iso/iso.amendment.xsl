@@ -1861,9 +1861,11 @@
 
 									<fo:table-row>
 										<fo:table-cell number-columns-spanned="2" border-right="{$cover_page_border}">
-											<fo:block>
-												<xsl:call-template name="insertLogoImages2024"/>
-											</fo:block>
+											<fo:block-container height="44mm">
+												<fo:block>
+													<xsl:call-template name="insertLogoImages2024"/>
+												</fo:block>
+											</fo:block-container>
 										</fo:table-cell>
 										<!-- International 
 										Standard -->
