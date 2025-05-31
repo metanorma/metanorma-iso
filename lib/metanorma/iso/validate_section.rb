@@ -155,10 +155,12 @@ module Metanorma
                                    "Normative References")
           end
         end
+        elem.nil? and return
         elem&.at("./self::references[@normative = 'true']") ||
           @log.add("Style", nil, "Document must include (references) " \
                                  "Normative References")
         elem = names&.shift
+        elem.nil? and return
         elem&.at("./self::references[@normative = 'false']") ||
           @log.add("Style", elem,
                    "Final section must be (references) Bibliography")

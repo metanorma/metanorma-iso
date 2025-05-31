@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-<!-- VERSION v2.0.6 -->
+<!-- VERSION v2.0.7 -->
 
   <!--
     ALERT: cannot have root comments, because of https://github.com/metanorma/metanorma/issues/437
@@ -76,6 +76,7 @@ but to `@anchor`, the user-supplied cross-reference</a:documentation>
       <a:documentation>Title(s) of a clause</a:documentation>
       <element name="title">
         <a:documentation>Title proper for a clause</a:documentation>
+        <ref name="RequiredId"/>
         <zeroOrMore>
           <ref name="TextElement"/>
         </zeroOrMore>
@@ -83,9 +84,18 @@ but to `@anchor`, the user-supplied cross-reference</a:documentation>
       <zeroOrMore>
         <element name="variant-title">
           <a:documentation>Alternate title for a clause</a:documentation>
+          <ref name="RequiredId"/>
           <ref name="TypedTitleString"/>
         </element>
       </zeroOrMore>
+    </define>
+    <define name="tname">
+      <element name="name">
+        <ref name="RequiredId"/>
+        <oneOrMore>
+          <ref name="NestedTextElement"/>
+        </oneOrMore>
+      </element>
     </define>
     <define name="UlBody">
       <optional>
@@ -475,6 +485,7 @@ normative or informative references, some split references into sections organiz
     <!-- exclude figures? -->
     <define name="dd">
       <element name="dd">
+        <ref name="OptionalId"/>
         <zeroOrMore>
           <!-- exclude figures? -->
           <ref name="BasicBlock"/>
@@ -526,6 +537,7 @@ normative or informative references, some split references into sections organiz
       </choice>
     </define>
     <define name="TrAttributes">
+      <ref name="OptionalId"/>
       <optional>
         <attribute name="style">
           <a:documentation>CSS style: only background-color supported</a:documentation>
@@ -595,6 +607,7 @@ gives an explicit page orientation</a:documentation>
   </include>
   <!-- end overrides -->
   <define name="FnAttributes" combine="interleave">
+    <ref name="RequiredId"/>
     <optional>
       <attribute name="hiddenref">
         <a:documentation>If true, number the footnote as normal, but suppress display of the footnote reference in the document body.
@@ -604,6 +617,7 @@ This is done if the footnote reference is already presented in some other form, 
     </optional>
   </define>
   <define name="TdAttributes" combine="interleave">
+    <ref name="RequiredId"/>
     <optional>
       <attribute name="style">
         <a:documentation>CSS style: only background-color supported</a:documentation>
@@ -1821,7 +1835,7 @@ used in document amendments</a:documentation>
     </element>
   </define>
   <define name="TermAttributes">
-    <ref name="OptionalId"/>
+    <ref name="RequiredId"/>
     <ref name="LocalizedStringAttributes"/>
     <ref name="BlockAttributes"/>
   </define>
@@ -2164,6 +2178,7 @@ used in document amendments</a:documentation>
   <define name="termdefinition">
     <a:documentation>The definition of a term applied in the current document</a:documentation>
     <element name="definition">
+      <ref name="RequiredId"/>
       <optional>
         <attribute name="type">
           <a:documentation>Type of definition, used to differentiate it from other definitions of the same term if present</a:documentation>
@@ -2185,6 +2200,7 @@ used in document amendments</a:documentation>
   </define>
   <define name="verbaldefinition">
     <element name="verbal-definition">
+      <ref name="RequiredId"/>
       <oneOrMore>
         <choice>
           <a:documentation>Content of the verbal representation of the term</a:documentation>
@@ -2205,6 +2221,7 @@ used in document amendments</a:documentation>
   <define name="nonverbalrep">
     <a:documentation>Non-verbal representation of the term</a:documentation>
     <element name="non-verbal-representation">
+      <ref name="RequiredId"/>
       <oneOrMore>
         <choice>
           <a:documentation>Content of the non-verbal representation of the term</a:documentation>
