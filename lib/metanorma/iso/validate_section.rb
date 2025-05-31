@@ -169,7 +169,9 @@ module Metanorma
                    "There are sections after the final Bibliography")
       end
 
-      NORM_ISO_WARN = "non-ISO/IEC reference not expected as normative".freeze
+      NORM_ISO_WARN = <<~WARN.freeze
+        non-ISO/IEC reference is allowed as normative only subject to the conditions in ISO/IEC DIR 2 10.2
+      WARN
       SCOPE_WARN = "Scope contains subclauses: should be succinct".freeze
 
       def section_style(root)

@@ -266,7 +266,7 @@ RSpec.describe Metanorma::Iso do
       * [[[XYZ,IESO 121]]] _Standard_
     INPUT
     expect(File.read("test.err.html"))
-      .to include("non-ISO/IEC reference not expected as normative")
+      .to include("non-ISO/IEC reference is allowed as normative only subject to the conditions in ISO/IEC DIR 2 10.2")
   end
 
   it "warns that Table should have title" do
