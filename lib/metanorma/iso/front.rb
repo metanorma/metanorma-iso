@@ -131,7 +131,7 @@ module Metanorma
         @amd and amd = node.attr("title-amendment-#{lang}")
         node.attr("addendum-number") and
           add = node.attr("title-addendum-#{lang}")
-        [title, intro, part, amd, add]
+        [title, intro, part, amd, add].map { |x| x&.empty? ? nil : x }
       end
 
       def title(node, xml)

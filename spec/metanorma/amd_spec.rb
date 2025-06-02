@@ -432,7 +432,7 @@ RSpec.describe Metanorma::Iso do
       .to be_equivalent_to Xml::C14n.format(output)
   end
 
-  it "processes metadata, amendment, stage 30" do
+  it "processes metadata, amendment, stage 30; empty amendment title" do
     input = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       = Document title
       Author
@@ -446,14 +446,29 @@ RSpec.describe Metanorma::Iso do
       :docstage: 30
       :updates: ISO 17301-1:2030
       :amendment-number: 1
+      :title-main-en: Main Title -- Title
+      :title-main-fr: Titre Principal
+      :copyright-year: 2017
+      :updates: ISO 17301-1:2016
+      :created-date: 2016-05-01
+      :amendment-number: 1
+      :title-amendment-en: 
+      :title-amendment-fr: 
     INPUT
     output = <<~OUTPUT
       <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
-          <docidentifier type="ISO" primary="true">ISO 17301-1:2030/CD Amd 1:#{Date.today.year}</docidentifier>
-          <docidentifier type="iso-reference">ISO 17301-1:2030/CD Amd 1:#{Date.today.year}(E)</docidentifier>
-          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-30.00:amd:#{Date.today.year}:v1</docidentifier>
-          <docnumber>17301</docnumber>
+          <title language="en" format="text/plain" type="main">Main Title — Title</title>
+          <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
+          <title language="fr" format="text/plain" type="main">Titre Principal</title>
+          <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
+          <docidentifier type="ISO" primary="true">ISO 17301-1:2016/CD Amd 1:2017</docidentifier>
+             <docidentifier type="iso-reference">ISO 17301-1:2016/CD Amd 1:2017(E)</docidentifier>
+             <docidentifier type="URN">urn:iso:std:iso:17301:-1:ed-1:stage-30.00:amd:2017:v1</docidentifier>
+             <docnumber>17301</docnumber>
+             <date type="created">
+                <on>2016-05-01</on>
+             </date>
           <contributor>
             <role type="author"/>
             <organization>
@@ -482,7 +497,7 @@ RSpec.describe Metanorma::Iso do
             <substage>00</substage>
           </status>
           <copyright>
-            <from>#{Time.now.year}</from>
+            <from>2017</from>
             <owner>
               <organization>
                 <name>International Organization for Standardization</name>
@@ -500,7 +515,7 @@ RSpec.describe Metanorma::Iso do
              <agency>ISO</agency>
             </approvalgroup>
             <structuredidentifier>
-              <project-number amendment="1" part="1">17301</project-number>
+              <project-number part="1" amendment="1" origyr="2016-05-01">17301</project-number>
             </structuredidentifier>
             <stagename  abbreviation="CD AMD"/>
           </ext>
