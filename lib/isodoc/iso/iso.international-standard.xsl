@@ -11339,7 +11339,7 @@
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:variable>
-				<xsl:if test="$key = 'font-family' or $key = 'font-size' or $key = 'color'">
+				<xsl:if test="$key = 'font-family' or $key = 'font-size' or $key = 'color' or $key = 'baseline-shift'">
 					<style name="{$key}"><xsl:value-of select="$value"/></style>
 				</xsl:if>
 				<xsl:if test="$key = 'text-indent'">
