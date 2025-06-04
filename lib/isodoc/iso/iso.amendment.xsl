@@ -5761,6 +5761,7 @@
 	<xsl:param name="inputxml_basepath"/> <!-- input xml file path -->
 	<xsl:param name="inputxml_filename"/> <!-- input xml file name -->
 	<xsl:param name="output_path"/> <!-- output PDF file name -->
+	<xsl:param name="outputpdf_basepath"/> <!-- output PDF folder -->
 	<xsl:param name="external_index"/><!-- path to index xml, generated on 1st pass, based on FOP Intermediate Format -->
 	<xsl:param name="syntax-highlight">false</xsl:param> <!-- syntax highlighting feature, default - off -->
 	<xsl:param name="add_math_as_text">true</xsl:param> <!-- add math in text behind svg formula, to copy-paste formula from PDF as text -->
@@ -19741,7 +19742,9 @@
 			<xsl:for-each select="//*[local-name() = 'bibitem'][@hidden = 'true'][*[local-name() = 'uri'][@type = 'attachment']]">
 				<xsl:variable name="attachment_path" select="*[local-name() = 'uri'][@type = 'attachment']"/>
 				<xsl:variable name="attachment_name" select="java:org.metanorma.fop.Util.getFilenameFromPath($attachment_path)"/>
-				<xsl:variable name="url" select="concat('url(file:///',$basepath, $attachment_path, ')')"/>
+				<!-- <xsl:variable name="url" select="concat('url(file:///',$basepath, $attachment_path, ')')"/> -->
+				<!-- See https://github.com/metanorma/metanorma-iso/issues/1369 -->
+				<xsl:variable name="url" select="concat('url(file:///',$outputpdf_basepath, $attachment_path, ')')"/>
 				<xsl:variable name="description" select="normalize-space(*[local-name() = 'formattedref'])"/>
 				<!-- Todo: need update -->
 				<xsl:variable name="afrelationship" select="normalize-space(.//*[local-name() = 'classification'][@type = 'pdf-AFRelationship'])"/>
