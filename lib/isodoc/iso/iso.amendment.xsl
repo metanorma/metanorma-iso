@@ -13322,6 +13322,7 @@
 
 	<xsl:template match="*[local-name() = 'image']">
 		<xsl:param name="indent">0</xsl:param>
+		<xsl:param name="logo_width"/>
 		<xsl:variable name="isAdded" select="../@added"/>
 		<xsl:variable name="isDeleted" select="../@deleted"/>
 		<xsl:choose>
@@ -13343,8 +13344,17 @@
 
 					<!-- debug scale='<xsl:value-of select="$scale"/>', indent='<xsl:value-of select="$indent"/>' -->
 
-					<!-- <fo:external-graphic src="{$src}" fox:alt-text="Image {@alt}" vertical-align="middle"/> -->
 					<fo:external-graphic src="{$src}" fox:alt-text="Image {@alt}" vertical-align="middle">
+
+						<xsl:if test="parent::*[local-name() = 'logo']"> <!-- publisher's logo -->
+							<xsl:attribute name="width">100%</xsl:attribute>
+							<xsl:if test="normalize-space($logo_width) != ''">
+								<xsl:attribute name="width"><xsl:value-of select="$logo_width"/></xsl:attribute>
+							</xsl:if>
+							<xsl:attribute name="content-height">100%</xsl:attribute>
+							<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+							<xsl:attribute name="scaling">uniform</xsl:attribute>
+						</xsl:if>
 
 						<xsl:variable name="width">
 							<xsl:call-template name="setImageWidth"/>
@@ -13567,7 +13577,8 @@
 			</xsl:when>
 			<xsl:when test="not(starts-with(@src, 'data:'))">
 				<xsl:variable name="src_external"><xsl:call-template name="getImageSrcExternal"/></xsl:variable>
-				<xsl:value-of select="concat('url(file:///', $src_external, ')')"/>
+				<xsl:variable name="file_protocol"><xsl:if test="not(starts-with($src_external, 'http:')) and not(starts-with($src_external, 'https:')) and not(starts-with($src_external, 'www.'))">file:///</xsl:if></xsl:variable>
+				<xsl:value-of select="concat('url(', $file_protocol, $src_external, ')')"/>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:value-of select="@src"/>
