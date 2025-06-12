@@ -1,13 +1,5 @@
 require "spec_helper"
 RSpec.describe Metanorma::Iso do
-  before do
-    # Force to download Relaton index file
-    allow_any_instance_of(Relaton::Index::Type).to receive(:actual?)
-      .and_return(false)
-    allow_any_instance_of(Relaton::Index::FileIO).to receive(:check_file)
-      .and_return(nil)
-  end
-
   it "has a version number" do
     expect(Metanorma::Iso::VERSION).not_to be nil
   end
@@ -1644,7 +1636,6 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "processes document relations" do
-    VCR.use_cassette "docrels", match_requests_on: %i[method uri body] do
       xml = Nokogiri::XML(Asciidoctor.convert(<<~INPUT, *OPTIONS))
         = Document title
         Author
@@ -1669,6 +1660,7 @@ RSpec.describe Metanorma::Iso do
         :related-directive: ABC 14
         :related-mandate: ABC 15
         :has-draft: ABC 16
+        :local-cache: spec/relatondb
       INPUT
       output = <<~OUTPUT
         <bibdata type="standard">
@@ -1846,12 +1838,9 @@ RSpec.describe Metanorma::Iso do
       end
       expect(Xml::C14n.format(strip_guid(xml.to_xml)))
         .to be_equivalent_to Xml::C14n.format(output)
-    end
   end
 
   it "processes adopted-from identifiers, CEN identifiers" do
-    VCR.use_cassette "withdrawn_iso",
-                     match_requests_on: %i[method uri body] do
       xml = Nokogiri::XML(Asciidoctor.convert(<<~INPUT, *OPTIONS))
         = Document title
         Author
@@ -1864,6 +1853,7 @@ RSpec.describe Metanorma::Iso do
         :doctype: international-standard
         :adopted-from: ISO 31-0
         :publisher: CEN
+        :local-cache: spec/relatondb
       INPUT
       output = <<~OUTPUT
         <bibdata type="standard">
@@ -1926,7 +1916,6 @@ RSpec.describe Metanorma::Iso do
       end
       expect(Xml::C14n.format(strip_guid(xml.to_xml)))
         .to be_equivalent_to Xml::C14n.format(output)
-    end
   end
 
   it "reads scripts into blank HTML document" do

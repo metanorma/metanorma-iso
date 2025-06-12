@@ -671,7 +671,6 @@ RSpec.describe IsoDoc do
   end
 
   it "processes websites" do
-    VCR.use_cassette "ignf" do 
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
               <bibdata>
@@ -734,6 +733,5 @@ RSpec.describe IsoDoc do
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to Xml::C14n.format(output)
-    end
   end
 end
