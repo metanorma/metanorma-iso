@@ -3,14 +3,6 @@ require "relaton_iso"
 require "relaton_ietf"
 
 RSpec.describe Metanorma::Iso do
-  before do
-    # Force to download Relaton index file
-    allow_any_instance_of(Relaton::Index::Type).to receive(:actual?)
-      .and_return(false)
-    allow_any_instance_of(Relaton::Index::FileIO).to receive(:check_file)
-      .and_return(nil)
-  end
-
   it "processes draft ISO reference" do
     mock_fdis
     input = <<~INPUT
@@ -364,10 +356,8 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "renders withdrawn and cancelled ISO references" do
-    VCR.use_cassette "withdrawn_iso",
-                     match_requests_on: %i[method uri body] do
       input = <<~INPUT
-        #{ISOBIB_BLANK_HDR}
+        #{LOCAL_CACHED_ISOBIB_BLANK_HDR}
 
         <<iso1,clause=1>>
         <<iso2,clause=1>>
@@ -628,7 +618,6 @@ RSpec.describe Metanorma::Iso do
       OUTPUT
       expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to Xml::C14n.format(output)
-    end
   end
 
   private

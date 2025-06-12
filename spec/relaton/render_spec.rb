@@ -355,7 +355,6 @@ RSpec.describe Relaton::Render::Iso do
   end
 
   it "renders software" do
-    VCR.use_cassette "standoc" do
       input = <<~INPUT
         <bibitem type="software">
           <title>metanorma-standoc</title>
@@ -382,7 +381,6 @@ RSpec.describe Relaton::Render::Iso do
       p = renderer
       expect(p.render(input))
         .to be_equivalent_to output
-    end
   end
 
   it "renders home standard" do
