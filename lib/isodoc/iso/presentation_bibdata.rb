@@ -31,11 +31,12 @@ module IsoDoc
       end
 
       def bibdata_i18n(bib)
-        hash_translate(bib, @i18n.get["doctype_dict"], "./ext/doctype")
+        hash_translate(bib, @i18n.get["doctype_dict"], "./ext/doctype",
+                       "//presentation-metadata/doctype-alias", @lang)
         bibdata_i18n_stage(bib, bib.at(ns("./status/stage")),
                            bib.at(ns("./ext/doctype")))
         hash_translate(bib, @i18n.get["substage_dict"],
-                       "./status/substage")
+                       "./status/substage", nil, @lang)
         edition_translate(bib)
       end
 
@@ -68,7 +69,7 @@ module IsoDoc
         stage or return
         i18n.get.dig("stage_dict", stage.text).is_a?(Hash) or
           return hash_translate(bib, i18n.get["stage_dict"],
-                                "./status/stage", lang)
+                                "./status/stage", nil, lang)
         bibdata_i18n_stage1(stage, type, lang, i18n)
       end
 
