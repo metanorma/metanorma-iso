@@ -13,16 +13,6 @@ module IsoDoc
         super
       end
 
-      # terms not defined in standoc
-      # KILL
-      def error_parse(node, out)
-        case node.name
-        when "appendix" then clause_parse(node, out)
-        else
-          super
-        end
-      end
-
       def example_span_label(_node, div, name)
         name.nil? and return
         div.span class: "example_label" do |p|

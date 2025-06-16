@@ -13,30 +13,6 @@ module IsoDoc
         end
       end
 
-      # KILL
-      def annex_namesx(clause, num)
-        appendix_names(clause, num)
-        super
-      end
-
-      # KILL
-      def appendix_namesx(clause, _num)
-        i = clause_counter(0)
-        clause.xpath(ns("./appendix")).each do |c|
-          i.increment(c)
-          num = semx(c, i.print)
-          lbl = labelled_autonum(@labels["appendix"], num)
-          @anchors[c["id"]] =
-            anchor_struct(i.print, c, @labels["appendix"],
-                          "clause").merge(level: 2, subtype: "annex",
-                                          container: clause["id"])
-          j = clause_counter(0)
-          c.xpath(ns("./clause | ./references")).each do |c1|
-            appendix_names1(c1, lbl, j.increment(c1).print, 3, clause["id"])
-          end
-        end
-      end
-
       # subclauses are not prefixed with "Clause"
       # retaining subtype for the semantics
       def section_name_anchors(clause, num, level)
@@ -64,17 +40,6 @@ module IsoDoc
                  { xref: semx(clause, num) }
                end
         @anchors[clause["id"]] = ret.merge(ret2)
-      end
-
-      # KILL
-      def appendix_names1x(clause, parentnum, num, level, container)
-        num = clause_number_semx(parentnum, clause, num)
-        @anchors[clause["id"]] = { label: num, xref: num, level: level,
-                                   container: container }
-        i = clause_counter(0)
-        clause.xpath(ns("./clause | ./references")).each do |c|
-          appendix_names1(c, num, i.increment(c).print, level + 1, container)
-        end
       end
     end
   end
