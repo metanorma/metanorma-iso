@@ -57,7 +57,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Aluffi, P., D. Anderson, M. Hering, M. Mustaţă and S. Payne</smallcap>. (eds.) <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. First edition. (London Mathematical Society Lecture Note Series 472). Cambridge, UK: Cambridge University Press. 2022. 1 vol.</formattedref>
+      <formattedref>ALUFFI, P., D. ANDERSON, M. HERING, M. MUSTAŢĂ and S. PAYNE. (eds.) <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. First edition. (London Mathematical Society Lecture Note Series 472). Cambridge, UK: Cambridge University Press. 2022. 1 vol.</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -121,7 +121,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Aluffi, P., D. Anderson, M. Hering, M. Mustaţă and S. Payne</smallcap>. (eds.) <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. First edition. (London Mathematical Society Lecture Note Series 472). Cambridge University Press. 2022. 1 vol.</formattedref>
+      <formattedref>ALUFFI, P., D. ANDERSON, M. HERING, M. MUSTAŢĂ and S. PAYNE. (eds.) <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. First edition. (London Mathematical Society Lecture Note Series 472). Cambridge University Press. 2022. 1 vol.</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -184,7 +184,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Aluffi, P., D. Anderson, M. Hering, M. Mustaţă and S. Payne</smallcap>. (eds.) <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. First edition. (London Mathematical Society Lecture Note Series 472). Cambridge, Cambridgeshire, UK: Cambridge University Press. 2022. 1 vol.</formattedref>
+      <formattedref>ALUFFI, P., D. ANDERSON, M. HERING, M. MUSTAŢĂ and S. PAYNE. (eds.) <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. First edition. (London Mathematical Society Lecture Note Series 472). Cambridge, Cambridgeshire, UK: Cambridge University Press. 2022. 1 vol.</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -261,7 +261,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Ramsey, J. K. and W. C. McGrew</smallcap>. Object play in great apes: Studies in nature and captivity. <em>The nature of play: Great apes and humans</em> (eds. Pellegrini, A. D. and P. K. Smith.). Third edition. New York, NY: Guilford Press. 2005. pp. 89–112. [viewed: September 3, 2019].</formattedref>
+      <formattedref>RAMSEY, J. K. and W. C. MCGREW. Object play in great apes: Studies in nature and captivity. <em>The nature of play: Great apes and humans</em> (eds. Pellegrini, A. D. and P. K. Smith.). Third edition. New York, NY: Guilford Press. 2005. pp. 89–112. [viewed: September 3, 2019].</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -347,7 +347,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Aluffi, P., D. Anderson, M. Hering, M. Mustaţă and S. Payne</smallcap>. (eds.) Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. <em>London Mathematical Society Lecture Note Series</em> (N.S.). 2022, vol. 1 no. 7, pp. 89–112.</formattedref>
+      <formattedref>ALUFFI, P., D. ANDERSON, M. HERING, M. MUSTAŢĂ and S. PAYNE. (eds.) Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. <em>London Mathematical Society Lecture Note Series</em> (N.S.). 2022, vol. 1 no. 7, pp. 89–112.</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -376,7 +376,7 @@ RSpec.describe Relaton::Render::Iso do
         </bibitem>
       INPUT
       output = <<~OUTPUT
-        <formattedref><smallcap>Ribose Inc.</smallcap>. <em>metanorma-standoc</em>. Version 1.3.1. 2019. Available from: <span class='biburl'><link target='https://github.com/metanorma/metanorma-standoc'>https://github.com/metanorma/metanorma-standoc</link></span>.</formattedref>
+        <formattedref>RIBOSE INC. <em>metanorma-standoc</em>. Version 1.3.1. 2019. Available from: <span class='biburl'><link target='https://github.com/metanorma/metanorma-standoc'>https://github.com/metanorma/metanorma-standoc</link></span>.</formattedref>
       OUTPUT
       p = renderer
       expect(p.render(input))
@@ -516,7 +516,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>S. Bradner</smallcap>. <em><span class='stddocTitle'>Intellectual Property Rights in IETF Technology</span></em>. RFC Series. Available from: <span class='biburl'><link target='https://www.rfc-editor.org/info/rfc3979'>https://www.rfc-editor.org/info/rfc3979</link></span>.</formattedref>
+      <formattedref>S. BRADNER. <em><span class='stddocTitle'>Intellectual Property Rights in IETF Technology</span></em>. RFC Series. Available from: <span class='biburl'><link target='https://www.rfc-editor.org/info/rfc3979'>https://www.rfc-editor.org/info/rfc3979</link></span>.</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -618,7 +618,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Portes, A. and R. G. Rumbaut</smallcap>. <em>Children of Immigrants. Longitudinal Sudy (CILS) 1991–2006 ICPSR20520</em>. Version 2. Dataset. 2012. Available from: <span class='biburl'><link target='https://doi.org/10.3886/ICPSR20520.v2'>https://doi.org/10.3886/ICPSR20520.v2</link></span>. 501 GB. [viewed: May 6, 2018].</formattedref>
+      <formattedref>PORTES, A. and R. G. RUMBAUT. <em>Children of Immigrants. Longitudinal Sudy (CILS) 1991–2006 ICPSR20520</em>. Version 2. Dataset. 2012. Available from: <span class='biburl'><link target='https://doi.org/10.3886/ICPSR20520.v2'>https://doi.org/10.3886/ICPSR20520.v2</link></span>. 501 GB. [viewed: May 6, 2018].</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -653,7 +653,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-    <formattedref><smallcap>Liberman, M. and G. Pullum</smallcap>. <em><span class='stddocTitle'>Language Log</span></em> [website]. University of Pennsylvania. 2003–. Available from: <span class='biburl'><link target='https://languagelog.ldc.upenn.edu/nll/'>https://languagelog.ldc.upenn.edu/nll/</link></span>. [viewed: September 3, 2019].</formattedref>
+      <formattedref>LIBERMAN, M. and G. PULLUM. <em><span class='stddocTitle'>Language Log</span></em> [website]. University of Pennsylvania. 2003–. Available from: <span class='biburl'><link target='https://languagelog.ldc.upenn.edu/nll/'>https://languagelog.ldc.upenn.edu/nll/</link></span>. [viewed: September 3, 2019].</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -685,7 +685,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Jenkins and J. Ruostekoski</smallcap>. <em>Controlled manipulation of light by cooperativeresponse of atoms in an optical lattice</em>. Preprint. 2012. Available from: <span class='biburl'><link target='https://eprints.soton.ac.uk/338797/'>https://eprints.soton.ac.uk/338797/</link></span>. [viewed: June 24, 2020].</formattedref>
+      <formattedref>JENKINS and J. RUOSTEKOSKI. <em>Controlled manipulation of light by cooperativeresponse of atoms in an optical lattice</em>. Preprint. 2012. Available from: <span class='biburl'><link target='https://eprints.soton.ac.uk/338797/'>https://eprints.soton.ac.uk/338797/</link></span>. [viewed: June 24, 2020].</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -717,7 +717,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><smallcap>Jenkins and J. Ruostekoski</smallcap>. <em>Controlled manipulation of light by cooperativeresponse of atoms in an optical lattice</em>. Preprint. 2020. Available from: <span class='biburl'><link target='https://eprints.soton.ac.uk/338797/'>https://eprints.soton.ac.uk/338797/</link></span>. [viewed: June 2020].</formattedref>
+    <formattedref>JENKINS and J. RUOSTEKOSKI. <em>Controlled manipulation of light by cooperativeresponse of atoms in an optical lattice</em>. Preprint. 2020. Available from: <span class='biburl'><link target='https://eprints.soton.ac.uk/338797/'>https://eprints.soton.ac.uk/338797/</link></span>. [viewed: June 2020].</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
