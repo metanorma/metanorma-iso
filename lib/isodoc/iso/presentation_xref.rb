@@ -3,7 +3,7 @@ module IsoDoc
     class PresentationXMLConvert < IsoDoc::PresentationXMLConvert
       def xref_init(lang, script, _klass, labels, options)
         html = HtmlConvert.new(language: @lang, script: @script)
-        @xrefs = Xref.new(lang, script, klass, labels, options)
+        @xrefs = Xref.new(lang, script, html, labels, options)
       end
 
       def eref_delim(delim, type)
