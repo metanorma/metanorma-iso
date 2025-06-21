@@ -1,7 +1,8 @@
 module IsoDoc
   module Iso
     class PresentationXMLConvert < IsoDoc::PresentationXMLConvert
-      def xref_init(lang, script, klass, labels, options)
+      def xref_init(lang, script, _klass, labels, options)
+        html = HtmlConvert.new(language: @lang, script: @script)
         @xrefs = Xref.new(lang, script, klass, labels, options)
       end
 
