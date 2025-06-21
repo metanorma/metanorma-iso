@@ -550,8 +550,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 </fmt-title>
                 <bibitem id="rfc2616" type="standard">
                    <formattedref>
-                      <smallcap>R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, &amp; T. Berners-Lee</smallcap>
-                      .
+                      R. FIELDING, J. GETTYS, J. MOGUL, H. FRYSTYK, L. MASINTER, P. LEACH and T. BERNERS-LEE.
                       <em>
                          <span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span>
                       </em>
@@ -837,8 +836,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <span class="stdpublisher">RFC </span>
                    <span class="stddocNumber">2616</span>
                    ,
-                   <span style="font-variant:small-caps;">R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, &amp; T. Berners-Lee</span>
-                   .
+                   R. FIELDING, J. GETTYS, J. MOGUL, H. FRYSTYK, L. MASINTER, P. LEACH and T. BERNERS-LEE.
                    <i>
                       <span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span>
                    </i>
@@ -1012,8 +1010,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <span class="stdpublisher">RFC </span>
                    <span class="stddocNumber">2616</span>
                    ,
-                   <span style="font-variant:small-caps;">R. Fielding, J. Gettys, J. Mogul, H. Frystyk, L. Masinter, P. Leach, &amp; T. Berners-Lee</span>
-                   .
+                   R. FIELDING, J. GETTYS, J. MOGUL, H. FRYSTYK, L. MASINTER, P. LEACH and T. BERNERS-LEE.
                    <i>
                       <span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span>
                    </i>
