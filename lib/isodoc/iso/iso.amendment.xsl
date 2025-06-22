@@ -151,14 +151,7 @@
 		</xsl:choose>
 	</xsl:variable>
 
-	<xsl:variable name="doctype_customized" select="normalize-space(/mn:metanorma/mn:metanorma-extension/mn:presentation-metadata/mn:doctype-customized)"/>
-
-	<xsl:variable name="doctype_uppercased">
-		<xsl:choose>
-			<xsl:when test="$doctype_customized != ''"><xsl:value-of select="$doctype_customized"/></xsl:when>
-			<xsl:otherwise><xsl:value-of select="java:toUpperCase(java:java.lang.String.new($doctype_localized))"/></xsl:otherwise>
-		</xsl:choose>
-	</xsl:variable>
+	<xsl:variable name="doctype_uppercased" select="java:toUpperCase(java:java.lang.String.new($doctype_localized))"/>
 
 	<xsl:variable name="stage" select="number(/mn:metanorma/mn:bibdata/mn:status/mn:stage)"/>
 	<xsl:variable name="substage" select="number(/mn:metanorma/mn:bibdata/mn:status/mn:substage)"/>
@@ -1319,10 +1312,7 @@
 														<fo:table-cell><fo:block> </fo:block></fo:table-cell>
 														<fo:table-cell>
 															<fo:block>
-																<xsl:choose>
-																	<xsl:when test="$doctype_customized != ''"><xsl:value-of select="$doctype_customized"/></xsl:when>
-																	<xsl:otherwise><xsl:value-of select="$doctype_localized"/></xsl:otherwise>
-																</xsl:choose>
+																<xsl:value-of select="$doctype_localized"/>
 															</fo:block>
 														</fo:table-cell>
 														<fo:table-cell text-align="center"><fo:block><xsl:value-of select="$docnumber_with_prefix"/></fo:block></fo:table-cell>
@@ -1701,10 +1691,7 @@
 												<xsl:if test="$layoutVersion = '1979'">
 													<xsl:attribute name="letter-spacing">-0.02em</xsl:attribute>
 												</xsl:if>
-												<xsl:choose>
-													<xsl:when test="$doctype_customized != ''"><xsl:value-of select="$doctype_customized"/></xsl:when>
-													<xsl:otherwise><xsl:value-of select="$doctype_localized"/></xsl:otherwise>
-												</xsl:choose>
+												<xsl:value-of select="$doctype_localized"/>
 											</fo:block>
 										</fo:table-cell>
 										<fo:table-cell>
@@ -1889,7 +1876,6 @@
 													</xsl:variable>
 
 													<xsl:choose>
-														<xsl:when test="$doctype_customized != ''"><xsl:value-of select="$doctype_customized"/></xsl:when>
 														<xsl:when test="$stage-abbreviation = 'DIS'"> <!--  or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM' -->
 															<xsl:choose>
 																<xsl:when test="normalize-space($stagename_localized_coverpage) != ''">
@@ -2503,7 +2489,6 @@
 													<fo:table-cell role="SKIP">
 														<fo:block text-align="left">
 															<xsl:choose>
-																<xsl:when test="$doctype_customized != ''"><xsl:value-of select="$doctype_customized"/></xsl:when>
 																<xsl:when test="$stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM'"><xsl:value-of select="$doctype_uppercased"/></xsl:when>
 																<xsl:when test="$doctype = 'amendment'">
 																	<xsl:value-of select="java:toUpperCase(java:java.lang.String.new(translate(/mn:metanorma/mn:bibdata/mn:ext/mn:updates-document-type,'-',' ')))"/>
@@ -2795,10 +2780,7 @@
 										<fo:table-row role="SKIP">
 											<fo:table-cell role="SKIP">
 												<fo:block text-align="left">
-													<xsl:choose>
-														<xsl:when test="$doctype_customized != ''"><xsl:value-of select="$doctype_customized"/></xsl:when>
-														<xsl:otherwise><xsl:value-of select="$doctype_uppercased"/></xsl:otherwise>
-													</xsl:choose>
+													<xsl:value-of select="$doctype_uppercased"/>
 												</fo:block>
 											</fo:table-cell>
 											<fo:table-cell role="SKIP">
@@ -4954,7 +4936,6 @@
 									<fo:table-cell>
 										<fo:block>
 											<xsl:choose>
-												<xsl:when test="$doctype_customized != ''"><xsl:value-of select="$doctype_customized"/></xsl:when>
 												<xsl:when test="$layoutVersion = '2024'">
 													<xsl:choose>
 														<xsl:when test="$doctype = 'committee-document'"><xsl:value-of select="$doctype_localized"/></xsl:when>
@@ -6733,6 +6714,12 @@
 	<xsl:template match="mn:svgmap" mode="update_xml_step1"/>
 
 	<xsl:template match="mn:review-container" mode="update_xml_step1"/>
+
+  <xsl:template match="mn:fmt-identifier[not(ancestor::*[local-name() = 'bibdata'])]//text()" mode="update_xml_step1">
+    <xsl:element name="{$element_name_keep-together_within-line}" namespace="{$namespace_full}">
+      <xsl:value-of select="."/>
+    </xsl:element>
+  </xsl:template>
 
 	<!-- END: update new Presentation XML -->
 
