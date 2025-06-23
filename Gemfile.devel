@@ -1,2 +1,0 @@
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
-gem "relaton-render", git: "https://github.com/relaton/relaton-render", branch: "main"
