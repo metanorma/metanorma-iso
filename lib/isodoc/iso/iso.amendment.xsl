@@ -6715,11 +6715,13 @@
 
 	<xsl:template match="mn:review-container" mode="update_xml_step1"/>
 
-  <xsl:template match="mn:fmt-identifier[not(ancestor::*[local-name() = 'bibdata'])]//text()" mode="update_xml_step1">
-    <xsl:element name="{$element_name_keep-together_within-line}" namespace="{$namespace_full}">
-      <xsl:value-of select="."/>
-    </xsl:element>
-  </xsl:template>
+	<xsl:template match="mn:fmt-identifier[not(ancestor::*[local-name() = 'bibdata'])]//text()" mode="update_xml_step1">
+		<xsl:element name="{$element_name_keep-together_within-line}" namespace="{$namespace_full}">
+			<xsl:value-of select="."/>
+		</xsl:element>
+	</xsl:template>
+
+	<xsl:template match="@semx-id | @anchor" mode="update_xml_step1"/>
 
 	<!-- END: update new Presentation XML -->
 
@@ -13361,13 +13363,28 @@
 		<xsl:if test="../mn:author">
 			<xsl:text>, </xsl:text>
 		</xsl:if>
-		<xsl:call-template name="insert_basic_link">
-			<xsl:with-param name="element">
-				<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
-					<xsl:apply-templates/>
-				</fo:basic-link>
-			</xsl:with-param>
-		</xsl:call-template>
+		<xsl:choose>
+			<xsl:when test="not(parent::quote)">
+				<fo:block>
+					<xsl:call-template name="insert_basic_link">
+						<xsl:with-param name="element">
+							<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
+								<xsl:apply-templates/>
+							</fo:basic-link>
+						</xsl:with-param>
+					</xsl:call-template>
+				</fo:block>
+			</xsl:when>
+			<xsl:otherwise>
+				<xsl:call-template name="insert_basic_link">
+					<xsl:with-param name="element">
+						<fo:basic-link internal-destination="{@bibitemid}" fox:alt-text="{@citeas}">
+							<xsl:apply-templates/>
+						</fo:basic-link>
+					</xsl:with-param>
+				</xsl:call-template>
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template match="mn:author">
@@ -18839,15 +18856,17 @@
 	</xsl:template>
 
 	<xsl:template name="setNamedDestination">
-		<!-- skip GUID, e.g. _33eac3cb-9663-4291-ae26-1d4b6f4635fc -->
-		<xsl:if test="@id and      normalize-space(java:matches(java:java.lang.String.new(@id), '_[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}')) = 'false'">
-			<fox:destination internal-destination="{@id}"/>
-		</xsl:if>
-		<xsl:for-each select=". | mn:title | mn:name">
-			<xsl:if test="@named_dest">
-				<fox:destination internal-destination="{@named_dest}"/>
+		<xsl:if test="$isGenerateTableIF = 'false'">
+			<!-- skip GUID, e.g. _33eac3cb-9663-4291-ae26-1d4b6f4635fc -->
+			<xsl:if test="@id and       normalize-space(java:matches(java:java.lang.String.new(@id), '_[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}')) = 'false'">
+				<fox:destination internal-destination="{@id}"/>
 			</xsl:if>
-		</xsl:for-each>
+			<xsl:for-each select=". | mn:title | mn:name">
+				<xsl:if test="@named_dest">
+					<fox:destination internal-destination="{@named_dest}"/>
+				</xsl:if>
+			</xsl:for-each>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template name="add-letter-spacing">
