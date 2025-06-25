@@ -29,13 +29,13 @@ module IsoDoc
       def warning_for_missing_metadata_post(docxml, ret)
         from = docxml.at(ns("//sections/*/@id"))&.text or return
         ret = <<~REVIEW
-          <review date='#{Date.today}' reviewer='Metanorma' #{add_id_text} from='#{from}' to='#{from}'>
+          <annotation date='#{Date.today}' reviewer='Metanorma' #{add_id_text} from='#{from}' to='#{from}'>
           <p><strong>Metadata warnings:</strong></p> #{ret}
-          </review>
+          </annotation>
         REVIEW
-        unless ins = docxml.at(ns("//review-container"))
-          docxml.root << "<review-container></review-container>"
-          ins = docxml.at(ns("//review-container"))
+        unless ins = docxml.at(ns("//annotation-container"))
+          docxml.root << "<annotation-container></annotation-container>"
+          ins = docxml.at(ns("//annotation-container"))
         end
         ins.add_first_child ret
       end

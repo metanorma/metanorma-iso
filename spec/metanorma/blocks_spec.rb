@@ -44,15 +44,15 @@ RSpec.describe Metanorma::Iso do
           <sections>
              <p id="_" anchor="foreword">Foreword</p>
           </sections>
-          <review-container>
-             <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="foreword" to="foreword">
+          <annotation-container>
+             <annotation id="_" reviewer="ISO" date="20170101T00:00:00Z" type="review" from="foreword" to="foreword">
                 <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
                 <p id="_">
                    For further information on the Foreword, see
                    <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong>
                 </p>
-             </review>
-          </review-container>
+             </annotation>
+          </annotation-container>
        </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
@@ -85,15 +85,15 @@ RSpec.describe Metanorma::Iso do
           <sections>
              <p id="_" anchor="foreword">Foreword</p>
           </sections>
-          <review-container>
-             <review id="_" reviewer="ISO" date="20170101T00:00:00Z" type="todo" from="foreword" to="foreword">
+          <annotation-container>
+             <annotation id="_" reviewer="ISO" date="20170101T00:00:00Z" type="review" from="foreword" to="foreword">
                 <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
                 <p id="_">
                    For further information on the Foreword, see
                    <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong>
                 </p>
-             </review>
-          </review-container>
+             </annotation>
+          </annotation-container>
        </metanorma>
     OUTPUT
     expect(Xml::C14n.format(strip_guid(input)
