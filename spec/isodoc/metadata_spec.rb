@@ -523,9 +523,9 @@ RSpec.describe IsoDoc::Iso::Metadata do
               <title>Clause 1</title>
             </clause>
           </sections>
-          <review-container>
-          <review reviewer="Me" from="C" to="C" date="1">Hello</review>
-          </review-container>
+          <annotation-container>
+          <annotation reviewer="Me" from="C" to="C" date="1">Hello</review>
+          </annotation-container>
       </iso-standard>
     INPUT
     output = <<~OUTPUT
@@ -552,12 +552,12 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <span class="boldtitle">Specifications and test methods</span>
              </p>
              <clause id="C" displayorder="3">
-                <fmt-review-start id="_" source="C" target="_" end="C" author="" date="#{Date.today}"/>
-                <fmt-review-start id="_" source="C" target="_" end="C" author="" date="1"/>
+                <fmt-annotation-start id="_" source="C" target="_" end="C" author="" date="#{Date.today}"/>
+                <fmt-annotation-start id="_" source="C" target="_" end="C" author="" date="1"/>
                 <title id="_">
                    Clause 1
-                   <fmt-review-end id="_" source="C" target="_" start="C" author="" date="1"/>
-                   <fmt-review-end id="_" source="C" target="_" start="C" author="" date="#{Date.today}"/>
+                   <fmt-annotation-end id="_" source="C" target="_" start="C" author="" date="1"/>
+                   <fmt-annotation-end id="_" source="C" target="_" start="C" author="" date="#{Date.today}"/>
                 </title>
                 <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
@@ -574,26 +574,26 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 </fmt-xref-label>
              </clause>
           </sections>
-          <review-container>
-             <review date="#{Date.today}" reviewer="Metanorma" id="_" from="C" to="C">
+          <annotation-container>
+             <annotation date="#{Date.today}" reviewer="Metanorma" id="_" from="C" to="C">
                 <p>
                    <strong>Metadata warnings:</strong>
                 </p>
                 <p>Secretariat is missing.</p>
-             </review>
-             <fmt-review-body date="#{Date.today}" reviewer="Metanorma" id="_" from="_" to="_">
-                <semx element="review" source="_">
+             </annotation>
+             <fmt-annotation-body date="#{Date.today}" reviewer="Metanorma" id="_" from="_" to="_">
+                <semx element="annotation" source="_">
                    <p>
                       <strong>Metadata warnings:</strong>
                    </p>
                    <p>Secretariat is missing.</p>
                 </semx>
-             </fmt-review-body>
-             <review reviewer="Me" from="C" to="C" date="1" id="_">Hello</review>
-             <fmt-review-body reviewer="Me" from="_" to="_" date="1" id="_">
-                <semx element="review" source="_">Hello</semx>
-             </fmt-review-body>
-          </review-container>
+             </fmt-annotation-body>
+             <annotation reviewer="Me" from="C" to="C" date="1" id="_">Hello</annotation>
+             <fmt-annotation-body reviewer="Me" from="_" to="_" date="1" id="_">
+                <semx element="annotation" source="_">Hello</semx>
+             </fmt-annotation-body>
+          </annotation-container>
        </iso-standard>
     OUTPUT
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -646,10 +646,10 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <span class="boldtitle">Specifications and test methods</span>
              </p>
              <clause id="C" displayorder="3">
-                <fmt-review-start id="_" source="C" target="_" end="C" author="" date="#{Date.today}"/>
+                <fmt-annotation-start id="_" source="C" target="_" end="C" author="" date="#{Date.today}"/>
                 <title id="_">
                    Clause 1
-                   <fmt-review-end id="_" source="C" target="_" start="C" author="" date="#{Date.today}"/>
+                   <fmt-annotation-end id="_" source="C" target="_" start="C" author="" date="#{Date.today}"/>
                 </title>
                 <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
@@ -666,22 +666,22 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 </fmt-xref-label>
              </clause>
           </sections>
-          <review-container>
-             <review date="#{Date.today}" reviewer="Metanorma" id="_" from="C" to="C">
+          <annotation-container>
+             <annotation date="#{Date.today}" reviewer="Metanorma" id="_" from="C" to="C">
                 <p>
                    <strong>Metadata warnings:</strong>
                 </p>
                 <p>Document date is missing.</p>
-             </review>
-             <fmt-review-body date="#{Date.today}" reviewer="Metanorma" id="_" from="_" to="_">
-                <semx element="review" source="_">
+             </annotation>
+             <fmt-annotation-body date="#{Date.today}" reviewer="Metanorma" id="_" from="_" to="_">
+                <semx element="annotation" source="_">
                    <p>
                       <strong>Metadata warnings:</strong>
                    </p>
                    <p>Document date is missing.</p>
                 </semx>
-             </fmt-review-body>
-          </review-container>
+             </fmt-annotation-body>
+          </annotation-container>
        </iso-standard>
     OUTPUT
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -732,10 +732,10 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <span class="boldtitle">Specifications and test methods</span>
              </p>
              <clause id="C" displayorder="3">
-                <fmt-review-start id="_" source="C" target="_" end="C" author="" date="#{Date.today}"/>
+                <fmt-annotation-start id="_" source="C" target="_" end="C" author="" date="#{Date.today}"/>
                 <title id="_">
                    Clause 1
-                   <fmt-review-end id="_" source="C" target="_" start="C" author="" date="#{Date.today}"/>
+                   <fmt-annotation-end id="_" source="C" target="_" start="C" author="" date="#{Date.today}"/>
                 </title>
                 <fmt-title id="_" depth="1">
                    <span class="fmt-caption-label">
@@ -752,22 +752,22 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 </fmt-xref-label>
              </clause>
           </sections>
-          <review-container>
-             <review date="#{Date.today}" reviewer="Metanorma" id="_" from="C" to="C">
+          <annotation-container>
+             <annotation date="#{Date.today}" reviewer="Metanorma" id="_" from="C" to="C">
                 <p>
                    <strong>Metadata warnings:</strong>
                 </p>
                 <p>Editorial groups are missing.</p>
-             </review>
-             <fmt-review-body date="#{Date.today}" reviewer="Metanorma" id="_" from="_" to="_">
-                <semx element="review" source="_">
+             </annotation>
+             <fmt-annotation-body date="#{Date.today}" reviewer="Metanorma" id="_" from="_" to="_">
+                <semx element="annotation" source="_">
                    <p>
                       <strong>Metadata warnings:</strong>
                    </p>
                    <p>Editorial groups are missing.</p>
                 </semx>
-             </fmt-review-body>
-          </review-container>
+             </fmt-annotation-body>
+          </annotation-container>
        </iso-standard>
     OUTPUT
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)

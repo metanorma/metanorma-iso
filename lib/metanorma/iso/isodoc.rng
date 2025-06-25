@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-<!-- VERSION v2.0.7 -->
+<!-- VERSION v2.0.8 -->
 
   <!--
     ALERT: cannot have root comments, because of https://github.com/metanorma/metanorma/issues/437
@@ -69,6 +69,46 @@ but to `@anchor`, the user-supplied cross-reference</a:documentation>
             <ref name="PureTextElement"/>
             <ref name="stem"/>
           </choice>
+        </oneOrMore>
+      </element>
+    </define>
+    <define name="review">
+      <a:documentation>Generalise BasicDoc element from just review comments, to general annotations;
+the type attribute defaults to `review` for reviews</a:documentation>
+      <element name="annotation">
+        <ref name="RequiredId"/>
+        <ref name="ReviewAttributes"/>
+        <oneOrMore>
+          <ref name="paragraph">
+            <a:documentation>Reviewer comments content</a:documentation>
+          </ref>
+        </oneOrMore>
+      </element>
+    </define>
+    <define name="ruby_pronunciation">
+      <a:documentation>Ruby annotation giving pronunciation of text: change tag from BasicDoc for disambiguation</a:documentation>
+      <element name="ruby-pronunciation">
+        <attribute name="value">
+          <a:documentation>Ruby annotation value</a:documentation>
+        </attribute>
+        <ref name="LocalizedStringAttributes"/>
+      </element>
+    </define>
+    <define name="ruby_annotation">
+      <a:documentation>Ruby annotation giving information other than pronunciation of text: change tag from BasicDoc for disambiguation</a:documentation>
+      <element name="ruby-annotation">
+        <attribute name="value">
+          <a:documentation>Ruby annotation value</a:documentation>
+        </attribute>
+        <ref name="LocalizedStringAttributes"/>
+      </element>
+    </define>
+    <define name="annotation">
+      <a:documentation>Source code annotation, corresponding to a callout</a:documentation>
+      <element name="callout-annotation">
+        <ref name="RequiredId"/>
+        <oneOrMore>
+          <ref name="paragraph"/>
         </oneOrMore>
       </element>
     </define>
@@ -540,7 +580,7 @@ normative or informative references, some split references into sections organiz
       <ref name="OptionalId"/>
       <optional>
         <attribute name="style">
-          <a:documentation>CSS style: only background-color supported</a:documentation>
+          <a:documentation>CSS style: only background-color, color, border supported</a:documentation>
         </attribute>
       </optional>
     </define>
@@ -620,7 +660,7 @@ This is done if the footnote reference is already presented in some other form, 
     <ref name="RequiredId"/>
     <optional>
       <attribute name="style">
-        <a:documentation>CSS style: only background-color supported</a:documentation>
+        <a:documentation>CSS style: only background-color, color, border supported</a:documentation>
       </attribute>
     </optional>
   </define>
@@ -698,6 +738,11 @@ titlecase, or lowercase</a:documentation>
     <optional>
       <attribute name="width">
         <a:documentation>Width of the table block in rendering</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="style">
+        <a:documentation>CSS style: only background-color, color, border supported</a:documentation>
       </attribute>
     </optional>
     <ref name="BlockAttributes"/>
@@ -1417,7 +1462,7 @@ numbers</a:documentation>
       </optional>
       <ref name="DocumentBody"/>
       <optional>
-        <ref name="review-container">
+        <ref name="annotation-container">
           <a:documentation>Annotations to the document</a:documentation>
         </ref>
       </optional>
@@ -1461,8 +1506,8 @@ numbers</a:documentation>
       </oneOrMore>
     </element>
   </define>
-  <define name="review-container">
-    <element name="review-container">
+  <define name="annotation-container">
+    <element name="annotation-container">
       <oneOrMore>
         <ref name="review"/>
       </oneOrMore>
