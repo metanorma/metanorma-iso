@@ -112,10 +112,6 @@ module IsoDoc
         end
       end
 
-      def ol_attrs(node)
-        super.merge(start: node["start"]).compact
-      end
-
       def table_parse(node, out)
         @in_table = true
         table_title_parse(node, out)

@@ -123,6 +123,7 @@ module IsoDoc
 
       def authority_copyright_style(auth)
         auth.xpath(".//p[not(@class)]").each { |p| p["class"] = "zzCopyright" }
+        auth.xpath(".//p[@class = 'Tablebody']").each { |p| p["class"] = "zzCopyright" }
         auth.xpath(".//p[@id = 'boilerplate-message']").each do |p|
           p["class"] = "zzCopyright1"
         end

@@ -66,8 +66,7 @@ module Metanorma
 
       def ol_attrs(node)
         attr_code(keep_attrs(node).merge(id_attr(node))
-                  .merge("explicit-type": olist_style(node.attributes[1]),
-                         start: node.attr("start")))
+                  .merge("explicit-type": olist_style(node.attributes[1])))
       end
 
       def admonition_name(node)
