@@ -64,11 +64,6 @@ module Metanorma
         { word_levels: 3, html_levels: 2, pdf_levels: 3 }
       end
 
-      def ol_attrs(node)
-        attr_code(keep_attrs(node).merge(id_attr(node))
-                  .merge("explicit-type": olist_style(node.attributes[1])))
-      end
-
       def admonition_name(node)
         name = super
         a = node.attr("type") and ["editorial"].each do |t|
