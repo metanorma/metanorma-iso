@@ -64,6 +64,12 @@ module Metanorma
         { word_levels: 3, html_levels: 2, pdf_levels: 3 }
       end
 
+      def ol_atts(node)
+        ret = super
+        ret.delete(:type)
+        ret
+      end
+
       def admonition_name(node)
         name = super
         a = node.attr("type") and ["editorial"].each do |t|
