@@ -139,7 +139,7 @@ module IsoDoc
       end
 
       def table1_fmt_xref_modspec(elem)
-        p = elem.parent.parent.at(ns("./fmt-xref-label"))
+        p = elem.parent.parent.at(ns("./fmt-xref-label")) or return
         t = elem.at(ns("./fmt-xref-label"))&.remove or return
         n = t.at(ns("./span[@class='fmt-element-name'][2]")) or return
         while i = n.next

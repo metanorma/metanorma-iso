@@ -652,7 +652,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <figure id="_">
-            <image height="auto" id="_" mimetype="image/png" src="spec/examples/rice_images/rice_image1.png" width="auto"/>
+             <image id="_" src="spec/examples/rice_images/rice_image1.png" mimetype="image/png" height="auto" width="auto" filename="spec/examples/rice_images/rice_image1.png"/>
             <fn id="_" reference="a">
               <p id="_">This is a footnote to a figure</p>
             </fn>
@@ -680,7 +680,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <figure id="_">
-            <image height="auto" id="_" mimetype="image/png" src="spec/examples/rice_images/rice_image1.png" width="auto"/>
+            <image id="_" src="spec/examples/rice_images/rice_image1.png" mimetype="image/png" height="auto" width="auto" filename="spec/examples/rice_images/rice_image1.png"/>
             <dl id="_" key="true">
               <dt>a</dt>
               <dd id="_">

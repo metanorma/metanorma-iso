@@ -33,6 +33,9 @@ module Metanorma
       end
 
       def ol_cleanup(doc)
+        doc.xpath("//ol[@type]").each do |x|
+          x.delete("type")
+        end
         doc.xpath("//ol[@explicit-type]").each do |x|
           x["type"] = x["explicit-type"]
           x.delete("explicit-type")

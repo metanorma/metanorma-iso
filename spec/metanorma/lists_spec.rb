@@ -28,7 +28,7 @@ RSpec.describe Metanorma::Iso do
             </li>
             <li>
               <p id="_">List 3</p>
-              <ol id="_">
+              <ol id="_" type="arabic">
                 <li>
                   <p id="_">List A</p>
                 </li>

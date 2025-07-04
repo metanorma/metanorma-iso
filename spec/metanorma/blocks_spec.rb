@@ -335,7 +335,7 @@ RSpec.describe Metanorma::Iso do
         <sections>
           <figure id="_">
             <name id="_">Split-it-right sample divider</name>
-            <image height="auto" id="_" mimetype="image/png" src="spec/examples/rice_images/rice_image1.png" width="auto"/>
+            <image id="_" src="spec/examples/rice_images/rice_image1.png" mimetype="image/png" height="auto" width="auto" filename="spec/examples/rice_images/rice_image1.png"/>
           </figure>
         </sections>
       </metanorma>
@@ -355,7 +355,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <figure id="_" width="3">
-            <image height="4" id="_" mimetype="image/png" src="spec/examples/rice_images/rice_image1.png" width="3"/>
+            <image id="_" src="spec/examples/rice_images/rice_image1.png" mimetype="image/png" height="4" width="3" filename="spec/examples/rice_images/rice_image1.png"/>
           </figure>
         </sections>
       </metanorma>
@@ -375,7 +375,7 @@ RSpec.describe Metanorma::Iso do
       #{BLANK_HDR}
         <sections>
           <figure id="_"  width="auto">
-            <image height="4" id="_" mimetype="image/png" src="spec/examples/rice_images/rice_image1.png" width="auto"/>
+            <image id="_" src="spec/examples/rice_images/rice_image1.png" mimetype="image/png" height="4" width="auto" filename="spec/examples/rice_images/rice_image1.png"/>
           </figure>
         </sections>
       </metanorma>
