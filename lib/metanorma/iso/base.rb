@@ -64,7 +64,7 @@ module Metanorma
         { word_levels: 3, html_levels: 2, pdf_levels: 3 }
       end
 
-      def ol_atts(node)
+      def ol_attrs(node)
         ret = super
         ret.delete(:type)
         ret
