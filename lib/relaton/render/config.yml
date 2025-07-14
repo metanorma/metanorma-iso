@@ -25,7 +25,7 @@ template:
   manual: book
   techreport: book
   proceedings: book
-  inbook: "{{ creatornames | selective_upcase }}. ({{role}}) {{ title }} . <em>{{host_title}}</em> ({{host_role}} {{ host_creatornames | replace: '+++', ''}}.) . {{ edition | capitalize_first }}. ({{ series }}). {% if place %}{{place}}:{%endif%} {{publisher}}. {{date}}. {{size}}. {{extent}}. ._{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>. {{ labels['at'] | capitalize}}:_{{ access_location }}. [{{ labels['viewed'] }}:_{{date_accessed}}]."
+  inbook: "{{ creatornames | selective_upcase }}. ({{role}}) {{ title }} . <em>{{host_title}}</em> ({{host_role}} {{ host_creatornames | replace: '+++', ''}}) . {{ edition | capitalize_first }}. ({{ series }}). {% if place %}{{place}}:{%endif%} {{publisher}}. {{date}}. {{size}}. {{extent}}. ._{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>. {{ labels['at'] | capitalize}}:_{{ access_location }}. [{{ labels['viewed'] }}:_{{date_accessed}}]."
   inproceedings: inbook
   incollection: inbook
   journal: "<em>{{ title}}</em> . {{ edition | capitalize_first }}. {{place}}: {{publisher}}. {{date}}. {{size}}. {{extent}}. ._{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>. {{ labels['at'] | capitalize}}:_{{ access_location }}. [{{ labels['viewed'] }}:_{{date_accessed}}]."

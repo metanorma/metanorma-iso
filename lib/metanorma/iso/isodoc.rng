@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-<!-- VERSION v2.0.8 -->
+<!-- VERSION v2.1.0 -->
 
   <!--
     ALERT: cannot have root comments, because of https://github.com/metanorma/metanorma/issues/437
@@ -735,6 +735,12 @@ titlecase, or lowercase</a:documentation>
     <ref name="BlockAttributes"/>
   </define>
   <define name="TableAttributes" combine="interleave">
+    <optional>
+      <attribute name="plain">
+        <a:documentation>Render as a plain attribute, with no shading or borders</a:documentation>
+        <data type="boolean"/>
+      </attribute>
+    </optional>
     <optional>
       <attribute name="width">
         <a:documentation>Width of the table block in rendering</a:documentation>
