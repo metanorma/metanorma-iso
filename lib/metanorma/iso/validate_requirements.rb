@@ -18,15 +18,15 @@ module Metanorma
         \\b
       REGEXP
 
-      def requirement_re
-        Regexp.new(self.class::REQUIREMENT_RE_STR.gsub(/\s/, "")
-          .gsub("_", "\\s"), Regexp::IGNORECASE)
+      def str_to_regexp(str)
+        Regexp.new(str.gsub(/\s/, "").gsub("_", "\\s"), Regexp::IGNORECASE)
       end
 
       def requirement_check(text)
         @lang == "en" or return
-        text.split(/\.\s+/).each do |t|
-          return t if requirement_re.match t
+        re = str_to_regexp(self.class::REQUIREMENT_RE_STR)
+        text.gsub(/\s+/, " ").split(/\.\s+/).each do |t|
+          return t if re.match t
         end
         nil
       end
@@ -39,15 +39,11 @@ module Metanorma
         \\b
       REGEXP
 
-      def recommendation_re
-        Regexp.new(self.class::RECOMMENDATION_RE_STR.gsub(/\s/, "")
-          .gsub("_", "\\s"), Regexp::IGNORECASE)
-      end
-
       def recommendation_check(text)
         @lang == "en" or return
-        text.split(/\.\s+/).each do |t|
-          return t if recommendation_re.match t
+        re = str_to_regexp(self.class::REQUIREMENT_RE_STR)
+        text.gsub(/\s+/, " ").split(/\.\s+/).each do |t|
+          return t if re.match t
         end
         nil
       end
@@ -61,15 +57,11 @@ module Metanorma
         \\b
       REGEXP
 
-      def permission_re
-        @lang == "en" or return
-        Regexp.new(self.class::PERMISSION_RE_STR.gsub(/\s/, "")
-          .gsub("_", "\\s"), Regexp::IGNORECASE)
-      end
-
       def permission_check(text)
-        text.split(/\.\s+/).each do |t|
-          return t if permission_re.match t
+        @lang == "en" or return
+        re = str_to_regexp(self.class::PERMISSION_RE_STR)
+        text.gsub(/\s+/, " ").split(/\.\s+/).each do |t|
+          return t if re.match t
         end
         nil
       end
@@ -84,14 +76,10 @@ module Metanorma
         \\b
       REGEXP
 
-      def possibility_re
-        @lang == "en" or return
-        Regexp.new(self.class::POSSIBILITY_RE_STR.gsub(/\s/, "")
-          .gsub("_", "\\s"), Regexp::IGNORECASE)
-      end
-
       def possibility_check(text)
-        text.split(/\.\s+/).each { |t| return t if possibility_re.match t }
+        @lang == "en" or return
+        re = str_to_regexp(self.class::POSSIBILITY_RE_STR)
+        text.gsub(/\s+/, " ").split(/\.\s+/).each { |t| return t if re.match t }
         nil
       end
 
@@ -103,21 +91,31 @@ module Metanorma
       end
 
       AMBIG_WORDS_RE_STR = <<~REGEXP.freeze
-        \\b
-            need_to | needs_to | might | could
-        \\b
+        \\b(
+            need_to | needs_to | might | could | family_of_standards | suite_of_standards
+        )\\b
       REGEXP
-
-      def ambig_words_re
-        @lang == "en" or return
-        Regexp.new(self.class::AMBIG_WORDS_RE_STR.gsub(/\s/, "")
-          .gsub("_", "\\s"), Regexp::IGNORECASE)
-      end
 
       def ambig_words_check(text)
         @lang == "en" or return
-        text.split(/\.\s+/).each do |t|
-          return t if ambig_words_re.match t
+        re = str_to_regexp(self.class::AMBIG_WORDS_RE_STR)
+        text.gsub(/\s+/, " ").split(/\.\s+/).each do |t|
+          return t if re.match t
+        end
+        nil
+      end
+
+      MISSPELLED_WORDS_RE_STR = <<~REGEXP.freeze
+        \\b(
+            on-line | cyber_security | cyber-security
+        )\\b
+      REGEXP
+
+      def misspelled_words_check(text)
+        @lang == "en" or return
+        re = str_to_regexp(self.class::MISSPELLED_WORDS_RE_STR)
+        text.gsub(/\s+/, " ").split(/\.\s+/).each do |t|
+          return t if re.match t
         end
         nil
       end

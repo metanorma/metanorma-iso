@@ -91,7 +91,7 @@ module Metanorma
         style_units(node, text)
         style_punct(node, text)
         style_subscript(node)
-        style_ambig_words(node, text)
+        style_problem_words(node, text)
       end
 
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-quantity
@@ -107,12 +107,17 @@ module Metanorma
 
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-need
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-might
-      def style_ambig_words(node, text)
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-family
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-it
+      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-use-of
+      def style_problem_words(node, text)
         r = ambig_words_check(text) and
           style_warning(node, "may contain ambiguous provision", r,
                         display: false)
-        @lang == "en" and style_regex(/\b(?<num>billions?)\b/i,
-                                      "ambiguous number", node, text)
+        r = misspelled_words_check(text) and
+          style_warning(node, "dispreferred spelling", r,
+                        display: false)
+        style_regex(/\b(?<num>billions?)\b/i, "ambiguous number", node, text)
       end
 
       # ISO/IEC DIR 2, 9.1

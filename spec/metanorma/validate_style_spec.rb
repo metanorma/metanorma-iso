@@ -299,7 +299,6 @@ RSpec.describe Metanorma::Iso do
     r = File.read("test.err.html")
     expect(r).not_to include("number not broken up in threes")
 
-
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
 
@@ -846,6 +845,45 @@ RSpec.describe Metanorma::Iso do
     INPUT
     expect(File.read("test.err.html"))
       .not_to include("may contain ambiguous provision")
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      This is not a suite of standards, but a series.
+    INPUT
+    expect(File.read("test.err.html"))
+      .to include("may contain ambiguous provision")
+  end
+
+  it "warns of misppelled term" do
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      Cyber-security is important
+    INPUT
+    expect(File.read("test.err.html"))
+      .to include("dispreferred spelling")
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      Cyber
+      security is important
+    INPUT
+    expect(File.read("test.err.html"))
+      .to include("dispreferred spelling")
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      This is not a suite of standards, but a series.
+    INPUT
+    expect(File.read("test.err.html"))
+      .not_to include("dispreferred spelling")
   end
 
   it "warns of cross-references before punctuation" do
@@ -1046,7 +1084,7 @@ RSpec.describe Metanorma::Iso do
       .not_to include("Ex1 has not been cross-referenced within document")
     expect(f)
       .to include("Annex AnnA has not been cross-referenced within document")
-    #expect(f)
+    # expect(f)
     #  .not_to include("Annex AnnB has not been cross-referenced within document")
     expect(f)
       .not_to include("Annex AnnB1 has not been cross-referenced within document")
