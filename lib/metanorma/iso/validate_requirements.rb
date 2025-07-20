@@ -41,7 +41,7 @@ module Metanorma
 
       def recommendation_check(text)
         @lang == "en" or return
-        re = str_to_regexp(self.class::REQUIREMENT_RE_STR)
+        re = str_to_regexp(self.class::RECOMMENDATION_RE_STR)
         text.gsub(/\s+/, " ").split(/\.\s+/).each do |t|
           return t if re.match t
         end

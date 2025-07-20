@@ -198,14 +198,14 @@ Applicable to modify and delete</a:documentation>
         </zeroOrMore>
       </element>
     </optional>
-    <optional>
+    <zeroOrMore>
       <element name="description">
-        <a:documentation>Description of the change described in this block</a:documentation>
-        <zeroOrMore>
+        <a:documentation>Description(s) of the change described in this block</a:documentation>
+        <oneOrMore>
           <ref name="BasicBlock"/>
-        </zeroOrMore>
+        </oneOrMore>
       </element>
-    </optional>
+    </zeroOrMore>
     <optional>
       <element name="newcontent">
         <a:documentation>New content to be added to the document; applicable to add and modify</a:documentation>

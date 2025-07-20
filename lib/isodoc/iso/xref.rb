@@ -48,7 +48,6 @@ module IsoDoc
         c = IsoDoc::XrefGen::Counter.new
         clause.xpath(ns(".//formula")).noblank.each do |t|
           @anchors[t["id"]] = anchor_struct(
-            #"#{num}#{hier_separator}#{c.increment(t).print}", t,
             hiersemx(clause, num, c.increment(t), t), t,
             t["inequality"] ? @labels["inequality"] : @labels["formula"],
             "formula", { unnumb: t["unnumbered"], container: true }
@@ -86,8 +85,8 @@ module IsoDoc
           @anchors[elem["id"]][:label] = sublabel
           @anchors[elem["id"]][:xref] = @anchors[elem.parent["id"]][:xref] +
             " " + semx(elem, sublabel) + delim_wrap(subfigure_delim)
-                    x = @anchors[elem.parent["id"]][:container] and
-          @anchors[elem["id"]][:container] = x
+          x = @anchors[elem.parent["id"]][:container] and
+            @anchors[elem["id"]][:container] = x
         end
       end
 
@@ -128,7 +127,6 @@ module IsoDoc
         j = 0
         clause.xpath(ns(FIGURE_NO_CLASS)).noblank.each do |t|
           j = subfigure_increment(j, c, t)
-          #label = "#{num}#{hier_separator}#{c.print}"
           sublabel = subfigure_label(j)
           figure_anchor(t, sublabel, hiersemx(clause, num, c, t), "figure")
         end
@@ -142,9 +140,9 @@ module IsoDoc
           .noblank.each do |t|
           c[t["class"]] ||= IsoDoc::XrefGen::Counter.new
           j = subfigure_increment(j, c[t["class"]], t)
-          #label = "#{num}#{hier_separator}#{c.print}"
           sublabel = j.zero? ? nil : "#{(j + 96).chr})"
-          figure_anchor(t, sublabel, hiersemx(clause, num, c[t["class"]], t), t["class"])
+          figure_anchor(t, sublabel, hiersemx(clause, num, c[t["class"]], t),
+                        t["class"])
         end
       end
 
@@ -160,7 +158,7 @@ module IsoDoc
             s.xpath(ns(".//appendix//ol")) - s.xpath(ns(".//ol//ol"))
           c = Counter.new
           notes.noblank.each do |n|
-            #n["id"] ||= "_#{UUIDTools::UUID.random_create}"
+            # n["id"] ||= "_#{UUIDTools::UUID.random_create}"
             @anchors[n["id"]] = anchor_struct(increment_label(notes, n, c), n,
                                               @labels["list"], "list",
                                               { unnumb: false, container: true })
@@ -197,22 +195,20 @@ module IsoDoc
       end
 
       def modspec_table_components_xrefs(table, table_label, container: false)
-        table.xpath(ns(".//tr[@id] | .//td[@id] | .//bookmark[@id]")).each do |tr|
+        table
+          .xpath(ns(".//tr[@id] | .//td[@id] | .//bookmark[@id]")).each do |tr|
           xref_to_modspec(tr["id"], table_label) or next
           container or @anchors[tr["id"]].delete(:container)
         end
       end
 
       def xref_to_modspec(id, table_label)
-        #(@anchors[id] && !@anchors[id][:has_modspec]) or return
+        # (@anchors[id] && !@anchors[id][:has_modspec]) or return
         (@anchors[id] && !@anchors[id][:has_table_prefix]) or return
         @anchors[id][:has_table_prefix] = true
         x = @anchors_previous[id][:xref_bare] || @anchors_previous[id][:xref]
-        # @anchors[id][:xref] = l10n("#{table_label}<span class='fmt-comma'>,</span> #{x}")
-
         @anchors[id][:xref] = l10n(@klass.connectives_spans(@i18n.nested_xref
           .sub("%1", table_label).sub("%2", x)))
-
         @anchors[id][:modspec] = @anchors_previous[id][:modspec]
         @anchors[id][:subtype] = "modspec" # prevents citetbl style from beign applied
         true

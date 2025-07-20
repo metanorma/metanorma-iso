@@ -187,9 +187,6 @@ module Metanorma
 
       def iso_id_default(params)
         params_nolang = params.dup.tap { |hs| hs.delete(:language) }
-        #params1 = if params[:unpublished]
-                    #params_nolang.dup.tap { |hs| hs.delete(:year) }
-                  #else params_nolang end
         params1 = params_nolang
         params1.delete(:unpublished)
         pubid_select(params1).create(**params1)
@@ -205,9 +202,6 @@ module Metanorma
       end
 
       def iso_id_with_lang(params)
-        #params1 = if params[:unpublished]
-                    #params.dup.tap { |hs| hs.delete(:year) }
-                  #else params end
         params1 = params
         params1.delete(:unpublished)
         pubid_select(params1).create(**params1)
@@ -220,7 +214,7 @@ module Metanorma
 
       def structured_id(node, xml)
         node.attr("docnumber") or return
-        part, subpart = node&.attr("partnumber")&.split("-")
+        part, subpart = node.attr("partnumber")&.split("-")
         xml.structuredidentifier do |i|
           i.project_number(node.attr("docnumber"), **attr_code(
             part:, subpart:,
