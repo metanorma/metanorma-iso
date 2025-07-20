@@ -11139,6 +11139,16 @@
 		</xsl:variable>
 		<xsl:variable name="quot">"</xsl:variable>
 		<xsl:variable name="styles_">
+			<!-- PDF: Borderless tables https://github.com/metanorma/metanorma-jis/issues/344 -->
+			<xsl:if test="@plain = 'true' or ancestor::mn:table/@plain = 'true'">
+				<style name="border-top">none</style>
+				<style name="border-right">none</style>
+				<style name="border-left">none</style>
+				<style name="border-bottom">none</style>
+				<style name="color">inherit</style>
+				<style name="background-color">transparent</style>
+			</xsl:if>
+
 			<xsl:for-each select="xalan:nodeset($styles__)/mnx:item">
 				<xsl:variable name="key" select="normalize-space(substring-before(., ':'))"/>
 				<xsl:variable name="value" select="normalize-space(substring-after(translate(.,$quot,''), ':'))"/>
