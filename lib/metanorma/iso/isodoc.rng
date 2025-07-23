@@ -922,11 +922,7 @@ titlecase, or lowercase</a:documentation>
     </choice>
   </define>
   <define name="PureTextElement" combine="choice">
-    <a:documentation>Treat stem as a pure text element in isodoc</a:documentation>
-    <choice>
-      <ref name="passthrough_inline"/>
-      <ref name="stem"/>
-    </choice>
+    <ref name="passthrough_inline"/>
   </define>
   <define name="NestedTextElement" combine="choice">
     <ref name="erefstack"/>

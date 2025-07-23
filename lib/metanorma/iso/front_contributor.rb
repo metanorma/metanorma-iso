@@ -1,10 +1,6 @@
 module Metanorma
   module Iso
     class Converter < Standoc::Converter
-      # def home_agency
-      # "ISO"
-      # end
-
       def default_publisher
         "ISO"
       end
@@ -22,11 +18,10 @@ module Metanorma
       end
 
       def org_organization(node, xml, org)
-        #require "debug"; binding.b
         if org[:committee]
-          contrib_committee_build(xml, org[:agency], org) else
-          super
-          end
+          contrib_committee_build(xml, org[:agency], org)
+        else super
+        end
       end
 
       # KILL
@@ -106,6 +101,7 @@ module Metanorma
         xml.name agency
         contrib_committee_subdiv(xml, committee)
         abbr = committee[:agency_abbrev] and xml.abbreviation abbr
+        full_committee_id(xml.parent)
       end
 
       def contrib_committee_subdiv(xml, committee)
@@ -115,6 +111,24 @@ module Metanorma
           committee[:abbr] and o.abbreviation committee[:abbr]
           committee[:ident] and o.identifier committee[:ident]
         end
+      end
+
+      def full_committee_id(contrib)
+        ids = []
+        ret = full_committee_agency_id(contrib)
+        s = contrib
+        while s = s.at("./subdivision")
+          ids << s.at("./identifier")&.text
+        end
+        ins = contrib.at("./subdivision/identifier") and
+          ins.next = "<identifier type='full'>#{ret}#{ids.join('/')}</identifier>"
+      end
+
+      def full_committee_agency_id(contrib)
+        agency = contrib.at("./abbreviation")&.text
+        ret = agency == default_publisher ? "" : "#{agency} "
+        /^\s+/.match?(ret) and ret = ""
+        ret
       end
 
       COMMITTEE_ABBREVS =

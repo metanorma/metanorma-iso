@@ -51,12 +51,113 @@ RSpec.describe IsoDoc::Iso::Metadata do
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
+                    <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <subdivision type="Technical committee">
+                   <name>Electrical equipment in medical practice</name>
+                   <subdivision type="Subcommittee">
+                      <name>Common aspects of electrical equipment used in medical practice</name>
+                      <subdivision type="Workgroup">
+                         <name>Working group on defibulators</name>
+                         <identifier>WG 62A1</identifier>
+                      </subdivision>
+                      <identifier>SC 62A</identifier>
+                   </subdivision>
+                   <identifier>TC 62</identifier>
+                </subdivision>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>Quality management and corresponding general aspects for medical devices</name>
+                   <identifier>TC 210</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>Institute of Electrical and Electronic Engineers</name>
+                <subdivision type="Technical committee">
+                   <name>The committee</name>
+                </subdivision>
+                <abbreviation>IEEE</abbreviation>
+             </organization>
+          </contributor>
           <contributor>
             <role type="publisher"/>
             <organization>
               <name>International Organization for Standardization</name>
               <abbreviation>ISO</abbreviation>
             </organization>
+          </contributor>
+                   <contributor>
+             <role type="authorizer">
+                <description>Agency</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+         <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <subdivision type="Technical committee">
+                   <name>Electrical equipment in medical practice</name>
+                   <subdivision type="Subcommittee">
+                      <name>Common aspects of electrical equipment used in medical practice</name>
+                      <subdivision type="Workgroup">
+                         <name>Working group on defibulators</name>
+                         <identifier>WG 62A1</identifier>
+                      </subdivision>
+                      <identifier>SC 62A</identifier>
+                   </subdivision>
+                   <identifier>TC 62</identifier>
+                </subdivision>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>Quality management and corresponding general aspects for medical devices</name>
+                   <identifier>TC 210</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>Institute of Electrical and Electronic Engineers</name>
+                <subdivision type="Technical committee">
+                   <name>The committee</name>
+                </subdivision>
+                <abbreviation>IEEE</abbreviation>
+             </organization>
           </contributor>
           <language>en</language>
           <script>Latn</script>

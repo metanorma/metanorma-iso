@@ -111,6 +111,7 @@ RSpec.describe Metanorma::Iso do
                       <identifier>B 2</identifier>
                    </subdivision>
                    <identifier>A 1</identifier>
+                   <identifier type="full">A 1/B 2/C 3</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
@@ -132,6 +133,7 @@ RSpec.describe Metanorma::Iso do
                       <identifier>B1 21</identifier>
                    </subdivision>
                    <identifier>A1 11</identifier>
+                   <identifier type="full">A1 11/B1 21/C1 31</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
@@ -169,6 +171,7 @@ RSpec.describe Metanorma::Iso do
                       <identifier>Ba 2a</identifier>
                    </subdivision>
                    <identifier>Aa 1a</identifier>
+                   <identifier type="full">Aa 1a/Ba 2a/Ca 3a</identifier>
                 </subdivision>
              </organization>
           </contributor>
@@ -189,6 +192,7 @@ RSpec.describe Metanorma::Iso do
                       <identifier>B1a 21a</identifier>
                    </subdivision>
                    <identifier>A1a 11a</identifier>
+                   <identifier type="full">A1a 11a/B1a 21a/C1a 31a</identifier>
                 </subdivision>
              </organization>
           </contributor>
@@ -347,6 +351,7 @@ RSpec.describe Metanorma::Iso do
                       <identifier>SC 2</identifier>
                    </subdivision>
                    <identifier>TC 1</identifier>
+                   <identifier type="full">TC 1/SC 2/WG 3</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
@@ -397,6 +402,7 @@ RSpec.describe Metanorma::Iso do
                       <identifier>SC 2</identifier>
                    </subdivision>
                    <identifier>TC 1</identifier>
+                   <identifier type="full">TC 1/SC 2/WG 3</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
@@ -569,6 +575,8 @@ RSpec.describe Metanorma::Iso do
       :technical-committee-number: 62
       :subcommittee_2: Common aspects of electrical equipment used in medical practice
       :subcommittee-number_2: 62A
+      :workgroup_2: Working group on defibulators
+      :workgroup-number_2: 62A1
       :technical-committee-agency: IEC
       :technical-committee_2: Quality management and corresponding general aspects for medical devices
       :technical-committee-number_2: 210
@@ -578,13 +586,13 @@ RSpec.describe Metanorma::Iso do
 
     INPUT
     output = <<~OUTPUT
-          <bibdata type="standard">
-         <docidentifier type="ISO" primary="true">ISO 1000:2025</docidentifier>
-         <docidentifier type="iso-reference">ISO 1000:2025(E)</docidentifier>
-         <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
-         <docidentifier type="iso-undated">ISO 1000</docidentifier>
-         <docidentifier type="iso-with-lang">ISO 1000:2025(en)</docidentifier>
-         <docnumber>1000</docnumber>
+       <bibdata type="standard">
+          <docidentifier type="ISO" primary="true">ISO 1000:2025</docidentifier>
+          <docidentifier type="iso-reference">ISO 1000:2025(E)</docidentifier>
+          <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
+          <docidentifier type="iso-undated">ISO 1000</docidentifier>
+          <docidentifier type="iso-with-lang">ISO 1000:2025(en)</docidentifier>
+          <docnumber>1000</docnumber>
           <contributor>
              <role type="author"/>
              <organization>
@@ -602,9 +610,14 @@ RSpec.describe Metanorma::Iso do
                    <name>Electrical equipment in medical practice</name>
                    <subdivision type="Subcommittee">
                       <name>Common aspects of electrical equipment used in medical practice</name>
+                      <subdivision type="Workgroup">
+                         <name>Working group on defibulators</name>
+                         <identifier>WG 62A1</identifier>
+                      </subdivision>
                       <identifier>SC 62A</identifier>
                    </subdivision>
                    <identifier>TC 62</identifier>
+                   <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
                 </subdivision>
                 <abbreviation>IEC</abbreviation>
              </organization>
@@ -618,6 +631,7 @@ RSpec.describe Metanorma::Iso do
                 <subdivision type="Technical committee">
                    <name>Quality management and corresponding general aspects for medical devices</name>
                    <identifier>TC 210</identifier>
+                   <identifier type="full">TC 210</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
@@ -660,9 +674,14 @@ RSpec.describe Metanorma::Iso do
                    <name>Electrical equipment in medical practice</name>
                    <subdivision type="Subcommittee">
                       <name>Common aspects of electrical equipment used in medical practice</name>
+                      <subdivision type="Workgroup">
+                         <name>Working group on defibulators</name>
+                         <identifier>WG 62A1</identifier>
+                      </subdivision>
                       <identifier>SC 62A</identifier>
                    </subdivision>
                    <identifier>TC 62</identifier>
+                   <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
                 </subdivision>
                 <abbreviation>IEC</abbreviation>
              </organization>
@@ -676,6 +695,7 @@ RSpec.describe Metanorma::Iso do
                 <subdivision type="Technical committee">
                    <name>Quality management and corresponding general aspects for medical devices</name>
                    <identifier>TC 210</identifier>
+                   <identifier type="full">TC 210</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
@@ -794,6 +814,7 @@ RSpec.describe Metanorma::Iso do
                       <identifier>2</identifier>
                    </subdivision>
                    <identifier>1</identifier>
+                   <identifier type="full">1/2/3</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
@@ -831,6 +852,7 @@ RSpec.describe Metanorma::Iso do
                       <identifier>2</identifier>
                    </subdivision>
                    <identifier>1</identifier>
+                   <identifier type="full">1/2/3</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
@@ -928,6 +950,7 @@ RSpec.describe Metanorma::Iso do
                       <identifier>2</identifier>
                    </subdivision>
                    <identifier>1</identifier>
+                   <identifier type="full">1/2/3</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
@@ -962,6 +985,7 @@ RSpec.describe Metanorma::Iso do
                       <identifier>2</identifier>
                    </subdivision>
                    <identifier>1</identifier>
+                   <identifier type="full">1/2/3</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
