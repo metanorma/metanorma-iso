@@ -17069,7 +17069,7 @@
 								</xsl:if>
 
 								<xsl:for-each select="$contents_nodes/mnx:doc">
-									<fo:bookmark internal-destination="{contents/mnx:item[@display = 'true'][1]/@id}" starting-state="hide">
+									<fo:bookmark internal-destination="{mnx:contents/mnx:item[@display = 'true'][1]/@id}" starting-state="hide">
 										<xsl:if test="@bundle = 'true'">
 											<xsl:attribute name="internal-destination"><xsl:value-of select="@firstpage_id"/></xsl:attribute>
 										</xsl:if>
@@ -17103,7 +17103,7 @@
 											</xsl:choose>
 										</fo:bookmark-title>
 
-										<xsl:apply-templates select="contents/mnx:item" mode="bookmark"/>
+										<xsl:apply-templates select="mnx:contents/mnx:item" mode="bookmark"/>
 
 										<xsl:call-template name="insertFigureBookmarks">
 											<xsl:with-param name="contents" select="mnx:contents"/>
