@@ -7,7 +7,9 @@ module Metanorma
 
       def org_abbrev
         { "International Organization for Standardization" => "ISO",
-          "International Electrotechnical Commission" => "IEC" }
+          "International Electrotechnical Commission" => "IEC",
+          "International Organization for Standardization, International Electrotechnical Commission" => "ISO/IEC",
+        }
       end
 
       def metadata_author(node, xml)

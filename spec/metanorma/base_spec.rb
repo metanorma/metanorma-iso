@@ -159,7 +159,7 @@ RSpec.describe Metanorma::Iso do
                 <description>Technical committee</description>
              </role>
              <organization>
-                <name>ISO/IEC</name>
+                <name>International Organization for Standardization, International Electrotechnical Commission</name>
                 <subdivision type="Technical committee">
                    <name>TCa</name>
                    <subdivision type="Subcommittee">
@@ -171,8 +171,9 @@ RSpec.describe Metanorma::Iso do
                       <identifier>Ba 2a</identifier>
                    </subdivision>
                    <identifier>Aa 1a</identifier>
-                   <identifier type="full">Aa 1a/Ba 2a/Ca 3a</identifier>
+                   <identifier type="full">ISO/IEC Aa 1a/Ba 2a/Ca 3a</identifier>
                 </subdivision>
+                <abbreviation>ISO/IEC</abbreviation>
              </organization>
           </contributor>
           <contributor>
@@ -180,7 +181,7 @@ RSpec.describe Metanorma::Iso do
                 <description>Technical committee</description>
              </role>
              <organization>
-                <name>ISO/IEC</name>
+                <name>International Organization for Standardization, International Electrotechnical Commission</name>
                 <subdivision type="Technical committee">
                    <name>TC1a</name>
                    <subdivision type="Subcommittee">
@@ -192,8 +193,9 @@ RSpec.describe Metanorma::Iso do
                       <identifier>B1a 21a</identifier>
                    </subdivision>
                    <identifier>A1a 11a</identifier>
-                   <identifier type="full">A1a 11a/B1a 21a/C1a 31a</identifier>
+                   <identifier type="full">ISO/IEC A1a 11a/B1a 21a/C1a 31a</identifier>
                 </subdivision>
+                <abbreviation>ISO/IEC</abbreviation>
              </organization>
           </contributor>
           <edition>2</edition>
