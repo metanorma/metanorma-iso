@@ -49,6 +49,8 @@ doctype_dict:
   committee-document: Document du comité
   recommendation: Recommandation ISO
   addendum: Additif
+contributor_role_desc_dict:
+  Technical committee: Comité technique
 stage_dict:
   "00": Élément de travail préliminaire
   "10": Nouvelle proposition d'élément de travail

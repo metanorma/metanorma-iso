@@ -37,6 +37,8 @@ module IsoDoc
                            bib.at(ns("./ext/doctype")))
         hash_translate(bib, @i18n.get["substage_dict"],
                        "./status/substage", nil, @lang)
+        hash_translate(bib, @i18n.get["contributor_role_desc_dict"],
+                       "./contributor/role/description", nil, @lang)
         edition_translate(bib)
       end
 
