@@ -38,16 +38,6 @@ module Metanorma
         approval or committee_contributors_approval(node, xml, agency)
       end
 
-      # KILL
-      def contributors_committees_nestx(committees)
-        committees = committees.reverse
-        committees.each_with_index do |m, i|
-          i.zero? and next
-          m[:subdiv] = committees[i - 1]
-        end
-        committees[-1]
-      end
-
       def committee_contrib_org_prep(node, type, approval, agency)
         agency_arr, agency_abbrev =
           committee_org_prep_agency(node, type, agency, [], [])
@@ -68,6 +58,18 @@ module Metanorma
           suffix = "_#{i}"
         end
         [agency_arr, agency_abbr]
+      end
+
+      def org_attrs_complex_parse(node, opts, source)
+        i = 1
+        suffix = ""
+        ret = []
+        while node.attr("#{source}-number#{suffix}")
+          ret << extract_org_attrs_complex(node, opts, source, suffix)
+          i += 1
+          suffix = "_#{i}"
+        end
+        ret
       end
 
       def committee_contributors_approval(node, xml, agency)
@@ -107,7 +109,6 @@ module Metanorma
       end
 
       def full_committee_id(contrib)
-        ids = []
         ret = full_committee_agency_id(contrib)
         ids = contrib.xpath("./subdivision").map { |x| x.at("./identifier")&.text }
         ins = contrib.at("./subdivision/identifier") and
