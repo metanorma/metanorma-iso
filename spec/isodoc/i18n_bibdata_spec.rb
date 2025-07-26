@@ -56,6 +56,115 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to edn
   end
 
+  it "changes i18n of contributor role description" do
+    input = <<~"INPUT"
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <bibdata>
+           <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <subdivision type="Technical committee">
+                   <name>Electrical equipment in medical practice</name>
+                   <identifier>TC 62</identifier>
+                   <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
+                </subdivision>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+         <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <subdivision type="Technical committee">
+                   <name>Electrical equipment in medical practice</name>
+                   <identifier>TC 62</identifier>
+                   <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
+                </subdivision>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Subcommittee</description>
+             </role>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <subdivision type="Technical committee">
+                   <name>Electrical equipment in medical practice</name>
+                   <identifier>TC 62</identifier>
+                   <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
+                </subdivision>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+      <language>fr</language>
+      <script>Latn</script>
+      <status>
+      <stage>published</stage>
+      <substage>withdrawn</substage>
+      </status>
+      <edition>2</edition>
+      <ext>
+      <doctype>brochure</doctype>
+      </ext>
+      </bibdata>
+      <metanorma-extension>
+      <presentation-metadata><name>document-scheme</name><value>2024</value></presentation-metadata>
+      </metanorma-extension>
+      <sections>
+          <clause id="D" obligation="normative" type="scope">
+            <title>Scope</title>
+            <p id="E">Text</p>
+          </clause>
+      </sections>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <x><role type="author">
+            <description language="">Technical committee</description><description language="fr">Comit&#xE9; technique</description>
+         </role><role type="authorizer">
+            <description language="">Technical committee</description><description language="fr">Comit&#xE9; technique</description>
+         </role><role type="authorizer">
+            <description>Subcommittee</description>
+         </role></x>
+    OUTPUT
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))
+    expect("<x>#{xml.xpath('//xmlns:bibdata/xmlns:contributor/xmlns:role')
+      .to_xml}</x>")
+      .to be_equivalent_to output
+  end
+
   it "add edition replacement text" do
     input = <<~"INPUT"
       <iso-standard xmlns="http://riboseinc.com/isoxml">
