@@ -45,6 +45,8 @@ doctype_dict:
   committee-document: Документ комитета
   recommendation: Рекомендации ИСО
   addendum: Дополнение
+contributor_role_desc_dict:
+  Technical committee: Технический комитет
 stage_dict:
   "00": Предварительный рабочий элемент
   "10": Предложение нового рабочего элемента
