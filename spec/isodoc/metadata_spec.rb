@@ -46,12 +46,13 @@ RSpec.describe IsoDoc::Iso::Metadata do
             <draft>0.4</draft>
           </version>
           <contributor>
-            <role type="author"/>
-            <organization>
-              <abbreviation>ISO</abbreviation>
-            </organization>
+             <role type="author"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
           </contributor>
-                    <contributor>
+          <contributor>
              <role type="author">
                 <description>Technical committee</description>
              </role>
@@ -59,16 +60,16 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <name>International Electrotechnical Commission</name>
                 <subdivision type="Technical committee">
                    <name>Electrical equipment in medical practice</name>
-                   <subdivision type="Subcommittee">
-                      <name>Common aspects of electrical equipment used in medical practice</name>
-                      <subdivision type="Workgroup">
-                         <name>Working group on defibulators</name>
-                         <identifier>WG 62A1</identifier>
-                      </subdivision>
-                      <identifier>SC 62A</identifier>
-                   </subdivision>
                    <identifier>TC 62</identifier>
-                    <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
+                   <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
                 </subdivision>
                 <abbreviation>IEC</abbreviation>
              </organization>
@@ -100,13 +101,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
              </organization>
           </contributor>
           <contributor>
-            <role type="publisher"/>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </contributor>
-                   <contributor>
              <role type="authorizer">
                 <description>Agency</description>
              </role>
@@ -115,7 +109,14 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <abbreviation>ISO</abbreviation>
              </organization>
           </contributor>
-         <contributor>
+          <contributor>
+             <role type="publisher"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
              <role type="authorizer">
                 <description>Technical committee</description>
              </role>
@@ -123,16 +124,16 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <name>International Electrotechnical Commission</name>
                 <subdivision type="Technical committee">
                    <name>Electrical equipment in medical practice</name>
-                   <subdivision type="Subcommittee">
-                      <name>Common aspects of electrical equipment used in medical practice</name>
-                      <subdivision type="Workgroup">
-                         <name>Working group on defibulators</name>
-                         <identifier>WG 62A1</identifier>
-                      </subdivision>
-                      <identifier>SC 62A</identifier>
-                   </subdivision>
                    <identifier>TC 62</identifier>
                    <identifier type="full">Approval IEC TC 62/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+              </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
                 </subdivision>
                 <abbreviation>IEC</abbreviation>
              </organization>
@@ -517,12 +518,13 @@ RSpec.describe IsoDoc::Iso::Metadata do
           <docidentifier type="iso-reference">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
           <docidentifier type="iso-tc">17301</docidentifier>
           <contributor>
-            <role type="author"/>
-            <organization>
-              <abbreviation>ISO</abbreviation>
-            </organization>
+             <role type="author"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
           </contributor>
-                    <contributor>
+          <contributor>
              <role type="author">
                 <description>Technical committee</description>
              </role>
@@ -530,16 +532,16 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <name>International Electrotechnical Commission</name>
                 <subdivision type="Technical committee">
                    <name>Electrical equipment in medical practice</name>
-                   <subdivision type="Subcommittee">
-                      <name>Common aspects of electrical equipment used in medical practice</name>
-                      <subdivision type="Workgroup">
-                         <name>Working group on defibulators</name>
-                         <identifier>WG 62A1</identifier>
-                      </subdivision>
-                      <identifier>SC 62A</identifier>
-                   </subdivision>
                    <identifier>TC 62</identifier>
-                    <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
+                   <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
                 </subdivision>
                 <abbreviation>IEC</abbreviation>
              </organization>
@@ -571,13 +573,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
              </organization>
           </contributor>
           <contributor>
-            <role type="publisher"/>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </contributor>
-                   <contributor>
              <role type="authorizer">
                 <description>Agency</description>
              </role>
@@ -586,7 +581,14 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <abbreviation>ISO</abbreviation>
              </organization>
           </contributor>
-         <contributor>
+          <contributor>
+             <role type="publisher"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
              <role type="authorizer">
                 <description>Technical committee</description>
              </role>
@@ -594,16 +596,16 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <name>International Electrotechnical Commission</name>
                 <subdivision type="Technical committee">
                    <name>Electrical equipment in medical practice</name>
-                   <subdivision type="Subcommittee">
-                      <name>Common aspects of electrical equipment used in medical practice</name>
-                      <subdivision type="Workgroup">
-                         <name>Working group on defibulators</name>
-                         <identifier>WG 62A1</identifier>
-                      </subdivision>
-                      <identifier>SC 62A</identifier>
-                   </subdivision>
                    <identifier>TC 62</identifier>
                    <identifier type="full">Approval IEC TC 62/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
                 </subdivision>
                 <abbreviation>IEC</abbreviation>
              </organization>

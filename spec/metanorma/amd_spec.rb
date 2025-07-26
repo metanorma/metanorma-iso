@@ -220,16 +220,16 @@ RSpec.describe Metanorma::Iso do
                    <name>International Organization for Standardization</name>
                    <subdivision type="Technical committee">
                       <name>TC</name>
-                      <subdivision type="Subcommittee">
-                         <name>SC</name>
-                         <subdivision type="Workgroup">
-                            <name>WG</name>
-                            <identifier>C 3</identifier>
-                         </subdivision>
-                         <identifier>B 2</identifier>
-                      </subdivision>
                       <identifier>A 1</identifier>
                       <identifier type="full">A 1/B 2/C 3</identifier>
+                   </subdivision>
+                   <subdivision type="Subcommittee">
+                      <name>SC</name>
+                      <identifier>B 2</identifier>
+                   </subdivision>
+                   <subdivision type="Workgroup">
+                      <name>WG</name>
+                      <identifier>C 3</identifier>
                    </subdivision>
                    <abbreviation>ISO</abbreviation>
                 </organization>
@@ -242,16 +242,16 @@ RSpec.describe Metanorma::Iso do
                    <name>International Organization for Standardization</name>
                    <subdivision type="Technical committee">
                       <name>TC1</name>
-                      <subdivision type="Subcommittee">
-                         <name>SC1</name>
-                         <subdivision type="Workgroup">
-                            <name>WG1</name>
-                            <identifier>C1 31</identifier>
-                         </subdivision>
-                         <identifier>B1 21</identifier>
-                      </subdivision>
                       <identifier>A1 11</identifier>
                       <identifier type="full">A1 11/B1 21/C1 31</identifier>
+                   </subdivision>
+                   <subdivision type="Subcommittee">
+                      <name>SC1</name>
+                      <identifier>B1 21</identifier>
+                   </subdivision>
+                   <subdivision type="Workgroup">
+                      <name>WG1</name>
+                      <identifier>C1 31</identifier>
                    </subdivision>
                    <abbreviation>ISO</abbreviation>
                 </organization>
@@ -280,16 +280,16 @@ RSpec.describe Metanorma::Iso do
                    <name>International Organization for Standardization</name>
                    <subdivision type="Technical committee">
                       <name>TC</name>
-                      <subdivision type="Subcommittee">
-                         <name>SC</name>
-                         <subdivision type="Workgroup">
-                            <name>WG</name>
-                            <identifier>C 3</identifier>
-                         </subdivision>
-                         <identifier>B 2</identifier>
-                      </subdivision>
                       <identifier>A 1</identifier>
                       <identifier type="full">A 1/B 2/C 3</identifier>
+                   </subdivision>
+                   <subdivision type="Subcommittee">
+                      <name>SC</name>
+                      <identifier>B 2</identifier>
+                   </subdivision>
+                   <subdivision type="Workgroup">
+                      <name>WG</name>
+                      <identifier>C 3</identifier>
                    </subdivision>
                    <abbreviation>ISO</abbreviation>
                 </organization>
@@ -302,16 +302,16 @@ RSpec.describe Metanorma::Iso do
                    <name>International Organization for Standardization</name>
                    <subdivision type="Technical committee">
                       <name>TC1</name>
-                      <subdivision type="Subcommittee">
-                         <name>SC1</name>
-                         <subdivision type="Workgroup">
-                            <name>WG1</name>
-                            <identifier>C1 31</identifier>
-                         </subdivision>
-                         <identifier>B1 21</identifier>
-                      </subdivision>
                       <identifier>A1 11</identifier>
                       <identifier type="full">A1 11/B1 21/C1 31</identifier>
+                   </subdivision>
+                   <subdivision type="Subcommittee">
+                      <name>SC1</name>
+                      <identifier>B1 21</identifier>
+                   </subdivision>
+                   <subdivision type="Workgroup">
+                      <name>WG1</name>
+                      <identifier>C1 31</identifier>
                    </subdivision>
                    <abbreviation>ISO</abbreviation>
                 </organization>

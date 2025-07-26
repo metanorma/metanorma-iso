@@ -8,8 +8,7 @@ module Metanorma
       def org_abbrev
         { "International Organization for Standardization" => "ISO",
           "International Electrotechnical Commission" => "IEC",
-          "International Organization for Standardization, International Electrotechnical Commission" => "ISO/IEC",
-        }
+          "International Organization for Standardization, International Electrotechnical Commission" => "ISO/IEC" }
       end
 
       def metadata_author(node, xml)
@@ -26,19 +25,6 @@ module Metanorma
         end
       end
 
-      # KILL
-      def committee_contributors(node, xml, approval, agency)
-        o = metadata_approval_committee_types(approval ? node : nil)
-          .each_with_object([]) do |v, m|
-          node.attr("#{v}-number") or next
-          node.attr(v) or node.set_attr(v, "")
-          m << committee_contrib_org_prep(node, v, approval, agency)
-        end
-        o.empty? or
-          org_contributor(node, xml, contributors_committees_nest(o))
-        approval or committee_contributors_approval(node, xml, agency)
-      end
-
       def committee_contributors(node, xml, approval, agency)
         t = metadata_approval_committee_types(approval ? node : nil)
         v = t.first
@@ -52,7 +38,8 @@ module Metanorma
         approval or committee_contributors_approval(node, xml, agency)
       end
 
-      def contributors_committees_nest(committees)
+      # KILL
+      def contributors_committees_nestx(committees)
         committees = committees.reverse
         committees.each_with_index do |m, i|
           i.zero? and next
@@ -101,7 +88,11 @@ module Metanorma
           agency = name
         end
         xml.name agency
-        contrib_committee_subdiv(xml, committee)
+        s = committee
+        loop do
+          contrib_committee_subdiv(xml, s)
+          s = s[:subdiv] or break
+        end
         abbr = committee[:agency_abbrev] and xml.abbreviation abbr
         full_committee_id(xml.parent)
       end
@@ -109,7 +100,7 @@ module Metanorma
       def contrib_committee_subdiv(xml, committee)
         xml.subdivision **attr_code(type: committee[:desc]) do |o|
           o.name committee[:name]
-          s = committee[:subdiv] and contrib_committee_subdiv(o, s)
+          # s = committee[:subdiv] and contrib_committee_subdiv(o, s)
           committee[:abbr] and o.abbreviation committee[:abbr]
           committee[:ident] and o.identifier committee[:ident]
         end
@@ -118,10 +109,7 @@ module Metanorma
       def full_committee_id(contrib)
         ids = []
         ret = full_committee_agency_id(contrib)
-        s = contrib
-        while s = s.at("./subdivision")
-          ids << s.at("./identifier")&.text
-        end
+        ids = contrib.xpath("./subdivision").map { |x| x.at("./identifier")&.text }
         ins = contrib.at("./subdivision/identifier") and
           ins.next = "<identifier type='full'>#{ret}#{ids.join('/')}</identifier>"
       end
@@ -159,6 +147,7 @@ module Metanorma
           ret << super
         end
         ret = contributors_committees_filter_empty(ret)
+        ret.first
         contributors_committees_nest1(ret)
       end
 
