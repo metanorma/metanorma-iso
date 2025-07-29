@@ -16674,11 +16674,17 @@
 		<xsl:attribute name="margin-bottom">18pt</xsl:attribute>
 	</xsl:attribute-set>
 
+	<xsl:template name="refine_toc-title-style">
+	</xsl:template>
+
 	<xsl:attribute-set name="toc-title-page-style">
 		<xsl:attribute name="font-weight">normal</xsl:attribute>
 		<xsl:attribute name="font-size">10pt</xsl:attribute>
 		<xsl:attribute name="role">SKIP</xsl:attribute>
 	</xsl:attribute-set> <!-- toc-title-page-style -->
+
+	<xsl:template name="refine_toc-title-page-style">
+	</xsl:template>
 
 	<xsl:attribute-set name="toc-item-block-style">
 	</xsl:attribute-set>
@@ -16709,7 +16715,7 @@
 	<xsl:attribute-set name="toc-leader-style">
 		<xsl:attribute name="font-size">9pt</xsl:attribute>
 		<xsl:attribute name="font-weight">normal</xsl:attribute>
-			<xsl:attribute name="leader-pattern">dots</xsl:attribute>
+		<xsl:attribute name="leader-pattern">dots</xsl:attribute>
 	</xsl:attribute-set> <!-- END: toc-leader-style -->
 
 	<xsl:attribute-set name="toc-pagenumber-style">
@@ -16721,6 +16727,9 @@
 		<xsl:attribute name="margin-top">5pt</xsl:attribute>
 		<xsl:attribute name="keep-with-next">always</xsl:attribute>
 	</xsl:attribute-set>
+
+	<xsl:template name="refine_toc-listof-title-style">
+	</xsl:template>
 
 	<xsl:attribute-set name="toc-listof-item-block-style">
 	</xsl:attribute-set>
