@@ -588,7 +588,7 @@ RSpec.describe Metanorma::Iso do
 
     INPUT
     output = <<~OUTPUT
-       <bibdata type="standard">
+      <bibdata type="standard">
           <docidentifier type="ISO" primary="true">ISO 1000:2025</docidentifier>
           <docidentifier type="iso-reference">ISO 1000:2025(E)</docidentifier>
           <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
@@ -611,15 +611,7 @@ RSpec.describe Metanorma::Iso do
                 <subdivision type="Technical committee">
                    <name>Electrical equipment in medical practice</name>
                    <identifier>TC 62</identifier>
-                   <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee">
-                   <name>Common aspects of electrical equipment used in medical practice</name>
-                   <identifier>SC 62A</identifier>
-                </subdivision>
-                <subdivision type="Workgroup">
-                   <name>Working group on defibulators</name>
-                   <identifier>WG 62A1</identifier>
+                   <identifier type="full">IEC TC 62</identifier>
                 </subdivision>
                 <abbreviation>IEC</abbreviation>
              </organization>
@@ -633,7 +625,15 @@ RSpec.describe Metanorma::Iso do
                 <subdivision type="Technical committee">
                    <name>Quality management and corresponding general aspects for medical devices</name>
                    <identifier>TC 210</identifier>
-                   <identifier type="full">TC 210</identifier>
+                   <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
@@ -675,15 +675,7 @@ RSpec.describe Metanorma::Iso do
                 <subdivision type="Technical committee">
                    <name>Electrical equipment in medical practice</name>
                    <identifier>TC 62</identifier>
-                   <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee">
-                   <name>Common aspects of electrical equipment used in medical practice</name>
-                   <identifier>SC 62A</identifier>
-                </subdivision>
-                <subdivision type="Workgroup">
-                   <name>Working group on defibulators</name>
-                   <identifier>WG 62A1</identifier>
+                   <identifier type="full">IEC TC 62</identifier>
                 </subdivision>
                 <abbreviation>IEC</abbreviation>
              </organization>
@@ -697,7 +689,15 @@ RSpec.describe Metanorma::Iso do
                 <subdivision type="Technical committee">
                    <name>Quality management and corresponding general aspects for medical devices</name>
                    <identifier>TC 210</identifier>
-                   <identifier type="full">TC 210</identifier>
+                   <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
@@ -743,6 +743,8 @@ RSpec.describe Metanorma::Iso do
                 <technical-committee number="62" type="TC">Electrical equipment in medical practice</technical-committee>
                 <technical-committee number="210" type="TC">Quality management and corresponding general aspects for medical devices</technical-committee>
                 <technical-committee type="TC">The committee</technical-committee>
+                <subcommittee number="62A" type="SC">Common aspects of electrical equipment used in medical practice</subcommittee>
+                <workgroup number="62A1" type="WG">Working group on defibulators</workgroup>
              </approvalgroup>
              <structuredidentifier>
                 <project-number>ISO 1000</project-number>

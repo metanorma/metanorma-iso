@@ -64,7 +64,7 @@ module Metanorma
         i = 1
         suffix = ""
         ret = []
-        while node.attr("#{source}-number#{suffix}")
+        while node.attr("#{source}-number#{suffix}") || node.attr("#{source}#{suffix}")
           ret << extract_org_attrs_complex(node, opts, source, suffix)
           i += 1
           suffix = "_#{i}"
@@ -100,6 +100,7 @@ module Metanorma
       end
 
       def contrib_committee_subdiv(xml, committee)
+        contributors_committees_filter_empty?(committee) and return
         xml.subdivision **attr_code(type: committee[:desc]) do |o|
           o.name committee[:name]
           # s = committee[:subdiv] and contrib_committee_subdiv(o, s)
@@ -147,28 +148,26 @@ module Metanorma
           opts = committee_contrib_org_prep(node, g, opts_orig[:approval], nil)
           ret << super
         end
-        ret = contributors_committees_filter_empty(ret)
-        ret.first
-        contributors_committees_nest1(ret)
+        #ret = contributors_committees_filter_empty(ret)
+        #ret.first
+        ret = contributors_committees_nest1(ret)
       end
 
-      # ensure there is subcommittee, workingroup _2, _3 etc
+      # ensure there is subcommittee, workgroup -number_2, -number_3 etc
       # to parse mutlple tech committees
       def contributors_committees_pad_multiples(committees, node, group)
         committees.each_with_index do |_r, j|
           suffix = j.zero? ? "" : "_#{j + 1}"
           node.attr("#{group}#{suffix}") or
             node.set_attr("#{group}#{suffix}", "")
+          node.attr("#{group}-number#{suffix}") or
+            node.set_attr("#{group}-number#{suffix}", "")
         end
       end
 
-      def contributors_committees_filter_empty(committees)
-        committees.map do |c|
-          c.reject do |c1|
-            c1[:name].empty? &&
-              (c1[:ident].nil? || %w(WG TC SC).include?(c1[:ident]))
-          end
-        end.reject(&:empty?)
+      def contributors_committees_filter_empty?(committee)
+            committee[:name].empty? &&
+              (committee[:ident].nil? || %w(WG TC SC).include?(committee[:ident]))
       end
 
       def contributors_committees_nest1(committees)
@@ -198,7 +197,8 @@ module Metanorma
       def metadata_editorial_committee(node, xml)
         xml.editorialgroup do |a|
           %w(technical-committee subcommittee workgroup).each do |v|
-            node.attr("#{v}-number") and committee_component(v, node, a)
+            val = node.attr("#{v}-number")
+            val && !val.empty? and committee_component(v, node, a)
             a.parent.xpath("./#{v.gsub('-', '_')}[not(node())][not(@number)]")
               .each(&:remove)
           end
@@ -231,6 +231,21 @@ module Metanorma
         list = [default_publisher] if list.nil? || list.empty?
         list.each do |v|
           xml.agency v
+        end
+      end
+
+      def committee_component(compname, node, out)
+        i = 1
+        suffix = ""
+        while node.attr(compname + suffix)
+          num = node.attr("#{compname}-number#{suffix}")
+                          name = node.attr(compname + suffix)
+                          (!num.nil? && !num.empty?) || (!name.nil? && !name.empty?) and
+          out.send compname.gsub(/-/, "_"), name,
+            **attr_code(number: num,
+                               type: node.attr("#{compname}-type#{suffix}"))
+          i += 1
+          suffix = "_#{i}"
         end
       end
     end
