@@ -34,8 +34,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-.to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+.to be_equivalent_to Canon.format_xml(output)
   end
 
   it "inserts header rows in a table with a name and no header" do
@@ -77,8 +77,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-.to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+.to be_equivalent_to Canon.format_xml(output)
   end
 
   it "inserts header rows in a table without a name and no header" do
@@ -118,8 +118,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-.to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+.to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes complex tables" do
@@ -302,6 +302,6 @@ RSpec.describe Metanorma::Iso do
          </sections>
        </metanorma>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS)))).to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS)))).to be_equivalent_to Canon.format_xml(output)
   end
 end

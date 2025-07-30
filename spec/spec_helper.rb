@@ -11,7 +11,7 @@ require "equivalent-xml"
 require "metanorma"
 require "metanorma/iso"
 require "iev"
-require "xml-c14n"
+require "canon"
 require "relaton_iso"
 
 RSpec.configure do |config|

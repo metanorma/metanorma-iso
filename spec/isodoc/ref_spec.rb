@@ -657,17 +657,17 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Xml::C14n.format(strip_guid(pres_output
+    expect(Canon.format_xml(strip_guid(pres_output
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
       .gsub(/reference="[^"]+"/, 'reference="1"')
                                       )))
-      .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)
       .gsub(/fn:[^"]+"/, 'fn:1"')
       .gsub(/<sup>[^<]+</, "<sup>1<")
                                       )))
-      .to be_equivalent_to Xml::C14n.format(html)
+      .to be_equivalent_to Canon.format_xml(html)
   end
 
   it "processes websites" do
@@ -728,10 +728,10 @@ RSpec.describe IsoDoc do
          </bibliography>
        </iso-standard>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
   end
 end

@@ -604,11 +604,11 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Xml::C14n.format(strip_guid(pres_output)))
-      .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+    expect(Canon.format_xml(strip_guid(pres_output)))
+      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true))))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes concept markup by context" do
@@ -993,10 +993,10 @@ RSpec.describe IsoDoc do
           </sections>
        </iso-standard>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
        .convert("test", input, true))))
-      .to be_equivalent_to Xml::C14n.format(presxml)
+      .to be_equivalent_to Canon.format_xml(presxml)
   end
 
   it "processes concept markup in term definitions" do
@@ -1113,10 +1113,10 @@ RSpec.describe IsoDoc do
           </sections>
        </iso-standard>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
        .convert("test", input, true))))
-      .to be_equivalent_to Xml::C14n.format(presxml)
+      .to be_equivalent_to Canon.format_xml(presxml)
   end
 
   it "processes concept attributes" do
@@ -1532,9 +1532,9 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Xml::C14n.format(strip_guid(pres_output)))
-      .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true)))).to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(pres_output)))
+      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))).to be_equivalent_to Canon.format_xml(output)
   end
 end

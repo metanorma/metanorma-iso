@@ -104,7 +104,7 @@ RSpec.describe Metanorma::Standoc do
     xml = Nokogiri::XML(Asciidoctor
       .convert(input, backend: :standoc, header_footer: true))
     xml.at("//xmlns:metanorma-extension")&.remove
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 end

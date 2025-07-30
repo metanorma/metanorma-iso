@@ -167,8 +167,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes all-parts ISO reference" do
@@ -220,8 +220,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes non-ISO reference in Normative References" do
@@ -252,8 +252,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes non-ISO reference in Bibliography" do
@@ -282,8 +282,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "sort ISO references in Bibliography" do
@@ -351,8 +351,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "renders withdrawn and cancelled ISO references" do
@@ -616,8 +616,8 @@ RSpec.describe Metanorma::Iso do
           </bibliography>
         </metanorma>
       OUTPUT
-      expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to Xml::C14n.format(output)
+      expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+        .to be_equivalent_to Canon.format_xml(output)
   end
 
   private

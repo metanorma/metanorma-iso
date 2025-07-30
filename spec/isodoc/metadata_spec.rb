@@ -806,8 +806,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
     xml.at("//xmlns:localized-strings")&.remove
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "warns of missing publication date" do
@@ -894,8 +894,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
     xml.at("//xmlns:localized-strings")&.remove
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "warns of missing editorial groups" do
@@ -980,8 +980,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
     xml.at("//xmlns:localized-strings")&.remove
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "does not warn of missing metadata in compliant document" do
@@ -1050,8 +1050,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
     xml.at("//xmlns:localized-strings")&.remove
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "does not warn of missing metadata in published document" do
@@ -1118,7 +1118,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
     xml.at("//xmlns:localized-strings")&.remove
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 end

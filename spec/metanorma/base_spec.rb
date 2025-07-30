@@ -254,8 +254,8 @@ RSpec.describe Metanorma::Iso do
        </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes complex metadata" do
@@ -457,8 +457,8 @@ RSpec.describe Metanorma::Iso do
        </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes full publisher names" do
@@ -560,8 +560,8 @@ RSpec.describe Metanorma::Iso do
       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes multiple committees" do
@@ -754,8 +754,8 @@ RSpec.describe Metanorma::Iso do
        </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes committee type of Other" do
@@ -899,8 +899,8 @@ RSpec.describe Metanorma::Iso do
        </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "supplies missing committee attributes" do
@@ -1032,8 +1032,8 @@ RSpec.describe Metanorma::Iso do
        </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes tech specification identifier" do
@@ -1112,8 +1112,8 @@ RSpec.describe Metanorma::Iso do
       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes committee document metadata" do
@@ -1153,8 +1153,8 @@ RSpec.describe Metanorma::Iso do
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
 
     input1 = input.gsub(/:technical-committee-type:.+?[\r\n]+/m, "")
       .gsub(/:subcommittee-type:.+?[\r\n]+/m, "")
@@ -1164,8 +1164,8 @@ RSpec.describe Metanorma::Iso do
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input1, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
 
     input1 = input.gsub(/:technical-committee-type:.+?[\r\n]+/m, "")
       .gsub(/:subcommittee-type:.+?[\r\n]+/m, "")
@@ -1174,8 +1174,8 @@ RSpec.describe Metanorma::Iso do
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input1, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
 
     input2 = input.gsub(/:workgroup.+?[\r\n]+/m, "")
     output = <<~OUTPUT
@@ -1183,8 +1183,8 @@ RSpec.describe Metanorma::Iso do
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input2, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
 
     input2 = input.gsub(/:subcommittee.+?[\r\n]+/m, "")
       .gsub(/:workgroup.+?[\r\n]+/m, "")
@@ -1193,15 +1193,15 @@ RSpec.describe Metanorma::Iso do
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input2, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
     output = <<~OUTPUT
       <docidentifier type="ISO" primary="true">ISO/A 1 N1000</docidentifier>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input2, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes Russian titles" do
@@ -1318,8 +1318,8 @@ RSpec.describe Metanorma::Iso do
       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes subdivisions; override docidentifier" do
@@ -1450,8 +1450,8 @@ RSpec.describe Metanorma::Iso do
        </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "defaults substage, defines iteration on stage 50" do
@@ -1530,8 +1530,8 @@ RSpec.describe Metanorma::Iso do
               </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "defaults substage for stage 60" do
@@ -1608,8 +1608,8 @@ RSpec.describe Metanorma::Iso do
       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "populates metadata for PRF" do
@@ -1686,8 +1686,8 @@ RSpec.describe Metanorma::Iso do
       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "defaults metadata for DIR" do
@@ -1763,8 +1763,8 @@ RSpec.describe Metanorma::Iso do
       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes document relations" do
@@ -1968,8 +1968,8 @@ RSpec.describe Metanorma::Iso do
       x.xpath(".//following-sibling::*").each(&:remove)
       x.xpath(".//preceding-sibling::*").each(&:remove)
     end
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes adopted-from identifiers, CEN identifiers" do
@@ -2046,8 +2046,8 @@ RSpec.describe Metanorma::Iso do
       x.xpath(".//following-sibling::*").each(&:remove)
       x.xpath(".//preceding-sibling::*").each(&:remove)
     end
-    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
   end
 
   it "reads scripts into blank HTML document" do
@@ -2188,72 +2188,72 @@ RSpec.describe Metanorma::Iso do
          </presentation-metadata>
        </metanorma-extension>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":document-scheme: DOCUMENT-SCHEME",
                ":copyright-year: 1960")
     output.sub!("DOCUMENT-SCHEME", "1951")
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 1960", ":copyright-year: 1973")
     output.sub!("<value>1951</value>", "<value>1972</value>")
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 1973", ":copyright-year: 1980")
     output.sub!("<value>1972</value>", "<value>1979</value>")
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 1980", ":copyright-year: 1988")
     output.sub!("<value>1979</value>", "<value>1987</value>")
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 1988", ":copyright-year: 1990")
     output.sub!("<value>1987</value>", "<value>1989</value>")
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 1990", ":copyright-year: 2012")
     output.sub!("<value>1989</value>", "<value>2012</value>")
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 2012", ":copyright-year: 2014")
     output.sub!("<value>2012</value>", "<value>2013</value>")
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 2014", ":copyright-year: 2025")
     output.sub!("<value>2013</value>", "<value>2024</value>")
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 2014", "")
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Xml::C14n.format(output)
+      .to be_equivalent_to Canon.format_xml(output)
   end
 end

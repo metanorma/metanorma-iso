@@ -568,26 +568,26 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Xml::C14n.format(strip_guid(pres_output)))
-      .to be_equivalent_to Xml::C14n.format(presxml)
+    expect(Canon.format_xml(strip_guid(pres_output)))
+      .to be_equivalent_to Canon.format_xml(presxml)
     IsoDoc::Iso::HtmlConvert.new({}).convert("test", pres_output, false)
     expect(File.exist?("test.html")).to be true
     out = File.read("test.html")
       .sub(/^.*<main /m, "<main ")
       .sub(%r{</main>.*$}m, "</main>")
-    expect(Xml::C14n.format(strip_guid(out)))
-      .to be_equivalent_to Xml::C14n.format(html)
+    expect(Canon.format_xml(strip_guid(out)))
+      .to be_equivalent_to Canon.format_xml(html)
     IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, false)
     expect(File.exist?("test.doc")).to be true
     out = File.read("test.doc")
       .sub(/^.+?<table /m, '<table xmlns:m="m" ')
       .sub(%r{</div>\s*<p class="MsoNormal">.*$}m, "")
-    expect(Xml::C14n.format("<div>#{strip_guid(out)}"))
-      .to be_equivalent_to Xml::C14n.format(doc)
+    expect(Canon.format_xml("<div>#{strip_guid(out)}"))
+      .to be_equivalent_to Canon.format_xml(doc)
     out = File.read("test.doc")
       .sub(/^.+?<div class="Section3"/m, '<div class="Section3"')
       .sub(%r{</div>\s*<br[^>]+>\s*<div class="colophon".*$}m, "")
-    expect(Xml::C14n.format(strip_guid(out))).to be_equivalent_to Xml::C14n.format(doc2)
+    expect(Canon.format_xml(strip_guid(out))).to be_equivalent_to Canon.format_xml(doc2)
   end
 
   it "processes units statements in tables" do
@@ -852,13 +852,13 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Xml::C14n.format(strip_guid(pres_output)))
-      .to be_equivalent_to Xml::C14n.format(presxml)
-    expect(Xml::C14n.format(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+    expect(Canon.format_xml(strip_guid(pres_output)))
+      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true))))
-      .to be_equivalent_to Xml::C14n.format(html)
-    expect(Xml::C14n.format(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
+      .to be_equivalent_to Canon.format_xml(html)
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
-      .at("//body").to_xml))).to be_equivalent_to Xml::C14n.format(doc)
+      .at("//body").to_xml))).to be_equivalent_to Canon.format_xml(doc)
   end
 end

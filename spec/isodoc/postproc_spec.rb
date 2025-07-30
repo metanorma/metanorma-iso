@@ -164,7 +164,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
 
-    expect(Xml::C14n.format(word)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
+    expect(Canon.format_xml(word)).to be_equivalent_to Canon.format_xml(<<~OUTPUT)
       <div class='WordSection3'>
          <div>
            <a name='_terms_and_definitions' id='_terms_and_definitions'/>
@@ -252,8 +252,8 @@ RSpec.describe IsoDoc do
     html = Nokogiri::XML(File.read("test.html", encoding: "UTF-8"))
       .at("//div[@id = 'toc']").to_xml
 
-    expect(Xml::C14n.format(strip_guid(html)))
-      .to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
+    expect(Canon.format_xml(strip_guid(html)))
+      .to be_equivalent_to Canon.format_xml(<<~OUTPUT)
              <div id="toc">
            <ul>
              <li class="h1">
@@ -354,8 +354,8 @@ RSpec.describe IsoDoc do
       .sub(%r{</div>.*$}m, "</div>")
       .gsub(/<o:p>&#xA0;<\/o:p>/, "")
 
-    expect(Xml::C14n.format("<div>#{word.gsub(/_Toc\d\d+/, '_Toc')}"))
-      .to be_equivalent_to Xml::C14n.format(<<~'OUTPUT')
+    expect(Canon.format_xml("<div>#{word.gsub(/_Toc\d\d+/, '_Toc')}"))
+      .to be_equivalent_to Canon.format_xml(<<~'OUTPUT')
            <div>
          <p class="MsoToc1">
            <span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"/><span style="mso-spacerun:yes"> </span>TOC
@@ -444,9 +444,9 @@ RSpec.describe IsoDoc do
            '<div class="WordSection2">')
       .sub(%r{<p class="MsoNormal">\s*<br clear="all" class="section"/>\s*</p>\s*<div class="WordSection3">.*$}m, "")
 
-    expect(Xml::C14n.format(word.gsub(/_Toc\d\d+/, "_Toc")
+    expect(Canon.format_xml(word.gsub(/_Toc\d\d+/, "_Toc")
       .gsub(/<o:p>&#xA0;<\/o:p>/, "")))
-      .to be_equivalent_to Xml::C14n.format(<<~'OUTPUT')
+      .to be_equivalent_to Canon.format_xml(<<~'OUTPUT')
         <div class="WordSection2">
          An empty word intro page.
 
@@ -556,7 +556,7 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<div class="WordSection3">/m, '<div class="WordSection3">')
       .sub(%r{<br[^>]*>\s*<div class="colophon".*$}m, "")
-    expect(Xml::C14n.format(word)).to be_equivalent_to Xml::C14n.format(<<~OUTPUT)
+    expect(Canon.format_xml(word)).to be_equivalent_to Canon.format_xml(<<~OUTPUT)
       <div class="WordSection3">
         <p class="MsoNormal">
           <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
@@ -616,7 +616,7 @@ RSpec.describe IsoDoc do
          </div>
        </div>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(word))).to be_equivalent_to Xml::C14n.format(output)
+    expect(Canon.format_xml(strip_guid(word))).to be_equivalent_to Canon.format_xml(output)
   end
 
   it "processes boilerplate" do
@@ -721,9 +721,9 @@ RSpec.describe IsoDoc do
       .merge(presxml_options))
       .convert("test", input, true)
 
-    expect(Xml::C14n.format(strip_guid(pres_output)
+    expect(Canon.format_xml(strip_guid(pres_output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
-      .to be_equivalent_to Xml::C14n.format(presxml)
+      .to be_equivalent_to Canon.format_xml(presxml)
 
     FileUtils.rm_rf "test.html"
     IsoDoc::Iso::HtmlConvert
@@ -742,8 +742,8 @@ RSpec.describe IsoDoc do
     contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m, "</body>")
     contents = Nokogiri::XML(contents)
       .at("//div[a/@id = 'boilerplate-copyright-destination']")
-    expect(Xml::C14n.format(contents.to_xml))
-      .to be_equivalent_to Xml::C14n.format(<<~"OUTPUT")
+    expect(Canon.format_xml(contents.to_xml))
+      .to be_equivalent_to Canon.format_xml(<<~"OUTPUT")
            <div>
           <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"/>
           <div style="mso-element:para-border-div;border:solid windowtext 1.0pt; border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt: solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt; margin-left:5.1pt;margin-right:5.1pt">

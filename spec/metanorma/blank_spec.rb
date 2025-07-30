@@ -10,8 +10,8 @@ RSpec.describe Metanorma::Iso do
         <sections/>
       </metanorma>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Xml::C14n.format(strip_guid(output))
+    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Canon.format_xml(strip_guid(output))
   end
 
   it "converts a blank document" do
@@ -27,8 +27,8 @@ RSpec.describe Metanorma::Iso do
         <sections/>
       </metanorma>
     OUTPUT
-    expect(Xml::C14n.format(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Xml::C14n.format(strip_guid(output))
+    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
+      .to be_equivalent_to Canon.format_xml(strip_guid(output))
     expect(File.exist?("test_alt.html")).to be true
     expect(File.exist?("test.html")).to be true
     expect(File.exist?("test.doc")).to be true

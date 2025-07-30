@@ -177,8 +177,8 @@ RSpec.describe IsoDoc::Iso do
     INPUT
     output = IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)
-    expect(Xml::C14n.format(strip_guid(output)))
-     .to be_equivalent_to Xml::C14n.format(strip_guid(<<~"OUTPUT"))
+    expect(Canon.format_xml(strip_guid(output)))
+     .to be_equivalent_to Canon.format_xml(strip_guid(<<~"OUTPUT"))
       #{HTML_HDR}
             <br/>
             <div id="A">
@@ -351,11 +351,11 @@ RSpec.describe IsoDoc::Iso do
           <stagename>Committee draft</stagename>
         </ext>
     OUTPUT
-    expect(Xml::C14n.format(Nokogiri::XML(
+    expect(Canon.format_xml(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
       .at("//xmlns:ext").to_xml))
-      .to be_equivalent_to Xml::C14n.format(presxml)
+      .to be_equivalent_to Canon.format_xml(presxml)
   end
 end
