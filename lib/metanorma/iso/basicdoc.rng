@@ -1291,13 +1291,13 @@ Restricted recursively to contain only other such inline elements with no identi
       <ref name="pure_strike"/>
       <ref name="pure_smallcap"/>
       <ref name="br"/>
+      <ref name="stem"/>
     </choice>
   </define>
   <define name="NestedTextElement">
     <a:documentation>Contents of TextElement tags: leaves out tags that should occur only at top level of block: bookmark image hr pagebreak</a:documentation>
     <choice>
       <ref name="PureTextElement"/>
-      <ref name="stem"/>
       <ref name="eref"/>
       <ref name="xref"/>
       <ref name="hyperlink"/>

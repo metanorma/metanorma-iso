@@ -202,6 +202,111 @@ RSpec.describe IsoDoc::Iso do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
+          <contributor>
+             <role type="author"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>TC</name>
+                   <subdivision type="Subcommittee">
+                      <name>SC</name>
+                      <subdivision type="Workgroup">
+                         <name>WG</name>
+                         <identifier>C 3</identifier>
+                      </subdivision>
+                      <identifier>B 2</identifier>
+                   </subdivision>
+                   <identifier>A 1</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>TC1</name>
+                   <subdivision type="Subcommittee">
+                      <name>SC1</name>
+                      <subdivision type="Workgroup">
+                         <name>WG1</name>
+                         <identifier>C1 31</identifier>
+                      </subdivision>
+                      <identifier>B1 21</identifier>
+                   </subdivision>
+                   <identifier>A1 11</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Agency</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="publisher"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>ISO/IEC</name>
+                <subdivision type="Technical committee">
+                   <name>TCa</name>
+                   <subdivision type="Subcommittee">
+                      <name>SCa</name>
+                      <subdivision type="Workgroup">
+                         <name>WGa</name>
+                         <identifier>Ca 3a</identifier>
+                      </subdivision>
+                      <identifier>Ba 2a</identifier>
+                   </subdivision>
+                   <identifier>Aa 1a</identifier>
+                </subdivision>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>ISO/IEC</name>
+                <subdivision type="Technical committee">
+                   <name>TC1a</name>
+                   <subdivision type="Subcommittee">
+                      <name>SC1a</name>
+                      <subdivision type="Workgroup">
+                         <name>WG1a</name>
+                         <identifier>C1a 31a</identifier>
+                      </subdivision>
+                      <identifier>B1a 21a</identifier>
+                   </subdivision>
+                   <identifier>A1a 11a</identifier>
+                </subdivision>
+             </organization>
+          </contributor>
           <ext>
             <doctype>international-standard</doctype>
             <horizontal>true</horizontal>
@@ -225,7 +330,6 @@ RSpec.describe IsoDoc::Iso do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <bibdata>
         <ext>
           <doctype language=''>international-standard</doctype>
           <doctype language='en'>International Standard</doctype>
@@ -246,13 +350,12 @@ RSpec.describe IsoDoc::Iso do
           </approvalgroup>
           <stagename>Committee draft</stagename>
         </ext>
-      </bibdata>
     OUTPUT
     expect(Xml::C14n.format(Nokogiri::XML(
       IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true),
     )
-      .at("//xmlns:bibdata").to_xml))
+      .at("//xmlns:ext").to_xml))
       .to be_equivalent_to Xml::C14n.format(presxml)
   end
 end

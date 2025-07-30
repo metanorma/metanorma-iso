@@ -218,10 +218,20 @@ RSpec.describe Metanorma::Iso do
                 </role>
                 <organization>
                    <name>International Organization for Standardization</name>
-                   <subdivision>
-                         <name>TC</name>
-                         <identifier>A 1</identifier>
+                   <subdivision type="Technical committee">
+                      <name>TC</name>
+                      <identifier>A 1</identifier>
+                      <identifier type="full">A 1/B 2/C 3</identifier>
                    </subdivision>
+                   <subdivision type="Subcommittee">
+                      <name>SC</name>
+                      <identifier>B 2</identifier>
+                   </subdivision>
+                   <subdivision type="Workgroup">
+                      <name>WG</name>
+                      <identifier>C 3</identifier>
+                   </subdivision>
+                   <abbreviation>ISO</abbreviation>
                 </organization>
              </contributor>
              <contributor>
@@ -230,58 +240,20 @@ RSpec.describe Metanorma::Iso do
                 </role>
                 <organization>
                    <name>International Organization for Standardization</name>
-                   <subdivision>
-                         <name>TC1</name>
-                         <identifier>A1 11</identifier>
+                   <subdivision type="Technical committee">
+                      <name>TC1</name>
+                      <identifier>A1 11</identifier>
+                      <identifier type="full">A1 11/B1 21/C1 31</identifier>
                    </subdivision>
-                </organization>
-             </contributor>
-             <contributor>
-                <role type="author">
-                   <description>Subcommittee</description>
-                </role>
-                <organization>
-                   <name>International Organization for Standardization</name>
-                   <subdivision>
-                         <name>SC</name>
-                         <identifier>B 2</identifier>
+                   <subdivision type="Subcommittee">
+                      <name>SC1</name>
+                      <identifier>B1 21</identifier>
                    </subdivision>
-                </organization>
-             </contributor>
-             <contributor>
-                <role type="author">
-                   <description>Subcommittee</description>
-                </role>
-                <organization>
-                   <name>International Organization for Standardization</name>
-                   <subdivision>
-                         <name>SC1</name>
-                         <identifier>B1 21</identifier>
+                   <subdivision type="Workgroup">
+                      <name>WG1</name>
+                      <identifier>C1 31</identifier>
                    </subdivision>
-                </organization>
-             </contributor>
-             <contributor>
-                <role type="author">
-                   <description>Workgroup</description>
-                </role>
-                <organization>
-                   <name>International Organization for Standardization</name>
-                   <subdivision>
-                         <name>WG</name>
-                         <identifier>C 3</identifier>
-                   </subdivision>
-                </organization>
-             </contributor>
-             <contributor>
-                <role type="author">
-                   <description>Workgroup</description>
-                </role>
-                <organization>
-                   <name>International Organization for Standardization</name>
-                   <subdivision>
-                         <name>WG1</name>
-                         <identifier>C1 31</identifier>
-                   </subdivision>
+                   <abbreviation>ISO</abbreviation>
                 </organization>
              </contributor>
              <contributor>
@@ -306,10 +278,20 @@ RSpec.describe Metanorma::Iso do
                 </role>
                 <organization>
                    <name>International Organization for Standardization</name>
-                   <subdivision>
-                         <name>TC</name>
-                         <identifier>A 1</identifier>
+                   <subdivision type="Technical committee">
+                      <name>TC</name>
+                      <identifier>A 1</identifier>
+                      <identifier type="full">A 1/B 2/C 3</identifier>
                    </subdivision>
+                   <subdivision type="Subcommittee">
+                      <name>SC</name>
+                      <identifier>B 2</identifier>
+                   </subdivision>
+                   <subdivision type="Workgroup">
+                      <name>WG</name>
+                      <identifier>C 3</identifier>
+                   </subdivision>
+                   <abbreviation>ISO</abbreviation>
                 </organization>
              </contributor>
              <contributor>
@@ -318,58 +300,20 @@ RSpec.describe Metanorma::Iso do
                 </role>
                 <organization>
                    <name>International Organization for Standardization</name>
-                   <subdivision>
-                         <name>TC1</name>
-                         <identifier>A1 11</identifier>
+                   <subdivision type="Technical committee">
+                      <name>TC1</name>
+                      <identifier>A1 11</identifier>
+                      <identifier type="full">A1 11/B1 21/C1 31</identifier>
                    </subdivision>
-                </organization>
-             </contributor>
-             <contributor>
-                <role type="authorizer">
-                   <description>Subcommittee</description>
-                </role>
-                <organization>
-                   <name>International Organization for Standardization</name>
-                   <subdivision>
-                         <name>SC</name>
-                         <identifier>B 2</identifier>
+                   <subdivision type="Subcommittee">
+                      <name>SC1</name>
+                      <identifier>B1 21</identifier>
                    </subdivision>
-                </organization>
-             </contributor>
-             <contributor>
-                <role type="authorizer">
-                   <description>Subcommittee</description>
-                </role>
-                <organization>
-                   <name>International Organization for Standardization</name>
-                   <subdivision>
-                         <name>SC1</name>
-                         <identifier>B1 21</identifier>
+                   <subdivision type="Workgroup">
+                      <name>WG1</name>
+                      <identifier>C1 31</identifier>
                    </subdivision>
-                </organization>
-             </contributor>
-             <contributor>
-                <role type="authorizer">
-                   <description>Workgroup</description>
-                </role>
-                <organization>
-                   <name>International Organization for Standardization</name>
-                   <subdivision>
-                         <name>WG</name>
-                         <identifier>C 3</identifier>
-                   </subdivision>
-                </organization>
-             </contributor>
-             <contributor>
-                <role type="authorizer">
-                   <description>Workgroup</description>
-                </role>
-                <organization>
-                   <name>International Organization for Standardization</name>
-                   <subdivision>
-                         <name>WG1</name>
-                         <identifier>C1 31</identifier>
-                   </subdivision>
+                   <abbreviation>ISO</abbreviation>
                 </organization>
              </contributor>
              <edition>2</edition>

@@ -73,7 +73,7 @@ module IsoDoc
 
       def part_title(part, titlenums, lang)
         part or return ""
-        suffix = part.children.to_xml
+        suffix = to_xml(part.children)
         p = titlenums[:part]
         titlenums[:part] && titlenums[:subpart] and
           p = "#{titlenums[:part]}&#x2013;#{titlenums[:subpart]}"
@@ -102,11 +102,11 @@ module IsoDoc
       end
 
       def compose_title(tparts, tnums, lang)
-        t = tparts[:main].nil? ? "" :  tparts[:main].children.to_xml
+        t = tparts[:main].nil? ? "" :  to_xml(tparts[:main].children)
         tparts[:intro] and
-          t = "#{tparts[:intro].children.to_xml}&#xa0;&#x2014; #{t}"
+          t = "#{to_xml(tparts[:intro].children)}&#xa0;&#x2014; #{t}"
         tparts[:complementary] and
-          t = "#{t}&#xa0;&#x2014; #{tparts[:complementary].children.to_xml}"
+          t = "#{t}&#xa0;&#x2014; #{to_xml(tparts[:complementary].children)}"
         if tparts[:part]
           suffix = part_title(tparts[:part], tnums, lang)
           t = "#{t}&#xa0;&#x2014; #{suffix}"
@@ -138,19 +138,19 @@ module IsoDoc
         # intro, main, complementary, part, amd = title_parts(isoxml, lang)
         tp = title_parts(isoxml, lang)
         tn = title_nums(isoxml)
-        set(:doctitlemain, tp[:main] ? tp[:main].children.to_xml : "")
+        set(:doctitlemain, tp[:main] ? to_xml(tp[:main].children) : "")
         main = compose_title(tp, tn, lang)
         set(:doctitle, main)
-        tp[:intro] and set(:doctitleintro, tp[:intro].children.to_xml)
+        tp[:intro] and set(:doctitleintro, to_xml(tp[:intro].children))
         tp[:complementary] and
-          set(:doctitlecomplementary, tp[:complementary].children.to_xml)
+          set(:doctitlecomplementary, to_xml(tp[:complementary].children))
         set(:doctitlepartlabel, part_prefix(tn, lang))
-        set(:doctitlepart, tp[:part].children.to_xml) if tp[:part]
+        set(:doctitlepart, to_xml(tp[:part].children)) if tp[:part]
         set(:doctitleamdlabel, amd_prefix(tn, lang)) if tn[:amd]
-        set(:doctitleamd, tp[:amd].children.to_xml) if tp[:amd]
+        set(:doctitleamd, to_xml(tp[:amd].children)) if tp[:amd]
         set(:doctitlecorrlabel, corr_prefix(tn, lang)) if tn[:corr]
         set(:doctitleaddlabel, add_prefix(tn, lang)) if tn[:add]
-        set(:doctitleadd, tp[:add].children.to_xml) if tp[:add]
+        set(:doctitleadd, to_xml(tp[:add].children)) if tp[:add]
       end
 
       def subtitle(isoxml, _out)
@@ -158,18 +158,18 @@ module IsoDoc
         tp = title_parts(isoxml, lang)
         tn = title_nums(isoxml)
 
-        set(:docsubtitlemain, tp[:main] ? tp[:main].children.to_xml : "")
+        set(:docsubtitlemain, tp[:main] ? to_xml(tp[:main].children) : "")
         main = compose_title(tp, tn, lang)
         set(:docsubtitle, main)
-        tp[:intro] and set(:docsubtitleintro, tp[:intro].children.to_xml)
+        tp[:intro] and set(:docsubtitleintro, to_xml(tp[:intro].children))
         tp[:complementary] and
-          set(:docsubtitlecomplementary, tp[:complementary].children.to_xml)
+          set(:docsubtitlecomplementary, to_xml(tp[:complementary].children))
         set(:docsubtitlepartlabel, part_prefix(tn, lang))
-        tp[:part] and set(:docsubtitlepart, tp[:part].children.to_xml)
+        tp[:part] and set(:docsubtitlepart, to_xml(tp[:part].children))
         set(:docsubtitleamdlabel, amd_prefix(tn, lang)) if tn[:amd]
-        set(:docsubtitleamd, tp[:amd].children.to_xml) if tp[:amd]
+        set(:docsubtitleamd, to_xml(tp[:amd].children)) if tp[:amd]
         set(:docsubtitleaddlabel, add_prefix(tn, lang)) if tn[:add]
-        set(:docsubtitleadd, tp[:add].children.to_xml) if tp[:add]
+        set(:docsubtitleadd, to_xml(tp[:add].children)) if tp[:add]
         set(:docsubtitlecorrlabel, corr_prefix(tn, lang)) if tn[:corr]
       end
 
@@ -225,10 +225,17 @@ module IsoDoc
       end
 
       def editorialgroup(xml)
-        a = xml.at(ns("//bibdata/ext/editorialgroup/@identifier")) and
-          set(:editorialgroup, a.text)
-        a = xml.at(ns("//bibdata/ext/approvalgroup/@identifier")) and
-          set(:approvalgroup, a.text)
+        xpath = <<~XPATH
+          //contributor[role/@type = 'author'][role/description = 'Technical committee']/organization/subdivision/identifier[@type = 'full']
+        XPATH
+        a = xml.xpath(ns(xpath))
+        a.empty? or set(:editorialgroup,
+                        connectives_strip(@i18n.boolean_conj(a.map(&:text),
+                                                             "and")))
+        a = xml.xpath(ns(xpath.sub("author", "authorizer")))
+        a.empty? or set(:approvalgroup,
+                        connectives_strip(@i18n.boolean_conj(a.map(&:text),
+                                                             "and")))
       end
 
       def secretariat(xml)

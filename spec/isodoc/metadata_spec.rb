@@ -46,17 +46,123 @@ RSpec.describe IsoDoc::Iso::Metadata do
             <draft>0.4</draft>
           </version>
           <contributor>
-            <role type="author"/>
-            <organization>
-              <abbreviation>ISO</abbreviation>
-            </organization>
+             <role type="author"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
           </contributor>
           <contributor>
-            <role type="publisher"/>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <subdivision type="Technical committee">
+                   <name>Electrical equipment in medical practice</name>
+                   <identifier>TC 62</identifier>
+                   <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
+                </subdivision>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>Quality management and corresponding general aspects for medical devices</name>
+                   <identifier>TC 210</identifier>
+                   <identifier type="full">TC 210</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>Institute of Electrical and Electronic Engineers</name>
+                <subdivision type="Technical committee">
+                   <name>The committee</name>
+                </subdivision>
+                <abbreviation>IEEE</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Agency</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="publisher"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <subdivision type="Technical committee">
+                   <name>Electrical equipment in medical practice</name>
+                   <identifier>TC 62</identifier>
+                   <identifier type="full">Approval IEC TC 62/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+              </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
+                </subdivision>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>Quality management and corresponding general aspects for medical devices</name>
+                   <identifier>TC 210</identifier>
+                   <identifier type="full">Approval TC 210</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>Institute of Electrical and Electronic Engineers</name>
+                <subdivision type="Technical committee">
+                   <name>The committee</name>
+                </subdivision>
+                <abbreviation>IEEE</abbreviation>
+             </organization>
           </contributor>
           <language>en</language>
           <script>Latn</script>
@@ -105,7 +211,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       { accesseddate: "2012",
         activateddate: "2013",
         agency: "ISO",
-        approvalgroup: "ABC",
+        approvalgroup: "Approval IEC TC 62/SC 62A/WG 62A1 and Approval TC 210",
         createddate: "2010&#x2013;2011",
         docnumber: "ISO/PreCD3 17301-1",
         docnumber_lang: "ISO/PreCD3 17301-1 (E)",
@@ -130,7 +236,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         draft: "0.4",
         draftinfo: " (draft 0.4, 2016-05-01)",
         edition: "2",
-        editorialgroup: "DEF",
+        editorialgroup: "IEC TC 62/SC 62A/WG 62A1 and TC 210",
         fast_track: "true",
         horizontal: "true",
         keywords: ["kw2", "kw1"],
@@ -412,24 +518,123 @@ RSpec.describe IsoDoc::Iso::Metadata do
           <docidentifier type="iso-reference">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
           <docidentifier type="iso-tc">17301</docidentifier>
           <contributor>
-            <role type="author"/>
-            <organization>
-              <name>ISO</name>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type="publisher"/>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
+             <role type="author"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
              </organization>
           </contributor>
           <contributor>
-            <role type="publisher"/>
-            <organization>
-              <name>International Electrotechnical Commission</name>
-              <abbreviation>IEC</abbreviation>
-            </organization>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <subdivision type="Technical committee">
+                   <name>Electrical equipment in medical practice</name>
+                   <identifier>TC 62</identifier>
+                   <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
+                </subdivision>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>Quality management and corresponding general aspects for medical devices</name>
+                   <identifier>TC 210</identifier>
+                   <identifier type="full">TC 210</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>Institute of Electrical and Electronic Engineers</name>
+                <subdivision type="Technical committee">
+                   <name>The committee</name>
+                </subdivision>
+                <abbreviation>IEEE</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Agency</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="publisher"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <subdivision type="Technical committee">
+                   <name>Electrical equipment in medical practice</name>
+                   <identifier>TC 62</identifier>
+                   <identifier type="full">Approval IEC TC 62/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
+                </subdivision>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>Quality management and corresponding general aspects for medical devices</name>
+                   <identifier>TC 210</identifier>
+                   <identifier type="full">Approval TC 210</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>Institute of Electrical and Electronic Engineers</name>
+                <subdivision type="Technical committee">
+                   <name>The committee</name>
+                </subdivision>
+                <abbreviation>IEEE</abbreviation>
+             </organization>
           </contributor>
           <language>ru</language>
           <script>Cyrl</script>
@@ -468,7 +673,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </iso-standard>
     INPUT
     output =
-      { agency: "ISO/IEC",
+      { agency: "ISO",
+        approvalgroup: "Approval IEC TC 62/SC 62A/WG 62A1 и Approval TC 210",
         docnumber: "ISO/IEC/CD 17301-1-3",
         docnumber_lang: "ISO/IEC/CD 17301-1-3 (E)",
         docnumber_reference: "ISO/IEC/CD 17301-1-3 (E)",
@@ -478,20 +684,21 @@ RSpec.describe IsoDoc::Iso::Metadata do
         docsubtitlemain: "Specifications and test methods",
         docsubtitlepart: "Rice",
         docsubtitlepartlabel: "Part&#xa0;1&#x2013;3",
-        doctitle: "&#x417;&#x435;&#x440;&#x43D;&#x43E;&#x432;&#x44B;&#x435; &#x438; &#x431;&#x43E;&#x431;&#x43E;&#x432;&#x44B;&#x435;&#xa0;&#x2014; &#x422;&#x435;&#x445;&#x43D;&#x438;&#x447;&#x435;&#x441;&#x43A;&#x438;&#x435; &#x445;&#x430;&#x440;&#x430;&#x43A;&#x442;&#x435;&#x440;&#x438;&#x441;&#x442;&#x438;&#x43A;&#x438; &#x438; &#x43C;&#x435;&#x442;&#x43E;&#x434;&#x44B; &#x438;&#x441;&#x43F;&#x44B;&#x442;&#x430;&#x43D;&#x438;&#x439;&#xa0;&#x2014; &#x414;&#x43E;&#x43F;&#x43E;&#x43B;&#x43D;&#x435;&#x43D;&#x438;&#x435;&#xa0;&#x2014; Часть&#xa0;1&#x2013;3: &#x420;&#x438;&#x441;",
-        doctitlecomplementary: "&#x414;&#x43E;&#x43F;&#x43E;&#x43B;&#x43D;&#x435;&#x43D;&#x438;&#x435;",
-        doctitleintro: "&#x417;&#x435;&#x440;&#x43d;&#x43e;&#x432;&#x44b;&#x435; &#x438; &#x431;&#x43e;&#x431;&#x43e;&#x432;&#x44b;&#x435;",
-        doctitlemain: "&#x422;&#x435;&#x445;&#x43d;&#x438;&#x447;&#x435;&#x441;&#x43a;&#x438;&#x435; &#x445;&#x430;&#x440;&#x430;&#x43a;&#x442;&#x435;&#x440;&#x438;&#x441;&#x442;&#x438;&#x43a;&#x438; &#x438; &#x43c;&#x435;&#x442;&#x43e;&#x434;&#x44b; &#x438;&#x441;&#x43f;&#x44b;&#x442;&#x430;&#x43d;&#x438;&#x439;",
-        doctitlepart: "&#x420;&#x438;&#x441;",
+        doctitle: "Зерновые и бобовые&#xa0;&#x2014; Технические характеристики и методы испытаний&#xa0;&#x2014; Дополнение&#xa0;&#x2014; Часть&#xa0;1&#x2013;3: Рис",
+        doctitlecomplementary: "Дополнение",
+        doctitleintro: "Зерновые и бобовые",
+        doctitlemain: "Технические характеристики и методы испытаний",
+        doctitlepart: "Рис",
         doctitlepartlabel: "Часть&#xa0;1&#x2013;3",
         doctype: "International Standard",
         doctype_display: "International Standard",
         docyear: "2016",
+        editorialgroup: "IEC TC 62/SC 62A/WG 62A1 и TC 210",
         ics: "1.2.3, 1.2.3",
         lang: "ru",
         obsoletes: "IEC 8121",
         obsoletes_part: "3.1",
-        publisher: "International Organization for Standardization &#x438; International Electrotechnical Commission",
+        publisher: "International Organization for Standardization",
         sc: "DEF 4",
         script: "Cyrl",
         stage: "60",
@@ -502,8 +709,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
         tc_docnumber: ["17301"],
         unpublished: false,
         wg: "GHI 3" }
-    expect(metadata(c.info(Nokogiri::XML(input),
-                           nil))).to be_equivalent_to output
+    expect(metadata(c.info(Nokogiri::XML(input), nil)))
+      .to be_equivalent_to output
   end
 
   it "warns of missing Secretariat" do

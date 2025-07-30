@@ -87,189 +87,171 @@ RSpec.describe Metanorma::Iso do
         <docidentifier type='iso-undated'>ISO/WD 1000-1.3</docidentifier>
         <docidentifier type="iso-with-lang">ISO/WD 1000-1.3:2000(en)</docidentifier>
         <docnumber>1000</docnumber>
-                   <contributor>
-           <role type="author"/>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="author"><description>Technical committee</description></role>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <subdivision><name>TC</name>
-             <identifier>A 1</identifier>
-             </subdivision>
-           </organization>
-         </contributor>
-         <contributor>
-         <role type="author"><description>Technical committee</description></role>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <subdivision><name>TC1</name>
-             <identifier>A1 11</identifier>
-             </subdivision>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="author"><description>Subcommittee</description></role>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <subdivision><name>SC</name>
-             <identifier>B 2</identifier>
-             </subdivision>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="author"><description>Subcommittee</description></role>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <subdivision><name>SC1</name>
-             <identifier>B1 21</identifier>
-             </subdivision>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="author"><description>Workgroup</description></role>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <subdivision><name>WG</name>
-             <identifier>C 3</identifier>
-             </subdivision>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="author"><description>Workgroup</description></role>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <subdivision><name>WG1</name>
-             <identifier>C1 31</identifier>
-             </subdivision>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="authorizer"><description>Agency</description></role>
-           <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="publisher"/>
-           <organization>
-             <name>International Organization for Standardization</name>
-             <abbreviation>ISO</abbreviation>
-           </organization>
-         </contributor>
-         <contributor>
-         <role type="authorizer"><description>Technical committee</description></role>
-           <organization>
-             <name>ISO/IEC</name>
-             <subdivision><name>TCa</name>
-             <identifier>Aa 1a</identifier>
-             </subdivision>
-           </organization>
-         </contributor>
-         <contributor>
-         <role type="authorizer"><description>Technical committee</description></role>
-           <organization>
-             <name>ISO/IEC</name>
-             <subdivision><name>TC1a</name>
-             <identifier>A1a 11a</identifier>
-             </subdivision>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="authorizer"><description>Subcommittee</description></role>
-           <organization>
-             <name>ISO/IEC</name>
-             <subdivision><name>SCa</name>
-             <identifier>Ba 2a</identifier>
-             </subdivision>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="authorizer"><description>Subcommittee</description></role>
-           <organization>
-             <name>ISO/IEC</name>
-             <subdivision><name>SC1a</name>
-             <identifier>B1a 21a</identifier>
-             </subdivision>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="authorizer"><description>Workgroup</description></role>
-           <organization>
-             <name>ISO/IEC</name>
-             <subdivision><name>WGa</name>
-             <identifier>Ca 3a</identifier>
-             </subdivision>
-           </organization>
-         </contributor>
-         <contributor>
-           <role type="authorizer"><description>Workgroup</description></role>
-           <organization>
-             <name>ISO/IEC</name>
-             <subdivision><name>WG1a</name>
-             <identifier>C1a 31a</identifier>
-             </subdivision>
-           </organization>
-         </contributor>
-        <edition>2</edition>
-        <version>
-          <revision-date>2000-01-01</revision-date>
-          <draft>0.3.4</draft>
-        </version>
-        <language>en</language>
-        <script>Latn</script>
-        <status>
-          <stage abbreviation="WD">20</stage>
-          <substage>20</substage>
-          <iteration>3</iteration>
-        </status>
-        <copyright>
-          <from>2000</from>
-          <owner>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </owner>
-        </copyright>
-        <ext>
-          <doctype>standard</doctype>
-          <flavor>iso</flavor>
-          <horizontal>true</horizontal>
-          <editorialgroup>
-           <agency>ISO</agency>
-            <technical-committee number="1" type="A">TC</technical-committee>
-            <technical-committee number="11" type="A1">TC1</technical-committee>
-            <subcommittee number="2" type="B">SC</subcommittee>
-            <subcommittee number="21" type="B1">SC1</subcommittee>
-            <workgroup number="3" type="C">WG</workgroup>
-            <workgroup number="31" type="C1">WG1</workgroup>
-            <secretariat>SECRETARIAT</secretariat>
-          </editorialgroup>
-          <approvalgroup>
-            <agency>ISO</agency>
-            <agency>IEC</agency>
-            <technical-committee number="1a" type="Aa">TCa</technical-committee>
-            <technical-committee number="11a" type="A1a">TC1a</technical-committee>
-            <subcommittee number="2a" type="Ba">SCa</subcommittee>
-            <subcommittee number="21a" type="B1a">SC1a</subcommittee>
-            <workgroup number="3a" type="Ca">WGa</workgroup>
-            <workgroup number="31a" type="C1a">WG1a</workgroup>
-          </approvalgroup>
-          <structuredidentifier>
-            <project-number part="1">ISO 1000</project-number>
-          </structuredidentifier>
-          <stagename abbreviation="WD">Working Draft International Standard</stagename>
-          <fast-track>true</fast-track>
-          <price-code>XC</price-code>
-          <iso-cen-parallel>true</iso-cen-parallel>
-        </ext>
-      </bibdata>
+          <contributor>
+             <role type="author"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>TC</name>
+                   <identifier>A 1</identifier>
+                   <identifier type="full">A 1/B 2/C 3</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>SC</name>
+                   <identifier>B 2</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>WG</name>
+                   <identifier>C 3</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>TC1</name>
+                   <identifier>A1 11</identifier>
+                   <identifier type="full">A1 11/B1 21/C1 31</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>SC1</name>
+                   <identifier>B1 21</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>WG1</name>
+                   <identifier>C1 31</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Agency</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="publisher"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization, International Electrotechnical Commission</name>
+                <subdivision type="Technical committee">
+                   <name>TCa</name>
+                   <identifier>Aa 1a</identifier>
+                   <identifier type="full">ISO/IEC Aa 1a/Ba 2a/Ca 3a</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>SCa</name>
+                   <identifier>Ba 2a</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>WGa</name>
+                   <identifier>Ca 3a</identifier>
+                </subdivision>
+                <abbreviation>ISO/IEC</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization, International Electrotechnical Commission</name>
+                <subdivision type="Technical committee">
+                   <name>TC1a</name>
+                   <identifier>A1a 11a</identifier>
+                   <identifier type="full">ISO/IEC A1a 11a/B1a 21a/C1a 31a</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>SC1a</name>
+                   <identifier>B1a 21a</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>WG1a</name>
+                   <identifier>C1a 31a</identifier>
+                </subdivision>
+                <abbreviation>ISO/IEC</abbreviation>
+             </organization>
+          </contributor>
+          <edition>2</edition>
+          <version>
+             <revision-date>2000-01-01</revision-date>
+             <draft>0.3.4</draft>
+          </version>
+          <language>en</language>
+          <script>Latn</script>
+          <status>
+             <stage abbreviation="WD">20</stage>
+             <substage>20</substage>
+             <iteration>3</iteration>
+          </status>
+          <copyright>
+             <from>2000</from>
+             <owner>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </owner>
+          </copyright>
+          <ext>
+             <doctype>standard</doctype>
+             <flavor>iso</flavor>
+             <editorialgroup>
+                <agency>ISO</agency>
+                <technical-committee number="1" type="A">TC</technical-committee>
+                <technical-committee number="11" type="A1">TC1</technical-committee>
+                <subcommittee number="2" type="B">SC</subcommittee>
+                <subcommittee number="21" type="B1">SC1</subcommittee>
+                <workgroup number="3" type="C">WG</workgroup>
+                <workgroup number="31" type="C1">WG1</workgroup>
+                <secretariat>SECRETARIAT</secretariat>
+             </editorialgroup>
+             <approvalgroup>
+                <agency>ISO</agency>
+                <agency>IEC</agency>
+                <technical-committee number="1a" type="Aa">TCa</technical-committee>
+                <technical-committee number="11a" type="A1a">TC1a</technical-committee>
+                <subcommittee number="2a" type="Ba">SCa</subcommittee>
+                <subcommittee number="21a" type="B1a">SC1a</subcommittee>
+                <workgroup number="3a" type="Ca">WGa</workgroup>
+                <workgroup number="31a" type="C1a">WG1a</workgroup>
+             </approvalgroup>
+             <structuredidentifier>
+                <project-number part="1">ISO 1000</project-number>
+             </structuredidentifier>
+             <horizontal>true</horizontal>
+             <stagename abbreviation="WD">Working Draft International Standard</stagename>
+             <fast-track>true</fast-track>
+             <price-code>XC</price-code>
+             <iso-cen-parallel>true</iso-cen-parallel>
+          </ext>
+       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
     expect(Xml::C14n.format(strip_guid(xml.to_xml)))
@@ -319,168 +301,160 @@ RSpec.describe Metanorma::Iso do
       :title-complementary-fr: Complement du Titre
     INPUT
     output = <<~OUTPUT
-           <bibdata type="standard">
-             <title language="en" format="text/plain" type="main">Main Title — Title — Title Complement</title>
-            <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
-            <title language="en" format="text/plain" type="title-complementary">Title Complement</title>
-            <title language="fr" format="text/plain" type="main">Titre Principal — Complement du Titre</title>
-            <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
-            <title language="fr" format="text/plain" type="title-complementary">Complement du Titre</title>
-             <docidentifier type='ISO' primary="true">IEC/IETF/ISO TR 1000-1-1:2001</docidentifier>
-             <docidentifier type='iso-reference'>IEC/IETF/ISO TR 1000-1-1:2001()</docidentifier>
-             <docidentifier type='URN'>urn:iso:std:iec-ietf-iso:tr:1000:-1-1:stage-60.60:el</docidentifier>
-             <docidentifier type='iso-undated'>IEC/IETF/ISO TR 1000-1-1</docidentifier>
-             <docidentifier type='iso-with-lang'>IEC/IETF/ISO TR 1000-1-1:2001(el)</docidentifier>
-             <docidentifier type="iso-tc">2000</docidentifier>
-             <docidentifier type="iso-tc">2003</docidentifier>
-             <docnumber>1000</docnumber>
-                        <contributor>
-          <role type="author"/>
-          <organization>
-            <name>International Electrotechnical Commission</name>
-            <abbreviation>IEC</abbreviation>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="author"/>
-          <organization>
-            <name>IETF</name>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="author"/>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
-          </organization>
-        </contributor>
-        <contributor>
-        <role type="author"><description>Technical committee</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision><name>Techcomm</name>
-            <identifier>TC 1</identifier>
-            </subdivision>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="author"><description>Subcommittee</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision><name>Subcommitt</name>
-            <identifier>SC 2</identifier>
-            </subdivision>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="author"><description>Workgroup</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision><name>Workg</name>
-            <identifier>WG 3</identifier>
-            </subdivision>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="publisher"/>
-          <organization>
-            <name>International Electrotechnical Commission</name>
-            <abbreviation>IEC</abbreviation>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="publisher"/>
-          <organization>
-            <name>IETF</name>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="publisher"/>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
-          </organization>
-        </contributor>
-        <contributor>
-        <role type="authorizer"><description>Technical committee</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision><name>ApprovTechcom</name>
-            <identifier>TC 1</identifier>
-            </subdivision>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="authorizer"><description>Subcommittee</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision><name>ApprovSubcom</name>
-            <identifier>SC 2</identifier>
-            </subdivision>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="authorizer"><description>Workgroup</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision><name>ApprovWorkg</name>
-            <identifier>WG 3</identifier>
-            </subdivision>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="authorizer"><description>Agency</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
-          </organization>
-        </contributor>
-             <language>el</language>
-             <script>Grek</script>
-             <status>
-               <stage>60</stage>
-               <substage>60</substage>
-             </status>
-             <copyright>
-               <from>2001</from>
-               <owner>
-                 <organization>
+       <bibdata type="standard">
+          <title language="en" format="text/plain" type="main">Main Title — Title — Title Complement</title>
+          <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
+          <title language="en" format="text/plain" type="title-complementary">Title Complement</title>
+          <title language="fr" format="text/plain" type="main">Titre Principal — Complement du Titre</title>
+          <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
+          <title language="fr" format="text/plain" type="title-complementary">Complement du Titre</title>
+          <docidentifier type="ISO" primary="true">IEC/IETF/ISO TR 1000-1-1:2001</docidentifier>
+          <docidentifier type="iso-reference">IEC/IETF/ISO TR 1000-1-1:2001()</docidentifier>
+          <docidentifier type="URN">urn:iso:std:iec-ietf-iso:tr:1000:-1-1:stage-60.60:el</docidentifier>
+          <docidentifier type="iso-undated">IEC/IETF/ISO TR 1000-1-1</docidentifier>
+          <docidentifier type="iso-with-lang">IEC/IETF/ISO TR 1000-1-1:2001(el)</docidentifier>
+          <docidentifier type="iso-tc">2000</docidentifier>
+          <docidentifier type="iso-tc">2003</docidentifier>
+          <docnumber>1000</docnumber>
+         <contributor>
+             <role type="author"/>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author"/>
+             <organization>
+                <name>IETF</name>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>Techcomm</name>
+                   <identifier>TC 1</identifier>
+                   <identifier type="full">TC 1/SC 2/WG 3</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Subcommitt</name>
+                   <identifier>SC 2</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Workg</name>
+                   <identifier>WG 3</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Agency</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="publisher"/>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="publisher"/>
+             <organization>
+                <name>IETF</name>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="publisher"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>ApprovTechcom</name>
+                   <identifier>TC 1</identifier>
+                   <identifier type="full">TC 1/SC 2/WG 3</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>ApprovSubcom</name>
+                   <identifier>SC 2</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>ApprovWorkg</name>
+                   <identifier>WG 3</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <language>el</language>
+          <script>Grek</script>
+          <status>
+             <stage>60</stage>
+             <substage>60</substage>
+          </status>
+          <copyright>
+             <from>2001</from>
+             <owner>
+                <organization>
                    <name>IETF</name>
-                 </organization>
-               </owner>
-             </copyright>
-                               <copyright>
-               <from>2001</from>
-               <owner>
-                 <organization>
+                </organization>
+             </owner>
+          </copyright>
+          <copyright>
+             <from>2001</from>
+             <owner>
+                <organization>
                    <name>International Organization for Standardization</name>
                    <abbreviation>ISO</abbreviation>
-                 </organization>
-               </owner>
-             </copyright>
-             <ext>
-               <doctype>technical-report</doctype>
-                <flavor>iso</flavor>
-        <editorialgroup>
-         <agency>IEC</agency>
-         <agency>IETF</agency>
-         <agency>ISO</agency>
-                        <technical-committee number="1" type="TC">Techcomm</technical-committee>
-            <subcommittee number="2" type="SC">Subcommitt</subcommittee>
-            <workgroup number="3" type="WG">Workg</workgroup>
-          </editorialgroup>
-          <approvalgroup>
-            <agency>ISO</agency>
-            <technical-committee number="1" type="TC">ApprovTechcom</technical-committee>
-            <subcommittee number="2" type="SC">ApprovSubcom</subcommittee>
-            <workgroup number="3" type="WG">ApprovWorkg</workgroup>
-          </approvalgroup>
-          <structuredidentifier>
-            <project-number part="1" subpart="1">IEC/IETF/ISO 1000</project-number>
-          </structuredidentifier>
-          <stagename abbreviation="TR">Technical Report</stagename>
-        </ext>
-      </bibdata>
+                </organization>
+             </owner>
+          </copyright>
+          <ext>
+             <doctype>technical-report</doctype>
+             <flavor>iso</flavor>
+             <editorialgroup>
+                <agency>IEC</agency>
+                <agency>IETF</agency>
+                <agency>ISO</agency>
+                <technical-committee number="1" type="TC">Techcomm</technical-committee>
+                <subcommittee number="2" type="SC">Subcommitt</subcommittee>
+                <workgroup number="3" type="WG">Workg</workgroup>
+             </editorialgroup>
+             <approvalgroup>
+                <agency>ISO</agency>
+                <technical-committee number="1" type="TC">ApprovTechcom</technical-committee>
+                <subcommittee number="2" type="SC">ApprovSubcom</subcommittee>
+                <workgroup number="3" type="WG">ApprovWorkg</workgroup>
+             </approvalgroup>
+             <structuredidentifier>
+                <project-number part="1" subpart="1">IEC/IETF/ISO 1000</project-number>
+             </structuredidentifier>
+             <stagename abbreviation="TR">Technical Report</stagename>
+          </ext>
+       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
     expect(Xml::C14n.format(strip_guid(xml.to_xml)))
@@ -590,6 +564,200 @@ RSpec.describe Metanorma::Iso do
       .to be_equivalent_to Xml::C14n.format(output)
   end
 
+  it "processes multiple committees" do
+    xml = Nokogiri::XML(Asciidoctor.convert(<<~INPUT, *OPTIONS))
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :no-isobib:
+      :docnumber: 1000
+      :technical-committee: Electrical equipment in medical practice
+      :technical-committee-number: 62
+      :subcommittee_2: Common aspects of electrical equipment used in medical practice
+      :subcommittee-number_2: 62A
+      :workgroup_2: Working group on defibulators
+      :workgroup-number_2: 62A1
+      :technical-committee-agency: IEC
+      :technical-committee_2: Quality management and corresponding general aspects for medical devices
+      :technical-committee-number_2: 210
+      :technical-committee_3: The committee
+      :technical-committee-agency_3: Institute of Electrical and Electronic Engineers
+      :technical-committee-agency-abbr_3: IEEE
+
+    INPUT
+    output = <<~OUTPUT
+      <bibdata type="standard">
+          <docidentifier type="ISO" primary="true">ISO 1000:2025</docidentifier>
+          <docidentifier type="iso-reference">ISO 1000:2025(E)</docidentifier>
+          <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
+          <docidentifier type="iso-undated">ISO 1000</docidentifier>
+          <docidentifier type="iso-with-lang">ISO 1000:2025(en)</docidentifier>
+          <docnumber>1000</docnumber>
+          <contributor>
+             <role type="author"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <subdivision type="Technical committee">
+                   <name>Electrical equipment in medical practice</name>
+                   <identifier>TC 62</identifier>
+                   <identifier type="full">IEC TC 62</identifier>
+                </subdivision>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>Quality management and corresponding general aspects for medical devices</name>
+                   <identifier>TC 210</identifier>
+                   <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>Institute of Electrical and Electronic Engineers</name>
+                <subdivision type="Technical committee">
+                   <name>The committee</name>
+                </subdivision>
+                <abbreviation>IEEE</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Agency</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="publisher"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <subdivision type="Technical committee">
+                   <name>Electrical equipment in medical practice</name>
+                   <identifier>TC 62</identifier>
+                   <identifier type="full">IEC TC 62</identifier>
+                </subdivision>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>Quality management and corresponding general aspects for medical devices</name>
+                   <identifier>TC 210</identifier>
+                   <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>Institute of Electrical and Electronic Engineers</name>
+                <subdivision type="Technical committee">
+                   <name>The committee</name>
+                </subdivision>
+                <abbreviation>IEEE</abbreviation>
+             </organization>
+          </contributor>
+          <language>en</language>
+          <script>Latn</script>
+          <status>
+             <stage>60</stage>
+             <substage>60</substage>
+          </status>
+          <copyright>
+             <from>#{Date.today.year}</from>
+             <owner>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </owner>
+          </copyright>
+          <ext>
+             <doctype>standard</doctype>
+             <flavor>iso</flavor>
+             <editorialgroup>
+                <agency>ISO</agency>
+                <technical-committee number="62" type="TC">Electrical equipment in medical practice</technical-committee>
+                <technical-committee number="210" type="TC">Quality management and corresponding general aspects for medical devices</technical-committee>
+                <technical-committee type="TC">The committee</technical-committee>
+             </editorialgroup>
+             <approvalgroup>
+                <agency>ISO</agency>
+                <technical-committee number="62" type="TC">Electrical equipment in medical practice</technical-committee>
+                <technical-committee number="210" type="TC">Quality management and corresponding general aspects for medical devices</technical-committee>
+                <technical-committee type="TC">The committee</technical-committee>
+                <subcommittee number="62A" type="SC">Common aspects of electrical equipment used in medical practice</subcommittee>
+                <workgroup number="62A1" type="WG">Working group on defibulators</workgroup>
+             </approvalgroup>
+             <structuredidentifier>
+                <project-number>ISO 1000</project-number>
+             </structuredidentifier>
+             <stagename>International Standard</stagename>
+          </ext>
+       </bibdata>
+    OUTPUT
+    xml = xml.at("//xmlns:bibdata")
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
+  end
+
   it "processes committee type of Other" do
     xml = Nokogiri::XML(Asciidoctor.convert(<<~INPUT, *OPTIONS))
       = Document title
@@ -626,117 +794,109 @@ RSpec.describe Metanorma::Iso do
         <docidentifier type="iso-undated">ISO 1000</docidentifier>
         <docidentifier type="iso-with-lang">ISO 1000:#{Date.today.year}(en)</docidentifier>
         <docnumber>1000</docnumber>
-        <contributor>
-          <role type="author"/>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
-          </organization>
-        </contributor>
-        <contributor>
-        <role type="author"><description>Technical committee</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision><name>Techcomm</name>
-            <identifier>1</identifier>
-            </subdivision>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="author"><description>Subcommittee</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision><name>Subcommitt</name>
-            <identifier>2</identifier>
-            </subdivision>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="author"><description>Workgroup</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision><name>Workg</name>
-            <identifier>3</identifier>
-            </subdivision>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="publisher"/>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
-          </organization>
-        </contributor>
-        <contributor>
-        <role type="authorizer"><description>Technical committee</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision><name>ApprovTechcom</name>
-            <identifier>1</identifier>
-            </subdivision>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="authorizer"><description>Subcommittee</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision><name>ApprovSubcom</name>
-            <identifier>2</identifier>
-            </subdivision>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="authorizer"><description>Workgroup</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <subdivision><name>ApprovWorkg</name>
-            <identifier>3</identifier>
-            </subdivision>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="authorizer"><description>Agency</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
-          </organization>
-        </contributor>
-        <language>en</language>
-        <script>Latn</script>
-        <status>
-          <stage>60</stage>
-          <substage>60</substage>
-        </status>
-        <copyright>
-          <from>#{Date.today.year}</from>
-          <owner>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </owner>
-        </copyright>
-        <ext>
-          <doctype>standard</doctype>
-                <flavor>iso</flavor>
-          <editorialgroup>
-            <agency>ISO</agency>
-            <technical-committee number="1" type="Other">Techcomm</technical-committee>
-            <subcommittee number="2" type="Other">Subcommitt</subcommittee>
-            <workgroup number="3" type="Other">Workg</workgroup>
-          </editorialgroup>
-          <approvalgroup>
-            <agency>ISO</agency>
-            <technical-committee number="1" type="Other">ApprovTechcom</technical-committee>
-            <subcommittee number="2" type="Other">ApprovSubcom</subcommittee>
-            <workgroup number="3" type="Other">ApprovWorkg</workgroup>
-          </approvalgroup>
-          <structuredidentifier>
-            <project-number>ISO 1000</project-number>
-          </structuredidentifier>
-          <stagename>International Standard</stagename>
-        </ext>
-      </bibdata>
+          <contributor>
+             <role type="author"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>Techcomm</name>
+                   <identifier>1</identifier>
+                   <identifier type="full">1/2/3</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>Subcommitt</name>
+                   <identifier>2</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>Workg</name>
+                   <identifier>3</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Agency</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="publisher"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Technical committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee">
+                   <name>ApprovTechcom</name>
+                   <identifier>1</identifier>
+                   <identifier type="full">1/2/3</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee">
+                   <name>ApprovSubcom</name>
+                   <identifier>2</identifier>
+                </subdivision>
+                <subdivision type="Workgroup">
+                   <name>ApprovWorkg</name>
+                   <identifier>3</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <language>en</language>
+          <script>Latn</script>
+          <status>
+             <stage>60</stage>
+             <substage>60</substage>
+          </status>
+          <copyright>
+             <from>#{Date.today.year}</from>
+             <owner>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </owner>
+          </copyright>
+          <ext>
+             <doctype>standard</doctype>
+             <flavor>iso</flavor>
+             <editorialgroup>
+                <agency>ISO</agency>
+                <technical-committee number="1" type="Other">Techcomm</technical-committee>
+                <subcommittee number="2" type="Other">Subcommitt</subcommittee>
+                <workgroup number="3" type="Other">Workg</workgroup>
+             </editorialgroup>
+             <approvalgroup>
+                <agency>ISO</agency>
+                <technical-committee number="1" type="Other">ApprovTechcom</technical-committee>
+                <subcommittee number="2" type="Other">ApprovSubcom</subcommittee>
+                <workgroup number="3" type="Other">ApprovWorkg</workgroup>
+             </approvalgroup>
+             <structuredidentifier>
+                <project-number>ISO 1000</project-number>
+             </structuredidentifier>
+             <stagename>International Standard</stagename>
+          </ext>
+       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
     expect(Xml::C14n.format(strip_guid(xml.to_xml)))
@@ -773,7 +933,7 @@ RSpec.describe Metanorma::Iso do
         <docidentifier type="iso-undated">ISO 1000</docidentifier>
         <docidentifier type="iso-with-lang">ISO 1000:#{Date.today.year}(en)</docidentifier>
         <docnumber>1000</docnumber>
-                  <contributor>
+          <contributor>
              <role type="author"/>
              <organization>
                 <name>International Organization for Standardization</name>
@@ -786,31 +946,17 @@ RSpec.describe Metanorma::Iso do
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision>
-                      <identifier>1</identifier>
+                <subdivision type="Technical committee">
+                   <identifier>1</identifier>
+                   <identifier type="full">1/2/3</identifier>
                 </subdivision>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="author">
-                <description>Subcommittee</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision>
-                      <identifier>2</identifier>
+                <subdivision type="Subcommittee">
+                   <identifier>2</identifier>
                 </subdivision>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="author">
-                <description>Workgroup</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision>
-                      <identifier>3</identifier>
+                <subdivision type="Workgroup">
+                   <identifier>3</identifier>
                 </subdivision>
+                <abbreviation>ISO</abbreviation>
              </organization>
           </contributor>
           <contributor>
@@ -835,31 +981,17 @@ RSpec.describe Metanorma::Iso do
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision>
-                      <identifier>1</identifier>
+                <subdivision type="Technical committee">
+                   <identifier>1</identifier>
+                   <identifier type="full">1/2/3</identifier>
                 </subdivision>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>Subcommittee</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision>
-                      <identifier>2</identifier>
+                <subdivision type="Subcommittee">
+                   <identifier>2</identifier>
                 </subdivision>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>Workgroup</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision>
-                      <identifier>3</identifier>
+                <subdivision type="Workgroup">
+                   <identifier>3</identifier>
                 </subdivision>
+                <abbreviation>ISO</abbreviation>
              </organization>
           </contributor>
           <language>en</language>
@@ -879,7 +1011,7 @@ RSpec.describe Metanorma::Iso do
           </copyright>
           <ext>
              <doctype>standard</doctype>
-                <flavor>iso</flavor>
+             <flavor>iso</flavor>
              <editorialgroup>
                 <agency>ISO</agency>
                 <technical-committee number="1" type="Other"/>
@@ -1636,286 +1768,286 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "processes document relations" do
-      xml = Nokogiri::XML(Asciidoctor.convert(<<~INPUT, *OPTIONS))
-        = Document title
-        Author
-        :docfile: test.adoc
-        :nodoc:
-        :novalid:
-        :amends: ISO 123:2001;ISO 124
-        :obsoletes: ABC 1
-        :successor-of: ABC 2
-        :manifestation-of: ABC 3
-        :annotation-of: ABC 3a
-        :related: ABC 4
-        :replaces: ABC 5
-        :supersedes: ABC 6
-        :corrects: ABC 7
-        :informatively-cited-in: ABC 8
-        :informatively-cites: ABC 9
-        :normatively-cited-in: ABC 10
-        :normatively-cites: ABC 11
-        :identical-adopted-from: ABC 12
-        :modified-adopted-from: ABC 13
-        :related-directive: ABC 14
-        :related-mandate: ABC 15
-        :has-draft: ABC 16
-        :local-cache: spec/relatondb
-      INPUT
-      output = <<~OUTPUT
-        <bibdata type="standard">
-          <contributor>
-            <role type="author"/>
+    xml = Nokogiri::XML(Asciidoctor.convert(<<~INPUT, *OPTIONS))
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :amends: ISO 123:2001;ISO 124
+      :obsoletes: ABC 1
+      :successor-of: ABC 2
+      :manifestation-of: ABC 3
+      :annotation-of: ABC 3a
+      :related: ABC 4
+      :replaces: ABC 5
+      :supersedes: ABC 6
+      :corrects: ABC 7
+      :informatively-cited-in: ABC 8
+      :informatively-cites: ABC 9
+      :normatively-cited-in: ABC 10
+      :normatively-cites: ABC 11
+      :identical-adopted-from: ABC 12
+      :modified-adopted-from: ABC 13
+      :related-directive: ABC 14
+      :related-mandate: ABC 15
+      :has-draft: ABC 16
+      :local-cache: spec/relatondb
+    INPUT
+    output = <<~OUTPUT
+      <bibdata type="standard">
+        <contributor>
+          <role type="author"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
+                    <contributor>
+          <role type="authorizer"><description>Agency</description></role>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
+        <language>en</language>
+        <script>Latn</script>
+        <status>
+          <stage>60</stage>
+          <substage>60</substage>
+        </status>
+        <copyright>
+          <from>#{Date.today.year}</from>
+          <owner>
             <organization>
               <name>International Organization for Standardization</name>
               <abbreviation>ISO</abbreviation>
             </organization>
-          </contributor>
-          <contributor>
-            <role type="publisher"/>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </contributor>
-                      <contributor>
-            <role type="authorizer"><description>Agency</description></role>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </contributor>
-          <language>en</language>
-          <script>Latn</script>
-          <status>
-            <stage>60</stage>
-            <substage>60</substage>
-          </status>
-          <copyright>
-            <from>#{Date.today.year}</from>
-            <owner>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-              </organization>
-            </owner>
-          </copyright>
-          <relation type="obsoletes">
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 1</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="successorOf">
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 2</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="manifestationOf">
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 3</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="related">
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 4</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="annotationOf">
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 3a</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="updates">
-            <description>amends</description>
-            <bibitem type="standard">
-              <docidentifier type="iso-reference">ISO 123:2001(E)</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="updates">
-            <description>amends</description>
-            <bibitem type="standard">
-              <docidentifier type="iso-reference">ISO 124(E)</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="obsoletes">
-            <description>replaces</description>
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 5</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="obsoletes">
-            <description>supersedes</description>
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 6</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="updates">
-            <description>corrects</description>
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 7</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="isCitedIn">
-            <description>informatively cited in</description>
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 8</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="cites">
-            <description>informatively cites</description>
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 9</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="cites">
-            <description>normatively cites</description>
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 11</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="adoptedFrom">
-            <description>identical adopted from</description>
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 12</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="adoptedFrom">
-            <description>modified adopted from</description>
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 13</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="related">
-            <description>related directive</description>
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 14</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="related">
-            <description>related mandate</description>
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 15</docidentifier>
-            </bibitem>
-          </relation>
-          <relation type="hasDraft">
-            <bibitem>
-              <title>--</title>
-              <docidentifier>ABC 16</docidentifier>
-            </bibitem>
-           </relation>
-          <ext>
-            <doctype>standard</doctype>
-                <flavor>iso</flavor>
-            <editorialgroup>
-              <agency>ISO</agency>
-            </editorialgroup>
-            <approvalgroup>
-              <agency>ISO</agency>
-            </approvalgroup>
-            <stagename>International Standard</stagename>
-          </ext>
-        </bibdata>
-      OUTPUT
-      xml = xml.at("//xmlns:bibdata")
-      xml.xpath("//xmlns:docidentifier[@type='iso-reference']").each do |x|
-        x.xpath(".//following-sibling::*").each(&:remove)
-        x.xpath(".//preceding-sibling::*").each(&:remove)
-      end
-      expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-        .to be_equivalent_to Xml::C14n.format(output)
+          </owner>
+        </copyright>
+        <relation type="obsoletes">
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 1</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="successorOf">
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 2</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="manifestationOf">
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 3</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="related">
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 4</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="annotationOf">
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 3a</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="updates">
+          <description>amends</description>
+          <bibitem type="standard">
+            <docidentifier type="iso-reference">ISO 123:2001(E)</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="updates">
+          <description>amends</description>
+          <bibitem type="standard">
+            <docidentifier type="iso-reference">ISO 124(E)</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="obsoletes">
+          <description>replaces</description>
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 5</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="obsoletes">
+          <description>supersedes</description>
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 6</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="updates">
+          <description>corrects</description>
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 7</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="isCitedIn">
+          <description>informatively cited in</description>
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 8</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="cites">
+          <description>informatively cites</description>
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 9</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="cites">
+          <description>normatively cites</description>
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 11</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="adoptedFrom">
+          <description>identical adopted from</description>
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 12</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="adoptedFrom">
+          <description>modified adopted from</description>
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 13</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="related">
+          <description>related directive</description>
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 14</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="related">
+          <description>related mandate</description>
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 15</docidentifier>
+          </bibitem>
+        </relation>
+        <relation type="hasDraft">
+          <bibitem>
+            <title>--</title>
+            <docidentifier>ABC 16</docidentifier>
+          </bibitem>
+         </relation>
+        <ext>
+          <doctype>standard</doctype>
+              <flavor>iso</flavor>
+          <editorialgroup>
+            <agency>ISO</agency>
+          </editorialgroup>
+          <approvalgroup>
+            <agency>ISO</agency>
+          </approvalgroup>
+          <stagename>International Standard</stagename>
+        </ext>
+      </bibdata>
+    OUTPUT
+    xml = xml.at("//xmlns:bibdata")
+    xml.xpath("//xmlns:docidentifier[@type='iso-reference']").each do |x|
+      x.xpath(".//following-sibling::*").each(&:remove)
+      x.xpath(".//preceding-sibling::*").each(&:remove)
+    end
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "processes adopted-from identifiers, CEN identifiers" do
-      xml = Nokogiri::XML(Asciidoctor.convert(<<~INPUT, *OPTIONS))
-        = Document title
-        Author
-        :docfile: test.adoc
-        :nodoc:
-        :novalid:
-        :no-isobib:
-        :docnumber: 31
-        :language: fr
-        :doctype: international-standard
-        :adopted-from: ISO 31-0
-        :publisher: CEN
-        :local-cache: spec/relatondb
-      INPUT
-      output = <<~OUTPUT
-        <bibdata type="standard">
-          <docidentifier type="CEN" primary="true">CEN ISO 31-0</docidentifier>
-          <docnumber>31</docnumber>
-          <contributor>
-            <role type="author"/>
+    xml = Nokogiri::XML(Asciidoctor.convert(<<~INPUT, *OPTIONS))
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :no-isobib:
+      :docnumber: 31
+      :language: fr
+      :doctype: international-standard
+      :adopted-from: ISO 31-0
+      :publisher: CEN
+      :local-cache: spec/relatondb
+    INPUT
+    output = <<~OUTPUT
+      <bibdata type="standard">
+        <docidentifier type="CEN" primary="true">CEN ISO 31-0</docidentifier>
+        <docnumber>31</docnumber>
+        <contributor>
+          <role type="author"/>
+          <organization>
+            <name>CEN</name>
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="authorizer">
+            <description>Agency</description>
+          </role>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>CEN</name>
+          </organization>
+        </contributor>
+        <language>fr</language>
+        <script>Latn</script>
+        <status>
+          <stage>60</stage>
+          <substage>60</substage>
+        </status>
+        <copyright>
+          <from>#{Date.today.year}</from>
+          <owner>
             <organization>
               <name>CEN</name>
             </organization>
-          </contributor>
-          <contributor>
-            <role type="authorizer">
-              <description>Agency</description>
-            </role>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type="publisher"/>
-            <organization>
-              <name>CEN</name>
-            </organization>
-          </contributor>
-          <language>fr</language>
-          <script>Latn</script>
-          <status>
-            <stage>60</stage>
-            <substage>60</substage>
-          </status>
-          <copyright>
-            <from>#{Date.today.year}</from>
-            <owner>
-              <organization>
-                <name>CEN</name>
-              </organization>
-            </owner>
-          </copyright>
-          <ext>
-            <doctype>international-standard</doctype>
-                <flavor>iso</flavor>
-            <editorialgroup>
-              <agency>CEN</agency>
-            </editorialgroup>
-            <approvalgroup>
-              <agency>ISO</agency>
-            </approvalgroup>
-            <structuredidentifier>
-              <project-number>CEN 31</project-number>
-            </structuredidentifier>
-          </ext>
-        </bibdata>
-      OUTPUT
-      xml = xml.at("//xmlns:bibdata")
-      xml.xpath("//xmlns:docidentifier[@type='iso-reference']").each do |x|
-        x.xpath(".//following-sibling::*").each(&:remove)
-        x.xpath(".//preceding-sibling::*").each(&:remove)
-      end
-      expect(Xml::C14n.format(strip_guid(xml.to_xml)))
-        .to be_equivalent_to Xml::C14n.format(output)
+          </owner>
+        </copyright>
+        <ext>
+          <doctype>international-standard</doctype>
+              <flavor>iso</flavor>
+          <editorialgroup>
+            <agency>CEN</agency>
+          </editorialgroup>
+          <approvalgroup>
+            <agency>ISO</agency>
+          </approvalgroup>
+          <structuredidentifier>
+            <project-number>CEN 31</project-number>
+          </structuredidentifier>
+        </ext>
+      </bibdata>
+    OUTPUT
+    xml = xml.at("//xmlns:bibdata")
+    xml.xpath("//xmlns:docidentifier[@type='iso-reference']").each do |x|
+      x.xpath(".//following-sibling::*").each(&:remove)
+      x.xpath(".//preceding-sibling::*").each(&:remove)
+    end
+    expect(Xml::C14n.format(strip_guid(xml.to_xml)))
+      .to be_equivalent_to Xml::C14n.format(output)
   end
 
   it "reads scripts into blank HTML document" do
@@ -2123,6 +2255,5 @@ RSpec.describe Metanorma::Iso do
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
       .to be_equivalent_to Xml::C14n.format(output)
-
   end
 end
