@@ -321,10 +321,19 @@
 		</xsl:for-each>
 	</xsl:variable>
 
-	<xsl:variable name="editorialgroup_">
+	<xsl:variable name="approvalgroup_">
 		<!-- Example: ISO/TC 46/SC 2 -->
 		<!-- ISO/SG SMART/SG TS/AG 1 -->
-		<xsl:variable name="approvalgroup" select="normalize-space(/mn:metanorma/mn:bibdata/mn:ext/mn:approvalgroup/@identifier)"/>
+		<!-- <xsl:variable name="approvalgroup" select="normalize-space(/mn:metanorma/mn:bibdata/mn:ext/mn:approvalgroup/@identifier)"/> -->
+		<xsl:variable name="contributor_authorizer_">
+			<xsl:copy-of select="/mn:metanorma/mn:bibdata/mn:contributor[mn:role[@type = 'authorizer' and mn:description[normalize-space(@language) = ''] = 'Technical committee']]"/>
+		</xsl:variable>
+		<xsl:variable name="contributor_authorizer" select="xalan:nodeset($contributor_authorizer_)"/>
+		<xsl:variable name="organization_abbreviation" select="normalize-space($contributor_authorizer/mn:contributor/mn:organization/mn:abbreviation)"/>
+		<xsl:variable name="approvalgroup">
+			<xsl:if test="$organization_abbreviation = 'ISO' or      contains($organization_abbreviation, 'ISO/') or     contains($organization_abbreviation, '/ISO')"><xsl:value-of select="concat($organization_abbreviation, '/')"/></xsl:if>
+			<xsl:value-of select="normalize-space($contributor_authorizer/mn:contributor/mn:organization/mn:subdivision/mn:identifier[@type = 'full'])"/>
+		</xsl:variable>
 		<xsl:variable name="parts_by_slash">
 			<xsl:call-template name="split">
 				<xsl:with-param name="pText" select="$approvalgroup"/>
@@ -365,7 +374,7 @@
 			</xsl:choose>
 		</xsl:for-each>
 	</xsl:variable>
-	<xsl:variable name="editorialgroup" select="xalan:nodeset($editorialgroup_)"/>
+	<xsl:variable name="approvalgroup" select="xalan:nodeset($approvalgroup_)"/>
 
 	<xsl:variable name="secretariat_">
 		<xsl:variable name="value" select="normalize-space(/mn:metanorma/mn:bibdata/mn:ext/mn:editorialgroup/mn:secretariat)"/>
@@ -2016,9 +2025,9 @@
 												</xsl:if>
 
 												<xsl:if test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM' or $stagename_abbreviation = 'DIS' or              $stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM' or $stagename_abbreviation = 'FDIS' or              $stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD'">
-													<xsl:if test="normalize-space($editorialgroup) != ''">
+													<xsl:if test="normalize-space($approvalgroup) != ''">
 														<fo:block margin-bottom="3mm">
-															<xsl:copy-of select="$editorialgroup"/>
+															<xsl:copy-of select="$approvalgroup"/>
 														</fo:block>
 													</xsl:if>
 													<xsl:if test="normalize-space($secretariat) != ''">
@@ -2313,7 +2322,7 @@
 													</fo:table-cell>
 													<fo:table-cell>
 														<fo:block margin-bottom="3mm">
-															<xsl:copy-of select="$editorialgroup"/>
+															<xsl:copy-of select="$approvalgroup"/>
 														</fo:block>
 													</fo:table-cell>
 													<fo:table-cell>
@@ -2546,7 +2555,7 @@
 																		<fo:table-row role="SKIP">
 																			<fo:table-cell role="SKIP">
 																				<fo:block>
-																					<xsl:copy-of select="$editorialgroup"/>
+																					<xsl:copy-of select="$approvalgroup"/>
 																				</fo:block>
 																			</fo:table-cell>
 																			<fo:table-cell role="SKIP">
@@ -2576,7 +2585,7 @@
 															<xsl:if test="$stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM' or $stagename_abbreviation = 'FDIS'">
 																<fo:block-container border="0.5mm solid black" width="51mm" role="SKIP">
 																	<fo:block margin="2mm" role="SKIP">
-																			<fo:block margin-bottom="8pt"><xsl:copy-of select="$editorialgroup"/></fo:block>
+																			<fo:block margin-bottom="8pt"><xsl:copy-of select="$approvalgroup"/></fo:block>
 																			<fo:block margin-bottom="6pt"><xsl:copy-of select="$secretariat"/></fo:block>
 																			<fo:block margin-bottom="6pt">
 																				<!-- Voting begins on: -->
@@ -2815,10 +2824,10 @@
 									</xsl:otherwise>
 								</xsl:choose>
 
-								<xsl:if test="normalize-space($editorialgroup) != ''">
+								<xsl:if test="normalize-space($approvalgroup) != ''">
 									<!-- ISO/TC 34/SC 4/WG 3 -->
 									<fo:block margin-bottom="12pt">
-										<xsl:copy-of select="$editorialgroup"/>
+										<xsl:copy-of select="$approvalgroup"/>
 									</fo:block>
 								</xsl:if>
 
@@ -2931,8 +2940,8 @@
 	<xsl:template name="insertLogoImages">
 		<xsl:param name="content-height"/>
 		<xsl:choose>
-			<xsl:when test="mn:metanorma/mn:bibdata/mn:contributor[mn:role/mn:description[not(@lang)] = 'Technical committee']/mn:organization">
-				<xsl:for-each select="mn:metanorma/mn:bibdata/mn:contributor[mn:role/mn:description[not(@lang)] = 'Technical committee']/mn:organization">
+			<xsl:when test="mn:metanorma/mn:bibdata/mn:contributor[mn:role[@type = 'author']/mn:description[normalize-space(@language) = ''] = 'Technical committee']/mn:organization">
+				<xsl:for-each select="mn:metanorma/mn:bibdata/mn:contributor[mn:role[@type = 'author']/mn:description[normalize-space(@language) = ''] = 'Technical committee']/mn:organization">
 
 					<xsl:variable name="items">
 						<xsl:call-template name="split_abbreviation"/>
@@ -3028,8 +3037,8 @@
 	<xsl:template name="insertLogoImages2024">
 		<xsl:variable name="content-height">20</xsl:variable>
 		<xsl:choose>
-			<xsl:when test="mn:metanorma/mn:bibdata/mn:contributor[mn:role/mn:description[not(@lang)] = 'Technical committee']/mn:organization">
-				<xsl:for-each select="mn:metanorma/mn:bibdata/mn:contributor[mn:role/mn:description[not(@lang)] = 'Technical committee']/mn:organization">
+			<xsl:when test="mn:metanorma/mn:bibdata/mn:contributor[mn:role[@type = 'author']/mn:description[normalize-space(@language) = ''] = 'Technical committee']/mn:organization">
+				<xsl:for-each select="mn:metanorma/mn:bibdata/mn:contributor[mn:role[@type = 'author']/mn:description[normalize-space(@language) = ''] = 'Technical committee']/mn:organization">
 
 					<xsl:variable name="items">
 						<xsl:call-template name="split_abbreviation"/>
