@@ -8,6 +8,9 @@ all_rights_reserved: Alle Rechte vorbehalten
 reference_number: Referenznummer
 reference_number_abbrev: Ref.nr
 price_based_on: Preis basierend auf % Seiten
+price: Preis
+date_first_printing: Datum des ersten Drucks
+date_printing: "Datum des {{ var1 | ordinal_word: '', '' }} Drucks"
 descriptor: Deskriptor
 under_preparation: In Vorbereitung. (Stadium zum Zeitpunkt der Veröffentlichung %).
 withdrawn: Zurückgezogen.
@@ -28,6 +31,12 @@ classification-UDC: UDK
 edition_ordinal_old: "{{ var1 | ordinal_num: 'edition', '' }} AUSGABE"
 edition_replacement: "Diese {{ var1 | ordinal_word: 'edition', '' }} Ausgabe ersetzt die {{ var2 | ordinal_word: 'edition', '' }} Ausgabe"
 website: Webseite
+formerly_id: "(früher %)"
+was_developed_by: "%1 wurde entwickelt von %2"
+iso-cen-parallel: ISO/CEN PARALLELVERARBEITUNG
+draft_comment_1: Bei diesem Dokument handelt es sich um einen Entwurf, der zur Kommentierung und Genehmigung in Umlauf gebracht wird. Sie unterliegt daher Änderungen und darf nicht als internationale Norm bezeichnet werden, bis sie als solche veröffentlicht wird.
+draft_comment_2: Zusätzlich zu ihrer Bewertung als akzeptabel für industrielle, technologische, kommerzielle und Benutzerzwecke müssen Entwürfe internationaler Normen gelegentlich auch im Hinblick auf ihr Potenzial geprüft werden, Normen zu werden, auf die in nationalen Vorschriften Bezug genommen werden kann.
+draft_comment_3: Empfänger dieses Entwurfs werden gebeten, mit ihren Kommentaren eine Mitteilung über alle relevanten Patentrechte einzureichen, die ihnen bekannt sind, und unterstützende Unterlagen einzureichen.
 doctype_dict:
   international-standard: Internationaler Standard
   technical-specification: Technische Spezifikation
@@ -78,6 +87,61 @@ stage_dict:
     directive: Richtlinie
   "90": Rezension
   "95": Rückzug
+stage_draft_variants:
+  Entwurf des internationalen Standards:
+    coverpage: ENTWURF<br/>des internationalen Standards
+    firstpage: ENTWURF des internationalen Standards
+  Entwurf der technischen Spezifikation:
+    coverpage: ENTWURF<br/>der technischen Spezifikation
+    firstpage: ENTWURF der technischen Spezifikation
+  Entwurf des technischen Berichts:
+    coverpage: ENTWURF<br/>des technischen Berichts
+    firstpage: ENTWURF des technischen Berichts
+  Entwurf der öffentlich verfügbaren Spezifikation:
+    coverpage: ENTWURF<br/>der öffentlich verfügbaren Spezifikation
+    firstpage: ENTWURF der öffentlich verfügbaren Spezifikation
+  Entwurf der internationalen Workshop-Vereinbarung:
+    coverpage: ENTWURF<br/>der internationalen Workshop-Vereinbarung
+    firstpage: ENTWURF der internationalen Workshop-Vereinbarung
+  Endgültiger Leitfadenentwurf:
+    coverpage: ENDGÜLTIGER<br/>Leitfadenentwurf
+    firstpage: ENDGÜLTIGER Leitfadenentwurf
+  Änderungsentwurf:
+    coverpage: ÄNDERUNGSENTWURF
+    firstpage: ÄNDERUNGSENTWURF
+  Entwurf der technischen Berichtigung:
+    coverpage: ENTWURF<br/>der technischen Berichtigung
+    firstpage: ENTWURF der technischen Berichtigung
+  Richtlinienentwurf:
+    coverpage: RICHTLINIENENTWURF
+    firstpage: RICHTLINIENENTWURF
+  Endgültiger Entwurf des internationalen Standards:
+    coverpage: ENDGÜLTIGER ENTWURF<br/>des internationalen Standards
+    firstpage: ENDGÜLTIGER ENTWURF des internationalen Standards
+  Endgültiger Entwurf der technischen Spezifikation:
+    coverpage: ENDGÜLTIGER ENTWURF<br/>der technischen Spezifikation
+    firstpage: ENDGÜLTIGER ENTWURF der technischen Spezifikation
+  Endgültiger Entwurf des technischen Berichts:
+    coverpage: ENDGÜLTIGER ENTWURF<br/>des technischen Berichts
+    firstpage: ENDGÜLTIGER ENTWURF des technischen Berichts
+  Endgültiger Entwurf der öffentlich verfügbaren Spezifikation:
+    coverpage: ENDGÜLTIGER ENTWURF<br/>der öffentlich verfügbaren Spezifikation
+    firstpage: ENDGÜLTIGER ENTWURF der öffentlich verfügbaren Spezifikation
+  Endgültiger Entwurf der internationalen Workshop-Vereinbarung:
+    coverpage: ENDGÜLTIGER ENTWURF<br/>der internationalen Workshop-Vereinbarung
+    firstpage: ENDGÜLTIGER ENTWURF der internationalen Workshop-Vereinbarung
+  Endgültiger Leitfadenentwurf:
+    coverpage: ENDGÜLTIGER<br/>Leitfadenentwurf
+    firstpage: ENDGÜLTIGER Leitfadenentwurf
+  Endgültiger Änderungsentwurf:
+    coverpage: ENDGÜLTIGER<br/>Änderungsentwurf
+    firstpage: ENDGÜLTIGER Änderungsentwurf
+  Endgültiger Entwurf der technischen Berichtigung:
+    coverpage: ENDGÜLTIGER ENTWURF<br/>der technischen Berichtigung
+    firstpage: ENDGÜLTIGER ENTWURF der technischen Berichtigung
+  Endgültiger Richtlinienentwurf:
+    coverpage: ENDGÜLTIGER<br/>Richtlinienentwurf
+    firstpage: ENDGÜLTIGER Richtlinienentwurf
 locality:
   appendix: Anhang
 requirements:
