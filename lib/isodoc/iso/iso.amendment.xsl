@@ -1883,10 +1883,18 @@
 															</xsl:choose>
 														</xsl:when>
 														<!-- <xsl:when test="$stage-abbreviation = 'FDAmd' or $stage-abbreviation = 'FDAM'"><xsl:value-of select="$doctype_uppercased"/></xsl:when> -->
-														<xsl:when test="$stagename-header-coverpage != ''">
+														<xsl:when test="$stagename-header-coverpage != '' or normalize-space($stagename_localized_coverpage) != ''">
 															<xsl:attribute name="margin-top">12pt</xsl:attribute>
 
-															<xsl:value-of select="$stagename-header-coverpage"/>
+															<xsl:choose>
+																<xsl:when test="normalize-space($stagename_localized_coverpage) != ''">
+																	<!-- FINAL DRAFT<br/>International Standard-->
+																	<xsl:apply-templates select="xalan:nodeset($stagename_localized_coverpage)/node()"/>
+																</xsl:when>
+																<xsl:otherwise>
+																	<xsl:value-of select="$stagename-header-coverpage"/>
+																</xsl:otherwise>
+															</xsl:choose>
 
 															<!-- if there is iteration number, then print it -->
 															<xsl:variable name="iteration" select="number(/mn:metanorma/mn:bibdata/mn:status/mn:iteration)"/>
@@ -1900,6 +1908,7 @@
 																<xsl:when test="$doctype = 'amendment'">
 																	<xsl:value-of select="$updates-document-type_str"/>
 																</xsl:when>
+																<xsl:when test="normalize-space($stagename_localized_coverpage) != ''"/>
 																<xsl:otherwise>
 																	<xsl:value-of select="$doctype_localized"/>
 																</xsl:otherwise>
@@ -1982,108 +1991,128 @@
 												</fo:block>
 											</fo:block-container>
 										</fo:table-cell>
-										<fo:table-cell number-columns-spanned="2" padding-left="6mm">
-											<fo:block margin-top="2.5mm" line-height="1.1" role="SKIP">
+										<fo:table-cell number-columns-spanned="2" number-rows-spanned="2" padding-left="6mm">
 
-												<xsl:if test="not($stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM')">
-													<xsl:variable name="edition_and_date">
-														<xsl:call-template name="insertEditionAndDate"/>
-													</xsl:variable>
-													<xsl:if test="normalize-space($edition_and_date) != ''">
-														<fo:block font-size="18pt" font-weight="bold" margin-bottom="3mm">
-															<xsl:value-of select="$edition_and_date"/>
-														</fo:block>
-													</xsl:if>
-												</xsl:if>
+											<fo:table width="100%" table-layout="fixed">
+												<fo:table-body>
+													<fo:table-row height="85mm">
+														<fo:table-cell>
 
-												<xsl:if test="$doctype = 'amendment'"> <!-- and not($stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM') -->
-													<fo:block font-size="15pt" font-weight="bold" margin-bottom="3mm">
-														<xsl:value-of select="$doctype_uppercased"/>
-														<xsl:text> </xsl:text>
-														<xsl:variable name="amendment-number" select="/mn:metanorma/mn:bibdata/mn:ext/mn:structuredidentifier/mn:project-number/@amendment"/>
-														<xsl:if test="normalize-space($amendment-number) != ''">
-															<xsl:value-of select="$amendment-number"/><xsl:text> </xsl:text>
-														</xsl:if>
-													</fo:block>
-												<!-- </xsl:if>
-											
-												<xsl:if test="$doctype = 'amendment' and not($stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM')"> -->
-													<xsl:if test="/mn:metanorma/mn:bibdata/mn:date[@type = 'updated']">
-														<fo:block font-size="18pt" font-weight="bold" margin-bottom="3mm">
-															<xsl:value-of select="/mn:metanorma/mn:bibdata/mn:date[@type = 'updated']"/>
-														</fo:block>
-													</xsl:if>
-												</xsl:if>
+															<fo:block margin-top="2.5mm" line-height="1.1" role="SKIP">
 
-												<xsl:variable name="date_corrected" select="normalize-space(/mn:metanorma/mn:bibdata/mn:date[@type = 'corrected'])"/>
-												<xsl:if test="$date_corrected != ''">
-													<fo:block font-size="18pt" font-weight="bold" margin-bottom="3mm">
-														<xsl:value-of select="$i18n_corrected_version"/>
-														<xsl:value-of select="$linebreak"/>
-														<xsl:value-of select="$date_corrected"/>
-													</fo:block>
-												</xsl:if>
+																<xsl:if test="not($stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM')">
+																	<xsl:variable name="edition_and_date">
+																		<xsl:call-template name="insertEditionAndDate"/>
+																	</xsl:variable>
+																	<xsl:if test="normalize-space($edition_and_date) != ''">
+																		<fo:block font-size="18pt" font-weight="bold" margin-bottom="3mm">
+																			<xsl:value-of select="$edition_and_date"/>
+																		</fo:block>
+																	</xsl:if>
+																</xsl:if>
 
-												<xsl:if test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM' or $stagename_abbreviation = 'DIS' or              $stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM' or $stagename_abbreviation = 'FDIS' or              $stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD'">
-													<xsl:if test="normalize-space($approvalgroup) != ''">
-														<fo:block margin-bottom="3mm">
-															<xsl:copy-of select="$approvalgroup"/>
-														</fo:block>
-													</xsl:if>
-													<xsl:if test="normalize-space($secretariat) != ''">
-														<fo:block margin-bottom="3mm">
-															<xsl:copy-of select="$secretariat"/>
-														</fo:block>
-													</xsl:if>
-												</xsl:if>
+																<xsl:if test="$doctype = 'amendment'"> <!-- and not($stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM') -->
+																	<fo:block font-size="15pt" font-weight="bold" margin-bottom="3mm">
+																		<xsl:value-of select="$doctype_uppercased"/>
+																		<xsl:text> </xsl:text>
+																		<xsl:variable name="amendment-number" select="/mn:metanorma/mn:bibdata/mn:ext/mn:structuredidentifier/mn:project-number/@amendment"/>
+																		<xsl:if test="normalize-space($amendment-number) != ''">
+																			<xsl:value-of select="$amendment-number"/><xsl:text> </xsl:text>
+																		</xsl:if>
+																	</fo:block>
+																<!-- </xsl:if>
+															
+																<xsl:if test="$doctype = 'amendment' and not($stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM')"> -->
+																	<xsl:if test="/mn:metanorma/mn:bibdata/mn:date[@type = 'updated']">
+																		<fo:block font-size="18pt" font-weight="bold" margin-bottom="3mm">
+																			<xsl:value-of select="/mn:metanorma/mn:bibdata/mn:date[@type = 'updated']"/>
+																		</fo:block>
+																	</xsl:if>
+																</xsl:if>
 
-												<xsl:if test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM' or $stagename_abbreviation = 'DIS' or                   $stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM' or $stagename_abbreviation = 'FDIS'">
+																<xsl:variable name="date_corrected" select="normalize-space(/mn:metanorma/mn:bibdata/mn:date[@type = 'corrected'])"/>
+																<xsl:if test="$date_corrected != ''">
+																	<fo:block font-size="18pt" font-weight="bold" margin-bottom="3mm">
+																		<xsl:value-of select="$i18n_corrected_version"/>
+																		<xsl:value-of select="$linebreak"/>
+																		<xsl:value-of select="$date_corrected"/>
+																	</fo:block>
+																</xsl:if>
 
-													<fo:block margin-bottom="3mm">
-													<!-- Voting begins on: -->
-														<xsl:value-of select="concat($i18n_voting_begins_on, ':')"/>
-														<fo:block font-weight="bold">
-															<xsl:variable name="v_date">
-																<xsl:call-template name="split">
-																	<xsl:with-param name="pText">
-																		<xsl:call-template name="insertVoteStarted"/>
-																	</xsl:with-param>
-																	<xsl:with-param name="sep" select="'-'"/>
-																	<xsl:with-param name="keep_sep">true</xsl:with-param>
-																</xsl:call-template>
-															</xsl:variable>
-															<xsl:for-each select="xalan:nodeset($v_date)/mnx:item">
-																<xsl:choose>
-																	<xsl:when test=". = '-'"><fo:inline font-weight="normal"><xsl:value-of select="."/></fo:inline></xsl:when>
-																	<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
-																</xsl:choose>
-															</xsl:for-each>
-														</fo:block>
-													</fo:block>
+																<xsl:if test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM' or $stagename_abbreviation = 'DIS' or                  $stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM' or $stagename_abbreviation = 'FDIS' or                  $stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD'">
+																	<xsl:if test="normalize-space($approvalgroup) != ''">
+																		<fo:block margin-bottom="3mm">
+																			<xsl:copy-of select="$approvalgroup"/>
+																		</fo:block>
+																	</xsl:if>
+																	<xsl:if test="normalize-space($secretariat) != ''">
+																		<fo:block margin-bottom="3mm">
+																			<xsl:copy-of select="$secretariat"/>
+																		</fo:block>
+																	</xsl:if>
+																</xsl:if>
 
-													<fo:block margin-bottom="3mm">
-														<!-- Voting terminates on: -->
-														<xsl:value-of select="concat($i18n_voting_terminates_on, ':')"/>
-														<fo:block font-weight="bold">
-															<xsl:variable name="v_date">
-																<xsl:call-template name="split">
-																	<xsl:with-param name="pText">
-																		<xsl:call-template name="insertVoteEnded"/>
-																	</xsl:with-param>
-																	<xsl:with-param name="sep" select="'-'"/>
-																	<xsl:with-param name="keep_sep">true</xsl:with-param>
-																</xsl:call-template>
-															</xsl:variable>
-															<xsl:for-each select="xalan:nodeset($v_date)/mnx:item">
-																<xsl:choose>
-																	<xsl:when test=". = '-'"><fo:inline font-weight="normal"><xsl:value-of select="."/></fo:inline></xsl:when>
-																	<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
-																</xsl:choose>
-															</xsl:for-each>
-														</fo:block>
-													</fo:block>
-												</xsl:if>
-											</fo:block>
+																<xsl:if test="$stage-abbreviation = 'DIS' or $stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM' or $stagename_abbreviation = 'DIS' or                       $stage-abbreviation = 'FDIS' or $stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM' or $stagename_abbreviation = 'FDIS'">
+
+																	<fo:block margin-bottom="3mm">
+																	<!-- Voting begins on: -->
+																		<xsl:value-of select="concat($i18n_voting_begins_on, ':')"/>
+																		<fo:block font-weight="bold">
+																			<xsl:variable name="v_date">
+																				<xsl:call-template name="split">
+																					<xsl:with-param name="pText">
+																						<xsl:call-template name="insertVoteStarted"/>
+																					</xsl:with-param>
+																					<xsl:with-param name="sep" select="'-'"/>
+																					<xsl:with-param name="keep_sep">true</xsl:with-param>
+																				</xsl:call-template>
+																			</xsl:variable>
+																			<xsl:for-each select="xalan:nodeset($v_date)/mnx:item">
+																				<xsl:choose>
+																					<xsl:when test=". = '-'"><fo:inline font-weight="normal"><xsl:value-of select="."/></fo:inline></xsl:when>
+																					<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+																				</xsl:choose>
+																			</xsl:for-each>
+																		</fo:block>
+																	</fo:block>
+
+																	<fo:block margin-bottom="3mm">
+																		<!-- Voting terminates on: -->
+																		<xsl:value-of select="concat($i18n_voting_terminates_on, ':')"/>
+																		<fo:block font-weight="bold">
+																			<xsl:variable name="v_date">
+																				<xsl:call-template name="split">
+																					<xsl:with-param name="pText">
+																						<xsl:call-template name="insertVoteEnded"/>
+																					</xsl:with-param>
+																					<xsl:with-param name="sep" select="'-'"/>
+																					<xsl:with-param name="keep_sep">true</xsl:with-param>
+																				</xsl:call-template>
+																			</xsl:variable>
+																			<xsl:for-each select="xalan:nodeset($v_date)/mnx:item">
+																				<xsl:choose>
+																					<xsl:when test=". = '-'"><fo:inline font-weight="normal"><xsl:value-of select="."/></fo:inline></xsl:when>
+																					<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+																				</xsl:choose>
+																			</xsl:for-each>
+																		</fo:block>
+																	</fo:block>
+																</xsl:if>
+															</fo:block>
+														</fo:table-cell>
+													</fo:table-row>
+													<fo:table-row height="85mm">
+														<fo:table-cell padding-left="-1mm" display-align="after">
+															<fo:block font-size="7pt" margin-right="20mm" font-family="Cambria">
+																<xsl:if test="$lang = 'ru'">
+																	<xsl:attribute name="margin-right">10mm</xsl:attribute>
+																</xsl:if>
+																<xsl:call-template name="insertDraftComments"/>
+															</fo:block>
+														</fo:table-cell>
+													</fo:table-row>
+												</fo:table-body>
+											</fo:table>
 
 										</fo:table-cell>
 									</fo:table-row>
@@ -2156,14 +2185,7 @@
 												</xsl:if>
 											</fo:block>
 										</fo:table-cell>
-										<fo:table-cell number-columns-spanned="2" padding-top="-3mm" padding-left="5mm" display-align="after">
-											<xsl:if test="$lang = 'fr'">
-												<xsl:attribute name="padding-top">-18mm</xsl:attribute>
-											</xsl:if>
-											<fo:block font-size="7pt" margin-right="20mm" font-family="Cambria">
-												<xsl:call-template name="insertDraftComments"/>
-											</fo:block>
-										</fo:table-cell>
+
 									</fo:table-row>
 
 									<fo:table-row height="13mm">
@@ -2208,10 +2230,14 @@
 											<xsl:if test="$stage-abbreviation = 'DAMD' or $stage-abbreviation = 'DAM'">
 												<xsl:attribute name="font-size">7pt</xsl:attribute>
 											</xsl:if>
-											<!-- margin-top="-30mm"  -->
-											<fo:block> <!-- margin-top="-100mm" -->
+											<!-- <fo:block>
 												<xsl:call-template name="insertDraftComments"/>
-											</fo:block>
+											</fo:block> -->
+											<fo:block-container position="absolute" top="-47mm" width="52mm" height="100mm" role="SKIP">
+												<fo:block>
+													<xsl:call-template name="insertDraftComments"/>
+												</fo:block>
+											</fo:block-container>
 										</fo:table-cell>
 										<fo:table-cell role="SKIP">
 											<fo:block role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:block>
