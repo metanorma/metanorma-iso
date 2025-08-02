@@ -354,6 +354,12 @@ RSpec.describe IsoDoc do
          <status>
             <stage abbreviation="CD" language="">40</stage>
             <stage abbreviation="CD" language="de">Entwurf des technischen Berichts</stage>
+            <stage abbreviation="CD" language="de" type="firstpage">ENTWURF des technischen Berichts</stage>
+            <stage abbreviation="CD" language="de" type="coverpage">
+               ENTWURF
+               <br/>
+               des technischen Berichts
+            </stage>
          </status>
          <ext>
             <doctype language="">technical-report</doctype>
