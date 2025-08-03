@@ -23,7 +23,7 @@ module IsoDoc
 
       def docstatus(isoxml, _out)
         docstatus = isoxml.at(ns("//bibdata/status/stage"))
-        set(:unpublished, false)
+        published_default(isoxml)
         revdate = isoxml.at(ns("//bibdata/version/revision-date"))
         set(:revdate, revdate&.text)
         docstatus and docstatus1(isoxml, docstatus)
