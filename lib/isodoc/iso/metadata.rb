@@ -23,32 +23,26 @@ module IsoDoc
 
       def docstatus(isoxml, _out)
         docstatus = isoxml.at(ns("//bibdata/status/stage"))
-        published_default(isoxml)
+        published = published_default(isoxml)
         revdate = isoxml.at(ns("//bibdata/version/revision-date"))
         set(:revdate, revdate&.text)
-        docstatus and docstatus1(isoxml, docstatus)
+        docstatus and docstatus1(isoxml, docstatus, published)
         docscheme = isoxml.at(ns("//presentation-metadata[name" \
           "[text() = 'document-scheme']]/value"))
         docscheme and set(:document_scheme, docscheme.text)
       end
 
-      def docstatus1(isoxml, docstatus)
+      def docstatus1(isoxml, docstatus, published)
         set(:stage, docstatus.text)
         set(:stage_int, docstatus.text.to_i)
         set(:substage_int, isoxml.at(ns("//bibdata/status/substage"))&.text)
-        set(:unpublished, unpublished(docstatus.text))
         set(:statusabbr,
             status_abbrev(docstatus["abbreviation"] || "??",
                           isoxml.at(ns("//bibdata/status/substage"))&.text,
                           isoxml.at(ns("//bibdata/status/iteration"))&.text,
                           isoxml.at(ns("//bibdata/version/draft"))&.text,
                           isoxml.at(ns("//bibdata/ext/doctype"))&.text))
-        unpublished(docstatus.text) and
-          set(:stageabbr, docstatus["abbreviation"])
-      end
-
-      def unpublished(status)
-        status.to_i.positive? && status.to_i < 60
+        !published and set(:stageabbr, docstatus["abbreviation"])
       end
 
       def docid(isoxml, _out)
