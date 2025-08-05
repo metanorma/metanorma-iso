@@ -30,7 +30,13 @@
 		</xsl:if>
 	</xsl:variable>
 	<xsl:variable name="docidentifierISO" select="normalize-space($docidentifierISO_)"/>
-	<xsl:variable name="docidentifierISO_with_break" select="java:replaceAll(java:java.lang.String.new($docidentifierISO),'^([^\d]+) (\d)', concat('$1', $linebreak, '$2'))"/> <!-- add line break before 1st sequence 'space digit' -->
+	<xsl:variable name="docidentifierISO_with_break_" select="java:replaceAll(java:java.lang.String.new($docidentifierISO),'^([^\d]+) (\d)', concat('$1', $linebreak, '$2'))"/> <!-- add line break before 1st sequence 'space digit' -->
+	<xsl:variable name="docidentifierISO_with_break">
+		<xsl:choose>
+			<xsl:when test="contains($docidentifierISO_with_break_, ' ') or contains($docidentifierISO_with_break_, $linebreak)"><xsl:value-of select="$docidentifierISO_with_break_"/></xsl:when>
+			<xsl:otherwise><xsl:value-of select="java:replaceAll(java:java.lang.String.new($docidentifierISO_with_break_), '(\/)(\d{3,})', concat('$1', $zero_width_space, '$2'))"/></xsl:otherwise>
+		</xsl:choose>
+	</xsl:variable>
 
 	<xsl:variable name="docidentifier_another_">
 		<xsl:for-each select="/mn:metanorma/mn:bibdata/mn:docidentifier[@type != '' and @type != 'ISO' and not(starts-with(@type, 'iso-')) and @type != 'URN']">
@@ -210,6 +216,8 @@
 		<xsl:choose>
 			<!-- $stage-abbreviation = 'PRF'  -->
 			<xsl:when test="$stagename_abbreviation = 'PRF'"><xsl:value-of select="$doctype_localized"/></xsl:when>
+			<!-- https://github.com/metanorma/metanorma-taste/issues/22#issuecomment-3156059344 -->
+			<xsl:when test="$doctype_localized != '' and       count(/mn:metanorma/mn:bibdata/mn:contributor[mn:role/@type = 'author'][mn:organization/mn:abbreviation = 'ISO']) = 0"><xsl:value-of select="$doctype_localized"/></xsl:when>
 			<xsl:when test="$layoutVersion = '2024' and $stagename_localized != ''">
 				<xsl:value-of select="$stagename_localized"/>
 			</xsl:when>
@@ -1934,7 +1942,7 @@
 										</fo:table-cell>
 										<fo:table-cell number-columns-spanned="2" display-align="after" padding-left="6mm">
 											<fo:block font-size="19pt" font-weight="bold" line-height="1">
-												<xsl:if test="$stage_published = 'true' and $substage != 0">
+												<xsl:if test="($stage_published = 'true' or $stage &gt;= 60) and $substage != 0">
 													<xsl:attribute name="color"><xsl:value-of select="$color_secondary"/></xsl:attribute>
 												</xsl:if>
 												<xsl:choose>
@@ -1944,7 +1952,8 @@
 														<xsl:value-of select="substring-after($docidentifierISO, ' ')"/>
 													</xsl:when>
 													<xsl:otherwise>
-														<xsl:value-of select="$docidentifierISO"/>
+														<!-- <xsl:value-of select="$docidentifierISO"/> -->
+														<xsl:value-of select="$docidentifierISO_with_break"/>
 													</xsl:otherwise>
 												</xsl:choose>
 											</fo:block>
