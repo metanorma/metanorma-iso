@@ -203,6 +203,9 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </ext>
         </bibdata>
         <metanorma-extension>
+        <semantic-metadata>
+        <stage-published>false</stage-published>
+        </semantic-metadata>
         <presentation-metadata><name>document-scheme</name><value>1951</value></presentation-metadata>
         </metanorma-extension>
       </iso-standard>
@@ -725,6 +728,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 </editorialgroup>
               </ext>
           </bibdata>
+          <metanorma-extension>
+          <semantic-metadata>
+          <stage-published>false</stage-published>
+          </semantic-metadata>
+          </metanorma-extension>
           <sections>
             <clause id="C">
               <title>Clause 1</title>
@@ -749,6 +757,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
                  </editorialgroup>
              </ext>
           </bibdata>
+            <metanorma-extension>
+                <semantic-metadata>
+                  <stage-published>false</stage-published>
+                </semantic-metadata>
+            </metanorma-extension>
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title id="_" depth="1">Contents</fmt-title>
@@ -822,6 +835,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <secretariat>BSI</secretariat>
               </ext>
           </bibdata>
+          <metanorma-extension>
+          <semantic-metadata>
+          <stage-published>false</stage-published>
+          </semantic-metadata>
+          </metanorma-extension>
           <sections>
             <clause id="C">
               <title>Clause 1</title>
@@ -843,6 +861,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <secretariat>BSI</secretariat>
              </ext>
           </bibdata>
+            <metanorma-extension>
+                <semantic-metadata>
+                  <stage-published>false</stage-published>
+                </semantic-metadata>
+            </metanorma-extension>
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title id="_" depth="1">Contents</fmt-title>
@@ -909,6 +932,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <secretariat>BSI</secretariat>
               </ext>
           </bibdata>
+          <metanorma-extension>
+          <semantic-metadata>
+          <stage-published>false</stage-published>
+          </semantic-metadata>
+          </metanorma-extension>
           <sections>
             <clause id="C">
               <title>Clause 1</title>
@@ -929,6 +957,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <secretariat>BSI</secretariat>
              </ext>
           </bibdata>
+            <metanorma-extension>
+                <semantic-metadata>
+                  <stage-published>false</stage-published>
+                </semantic-metadata>
+            </metanorma-extension>
           <preface>
              <clause type="toc" id="_" displayorder="1">
                 <fmt-title id="_" depth="1">Contents</fmt-title>

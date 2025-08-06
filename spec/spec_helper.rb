@@ -214,6 +214,9 @@ BLANK_HDR1 = <<~"HDR".freeze
       </ext>
     </bibdata>
         <metanorma-extension>
+         <semantic-metadata>
+         <stage-published>true</stage-published>
+      </semantic-metadata>
     <presentation-metadata>
       <name>document-scheme</name>
       <value>2024</value>
