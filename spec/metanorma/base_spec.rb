@@ -2179,15 +2179,12 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       <metanorma-extension>
         <semantic-metadata>
-            <stage-published>false</stage-published>
+            <stage-published>true</stage-published>
         </semantic-metadata>
          <presentation-metadata>
            <name>document-scheme</name>
            <value>DOCUMENT-SCHEME</value>
          </presentation-metadata>
-         <semantic-metadata>
-          <stage-published>true</stage-published>
-        </semantic-metadata>
          <presentation-metadata>
            <name>TOC Heading Levels</name>
            <value>2</value>
