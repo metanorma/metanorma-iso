@@ -138,8 +138,11 @@ module Metanorma
       def editorial_group_types(xmldoc)
         %w(technical-committee subcommittee workgroup).each do |v|
           xmldoc.xpath("//bibdata//#{v} | //bibdata//approval-#{v}").each do |g|
-            g["type"] and next
-            g["type"] = DEFAULT_EDGROUP_TYPE[v.to_sym]
+            g["type"] ||= DEFAULT_EDGROUP_TYPE[v.to_sym]
+          end
+          v1 = v.sub("-", " ").capitalize
+          xmldoc.xpath("//bibdata//subdivision[@type = '#{v1}']").each do |g|
+            g["subtype"] ||= DEFAULT_EDGROUP_TYPE[v.to_sym]
           end
         end
       end

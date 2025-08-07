@@ -17,6 +17,7 @@ module Metanorma
                           default: default_publisher })
         committee_contributors(node, xml, default_publisher,
                                { approval: false })
+        secretariat_contributor(node, xml, default_publisher)
       end
 
       def org_organization(node, xml, org)
@@ -24,6 +25,13 @@ module Metanorma
           contrib_committee_build(xml, org[:agency], org)
         else super
         end
+      end
+
+      def secretariat_contributor(node, xml, agency)
+        node.attr("secretariat") or return
+        o = committee_contrib_org_prep(node, "secretariat", agency, {})
+        o[:desc] = "secretariat"
+        org_contributor(node, xml, o)
       end
 
       def committee_contributors(node, xml, agency, opt)
@@ -44,8 +52,9 @@ module Metanorma
           committee_org_prep_agency(node, type, agency, [], [])
         { source: [type], role: opt[:approval] ? "authorizer" : "author",
           default_org: false, committee: true, agency: agency_arr,
-          agency_abbrev:,
-          desc: type.sub(/^approval-/, "").tr("-", " ").capitalize }.compact
+          agency_abbrev:, desc: "committee",
+          subdivtype: type.sub(/^approval-/, "").tr("-", " ").capitalize }
+          .compact
       end
 
       def committee_org_prep_agency(node, type, agency, agency_arr, agency_abbr)

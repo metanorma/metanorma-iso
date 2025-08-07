@@ -54,52 +54,64 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Electrotechnical Commission</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>Electrical equipment in medical practice</name>
                    <identifier>TC 62</identifier>
-                   <identifier type="full">IEC TC 62/SC 62A/WG 62A1</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee">
-                   <name>Common aspects of electrical equipment used in medical practice</name>
-                   <identifier>SC 62A</identifier>
-                </subdivision>
-                <subdivision type="Workgroup">
-                   <name>Working group on defibulators</name>
-                   <identifier>WG 62A1</identifier>
+                   <identifier type="full">IEC TC 62</identifier>
                 </subdivision>
                 <abbreviation>IEC</abbreviation>
              </organization>
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>Quality management and corresponding general aspects for medical devices</name>
                    <identifier>TC 210</identifier>
-                   <identifier type="full">TC 210</identifier>
+                   <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee" subtype="SC">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup" subtype="WG">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>Institute of Electrical and Electronic Engineers</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>The committee</name>
                 </subdivision>
                 <abbreviation>IEEE</abbreviation>
              </organization>
           </contributor>
+             <contributor>
+      <role type="author">
+         <description>secretariat</description>
+      </role>
+      <organization>
+         <name>International Organization for Standardization</name>
+         <subdivision type="Secretariat">
+            <name>GB</name>
+         </subdivision>
+         <abbreviation>ISO</abbreviation>
+      </organization>
+   </contributor>
           <contributor>
              <role type="authorizer">
                 <description>Agency</description>
@@ -118,47 +130,47 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Electrotechnical Commission</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>Electrical equipment in medical practice</name>
                    <identifier>TC 62</identifier>
-                   <identifier type="full">Approval IEC TC 62/SC 62A/WG 62A1</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee">
-                   <name>Common aspects of electrical equipment used in medical practice</name>
-                   <identifier>SC 62A</identifier>
-              </subdivision>
-                <subdivision type="Workgroup">
-                   <name>Working group on defibulators</name>
-                   <identifier>WG 62A1</identifier>
+                   <identifier type="full">Approval IEC TC 62</identifier>
                 </subdivision>
                 <abbreviation>IEC</abbreviation>
              </organization>
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>Quality management and corresponding general aspects for medical devices</name>
                    <identifier>TC 210</identifier>
-                   <identifier type="full">Approval TC 210</identifier>
+                   <identifier type="full">Approval TC 210/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee" subtype="SC">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup" subtype="WG">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>Institute of Electrical and Electronic Engineers</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>The committee</name>
                 </subdivision>
                 <abbreviation>IEEE</abbreviation>
@@ -211,7 +223,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
       { accesseddate: "2012",
         activateddate: "2013",
         agency: "ISO",
-        approvalgroup: "Approval IEC TC 62/SC 62A/WG 62A1 and Approval TC 210",
+        approvalgroup: "Approval IEC TC 62 and Approval TC 210/SC 62A/WG 62A1",
         createddate: "2010&#x2013;2011",
         docnumber: "ISO/PreCD3 17301-1",
         docnumber_lang: "ISO/PreCD3 17301-1 (E)",
@@ -236,7 +248,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         draft: "0.4",
         draftinfo: " (draft 0.4, 2016-05-01)",
         edition: "2",
-        editorialgroup: "IEC TC 62/SC 62A/WG 62A1 and TC 210",
+        editorialgroup: "IEC TC 62 and TC 210/SC 62A/WG 62A1",
         fast_track: "true",
         horizontal: "true",
         keywords: ["kw2", "kw1"],
@@ -247,7 +259,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         publisher: "International Organization for Standardization",
         revdate: "2016-05-01",
         revdate_monthyear: "May 2016",
-        sc: "SC 4",
+        sc: "SC 62A",
         script: "Latn",
         secretariat: "GB",
         stage: "30",
@@ -255,10 +267,10 @@ RSpec.describe IsoDoc::Iso::Metadata do
         stageabbr: "CD",
         statusabbr: "PreCD3",
         substage_int: "92",
-        tc: "TC 34",
+        tc: "TC 62",
         tc_docnumber: ["17301", "17302"],
         unpublished: true,
-        wg: "WG 3" }
+        wg: "WG 62A1" }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -356,16 +368,14 @@ RSpec.describe IsoDoc::Iso::Metadata do
         obsoletes: "IEC 8121",
         obsoletes_part: "3.1",
         publisher: "International Organization for Standardization and International Electrotechnical Commission",
-        sc: "DEF 4",
         script: "Latn",
         stage: "60",
         stage_int: 60,
         statusabbr: "IS",
         substage_int: "92",
-        tc: "ABC 34",
         tc_docnumber: ["17301"],
         unpublished: false,
-        wg: "GHI 3" }
+        }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -475,16 +485,14 @@ RSpec.describe IsoDoc::Iso::Metadata do
         obsoletes: "IEC 8121",
         obsoletes_part: "3.1",
         publisher: "International Organization for Standardization et International Electrotechnical Commission",
-        sc: "DEF 4",
         script: "Latn",
         stage: "60",
         stage_int: 60,
         statusabbr: "IS",
         substage_int: "92",
-        tc: "ABC 34",
         tc_docnumber: ["17301"],
         unpublished: false,
-        wg: "GHI 3" }
+        }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -526,7 +534,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Electrotechnical Commission</name>
@@ -548,7 +556,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
@@ -562,7 +570,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>Institute of Electrical and Electronic Engineers</name>
@@ -590,7 +598,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Electrotechnical Commission</name>
@@ -612,7 +620,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
@@ -626,7 +634,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>Institute of Electrical and Electronic Engineers</name>
@@ -699,16 +707,16 @@ RSpec.describe IsoDoc::Iso::Metadata do
         obsoletes: "IEC 8121",
         obsoletes_part: "3.1",
         publisher: "International Organization for Standardization",
-        sc: "DEF 4",
+        sc: "SC 62A",
         script: "Cyrl",
         stage: "60",
         stage_int: 60,
         statusabbr: "IS",
         substage_int: "92",
-        tc: "ABC 34",
+        tc: "TC 62",
         tc_docnumber: ["17301"],
         unpublished: false,
-        wg: "GHI 3" }
+        wg: "WG 62A1" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
       .to be_equivalent_to output
   end

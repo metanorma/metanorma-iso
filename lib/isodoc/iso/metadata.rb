@@ -188,12 +188,13 @@ module IsoDoc
       end
 
       def tc_base(xml, grouptype)
-        tc_num = xml.at(ns("//bibdata/ext/#{grouptype}/" \
-                           "technical-committee/@number")) or return nil
-        tc_type = xml.at(ns("//bibdata/ext/#{grouptype}/technical-committee/" \
-                            "@type"))&.text || "TC"
-        tc_type == "Other" and tc_type = ""
-        "#{tc_type} #{tc_num.text}".strip
+        #tc_num = xml.at(ns("//bibdata/ext/#{grouptype}/" \
+                           #"technical-committee/@number")) or return nil
+        #tc_type = xml.at(ns("//bibdata/ext/#{grouptype}/technical-committee/" \
+                            #"@type"))&.text || "TC"
+        s = xml.at(ns("//bibdata/contributor[role/@type = 'author'][role/description = 'committee']/organization/subdivision[@type = 'Technical committee']"))
+        s or return nil
+        s.at(ns("./identifier[not(@type = 'full')]"))&.text
       end
 
       def sc(xml)
@@ -202,12 +203,15 @@ module IsoDoc
       end
 
       def sc_base(xml, grouptype)
-        sc_num = xml.at(ns("//bibdata/ext/#{grouptype}/subcommittee/" \
-                           "@number")) or return nil
-        sc_type = xml.at(ns("//bibdata/ext/#{grouptype}/subcommittee/" \
-                            "@type"))&.text || "SC"
-        sc_type == "Other" and sc_type = ""
-        "#{sc_type} #{sc_num.text}"
+        #sc_num = xml.at(ns("//bibdata/ext/#{grouptype}/subcommittee/" \
+        #                   "@number")) or return nil
+        #sc_type = xml.at(ns("//bibdata/ext/#{grouptype}/subcommittee/" \
+        #                    "@type"))&.text || "SC"
+        #sc_type == "Other" and sc_type = ""
+        #"#{sc_type} #{sc_num.text}"
+        s = xml.at(ns("//bibdata/contributor[role/@type = 'author'][role/description = 'committee']/organization/subdivision[@type = 'Subcommittee']"))
+        s or return nil
+        s.at(ns("./identifier[not(@type = 'full')]"))&.text
       end
 
       def wg(xml)
@@ -216,17 +220,20 @@ module IsoDoc
       end
 
       def wg_base(xml, grouptype)
-        wg_num = xml.at(ns("//bibdata/ext/#{grouptype}/workgroup/" \
-                           "@number")) or return
-        wg_type = xml.at(ns("//bibdata/ext/#{grouptype}/workgroup/" \
-                            "@type"))&.text || "WG"
-        wg_type == "Other" and wg_type = ""
-        "#{wg_type} #{wg_num.text}"
+        #wg_num = xml.at(ns("//bibdata/ext/#{grouptype}/workgroup/" \
+                           #"@number")) or return
+        #wg_type = xml.at(ns("//bibdata/ext/#{grouptype}/workgroup/" \
+                            #"@type"))&.text || "WG"
+        #wg_type == "Other" and wg_type = ""
+        #"#{wg_type} #{wg_num.text}"
+        s = xml.at(ns("//bibdata/contributor[role/@type = 'author'][role/description = 'committee']/organization/subdivision[@type = 'Workgroup']"))
+        s or return nil
+        s.at(ns("./identifier[not(@type = 'full')]"))&.text
       end
 
       def editorialgroup(xml)
         xpath = <<~XPATH
-          //contributor[role/@type = 'author'][role/description = 'Technical committee']/organization/subdivision/identifier[@type = 'full']
+          //contributor[role/@type = 'author'][role/description = 'committee']/organization/subdivision/identifier[@type = 'full']
         XPATH
         a = xml.xpath(ns(xpath))
         a.empty? or set(:editorialgroup,
@@ -239,7 +246,8 @@ module IsoDoc
       end
 
       def secretariat(xml)
-        sec = xml.at(ns("//bibdata/ext/editorialgroup/secretariat"))
+        #sec = xml.at(ns("//bibdata/ext/editorialgroup/secretariat"))
+        sec = xml.at(ns("//bibdata/contributor[role/@type = 'author'][role/description = 'secretariat']/organization/subdivision[@type = 'Secretariat']/name"))
         set(:secretariat, sec.text) if sec
       end
 
