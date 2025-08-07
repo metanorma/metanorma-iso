@@ -533,9 +533,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
       <div class="WordSection3">
-          <span style="MsoCommentReference" target="1" class="commentLink" from="A" to="A">
-             <span lang="EN-GB" style="font-size:9.0pt" xml:lang="EN-GB">
-                <a style="mso-comment-reference:SMC_1;mso-comment-date:#{Date.today.to_s.gsub('-', '')}">
                    <div>
                        <a name="A" id="A"/>
                        <h1>1</h1>
@@ -815,10 +812,6 @@ RSpec.describe IsoDoc do
                           </div>
                        </p>
                     </div>
-                 </a>
-                 <span style="mso-special-character:comment" target="1"/>
-              </span>
-           </span>
         </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
@@ -874,9 +867,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
        <div class="WordSection3">
-          <span style="MsoCommentReference" target="1" class="commentLink" from="A" to="A">
-             <span lang="EN-GB" style="font-size:9.0pt" xml:lang="EN-GB">
-                <a style="mso-comment-reference:SMC_1;mso-comment-date:#{Date.today.to_s.gsub('-', '')}">
                    <div>
                        <a name="A" id="A"/>
                        <h1>1</h1>
@@ -975,10 +965,6 @@ RSpec.describe IsoDoc do
                           </div>
                        </p>
                     </div>
-                 </a>
-                 <span style="mso-special-character:comment" target="1"/>
-              </span>
-           </span>
         </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
@@ -1020,9 +1006,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
        <div class="WordSection3">
-          <span style="MsoCommentReference" target="1" class="commentLink" from="A" to="A">
-             <span lang="EN-GB" style="font-size:9.0pt" xml:lang="EN-GB">
-                <a style="mso-comment-reference:SMC_1;mso-comment-date:#{Date.today.to_s.gsub('-', '')}">
                      <div>
                        <a name="A" id="A"/>
                        <h1>1</h1>
@@ -1047,10 +1030,6 @@ RSpec.describe IsoDoc do
                           </p>
                        </div>
                     </div>
-                 </a>
-                 <span style="mso-special-character:comment" target="1"/>
-              </span>
-           </span>
         </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
@@ -1113,9 +1092,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
        <div class="WordSection3">
-          <span style="MsoCommentReference" target="1" class="commentLink" from="A" to="A">
-             <span lang="EN-GB" style="font-size:9.0pt" xml:lang="EN-GB">
-                <a style="mso-comment-reference:SMC_1;mso-comment-date:#{Date.today.to_s.gsub('-', '')}">
                     <div>
                        <a name="A" id="A"/>
                        <h1>1</h1>
@@ -1255,10 +1231,6 @@ RSpec.describe IsoDoc do
                           </div>
                        </p>
                     </div>
-                 </a>
-                 <span style="mso-special-character:comment" target="1"/>
-              </span>
-           </span>
         </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
@@ -1688,9 +1660,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
        <div class="WordSection3">
-          <span style="MsoCommentReference" target="1" class="commentLink" from="A" to="A">
-             <span lang="EN-GB" style="font-size:9.0pt" xml:lang="EN-GB">
-                <a style="mso-comment-reference:SMC_1;mso-comment-date:#{Date.today.to_s.gsub('-', '')}">
                     <div>
                        <a name="A" id="A"/>
                        <h1>1</h1>
@@ -1835,10 +1804,6 @@ RSpec.describe IsoDoc do
                           </div>
                        </div>
                     </div>
-                 </a>
-                 <span style="mso-special-character:comment" target="1"/>
-              </span>
-           </span>
         </div>
     WORD
     FileUtils.rm_f "test.doc"
@@ -1903,9 +1868,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
        <div class="WordSection3">
-          <span style="MsoCommentReference" target="1" class="commentLink" from="A" to="A">
-             <span lang="EN-GB" style="font-size:9.0pt" xml:lang="EN-GB">
-                <a style="mso-comment-reference:SMC_1;mso-comment-date:#{Date.today.to_s.gsub('-', '')}">
                     <div>
                        <a name="A" id="A"/>
                        <h1>1</h1>
@@ -2050,10 +2012,6 @@ RSpec.describe IsoDoc do
                           </div>
                        </div>
                     </div>
-                 </a>
-                 <span style="mso-special-character:comment" target="1"/>
-              </span>
-           </span>
         </div>
             WORD
     FileUtils.rm_f "test.doc"
@@ -2103,9 +2061,6 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
        <div class="WordSection3">
-          <span style="MsoCommentReference" target="1" class="commentLink" from="A" to="A">
-             <span lang="EN-GB" style="font-size:9.0pt" xml:lang="EN-GB">
-                <a style="mso-comment-reference:SMC_1;mso-comment-date:#{Date.today.to_s.gsub('-', '')}">
                      <div>
                        <a name="A" id="A"/>
                        <h1>1</h1>
@@ -2151,10 +2106,6 @@ RSpec.describe IsoDoc do
                           </p>
                        </div>
                     </div>
-                 </a>
-                 <span style="mso-special-character:comment" target="1"/>
-              </span>
-           </span>
         </div>
     WORD
     FileUtils.rm_f "test.doc"

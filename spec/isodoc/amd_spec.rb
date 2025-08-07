@@ -921,6 +921,11 @@ RSpec.describe IsoDoc do
             <updates-document-type>international-standard</updates-document-type>
           </ext>
         </bibdata>
+                <metanorma-extension>
+        <semantic-metadata>
+        <stage-published>false</stage-published>
+        </semantic-metadata>
+        </metanorma-extension>
         <sections/>
       </iso-standard>
     INPUT
@@ -1071,6 +1076,11 @@ RSpec.describe IsoDoc do
             <updates-document-type>international-standard</updates-document-type>
           </ext>
         </bibdata>
+                <metanorma-extension>
+        <semantic-metadata>
+        <stage-published>false</stage-published>
+        </semantic-metadata>
+        </metanorma-extension>
         <sections/>
       </iso-standard>
     INPUT
@@ -1216,6 +1226,11 @@ RSpec.describe IsoDoc do
             <updates-document-type>international-standard</updates-document-type>
           </ext>
         </bibdata>
+        <metanorma-extension>
+        <semantic-metadata>
+        <stage-published>false</stage-published>
+        </semantic-metadata>
+        </metanorma-extension>
         <sections/>
       </iso-standard>
     INPUT

@@ -627,6 +627,11 @@ RSpec.describe IsoDoc do
             <stage>30</stage>
           </status>
         </bibdata>
+        <metanorma-extension>
+        <semantic-metadata>
+        <stage-published>false</stage-published>
+        </semantic-metadata>
+        </metanorma-extension>
         <boilerplate>
           <copyright-statement>
             <clause id="boilerplate-copyright-default">
@@ -673,6 +678,11 @@ RSpec.describe IsoDoc do
             <stage language='en'>Committee draft</stage>
           </status>
         </bibdata>
+        <metanorma-extension>
+        <semantic-metadata>
+        <stage-published>false</stage-published>
+        </semantic-metadata>
+        </metanorma-extension>
         <boilerplate>
           <copyright-statement>
             <clause inline-header="true" id="boilerplate-copyright-default">

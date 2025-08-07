@@ -154,6 +154,10 @@ module Metanorma
         f.at("./preceding-sibling::clause") and return root
         f
       end
+
+      def published?(status, _xmldoc)
+        status.to_i.positive? && status.to_i >= 60
+      end
     end
   end
 end
