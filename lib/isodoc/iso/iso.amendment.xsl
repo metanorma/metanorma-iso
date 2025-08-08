@@ -2855,11 +2855,11 @@
 					<xsl:with-param name="font-weight">normal</xsl:with-param>
 					<xsl:with-param name="is_footer">true</xsl:with-param>
 				</xsl:call-template>
-				<fo:flow flow-name="xsl-region-body" line-height="115%" role="SKIP">
+				<fo:flow flow-name="xsl-region-body" role="SKIP"> <!-- line-height="115%"  -->
 
 					<xsl:if test="$layoutVersion = '1989' and $revision_date_num &gt;= 19990101">
 						<!-- PDF disclaimer -->
-						<fo:block-container position="absolute" left="0mm" top="0mm" width="172mm" role="SKIP" border="0.5pt solid black">
+						<fo:block-container position="absolute" left="0mm" top="0mm" width="172mm" role="SKIP" border="0.5pt solid black" line-height="115%">
 							<fo:block-container border="0.5pt solid black">
 								<fo:block font-size="8pt" text-align="justify" line-height="1.2" margin="1.8mm">
 									<xsl:choose>
@@ -2914,22 +2914,9 @@
 						<xsl:if test="$layoutVersion = '2024'">
 							<xsl:attribute name="width">172mm</xsl:attribute>
 						</xsl:if>
-						<!-- <fo:block margin-bottom="3mm">
-							<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-Attention))}" width="14mm" content-height="13mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/>								
-							<fo:inline padding-left="6mm" font-size="12pt" font-weight="bold"></fo:inline>
-						</fo:block> -->
-						<fo:block line-height="90%" role="SKIP">
-							<fo:block font-size="9pt" text-align="justify" role="SKIP">
-								<xsl:if test="$layoutVersion = '1989'">
-									<xsl:attribute name="font-size">8pt</xsl:attribute>
-								</xsl:if>
-								<!-- <xsl:if test="$layoutVersion = '2024'">
-									<xsl:attribute name="font-size">8.6pt</xsl:attribute>
-								</xsl:if> -->
-								<!-- <xsl:copy-of select="$copyright-statement"/> -->
-								<xsl:apply-templates select="/mn:metanorma/mn:boilerplate/mn:copyright-statement"/>
-							</fo:block>
-						</fo:block>
+
+						<xsl:apply-templates select="/mn:metanorma/mn:boilerplate/mn:copyright-statement"/>
+
 					</fo:block-container>
 				</fo:flow>
 			</fo:page-sequence>
@@ -4024,10 +4011,9 @@
 				<fo:block> </fo:block>
 			</xsl:when>
 			<xsl:otherwise>
-				<fo:block margin-left="0.5mm" margin-bottom="3mm" role="H1">
-					<xsl:if test="$layoutVersion = '2024'">
-							<xsl:attribute name="margin-bottom">3.5mm</xsl:attribute>
-						</xsl:if>
+				<fo:block xsl:use-attribute-sets="copyright-statement-title-style">
+					<xsl:call-template name="refine_copyright-statement-title-style"/>
+
 					<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-Attention))}" width="14mm" content-height="13mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}">
 						<!-- <xsl:if test="$layoutVersion = '2024'">
 							<xsl:attribute name="width">13mm</xsl:attribute>
@@ -4036,10 +4022,7 @@
 						</xsl:if> -->
 					</fo:external-graphic>
 					<!-- <fo:inline padding-left="6mm" font-size="12pt" font-weight="bold">COPYRIGHT PROTECTED DOCUMENT</fo:inline> -->
-					<fo:inline padding-left="6mm" font-size="12pt" font-weight="bold" role="SKIP">
-						<xsl:if test="$layoutVersion = '1989'">
-							<xsl:attribute name="font-size">11pt</xsl:attribute>
-						</xsl:if>
+					<fo:inline padding-left="6mm" role="SKIP">
 						<xsl:if test="$layoutVersion = '2024'">
 							<xsl:attribute name="baseline-shift">5%</xsl:attribute>
 						</xsl:if>
@@ -4104,15 +4087,14 @@
 				<fo:block><xsl:apply-templates/></fo:block>
 			</xsl:when>
 			<xsl:otherwise>
-				<fo:block>
-					<xsl:if test="following-sibling::mn:p">
-						<xsl:attribute name="margin-bottom">3pt</xsl:attribute>
-					</xsl:if>
-					<xsl:attribute name="margin-left">0.5mm</xsl:attribute>
-					<xsl:attribute name="margin-right">0.5mm</xsl:attribute>
-					<xsl:if test="contains(@id, 'address') or contains(normalize-space(), 'Tel:') or contains(normalize-space(), 'Phone:')">
-						<xsl:attribute name="margin-left">4.5mm</xsl:attribute>
-					</xsl:if>
+				<fo:block xsl:use-attribute-sets="copyright-statement-p-style">
+
+					<xsl:call-template name="refine_copyright-statement-p-style"/>
+
+					<xsl:call-template name="setBlockAttributes">
+						<xsl:with-param name="text_align_default">justify</xsl:with-param>
+					</xsl:call-template>
+
 					<xsl:apply-templates/>
 				</fo:block>
 			</xsl:otherwise>
@@ -7621,15 +7603,50 @@
 
 	<!-- boilerplate sections styles -->
 	<xsl:attribute-set name="copyright-statement-style">
+		<xsl:attribute name="line-height">1.1</xsl:attribute>
+		<xsl:attribute name="font-size">9pt</xsl:attribute>
+		<xsl:attribute name="text-align">justify</xsl:attribute>
+		<xsl:attribute name="role">SKIP</xsl:attribute>
 	</xsl:attribute-set> <!-- copyright-statement-style -->
 
+	<xsl:template name="refine_copyright-statement-style">
+		<xsl:if test="$layoutVersion = '1989'">
+			<xsl:attribute name="font-size">8pt</xsl:attribute>
+		</xsl:if>
+	</xsl:template>
+
 	<xsl:attribute-set name="copyright-statement-title-style">
+		<xsl:attribute name="margin-left">0.5mm</xsl:attribute>
+		<xsl:attribute name="margin-bottom">3mm</xsl:attribute>
+		<xsl:attribute name="font-size">12pt</xsl:attribute>
+		<xsl:attribute name="font-weight">bold</xsl:attribute>
+		<xsl:attribute name="role">H1</xsl:attribute>
 	</xsl:attribute-set> <!-- copyright-statement-title-style -->
 
+	<xsl:template name="refine_copyright-statement-title-style">
+		<xsl:if test="$layoutVersion = '1989'">
+				<xsl:attribute name="font-size">11pt</xsl:attribute>
+			</xsl:if>
+		<xsl:if test="$layoutVersion = '2024'">
+			<xsl:attribute name="margin-bottom">3.5mm</xsl:attribute>
+		</xsl:if>
+	</xsl:template>
+
 	<xsl:attribute-set name="copyright-statement-p-style">
+		<xsl:attribute name="margin-left">0.5mm</xsl:attribute>
+		<xsl:attribute name="margin-right">0.5mm</xsl:attribute>
 	</xsl:attribute-set> <!-- copyright-statement-p-style -->
 
-		<xsl:attribute-set name="license-statement-style">
+	<xsl:template name="refine_copyright-statement-p-style">
+		<xsl:if test="following-sibling::mn:p">
+			<xsl:attribute name="margin-bottom">3pt</xsl:attribute>
+		</xsl:if>
+		<xsl:if test="contains(@id, 'address') or contains(normalize-space(), 'Tel:') or contains(normalize-space(), 'Phone:')">
+			<xsl:attribute name="margin-left">4.5mm</xsl:attribute>
+		</xsl:if>
+	</xsl:template>
+
+	<xsl:attribute-set name="license-statement-style">
 	</xsl:attribute-set> <!-- license-statement-style -->
 
 	<xsl:attribute-set name="license-statement-title-style">
@@ -7669,6 +7686,8 @@
 	<!-- ================================= -->
 	<xsl:template match="mn:copyright-statement">
 		<fo:block xsl:use-attribute-sets="copyright-statement-style" role="SKIP">
+			<xsl:call-template name="refine_copyright-statement-style"/>
+
 			<xsl:apply-templates/>
 		</fo:block>
 	</xsl:template> <!-- copyright-statement -->
@@ -8792,7 +8811,7 @@
 						</xsl:otherwise>
 					</xsl:choose>
 				</xsl:variable>
-				<xsl:if test="$key = 'font-family' or $key = 'font-size' or $key = 'color' or $key = 'baseline-shift'">
+				<xsl:if test="$key = 'font-family' or           $key = 'font-size' or          $key = 'color' or          $key = 'baseline-shift' or          $key = 'line-height'          ">
 					<style name="{$key}"><xsl:value-of select="$value"/></style>
 				</xsl:if>
 				<xsl:if test="$key = 'text-indent'">
@@ -19410,6 +19429,13 @@
 			<xsl:with-param name="default" select="$text_align_default"/>
 		</xsl:call-template>
 		<xsl:call-template name="setKeepAttributes"/>
+		<xsl:if test="node()[1][self::mn:span][contains(@style, 'line-height')]">
+			<xsl:variable name="styles">
+				<xsl:apply-templates select="*[1]"/>
+			</xsl:variable>
+			<!-- move attribute line-height from inline to block -->
+			<xsl:attribute name="line-height"><xsl:value-of select="xalan:nodeset($styles)//*/@line-height"/></xsl:attribute>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template name="setKeepAttributes">
