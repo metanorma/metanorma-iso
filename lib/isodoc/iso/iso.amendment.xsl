@@ -277,6 +277,8 @@
 		</xsl:choose>
 	</xsl:variable>
 
+	<xsl:variable name="force-page-count-main_sections"/>
+
 	<xsl:variable name="proof-text">PROOF/ÉPREUVE</xsl:variable>
 
 	<xsl:variable name="docnumber_with_prefix">
@@ -1163,6 +1165,9 @@
 							<xsl:if test="$layoutVersion = '1951'">
 								<xsl:attribute name="initial-page-number">auto</xsl:attribute>
 								<xsl:attribute name="force-page-count">end-on-even</xsl:attribute>
+							</xsl:if>
+							<xsl:if test="position() = last() and normalize-space($force-page-count-main_sections) != ''">
+								<xsl:attribute name="force-page-count"><xsl:value-of select="$force-page-count-main_sections"/></xsl:attribute>
 							</xsl:if>
 							<fo:static-content flow-name="xsl-footnote-separator" role="artifact">
 								<fo:block>
