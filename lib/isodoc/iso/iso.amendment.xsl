@@ -16722,12 +16722,30 @@
 				<!-- skip here, see the template 'fmt-review-start' -->
 			</xsl:when>
 			<xsl:otherwise>
-				<!-- <fo:inline id="{@id}" font-size="1pt"/> -->
-				<fo:inline id="{@id}" font-size="1pt"><xsl:if test="preceding-sibling::node()[self::mn:fmt-annotation-start][@source = $bookmark_id] and        following-sibling::node()[self::mn:fmt-annotation-end][@source = $bookmark_id]"><xsl:attribute name="line-height">0.1</xsl:attribute></xsl:if><xsl:value-of select="$hair_space"/></fo:inline>
-				<!-- we need to add zero-width space, otherwise this fo:inline is missing in IF xml -->
-				<xsl:if test="not(following-sibling::node()[normalize-space() != ''])"><fo:inline font-size="1pt"> </fo:inline></xsl:if>
+				<xsl:choose>
+					<xsl:when test="parent::mn:example or parent::mn:termexample or parent::mn:note or parent::mn:termnote">
+						<fo:block font-size="1pt" line-height="0.1">
+							<xsl:call-template name="fo_inline_bookmark">
+								<xsl:with-param name="bookmark_id" select="$bookmark_id"/>
+							</xsl:call-template>
+						</fo:block>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:call-template name="fo_inline_bookmark">
+							<xsl:with-param name="bookmark_id" select="$bookmark_id"/>
+						</xsl:call-template>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template name="fo_inline_bookmark">
+		<xsl:param name="bookmark_id"/>
+		<!-- <fo:inline id="{@id}" font-size="1pt"/> -->
+		<fo:inline id="{@id}" font-size="1pt"><xsl:if test="preceding-sibling::node()[self::mn:fmt-annotation-start][@source = $bookmark_id] and      following-sibling::node()[self::mn:fmt-annotation-end][@source = $bookmark_id]"><xsl:attribute name="line-height">0.1</xsl:attribute></xsl:if><xsl:value-of select="$hair_space"/></fo:inline>
+		<!-- we need to add zero-width space, otherwise this fo:inline is missing in IF xml -->
+		<xsl:if test="not(following-sibling::node()[normalize-space() != ''])"><fo:inline font-size="1pt"> </fo:inline></xsl:if>
 	</xsl:template>
 	<!-- =================== -->
 	<!-- End of Index processing -->
@@ -18635,6 +18653,8 @@
 	<xsl:template match="mn:erefstack"/>
 
 	<xsl:template match="mn:svgmap"/>
+
+	<xsl:template match="mn:name[following-sibling::*[1][self::mn:fmt-name]]"/>
 
 	<!-- for correct rendering combining chars, added in mode="update_xml_step2" -->
 	<xsl:template match="*[local-name() = 'lang_none']">
