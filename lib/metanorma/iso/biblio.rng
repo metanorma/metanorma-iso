@@ -443,7 +443,9 @@ real names (if the person is named with a pseudonym or user name); previous lega
     </oneOrMore>
     <zeroOrMore>
       <ref name="subdivision">
-        <a:documentation>The subdivision of the organization directly involved with the production of the bibliographic item</a:documentation>
+        <a:documentation>The subdivision of the organization directly involved with the production of the bibliographic item.
+Multiple subdivisions can be specified for an organization, with no implication of hierarchical
+relation between them</a:documentation>
       </ref>
     </zeroOrMore>
     <optional>
@@ -483,6 +485,11 @@ real names (if the person is named with a pseudonym or user name); previous lega
       <optional>
         <attribute name="type">
           <a:documentation>The type of subdivision</a:documentation>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="subtype">
+          <a:documentation>The subtype of subdivision; e.g. different types of technical committee</a:documentation>
         </attribute>
       </optional>
       <ref name="OrganizationType">

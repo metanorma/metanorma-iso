@@ -37,7 +37,7 @@ module Metanorma
       def committee_contributors(node, xml, agency, opt)
         t = metadata_approval_committee_types(opt[:approval] ? node : nil)
         v = t.first
-        if node.attr("#{v}-number")
+        if committee_number_or_name?(node, v, "")
           node.attr(v) or node.set_attr(v, "")
           o = committee_contrib_org_prep(node, v, agency, opt)
           o[:groups] = t
@@ -60,8 +60,7 @@ module Metanorma
       def committee_org_prep_agency(node, type, agency, agency_arr, agency_abbr)
         i = 1
         suffix = ""
-        while node.attr("#{type}-number#{suffix}") ||
-            node.attr("#{type}#{suffix}")
+        while committee_number_or_name?(node, type, suffix)
           agency_arr << (node.attr("#{type}-agency#{suffix}") || agency)
           agency_abbr << node.attr("#{type}-agency-abbr#{suffix}")
           i += 1
