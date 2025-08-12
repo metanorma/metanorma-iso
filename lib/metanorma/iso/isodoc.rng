@@ -2233,6 +2233,11 @@ used in document amendments</a:documentation>
       <ref name="RequiredId"/>
       <ref name="NumberingAttributes"/>
       <ref name="BlockAttributes"/>
+      <optional>
+        <attribute name="type">
+          <a:documentation>Semantic classification of note</a:documentation>
+        </attribute>
+      </optional>
       <oneOrMore>
         <choice>
           <a:documentation>Content of the term note</a:documentation>

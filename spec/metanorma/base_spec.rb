@@ -296,7 +296,6 @@ RSpec.describe Metanorma::Iso do
       :docstage:
       :docsubstage:
       :technical-committee: Techcomm
-      :technical-committee-number: 1
       :subcommittee: Subcommitt
       :subcommittee-number: 2
       :workgroup: Workg
@@ -356,12 +355,11 @@ RSpec.describe Metanorma::Iso do
                 <name>International Organization for Standardization</name>
                 <subdivision type="Technical committee" subtype="TC">
                    <name>Techcomm</name>
-                   <identifier>TC 1</identifier>
-                   <identifier type="full">TC 1/SC 2/WG 3</identifier>
                 </subdivision>
                 <subdivision type="Subcommittee" subtype="SC">
                    <name>Subcommitt</name>
                    <identifier>SC 2</identifier>
+                   <identifier type="full">SC 2/WG 3</identifier>
                 </subdivision>
                 <subdivision type="Workgroup" subtype="WG">
                    <name>Workg</name>
@@ -451,7 +449,6 @@ RSpec.describe Metanorma::Iso do
                 <agency>IEC</agency>
                 <agency>IETF</agency>
                 <agency>ISO</agency>
-                <technical-committee number="1" type="TC">Techcomm</technical-committee>
                 <subcommittee number="2" type="SC">Subcommitt</subcommittee>
                 <workgroup number="3" type="WG">Workg</workgroup>
              </editorialgroup>
