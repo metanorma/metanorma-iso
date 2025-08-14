@@ -100,50 +100,11 @@ module Metanorma
         super
       end
 
-      def bibdata_cleanup(xmldoc)
-        super
-        approval_groups_rename(xmldoc)
-        editorial_groups_agency(xmldoc)
-        editorial_group_types(xmldoc)
-      end
-
-      def approval_groups_rename(xmldoc)
-        %w(technical-committee subcommittee workgroup).each do |v|
-          xmldoc.xpath("//bibdata//approval-#{v}").each { |a| a.name = v }
-        end
-      end
-
-      def editorial_groups_agency(xmldoc)
-        pubs = extract_publishers(xmldoc)
-        xmldoc.xpath("//bibdata/ext/editorialgroup").each do |e|
-          pubs.reverse_each do |p|
-            if e.children.empty? then e << "<agency>#{p}</agency>"
-            else e.children.first.previous = "<agency>#{p}</agency>"
-            end
-          end
-        end
-      end
-
       def extract_publishers(xmldoc)
         xmldoc.xpath("//bibdata/contributor[role/@type = 'publisher']/" \
                      "organization").each_with_object([]) do |p, m|
           x = p.at("./abbreviation") || p.at("./name") or next
           m << x.children.to_xml
-        end
-      end
-
-      DEFAULT_EDGROUP_TYPE = { "technical-committee": "TC",
-                               subcommittee: "SC", workgroup: "WG" }.freeze
-
-      def editorial_group_types(xmldoc)
-        %w(technical-committee subcommittee workgroup).each do |v|
-          xmldoc.xpath("//bibdata//#{v} | //bibdata//approval-#{v}").each do |g|
-            g["type"] ||= DEFAULT_EDGROUP_TYPE[v.to_sym]
-          end
-          v1 = v.sub("-", " ").capitalize
-          xmldoc.xpath("//bibdata//subdivision[@type = '#{v1}']").each do |g|
-            g["subtype"] ||= DEFAULT_EDGROUP_TYPE[v.to_sym]
-          end
         end
       end
 
@@ -157,6 +118,23 @@ module Metanorma
 
       def published?(status, _xmldoc)
         status.to_i.positive? && status.to_i >= 60
+      end
+
+      def bibdata_cleanup(xmldoc)
+        super
+        editorial_group_types(xmldoc)
+      end
+
+      DEFAULT_EDGROUP_TYPE = { "technical-committee": "TC",
+                               subcommittee: "SC", workgroup: "WG" }.freeze
+
+      def editorial_group_types(xmldoc)
+        %w(technical-committee subcommittee workgroup).each do |v|
+          v1 = v.sub("-", " ").capitalize
+          xmldoc.xpath("//bibdata//subdivision[@type = '#{v1}']").each do |g|
+            g["subtype"] ||= DEFAULT_EDGROUP_TYPE[v.to_sym]
+          end
+        end
       end
     end
   end

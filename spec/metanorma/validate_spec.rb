@@ -428,6 +428,7 @@ RSpec.describe Metanorma::Iso do
       Author
       :docfile: test.adoc
       :nodoc:
+      :technical-committee: A1
       :subcommittee: A
       :subcommittee-type: X
       :subcommittee-number: X

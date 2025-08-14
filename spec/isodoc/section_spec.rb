@@ -1126,12 +1126,6 @@ RSpec.describe IsoDoc do
                  <doctype>standard</doctype>
                  <subdoctype>vocabulary</subdoctype>
                  <flavor>iso</flavor>
-                 <editorialgroup identifier="ISO">
-                    <agency>ISO</agency>
-                 </editorialgroup>
-                 <approvalgroup identifier="ISO">
-                    <agency>ISO</agency>
-                 </approvalgroup>
                  <stagename>International Standard</stagename>
               </ext>
            </bibdata>

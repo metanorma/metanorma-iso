@@ -76,12 +76,6 @@ from other documents in the same doctype</a:documentation>
     <ref name="flavor">
       <a:documentation>Flavour of Metanorma used to process this document</a:documentation>
     </ref>
-    <optional>
-      <ref name="editorialgroup">
-        <a:documentation>Groups associated with the production of the standards document, typically within
-a standards definition organization</a:documentation>
-      </ref>
-    </optional>
     <zeroOrMore>
       <ref name="ics">
         <a:documentation>Classification of the document contents taken from the International Classification of Standards</a:documentation>
@@ -129,49 +123,6 @@ a standards definition organization</a:documentation>
     <a:documentation>This is in fact an enum, as of this writing: standoc iso generic ietf ieee itu nist ogc csa cc iho ribose jis iec bsi bipm plateau.
 However we prefer not to hardcode it, given ongoing extension.</a:documentation>
     <text/>
-  </define>
-  <define name="editorialgroup">
-    <a:documentation>A group associated with the production of the standards document, typically within
-a standards definition organization</a:documentation>
-    <element name="editorialgroup">
-      <oneOrMore>
-        <ref name="technical-committee">
-          <a:documentation>A technical committee associated with the production of the standards document</a:documentation>
-        </ref>
-      </oneOrMore>
-    </element>
-  </define>
-  <define name="technical-committee">
-    <a:documentation>Technical committee associated with the production of a standards document</a:documentation>
-    <element name="technical-committee">
-      <ref name="IsoWorkgroup"/>
-    </element>
-  </define>
-  <define name="IsoWorkgroup">
-    <optional>
-      <attribute name="number">
-        <a:documentation>Numeric identifier of the technical committee</a:documentation>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="type">
-        <a:documentation>Type of the technical committee, used in identifying the technical committee</a:documentation>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="identifier">
-        <a:documentation>Non-numeric, complete identifier of the technical committee</a:documentation>
-      </attribute>
-    </optional>
-    <optional>
-      <attribute name="prefix">
-        <a:documentation>Disambiguating prefix added to number to form the identifier of the technical committee,
-typically indicating its type</a:documentation>
-      </attribute>
-    </optional>
-    <text>
-      <a:documentation>Name of the technical committee</a:documentation>
-    </text>
   </define>
   <define name="ics">
     <a:documentation>Classification taken from the International Classification of Standards. 

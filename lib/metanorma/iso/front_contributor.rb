@@ -102,64 +102,12 @@ module Metanorma
         )
       end
 
-      def metadata_committee(node, xml)
-        metadata_editorial_committee(node, xml)
-        metadata_approval_committee(node, xml)
-      end
-
-      def metadata_editorial_committee(node, xml)
-        xml.editorialgroup do |a|
-          %w(technical-committee subcommittee workgroup).each do |v|
-            val = node.attr("#{v}-number")
-            val && !val.empty? and committee_component(v, node, a)
-            a.parent.xpath("./#{v.gsub('-', '_')}[not(node())][not(@number)]")
-              .each(&:remove)
-          end
-          node.attr("secretariat") and a.secretariat(node.attr("secretariat"))
-        end
-      end
-
-      def metadata_approval_committee(node, xml)
-        types = metadata_approval_committee_types(node)
-        xml.approvalgroup do |a|
-          metadata_approval_agency(a, node.attr("approval-agency")
-            &.split(%r{[/,;]}))
-          types.each do |v|
-            node.attr("#{v}-number") and committee_component(v, node, a)
-            a.parent.xpath("./#{v.gsub('-', '_')}[not(node())][not(@number)]")
-              .each(&:remove)
-          end
-        end
-      end
-
       def metadata_approval_committee_types(node)
         types = %w(technical-committee subcommittee workgroup)
         !node.nil? && node.attr("approval-technical-committee-number") and
           types = %w(approval-technical-committee approval-subcommittee
                      approval-workgroup)
         types
-      end
-
-      def metadata_approval_agency(xml, list)
-        list = [default_publisher] if list.nil? || list.empty?
-        list.each do |v|
-          xml.agency v
-        end
-      end
-
-      def committee_component(compname, node, out)
-        i = 1
-        suffix = ""
-        while node.attr(compname + suffix)
-          num = node.attr("#{compname}-number#{suffix}")
-          name = node.attr(compname + suffix)
-          (!num.nil? && !num.empty?) || (!name.nil? && !name.empty?) and
-            out.send compname.gsub(/-/, "_"), name,
-                     **attr_code(number: num,
-                                 type: node.attr("#{compname}-type#{suffix}"))
-          i += 1
-          suffix = "_#{i}"
-        end
       end
     end
   end

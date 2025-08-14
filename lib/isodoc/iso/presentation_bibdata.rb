@@ -1,35 +1,6 @@
 module IsoDoc
   module Iso
     class PresentationXMLConvert < IsoDoc::PresentationXMLConvert
-      def bibdata(docxml)
-        super
-        editorialgroup_identifier(docxml)
-      end
-
-      def editorialgroup_identifier(docxml)
-        %w(editorialgroup approvalgroup).each do |v|
-          docxml.xpath(ns("//bibdata/ext/#{v}")).each do |a|
-            editorialgroup_identifier1(a)
-          end
-        end
-      end
-
-      def editorialgroup_identifier1(group)
-        agency = group.xpath(ns("./agency"))&.map(&:text)
-        ret = %w(technical-committee subcommittee workgroup)
-          .each_with_object([]) do |v, m|
-          m << editorialgroup_identifier2(group, v)
-        end
-        group["identifier"] = (agency + ret.compact).join("/")
-      end
-
-      def editorialgroup_identifier2(group, level)
-        a = group.at(ns("./#{level}")) or return nil
-        type = a["type"]
-        type&.casecmp("other")&.zero? and type = ""
-        "#{type} #{a['number']}".strip
-      end
-
       def bibdata_i18n(bib)
         hash_translate(bib, @i18n.get["doctype_dict"], "./ext/doctype",
                        "//presentation-metadata/doctype-alias", @lang)

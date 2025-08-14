@@ -204,12 +204,6 @@ BLANK_HDR1 = <<~"HDR".freeze
       <ext>
         <doctype>standard</doctype>
         <flavor>iso</flavor>
-        <editorialgroup>
-          <agency>ISO</agency>
-        </editorialgroup>
-        <approvalgroup>
-          <agency>ISO</agency>
-        </approvalgroup>
         <stagename>International Standard</stagename>
       </ext>
     </bibdata>
