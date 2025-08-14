@@ -96,20 +96,20 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="A">
                    <name>TC</name>
                    <identifier>A 1</identifier>
                    <identifier type="full">A 1/B 2/C 3</identifier>
                 </subdivision>
-                <subdivision type="Subcommittee">
+                <subdivision type="Subcommittee" subtype="B">
                    <name>SC</name>
                    <identifier>B 2</identifier>
                 </subdivision>
-                <subdivision type="Workgroup">
+                <subdivision type="Workgroup" subtype="C">
                    <name>WG</name>
                    <identifier>C 3</identifier>
                 </subdivision>
@@ -118,26 +118,38 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="A1">
                    <name>TC1</name>
                    <identifier>A1 11</identifier>
                    <identifier type="full">A1 11/B1 21/C1 31</identifier>
                 </subdivision>
-                <subdivision type="Subcommittee">
+                <subdivision type="Subcommittee" subtype="B1">
                    <name>SC1</name>
                    <identifier>B1 21</identifier>
                 </subdivision>
-                <subdivision type="Workgroup">
+                <subdivision type="Workgroup" subtype="C1">
                    <name>WG1</name>
                    <identifier>C1 31</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
              </organization>
           </contributor>
+             <contributor>
+      <role type="author">
+         <description>secretariat</description>
+      </role>
+      <organization>
+         <name>International Organization for Standardization</name>
+         <subdivision type="Secretariat">
+            <name>SECRETARIAT</name>
+         </subdivision>
+         <abbreviation>ISO</abbreviation>
+      </organization>
+   </contributor>
           <contributor>
              <role type="authorizer">
                 <description>Agency</description>
@@ -156,20 +168,20 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization, International Electrotechnical Commission</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="Aa">
                    <name>TCa</name>
                    <identifier>Aa 1a</identifier>
                    <identifier type="full">ISO/IEC Aa 1a/Ba 2a/Ca 3a</identifier>
                 </subdivision>
-                <subdivision type="Subcommittee">
+                <subdivision type="Subcommittee" subtype="Ba">
                    <name>SCa</name>
                    <identifier>Ba 2a</identifier>
                 </subdivision>
-                <subdivision type="Workgroup">
+                <subdivision type="Workgroup" subtype="Ca">
                    <name>WGa</name>
                    <identifier>Ca 3a</identifier>
                 </subdivision>
@@ -178,20 +190,20 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization, International Electrotechnical Commission</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="A1a">
                    <name>TC1a</name>
                    <identifier>A1a 11a</identifier>
                    <identifier type="full">ISO/IEC A1a 11a/B1a 21a/C1a 31a</identifier>
                 </subdivision>
-                <subdivision type="Subcommittee">
+                <subdivision type="Subcommittee" subtype="B1a">
                    <name>SC1a</name>
                    <identifier>B1a 21a</identifier>
                 </subdivision>
-                <subdivision type="Workgroup">
+                <subdivision type="Workgroup" subtype="C1a">
                    <name>WG1a</name>
                    <identifier>C1a 31a</identifier>
                 </subdivision>
@@ -284,7 +296,6 @@ RSpec.describe Metanorma::Iso do
       :docstage:
       :docsubstage:
       :technical-committee: Techcomm
-      :technical-committee-number: 1
       :subcommittee: Subcommitt
       :subcommittee-number: 2
       :workgroup: Workg
@@ -316,7 +327,7 @@ RSpec.describe Metanorma::Iso do
           <docidentifier type="iso-tc">2000</docidentifier>
           <docidentifier type="iso-tc">2003</docidentifier>
           <docnumber>1000</docnumber>
-         <contributor>
+          <contributor>
              <role type="author"/>
              <organization>
                 <name>International Electrotechnical Commission</name>
@@ -338,20 +349,19 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>Techcomm</name>
-                   <identifier>TC 1</identifier>
-                   <identifier type="full">TC 1/SC 2/WG 3</identifier>
                 </subdivision>
-                <subdivision type="Subcommittee">
+                <subdivision type="Subcommittee" subtype="SC">
                    <name>Subcommitt</name>
                    <identifier>SC 2</identifier>
+                   <identifier type="full">SC 2/WG 3</identifier>
                 </subdivision>
-                <subdivision type="Workgroup">
+                <subdivision type="Workgroup" subtype="WG">
                    <name>Workg</name>
                    <identifier>WG 3</identifier>
                 </subdivision>
@@ -389,20 +399,20 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>ApprovTechcom</name>
                    <identifier>TC 1</identifier>
                    <identifier type="full">TC 1/SC 2/WG 3</identifier>
                 </subdivision>
-                <subdivision type="Subcommittee">
+                <subdivision type="Subcommittee" subtype="SC">
                    <name>ApprovSubcom</name>
                    <identifier>SC 2</identifier>
                 </subdivision>
-                <subdivision type="Workgroup">
+                <subdivision type="Workgroup" subtype="WG">
                    <name>ApprovWorkg</name>
                    <identifier>WG 3</identifier>
                 </subdivision>
@@ -439,7 +449,6 @@ RSpec.describe Metanorma::Iso do
                 <agency>IEC</agency>
                 <agency>IETF</agency>
                 <agency>ISO</agency>
-                <technical-committee number="1" type="TC">Techcomm</technical-committee>
                 <subcommittee number="2" type="SC">Subcommitt</subcommittee>
                 <workgroup number="3" type="WG">Workg</workgroup>
              </editorialgroup>
@@ -604,11 +613,11 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Electrotechnical Commission</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>Electrical equipment in medical practice</name>
                    <identifier>TC 62</identifier>
                    <identifier type="full">IEC TC 62</identifier>
@@ -618,20 +627,20 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>Quality management and corresponding general aspects for medical devices</name>
                    <identifier>TC 210</identifier>
                    <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
                 </subdivision>
-                <subdivision type="Subcommittee">
+                <subdivision type="Subcommittee" subtype="SC">
                    <name>Common aspects of electrical equipment used in medical practice</name>
                    <identifier>SC 62A</identifier>
                 </subdivision>
-                <subdivision type="Workgroup">
+                <subdivision type="Workgroup" subtype="WG">
                    <name>Working group on defibulators</name>
                    <identifier>WG 62A1</identifier>
                 </subdivision>
@@ -640,11 +649,11 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>Institute of Electrical and Electronic Engineers</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>The committee</name>
                 </subdivision>
                 <abbreviation>IEEE</abbreviation>
@@ -668,11 +677,11 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Electrotechnical Commission</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>Electrical equipment in medical practice</name>
                    <identifier>TC 62</identifier>
                    <identifier type="full">IEC TC 62</identifier>
@@ -682,20 +691,20 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>Quality management and corresponding general aspects for medical devices</name>
                    <identifier>TC 210</identifier>
                    <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
                 </subdivision>
-                <subdivision type="Subcommittee">
+                <subdivision type="Subcommittee" subtype="SC">
                    <name>Common aspects of electrical equipment used in medical practice</name>
                    <identifier>SC 62A</identifier>
                 </subdivision>
-                <subdivision type="Workgroup">
+                <subdivision type="Workgroup" subtype="WG">
                    <name>Working group on defibulators</name>
                    <identifier>WG 62A1</identifier>
                 </subdivision>
@@ -704,11 +713,11 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>Institute of Electrical and Electronic Engineers</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="TC">
                    <name>The committee</name>
                 </subdivision>
                 <abbreviation>IEEE</abbreviation>
@@ -803,20 +812,20 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="Other">
                    <name>Techcomm</name>
                    <identifier>1</identifier>
                    <identifier type="full">1/2/3</identifier>
                 </subdivision>
-                <subdivision type="Subcommittee">
+                <subdivision type="Subcommittee" subtype="Other">
                    <name>Subcommitt</name>
                    <identifier>2</identifier>
                 </subdivision>
-                <subdivision type="Workgroup">
+                <subdivision type="Workgroup" subtype="Other">
                    <name>Workg</name>
                    <identifier>3</identifier>
                 </subdivision>
@@ -841,20 +850,20 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="Other">
                    <name>ApprovTechcom</name>
                    <identifier>1</identifier>
                    <identifier type="full">1/2/3</identifier>
                 </subdivision>
-                <subdivision type="Subcommittee">
+                <subdivision type="Subcommittee" subtype="Other">
                    <name>ApprovSubcom</name>
                    <identifier>2</identifier>
                 </subdivision>
-                <subdivision type="Workgroup">
+                <subdivision type="Workgroup" subtype="Other">
                    <name>ApprovWorkg</name>
                    <identifier>3</identifier>
                 </subdivision>
@@ -942,18 +951,18 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="author">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="Other">
                    <identifier>1</identifier>
                    <identifier type="full">1/2/3</identifier>
                 </subdivision>
-                <subdivision type="Subcommittee">
+                <subdivision type="Subcommittee" subtype="Other">
                    <identifier>2</identifier>
                 </subdivision>
-                <subdivision type="Workgroup">
+                <subdivision type="Workgroup" subtype="Other">
                    <identifier>3</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
@@ -977,18 +986,18 @@ RSpec.describe Metanorma::Iso do
           </contributor>
           <contributor>
              <role type="authorizer">
-                <description>Technical committee</description>
+                <description>committee</description>
              </role>
              <organization>
                 <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
+                <subdivision type="Technical committee" subtype="Other">
                    <identifier>1</identifier>
                    <identifier type="full">1/2/3</identifier>
                 </subdivision>
-                <subdivision type="Subcommittee">
+                <subdivision type="Subcommittee" subtype="Other">
                    <identifier>2</identifier>
                 </subdivision>
-                <subdivision type="Workgroup">
+                <subdivision type="Workgroup" subtype="Other">
                    <identifier>3</identifier>
                 </subdivision>
                 <abbreviation>ISO</abbreviation>
@@ -2166,13 +2175,13 @@ RSpec.describe Metanorma::Iso do
     INPUT
     output = <<~OUTPUT
       <metanorma-extension>
+        <semantic-metadata>
+            <stage-published>true</stage-published>
+        </semantic-metadata>
          <presentation-metadata>
            <name>document-scheme</name>
            <value>DOCUMENT-SCHEME</value>
          </presentation-metadata>
-         <semantic-metadata>
-          <stage-published>true</stage-published>
-        </semantic-metadata>
          <presentation-metadata>
            <name>TOC Heading Levels</name>
            <value>2</value>

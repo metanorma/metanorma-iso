@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-<!-- VERSION v2.1.0 -->
+<!-- VERSION v2.1.1 -->
 
   <!--
     ALERT: cannot have root comments, because of https://github.com/metanorma/metanorma/issues/437
@@ -2233,6 +2233,11 @@ used in document amendments</a:documentation>
       <ref name="RequiredId"/>
       <ref name="NumberingAttributes"/>
       <ref name="BlockAttributes"/>
+      <optional>
+        <attribute name="type">
+          <a:documentation>Semantic classification of note</a:documentation>
+        </attribute>
+      </optional>
       <oneOrMore>
         <choice>
           <a:documentation>Content of the term note</a:documentation>
