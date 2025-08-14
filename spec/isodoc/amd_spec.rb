@@ -867,6 +867,66 @@ RSpec.describe IsoDoc do
             </organization>
           </contributor>
           <contributor>
+             <role type="author">
+                <description>committee</description>
+             </role>
+             <organization>
+                <name>International Electrotechnical Commission</name>
+                <subdivision type="Technical committee" subtype="TC">
+                   <name>Electrical equipment in medical practice</name>
+                   <identifier>TC 62</identifier>
+                   <identifier type="full">IEC TC 62</identifier>
+                </subdivision>
+                <abbreviation>IEC</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>committee</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <subdivision type="Technical committee" subtype="TC">
+                   <name>Quality management and corresponding general aspects for medical devices</name>
+                   <identifier>TC 210</identifier>
+                   <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
+                </subdivision>
+                <subdivision type="Subcommittee" subtype="SC">
+                   <name>Common aspects of electrical equipment used in medical practice</name>
+                   <identifier>SC 62A</identifier>
+                </subdivision>
+                <subdivision type="Workgroup" subtype="WG">
+                   <name>Working group on defibulators</name>
+                   <identifier>WG 62A1</identifier>
+                </subdivision>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="author">
+                <description>committee</description>
+             </role>
+             <organization>
+                <name>Institute of Electrical and Electronic Engineers</name>
+                <subdivision type="Technical committee" subtype="TC">
+                   <name>The committee</name>
+                </subdivision>
+                <abbreviation>IEEE</abbreviation>
+             </organization>
+          </contributor>
+             <contributor>
+      <role type="author">
+         <description>secretariat</description>
+      </role>
+      <organization>
+         <name>International Organization for Standardization</name>
+         <subdivision type="Secretariat">
+            <name>GB</name>
+         </subdivision>
+         <abbreviation>ISO</abbreviation>
+      </organization>
+   </contributor>
+          <contributor>
             <role type="publisher"/>
             <organization>
               <name>International Organization for Standardization</name>
@@ -958,22 +1018,23 @@ RSpec.describe IsoDoc do
         draft: "0.3.4",
         draftinfo: " (draft 0.3.4, 2000-01-01)",
         edition: "2",
+        editorialgroup: "IEC TC 62 and TC 210/SC 62A/WG 62A1",
         ics: "1, 2, 3",
         lang: "en",
         publisher: "International Organization for Standardization",
         revdate: "2000-01-01",
         revdate_monthyear: "January 2000",
-        sc: "B 2",
+        sc: "SC 62A",
         script: "Latn",
-        secretariat: "SECRETARIAT",
+        secretariat: "GB",
         stage: "10",
         stage_int: 10,
         stageabbr: "NWIP",
         statusabbr: "PreNWIP3",
         substage_int: "20",
-        tc: "A 1",
+        tc: "TC 62",
         unpublished: true,
-        wg: "C 3" }
+        wg: "WG 62A1" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
       .to be_equivalent_to output
   end
@@ -1118,17 +1179,13 @@ RSpec.describe IsoDoc do
         publisher: "International Organization for Standardization",
         revdate: "2000-01-01",
         revdate_monthyear: "Janvier 2000",
-        sc: "B 2",
         script: "Latn",
-        secretariat: "SECRETARIAT",
         stage: "10",
         stage_int: 10,
         stageabbr: "NWIP",
         statusabbr: "PreNWIP3",
         substage_int: "20",
-        tc: "A 1",
-        unpublished: true,
-        wg: "C 3" }
+        unpublished: true }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
       .to be_equivalent_to output
   end
@@ -1268,17 +1325,13 @@ RSpec.describe IsoDoc do
         publisher: "International Organization for Standardization",
         revdate: "2000-01-01",
         revdate_monthyear: "January 2000",
-        sc: "B 2",
         script: "Latn",
-        secretariat: "SECRETARIAT",
         stage: "10",
         stage_int: 10,
         stageabbr: "NWIP",
         statusabbr: "PreNWIP3",
         substage_int: "20",
-        tc: "A 1",
-        unpublished: true,
-        wg: "C 3" }
+        unpublished: true }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
       .to be_equivalent_to output
   end

@@ -214,20 +214,20 @@ RSpec.describe Metanorma::Iso do
              </contributor>
              <contributor>
                 <role type="author">
-                   <description>Technical committee</description>
+                   <description>committee</description>
                 </role>
                 <organization>
                    <name>International Organization for Standardization</name>
-                   <subdivision type="Technical committee">
+                   <subdivision type="Technical committee" subtype="A">
                       <name>TC</name>
                       <identifier>A 1</identifier>
                       <identifier type="full">A 1/B 2/C 3</identifier>
                    </subdivision>
-                   <subdivision type="Subcommittee">
+                   <subdivision type="Subcommittee" subtype="B">
                       <name>SC</name>
                       <identifier>B 2</identifier>
                    </subdivision>
-                   <subdivision type="Workgroup">
+                   <subdivision type="Workgroup" subtype="C">
                       <name>WG</name>
                       <identifier>C 3</identifier>
                    </subdivision>
@@ -236,20 +236,20 @@ RSpec.describe Metanorma::Iso do
              </contributor>
              <contributor>
                 <role type="author">
-                   <description>Technical committee</description>
+                   <description>committee</description>
                 </role>
                 <organization>
                    <name>International Organization for Standardization</name>
-                   <subdivision type="Technical committee">
+                   <subdivision type="Technical committee" subtype="A1">
                       <name>TC1</name>
                       <identifier>A1 11</identifier>
                       <identifier type="full">A1 11/B1 21/C1 31</identifier>
                    </subdivision>
-                   <subdivision type="Subcommittee">
+                   <subdivision type="Subcommittee" subtype="B1">
                       <name>SC1</name>
                       <identifier>B1 21</identifier>
                    </subdivision>
-                   <subdivision type="Workgroup">
+                   <subdivision type="Workgroup" subtype="C1">
                       <name>WG1</name>
                       <identifier>C1 31</identifier>
                    </subdivision>
@@ -266,6 +266,18 @@ RSpec.describe Metanorma::Iso do
                 </organization>
              </contributor>
              <contributor>
+                <role type="author">
+                   <description>secretariat</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision type="Secretariat">
+                      <name>SECRETARIAT</name>
+                   </subdivision>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
                 <role type="publisher"/>
                 <organization>
                    <name>International Organization for Standardization</name>
@@ -274,20 +286,20 @@ RSpec.describe Metanorma::Iso do
              </contributor>
              <contributor>
                 <role type="authorizer">
-                   <description>Technical committee</description>
+                   <description>committee</description>
                 </role>
                 <organization>
                    <name>International Organization for Standardization</name>
-                   <subdivision type="Technical committee">
+                   <subdivision type="Technical committee" subtype="A">
                       <name>TC</name>
                       <identifier>A 1</identifier>
                       <identifier type="full">A 1/B 2/C 3</identifier>
                    </subdivision>
-                   <subdivision type="Subcommittee">
+                   <subdivision type="Subcommittee" subtype="B">
                       <name>SC</name>
                       <identifier>B 2</identifier>
                    </subdivision>
-                   <subdivision type="Workgroup">
+                   <subdivision type="Workgroup" subtype="C">
                       <name>WG</name>
                       <identifier>C 3</identifier>
                    </subdivision>
@@ -296,20 +308,20 @@ RSpec.describe Metanorma::Iso do
              </contributor>
              <contributor>
                 <role type="authorizer">
-                   <description>Technical committee</description>
+                   <description>committee</description>
                 </role>
                 <organization>
                    <name>International Organization for Standardization</name>
-                   <subdivision type="Technical committee">
+                   <subdivision type="Technical committee" subtype="A1">
                       <name>TC1</name>
                       <identifier>A1 11</identifier>
                       <identifier type="full">A1 11/B1 21/C1 31</identifier>
                    </subdivision>
-                   <subdivision type="Subcommittee">
+                   <subdivision type="Subcommittee" subtype="B1">
                       <name>SC1</name>
                       <identifier>B1 21</identifier>
                    </subdivision>
-                   <subdivision type="Workgroup">
+                   <subdivision type="Workgroup" subtype="C1">
                       <name>WG1</name>
                       <identifier>C1 31</identifier>
                    </subdivision>
