@@ -731,10 +731,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
               <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
               <status><stage abbreviation="CD">30</stage></status>
               <date type="published">2000</date>
-              <ext>
-                <editorialgroup>
-                </editorialgroup>
-              </ext>
+              <contributor><role><description>committee</description></role></contributor>
           </bibdata>
           <metanorma-extension>
           <semantic-metadata>
@@ -760,10 +757,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <stage abbreviation="CD" language="en">Committee draft</stage>
              </status>
              <date type="published">2000</date>
-             <ext>
-                <editorialgroup identifier="">
-                 </editorialgroup>
-             </ext>
+              <contributor><role><description>committee</description></role></contributor>
           </bibdata>
             <metanorma-extension>
                 <semantic-metadata>
@@ -837,11 +831,10 @@ RSpec.describe IsoDoc::Iso::Metadata do
           <bibdata type="standard">
               <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
               <status><stage abbreviation="CD">30</stage></status>
-              <ext>
-                <editorialgroup>
-                </editorialgroup>
-                <secretariat>BSI</secretariat>
-              </ext>
+              <contributor><role><description>committee</description></role></contributor>
+              <contributor>
+              <role><description>secretariat</description></role>
+              </contributor>
           </bibdata>
           <metanorma-extension>
           <semantic-metadata>
@@ -863,11 +856,10 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <stage abbreviation="CD" language="">30</stage>
                 <stage abbreviation="CD" language="en">Committee draft</stage>
              </status>
-             <ext>
-                <editorialgroup identifier="">
-                 </editorialgroup>
-                <secretariat>BSI</secretariat>
-             </ext>
+              <contributor><role><description>committee</description></role></contributor>
+              <contributor>
+              <role><description>secretariat</description></role>
+              </contributor>
           </bibdata>
             <metanorma-extension>
                 <semantic-metadata>
@@ -936,9 +928,9 @@ RSpec.describe IsoDoc::Iso::Metadata do
               <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
               <status><stage abbreviation="CD">30</stage></status>
               <date type="published">2000</date>
-              <ext>
-                <secretariat>BSI</secretariat>
-              </ext>
+              <contributor>
+              <role><description>secretariat</description></role>
+              </contributor>
           </bibdata>
           <metanorma-extension>
           <semantic-metadata>
@@ -961,9 +953,9 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <stage abbreviation="CD" language="en">Committee draft</stage>
              </status>
              <date type="published">2000</date>
-             <ext>
-                <secretariat>BSI</secretariat>
-             </ext>
+              <contributor>
+              <role><description>secretariat</description></role>
+              </contributor>
           </bibdata>
             <metanorma-extension>
                 <semantic-metadata>
@@ -1032,11 +1024,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
               <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
               <status><stage abbreviation="CD">30</stage></status>
               <date type="published">2000</date>
-              <ext>
-                <editorialgroup>
-                </editorialgroup>
-                <secretariat>BSI</secretariat>
-                </ext>
+              <contributor><role><description>secretariat</description></role></contributor>
           </bibdata>
           <sections>
             <clause>
@@ -1054,11 +1042,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <stage abbreviation="CD" language="en">Committee draft</stage>
              </status>
              <date type="published">2000</date>
-             <ext>
-                <editorialgroup identifier="">
-                 </editorialgroup>
-                <secretariat>BSI</secretariat>
-             </ext>
+              <contributor><role><description>secretariat</description></role></contributor>
           </bibdata>
           <preface>
              <clause type="toc" id="_" displayorder="1">
@@ -1101,11 +1085,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
           <bibdata type="standard">
               <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
               <status><stage abbreviation="CD">90</stage></status>
-              <ext>
-                <editorialgroup>
-                </editorialgroup>
-                <secretariat>BSI</secretariat>
-              </ext>
+              <contributor><role><description>secretariat</description></role></contributor>
           </bibdata>
           <sections>
             <clause>
@@ -1122,11 +1102,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
                 <stage abbreviation="CD" language="">90</stage>
                 <stage abbreviation="CD" language="en">Review</stage>
              </status>
-             <ext>
-                <editorialgroup identifier="">
-                 </editorialgroup>
-                <secretariat>BSI</secretariat>
-             </ext>
+              <contributor><role><description>secretariat</description></role></contributor>
           </bibdata>
           <preface>
              <clause type="toc" id="_" displayorder="1">

@@ -67,14 +67,6 @@
         </group>
       </element>
     </define>
-    <define name="editorialgroup">
-      <element name="editorialgroup">
-        <ref name="ISOProjectGroup"/>
-      </element>
-      <optional>
-        <ref name="approvalgroup"/>
-      </optional>
-    </define>
   </include>
   <define name="BibDataExtensionType" combine="interleave">
     <optional>
@@ -110,33 +102,6 @@ Used for legacy ISO documents</a:documentation>
   <define name="updates_document_type">
     <element name="updates-document-type">
       <ref name="DocumentType"/>
-    </element>
-  </define>
-  <define name="ISOProjectGroup">
-    <zeroOrMore>
-      <ref name="agency"/>
-    </zeroOrMore>
-    <oneOrMore>
-      <ref name="technical-committee"/>
-    </oneOrMore>
-    <zeroOrMore>
-      <ref name="subcommittee"/>
-    </zeroOrMore>
-    <zeroOrMore>
-      <ref name="workgroup"/>
-    </zeroOrMore>
-    <optional>
-      <ref name="secretariat"/>
-    </optional>
-  </define>
-  <define name="approvalgroup">
-    <element name="approvalgroup">
-      <ref name="ISOProjectGroup"/>
-    </element>
-  </define>
-  <define name="agency">
-    <element name="agency">
-      <text/>
     </element>
   </define>
   <define name="horizontal">
@@ -177,21 +142,6 @@ Used for legacy ISO documents</a:documentation>
   <define name="tc-documentnumber">
     <element name="tc-document-number">
       <data type="int"/>
-    </element>
-  </define>
-  <define name="subcommittee">
-    <element name="subcommittee">
-      <ref name="IsoWorkgroup"/>
-    </element>
-  </define>
-  <define name="workgroup">
-    <element name="workgroup">
-      <ref name="IsoWorkgroup"/>
-    </element>
-  </define>
-  <define name="secretariat">
-    <element name="secretariat">
-      <text/>
     </element>
   </define>
   <define name="stagename">

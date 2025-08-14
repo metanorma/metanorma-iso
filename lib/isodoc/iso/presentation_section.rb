@@ -15,9 +15,9 @@ module IsoDoc
 
       def warning_for_missing_metadata_create(docxml)
         ret = ""
-        docxml.at(ns("//bibdata/ext//secretariat")) or
+        docxml.at(ns("//bibdata//contributor/role[description = 'secretariat']")) or
           ret += "<p>Secretariat is missing.</p>"
-        docxml.at(ns("//bibdata/ext//editorialgroup")) or
+        docxml.at(ns("//bibdata//contributor/role[description = 'committee']")) or
           ret += "<p>Editorial groups are missing.</p>"
         docxml.at(ns("//bibdata/date[@type = 'published' or @type = 'issued' " \
                      "or @type = 'created']")) ||

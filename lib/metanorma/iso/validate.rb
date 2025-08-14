@@ -12,13 +12,17 @@ require "iev"
 module Metanorma
   module Iso
     class Converter < Standoc::Converter
+      COMMITTEE_XPATH = <<~XPATH.freeze
+        //contributor[role/description = 'committee']/organization/subdivision
+      XPATH
+
       def isosubgroup_validate(root)
-        root.xpath("//technical-committee/@type").each do |t|
+        root.xpath("#{COMMITTEE_XPATH}[@type = 'Technical committee']/@subtype").each do |t|
           %w{TC PC JTC JPC}.include?(t.text) or
             @log.add("Document Attributes", nil,
                      "invalid technical committee type #{t}")
         end
-        root.xpath("//subcommittee/@type").each do |t|
+        root.xpath("#{COMMITTEE_XPATH}[@type = 'Subcommittee']/@subtype").each do |t|
           %w{SC JSC}.include?(t.text) or
             @log.add("Document Attributes", nil,
                      "invalid subcommittee type #{t}")
@@ -60,12 +64,11 @@ module Metanorma
           prec = t.at("./preceding-sibling::text()[last()]")
           !prec.nil? && /\b(see|refer to)\p{Zs}*\Z/mi.match(prec) or next
           unless target = bibitemids[t["bibitemid"]]
-            #unless target = root.at("//bibitem[@anchor = '#{t['bibitemid']}']")
+            # unless target = root.at("//bibitem[@anchor = '#{t['bibitemid']}']")
             @log.add("Bibliography", t,
                      "'#{t} is not pointing to a real reference")
             next
           end
-          #target.at("./ancestor::references[@normative = 'true']") and
           target[:norm] and
             @log.add("Style", t,
                      "'see #{t}' is pointing to a normative reference")

@@ -234,26 +234,6 @@ RSpec.describe Metanorma::Iso do
           <ext>
              <doctype>standard</doctype>
              <flavor>iso</flavor>
-             <editorialgroup>
-                <agency>ISO</agency>
-                <technical-committee number="1" type="A">TC</technical-committee>
-                <technical-committee number="11" type="A1">TC1</technical-committee>
-                <subcommittee number="2" type="B">SC</subcommittee>
-                <subcommittee number="21" type="B1">SC1</subcommittee>
-                <workgroup number="3" type="C">WG</workgroup>
-                <workgroup number="31" type="C1">WG1</workgroup>
-                <secretariat>SECRETARIAT</secretariat>
-             </editorialgroup>
-             <approvalgroup>
-                <agency>ISO</agency>
-                <agency>IEC</agency>
-                <technical-committee number="1a" type="Aa">TCa</technical-committee>
-                <technical-committee number="11a" type="A1a">TC1a</technical-committee>
-                <subcommittee number="2a" type="Ba">SCa</subcommittee>
-                <subcommittee number="21a" type="B1a">SC1a</subcommittee>
-                <workgroup number="3a" type="Ca">WGa</workgroup>
-                <workgroup number="31a" type="C1a">WG1a</workgroup>
-             </approvalgroup>
              <structuredidentifier>
                 <project-number part="1">ISO 1000</project-number>
              </structuredidentifier>
@@ -445,19 +425,6 @@ RSpec.describe Metanorma::Iso do
           <ext>
              <doctype>technical-report</doctype>
              <flavor>iso</flavor>
-             <editorialgroup>
-                <agency>IEC</agency>
-                <agency>IETF</agency>
-                <agency>ISO</agency>
-                <subcommittee number="2" type="SC">Subcommitt</subcommittee>
-                <workgroup number="3" type="WG">Workg</workgroup>
-             </editorialgroup>
-             <approvalgroup>
-                <agency>ISO</agency>
-                <technical-committee number="1" type="TC">ApprovTechcom</technical-committee>
-                <subcommittee number="2" type="SC">ApprovSubcom</subcommittee>
-                <workgroup number="3" type="WG">ApprovWorkg</workgroup>
-             </approvalgroup>
              <structuredidentifier>
                 <project-number part="1" subpart="1">IEC/IETF/ISO 1000</project-number>
              </structuredidentifier>
@@ -554,13 +521,6 @@ RSpec.describe Metanorma::Iso do
         <ext>
           <doctype>technical-report</doctype>
                 <flavor>iso</flavor>
-          <editorialgroup>
-            <agency>ISO</agency>
-            <agency>IEC</agency>
-          </editorialgroup>
-          <approvalgroup>
-            <agency>ISO</agency>
-          </approvalgroup>
           <structuredidentifier>
             <project-number>ISO/IEC 1000</project-number>
           </structuredidentifier>
@@ -741,20 +701,6 @@ RSpec.describe Metanorma::Iso do
           <ext>
              <doctype>standard</doctype>
              <flavor>iso</flavor>
-             <editorialgroup>
-                <agency>ISO</agency>
-                <technical-committee number="62" type="TC">Electrical equipment in medical practice</technical-committee>
-                <technical-committee number="210" type="TC">Quality management and corresponding general aspects for medical devices</technical-committee>
-                <technical-committee type="TC">The committee</technical-committee>
-             </editorialgroup>
-             <approvalgroup>
-                <agency>ISO</agency>
-                <technical-committee number="62" type="TC">Electrical equipment in medical practice</technical-committee>
-                <technical-committee number="210" type="TC">Quality management and corresponding general aspects for medical devices</technical-committee>
-                <technical-committee type="TC">The committee</technical-committee>
-                <subcommittee number="62A" type="SC">Common aspects of electrical equipment used in medical practice</subcommittee>
-                <workgroup number="62A1" type="WG">Working group on defibulators</workgroup>
-             </approvalgroup>
              <structuredidentifier>
                 <project-number>ISO 1000</project-number>
              </structuredidentifier>
@@ -888,18 +834,6 @@ RSpec.describe Metanorma::Iso do
           <ext>
              <doctype>standard</doctype>
              <flavor>iso</flavor>
-             <editorialgroup>
-                <agency>ISO</agency>
-                <technical-committee number="1" type="Other">Techcomm</technical-committee>
-                <subcommittee number="2" type="Other">Subcommitt</subcommittee>
-                <workgroup number="3" type="Other">Workg</workgroup>
-             </editorialgroup>
-             <approvalgroup>
-                <agency>ISO</agency>
-                <technical-committee number="1" type="Other">ApprovTechcom</technical-committee>
-                <subcommittee number="2" type="Other">ApprovSubcom</subcommittee>
-                <workgroup number="3" type="Other">ApprovWorkg</workgroup>
-             </approvalgroup>
              <structuredidentifier>
                 <project-number>ISO 1000</project-number>
              </structuredidentifier>
@@ -1021,18 +955,6 @@ RSpec.describe Metanorma::Iso do
           <ext>
              <doctype>standard</doctype>
              <flavor>iso</flavor>
-             <editorialgroup>
-                <agency>ISO</agency>
-                <technical-committee number="1" type="Other"/>
-                <subcommittee number="2" type="Other"/>
-                <workgroup number="3" type="Other"/>
-             </editorialgroup>
-             <approvalgroup>
-                <agency>ISO</agency>
-                <technical-committee number="1" type="Other"/>
-                <subcommittee number="2" type="Other"/>
-                <workgroup number="3" type="Other"/>
-             </approvalgroup>
              <structuredidentifier>
                 <project-number>ISO 1000</project-number>
              </structuredidentifier>
@@ -1107,12 +1029,6 @@ RSpec.describe Metanorma::Iso do
         <ext>
           <doctype>technical-specification</doctype>
                 <flavor>iso</flavor>
-                      <editorialgroup>
-          <agency>ISO</agency>
-         </editorialgroup>
-         <approvalgroup>
-          <agency>ISO</agency>
-         </approvalgroup>
           <structuredidentifier>
             <project-number part='1' subpart='1'>ISO 1000</project-number>
           </structuredidentifier>
@@ -1313,12 +1229,6 @@ RSpec.describe Metanorma::Iso do
           <doctype>standard</doctype>
                 <flavor>iso</flavor>
           <horizontal>true</horizontal>
-                      <editorialgroup>
-         <agency>ISO</agency>
-        </editorialgroup>
-        <approvalgroup>
-         <agency>ISO</agency>
-        </approvalgroup>
           <structuredidentifier>
             <project-number part='1'>ISO 1000</project-number>
           </structuredidentifier>
@@ -1445,12 +1355,6 @@ RSpec.describe Metanorma::Iso do
          <ext>
            <doctype>this-is-a-doctype</doctype>
                 <flavor>iso</flavor>
-           <editorialgroup>
-             <agency>ISO</agency>
-           </editorialgroup>
-           <approvalgroup>
-             <agency>ISO</agency>
-           </approvalgroup>
            <structuredidentifier>
              <project-number part="1" subpart="1">SD 1000</project-number>
            </structuredidentifier>
@@ -1525,12 +1429,6 @@ RSpec.describe Metanorma::Iso do
                 <ext>
                   <doctype>international-standard</doctype>
                 <flavor>iso</flavor>
-                              <editorialgroup>
-           <agency>ISO</agency>
-          </editorialgroup>
-          <approvalgroup>
-           <agency>ISO</agency>
-          </approvalgroup>
                   <structuredidentifier>
                     <project-number>ISO 1000</project-number>
                   </structuredidentifier>
@@ -1603,12 +1501,6 @@ RSpec.describe Metanorma::Iso do
         <ext>
           <doctype>standard</doctype>
                 <flavor>iso</flavor>
-                      <editorialgroup>
-           <agency>ISO</agency>
-          </editorialgroup>
-          <approvalgroup>
-           <agency>ISO</agency>
-          </approvalgroup>
           <structuredidentifier>
             <project-number>ISO 1000</project-number>
           </structuredidentifier>
@@ -1681,12 +1573,6 @@ RSpec.describe Metanorma::Iso do
         <ext>
           <doctype>standard</doctype>
                 <flavor>iso</flavor>
-                      <editorialgroup>
-         <agency>ISO</agency>
-        </editorialgroup>
-        <approvalgroup>
-         <agency>ISO</agency>
-        </approvalgroup>
           <structuredidentifier>
             <project-number>ISO 1000</project-number>
           </structuredidentifier>
@@ -1758,12 +1644,6 @@ RSpec.describe Metanorma::Iso do
         <ext>
           <doctype>directive</doctype>
                 <flavor>iso</flavor>
-                      <editorialgroup>
-         <agency>ISO</agency>
-        </editorialgroup>
-        <approvalgroup>
-         <agency>ISO</agency>
-        </approvalgroup>
           <structuredidentifier>
             <project-number>ISO 1000</project-number>
           </structuredidentifier>
@@ -1962,12 +1842,6 @@ RSpec.describe Metanorma::Iso do
         <ext>
           <doctype>standard</doctype>
               <flavor>iso</flavor>
-          <editorialgroup>
-            <agency>ISO</agency>
-          </editorialgroup>
-          <approvalgroup>
-            <agency>ISO</agency>
-          </approvalgroup>
           <stagename>International Standard</stagename>
         </ext>
       </bibdata>
@@ -2038,12 +1912,6 @@ RSpec.describe Metanorma::Iso do
         <ext>
           <doctype>international-standard</doctype>
               <flavor>iso</flavor>
-          <editorialgroup>
-            <agency>CEN</agency>
-          </editorialgroup>
-          <approvalgroup>
-            <agency>ISO</agency>
-          </approvalgroup>
           <structuredidentifier>
             <project-number>CEN 31</project-number>
           </structuredidentifier>

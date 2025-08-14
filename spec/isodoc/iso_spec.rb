@@ -114,248 +114,87 @@ RSpec.describe IsoDoc::Iso do
   it "does not include IEV in references" do
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", <<~INPUT, true)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <preface>
-          <foreword id="A"><title>Foreword</title>
-            <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
-              <eref bibitemid="IEV">IEV</eref>
-              <eref bibitemid="ISO20483">ISO 20483</eref>
-            </p>
-          </foreword>
-        </preface>
-        <bibliography>
-          <references id="_normative_references" normative="true" obligation="informative">
-            <title>Normative References</title>
-            <bibitem id="IEV" type="standard">
-              <title format="text/plain" language="en" script="Latn">Electropedia: The World's Online Electrotechnical Vocabulary</title>
-              <uri type="src">http://www.electropedia.org</uri>
-              <docidentifier>IEV</docidentifier>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <name>International Electrotechnical Commission</name>
-                  <abbreviation>IEC</abbreviation>
-                  <uri>www.iec.ch</uri>
-                </organization>
-              </contributor>
-              <language>en</language>
-              <language>fr</language>
-              <script>Latn</script>
-              <copyright>
-                <owner>
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <preface>
+            <foreword id="A"><title>Foreword</title>
+              <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
+                <eref bibitemid="IEV">IEV</eref>
+                <eref bibitemid="ISO20483">ISO 20483</eref>
+              </p>
+            </foreword>
+          </preface>
+          <bibliography>
+            <references id="_normative_references" normative="true" obligation="informative">
+              <title>Normative References</title>
+              <bibitem id="IEV" type="standard">
+                <title format="text/plain" language="en" script="Latn">Electropedia: The World's Online Electrotechnical Vocabulary</title>
+                <uri type="src">http://www.electropedia.org</uri>
+                <docidentifier>IEV</docidentifier>
+                <contributor>
+                  <role type="publisher"/>
                   <organization>
                     <name>International Electrotechnical Commission</name>
                     <abbreviation>IEC</abbreviation>
                     <uri>www.iec.ch</uri>
                   </organization>
-                </owner>
-              </copyright>
-              <relation type="updates">
-                <bibitem>
-                  <formattedref>IEC 60050</formattedref>
-                </bibitem>
-              </relation>
-            </bibitem>
-            <bibitem id="ISO20483" type="standard">
-              <formattedref format="text/plain"><em>Cereals and pulses</em></formattedref>
-              <docidentifier>ISO 20483</docidentifier>
-              <date type="published">
-                <from>2013</from>
-                <to>2014</to>
-              </date>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <name>International Organization for Standardization</name>
-                </organization>
-              </contributor>
-              <biblio-tag>ISO 20483,</biblio-tag>
-            </bibitem>
-          </references>
-        </bibliography>
-      </iso-standard>
-    INPUT
+                </contributor>
+                <language>en</language>
+                <language>fr</language>
+                <script>Latn</script>
+                <copyright>
+                  <owner>
+                    <organization>
+                      <name>International Electrotechnical Commission</name>
+                      <abbreviation>IEC</abbreviation>
+                      <uri>www.iec.ch</uri>
+                    </organization>
+                  </owner>
+                </copyright>
+                <relation type="updates">
+                  <bibitem>
+                    <formattedref>IEC 60050</formattedref>
+                  </bibitem>
+                </relation>
+              </bibitem>
+              <bibitem id="ISO20483" type="standard">
+                <formattedref format="text/plain"><em>Cereals and pulses</em></formattedref>
+                <docidentifier>ISO 20483</docidentifier>
+                <date type="published">
+                  <from>2013</from>
+                  <to>2014</to>
+                </date>
+                <contributor>
+                  <role type="publisher"/>
+                  <organization>
+                    <name>International Organization for Standardization</name>
+                  </organization>
+                </contributor>
+                <biblio-tag>ISO 20483,</biblio-tag>
+              </bibitem>
+            </references>
+          </bibliography>
+        </iso-standard>
+      INPUT
     output = IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)
     expect(Canon.format_xml(strip_guid(output)))
-     .to be_equivalent_to Canon.format_xml(strip_guid(<<~"OUTPUT"))
-      #{HTML_HDR}
-            <br/>
-            <div id="A">
-              <h1 class="ForewordTitle">Foreword</h1>
-              <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
-                <a href="http://www.electropedia.org">IEV</a>
-                <a href="#ISO20483">ISO 20483</a>
-              </p>
+      .to be_equivalent_to Canon.format_xml(strip_guid(<<~"OUTPUT"))
+        #{HTML_HDR}
+              <br/>
+              <div id="A">
+                <h1 class="ForewordTitle">Foreword</h1>
+                <p id="_f06fd0d1-a203-4f3d-a515-0bdba0f8d83f">
+                  <a href="http://www.electropedia.org">IEV</a>
+                  <a href="#ISO20483">ISO 20483</a>
+                </p>
+              </div>
+              <div>
+                <h1>1&#160; Normative References</h1>
+                <p id="ISO20483" class="NormRef">ISO 20483, <i>Cereals and pulses</i></p>
+              </div>
             </div>
-            <div>
-              <h1>1&#160; Normative References</h1>
-              <p id="ISO20483" class="NormRef">ISO 20483, <i>Cereals and pulses</i></p>
-            </div>
-          </div>
-        </body>
-      </html>
-    OUTPUT
-  end
-
-  it "inserts identifiers for editorial group and approval group" do
-    input = <<~INPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <bibdata>
-          <contributor>
-             <role type="author"/>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="author">
-                <description>Technical committee</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
-                   <name>TC</name>
-                   <subdivision type="Subcommittee">
-                      <name>SC</name>
-                      <subdivision type="Workgroup">
-                         <name>WG</name>
-                         <identifier>C 3</identifier>
-                      </subdivision>
-                      <identifier>B 2</identifier>
-                   </subdivision>
-                   <identifier>A 1</identifier>
-                </subdivision>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="author">
-                <description>Technical committee</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee">
-                   <name>TC1</name>
-                   <subdivision type="Subcommittee">
-                      <name>SC1</name>
-                      <subdivision type="Workgroup">
-                         <name>WG1</name>
-                         <identifier>C1 31</identifier>
-                      </subdivision>
-                      <identifier>B1 21</identifier>
-                   </subdivision>
-                   <identifier>A1 11</identifier>
-                </subdivision>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>Agency</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="publisher"/>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>Technical committee</description>
-             </role>
-             <organization>
-                <name>ISO/IEC</name>
-                <subdivision type="Technical committee">
-                   <name>TCa</name>
-                   <subdivision type="Subcommittee">
-                      <name>SCa</name>
-                      <subdivision type="Workgroup">
-                         <name>WGa</name>
-                         <identifier>Ca 3a</identifier>
-                      </subdivision>
-                      <identifier>Ba 2a</identifier>
-                   </subdivision>
-                   <identifier>Aa 1a</identifier>
-                </subdivision>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>Technical committee</description>
-             </role>
-             <organization>
-                <name>ISO/IEC</name>
-                <subdivision type="Technical committee">
-                   <name>TC1a</name>
-                   <subdivision type="Subcommittee">
-                      <name>SC1a</name>
-                      <subdivision type="Workgroup">
-                         <name>WG1a</name>
-                         <identifier>C1a 31a</identifier>
-                      </subdivision>
-                      <identifier>B1a 21a</identifier>
-                   </subdivision>
-                   <identifier>A1a 11a</identifier>
-                </subdivision>
-             </organization>
-          </contributor>
-          <ext>
-            <doctype>international-standard</doctype>
-            <horizontal>true</horizontal>
-            <editorialgroup>
-              <agency>ISO</agency>
-              <agency>IEC</agency>
-              <technical-committee type="A" number="34">Food products</technical-committee>
-              <subcommittee type="B" number="4">Cereals and pulses</subcommittee>
-              <workgroup type="C" number="3">Rice Group</workgroup>
-              <secretariat>GB</secretariat>
-            </editorialgroup>
-            <approvalgroup>
-              <agency>ISO</agency>
-              <technical-committee type="Other" number="34a">Food products A</technical-committee>
-              <subcommittee type="E" number="4a">Cereals and pulses A</subcommittee>
-              <workgroup type="F" number="3a">Rice Group A</workgroup>
-            </approvalgroup>
-            <stagename>Committee draft</stagename>
-          </ext>
-        </bibdata>
-      </iso-standard>
-    INPUT
-    presxml = <<~OUTPUT
-        <ext>
-          <doctype language=''>international-standard</doctype>
-          <doctype language='en'>International Standard</doctype>
-          <horizontal>true</horizontal>
-          <editorialgroup identifier='ISO/IEC/A 34/B 4/C 3'>
-              <agency>ISO</agency>
-              <agency>IEC</agency>
-            <technical-committee type='A' number='34'>Food products</technical-committee>
-            <subcommittee type='B' number='4'>Cereals and pulses</subcommittee>
-            <workgroup type='C' number='3'>Rice Group</workgroup>
-            <secretariat>GB</secretariat>
-          </editorialgroup>
-          <approvalgroup identifier='ISO/34a/E 4a/F 3a'>
-              <agency>ISO</agency>
-            <technical-committee type='Other' number='34a'>Food products A</technical-committee>
-            <subcommittee type='E' number='4a'>Cereals and pulses A</subcommittee>
-            <workgroup type='F' number='3a'>Rice Group A</workgroup>
-          </approvalgroup>
-          <stagename>Committee draft</stagename>
-        </ext>
-    OUTPUT
-    expect(Canon.format_xml(Nokogiri::XML(
-      IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true),
-    )
-      .at("//xmlns:ext").to_xml))
-      .to be_equivalent_to Canon.format_xml(presxml)
+          </body>
+        </html>
+      OUTPUT
   end
 end
