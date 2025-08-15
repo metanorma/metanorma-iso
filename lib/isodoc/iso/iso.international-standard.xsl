@@ -4745,6 +4745,8 @@
 
 			<xsl:call-template name="sections_element_style"/>
 
+			<xsl:call-template name="addTagElementT"/>
+
 			<xsl:if test="$layoutVersion = '1951' and $revision_date_num &gt;= 19680101">
 				<xsl:attribute name="space-before">6pt</xsl:attribute>
 				<xsl:if test="self::mn:introduction">
@@ -18479,6 +18481,7 @@
 		<xsl:call-template name="setNamedDestination"/>
 		<fo:block>
 			<xsl:attribute name="role">Sect</xsl:attribute>
+			<xsl:call-template name="addTagElementT"/>
 			<xsl:call-template name="setId"/>
 			<xsl:call-template name="addReviewHelper"/>
 			<xsl:apply-templates/>
@@ -18541,6 +18544,7 @@
 
 				<fo:block id="{@id}">
 					<xsl:attribute name="role">Sect</xsl:attribute>
+					<xsl:call-template name="addTagElementT"/>
 
 					<xsl:call-template name="setBlockSpanAll"/>
 
@@ -18660,6 +18664,28 @@
 	<!-- for correct rendering combining chars, added in mode="update_xml_step2" -->
 	<xsl:template match="*[local-name() = 'lang_none']">
 		<fo:inline xml:lang="none"><xsl:value-of select="."/></fo:inline>
+	</xsl:template>
+
+	<xsl:template name="addTagElementT">
+		<xsl:variable name="title_">
+			<xsl:apply-templates select="mn:fmt-title"/>
+		</xsl:variable>
+		<xsl:variable name="title__">
+			<xsl:for-each select="xalan:nodeset($title_)/*/node()">
+				<xsl:choose>
+					<xsl:when test="self::text()"><xsl:text> </xsl:text><xsl:value-of select="."/><xsl:text> </xsl:text></xsl:when>
+					<xsl:otherwise><xsl:text> </xsl:text><xsl:copy-of select="."/><xsl:text> </xsl:text></xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="title" select="normalize-space($title__)"/>
+		<xsl:if test="$title != ''">
+			<xsl:attribute name="fox:title">
+				<xsl:if test="ancestor::mn:sections">
+					<xsl:text>Section </xsl:text>
+				</xsl:if>
+				<xsl:value-of select="$title"/></xsl:attribute>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:template name="replaceChar">
