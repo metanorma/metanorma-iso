@@ -7652,6 +7652,7 @@
 		<xsl:if test="contains(@id, 'address') or contains(normalize-space(), 'Tel:') or contains(normalize-space(), 'Phone:')">
 			<xsl:attribute name="margin-left">4.5mm</xsl:attribute>
 		</xsl:if>
+
 	</xsl:template>
 
 	<xsl:attribute-set name="license-statement-style">
@@ -7666,6 +7667,10 @@
 		<xsl:attribute name="margin-left">1.5mm</xsl:attribute>
 		<xsl:attribute name="margin-right">1.5mm</xsl:attribute>
 	</xsl:attribute-set> <!-- license-statement-p-style -->
+
+	<xsl:template name="refine_license-statement-p-style">
+
+	</xsl:template>
 
 	<xsl:attribute-set name="legal-statement-style">
 	</xsl:attribute-set> <!-- legal-statement-style -->
