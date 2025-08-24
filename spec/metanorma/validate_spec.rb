@@ -613,6 +613,7 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "warns of nested subscripts" do
+    # Test 2-level nesting (should warn with "may contain nested subscripts")
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
 
@@ -621,8 +622,38 @@ RSpec.describe Metanorma::Iso do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include("may contain nested subscripts (max 3 levels allowed)")
+      .to include("may contain nested subscripts")
+    expect(File.read("test.err.html"))
+      .not_to include("no more than 3 levels of nesting allowed")
 
+    # Test 3-level nesting (should warn with "no more than 3 levels of nesting allowed")
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      +++Y<sub>n<sub>1<sub>2</sub></sub></sub>+++
+
+    INPUT
+    expect(File.read("test.err.html"))
+      .to include("may contain nested subscripts")
+    expect(File.read("test.err.html"))
+      .not_to include("no more than 3 levels of nesting allowed")
+
+
+    # Test 3-level nesting (should warn with "no more than 3 levels of nesting allowed")
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      +++Y<sub>n<sub>1<sub>2<sub>3</sub></sub></sub></sub>+++
+
+    INPUT
+    expect(File.read("test.err.html"))
+      .not_to include("may contain nested subscripts")
+     expect(File.read("test.err.html"))
+      .to include("no more than 3 levels of subscript nesting allowed")
+
+    # Test MathML 2-level nesting
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
 
@@ -634,8 +665,11 @@ RSpec.describe Metanorma::Iso do
 
     INPUT
     expect(File.read("test.err.html"))
-      .to include("may contain nested subscripts (max 3 levels allowed)")
+      .to include("may contain nested subscripts")
+    expect(File.read("test.err.html"))
+      .not_to include("no more than 3 levels of nesting allowed")
 
+    # Test single level subscript (should not warn)
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
 
@@ -643,6 +677,20 @@ RSpec.describe Metanorma::Iso do
       +++Y<sub>n</sub>+++
     INPUT
     expect(File.read("test.err.html"))
-      .not_to include("may contain nested subscripts (max 3 levels allowed)")
+      .not_to include("may contain nested subscripts")
+    expect(File.read("test.err.html"))
+      .not_to include("no more than 3 levels of nesting allowed")
+
+    # Test that nested subs don't trigger warnings on inner elements
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      +++Y<sub>n<sub>1<sub>2<sub>3</sub></sub></sub></sub>+++
+    INPUT
+    # Should only have one warning (from the topmost sub)
+    content = File.read("test.err.html")
+    warning_count = content.scan(/no more than 3 levels of subscript nesting allowed/).length
+    expect(warning_count).to eq(1)
   end
 end
