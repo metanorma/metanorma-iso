@@ -12,13 +12,11 @@ module Metanorma
       end
 
       def metadata_author(node, xml)
-        org_contributor(node, xml,
-                        { source: ["publisher", "pub"], role: "author",
-                          default: default_publisher })
-        committee_contributors(node, xml, default_publisher,
-                               { approval: false })
+        super
         secretariat_contributor(node, xml, default_publisher)
       end
+
+      def personal_author(node, xml); end
 
       def org_organization(node, xml, org)
         if org[:committee]
