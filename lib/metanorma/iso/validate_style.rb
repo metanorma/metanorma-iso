@@ -94,17 +94,6 @@ module Metanorma
         style_problem_words(node, text)
       end
 
-      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-quantity
-      def style_subscript(node)
-        warning = "may contain nested subscripts (max 3 levels allowed)"
-        node.xpath(".//sub[.//sub]").each do |x|
-          style_warning(node, warning, x.to_xml)
-        end
-        node.xpath(".//m:msub[.//m:msub]", "m" => MATHML_NS).each do |x|
-          style_warning(node, warning, x.to_xml)
-        end
-      end
-
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-need
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-might
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-family
@@ -118,44 +107,6 @@ module Metanorma
           style_warning(node, "dispreferred spelling", r,
                         display: false)
         style_regex(/\b(?<num>billions?)\b/i, "ambiguous number", node, text)
-      end
-
-      # ISO/IEC DIR 2, 9.1
-      # ISO/IEC DIR 2, Table B.1
-      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-n-numbers
-      def style_number(node, text)
-        style_number_grouping(node, text)
-        style_regex(/(?:^|\p{Zs})(?<num>[0-9]+\.[0-9]+)(?!\.[0-9])/i,
-                    "possible decimal point: mark up numbers with stem:[]", node, text)
-        @lang == "en" and style_regex(/\b(?<num>billions?)\b/i,
-                                      "ambiguous number", node, text)
-        style_regex(/(?:^|\p{Zs})(?<num>-[0-9][0-9,.]*)/i,
-                    "hyphen instead of minus sign U+2212", node, text)
-        @novalid_number = true
-      end
-
-      def style_number_grouping(node, text)
-        if @validate_years
-          style_two_regex_not_prev(
-            node, text, /^(?<num>-?[0-9]{4,}[,0-9]*)\Z/,
-            %r{\b(ISO|IEC|IEEE|(in|January|February|March|April|May|June|August|September|October|November|December)\b)\Z},
-            "number not broken up in threes: mark up numbers with stem:[]"
-          )
-        else
-          style_two_regex_not_prev(
-            node, text, /^(?<num>-?(?:[0-9]{5,}[,0-9]*|[03-9]\d\d\d|1[0-8]\d\d|2[1-9]\d\d|20[5-9]\d))\Z/,
-            %r{\b(ISO|IEC|IEEE|\b)\Z},
-            "number not broken up in threes: mark up numbers with stem:[]"
-          )
-        end
-      end
-
-      # ISO/IEC DIR 2, 9.2.1
-      def style_percent(node, text)
-        style_regex(/\b(?<num>[0-9.,]+%)/,
-                    "no space before percent sign", node, text)
-        style_regex(/\b(?<num>[0-9.,]+ \u00b1 [0-9,.]+ %)/,
-                    "unbracketed tolerance before percent sign", node, text)
       end
 
       # ISO/IEC DIR 2, 8.4
@@ -172,29 +123,6 @@ module Metanorma
       SI_UNIT = "(m|cm|mm|km|μm|nm|g|kg|mgmol|cd|rad|sr|Hz|Hz|MHz|Pa|hPa|kJ|" \
                 "V|kV|W|MW|kW|F|μF|Ω|Wb|°C|lm|lx|Bq|Gy|Sv|kat|l|t|eV|u|Np|Bd|" \
                 "bit|kB|MB|Hart|nat|Sh|var)".freeze
-
-      # ISO/IEC DIR 2, 9.3
-      def style_units(node, text)
-        style_regex(/\b(?<num>[0-9][0-9,]*\p{Zs}+[\u00b0\u2032\u2033])/,
-                    "space between number and degrees/minutes/seconds",
-                    node, text)
-        style_regex(/\b(?<num>[0-9][0-9,]*#{SI_UNIT})\b/o,
-                    "no space between number and SI unit", node, text)
-        style_non_std_units(node, text)
-      end
-
-      NONSTD_UNITS = {
-        sec: "s", mins: "min", hrs: "h", hr: "h", cc: "cm^3",
-        lit: "l", amp: "A", amps: "A", rpm: "r/min"
-      }.freeze
-
-      # ISO/IEC DIR 2, 9.3
-      def style_non_std_units(node, text)
-        NONSTD_UNITS.each do |k, v|
-          style_regex(/\b(?<num>[0-9][0-9,]*\p{Zs}+#{k})\b/,
-                      "non-standard unit (should be #{v})", node, text)
-        end
-      end
 
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-and
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-andor

@@ -1,5 +1,6 @@
 require "metanorma-standoc"
 require_relative "validate_style"
+require_relative "validate_numeric"
 require_relative "validate_requirements"
 require_relative "validate_section"
 require_relative "validate_title"
