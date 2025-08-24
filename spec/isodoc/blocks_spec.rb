@@ -1553,7 +1553,7 @@ RSpec.describe IsoDoc do
                       Split-it-right
                       <em>sample</em>
                       divider
-                      <fn reference="1" original-reference="1" target="_" original-id="_">
+                      <fn reference="1" original-id="_" original-reference="1" id="_" target="_">
                          <p>X</p>
                          <fmt-fn-label>
                             <span class="fmt-caption-label">
@@ -1771,7 +1771,7 @@ RSpec.describe IsoDoc do
           <bibliography>
              </bibliography>
           <fmt-footnote-container>
-             <fmt-fn-body id="_" target="_" reference="1">
+             <fmt-fn-body id="_" target="" reference="1">
                 <semx element="fn" source="_">
                    <p>
                       <fmt-fn-label>
