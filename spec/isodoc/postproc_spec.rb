@@ -345,7 +345,7 @@ RSpec.describe IsoDoc do
                       </clause>
                     </clause>
                   </sections>
-                  <annex id="AA" displayorder="2"><fmt-title id="_">Annex A<tab/>Annex First</fmt-title></annex>
+                  <annex id="AA" displayorder="2"><fmt-title id="_">Annex First</fmt-title></annex>
                 </iso-standard>
       INPUT
 
