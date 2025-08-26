@@ -123,7 +123,9 @@ module IsoDoc
 
       def authority_copyright_style(auth)
         auth.xpath(".//p[not(@class)]").each { |p| p["class"] = "zzCopyright" }
-        auth.xpath(".//p[@class = 'Tablebody']").each { |p| p["class"] = "zzCopyright" }
+        auth.xpath(".//p[@class = 'Tablebody']").each do |p|
+          p["class"] = "zzCopyright"
+        end
         auth.xpath(".//p[@id = 'boilerplate-message']").each do |p|
           p["class"] = "zzCopyright1"
         end
@@ -163,13 +165,26 @@ module IsoDoc
         toc = ""
         s = docxml.at("//div[@class = 'TOC']") and toc = to_xml(s.children)
         xpath = (1..level).each.map { |i| "//h#{i}" }.join (" | ")
+        annexid = 0
         docxml.xpath(xpath).each do |h|
           x = ""
-          x = @anchor[h.parent["id"]][:xref] if h["class"] == "ANNEX"
+          if %w(ANNEX Annex).include?(h["class"])
+            x, annexid = annex_toc(annexid)
+          end
           toc += word_toc_entry(h.name[1].to_i, x + header_strip(h))
         end
         toc.sub(/(<p class="MsoToc1">)/,
                 %{\\1#{word_toc_preface(level)}}) + WORD_TOC_SUFFIX1
+      end
+
+      # do not use in IEC, BSI, where Word does not use list to generate
+      # "Annex A"
+      def annex_toc(annexid)
+        instance_of?(IsoDoc::Iso::WordConvert) ||
+          instance_of?(WordDISConvert) or return ""
+        annexid += 1
+        x = "#{@i18n.annex} #{('@'.ord + annexid).chr} "
+        [x, annexid]
       end
     end
   end
