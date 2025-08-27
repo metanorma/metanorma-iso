@@ -16236,7 +16236,7 @@
 	</xsl:template> <!-- references[not(@normative='true')]/bibitem -->
 
 	<!-- bibitem's notes will be processing in 'processBibitemFollowingNotes' -->
-	<xsl:template match="mn:references[not(@normative='true')]/mn:note" priority="2"/>
+	<xsl:template match="mn:references/mn:note" priority="2"/> <!-- [not(@normative='true')] -->
 
 	<xsl:template name="insertListItem_Bibitem">
 		<xsl:choose>
@@ -16283,6 +16283,10 @@
 			<xsl:with-param name="biblio_tag_part" select="$biblio_tag_part"/>
 		</xsl:apply-templates>
 		<xsl:apply-templates select="mn:formattedref"/>
+				<xsl:if test="ancestor::mn:references[@normative = 'true']">
+					<xsl:call-template name="processBibitemFollowingNotes"/>
+				</xsl:if>
+
 		<!-- end bibitem processing -->
 
 		<!-- <xsl:call-template name="processBibliographyNote"/> -->
