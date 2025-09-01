@@ -123,6 +123,10 @@ the type attribute defaults to `review` for reviews</a:documentation>
           <a:documentation>Notes whose scope is the current block</a:documentation>
         </ref>
       </zeroOrMore>
+      <ref name="BlockSource">
+        <a:documentation>Bibliographic source for the information in the list.
+Sources are currently only rendered in metanorma-plateau</a:documentation>
+      </ref>
     </define>
     <define name="OlBody">
       <optional>
@@ -140,6 +144,10 @@ the type attribute defaults to `review` for reviews</a:documentation>
           <a:documentation>Notes whose scope is the current block</a:documentation>
         </ref>
       </zeroOrMore>
+      <ref name="BlockSource">
+        <a:documentation>Bibliographic source for the information in the list.
+Sources are currently only rendered in metanorma-plateau</a:documentation>
+      </ref>
     </define>
     <define name="OlAttributes">
       <a:documentation>NOTE: `start` attribute is not included by default, because of problems it raises with DOC output</a:documentation>
@@ -188,6 +196,10 @@ the type attribute defaults to `review` for reviews</a:documentation>
           <a:documentation>Notes whose scope is the current block</a:documentation>
         </ref>
       </zeroOrMore>
+      <ref name="BlockSource">
+        <a:documentation>Bibliographic source for the information in the list.
+Sources are currently only rendered in metanorma-plateau</a:documentation>
+      </ref>
     </define>
     <define name="dt">
       <element name="dt">
@@ -870,6 +882,12 @@ titlecase, or lowercase</a:documentation>
         </choice>
       </oneOrMore>
     </element>
+  </define>
+  <define name="ParagraphFnBody" combine="interleave">
+    <ref name="BlockSource">
+      <a:documentation>Bibliographic source for the information in the paragraph
+parargaph sources are currently only rendered in metanorma-plateau</a:documentation>
+    </ref>
   </define>
   <define name="BasicBlock" combine="choice">
     <ref name="columnbreak"/>
