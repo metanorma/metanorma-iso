@@ -10624,7 +10624,7 @@
 
 			</fo:block>
 
-			<!-- <xsl:if test="$namespace = 'bsi' or $namespace = 'iec' or $namespace = 'iso'"> -->
+			<!-- <xsl:if test="$namespace = 'bsi' or $namespace = 'pas' or $namespace = 'iec' or $namespace = 'iso'"> -->
 			<xsl:if test="$continued = 'true'">
 
 				<!-- to prevent the error 'THead element may contain only TR elements' -->
