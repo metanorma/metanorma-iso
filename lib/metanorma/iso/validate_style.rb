@@ -119,11 +119,6 @@ module Metanorma
                     "language-specific abbreviation", node, text)
       end
 
-      # leaving out as problematic: N J K C S T H h d B o E
-      SI_UNIT = "(m|cm|mm|km|μm|nm|g|kg|mgmol|cd|rad|sr|Hz|Hz|MHz|Pa|hPa|kJ|" \
-                "V|kV|W|MW|kW|F|μF|Ω|Wb|°C|lm|lx|Bq|Gy|Sv|kat|l|t|eV|u|Np|Bd|" \
-                "bit|kB|MB|Hart|nat|Sh|var)".freeze
-
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-and
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-andor
       def style_punct(node, text)
