@@ -18999,6 +18999,10 @@
 		<xsl:value-of select="java:replaceAll(java:java.lang.String.new(.),' ',' ')"/>
 	</xsl:template>
 
+	<!-- for case when update_xml_step1 (common.updatexml.xsl) doesn't apply when $table_if = 'true' -->
+	<xsl:template match="mn:title[following-sibling::*[1][self::mn:fmt-title]]"/>
+	<xsl:template match="mn:name[following-sibling::*[1][self::mn:fmt-name]]"/>
+
 	<!-- insert fo:basic-link, if external-destination or internal-destination is non-empty, otherwise insert fo:inline -->
 	<xsl:template name="insert_basic_link">
 		<xsl:param name="element"/>
