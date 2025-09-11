@@ -18891,7 +18891,7 @@
 	<!-- main sections -->
 	<xsl:template match="/*/mn:sections/*" name="sections_node" priority="2">
 		<xsl:call-template name="setNamedDestination"/>
-		<fo:block>
+		<fo:block role="Sect">
 			<xsl:call-template name="setId"/>
 
 			<xsl:call-template name="sections_element_style"/>
