@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-<!-- VERSION v2.1.2 -->
+<!-- VERSION v2.1.3 -->
 
   <!--
     ALERT: cannot have root comments, because of https://github.com/metanorma/metanorma/issues/437
@@ -455,14 +455,7 @@ normative or informative references, some split references into sections organiz
           </ref>
         </zeroOrMore>
         <zeroOrMore>
-          <ref name="doc_bibitem">
-            <a:documentation>Bibliographic item cited in the document</a:documentation>
-          </ref>
-          <zeroOrMore>
-            <ref name="note">
-              <a:documentation>Annotation of the bibliographic item</a:documentation>
-            </ref>
-          </zeroOrMore>
+          <ref name="ReferenceEntry"/>
         </zeroOrMore>
         <zeroOrMore>
           <ref name="references">
@@ -604,18 +597,21 @@ gives an explicit page orientation</a:documentation>
         </element>
       </optional>
     </define>
+    <define name="FnAttributes">
+      <ref name="RequiredId"/>
+      <optional>
+        <attribute name="hiddenref">
+          <a:documentation>If true, number the footnote as normal, but suppress display of the footnote reference in the document body.
+This is done if the footnote reference is already presented in some other form, e.g. within a figure image.</a:documentation>
+          <data type="boolean"/>
+        </attribute>
+      </optional>
+      <attribute name="reference">
+        <a:documentation>The number of the footnote, used to identify it visually</a:documentation>
+      </attribute>
+    </define>
   </include>
   <!-- end overrides -->
-  <define name="FnAttributes" combine="interleave">
-    <ref name="RequiredId"/>
-    <optional>
-      <attribute name="hiddenref">
-        <a:documentation>If true, number the footnote as normal, but suppress display of the footnote reference in the document body.
-This is done if the footnote reference is already presented in some other form, e.g. within a figure image.</a:documentation>
-        <data type="boolean"/>
-      </attribute>
-    </optional>
-  </define>
   <define name="TdAttributes" combine="interleave">
     <ref name="RequiredId"/>
     <optional>
@@ -852,6 +848,17 @@ titlecase, or lowercase</a:documentation>
       <value>normative</value>
       <value>informative</value>
     </choice>
+  </define>
+  <define name="ReferenceEntry">
+    <a:documentation>Entry in bibliography</a:documentation>
+    <ref name="doc_bibitem">
+      <a:documentation>Bibliographic item cited in the document</a:documentation>
+    </ref>
+    <zeroOrMore>
+      <ref name="note">
+        <a:documentation>Annotation of the bibliographic item</a:documentation>
+      </ref>
+    </zeroOrMore>
   </define>
   <define name="doc_bibitem">
     <a:documentation>Standardisation document representation of bibliographic entry</a:documentation>
