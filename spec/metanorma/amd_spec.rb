@@ -188,16 +188,16 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
           <bibdata type="standard">
-             <title language="en" format="text/plain" type="main">Introduction — Main Title — Title — Title Part — Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
-             <title language="en" format="text/plain" type="title-intro">Introduction</title>
-             <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
-             <title language="en" format="text/plain" type="title-part">Title Part</title>
-             <title language="en" format="text/plain" type="title-amd">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
-             <title language="fr" format="text/plain" type="main">Introduction Française — Titre Principal — Part du Titre — Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
-             <title language="fr" format="text/plain" type="title-intro">Introduction Française</title>
-             <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
-             <title language="fr" format="text/plain" type="title-part">Part du Titre</title>
-             <title language="fr" format="text/plain" type="title-amd">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+             <title language="en" type="main">Introduction — Main Title — Title — Title Part — Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+             <title language="en" type="title-intro">Introduction</title>
+             <title language="en" type="title-main">Main Title — Title</title>
+             <title language="en" type="title-part">Title Part</title>
+             <title language="en" type="title-amd">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+             <title language="fr" type="main">Introduction Française — Titre Principal — Part du Titre — Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+             <title language="fr" type="title-intro">Introduction Française</title>
+             <title language="fr" type="title-main">Titre Principal</title>
+             <title language="fr" type="title-part">Part du Titre</title>
+             <title language="fr" type="title-amd">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
              <docidentifier type="ISO" primary="true">ISO 17301-1:2016/NP Amd 1.3:2017</docidentifier>
              <docidentifier type="iso-reference">ISO 17301-1:2016/NP Amd 1.3:2017(E)</docidentifier>
              <docidentifier type="URN">urn:iso:std:iso:17301:-1:ed-1:stage-10.20:amd:2017:v1</docidentifier>
@@ -395,10 +395,10 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
-          <title language="en" format="text/plain" type="main">Main Title — Title</title>
-          <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
-          <title language="fr" format="text/plain" type="main">Titre Principal</title>
-          <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
+          <title language="en" type="main">Main Title — Title</title>
+          <title language="en" type="title-main">Main Title — Title</title>
+          <title language="fr" type="main">Titre Principal</title>
+          <title language="fr" type="title-main">Titre Principal</title>
           <docidentifier type="ISO" primary="true">ISO 17301-1:2016/CD Amd 1:2017</docidentifier>
              <docidentifier type="iso-reference">ISO 17301-1:2016/CD Amd 1:2017(E)</docidentifier>
              <docidentifier type="URN">urn:iso:std:iso:17301:-1:ed-1:stage-30.00:amd:2017:v1</docidentifier>
@@ -866,12 +866,12 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
-             <title language="en" format="text/plain" type="main">Rice — Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
-             <title language="en" format="text/plain" type="title-main">Rice</title>
-             <title language="en" format="text/plain" type="title-add">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
-             <title language="fr" format="text/plain" type="main">Riz — Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
-             <title language="fr" format="text/plain" type="title-main">Riz</title>
-             <title language="fr" format="text/plain" type="title-add">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+             <title language="en" type="main">Rice — Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+             <title language="en" type="title-main">Rice</title>
+             <title language="en" type="title-add">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+             <title language="fr" type="main">Riz — Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+             <title language="fr" type="title-main">Riz</title>
+             <title language="fr" type="title-add">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Add 3:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Add 3:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:sup:iso:#{Date.today.year}:v3</docidentifier>

@@ -13,7 +13,7 @@ RSpec.describe Metanorma::Standoc do
     output = <<~OUTPUT
       <metanorma xmlns='https://www.metanorma.org/ns/standoc' type='semantic' version='#{Metanorma::Standoc::VERSION}' flavor="standoc">
        <bibdata type='standard'>
-         <title language='en' format='text/plain'>Document title</title>
+         <title language='en' type='main'>Document title</title>
          <language>en</language>
          <script>Latn</script>
          <status>
@@ -28,19 +28,19 @@ RSpec.describe Metanorma::Standoc do
          </ext>
                     <relation type='derivedFrom'>
              <bibitem>
-               <title language='en' format='text/plain' type='main'>
+               <title language='en' type='main'>
                  Medical devices — Quality management systems — Requirements for
                  regulatory purposes
                </title>
-               <title language='en' format='text/plain' type='title-main'>
+               <title language='en' type='title-main'>
                  Medical devices — Quality management systems — Requirements for
                  regulatory purposes
                </title>
-               <title language='fr' format='text/plain' type='main'>
+               <title language='fr' type='main'>
                  Dispositifs médicaux — Systèmes de management de la qualité —
                  Exigences à des fins réglementaires
                </title>
-               <title language='fr' format='text/plain' type='title-main'>
+               <title language='fr' type='title-main'>
                  Dispositifs médicaux — Systèmes de management de la qualité —
                  Exigences à des fins réglementaires
                </title>

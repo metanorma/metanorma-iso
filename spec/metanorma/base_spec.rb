@@ -73,14 +73,14 @@ RSpec.describe Metanorma::Iso do
     INPUT
     output = <<~OUTPUT
       <bibdata type="standard">
-        <title format="text/plain" language="en" type="main">Introduction — Main Title — Title — Title Part</title>
-        <title format="text/plain" language="en" type="title-intro">Introduction</title>
-        <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
-        <title format="text/plain" language="en" type="title-part">Title Part</title>
-        <title format="text/plain" language="fr" type="main">Introduction Française — Titre Principal — Part du Titre</title>
-        <title format="text/plain" language="fr" type="title-intro">Introduction Française</title>
-        <title format="text/plain" language="fr" type="title-main">Titre Principal</title>
-        <title format="text/plain" language="fr" type="title-part">Part du Titre</title>
+        <title language="en" type="main">Introduction — Main Title — Title — Title Part</title>
+        <title language="en" type="title-intro">Introduction</title>
+        <title language="en" type="title-main">Main Title — Title</title>
+        <title language="en" type="title-part">Title Part</title>
+        <title language="fr" type="main">Introduction Française — Titre Principal — Part du Titre</title>
+        <title language="fr" type="title-intro">Introduction Française</title>
+        <title language="fr" type="title-main">Titre Principal</title>
+        <title language="fr" type="title-part">Part du Titre</title>
         <docidentifier type="ISO" primary="true">ISO/WD 1000-1.3:2000</docidentifier>
         <docidentifier type="iso-reference">ISO/WD 1000-1.3:2000(E)</docidentifier>
         <docidentifier type='URN'>urn:iso:std:iso:1000:-1:stage-20.20.v3:en</docidentifier>
@@ -293,12 +293,12 @@ RSpec.describe Metanorma::Iso do
     INPUT
     output = <<~OUTPUT
        <bibdata type="standard">
-          <title language="en" format="text/plain" type="main">Main Title — Title — Title Complement</title>
-          <title language="en" format="text/plain" type="title-main">Main Title — Title</title>
-          <title language="en" format="text/plain" type="title-complementary">Title Complement</title>
-          <title language="fr" format="text/plain" type="main">Titre Principal — Complement du Titre</title>
-          <title language="fr" format="text/plain" type="title-main">Titre Principal</title>
-          <title language="fr" format="text/plain" type="title-complementary">Complement du Titre</title>
+          <title language="en" type="main">Main Title — Title — Title Complement</title>
+          <title language="en" type="title-main">Main Title — Title</title>
+          <title language="en" type="title-complementary">Title Complement</title>
+          <title language="fr" type="main">Titre Principal — Complement du Titre</title>
+          <title language="fr" type="title-main">Titre Principal</title>
+          <title language="fr" type="title-complementary">Complement du Titre</title>
           <docidentifier type="ISO" primary="true">IEC/IETF/ISO TR 1000-1-1:2001</docidentifier>
           <docidentifier type="iso-reference">IEC/IETF/ISO TR 1000-1-1:2001()</docidentifier>
           <docidentifier type="URN">urn:iso:std:iec-ietf-iso:tr:1000:-1-1:stage-60.60:el</docidentifier>
@@ -1157,27 +1157,27 @@ RSpec.describe Metanorma::Iso do
     INPUT
     output = <<~OUTPUT
       <bibdata type='standard'>
-        <title language='en' format='text/plain' type='main'>
+        <title language='en' type='main'>
           Introduction&#8201;&#8212;&#8201;Main
           Title&#8201;&#8212;&#8201;Title&#8201;&#8212;&#8201;Title Part
         </title>
-        <title language='en' format='text/plain' type='title-intro'>Introduction</title>
-        <title language='en' format='text/plain' type='title-main'>Main Title&#8201;&#8212;&#8201;Title</title>
-        <title language='en' format='text/plain' type='title-part'>Title Part</title>
-        <title language='ru' format='text/plain' type='main'>
+        <title language='en' type='title-intro'>Introduction</title>
+        <title language='en' type='title-main'>Main Title&#8201;&#8212;&#8201;Title</title>
+        <title language='en' type='title-part'>Title Part</title>
+        <title language='ru' type='main'>
           Introdukcija Russkaja&#8201;&#8212;&#8201;Titel
           Principalnyj&#8201;&#8212;&#8201;Partija Titel
         </title>
-        <title language='ru' format='text/plain' type='title-intro'>Introdukcija Russkaja</title>
-        <title language='ru' format='text/plain' type='title-main'>Titel Principalnyj</title>
-        <title language='ru' format='text/plain' type='title-part'>Partija Titel</title>
-        <title language='fr' format='text/plain' type='main'>
+        <title language='ru' type='title-intro'>Introdukcija Russkaja</title>
+        <title language='ru' type='title-main'>Titel Principalnyj</title>
+        <title language='ru' type='title-part'>Partija Titel</title>
+        <title language='fr' type='main'>
           Introduction Fran&#231;aise&#8201;&#8212;&#8201;Titre
           Principal&#8201;&#8212;&#8201;Part du Titre
         </title>
-        <title language='fr' format='text/plain' type='title-intro'>Introduction Fran&#231;aise</title>
-        <title language='fr' format='text/plain' type='title-main'>Titre Principal</title>
-        <title language='fr' format='text/plain' type='title-part'>Part du Titre</title>
+        <title language='fr' type='title-intro'>Introduction Fran&#231;aise</title>
+        <title language='fr' type='title-main'>Titre Principal</title>
+        <title language='fr' type='title-part'>Part du Titre</title>
         <docidentifier type='ISO' primary="true">ISO 1000-1:2000</docidentifier>
         <docidentifier type='iso-reference'>ISO 1000-1:2000(R)</docidentifier>
         <docidentifier type='URN'>urn:iso:std:iso:1000:-1:stage-60.60:ru</docidentifier>

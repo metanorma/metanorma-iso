@@ -71,56 +71,18 @@ module Metanorma
         @log.add("Document Attributes", nil, err)
       end
 
-      def title_component(node, xml, lang, attr, comp)
+      def title_component(node, xml, lang, comp)
         t = node.attr("title-#{comp[:name]}-#{lang}") or return
-        xml.title(**attr_code(attr.merge(type: "title-#{comp[:abbr]}"))) do |t1|
-          t1 << Metanorma::Utils::asciidoc_sub(t)
-        end
+        add_title_xml(xml, t, lang, "title-#{comp[:abbr]}")
       end
 
-      def title_intro(node, xml, lang, at)
-        t = node.attr("title-intro-#{lang}") or return
-        xml.title(**attr_code(at.merge(type: "title-intro"))) do |t1|
-          t1 << Metanorma::Utils::asciidoc_sub(t)
-        end
-      end
-
-      def title_main(node, xml, lang, at)
-        xml.title **attr_code(at.merge(type: "title-main")) do |t1|
-          t1 << Metanorma::Utils::asciidoc_sub(node.attr("title-main-#{lang}"))
-        end
-      end
-
-      def title_part(node, xml, lang, at)
-        t = node.attr("title-part-#{lang}") or return
-        xml.title(**attr_code(at.merge(type: "title-part"))) do |t1|
-          t1 << Metanorma::Utils::asciidoc_sub(t)
-        end
-      end
-
-      def title_amd(node, xml, lang, at)
-        t = node.attr("title-amendment-#{lang}") or return
-        xml.title(**attr_code(at.merge(type: "title-amd"))) do |t1|
-          t1 << Metanorma::Utils::asciidoc_sub(t)
-        end
-      end
-
-      def title_add(node, xml, lang, at)
-        t = node.attr("title-addendum-#{lang}") or return
-        xml.title(**attr_code(at.merge(type: "title-add"))) do |t1|
-          t1 << Metanorma::Utils::asciidoc_sub(t)
-        end
-      end
-
-      def title_full(node, xml, lang, at)
+      def title_full(node, xml, lang)
         title, intro, part, amd, add = title_full_prep(node, lang)
         title = "#{intro} -- #{title}" if intro
         title = "#{title} -- #{part}" if part
         title = "#{title} -- #{amd}" if amd
         title = "#{title} -- #{add}" if add
-        xml.title **attr_code(at.merge(type: "main")) do |t1|
-          t1 << Metanorma::Utils::asciidoc_sub(title)
-        end
+        add_title_xml(xml, title, lang, "main")
       end
 
       def title_full_prep(node, lang)
@@ -136,20 +98,19 @@ module Metanorma
 
       def title(node, xml)
         %w(en ru fr).each do |lang|
-          at = { language: lang, format: "text/plain" }
-          title1(node, xml, lang, at)
+          title1(node, xml, lang)
         end
       end
 
-      def title1(node, xml, lang, at)
-        title_full(node, xml, lang, at)
+      def title1(node, xml, lang)
+        title_full(node, xml, lang)
         %w(intro main part complementary).each do |w|
-          title_component(node, xml, lang, at, { name: w, abbr: w })
+          title_component(node, xml, lang, { name: w, abbr: w })
         end
-        @amd and title_component(node, xml, lang, at,
+        @amd and title_component(node, xml, lang,
                                  { name: "amendment", abbr: "amd" })
         node.attr("addendum-number") and
-          title_component(node, xml, lang, at,
+          title_component(node, xml, lang,
                           { name: "addendum", abbr: "add" })
       end
 
