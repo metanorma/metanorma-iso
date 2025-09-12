@@ -110,7 +110,7 @@ module IsoDoc
         <<~OUTPUT
           <p class='zzSTDTitle1'><span class='boldtitle'>{{ doctitleintro -}}
           {% if doctitleintro and doctitlemain %} &#x2014; {% endif %}{{ doctitlemain -}}
-          {% if doctitlemain and ( doctitlepart or doctitlecomplementary ) %}  &#x2014; {% endif -%}
+          {% if doctitlemain %}{% if doctitlepart or doctitlecomplementary %} &#x2014; {% endif %}{% endif -%}
           </span>#{middle_title_part}</p>
         OUTPUT
       end
@@ -155,7 +155,7 @@ module IsoDoc
           {% if doctitleamdlabel %}<p class='zzSTDTitle2'>{{ doctitleamdlabel -}}
             {% if doctitleamd %}: {{doctitleamd}}{% endif -%}
             </p>{% endif %}
-          {% if doctitlecorrlabel %}<p class='zzSTDTitle2'{{ doctitlecorrlabel }}</p>{% endif %}
+          {% if doctitlecorrlabel %}<p class='zzSTDTitle2'>{{ doctitlecorrlabel }}</p>{% endif %}
         OUTPUT
       end
 
