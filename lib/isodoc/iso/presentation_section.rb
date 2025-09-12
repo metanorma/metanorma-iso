@@ -84,7 +84,8 @@ module IsoDoc
         super
       end
 
-      def middle_title(docxml)
+      # KILL
+      def middle_titlex(docxml)
         @meta.get[:doctitlemain].nil? || @meta.get[:doctitlemain].empty? and
           return
         s = docxml.at(ns("//sections")) or return
@@ -92,7 +93,8 @@ module IsoDoc
         s.add_first_child ret
       end
 
-      def middle_title_main
+      # KILL
+      def middle_title_mainx
         ret = "<span class='boldtitle'>#{@meta.get[:doctitleintro]}"
         @meta.get[:doctitleintro] && @meta.get[:doctitlemain] and
           ret += " &#x2014; "
@@ -104,7 +106,17 @@ module IsoDoc
         "<p class='zzSTDTitle1'>#{ret}</p>"
       end
 
-      def middle_title_part
+      def middle_title_main
+        <<~OUTPUT
+          <p class='zzSTDTitle1'><span class='boldtitle'>{{ doctitleintro -}}
+          {% if doctitleintro and doctitlemain %} &#x2014; {% endif %}{{ doctitlemain -}}
+          {% if doctitlemain and ( doctitlepart or doctitlecomplementary ) %}  &#x2014; {% endif -%}
+          </span>#{middle_title_part}</p>
+        OUTPUT
+      end
+
+      # KILL
+      def middle_title_partx
         ret = ""
         if a = @meta.get[:doctitlecomplementary]
           ret += "<span class='boldtitle'>#{a}</span>"
@@ -116,7 +128,17 @@ module IsoDoc
         ret
       end
 
-      def middle_title_amd
+      def middle_title_part
+        <<~OUTPUT.strip
+          {% if doctitlecomplementary %}<span class='boldtitle'>{{ doctitlecomplementary }}</span>
+          {% elsif doctitlepart -%}
+            {% if doctitlepartlabel %}<span class='nonboldtitle'>{{ doctitlepartlabel }}:</span>{% endif -%}
+          <span class='boldtitle'>{{ doctitlepart }}</span>{% endif %}
+        OUTPUT
+      end
+
+      # KILL
+      def middle_title_amdx
         ret = ""
         if a = @meta.get[:doctitleamdlabel]
           ret += "<p class='zzSTDTitle2'>#{a}"
@@ -126,6 +148,19 @@ module IsoDoc
         a = @meta.get[:doctitlecorrlabel] and
           ret += "<p class='zzSTDTitle2'>#{a}</p>"
         ret
+      end
+
+      def middle_title_amd
+        <<~OUTPUT
+          {% if doctitleamdlabel %}<p class='zzSTDTitle2'>{{ doctitleamdlabel -}}
+            {% if doctitleamd %}: {{doctitleamd}}{% endif -%}
+            </p>{% endif %}
+          {% if doctitlecorrlabel %}<p class='zzSTDTitle2'{{ doctitlecorrlabel }}</p>{% endif %}
+        OUTPUT
+      end
+
+      def middle_title_template
+        middle_title_main + middle_title_amd
       end
 
       def move_norm_ref_to_sections(docxml)
