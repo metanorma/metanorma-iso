@@ -18887,6 +18887,17 @@
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_clause-style">
+		<!-- commented for https://github.com/metanorma/metanorma-ribose/issues/421 -->
+		<!-- <xsl:if test="$namespace = 'rsd'">
+			<xsl:variable name="level">
+				<xsl:call-template name="getLevel">
+					<xsl:with-param name="depth" select="mn:fmt-title/@depth"/>
+				</xsl:call-template>
+			</xsl:variable>
+			<xsl:if test="$level &gt;= 4">
+				<xsl:attribute name="margin-left">13mm</xsl:attribute>
+			</xsl:if>
+		</xsl:if> -->
 	</xsl:template>
 
 	<!-- main sections -->
