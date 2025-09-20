@@ -16064,7 +16064,9 @@
 	</xsl:template>
 
 	<xsl:attribute-set name="fn-num-style">
+		<xsl:attribute name="role">Reference</xsl:attribute>
 		<xsl:attribute name="keep-with-previous.within-line">always</xsl:attribute>
+		<xsl:attribute name="font-size">65%</xsl:attribute>
 		<xsl:attribute name="font-size">80%</xsl:attribute>
 		<!--<xsl:attribute name="vertical-align">super</xsl:attribute> -->
 		<xsl:attribute name="baseline-shift">30%</xsl:attribute>
@@ -16158,26 +16160,9 @@
 		<xsl:variable name="ref_id" select="@target"/>
 
 		<xsl:variable name="footnote_inline">
-			<fo:inline role="Reference">
+			<fo:inline xsl:use-attribute-sets="fn-num-style">
 
-				<xsl:variable name="fn_styles">
-					<xsl:choose>
-						<xsl:when test="ancestor::mn:bibitem">
-							<fn_styles xsl:use-attribute-sets="bibitem-note-fn-style">
-								<xsl:call-template name="refine_bibitem-note-fn-style"/>
-							</fn_styles>
-						</xsl:when>
-						<xsl:otherwise>
-							<fn_styles xsl:use-attribute-sets="fn-num-style">
-								<xsl:call-template name="refine_fn-num-style"/>
-							</fn_styles>
-						</xsl:otherwise>
-					</xsl:choose>
-				</xsl:variable>
-
-				<xsl:for-each select="xalan:nodeset($fn_styles)/fn_styles/@*">
-					<xsl:copy-of select="."/>
-				</xsl:for-each>
+				<xsl:call-template name="refine_fn-num-style"/>
 
 				<!-- https://github.com/metanorma/metanorma-ieee/issues/595 -->
 				<!-- <xsl:if test="following-sibling::node()[normalize-space() != ''][1][self::mn:fn]">
@@ -16491,32 +16476,6 @@
 
 	<xsl:template name="refine_bibitem-non-normative-list-body-style">
 	</xsl:template>
-
-	<!-- footnote reference number for bibitem, in the text  -->
-	<xsl:attribute-set name="bibitem-note-fn-style">
-		<xsl:attribute name="keep-with-previous.within-line">always</xsl:attribute>
-		<xsl:attribute name="font-size">65%</xsl:attribute>
-		<xsl:attribute name="font-size">8pt</xsl:attribute>
-		<xsl:attribute name="baseline-shift">30%</xsl:attribute>
-	</xsl:attribute-set> <!-- bibitem-note-fn-style -->
-
-	<xsl:template name="refine_bibitem-note-fn-style">
-	</xsl:template>
-
-	<!-- footnote number on the page bottom -->
-	<xsl:attribute-set name="bibitem-note-fn-number-style">
-		<xsl:attribute name="keep-with-next.within-line">always</xsl:attribute>
-		<xsl:attribute name="alignment-baseline">hanging</xsl:attribute>
-		<xsl:attribute name="padding-right">3mm</xsl:attribute>
-	</xsl:attribute-set> <!-- bibitem-note-fn-number-style -->
-
-	<!-- footnote body (text) on the page bottom -->
-	<xsl:attribute-set name="bibitem-note-fn-body-style">
-		<xsl:attribute name="font-size">10pt</xsl:attribute>
-		<xsl:attribute name="margin-bottom">12pt</xsl:attribute>
-		<xsl:attribute name="start-indent">0pt</xsl:attribute>
-		<xsl:attribute name="margin-bottom">4pt</xsl:attribute>
-	</xsl:attribute-set> <!-- bibitem-note-fn-body-style -->
 
 	<xsl:attribute-set name="references-non-normative-style">
 	</xsl:attribute-set> <!-- references-non-normative-style -->
