@@ -1082,7 +1082,7 @@
 							<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1979' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)"><!-- copyright renders in the footer footer-preface-first_1987-1998--></xsl:when>
 							<xsl:otherwise>
 
-								<xsl:call-template name="copyright-statement"/>
+								<xsl:call-template name="inner-cover-page"/>
 
 							</xsl:otherwise>
 						</xsl:choose>
@@ -2849,7 +2849,8 @@
 		</xsl:if> <!-- $isGenerateTableIF = 'false' -->
 	</xsl:template> <!-- END cover-page -->
 
-	<xsl:template name="copyright-statement">
+	<!-- copyright-statement -->
+	<xsl:template name="inner-cover-page">
 		<xsl:if test="normalize-space(/mn:metanorma/mn:boilerplate/mn:copyright-statement) != ''">
 
 			<fo:page-sequence format="i" force-page-count="no-force">
