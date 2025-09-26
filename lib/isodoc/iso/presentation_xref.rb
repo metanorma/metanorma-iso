@@ -153,8 +153,6 @@ module IsoDoc
         bracketed_refs_processing(docxml)
       end
 
-      #def bracketed_refs_processing(docxml); end
-
       # style [1] references as [Reference 1], eref or origin
       def bracketed_refs_processing(docxml)
         (docxml.xpath(ns("//semx[@element = 'eref']")) -
@@ -191,6 +189,10 @@ module IsoDoc
         semx, erefstack_orig = bracket_erefstack_style_prep(elem)
         semx.empty? and return
         if erefstack_orig && erefstack_orig["style"]
+          elem.children.each do |e|
+            e.name == "span" and e.remove
+            e.text.strip.empty? and e.remove
+          end
           elem.children.wrap("<sup></sup>")
           remove_preceding_space(elem)
         else

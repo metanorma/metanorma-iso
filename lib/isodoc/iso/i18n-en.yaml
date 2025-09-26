@@ -28,8 +28,8 @@ voting_begins_on: Voting begins on
 voting_terminates_on: Voting terminates on
 corrected_version: Corrected version
 fast-track-procedure: Fast track procedure
-multiple_and: "%1 and %2"
-multiple_or: "%1 or %2"
+multiple_and: "%1 <span class='fmt-conn'>and</span> %2"
+multiple_or: "%1 <span class='fmt-conn'>or</span> %2"
 classification-UDC: UDC
 website: website
 formerly_id: "(formerly %)"
