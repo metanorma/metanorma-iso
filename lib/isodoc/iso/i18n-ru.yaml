@@ -7,6 +7,7 @@ all_rights_reserved: Все права защищены
 reference_number: Ссылочный номер
 reference_number_abbrev: Исх. №
 descriptor: Дескриптор
+reference: Ссылка
 price_based_on: Цена рассчитана на % стр.
 price: Цена
 date_first_printing: Дата первой печати
@@ -159,3 +160,6 @@ inflection:
   Дескриптор:
     sg: Дескриптор
     pl: Дескрипторы
+  Ссылка:
+    sg: Ссылка
+    pl: Ссылки

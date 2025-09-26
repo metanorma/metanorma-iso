@@ -169,7 +169,7 @@ module IsoDoc
 
       def termref_parse(node, out)
         out.p **termref_attrs do |p|
-          node.children.each { |n| parse(n, p) }
+          children_parse(node, p)
         end
       end
 
@@ -181,7 +181,7 @@ module IsoDoc
       def figure_name_parse(node, div, name)
         name.nil? and return
         div.p **figure_name_attrs(node) do |p|
-          name.children.each { |n| parse(n, p) }
+          children_parse(name, p)
         end
       end
 
@@ -193,7 +193,7 @@ module IsoDoc
       def table_title_parse(node, out)
         name = node.at(ns("./fmt-name")) or return
         out.p **table_title_attrs(node) do |p|
-          name&.children&.each { |n| parse(n, p) }
+          children_parse(name, p)
         end
       end
 

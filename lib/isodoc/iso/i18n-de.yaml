@@ -12,6 +12,7 @@ price: Preis
 date_first_printing: Datum des ersten Drucks
 date_printing: "Datum des {{ var1 | ordinal_word: '', '' }} Drucks"
 descriptor: Deskriptor
+reference: Referenz
 under_preparation: In Vorbereitung. (Stadium zum Zeitpunkt der Veröffentlichung %).
 withdrawn: Zurückgezogen.
 cancelled_and_replaced: Abgebrochen und ersetzt durch %.
@@ -158,3 +159,6 @@ inflection:
   Deskriptor:
     sg: Deskriptor
     pl: Deskriptoren
+  Referenz:
+    sg: Referenz
+    pl: Referenzen

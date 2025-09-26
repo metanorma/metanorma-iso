@@ -23,7 +23,6 @@ module IsoDoc
             { label:, xref:, elem: @labels["section"],
               title: clause_title(clause), level: level, type: "clause" }
         elsif level > 1
-          #num = semx(clause, num)
           @anchors[clause["id"]] =
             { label: num, level: level, xref: num, subtype: "clause" }
         else super end
