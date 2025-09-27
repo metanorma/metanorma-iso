@@ -158,7 +158,6 @@ module IsoDoc
             s.xpath(ns(".//appendix//ol")) - s.xpath(ns(".//ol//ol"))
           c = Counter.new
           notes.noblank.each do |n|
-            # n["id"] ||= "_#{UUIDTools::UUID.random_create}"
             @anchors[n["id"]] = anchor_struct(increment_label(notes, n, c), n,
                                               @labels["list"], "list",
                                               { unnumb: false, container: true })
@@ -203,7 +202,6 @@ module IsoDoc
       end
 
       def xref_to_modspec(id, table_label)
-        # (@anchors[id] && !@anchors[id][:has_modspec]) or return
         (@anchors[id] && !@anchors[id][:has_table_prefix]) or return
         @anchors[id][:has_table_prefix] = true
         x = @anchors_previous[id][:xref_bare] || @anchors_previous[id][:xref]

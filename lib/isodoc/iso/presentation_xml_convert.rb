@@ -211,6 +211,14 @@ module IsoDoc
         end
       end
 
+      def citeas_cleanup1(citeas)
+        ret = super
+        if /^\[\d+\]$/.match?(ret)
+          ret = @i18n.l10n("#{@i18n.reference} #{ret}")
+        end
+        ret
+      end
+      
       include Init
     end
   end

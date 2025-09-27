@@ -12,6 +12,7 @@ price: Preis
 date_first_printing: Datum des ersten Drucks
 date_printing: "Datum des {{ var1 | ordinal_word: '', '' }} Drucks"
 descriptor: Deskriptor
+reference: Referenz
 under_preparation: In Vorbereitung. (Stadium zum Zeitpunkt der Veröffentlichung %).
 withdrawn: Zurückgezogen.
 cancelled_and_replaced: Abgebrochen und ersetzt durch %.
@@ -25,8 +26,8 @@ voting_begins_on: Die Abstimmung beginnt am
 voting_terminates_on: Die Abstimmung endet am
 corrected_version: Korrigierte Version
 fast-track-procedue: Beschleunigtes Verfahren
-multiple_and: "%1 und %2"
-multiple_or: "%1 oder %2"
+multiple_and: "%1 <span class='fmt-conn'>und</span> %2"
+multiple_or: "%1 <span class='fmt-conn'>oder</span> %2"
 classification-UDC: UDK
 edition_ordinal_old: "{{ var1 | ordinal_num: 'edition', '' }} AUSGABE"
 edition_replacement: "Diese {{ var1 | ordinal_word: 'edition', '' }} Ausgabe ersetzt die {{ var2 | ordinal_word: 'edition', '' }} Ausgabe"
@@ -158,3 +159,6 @@ inflection:
   Deskriptor:
     sg: Deskriptor
     pl: Deskriptoren
+  Referenz:
+    sg: Referenz
+    pl: Referenzen

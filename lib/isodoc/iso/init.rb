@@ -36,8 +36,8 @@ module IsoDoc
       end
 
       def bibrenderer(options = {})
-        ::Relaton::Render::Iso::General.new(options.merge(language: @lang,
-                                                          i18nhash: @i18n.get))
+        ::Relaton::Render::Iso::General.new(options
+          .merge(language: @lang, script: @script, i18nhash: @i18n.get))
       end
 
       def amd?(_docxml)
