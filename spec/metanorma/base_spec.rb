@@ -292,7 +292,7 @@ RSpec.describe Metanorma::Iso do
       :title-complementary-fr: Complement du Titre
     INPUT
     output = <<~OUTPUT
-       <bibdata type="standard">
+      <bibdata type="standard">
           <title language="en" type="main">Main Title — Title — Title Complement</title>
           <title language="en" type="title-main">Main Title — Title</title>
           <title language="en" type="title-complementary">Title Complement</title>
@@ -332,7 +332,7 @@ RSpec.describe Metanorma::Iso do
                 <description>committee</description>
              </role>
              <organization>
-                <name>International Organization for Standardization</name>
+                <name>IEC;IETF;ISO</name>
                 <subdivision type="Technical committee" subtype="TC">
                    <name>Techcomm</name>
                 </subdivision>
@@ -345,7 +345,6 @@ RSpec.describe Metanorma::Iso do
                    <name>Workg</name>
                    <identifier>WG 3</identifier>
                 </subdivision>
-                <abbreviation>ISO</abbreviation>
              </organization>
           </contributor>
           <contributor>
@@ -353,8 +352,7 @@ RSpec.describe Metanorma::Iso do
                 <description>Agency</description>
              </role>
              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
+                <name>IEC;IETF;ISO</name>
              </organization>
           </contributor>
           <contributor>
@@ -476,8 +474,7 @@ RSpec.describe Metanorma::Iso do
             <description>Agency</description>
           </role>
           <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
+            <name>International Organization for Standardization; International Electrotechnical Commission</name>
           </organization>
         </contributor>
         <contributor>
@@ -1885,8 +1882,7 @@ RSpec.describe Metanorma::Iso do
             <description>Agency</description>
           </role>
           <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
+            <name>CEN</name>
           </organization>
         </contributor>
         <contributor>

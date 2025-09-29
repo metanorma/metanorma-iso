@@ -216,7 +216,7 @@ module IsoDoc
         # Find the preceding text node that has actual content
         prec = elem.at("./preceding-sibling::text()" \
           "[normalize-space(.) != ''][1]") or return
-        prec.content.end_with?(' ') and prec.content = prec.content.rstrip
+        prec.content.end_with?(" ") and prec.content = prec.content.rstrip
       end
     end
   end
