@@ -4969,18 +4969,26 @@
 		<xsl:param name="border_around_page">false</xsl:param>
 		<xsl:param name="insert_header_first">true</xsl:param>
 		<xsl:param name="insert_footer_last">true</xsl:param>
-		<xsl:if test="($layoutVersion = '1972' or $layoutVersion = '1979' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)) and $is_footer = 'true'">
-			<xsl:call-template name="insertFooterFirst1972_1998">
-				<xsl:with-param name="font-weight" select="$font-weight"/>
-			</xsl:call-template>
-		</xsl:if>
+
+		<xsl:call-template name="insertHeader">
+			<xsl:with-param name="is_header" select="$is_header"/>
+			<xsl:with-param name="border_around_page" select="$border_around_page"/>
+			<xsl:with-param name="insert_header_first" select="$insert_header_first"/>
+		</xsl:call-template>
+		<xsl:call-template name="insertFooter">
+			<xsl:with-param name="font-weight" select="$font-weight"/>
+			<xsl:with-param name="is_footer" select="$is_footer"/>
+			<xsl:with-param name="insert_footer_last" select="$insert_footer_last"/>
+		</xsl:call-template>
+	</xsl:template>
+
+	<xsl:template name="insertHeader">
+		<xsl:param name="is_header">true</xsl:param>
+		<xsl:param name="border_around_page">false</xsl:param>
+		<xsl:param name="insert_header_first">true</xsl:param>
 		<xsl:call-template name="insertHeaderEven">
 			<xsl:with-param name="border_around_page" select="$border_around_page"/>
 			<xsl:with-param name="is_header" select="$is_header"/>
-		</xsl:call-template>
-		<xsl:call-template name="insertFooterEven">
-			<xsl:with-param name="font-weight" select="$font-weight"/>
-			<xsl:with-param name="insert_footer_last" select="$insert_footer_last"/>
 		</xsl:call-template>
 		<xsl:choose>
 			<xsl:when test="$layoutVersion = '1951'"/>
@@ -4992,10 +5000,26 @@
 			<xsl:with-param name="border_around_page" select="$border_around_page"/>
 			<xsl:with-param name="is_header" select="$is_header"/>
 		</xsl:call-template>
+	</xsl:template>
+
+	<xsl:template name="insertFooter">
+		<xsl:param name="font-weight" select="'bold'"/>
+		<xsl:param name="is_footer">false</xsl:param>
+		<xsl:param name="insert_footer_last">true</xsl:param>
+		<xsl:if test="($layoutVersion = '1972' or $layoutVersion = '1979' or $layoutVersion = '1987' or ($layoutVersion = '1989' and $revision_date_num &lt;= 19981231)) and $is_footer = 'true'">
+			<xsl:call-template name="insertFooterFirst1972_1998">
+				<xsl:with-param name="font-weight" select="$font-weight"/>
+			</xsl:call-template>
+		</xsl:if>
+		<xsl:call-template name="insertFooterEven">
+			<xsl:with-param name="font-weight" select="$font-weight"/>
+			<xsl:with-param name="insert_footer_last" select="$insert_footer_last"/>
+		</xsl:call-template>
 		<xsl:call-template name="insertFooterOdd">
 			<xsl:with-param name="font-weight" select="$font-weight"/>
 		</xsl:call-template>
 	</xsl:template>
+
 	<xsl:variable name="font-size_header">
 		<xsl:choose>
 			<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1979' or $layoutVersion = '1987' or $layoutVersion = '1989'">11pt</xsl:when>
