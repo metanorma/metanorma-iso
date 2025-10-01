@@ -84,28 +84,6 @@ module IsoDoc
         super
       end
 
-      # KILL
-      def middle_titlex(docxml)
-        @meta.get[:doctitlemain].nil? || @meta.get[:doctitlemain].empty? and
-          return
-        s = docxml.at(ns("//sections")) or return
-        ret = "#{middle_title_main}#{middle_title_amd}"
-        s.add_first_child ret
-      end
-
-      # KILL
-      def middle_title_mainx
-        ret = "<span class='boldtitle'>#{@meta.get[:doctitleintro]}"
-        @meta.get[:doctitleintro] && @meta.get[:doctitlemain] and
-          ret += " &#x2014; "
-        ret += @meta.get[:doctitlemain]
-        @meta.get[:doctitlemain] &&
-          (@meta.get[:doctitlepart] || @meta.get[:doctitlecomplementary]) and
-          ret += " &#x2014; "
-        ret += "</span>#{middle_title_part}"
-        "<p class='zzSTDTitle1'>#{ret}</p>"
-      end
-
       def middle_title_main
         <<~OUTPUT
           <p class='zzSTDTitle1'><span class='boldtitle'>{{ doctitleintro -}}
