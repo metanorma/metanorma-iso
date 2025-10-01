@@ -52,11 +52,11 @@ module IsoDoc
       end
 
       def figure_delim(elem)
-        elem.parent.name == "figure" ? "&#xa0; " : "&#xa0;&#x2014; "
+        elem.at("./ancestor::xmlns:figure") ? "&#xa0; " : "&#xa0;&#x2014; "
       end
 
       def figure_name(elem)
-        elem.parent.name == "figure" and return ""
+        elem.at("./ancestor::xmlns:figure") and return ""
         super
       end
 

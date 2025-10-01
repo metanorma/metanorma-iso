@@ -311,17 +311,28 @@ and is intended to be referenced by a callout within the source code</a:document
         </ref>
       </optional>
       <choice>
-        <a:documentation>Content of the figure</a:documentation>
-        <ref name="image"/>
+        <a:documentation>Content of the figure     </a:documentation>
+        <ref name="image">
+          <a:documentation>by default the content of a figure is a media file</a:documentation>
+        </ref>
         <ref name="video"/>
         <ref name="audio"/>
-        <ref name="pre"/>
+        <ref name="pre">
+          <a:documentation>figures can contain ASCII art</a:documentation>
+        </ref>
         <oneOrMore>
-          <ref name="paragraph-with-footnote"/>
+          <ref name="paragraph-with-footnote">
+            <a:documentation>figures can contain discursive art</a:documentation>
+          </ref>
         </oneOrMore>
         <zeroOrMore>
-          <ref name="figure"/>
+          <ref name="figure">
+            <a:documentation>subfigures, nested directly within a figure</a:documentation>
+          </ref>
         </zeroOrMore>
+        <ref name="table">
+          <a:documentation>Table is understood in this context to be a tabular arrangement of subfigures</a:documentation>
+        </ref>
       </choice>
       <zeroOrMore>
         <ref name="fn">
@@ -354,17 +365,28 @@ and is intended to be referenced by a callout within the source code</a:document
         </ref>
       </optional>
       <choice>
-        <a:documentation>Content of the figure</a:documentation>
-        <ref name="image-no-id"/>
+        <a:documentation>Content of the figure     </a:documentation>
+        <ref name="image-no-id">
+          <a:documentation>by default the content of a figure is a media file</a:documentation>
+        </ref>
         <ref name="video-no-id"/>
         <ref name="audio-no-id"/>
-        <ref name="pre-no-id"/>
+        <ref name="pre-no-id">
+          <a:documentation>figures can contain ASCII art</a:documentation>
+        </ref>
         <oneOrMore>
-          <ref name="paragraph-with-footnote-no-id"/>
+          <ref name="paragraph-with-footnote-no-id">
+            <a:documentation>figures can contain discursive art</a:documentation>
+          </ref>
         </oneOrMore>
         <zeroOrMore>
-          <ref name="figure-no-id"/>
+          <ref name="figure-no-id">
+            <a:documentation>subfigures, nested directly within a figure</a:documentation>
+          </ref>
         </zeroOrMore>
+        <ref name="table-no-id">
+          <a:documentation>Table is understood in this context to be a tabular arrangement of subfigures</a:documentation>
+        </ref>
       </choice>
       <zeroOrMore>
         <ref name="fn">
