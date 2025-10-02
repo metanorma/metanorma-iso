@@ -86,7 +86,7 @@ module Metanorma
       end
 
       def list_semicolon_phrase_punct(elem, text, last)
-        punct = text.strip.sub(/^.*?(\S)$/m, "\\1")
+        punct = text.strip.sub(/^.*?(\S)\z/m, "\\1")
         if last
           punct == "." or
             style_warning(elem, "Final list entry of broken up " \
@@ -105,7 +105,7 @@ module Metanorma
         starts_uppercase?(text) or
           style_warning(elem, "List entry of separate sentences must start " \
                               "with uppercase letter", text, display: false)
-        punct = text.strip.sub(/^.*?(\S)$/m, "\\1")
+        punct = text.strip.sub(/^.*?(\S)\z/m, "\\1")
         punct == "." or
           style_warning(elem, "List entry of separate sentences must " \
                               "end with full stop", text, display: false)
