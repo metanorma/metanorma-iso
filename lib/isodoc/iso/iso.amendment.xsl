@@ -19991,11 +19991,16 @@
 
 	<!-- for https://github.com/metanorma/mn-native-pdf/issues/845 -->
 	<xsl:template name="insertCoverPageFullImage">
-		<fo:page-sequence master-reference="cover-page" force-page-count="no-force">
-			<fo:flow flow-name="xsl-region-body">
-				<xsl:call-template name="insertBackgroundPageImage"/>
-			</fo:flow>
-		</fo:page-sequence>
+		<xsl:param name="name">coverpage-image</xsl:param>
+		<xsl:for-each select="//mn:metanorma/mn:metanorma-extension/mn:presentation-metadata[mn:name = $name][1]/mn:value/mn:image">
+			<fo:page-sequence master-reference="cover-page" force-page-count="no-force">
+				<fo:flow flow-name="xsl-region-body">
+					<xsl:call-template name="insertBackgroundPageImage">
+						<xsl:with-param name="number" select="position()"/>
+					</xsl:call-template>
+				</fo:flow>
+			</fo:page-sequence>
+		</xsl:for-each>
 	</xsl:template>
 
 	<xsl:template name="insertPageImage">
