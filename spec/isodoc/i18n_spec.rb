@@ -2204,7 +2204,7 @@ RSpec.describe IsoDoc do
                       <semx element="autonum" source="D0">3</semx>
                    </span>
                    <span class="fmt-caption-delim">
-                      :
+                      ：
                       <tab/>
                    </span>
                    <semx element="title" source="_">一般的</semx>
@@ -2240,8 +2240,8 @@ RSpec.describe IsoDoc do
                       <fmt-xref type="inline" target="ISO712">
                          <span class="stdpublisher">ISO </span>
                          <span class="stddocNumber">712</span>
-                         ,
-                         <span class="citetbl">第1～1表</span>
+                         ，
+                         <span class="citetbl">第1〜1表</span>
                       </fmt-xref>
                    </semx>
                 </p>
@@ -2527,7 +2527,7 @@ RSpec.describe IsoDoc do
                       <span class="fmt-element-name">附件</span>
                       <semx element="autonum" source="P">A</semx>
                    </span>
-                   <span class="fmt-comma">,</span>
+                   <span class="fmt-comma">，</span>
                    <span class="fmt-element-name">附录</span>
                    <semx element="autonum" source="Q2">1</semx>
                 </fmt-xref-label>
@@ -2553,7 +2553,7 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR.gsub(/"en"/, '"zh"').sub(/Contents/, '目　次')}
                    <br/>
-                <div id="_">
+               <div id="_">
                    <h1 class="ForewordTitle">Foreword</h1>
                    <p id="A">This is a preamble</p>
                 </div>
@@ -2571,8 +2571,8 @@ RSpec.describe IsoDoc do
                       <a href="#ISO712">
                          <span class="stdpublisher">ISO </span>
                          <span class="stddocNumber">712</span>
-                         ,
-                         <span class="citetbl">第1～1表</span>
+                         ，
+                         <span class="citetbl">第1〜1表</span>
                       </a>
                    </p>
                 </div>
@@ -2587,7 +2587,7 @@ RSpec.describe IsoDoc do
                    </p>
                 </div>
                 <div id="D0">
-                   <h1>条3:　一般的</h1>
+                   <h1>条3：　一般的</h1>
                 </div>
                 <div id="H">
                    <h1>4　Terms, definitions, symbols and abbreviated terms</h1>

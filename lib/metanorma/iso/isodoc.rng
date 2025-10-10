@@ -898,6 +898,9 @@ titlecase, or lowercase</a:documentation>
           <data type="boolean"/>
         </attribute>
       </optional>
+      <ref name="LocalizedStringAttributes">
+        <a:documentation>Specify language of bibitem, can be used to render it with language-specific bibliographic style</a:documentation>
+      </ref>
       <ref name="ReducedBibliographicItem"/>
     </element>
   </define>

@@ -869,7 +869,7 @@ depending on whether the items exist as independent documents, or are parts of a
       </zeroOrMore>
     </element>
   </define>
-  <define name="BibItemType" combine="choice">
+  <define name="BibItemType">
     <a:documentation>Type of bibliographic item.
 The value list complies with the types provided in ISO 690:2021.
 NOTE: These values represent a strict superset to BibTeX
