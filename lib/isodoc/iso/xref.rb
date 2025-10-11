@@ -206,8 +206,8 @@ module IsoDoc
         (@anchors[id] && !@anchors[id][:has_table_prefix]) or return
         @anchors[id][:has_table_prefix] = true
         x = @anchors_previous[id][:xref_bare] || @anchors_previous[id][:xref]
-        @anchors[id][:xref] = l10n(@klass.connectives_spans(@i18n.nested_xref
-          .sub("%1", table_label).sub("%2", x)))
+        @anchors[id][:xref] = @klass.connectives_spans(@i18n.nested_xref
+          .sub("%1", table_label).sub("%2", x))
         @anchors[id][:modspec] = @anchors_previous[id][:modspec]
         @anchors[id][:subtype] = "modspec" # prevents citetbl style from beign applied
         true

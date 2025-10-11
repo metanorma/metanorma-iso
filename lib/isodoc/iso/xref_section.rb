@@ -33,8 +33,7 @@ module IsoDoc
         ret = { label: num, level: level, subtype: "annex" }
         ret2 = if level == 2
                  xref = labelled_autonum(@labels["clause"], num)
-                 { xref:, # l10n("#{@labels['clause']} #{num}"),
-                   elem: @labels["clause"] }
+                 { xref:, elem: @labels["clause"] }
                else
                  { xref: semx(clause, num) }
                end
