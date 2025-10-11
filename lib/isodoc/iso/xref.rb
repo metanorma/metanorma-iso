@@ -243,6 +243,11 @@ module IsoDoc
                           { unnum: false, container: true })
         end
       end
+
+      def localise_anchors
+        #require "debug"; binding.b
+        super
+      end
     end
   end
 end
