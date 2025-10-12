@@ -51,7 +51,7 @@ module IsoDoc
       end
 
       def subclause?(target, type, from)
-        (from&.match?(/\./) && type == "clause") ||
+        (from&.include?(".") && type == "clause") ||
           type == "list" ||
           target&.gsub(/<[^<>]+>/, "")&.match(/^IEV$|^IEC 60050-/)
       end
@@ -93,10 +93,10 @@ module IsoDoc
       end
 
       def eref_localities1(opt)
-        return nil if opt[:type] == "anchor"
-
+        opt[:type] == "anchor" and return nil
         opt[:type] = opt[:type].downcase
-        opt[:lang] == "zh" and return l10n(eref_localities1_zh(opt))
+        %w(zh ko ja).include?(opt[:lang]) and
+          return l10n(eref_localities1_zh(opt))
         ret = ""
         opt[:node]["droploc"] != "true" &&
           !subclause?(opt[:target], opt[:type], opt[:from]) and
