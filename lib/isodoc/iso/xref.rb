@@ -243,6 +243,15 @@ module IsoDoc
                           { unnum: false, container: true })
         end
       end
+
+      def sequential_permission_body(id, parent_id, elem, label, klass, model,
+container: false)
+        e = elem["id"] || elem["original-id"]
+        has_table_prefix = @anchors.dig(e, :has_table_prefix)
+        has_table_prefix and return
+        super
+        #has_table_prefix and @anchors[e][:has_table_prefix] = true # restore
+      end
     end
   end
 end

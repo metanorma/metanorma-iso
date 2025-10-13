@@ -2333,125 +2333,125 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         </ogc-standard>
     INPUT
     presxml = <<~OUTPUT
-      <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
-          <preface>
-             <clause type="toc" id="_" displayorder="1">
-                <fmt-title id="_" depth="1">Contents</fmt-title>
-             </clause>
-             <foreword id="A" displayorder="2">
-                <title id="_">Preface</title>
-                <fmt-title id="_" depth="1">
-                   <semx element="title" source="_">Preface</semx>
-                </fmt-title>
-                <table id="A0" autonum="1">
-                   <fmt-name id="_">
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Table</span>
-                         <semx element="autonum" source="A0">1</semx>
-                      </span>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Table</span>
-                      <semx element="autonum" source="A0">1</semx>
-                   </fmt-xref-label>
-                </table>
-                <permission model="ogc" autonum="1" original-id="A1">
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Table</span>
-                      <semx element="autonum" source="A1">2</semx>
-                      <span class="fmt-comma">,</span>
-                      <span class="fmt-element-name">Permission</span>
-                      <semx element="autonum" source="A1">1</semx>
-                      :
-                      <tt>
-                         <xref style="id" target="A1">
-                            <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
-                         </xref>
-                      </tt>
-                   </fmt-xref-label>
-                   <title>First</title>
-                   <identifier id="_">/ogc/recommendation/wfs/2</identifier>
-                   <fmt-provision id="_">
-                      <table id="A1" type="recommend" class="modspec" autonum="2">
-                         <fmt-name id="_">
-                            <span class="fmt-caption-label">
-                               <span class="fmt-element-name">Table</span>
-                               <semx element="autonum" source="A1">2</semx>
-                            </span>
-                            <span class="fmt-caption-delim"> — </span>
-                            <semx element="name" source="_">
-                               <span class="fmt-caption-label">
-                                  <span class="fmt-element-name">Permission</span>
-                                  <semx element="autonum" source="A1">1</semx>
-                                  <span class="fmt-caption-delim">: </span>
-                                  <semx element="title" source="A1">First</semx>
-                               </span>
-                            </semx>
-                         </fmt-name>
-                         <tbody>
-                            <tr>
-                               <th>Identifier</th>
-                               <td>
-                                  <tt>
-                                     <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
-                                  </tt>
-                               </td>
-                            </tr>
-                         </tbody>
-                      </table>
-                   </fmt-provision>
-                </permission>
-                <table id="A2" autonum="3">
-                   <fmt-name id="_">
-                      <span class="fmt-caption-label">
-                         <span class="fmt-element-name">Table</span>
-                         <semx element="autonum" source="A2">3</semx>
-                      </span>
-                   </fmt-name>
-                   <fmt-xref-label>
-                      <span class="fmt-element-name">Table</span>
-                      <semx element="autonum" source="A2">3</semx>
-                   </fmt-xref-label>
-                </table>
-             </foreword>
-             <introduction id="B" displayorder="3">
-                <title id="_">Introduction</title>
-                <fmt-title id="_" depth="1">
-                   <semx element="title" source="_">Introduction</semx>
-                </fmt-title>
-                <p>
-                   <xref target="A0" id="_"/>
-                   <semx element="xref" source="_">
-                      <fmt-xref target="A0">
-                         <span class="citetbl">
-                            <span class="fmt-element-name">Table</span>
-                            <semx element="autonum" source="A0">1</semx>
-                         </span>
-                      </fmt-xref>
-                   </semx>
-                   <xref target="A1" id="_"/>
-                   <semx element="xref" source="_">
-                      <fmt-xref target="A1">
-                         <span class="fmt-element-name">Table</span>
-                         <semx element="autonum" source="A1">2</semx>
-                         <span class="fmt-comma">,</span>
-                         <span class="fmt-element-name">Permission</span>
-                         <semx element="autonum" source="A1">1</semx>
-                      </fmt-xref>
-                   </semx>
-                   <xref target="A2" id="_"/>
-                   <semx element="xref" source="_">
-                      <fmt-xref target="A2">
-                         <span class="citetbl">
-                            <span class="fmt-element-name">Table</span>
-                            <semx element="autonum" source="A2">3</semx>
-                         </span>
-                      </fmt-xref>
-                   </semx>
-                </p>
-             </introduction>
-          </preface>
-       </ogc-standard>
+        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+           <preface>
+              <clause type="toc" id="_" displayorder="1">
+                 <fmt-title depth="1" id="_">Contents</fmt-title>
+              </clause>
+              <foreword id="A" displayorder="2">
+                 <title id="_">Preface</title>
+                 <fmt-title depth="1" id="_">
+                    <semx element="title" source="_">Preface</semx>
+                 </fmt-title>
+                 <table id="A0" autonum="1">
+                    <fmt-name id="_">
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Table</span>
+                          <semx element="autonum" source="A0">1</semx>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Table</span>
+                       <semx element="autonum" source="A0">1</semx>
+                    </fmt-xref-label>
+                 </table>
+                 <permission model="ogc" id="_" autonum="1" original-id="A1">
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Table</span>
+                       <semx element="autonum" source="A1">2</semx>
+                       <span class="fmt-comma">,</span>
+                       <span class="fmt-element-name">Permission</span>
+                       <semx element="autonum" source="A1">1</semx>
+                       :
+                       <tt>
+                          <xref style="id" target="A1">
+                             <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
+                          </xref>
+                       </tt>
+                    </fmt-xref-label>
+                    <title>First</title>
+                    <identifier id="_">/ogc/recommendation/wfs/2</identifier>
+                    <fmt-provision id="_">
+                       <table id="A1" type="recommend" class="modspec" autonum="2">
+                          <fmt-name id="_">
+                             <span class="fmt-caption-label">
+                                <span class="fmt-element-name">Table</span>
+                                <semx element="autonum" source="A1">2</semx>
+                             </span>
+                             <span class="fmt-caption-delim"> — </span>
+                             <semx element="name" source="_">
+                                <span class="fmt-caption-label">
+                                   <span class="fmt-element-name">Permission</span>
+                                   <semx element="autonum" source="A1">1</semx>
+                                   <span class="fmt-caption-delim">: </span>
+                                   <semx element="title" source="A1">First</semx>
+                                </span>
+                             </semx>
+                          </fmt-name>
+                          <tbody>
+                             <tr>
+                                <th>Identifier</th>
+                                <td>
+                                   <tt>
+                                      <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
+                                   </tt>
+                                </td>
+                             </tr>
+                          </tbody>
+                       </table>
+                    </fmt-provision>
+                 </permission>
+                 <table id="A2" autonum="3">
+                    <fmt-name id="_">
+                       <span class="fmt-caption-label">
+                          <span class="fmt-element-name">Table</span>
+                          <semx element="autonum" source="A2">3</semx>
+                       </span>
+                    </fmt-name>
+                    <fmt-xref-label>
+                       <span class="fmt-element-name">Table</span>
+                       <semx element="autonum" source="A2">3</semx>
+                    </fmt-xref-label>
+                 </table>
+              </foreword>
+              <introduction id="B" displayorder="3">
+                 <title id="_">Introduction</title>
+                 <fmt-title depth="1" id="_">
+                    <semx element="title" source="_">Introduction</semx>
+                 </fmt-title>
+                 <p>
+                    <xref target="A0" id="_"/>
+                    <semx element="xref" source="_">
+                       <fmt-xref target="A0">
+                          <span class="citetbl">
+                             <span class="fmt-element-name">Table</span>
+                             <semx element="autonum" source="A0">1</semx>
+                          </span>
+                       </fmt-xref>
+                    </semx>
+                    <xref target="A1" id="_"/>
+                    <semx element="xref" source="_">
+                       <fmt-xref target="A1">
+                          <span class="fmt-element-name">Table</span>
+                          <semx element="autonum" source="A1">2</semx>
+                          <span class="fmt-comma">,</span>
+                          <span class="fmt-element-name">Permission</span>
+                          <semx element="autonum" source="A1">1</semx>
+                       </fmt-xref>
+                    </semx>
+                    <xref target="A2" id="_"/>
+                    <semx element="xref" source="_">
+                       <fmt-xref target="A2">
+                          <span class="citetbl">
+                             <span class="fmt-element-name">Table</span>
+                             <semx element="autonum" source="A2">3</semx>
+                          </span>
+                       </fmt-xref>
+                    </semx>
+                 </p>
+              </introduction>
+           </preface>
+        </ogc-standard>
     OUTPUT
     expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)

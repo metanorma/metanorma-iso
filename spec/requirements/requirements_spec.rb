@@ -80,7 +80,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Preface</semx>
                 </fmt-title>
-                <permission model="ogc" autonum="1" original-id="A1">
+                <permission model="ogc" autonum="1" original-id="A1" id="_">
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>
                       <semx element="autonum" source="A1">1</semx>
@@ -559,7 +559,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           <br/>
            <div id='A'>
                          <h1 class="ForewordTitle">Preface</h1>
-                          <div class="permission">
+                          <div class="permission" id="_">
               <p class="TableTitle" style="text-align:center;">Table 1 — Permission 1: First</p>
               <table id="A1" class="modspec" style="border-width:1px;border-spacing:0;">
                 <tbody>
@@ -722,7 +722,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
         </p>
           <div id="A">
             <h1 class="ForewordTitle">Preface</h1>
-            <div class="permission">
+            <div class="permission" id="_">
             <p class="Tabletitle" style="text-align:center;">Table 1 — Permission 1: First</p>
             <div align="center" class="table_container">
               <table id="A1" class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;" width="100%">
@@ -962,7 +962,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Preface</semx>
                 </fmt-title>
-                <permission model="ogc" type="verification" autonum="1" original-id="A1">
+                <permission model="ogc" type="verification" autonum="1" original-id="A1" id="_">
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>
                       <semx element="autonum" source="A1">1</semx>
@@ -1254,7 +1254,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <fmt-title depth="1" id="_">
                    <semx element="title" source="_">Preface</semx>
                 </fmt-title>
-                <requirement model="ogc" autonum="1" original-id="A">
+                <requirement model="ogc" autonum="1" original-id="A" id="_">
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>
                       <semx element="autonum" source="A">1</semx>
@@ -1447,7 +1447,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <fmt-title depth="1" id="_">
                    <semx element="title" source="_">Preface</semx>
                 </fmt-title>
-                <requirement unnumbered="true" model="ogc" original-id="A">
+                <requirement unnumbered="true" model="ogc" original-id="A" id="_">
                    <title>A New Requirement</title>
                    <identifier id="_">/ogc/recommendation/wfs/2</identifier>
                    <inherit id="_">/ss/584/2015/level/1</inherit>
@@ -1677,7 +1677,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                  <fmt-title id="_" depth="1">
                     <semx element="title" source="_">Preface</semx>
                  </fmt-title>
-                 <recommendation model="ogc" autonum="1" original-id="B">
+                 <recommendation model="ogc" autonum="1" original-id="B" id="_">
                     <fmt-xref-label>
                        <span class="fmt-element-name">Table</span>
                        <semx element="autonum" source="B">1</semx>

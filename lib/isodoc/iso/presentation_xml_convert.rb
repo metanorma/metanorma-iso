@@ -125,6 +125,7 @@ module IsoDoc
 
       def table1(elem)
         table1_key(elem)
+        #require "debug"; binding.b
         if elem["class"] == "modspec"
           if n = elem.at(ns(".//fmt-name"))
             n.remove.name = "name"

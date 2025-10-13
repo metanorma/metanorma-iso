@@ -1,4 +1,0 @@
-gem "isodoc-i18n", git: "https://github.com/metanorma/isodoc-i18n", branch: "cjk-oct-2025"
-gem "relaton-render", git: "https://github.com/metanorma/relaton-render", branch: "main"
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "fix/cjk-oct-2025"
-gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "main"

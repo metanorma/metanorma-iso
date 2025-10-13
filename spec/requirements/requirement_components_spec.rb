@@ -5,7 +5,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     input = <<~INPUT
       <ogc-standard xmlns="https://standards.opengeospatial.org/document">
         <preface><foreword id="A"><title>Preface</title>
-        <recommendation model="ogc" id="_">
+        <recommendation model="ogc" id="A0">
       <identifier>/ogc/recommendation/wfs/2</identifier>
       <inherit>/ss/584/2015/level/1</inherit>
       <subject>user</subject>
@@ -34,26 +34,26 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     INPUT
     presxml = <<~OUTPUT
-      <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+       <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <fmt-title id="_" depth="1">Contents</fmt-title>
+                <fmt-title depth="1" id="_">Contents</fmt-title>
              </clause>
              <foreword id="A" displayorder="2">
                 <title id="_">Preface</title>
-                <fmt-title id="_" depth="1">
+                <fmt-title depth="1" id="_">
                    <semx element="title" source="_">Preface</semx>
                 </fmt-title>
-                <recommendation model="ogc" autonum="1" original-id="_">
+                <recommendation model="ogc" id="_" autonum="1" original-id="A0">
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>
-                      <semx element="autonum" source="_">1</semx>
+                      <semx element="autonum" source="A0">1</semx>
                       <span class="fmt-comma">,</span>
                       <span class="fmt-element-name">Recommendation</span>
-                      <semx element="autonum" source="_">1</semx>
+                      <semx element="autonum" source="A0">1</semx>
                       :
                       <tt>
-                         <xref style="id" target="_">
+                         <xref style="id" target="A0">
                             <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
                          </xref>
                       </tt>
@@ -159,17 +159,17 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                       </p>
                    </description>
                    <fmt-provision id="_">
-                      <table id="_" type="recommend" class="modspec" autonum="1">
+                      <table id="A0" type="recommend" class="modspec" autonum="1">
                          <fmt-name id="_">
                             <span class="fmt-caption-label">
                                <span class="fmt-element-name">Table</span>
-                               <semx element="autonum" source="_">1</semx>
+                               <semx element="autonum" source="A0">1</semx>
                             </span>
                             <span class="fmt-caption-delim"> — </span>
                             <semx element="name" source="_">
                                <span class="fmt-caption-label">
                                   <span class="fmt-element-name">Recommendation</span>
-                                  <semx element="autonum" source="_">1</semx>
+                                  <semx element="autonum" source="A0">1</semx>
                                </span>
                             </semx>
                          </fmt-name>
@@ -393,7 +393,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
     input = <<~INPUT
               <ogc-standard xmlns="https://standards.opengeospatial.org/document">
         <preface><foreword id="A"><title>Preface</title>
-        <recommendation model="ogc" id="_" type="class">
+        <recommendation model="ogc" id="A0" type="class">
       <identifier>/ogc/recommendation/wfs/2</identifier>
       <inherit>/ss/584/2015/level/1</inherit>
       <subject>user</subject>
@@ -421,23 +421,23 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
           <preface>
              <clause type="toc" id="_" displayorder="1">
-                <fmt-title id="_" depth="1">Contents</fmt-title>
+                <fmt-title depth="1" id="_">Contents</fmt-title>
              </clause>
              <foreword id="A" displayorder="2">
                 <title id="_">Preface</title>
-                <fmt-title id="_" depth="1">
+                <fmt-title depth="1" id="_">
                    <semx element="title" source="_">Preface</semx>
                 </fmt-title>
-                <recommendation model="ogc" type="class" autonum="1" original-id="_">
+                <recommendation model="ogc" id="_" type="class" autonum="1" original-id="A0">
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>
-                      <semx element="autonum" source="_">1</semx>
+                      <semx element="autonum" source="A0">1</semx>
                       <span class="fmt-comma">,</span>
                       <span class="fmt-element-name">Recommendations class</span>
-                      <semx element="autonum" source="_">1</semx>
+                      <semx element="autonum" source="A0">1</semx>
                       :
                       <tt>
-                         <xref style="id" target="_">
+                         <xref style="id" target="A0">
                             <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
                          </xref>
                       </tt>
@@ -523,17 +523,17 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                       </p>
                    </description>
                    <fmt-provision id="_">
-                      <table id="_" type="recommendclass" class="modspec" autonum="1">
+                      <table id="A0" type="recommendclass" class="modspec" autonum="1">
                          <fmt-name id="_">
                             <span class="fmt-caption-label">
                                <span class="fmt-element-name">Table</span>
-                               <semx element="autonum" source="_">1</semx>
+                               <semx element="autonum" source="A0">1</semx>
                             </span>
                             <span class="fmt-caption-delim"> — </span>
                             <semx element="name" source="_">
                                <span class="fmt-caption-label">
                                   <span class="fmt-element-name">Recommendations class</span>
-                                  <semx element="autonum" source="_">1</semx>
+                                  <semx element="autonum" source="A0">1</semx>
                                </span>
                             </semx>
                          </fmt-name>
@@ -772,7 +772,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <fmt-title id="_" depth="1">
                    <semx element="title" source="_">Preface</semx>
                 </fmt-title>
-                <requirement model="ogc" autonum="1" original-id="A1">
+                <requirement model="ogc" autonum="1" original-id="A1" id="_">
                    <fmt-xref-label>
                       <span class="fmt-element-name">Table</span>
                       <semx element="autonum" source="A1">1</semx>
@@ -908,287 +908,287 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
       </ogc-standard>
     INPUT
     presxml = <<~PRESXML
-        <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
-           <preface>
-              <clause type="toc" id="_" displayorder="1">
-                 <fmt-title id="_" depth="1">Contents</fmt-title>
-              </clause>
-              <foreword id="A" displayorder="2">
-                 <title id="_">Preface</title>
-                 <fmt-title id="_" depth="1">
-                    <semx element="title" source="_">Preface</semx>
-                 </fmt-title>
-                 <requirement model="ogc" type="general" autonum="1" original-id="A1">
-                    <fmt-xref-label>
-                       <span class="fmt-element-name">Table</span>
-                       <semx element="autonum" source="A1">1</semx>
-                       <span class="fmt-comma">,</span>
-                       <span class="fmt-element-name">Requirement</span>
-                       <semx element="autonum" source="A1">1</semx>
-                       :
-                       <tt>
-                          <xref style="id" target="A1">
-                             <semx element="identifier" source="_">/ogc/recommendation/wfs/1</semx>
-                          </xref>
-                       </tt>
-                    </fmt-xref-label>
-                    <title>First</title>
-                    <identifier id="_">/ogc/recommendation/wfs/1</identifier>
-                    <fmt-provision id="_">
-                       <table id="A1" type="recommend" class="modspec" autonum="1">
-                          <fmt-name id="_">
-                             <span class="fmt-caption-label">
-                                <span class="fmt-element-name">Table</span>
-                                <semx element="autonum" source="A1">1</semx>
-                             </span>
-                             <span class="fmt-caption-delim"> — </span>
-                             <semx element="name" source="_">
-                                <span class="fmt-caption-label">
-                                   <span class="fmt-element-name">Requirement</span>
-                                   <semx element="autonum" source="A1">1</semx>
-                                   <span class="fmt-caption-delim">: </span>
-                                   <semx element="title" source="A1">First</semx>
-                                </span>
-                             </semx>
-                          </fmt-name>
-                          <tbody>
-                             <tr>
-                                <th>Identifier</th>
-                                <td>
-                                   <tt>
-                                      <semx element="identifier" source="_">/ogc/recommendation/wfs/1</semx>
-                                   </tt>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>Conformance test</th>
-                                <td>
-                                   <xref target="A2" id="_">
-                                      <span class="fmt-element-name">Conformance test</span>
-                                      <semx element="autonum" source="A2">1</semx>
-                                      <span class="fmt-caption-delim">: </span>
-                                      <semx element="title" source="A2">Second</semx>
-                                   </xref>
-                                   <semx element="xref" source="_">
-                                      <fmt-xref target="A2">
-                                         <span class="fmt-element-name">Conformance test</span>
-                                         <semx element="autonum" source="A2">1</semx>
-                                         <span class="fmt-caption-delim">: </span>
-                                         <semx element="title" source="A2">Second</semx>
-                                      </fmt-xref>
-                                   </semx>
-                                </td>
-                             </tr>
-                          </tbody>
-                       </table>
-                    </fmt-provision>
-                 </requirement>
-                 <requirement model="ogc" type="verification" autonum="1" original-id="A2">
-                    <fmt-xref-label>
-                       <span class="fmt-element-name">Table</span>
-                       <semx element="autonum" source="A2">2</semx>
-                       <span class="fmt-comma">,</span>
-                       <span class="fmt-element-name">Conformance test</span>
-                       <semx element="autonum" source="A2">1</semx>
-                       :
-                       <tt>
-                          <xref style="id" target="A2">
-                             <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
-                          </xref>
-                       </tt>
-                    </fmt-xref-label>
-                    <title>Second</title>
-                    <identifier id="_">/ogc/recommendation/wfs/2</identifier>
-                    <classification>
-                       <tag>target</tag>
-                       <value id="_">/ogc/recommendation/wfs/1</value>
-                    </classification>
-                    <fmt-provision id="_">
-                       <table id="A2" type="recommendtest" class="modspec" autonum="2">
-                          <fmt-name id="_">
-                             <span class="fmt-caption-label">
-                                <span class="fmt-element-name">Table</span>
-                                <semx element="autonum" source="A2">2</semx>
-                             </span>
-                             <span class="fmt-caption-delim"> — </span>
-                             <semx element="name" source="_">
-                                <span class="fmt-caption-label">
-                                   <span class="fmt-element-name">Conformance test</span>
-                                   <semx element="autonum" source="A2">1</semx>
-                                   <span class="fmt-caption-delim">: </span>
-                                   <semx element="title" source="A2">Second</semx>
-                                </span>
-                             </semx>
-                          </fmt-name>
-                          <tbody>
-                             <tr>
-                                <th>Identifier</th>
-                                <td>
-                                   <tt>
-                                      <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
-                                   </tt>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>Requirement</th>
-                                <td>
-                                   <xref target="A1" id="_">
-                                      <span class="fmt-element-name">Requirement</span>
-                                      <semx element="autonum" source="A1">1</semx>
-                                      <span class="fmt-caption-delim">: </span>
-                                      <semx element="title" source="A1">First</semx>
-                                   </xref>
-                                   <semx element="xref" source="_">
-                                      <fmt-xref target="A1">
-                                         <span class="fmt-element-name">Requirement</span>
-                                         <semx element="autonum" source="A1">1</semx>
-                                         <span class="fmt-caption-delim">: </span>
-                                         <semx element="title" source="A1">First</semx>
-                                      </fmt-xref>
-                                   </semx>
-                                </td>
-                             </tr>
-                          </tbody>
-                       </table>
-                    </fmt-provision>
-                 </requirement>
-                 <requirement model="ogc" type="class" autonum="1" original-id="A3">
-                    <fmt-xref-label>
-                       <span class="fmt-element-name">Table</span>
-                       <semx element="autonum" source="A3">3</semx>
-                       <span class="fmt-comma">,</span>
-                       <span class="fmt-element-name">Requirements class</span>
-                       <semx element="autonum" source="A3">1</semx>
-                       :
-                       <tt>
-                          <xref style="id" target="A3">
-                             <semx element="identifier" source="_">/ogc/recommendation/wfs/3</semx>
-                          </xref>
-                       </tt>
-                    </fmt-xref-label>
-                    <title>Third</title>
-                    <identifier id="_">/ogc/recommendation/wfs/3</identifier>
-                    <fmt-provision id="_">
-                       <table id="A3" type="recommendclass" class="modspec" autonum="3">
-                          <fmt-name id="_">
-                             <span class="fmt-caption-label">
-                                <span class="fmt-element-name">Table</span>
-                                <semx element="autonum" source="A3">3</semx>
-                             </span>
-                             <span class="fmt-caption-delim"> — </span>
-                             <semx element="name" source="_">
-                                <span class="fmt-caption-label">
-                                   <span class="fmt-element-name">Requirements class</span>
-                                   <semx element="autonum" source="A3">1</semx>
-                                   <span class="fmt-caption-delim">: </span>
-                                   <semx element="title" source="A3">Third</semx>
-                                </span>
-                             </semx>
-                          </fmt-name>
-                          <tbody>
-                             <tr>
-                                <th>Identifier</th>
-                                <td>
-                                   <tt>
-                                      <semx element="identifier" source="_">/ogc/recommendation/wfs/3</semx>
-                                   </tt>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>Conformance class</th>
-                                <td>
-                                   <xref target="A4" id="_">
-                                      <span class="fmt-element-name">Conformance class</span>
-                                      <semx element="autonum" source="A4">1</semx>
-                                      <span class="fmt-caption-delim">: </span>
-                                      <semx element="title" source="A4">Fourth</semx>
-                                   </xref>
-                                   <semx element="xref" source="_">
-                                      <fmt-xref target="A4">
-                                         <span class="fmt-element-name">Conformance class</span>
-                                         <semx element="autonum" source="A4">1</semx>
-                                         <span class="fmt-caption-delim">: </span>
-                                         <semx element="title" source="A4">Fourth</semx>
-                                      </fmt-xref>
-                                   </semx>
-                                </td>
-                             </tr>
-                          </tbody>
-                       </table>
-                    </fmt-provision>
-                 </requirement>
-                 <requirement model="ogc" type="conformanceclass" autonum="1" original-id="A4">
-                    <fmt-xref-label>
-                       <span class="fmt-element-name">Table</span>
-                       <semx element="autonum" source="A4">4</semx>
-                       <span class="fmt-comma">,</span>
-                       <span class="fmt-element-name">Conformance class</span>
-                       <semx element="autonum" source="A4">1</semx>
-                       :
-                       <tt>
-                          <xref style="id" target="A4">
-                             <semx element="identifier" source="_">/ogc/recommendation/wfs/4</semx>
-                          </xref>
-                       </tt>
-                    </fmt-xref-label>
-                    <title>Fourth</title>
-                    <identifier id="_">/ogc/recommendation/wfs/4</identifier>
-                    <classification>
-                       <tag>target</tag>
-                       <value id="_">/ogc/recommendation/wfs/3</value>
-                    </classification>
-                    <fmt-provision id="_">
-                       <table id="A4" type="recommendclass" class="modspec" autonum="4">
-                          <fmt-name id="_">
-                             <span class="fmt-caption-label">
-                                <span class="fmt-element-name">Table</span>
-                                <semx element="autonum" source="A4">4</semx>
-                             </span>
-                             <span class="fmt-caption-delim"> — </span>
-                             <semx element="name" source="_">
-                                <span class="fmt-caption-label">
-                                   <span class="fmt-element-name">Conformance class</span>
-                                   <semx element="autonum" source="A4">1</semx>
-                                   <span class="fmt-caption-delim">: </span>
-                                   <semx element="title" source="A4">Fourth</semx>
-                                </span>
-                             </semx>
-                          </fmt-name>
-                          <tbody>
-                             <tr>
-                                <th>Identifier</th>
-                                <td>
-                                   <tt>
-                                      <semx element="identifier" source="_">/ogc/recommendation/wfs/4</semx>
-                                   </tt>
-                                </td>
-                             </tr>
-                             <tr>
-                                <th>Requirements class</th>
-                                <td>
-                                   <xref target="A3" id="_">
-                                      <span class="fmt-element-name">Requirements class</span>
-                                      <semx element="autonum" source="A3">1</semx>
-                                      <span class="fmt-caption-delim">: </span>
-                                      <semx element="title" source="A3">Third</semx>
-                                   </xref>
-                                   <semx element="xref" source="_">
-                                      <fmt-xref target="A3">
-                                         <span class="fmt-element-name">Requirements class</span>
-                                         <semx element="autonum" source="A3">1</semx>
-                                         <span class="fmt-caption-delim">: </span>
-                                         <semx element="title" source="A3">Third</semx>
-                                      </fmt-xref>
-                                   </semx>
-                                </td>
-                             </tr>
-                          </tbody>
-                       </table>
-                    </fmt-provision>
-                 </requirement>
-              </foreword>
-           </preface>
-        </ogc-standard>
+           <ogc-standard xmlns="https://standards.opengeospatial.org/document" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1" id="_">Contents</fmt-title>
+             </clause>
+             <foreword id="A" displayorder="2">
+                <title id="_">Preface</title>
+                <fmt-title depth="1" id="_">
+                   <semx element="title" source="_">Preface</semx>
+                </fmt-title>
+                <requirement model="ogc" id="_" type="general" autonum="1" original-id="A1">
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Table</span>
+                      <semx element="autonum" source="A1">1</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Requirement</span>
+                      <semx element="autonum" source="A1">1</semx>
+                      :
+                      <tt>
+                         <xref style="id" target="A1">
+                            <semx element="identifier" source="_">/ogc/recommendation/wfs/1</semx>
+                         </xref>
+                      </tt>
+                   </fmt-xref-label>
+                   <title>First</title>
+                   <identifier id="_">/ogc/recommendation/wfs/1</identifier>
+                   <fmt-provision id="_">
+                      <table id="A1" type="recommend" class="modspec" autonum="1">
+                         <fmt-name id="_">
+                            <span class="fmt-caption-label">
+                               <span class="fmt-element-name">Table</span>
+                               <semx element="autonum" source="A1">1</semx>
+                            </span>
+                            <span class="fmt-caption-delim"> — </span>
+                            <semx element="name" source="_">
+                               <span class="fmt-caption-label">
+                                  <span class="fmt-element-name">Requirement</span>
+                                  <semx element="autonum" source="A1">1</semx>
+                                  <span class="fmt-caption-delim">: </span>
+                                  <semx element="title" source="A1">First</semx>
+                               </span>
+                            </semx>
+                         </fmt-name>
+                         <tbody>
+                            <tr>
+                               <th>Identifier</th>
+                               <td>
+                                  <tt>
+                                     <semx element="identifier" source="_">/ogc/recommendation/wfs/1</semx>
+                                  </tt>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>Conformance test</th>
+                               <td>
+                                  <xref target="A2" id="_">
+                                     <span class="fmt-element-name">Conformance test</span>
+                                     <semx element="autonum" source="A2">1</semx>
+                                     <span class="fmt-caption-delim">: </span>
+                                     <semx element="title" source="A2">Second</semx>
+                                  </xref>
+                                  <semx element="xref" source="_">
+                                     <fmt-xref target="A2">
+                                        <span class="fmt-element-name">Conformance test</span>
+                                        <semx element="autonum" source="A2">1</semx>
+                                        <span class="fmt-caption-delim">: </span>
+                                        <semx element="title" source="A2">Second</semx>
+                                     </fmt-xref>
+                                  </semx>
+                               </td>
+                            </tr>
+                         </tbody>
+                      </table>
+                   </fmt-provision>
+                </requirement>
+                <requirement model="ogc" id="_" type="verification" autonum="1" original-id="A2">
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Table</span>
+                      <semx element="autonum" source="A2">2</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Conformance test</span>
+                      <semx element="autonum" source="A2">1</semx>
+                      :
+                      <tt>
+                         <xref style="id" target="A2">
+                            <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
+                         </xref>
+                      </tt>
+                   </fmt-xref-label>
+                   <title>Second</title>
+                   <identifier id="_">/ogc/recommendation/wfs/2</identifier>
+                   <classification>
+                      <tag>target</tag>
+                      <value id="_">/ogc/recommendation/wfs/1</value>
+                   </classification>
+                   <fmt-provision id="_">
+                      <table id="A2" type="recommendtest" class="modspec" autonum="2">
+                         <fmt-name id="_">
+                            <span class="fmt-caption-label">
+                               <span class="fmt-element-name">Table</span>
+                               <semx element="autonum" source="A2">2</semx>
+                            </span>
+                            <span class="fmt-caption-delim"> — </span>
+                            <semx element="name" source="_">
+                               <span class="fmt-caption-label">
+                                  <span class="fmt-element-name">Conformance test</span>
+                                  <semx element="autonum" source="A2">1</semx>
+                                  <span class="fmt-caption-delim">: </span>
+                                  <semx element="title" source="A2">Second</semx>
+                               </span>
+                            </semx>
+                         </fmt-name>
+                         <tbody>
+                            <tr>
+                               <th>Identifier</th>
+                               <td>
+                                  <tt>
+                                     <semx element="identifier" source="_">/ogc/recommendation/wfs/2</semx>
+                                  </tt>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>Requirement</th>
+                               <td>
+                                  <xref target="A1" id="_">
+                                     <span class="fmt-element-name">Requirement</span>
+                                     <semx element="autonum" source="A1">1</semx>
+                                     <span class="fmt-caption-delim">: </span>
+                                     <semx element="title" source="A1">First</semx>
+                                  </xref>
+                                  <semx element="xref" source="_">
+                                     <fmt-xref target="A1">
+                                        <span class="fmt-element-name">Requirement</span>
+                                        <semx element="autonum" source="A1">1</semx>
+                                        <span class="fmt-caption-delim">: </span>
+                                        <semx element="title" source="A1">First</semx>
+                                     </fmt-xref>
+                                  </semx>
+                               </td>
+                            </tr>
+                         </tbody>
+                      </table>
+                   </fmt-provision>
+                </requirement>
+                <requirement model="ogc" id="_" type="class" autonum="1" original-id="A3">
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Table</span>
+                      <semx element="autonum" source="A3">3</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Requirements class</span>
+                      <semx element="autonum" source="A3">1</semx>
+                      :
+                      <tt>
+                         <xref style="id" target="A3">
+                            <semx element="identifier" source="_">/ogc/recommendation/wfs/3</semx>
+                         </xref>
+                      </tt>
+                   </fmt-xref-label>
+                   <title>Third</title>
+                   <identifier id="_">/ogc/recommendation/wfs/3</identifier>
+                   <fmt-provision id="_">
+                      <table id="A3" type="recommendclass" class="modspec" autonum="3">
+                         <fmt-name id="_">
+                            <span class="fmt-caption-label">
+                               <span class="fmt-element-name">Table</span>
+                               <semx element="autonum" source="A3">3</semx>
+                            </span>
+                            <span class="fmt-caption-delim"> — </span>
+                            <semx element="name" source="_">
+                               <span class="fmt-caption-label">
+                                  <span class="fmt-element-name">Requirements class</span>
+                                  <semx element="autonum" source="A3">1</semx>
+                                  <span class="fmt-caption-delim">: </span>
+                                  <semx element="title" source="A3">Third</semx>
+                               </span>
+                            </semx>
+                         </fmt-name>
+                         <tbody>
+                            <tr>
+                               <th>Identifier</th>
+                               <td>
+                                  <tt>
+                                     <semx element="identifier" source="_">/ogc/recommendation/wfs/3</semx>
+                                  </tt>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>Conformance class</th>
+                               <td>
+                                  <xref target="A4" id="_">
+                                     <span class="fmt-element-name">Conformance class</span>
+                                     <semx element="autonum" source="A4">1</semx>
+                                     <span class="fmt-caption-delim">: </span>
+                                     <semx element="title" source="A4">Fourth</semx>
+                                  </xref>
+                                  <semx element="xref" source="_">
+                                     <fmt-xref target="A4">
+                                        <span class="fmt-element-name">Conformance class</span>
+                                        <semx element="autonum" source="A4">1</semx>
+                                        <span class="fmt-caption-delim">: </span>
+                                        <semx element="title" source="A4">Fourth</semx>
+                                     </fmt-xref>
+                                  </semx>
+                               </td>
+                            </tr>
+                         </tbody>
+                      </table>
+                   </fmt-provision>
+                </requirement>
+                <requirement model="ogc" id="_" type="conformanceclass" autonum="1" original-id="A4">
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Table</span>
+                      <semx element="autonum" source="A4">4</semx>
+                      <span class="fmt-comma">,</span>
+                      <span class="fmt-element-name">Conformance class</span>
+                      <semx element="autonum" source="A4">1</semx>
+                      :
+                      <tt>
+                         <xref style="id" target="A4">
+                            <semx element="identifier" source="_">/ogc/recommendation/wfs/4</semx>
+                         </xref>
+                      </tt>
+                   </fmt-xref-label>
+                   <title>Fourth</title>
+                   <identifier id="_">/ogc/recommendation/wfs/4</identifier>
+                   <classification>
+                      <tag>target</tag>
+                      <value id="_">/ogc/recommendation/wfs/3</value>
+                   </classification>
+                   <fmt-provision id="_">
+                      <table id="A4" type="recommendclass" class="modspec" autonum="4">
+                         <fmt-name id="_">
+                            <span class="fmt-caption-label">
+                               <span class="fmt-element-name">Table</span>
+                               <semx element="autonum" source="A4">4</semx>
+                            </span>
+                            <span class="fmt-caption-delim"> — </span>
+                            <semx element="name" source="_">
+                               <span class="fmt-caption-label">
+                                  <span class="fmt-element-name">Conformance class</span>
+                                  <semx element="autonum" source="A4">1</semx>
+                                  <span class="fmt-caption-delim">: </span>
+                                  <semx element="title" source="A4">Fourth</semx>
+                               </span>
+                            </semx>
+                         </fmt-name>
+                         <tbody>
+                            <tr>
+                               <th>Identifier</th>
+                               <td>
+                                  <tt>
+                                     <semx element="identifier" source="_">/ogc/recommendation/wfs/4</semx>
+                                  </tt>
+                               </td>
+                            </tr>
+                            <tr>
+                               <th>Requirements class</th>
+                               <td>
+                                  <xref target="A3" id="_">
+                                     <span class="fmt-element-name">Requirements class</span>
+                                     <semx element="autonum" source="A3">1</semx>
+                                     <span class="fmt-caption-delim">: </span>
+                                     <semx element="title" source="A3">Third</semx>
+                                  </xref>
+                                  <semx element="xref" source="_">
+                                     <fmt-xref target="A3">
+                                        <span class="fmt-element-name">Requirements class</span>
+                                        <semx element="autonum" source="A3">1</semx>
+                                        <span class="fmt-caption-delim">: </span>
+                                        <semx element="title" source="A3">Third</semx>
+                                     </fmt-xref>
+                                  </semx>
+                               </td>
+                            </tr>
+                         </tbody>
+                      </table>
+                   </fmt-provision>
+                </requirement>
+             </foreword>
+          </preface>
+       </ogc-standard>
     PRESXML
     expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))))
