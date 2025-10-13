@@ -37,7 +37,8 @@ module IsoDoc
         requirement docxml
         recommendation docxml
         requirement_render docxml
-        @xrefs.anchors_previous = @xrefs.anchors.dup # store old xrefs of reqts
+        @xrefs.anchors_previous = 
+          @xrefs.anchors.transform_values(&:dup) # store old xrefs of reqts
         @xrefs.parse docxml
         # TODO move this dependency around: requirements at root should be processed before everything else
         table docxml # have table include requirements newly converted to tables
