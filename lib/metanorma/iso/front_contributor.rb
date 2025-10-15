@@ -16,8 +16,6 @@ module Metanorma
         secretariat_contributor(node, xml, default_publisher)
       end
 
-      def personal_author(node, xml); end
-
       def org_organization(node, xml, org)
         if org[:committee]
           contrib_committee_build(xml, org[:agency], org)
