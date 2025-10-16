@@ -3080,9 +3080,8 @@
 	<xsl:template name="insertLogoImages2024">
 		<xsl:variable name="content-height">20</xsl:variable>
 		<xsl:choose>
-			<xsl:when test="mn:metanorma/mn:bibdata/mn:contributor[mn:role[@type = 'author']/mn:description = 'committee']/mn:organization">
-				<xsl:for-each select="mn:metanorma/mn:bibdata/mn:contributor[mn:role[@type = 'author']/mn:description = 'committee']/mn:organization">
-
+			<xsl:when test="/mn:metanorma/mn:bibdata/mn:contributor[mn:role[@type = 'author']/mn:description = 'committee']/mn:organization[mn:abbreviation]">
+				<xsl:for-each select="/mn:metanorma/mn:bibdata/mn:contributor[mn:role[@type = 'author']/mn:description = 'committee']/mn:organization[mn:abbreviation]">
 					<xsl:variable name="items">
 						<xsl:call-template name="split_abbreviation"/>
 					</xsl:variable>
