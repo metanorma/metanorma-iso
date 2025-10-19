@@ -18543,6 +18543,7 @@
 
 	<xsl:template name="refine_p-style">
 		<xsl:param name="element-name"/>
+		<xsl:param name="margin"/>
 		<xsl:call-template name="setBlockAttributes">
 			<!-- <xsl:with-param name="text_align_default">justify</xsl:with-param> -->
 			<xsl:with-param name="skip_text_align_default">true</xsl:with-param>
@@ -18618,6 +18619,7 @@
 			</xsl:if>
 		</xsl:if>
 		<!-- $namespace = 'iso' -->
+
 	</xsl:template> <!-- refine_p-style -->
 
 	<xsl:template name="processPrefaceSectionsDefault">
