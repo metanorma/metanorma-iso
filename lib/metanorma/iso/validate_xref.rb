@@ -11,8 +11,7 @@ module Metanorma
           !preceding.nil? &&
             /\b(see| refer to)\p{Zs}*\Z/mi.match(preceding) or next
           anchors[t["target"]] and
-            @log.add("Style", t,
-                     "'see #{t['target']}' is pointing to a normative section")
+            @log.add("ISO_46", t, params: [t["target"]])
         end
       end
 
@@ -37,13 +36,11 @@ module Metanorma
           !prec.nil? && /\b(see|refer to)\p{Zs}*\Z/mi.match(prec) or next
           unless target = bibitemids[t["bibitemid"]]
             # unless target = root.at("//bibitem[@anchor = '#{t['bibitemid']}']")
-            @log.add("Bibliography", t,
-                     "'#{t} is not pointing to a real reference")
+            @log.add("ISO_47", t, params: [t])
             next
           end
           target[:norm] and
-            @log.add("Style", t,
-                     "'see #{t}' is pointing to a normative reference")
+            @log.add("ISO_48", t, params: [t])
         end
       end
 
@@ -64,9 +61,7 @@ module Metanorma
         root.xpath("//eref[descendant::locality]").each do |t|
           if /^(ISO|IEC)/.match?(t["citeas"]) &&
               !/: ?(\d+{4}|–)$/.match?(t["citeas"])
-            @log.add("Style", t,
-                     "undated reference #{t['citeas']} should not contain " \
-                     "specific elements")
+            @log.add("ISO_49", t, params: [t["citeas"]])
           end
         end
       end
@@ -88,13 +83,9 @@ module Metanorma
       def term_xrefs_validate1(xref, termids)
         closest_id = xref.xpath("./ancestor::*[@id]")&.last or return
         termids[xref["target"]] && !termids[closest_id["id"]] and
-          @log.add("Style", xref,
-                   "only terms clauses can cross-reference terms clause " \
-                   "(#{xref['target']})")
+          @log.add("ISO_50", xref, params: [xref["target"]])
         !termids[xref["target"]] && termids[closest_id["id"]] and
-          @log.add("Style", xref,
-                   "non-terms clauses cannot cross-reference terms clause " \
-                   "(#{xref['target']})")
+          @log.add("ISO_51", xref, params: [xref["target"]])
       end
 
       # require that all assets of a particular type be cross-referenced
@@ -112,9 +103,8 @@ module Metanorma
         (xmldoc.xpath(xpath) - xmldoc.xpath(exc)).each do |x|
           x["unnumbered"] == "true" and next
           @doc_xrefs[x["anchor"]] or
-            @log.add("Style", x, "#{name} #{x['anchor']} has not been " \
-                                 "cross-referenced within document",
-                     severity: xpath == "//formula" ? 2 : 1)
+            @log.add(xpath == "//formula" ? "ISO_22" : "ISO_21",
+                     x, params: [name, x["anchor"]])
         end
       end
 

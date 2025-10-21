@@ -39,8 +39,7 @@ module Metanorma
         doc.xpath("//ol[@explicit-type]").each do |x|
           x["type"] = x["explicit-type"]
           x.delete("explicit-type")
-          @log.add("Style", x,
-                   "Style override set for ordered list")
+          @log.add("ISO_1", x)
         end
       end
 

@@ -11,10 +11,10 @@ module Metanorma
         title_intro_en = title_lang_part(root, "intro", "en")
         title_intro_fr = title_lang_part(root, "intro", "fr")
         if title_intro_en.nil? && !title_intro_fr.nil?
-          @log.add("Style", title_intro_fr, "No English Title Intro!")
+          @log.add("ISO_10", title_intro_fr)
         end
         if !title_intro_en.nil? && title_intro_fr.nil?
-          @log.add("Style", title_intro_en, "No French Title Intro!")
+          @log.add("ISO_11", title_intro_en)
         end
       end
 
@@ -22,20 +22,20 @@ module Metanorma
         title_main_en = title_lang_part(root, "main", "en")
         title_main_fr = title_lang_part(root, "main", "fr")
         if title_main_en.nil? && !title_main_fr.nil?
-          @log.add("Style", title_main_fr, "No English Title!")
+          @log.add("ISO_12", title_main_fr)
         end
         if !title_main_en.nil? && title_main_fr.nil?
-          @log.add("Style", title_main_en, "No French Title!")
+          @log.add("ISO_13", title_main_en)
         end
       end
 
       def title_part_validate(root)
         title_part_en = title_lang_part(root, "part", "en")
         title_part_fr = title_lang_part(root, "part", "fr")
-        (title_part_en.nil? && !title_part_fr.nil?) &&
-          @log.add("Style", title_part_fr, "No English Title Part!")
-        (!title_part_en.nil? && title_part_fr.nil?) &&
-          @log.add("Style", title_part_en, "No French Title Part!")
+        title_part_en.nil? && !title_part_fr.nil? &&
+          @log.add("ISO_14", title_part_fr)
+        !title_part_en.nil? && title_part_fr.nil? &&
+          @log.add("ISO_15", title_part_en)
       end
 
       # ISO/IEC DIR 2, 11.4
@@ -46,7 +46,7 @@ module Metanorma
                       "organization[abbreviation = 'IEC' or " \
                       "name = 'International Electrotechnical Commission']")
         subpart && !iec and
-          @log.add("Style", docid, "Subpart defined on non-IEC document!")
+          @log.add("ISO_16", docid)
       end
 
       # ISO/IEC DIR 2, 11.5.2
@@ -56,11 +56,10 @@ module Metanorma
         Publicly\sAvailable\sSpecification | Technical\sReport | Guide /xi
         title_main_en = title_lang_part(root, "main", "en")
         !title_main_en.nil? && doctypes.match(title_main_en.text) and
-          @log.add("Style", title_main_en, "Main Title may name document type")
+          @log.add("ISO_17", title_main_en)
         title_intro_en = title_lang_part(root, "intro", "en")
         !title_intro_en.nil? && doctypes.match(title_intro_en.text) and
-          @log.add("Style", title_intro_en,
-                   "Title Intro may name document type")
+          @log.add("ISO_18", title_intro_en)
       end
 
       # ISO/IEC DIR 2, 22.2
@@ -70,8 +69,7 @@ module Metanorma
           s.xpath("./clause | ./terms | ./references").each do |ss|
             subtitle = ss.at("./title")
             (!subtitle.nil? && !subtitle&.text&.empty?) or
-              @log.add("Style", ss,
-                       "#{title}: each first-level subclause must have a title")
+              @log.add("ISO_19", ss, params: [title])
           end
         end
       end
@@ -88,8 +86,7 @@ module Metanorma
           withtitle = withtitle || (subtitle && !subtitle.text.empty?)
         end
         notitle && withtitle &&
-          @log.add("Style", nil,
-                   "#{label}: all subclauses must have a title, or none")
+          @log.add("ISO_20", nil, params: [label])
       end
 
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-full

@@ -142,7 +142,7 @@ module Metanorma
         @novalid and return
         w = msg
         w += ": #{text}" if text
-        @log.add("Style", node, w, display:)
+        @log.add("STANDOC_48", node, params: [w], display:)
       end
 
       ASSETS_TO_STYLE =
