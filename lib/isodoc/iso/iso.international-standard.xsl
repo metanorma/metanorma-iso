@@ -18622,6 +18622,18 @@
 
 	</xsl:template> <!-- refine_p-style -->
 
+	<xsl:attribute-set name="title-style">
+		<!-- Note: font-size for level 1 title -->
+	</xsl:attribute-set> <!-- title-style -->
+
+	<xsl:template name="refine_title-style">
+		<xsl:param name="element-name"/>
+		<xsl:variable name="level">
+			<xsl:call-template name="getLevel"/>
+		</xsl:variable>
+		<xsl:attribute name="role">H<xsl:value-of select="$level"/></xsl:attribute>
+	</xsl:template> <!-- refine_title-style -->
+
 	<xsl:template name="processPrefaceSectionsDefault">
 		<xsl:for-each select="/*/mn:preface/*[not(self::mn:note or self::mn:admonition)]">
 			<xsl:sort select="@displayorder" data-type="number"/>
