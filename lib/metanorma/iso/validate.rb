@@ -20,18 +20,16 @@ module Metanorma
       def isosubgroup_validate(root)
         root.xpath("#{COMMITTEE_XPATH}[@type = 'Technical committee']/@subtype").each do |t|
           %w{TC PC JTC JPC}.include?(t.text) or
-            @log.add("Document Attributes", nil,
-                     "invalid technical committee type #{t}")
+            @log.add("ISO_2", nil, params: [t.text])
         end
         root.xpath("#{COMMITTEE_XPATH}[@type = 'Subcommittee']/@subtype").each do |t|
           %w{SC JSC}.include?(t.text) or
-            @log.add("Document Attributes", nil,
-                     "invalid subcommittee type #{t}")
+            @log.add("ISO_3", nil, params: [t.text])
         end
       end
 
       def termdef_warn(text, regex, elem, term, msg)
-        regex.match(text) && @log.add("Style", elem, "#{term}: #{msg}")
+        regex.match(text) && @log.add(msg, elem, params: [term])
       end
 
       # ISO/IEC DIR 2, 16.5.6
@@ -39,11 +37,10 @@ module Metanorma
         xmldoc.xpath("//term").each do |t|
           para = t.at("./definition/verbal-definition") || return
           term = t.at("./preferred//name").text
-          @lang == "en" and termdef_warn(para.text, /\A(the|a)\b/i, t, term,
-                                         "term definition starts with article")
+          @lang == "en" and
+            termdef_warn(para.text, /\A(the|a)\b/i, t, term, "ISO_4")
           %(Cyrl Latn).include?(@script) and
-            termdef_warn(para.text, /\.\Z/i, t, term,
-                         "term definition ends with period")
+            termdef_warn(para.text, /\.\Z/i, t, term, "ISO_35")
         end
       end
 
@@ -53,15 +50,13 @@ module Metanorma
            guide amendment technical-corrigendum committee-document addendum
            recommendation)
           .include? @doctype or
-          @log.add("Document Attributes", nil,
-                   "#{@doctype} is not a recognised document type")
+          @log.add("ISO_5", nil, params: [@doctype])
       end
 
       def iteration_validate(xmldoc)
         iteration = xmldoc&.at("//bibdata/status/iteration")&.text or return
         /^\d+/.match(iteration) or
-          @log.add("Document Attributes", nil,
-                   "#{iteration} is not a recognised iteration")
+          @log.add("ISO_6", nil, params: [iteration])
       end
 
       def bibdata_validate(doc)
@@ -75,7 +70,7 @@ module Metanorma
         xmldoc.xpath("//figure//figure").each do |f|
           elems.each do |k, v|
             f.xpath(".//#{v}").each do |n|
-              @log.add("Style", n, "#{k} is not permitted in a subfigure")
+              @log.add("ISO_7", n, params: [k])
             end
           end
         end
@@ -106,9 +101,7 @@ module Metanorma
       def bibitem_validate(xmldoc)
         xmldoc.xpath("//bibitem[date/on = '–']").each do |b|
           b.at("./note[@type = 'Unpublished-Status']") or
-            @log.add("Style", b,
-                     "Reference does not have an " \
-                     "associated footnote indicating unpublished status")
+            @log.add("ISO_8", b)
         end
       end
 

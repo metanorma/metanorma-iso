@@ -2427,7 +2427,7 @@ RSpec.describe IsoDoc do
                    <biblio-tag>
                       <span class="stdpublisher">ISO </span>
                       <span class="stddocNumber">712</span>
-                      ,
+                       ，
                    </biblio-tag>
                    <formattedref>
                       <em>Cereals and cereal products</em>
@@ -2581,7 +2581,7 @@ RSpec.describe IsoDoc do
                    <p id="ISO712" class="NormRef">
                       <span class="stdpublisher">ISO </span>
                       <span class="stddocNumber">712</span>
-                      ,
+                       ，
                       <i>Cereals and cereal products</i>
                       .
                    </p>

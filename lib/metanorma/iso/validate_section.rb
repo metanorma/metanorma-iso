@@ -22,32 +22,26 @@ module Metanorma
       def foreword_validate(root)
         f = root.at("//foreword") || return
         s = f.at("./clause")
-        @log.add("Style", f, "foreword contains subclauses") unless s.nil?
+        @log.add("ISO_23", f) unless s.nil?
       end
 
       # ISO/IEC DIR 2, 15.4
       def normref_validate(root)
         f = root.at("//references[@normative = 'true']") || return
         f.at("./references | ./clause") &&
-          @log.add("Style", f, "normative references contains subclauses")
+          @log.add("ISO_24", f)
       end
-
-      ONE_SYMBOLS_WARNING = "Only one Symbols and Abbreviated " \
-                            "Terms section in the standard".freeze
-      NON_DL_SYMBOLS_WARNING = "Symbols and Abbreviated Terms can " \
-                               "only contain a definition list".freeze
 
       def symbols_validate(root)
         f = root.xpath("//definitions")
         f.empty? && return
         (f.size == 1 || @vocab) or
-          @log.add("Style", f.first, ONE_SYMBOLS_WARNING)
+          @log.add("ISO_25", f.first)
         f.first.elements.reject { |e| %w(title dl).include? e.name }.empty? or
-          @log.add("Style", f.first, NON_DL_SYMBOLS_WARNING)
+          @log.add("ISO_26", f.first)
         @vocab and f.each do |f1|
           f1.at("./ancestor::annex") or
-            @log.add("Style", f1, "In vocabulary documents, Symbols and " \
-                                  "Abbreviated Terms are only permitted in annexes")
+            @log.add("ISO_27", f1)
         end
       end
 
@@ -57,18 +51,18 @@ module Metanorma
 
         test = accepted.map { |a| n.at(a) }
         if test.all?(&:nil?)
-          @log.add("Style", nil, msg)
+          @log.add("ISO_28", nil, params: [msg])
         end
         names
       end
 
       def sections_presence_validate(root)
         root.at("//sections/clause[@type = 'scope']") or
-          @log.add("Style", nil, "Scope clause missing")
+          @log.add("ISO_29", nil)
         root.at("//references[@normative = 'true']") or
-          @log.add("Style", nil, "Normative references missing")
+          @log.add("ISO_30", nil)
         root.at("//terms") or
-          @log.add("Style", nil, "Terms & definitions missing")
+          @log.add("ISO_31", nil)
       end
 
       # spec of permissible section sequence
@@ -116,24 +110,20 @@ module Metanorma
 
       def sections_sequence_validate_body(names, elem)
         if elem.nil? || elem.name != "clause"
-          @log.add("Style", elem, "Document must contain at least one clause")
+          @log.add("ISO_32", elem)
         end
         elem&.at("./self::clause") or
-          @log.add("Style", elem, "Document must contain clause after " \
-                                  "Terms and Definitions")
+          @log.add("ISO_33", elem)
         elem&.at("./self::clause[@type = 'scope']") and
-          @log.add("Style", elem,
-                   "Scope must not occur after Terms and Definitions")
+          @log.add("ISO_34", elem)
         elem = names.shift
         while elem&.name == "clause"
           elem&.at("./self::clause[@type = 'scope']") and
-            @log.add("Style", elem,
-                     "Scope must not occur after Terms and Definitions")
+            @log.add("ISO_34", elem)
           elem = names.shift
         end
         %w(annex references).include? elem&.name or
-          @log.add("Style", elem,
-                   "Only annexes and references can follow clauses")
+          @log.add("ISO_36", elem)
         [names, elem]
       end
 
@@ -142,8 +132,7 @@ module Metanorma
           elem = names.shift
         end
         %w(annex references).include? elem&.name or
-          @log.add("Style", elem,
-                   "Only annexes and references can follow terms and clauses")
+          @log.add("ISO_37", elem)
         [names, elem]
       end
 
@@ -151,28 +140,19 @@ module Metanorma
         while elem&.name == "annex"
           elem = names.shift
           if elem.nil?
-            @log.add("Style", nil, "Document must include (references) " \
-                                   "Normative References")
+            @log.add("ISO_38", nil)
           end
         end
         elem.nil? and return
         elem&.at("./self::references[@normative = 'true']") ||
-          @log.add("Style", nil, "Document must include (references) " \
-                                 "Normative References")
+          @log.add("ISO_38", nil)
         elem = names&.shift
         elem.nil? and return
         elem&.at("./self::references[@normative = 'false']") ||
-          @log.add("Style", elem,
-                   "Final section must be (references) Bibliography")
+          @log.add("ISO_40", elem)
         names.empty? ||
-          @log.add("Style", elem,
-                   "There are sections after the final Bibliography")
+          @log.add("ISO_41", elem)
       end
-
-      NORM_ISO_WARN = <<~WARN.freeze
-        non-ISO/IEC reference is allowed as normative only subject to the conditions in ISO/IEC DIR 2 10.2
-      WARN
-      SCOPE_WARN = "Scope contains subclauses: should be succinct".freeze
 
       def section_style(root)
         foreword_style(root.at("//foreword"))
@@ -180,7 +160,7 @@ module Metanorma
         scope_style(root.at("//clause[@type = 'scope']"))
         scope = root.at("//clause[@type = 'scope']/clause")
         # ISO/IEC DIR 2, 14.4
-        scope.nil? || style_warning(scope, SCOPE_WARN, nil)
+        scope.nil? || @log.add("ISO_39", scope)
         tech_report_style(root)
       end
 
@@ -205,7 +185,7 @@ module Metanorma
       def norm_bibitem_style(root)
         root.xpath(NORM_BIBITEMS).each do |b|
           if b.at(ISO_PUBLISHER_XPATH).nil?
-            @log.add("Style", b, "#{NORM_ISO_WARN}: #{b.text}")
+            @log.add("ISO_42", b, params: [b.text])
           end
         end
       end
@@ -221,7 +201,7 @@ module Metanorma
       def onlychild_clause_validate(root)
         root.xpath(Standoc::Utils::SUBCLAUSE_XPATH).each do |c|
           c.xpath("../clause").size == 1 or next
-          @log.add("Style", c, "subclause is only child")
+          @log.add("ISO_43", c)
         end
       end
 
@@ -230,15 +210,11 @@ module Metanorma
         terms = root.xpath("//sections/terms | //sections/clause[.//terms]")
         if terms.size == 1
           ((t = terms.first.at("./title")) && (t&.text == @i18n.termsdef)) or
-            @log.add("Style", terms.first,
-                     "Single terms clause in vocabulary document " \
-                     "should have normal Terms and definitions heading")
+            @log.add("ISO_44", terms.first)
         elsif terms.size > 1
           terms.each do |x|
             ((t = x.at("./title")) && /^#{@i18n.termsrelated}/.match?(t&.text)) or
-              @log.add("Style", x,
-                       "Multiple terms clauses in vocabulary document " \
-                       "should have 'Terms related to' heading")
+              @log.add("ISO_45", x)
           end
         end
       end

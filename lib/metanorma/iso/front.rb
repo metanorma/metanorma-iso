@@ -67,8 +67,7 @@ module Metanorma
       end
 
       def report_illegal_stage(stage, substage)
-        err = "Illegal document stage: #{stage}.#{substage}"
-        @log.add("Document Attributes", nil, err)
+        @log.add("ISO_9", nil, params: [stage, substage])
       end
 
       def title_component(node, xml, lang, comp)

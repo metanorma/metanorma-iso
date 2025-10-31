@@ -261,7 +261,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref>RAMSEY, J. K. and W. C. MCGREW. Object play in great apes: Studies in nature and captivity. <em>The nature of play: Great apes and humans</em> (eds. Pellegrini, A. D. and P. K. Smith). Third edition. New York, NY: Guilford Press. 2005. pp. 89–112. [viewed: September 3, 2019].</formattedref>
+      <formattedref>RAMSEY, J. K. and W. C. MCGREW. Object play in great apes: Studies in nature and captivity. <em>The nature of play: Great apes and humans</em> (eds. Pellegrini, A. D. and P. K. Smith). Third edition. New York, NY: Guilford Press. 2005. pp. 89–112. [viewed: September 3, 2019]</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -276,7 +276,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><em>Nature</em>. 2005–2009.</formattedref>
+      <formattedref><em>Nature</em>. 2005–2009</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -347,7 +347,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref>ALUFFI, P., D. ANDERSON, M. HERING, M. MUSTAŢĂ and S. PAYNE. (eds.) Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. <em>London Mathematical Society Lecture Note Series</em> (N.S.). 2022, vol. 1 no. 7, pp. 89–112.</formattedref>
+      <formattedref>ALUFFI, P., D. ANDERSON, M. HERING, M. MUSTAŢĂ and S. PAYNE. (eds.) Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday. <em>London Mathematical Society Lecture Note Series</em> (N.S.). 2022, vol. 1 no. 7, pp. 89–112</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -355,32 +355,32 @@ RSpec.describe Relaton::Render::Iso do
   end
 
   it "renders software" do
-      input = <<~INPUT
-        <bibitem type="software">
-          <title>metanorma-standoc</title>
-          <uri>https://github.com/metanorma/metanorma-standoc</uri>
-          <date type="published"><on>2019-09-04</on></date>
-          <contributor>
-            <role type="author"/>
-            <organization>
-              <name>Ribose Inc.</name>
-            </organization>
-          </contributor>
-          <contributor>
-            <role type="distributor"/>
-            <organization>
-              <name>GitHub</name>
-            </organization>
-          </contributor>
-          <edition>1.3.1</edition>
-        </bibitem>
-      INPUT
-      output = <<~OUTPUT
-        <formattedref>RIBOSE INC. <em>metanorma-standoc</em>. Version 1.3.1. 2019. Available from: <span class='biburl'><link target='https://github.com/metanorma/metanorma-standoc'>https://github.com/metanorma/metanorma-standoc</link></span>.</formattedref>
-      OUTPUT
-      p = renderer
-      expect(p.render(input))
-        .to be_equivalent_to output
+    input = <<~INPUT
+      <bibitem type="software">
+        <title>metanorma-standoc</title>
+        <uri>https://github.com/metanorma/metanorma-standoc</uri>
+        <date type="published"><on>2019-09-04</on></date>
+        <contributor>
+          <role type="author"/>
+          <organization>
+            <name>Ribose Inc.</name>
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="distributor"/>
+          <organization>
+            <name>GitHub</name>
+          </organization>
+        </contributor>
+        <edition>1.3.1</edition>
+      </bibitem>
+    INPUT
+    output = <<~OUTPUT
+      <formattedref>RIBOSE INC. <em>metanorma-standoc</em>. Version 1.3.1. 2019. Available from: <span class='biburl'><link target='https://github.com/metanorma/metanorma-standoc'>https://github.com/metanorma/metanorma-standoc</link></span></formattedref>
+    OUTPUT
+    p = renderer
+    expect(p.render(input))
+      .to be_equivalent_to output
   end
 
   it "renders home standard" do
@@ -516,7 +516,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref>S. BRADNER. <em><span class='stddocTitle'>Intellectual Property Rights in IETF Technology</span></em>. RFC Series. Available from: <span class='biburl'><link target='https://www.rfc-editor.org/info/rfc3979'>https://www.rfc-editor.org/info/rfc3979</link></span>.</formattedref>
+      <formattedref>S. BRADNER. <em><span class='stddocTitle'>Intellectual Property Rights in IETF Technology</span></em>. RFC Series. Available from: <span class='biburl'><link target='https://www.rfc-editor.org/info/rfc3979'>https://www.rfc-editor.org/info/rfc3979</link></span></formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -576,7 +576,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref><em><span class='stddocTitle'>Time Ontology in OWL</span></em>. Recommendation. Available from: <span class='biburl'><link target='https://www.w3.org/TR/owl-time/'>https://www.w3.org/TR/owl-time/</link></span>.</formattedref>
+      <formattedref><em><span class='stddocTitle'>Time Ontology in OWL</span></em>. Recommendation. Available from: <span class='biburl'><link target='https://www.w3.org/TR/owl-time/'>https://www.w3.org/TR/owl-time/</link></span></formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -618,7 +618,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref>PORTES, A. and R. G. RUMBAUT. <em>Children of Immigrants. Longitudinal Sudy (CILS) 1991–2006 ICPSR20520</em>. Version 2. Dataset. 2012. Available from: <span class='biburl'><link target='https://doi.org/10.3886/ICPSR20520.v2'>https://doi.org/10.3886/ICPSR20520.v2</link></span>. 501 GB. [viewed: May 6, 2018].</formattedref>
+      <formattedref>PORTES, A. and R. G. RUMBAUT. <em>Children of Immigrants. Longitudinal Sudy (CILS) 1991–2006 ICPSR20520</em>. Version 2. Dataset. 2012. Available from: <span class='biburl'><link target='https://doi.org/10.3886/ICPSR20520.v2'>https://doi.org/10.3886/ICPSR20520.v2</link></span>. 501 GB. [viewed: May 6, 2018]</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -653,7 +653,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref>LIBERMAN, M. and G. PULLUM. <em><span class='stddocTitle'>Language Log</span></em> [website]. University of Pennsylvania. 2003–. Available from: <span class='biburl'><link target='https://languagelog.ldc.upenn.edu/nll/'>https://languagelog.ldc.upenn.edu/nll/</link></span>. [viewed: September 3, 2019].</formattedref>
+      <formattedref>LIBERMAN, M. and G. PULLUM. <em><span class='stddocTitle'>Language Log</span></em> [website]. University of Pennsylvania. 2003–. Available from: <span class='biburl'><link target='https://languagelog.ldc.upenn.edu/nll/'>https://languagelog.ldc.upenn.edu/nll/</link></span>. [viewed: September 3, 2019]</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -685,7 +685,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-      <formattedref>JENKINS and J. RUOSTEKOSKI. <em>Controlled manipulation of light by cooperativeresponse of atoms in an optical lattice</em>. Preprint. 2012. Available from: <span class='biburl'><link target='https://eprints.soton.ac.uk/338797/'>https://eprints.soton.ac.uk/338797/</link></span>. [viewed: June 24, 2020].</formattedref>
+      <formattedref>JENKINS and J. RUOSTEKOSKI. <em>Controlled manipulation of light by cooperativeresponse of atoms in an optical lattice</em>. Preprint. 2012. Available from: <span class='biburl'><link target='https://eprints.soton.ac.uk/338797/'>https://eprints.soton.ac.uk/338797/</link></span>. [viewed: June 24, 2020]</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))
@@ -717,7 +717,7 @@ RSpec.describe Relaton::Render::Iso do
       </bibitem>
     INPUT
     output = <<~OUTPUT
-    <formattedref>JENKINS and J. RUOSTEKOSKI. <em>Controlled manipulation of light by cooperativeresponse of atoms in an optical lattice</em>. Preprint. 2020. Available from: <span class='biburl'><link target='https://eprints.soton.ac.uk/338797/'>https://eprints.soton.ac.uk/338797/</link></span>. [viewed: June 2020].</formattedref>
+      <formattedref>JENKINS and J. RUOSTEKOSKI. <em>Controlled manipulation of light by cooperativeresponse of atoms in an optical lattice</em>. Preprint. 2020. Available from: <span class='biburl'><link target='https://eprints.soton.ac.uk/338797/'>https://eprints.soton.ac.uk/338797/</link></span>. [viewed: June 2020]</formattedref>
     OUTPUT
     p = renderer
     expect(p.render(input))

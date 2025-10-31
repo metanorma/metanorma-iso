@@ -163,3 +163,5 @@ inflection:
   Référence:
     sg: Référence
     pl: Références
+punct:
+  biblio-terminator: ""

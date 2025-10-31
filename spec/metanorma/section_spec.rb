@@ -263,61 +263,65 @@ RSpec.describe Metanorma::Iso do
       * [[[iso5678,B]]]
     INPUT
     output = <<~OUTPUT
-        #{BLANK_HDR.sub(/<boilerplate>/, '<termdocsource bibitemid="iso1234"/><termdocsource bibitemid="iso5678"/><boilerplate>')}
-        <preface>
-          <foreword id="_" obligation="informative">
-            <title id="_">Foreword</title>
-            <p id="_">Foreword</p>
-          </foreword>
-        </preface>
-                  <sections>
-             <terms id="_" obligation="normative">
-                <title id="_">Terms and definitions</title>
-                <p id="_">
-                   For the purposes of this document, the terms and definitions given in
-                   <eref bibitemid="iso1234" citeas="A"/>
-                   and
-                   <eref bibitemid="iso5678" citeas="B"/>
-                   and the following apply.
-                </p>
-                <p id="_">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
-                <ul id="_">
-                   <li>
-                      <p id="_">
-                         ISO Online browsing platform: available at
-                         <link target="https://www.iso.org/obp"/>
-                      </p>
-                   </li>
-                   <li>
-                      <p id="_">
-                         IEC Electropedia: available at
-                         <link target="https://www.electropedia.org"/>
-                      </p>
-                   </li>
-                </ul>
-                <term id="_" anchor="term-Term1">
-                   <preferred>
-                      <expression>
-                         <name>Term1</name>
-                      </expression>
-                   </preferred>
-                </term>
-             </terms>
-          </sections>
-          <bibliography>
-             <references id="_" normative="false" obligation="informative">
-                <title id="_">Bibliography</title>
-                <bibitem id="_" anchor="iso1234">
-                   <formattedref format="application/x-isodoc+xml">[NO INFORMATION AVAILABLE]</formattedref>
-                   <docidentifier>A</docidentifier>
-                </bibitem>
-                <bibitem id="_" anchor="iso5678">
-                   <formattedref format="application/x-isodoc+xml">[NO INFORMATION AVAILABLE]</formattedref>
-                   <docidentifier>B</docidentifier>
-                </bibitem>
-             </references>
-          </bibliography>
-       </metanorma>
+       #{BLANK_HDR.sub(/<boilerplate>/, '<termdocsource bibitemid="iso1234"/><termdocsource bibitemid="iso5678"/><boilerplate>')}
+       <preface>
+         <foreword id="_" obligation="informative">
+           <title id="_">Foreword</title>
+           <p id="_">Foreword</p>
+         </foreword>
+       </preface>
+                 <sections>
+            <terms id="_" obligation="normative">
+               <title id="_">Terms and definitions</title>
+               <p id="_">
+                  For the purposes of this document, the terms and definitions given in
+                  <eref bibitemid="iso1234" citeas="A"/>
+                  and
+                  <eref bibitemid="iso5678" citeas="B"/>
+                  and the following apply.
+               </p>
+               <p id="_">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
+               <ul id="_">
+                  <li>
+                     <p id="_">
+                        ISO Online browsing platform: available at
+                        <link target="https://www.iso.org/obp"/>
+                     </p>
+                  </li>
+                  <li>
+                     <p id="_">
+                        IEC Electropedia: available at
+                        <link target="https://www.electropedia.org"/>
+                     </p>
+                  </li>
+               </ul>
+               <term id="_" anchor="term-Term1">
+                  <preferred>
+                     <expression>
+                        <name>Term1</name>
+                     </expression>
+                  </preferred>
+               </term>
+            </terms>
+         </sections>
+         <bibliography>
+            <references id="_" normative="false" obligation="informative">
+               <title id="_">Bibliography</title>
+               <bibitem id="_" anchor="iso1234">
+                  <formattedref format="application/x-isodoc+xml">[NO INFORMATION AVAILABLE]</formattedref>
+                  <docidentifier>A</docidentifier>
+                  <language>en</language>
+                  <script>Latn</script>
+               </bibitem>
+               <bibitem id="_" anchor="iso5678">
+                  <formattedref format="application/x-isodoc+xml">[NO INFORMATION AVAILABLE]</formattedref>
+                  <docidentifier>B</docidentifier>
+                  <language>en</language>
+                  <script>Latn</script>
+               </bibitem>
+            </references>
+         </bibliography>
+      </metanorma>
     OUTPUT
     expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Canon.format_xml(output)
@@ -427,10 +431,14 @@ RSpec.describe Metanorma::Iso do
                 <bibitem id="_" anchor="iso1234">
                    <formattedref format="application/x-isodoc+xml">[NO INFORMATION AVAILABLE]</formattedref>
                    <docidentifier>A</docidentifier>
+                   <language>en</language>
+                   <script>Latn</script>
                 </bibitem>
                 <bibitem id="_" anchor="iso5678">
                    <formattedref format="application/x-isodoc+xml">[NO INFORMATION AVAILABLE]</formattedref>
                    <docidentifier>B</docidentifier>
+                   <language>en</language>
+                   <script>Latn</script>
                 </bibitem>
              </references>
           </bibliography>

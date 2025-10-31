@@ -16,3 +16,5 @@ module Metanorma
     end
   end
 end
+
+require "metanorma/iso/log"

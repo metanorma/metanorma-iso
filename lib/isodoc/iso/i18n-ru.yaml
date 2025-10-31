@@ -163,3 +163,5 @@ inflection:
   Ссылка:
     sg: Ссылка
     pl: Ссылки
+punct:
+  biblio-terminator: ""

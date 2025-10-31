@@ -165,3 +165,6 @@ inflection:
   Reference:
     sg: Reference
     pl: References
+punct:
+  biblio-terminator: ""
+

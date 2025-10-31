@@ -162,3 +162,5 @@ inflection:
   Referenz:
     sg: Referenz
     pl: Referenzen
+punct:
+    biblio-terminator: ""

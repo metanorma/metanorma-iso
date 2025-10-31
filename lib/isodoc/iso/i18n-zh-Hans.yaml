@@ -78,3 +78,5 @@ locality:
 requirements:
   modspec:
     provision: 条件
+punct:
+  biblio-terminator: ""
