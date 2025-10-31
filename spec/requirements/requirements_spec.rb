@@ -409,7 +409,6 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                       <em>
                          <span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span>
                       </em>
-                      .
                    </formattedref>
                    <fetched/>
                    <title format="text/plain" language="en" script="Latn">Hypertext Transfer Protocol — HTTP/1.1</title>
@@ -695,7 +694,6 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <i>
                       <span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span>
                    </i>
-                   .
                 </p>
              </div>
           </div>
@@ -869,7 +867,6 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                    <i>
                       <span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span>
                    </i>
-                   .
                 </p>
              </div>
           </div>

@@ -42,5 +42,5 @@ stage_dict:
     directive: Directive
   "90": Review
   "95": Withdrawal
-
-
+punct:
+  biblio-terminator: ""

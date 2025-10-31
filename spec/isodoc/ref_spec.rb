@@ -139,9 +139,8 @@ RSpec.describe IsoDoc do
             </bibitem>
             <bibitem id="ref12">
               <formattedref format="application/x-isodoc+xml">CitationWorks. 2019.
-
                 <em>How to cite a reference</em>
-                .</formattedref>
+                </formattedref>
               <docidentifier type="metanorma">[Citn]</docidentifier>
               <docidentifier type="IETF">RFC 20</docidentifier>
             </bibitem>
@@ -453,7 +452,6 @@ RSpec.describe IsoDoc do
                      <em>
                         <span class="stddocTitle">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</span>
                      </em>
-                     .
                   </formattedref>
                   <title>Internet Calendaring and Scheduling Core Object Specification (iCalendar)</title>
                   <docidentifier type="metanorma-ordinal">[5]</docidentifier>
@@ -472,7 +470,6 @@ RSpec.describe IsoDoc do
                   <formattedref format="application/x-isodoc+xml">
                      CitationWorks. 2019.
                      <em>How to cite a reference</em>
-                     .
                   </formattedref>
                   <docidentifier type="metanorma">[Citn]</docidentifier>
                   <docidentifier type="IETF">IETF RFC 20</docidentifier>
@@ -635,7 +632,6 @@ RSpec.describe IsoDoc do
                       <i>
                          <span class="stddocTitle">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</span>
                       </i>
-                      .
                    </p>
                    <p id="ref12" class="Biblio">
                       Citn#{' '}
@@ -644,7 +640,6 @@ RSpec.describe IsoDoc do
                       <span class="stddocNumber">20</span>
                       , CitationWorks. 2019.
                       <i>How to cite a reference</i>
-                      .
                    </p>
                 </div>
                 <aside id="fn:1" class="footnote">
@@ -713,7 +708,6 @@ RSpec.describe IsoDoc do
                        <fmt-link target="https://registre.ign.fr/">https://registre.ign.fr/</fmt-link>
                     </semx>
                   </span>
-                  .
                 </formattedref>
                <fetched/>
                <title type="title-main" format="text/plain">IGNF. (IGN France) Registry</title>
