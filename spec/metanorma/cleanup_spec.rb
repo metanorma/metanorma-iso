@@ -236,6 +236,8 @@ RSpec.describe Metanorma::Iso do
                   <abbreviation>ISO</abbreviation>
                 </organization>
               </contributor>
+              <language>en</language>
+              <script>Latn</script>
             </bibitem>
           </references>
         </bibliography>
@@ -295,6 +297,8 @@ RSpec.describe Metanorma::Iso do
                   <abbreviation>ISO</abbreviation>
                 </organization>
               </contributor>
+              <language>en</language>
+              <script>Latn</script>
             </bibitem>
           </references>
         </bibliography>
@@ -339,6 +343,8 @@ RSpec.describe Metanorma::Iso do
                   <abbreviation>ISO</abbreviation>
                 </organization>
               </contributor>
+              <language>en</language>
+              <script>Latn</script>
             </bibitem>
           </references>
         </bibliography>
@@ -418,6 +424,8 @@ RSpec.describe Metanorma::Iso do
                   <abbreviation>ISO</abbreviation>
                 </organization>
               </contributor>
+              <language>en</language>
+              <script>Latn</script>
             </bibitem>
           </references>
         </bibliography>
@@ -749,6 +757,8 @@ RSpec.describe Metanorma::Iso do
                 </organization>
               </contributor>
               <note format="text/plain" type="Unpublished-Status">The standard is in press</note>
+              <language>en</language>
+              <script>Latn</script>
             </bibitem>
           </references>
         </bibliography>
@@ -937,6 +947,8 @@ RSpec.describe Metanorma::Iso do
                      <abbreviation>ISO</abbreviation>
                    </organization>
                  </contributor>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref2" type='standard'>
                  <title format='text/plain'>Standard ISO/IEC 123</title>
@@ -956,6 +968,8 @@ RSpec.describe Metanorma::Iso do
                      <abbreviation>IEC</abbreviation>
                    </organization>
                  </contributor>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref1b" type='standard'>
                  <title format='text/plain'>Standard ISO 123</title>
@@ -974,6 +988,8 @@ RSpec.describe Metanorma::Iso do
                      <name>TS</name>
                    </organization>
                  </contributor>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref1a" type='standard'>
                  <title format='text/plain'>Standard ISO 123</title>
@@ -986,6 +1002,8 @@ RSpec.describe Metanorma::Iso do
                      <abbreviation>ISO</abbreviation>
                    </organization>
                  </contributor>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref3" type='standard'>
                  <title format='text/plain'>Standard IEC 123</title>
@@ -998,6 +1016,8 @@ RSpec.describe Metanorma::Iso do
                      <abbreviation>IEC</abbreviation>
                    </organization>
                  </contributor>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref4">
                  <formattedref format='application/x-isodoc+xml'>
@@ -1005,24 +1025,32 @@ RSpec.describe Metanorma::Iso do
                  </formattedref>
                  <docidentifier>GB 123</docidentifier>
                  <docnumber>123</docnumber>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref5">
                  <formattedref format='application/x-isodoc+xml'>
                    <em>Standard 10</em>
                  </formattedref>
                  <docidentifier type='metanorma'>[7]</docidentifier>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref7">
                  <formattedref format='application/x-isodoc+xml'>
                    <em>Standard 30</em>
                  </formattedref>
                  <docidentifier type='metanorma'>[A]</docidentifier>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref6">
                  <formattedref format='application/x-isodoc+xml'>
                    <em>Standard 20</em>
                  </formattedref>
                  <docidentifier type='metanorma'>[B]</docidentifier>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
              </references>
              <references id='_' normative='false' obligation='informative'>
@@ -1037,6 +1065,8 @@ RSpec.describe Metanorma::Iso do
                      <abbreviation>ISO</abbreviation>
                    </organization>
                  </contributor>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref10" type='standard'>
                  <title format='text/plain'>Standard ISO/IEC 123</title>
@@ -1056,6 +1086,8 @@ RSpec.describe Metanorma::Iso do
                      <abbreviation>IEC</abbreviation>
                    </organization>
                  </contributor>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref13" type='standard'>
                  <title format='text/plain'>Standard IEC 123</title>
@@ -1068,6 +1100,8 @@ RSpec.describe Metanorma::Iso do
                      <abbreviation>IEC</abbreviation>
                    </organization>
                  </contributor>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref14">
                  <formattedref format='application/x-isodoc+xml'>
@@ -1075,24 +1109,32 @@ RSpec.describe Metanorma::Iso do
                  </formattedref>
                  <docidentifier>GB 123</docidentifier>
                  <docnumber>123</docnumber>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref15">
                  <formattedref format='application/x-isodoc+xml'>
                    <em>Standard 10</em>
                  </formattedref>
                  <docidentifier type='metanorma'>[14]</docidentifier>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref17">
                  <formattedref format='application/x-isodoc+xml'>
                    <em>Standard 30</em>
                  </formattedref>
                  <docidentifier type='metanorma'>[A]</docidentifier>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
                <bibitem id="_" anchor="ref16">
                  <formattedref format='application/x-isodoc+xml'>
                    <em>Standard 20</em>
                  </formattedref>
                  <docidentifier type='metanorma'>[B]</docidentifier>
+                 <language>en</language>
+                 <script>Latn</script>
                </bibitem>
              </references>
            </clause>
@@ -1278,7 +1320,7 @@ RSpec.describe Metanorma::Iso do
               </clause>
            </sections>
         </metanorma>
-              OUTPUT
+      OUTPUT
       expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to Canon.format_xml(output)
     end
@@ -1605,7 +1647,7 @@ RSpec.describe Metanorma::Iso do
               </terms>
            </sections>
         </metanorma>
-             OUTPUT
+      OUTPUT
       expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
         .to be_equivalent_to Canon.format_xml(output)
     end

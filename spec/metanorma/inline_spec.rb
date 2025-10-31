@@ -150,11 +150,15 @@ RSpec.describe Metanorma::Iso do
             <bibitem id="_" anchor="ISO712">
               <formattedref format="application/x-isodoc+xml">Reference</formattedref>
               <docidentifier>x</docidentifier>
+              <language>en</language>
+              <script>Latn</script>
             </bibitem>
             <bibitem id="_" anchor="ISO713">
               <formattedref format="application/x-isodoc+xml">Reference</formattedref>
               <docidentifier>ISO713</docidentifier>
               <docnumber>713</docnumber>
+              <language>en</language>
+              <script>Latn</script>
             </bibitem>
           </references>
         </bibliography>
