@@ -8,29 +8,6 @@ module IsoDoc
     class Xref < IsoDoc::Xref
       attr_accessor :anchors_previous, :anchors
 
-      def clause_order_main(docxml)
-        if @klass.amd?(docxml)
-          [{ path: "//sections/clause", multi: true }]
-        else
-          [{ path: "//sections/clause[@type = 'scope']" },
-           { path: @klass.norm_ref_xpath },
-           { path:
-             "#{@klass.middle_clause(docxml)} | //sections/terms | " \
-             "//sections/clause[descendant::terms or descendant::definitions] | " \
-             "//sections/definitions | //sections/clause[@type = 'section']", multi: true }]
-        end
-      end
-
-      def clause_order_back(docxml)
-        if @klass.amd?(docxml)
-          [{ path: @klass.norm_ref_xpath },
-           { path: @klass.bibliography_xpath },
-           { path: "//indexsect", multi: true },
-           { path: "//colophon/*", multi: true }]
-        else super
-        end
-      end
-
       def initial_anchor_names(doc)
         super
         if @parse_settings.empty? || @parse_settings[:clauses]

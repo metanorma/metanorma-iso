@@ -656,6 +656,7 @@ RSpec.describe IsoDoc do
                          <span style="mso-tab-count:1">  </span>
                          Symbols
                       </h2>
+                      <div align="left">
                       <table class="dl">
                          <tr>
                             <td valign="top" align="left">
@@ -664,6 +665,7 @@ RSpec.describe IsoDoc do
                             <td valign="top">Definition</td>
                          </tr>
                       </table>
+                      </div>
                    </div>
                 </div>
                 <div id="L" class="Symbols">
@@ -672,6 +674,7 @@ RSpec.describe IsoDoc do
                       <span style="mso-tab-count:1">  </span>
                       Symbols
                    </h1>
+                   <div align="left">
                    <table class="dl">
                       <tr>
                          <td valign="top" align="left">
@@ -680,6 +683,7 @@ RSpec.describe IsoDoc do
                          <td valign="top">Definition</td>
                       </tr>
                    </table>
+                   </div>
                 </div>
                 <div id="M">
                    <h1>

@@ -16,6 +16,46 @@ nametemplate:
 # etal_count: 5
 seriestemplate: "{% if series_formatted %}{{ series_formatted }}{%else%}{% if series_abbr %}{{series_abbr}}{% else %}{{series_title}}{% endif %} ({{series_run}}) {{series_num}}|({{series_partnumber}}){%endif%}"
 journaltemplate: "<em>{% if series_abbr %}{{series_abbr}}{% else %}{{series_title}}{% endif %}</em> ({{series_run}}) {{ labels['volume'] }}_{{series_num}} {{ labels['part'] }}_{{series_partnumber}}"
+
+citetemplate:
+  short:
+    standard: "{% if home_standard %}<em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }}{% else %}{{ creatornames | selective_upcase }}$$$ <em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }} $$$  {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{labels['updated'] | capitalize }}_{{date_updated}}$$$ {{status | capitalize}}$$$ {{ authorizer }}{% endif %}"
+    website: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em><span_class='stddocTitle'>{{ title }}</span></em> [{{ labels['website'] }}]$$$ {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{place}}: {{ publisher }}$$$ {{date}}"
+    book: "{{ creatornames | selective_upcase }}$$$ ({{role}}) <em>{{ title }}</em> $$$ {{ edition | capitalize_first }}$$$ ({{ series }})$$$ {% if place %}{{place}}:{%endif%} {{publisher}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}"
+    booklet: book
+    manual: book
+    techreport: book
+    proceedings: book
+    inbook: "{{ creatornames | selective_upcase }}$$$ ({{role}}) {{ title }} $$$ <em>{{host_title}}</em> ({{host_role}} {{ host_creatornames | replace: '+++', ''}}) $$$ {{ edition | capitalize_first }}$$$ ({{ series }})$$$ {% if place %}{{place}}:{%endif%} {{publisher}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}"
+    inproceedings: inbook
+    incollection: inbook
+    journal: "<em>{{ title}}</em> $$$ {{ edition | capitalize_first }}$$$ {{place}}: {{publisher}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}"
+    article: "{{ creatornames | selective_upcase }}$$$ ({{role}}) {{ title }}$$$ {{ series }} $$$ {{date}}, {{ extent }}$$$ {{ labels['updated'] | capitalize }}:_{{date_updated}}"
+    software: "{{ creatornames | selective_upcase }}$$$ ({{ role}}) <em>{{ title }}</em> $$$ {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{medium | capitalize}}$$$ {{place}}: {{publisher}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}"
+    electronic resource:  software
+    dataset: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{medium | capitalize }}$$$ {{ labels['in'] | capitalize }}:_{{series}}$$$ {{date}}$$$ {{ labels['updated'] | capitalize }}:_{{date_updated}}$$$ {{ authoritative_identifier | join '$$$ ' }}$$$ {{ other_identifier | join '$$$ ' }}"
+    webresource: website
+    unpublished: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ medium | capitalize }}$$$ {{ date }}$$$ {{ labels['at'] | capitalize}}:_{{ access_location }}"
+    presentation: unpublished
+    thesis: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ medium | capitalize }}$$$ {{place}}: {{ publisher }}$$$ {{ date }}"
+    misc:  "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ date }}$$$"
+    # following are # unsupported types:
+    map: misc
+    audiovisual: misc
+    film: misc
+    video: misc
+    broadcast: misc
+    graphic_work: misc
+    music: misc
+    performance: misc
+    patent: misc
+    archival: misc
+    social_media: misc
+    alert: misc
+    message: misc
+    conversation: misc
+    internal: misc
+
 template:
   # skip standardidentifier, it is inserted in front of formattedref within metanorma
   standard: "{% if home_standard %}<em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }}{% else %}{{ creatornames | selective_upcase }}$$$ <em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }} $$$  {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{labels['updated'] | capitalize }}_{{date_updated}}$$$ {{status | capitalize}}$$$ {{ authorizer }}$$$ {{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$${% endif %}" 

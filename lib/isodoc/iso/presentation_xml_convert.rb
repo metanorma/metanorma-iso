@@ -4,6 +4,7 @@ require_relative "presentation_xref"
 require_relative "presentation_bibdata"
 require_relative "presentation_section"
 require_relative "presentation_terms"
+require_relative "presentation_origin"
 require_relative "../../relaton/render/general"
 
 module IsoDoc

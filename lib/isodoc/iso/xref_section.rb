@@ -1,6 +1,29 @@
 module IsoDoc
   module Iso
     class Xref < IsoDoc::Xref
+      def clause_order_main(docxml)
+        if @klass.amd?(docxml)
+          [{ path: "//sections/clause", multi: true }]
+        else
+          [{ path: "//sections/clause[@type = 'scope']" },
+           { path: @klass.norm_ref_xpath },
+           { path:
+             "#{@klass.middle_clause(docxml)} | //sections/terms | " \
+             "//sections/clause[descendant::terms or descendant::definitions] | " \
+             "//sections/definitions | //sections/clause[@type = 'section']", multi: true }]
+        end
+      end
+
+      def clause_order_back(docxml)
+        if @klass.amd?(docxml)
+          [{ path: @klass.norm_ref_xpath },
+           { path: @klass.bibliography_xpath },
+           { path: "//indexsect", multi: true },
+           { path: "//colophon/*", multi: true }]
+        else super
+        end
+      end
+
       # we can reference 0-number clauses in introduction
       def introduction_names(clause)
         clause.nil? and return
@@ -25,7 +48,8 @@ module IsoDoc
         elsif level > 1
           @anchors[clause["id"]] =
             { label: num, level: level, xref: num, subtype: "clause" }
-        else super end
+        else super
+        end
       end
 
       def annex_name_anchors1(clause, num, level)
