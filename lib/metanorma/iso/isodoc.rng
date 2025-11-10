@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-<!-- VERSION v2.1.3 -->
+<!-- VERSION v2.1.4 -->
 
   <!--
     ALERT: cannot have root comments, because of https://github.com/metanorma/metanorma/issues/437
@@ -905,15 +905,32 @@ titlecase, or lowercase</a:documentation>
     </element>
   </define>
   <define name="image" combine="choice">
-    <element name="svg">
-      <a:documentation>Add svg mark up to image</a:documentation>
-      <oneOrMore>
-        <choice>
-          <text/>
-          <ref name="AnyElement"/>
-        </choice>
-      </oneOrMore>
-    </element>
+    <choice>
+      <element name="image">
+        <ref name="RequiredId"/>
+        <ref name="ImageAttributes"/>
+        <optional>
+          <element name="svg">
+            <a:documentation>Allow svg in image/svg, for consistency</a:documentation>
+            <oneOrMore>
+              <choice>
+                <text/>
+                <ref name="AnyElement"/>
+              </choice>
+            </oneOrMore>
+          </element>
+        </optional>
+      </element>
+      <element name="svg">
+        <a:documentation>Add svg mark up to image</a:documentation>
+        <oneOrMore>
+          <choice>
+            <text/>
+            <ref name="AnyElement"/>
+          </choice>
+        </oneOrMore>
+      </element>
+    </choice>
   </define>
   <define name="ParagraphFnBody" combine="interleave">
     <ref name="BlockSource">

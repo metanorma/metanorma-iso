@@ -1434,8 +1434,9 @@ RSpec.describe IsoDoc do
                       Example
                    </p>
                 </div>
+                <div align="left" style="page-break-after:avoid;">
                 <p class="KeyTitle">Key</p>
-                <div class="figdl" style="page-break-after:avoid;page-break-after:avoid;">
+                <div class="figdl" style="page-break-after:avoid;">
                    <table class="figdl">
                       <tr>
                          <td valign="top" align="left">
@@ -1446,6 +1447,7 @@ RSpec.describe IsoDoc do
                          </td>
                       </tr>
                    </table>
+                   </div>
                 </div>
                 <p class="Figuretitle" style="text-align:center;">Table1</p>
              </div>
@@ -2153,6 +2155,7 @@ RSpec.describe IsoDoc do
               EXAMPLE
               <span style='mso-tab-count:1'>  </span>
             </p>
+            <div align="left">
             <table class='dl' style='margin-left: 1cm;'>
               <tr>
                 <td valign='top' align='left'>
@@ -2163,6 +2166,7 @@ RSpec.describe IsoDoc do
                 </td>
               </tr>
             </table>
+            </div>
           </div>
         </div>
       </div>
