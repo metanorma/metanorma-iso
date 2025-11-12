@@ -85,8 +85,8 @@ module Metanorma
 
       def contributors_committees_filter_empty?(committee)
         committee[:name].empty? &&
-          (committee[:ident].nil? || %w(WG TC
-                                        SC).include?(committee[:ident]))
+          (committee[:ident].nil? ||
+          %w(WG TC SC).include?(committee[:ident]))
       end
 
       def metadata_publisher(node, xml)

@@ -16,12 +16,15 @@ module Metanorma
       end
 
       def metadata_ext_iso(node, xml)
-        a = node.attr("horizontal") and xml.horizontal a
+        add_noko_elem(xml, "horizontal", node.attr("horizontal")) # xml.horizontal a
         metadata_stage(node, xml)
-        @amd && a = node.attr("updates-document-type") and
-          xml.updates_document_type a
+        @amd and # && a = node.attr("updates-document-type") and
+          add_noko_elem(xml, "updates_document_type",
+                        node.attr("updates-document-type"))
+        # xml.updates_document_type a
         a = node.attr("fast-track") and xml.send "fast-track", a != "false"
-        a = node.attr("price-code") and xml.price_code a
+        # a = node.attr("price-code") and xml.price_code a
+        add_noko_elem(xml, "price_code", node.attr("price-code"))
         node.attr("iso-cen-parallel") and xml.iso_cen_parallel true
       end
 
@@ -58,9 +61,12 @@ module Metanorma
         substage = get_substage(node)
         abbrev = iso_id_default(iso_id_params(node)).stage&.abbr&.upcase
         xml.status do |s|
-          s.stage stage, **attr_code(abbreviation: abbrev)
-          s.substage substage
-          i = node.attr("iteration") and s.iteration i
+          add_noko_elem(s, "stage", stage, **attr_code(abbreviation: abbrev))
+          # s.stage stage, **attr_code(abbreviation: abbrev)
+          add_noko_elem(s, "substage", substage)
+          # s.substage substage
+          add_noko_elem(s, "iteration", node.attr("iteration"))
+          # i = node.attr("iteration") and s.iteration i
         end
       rescue *STAGE_ERROR
         report_illegal_stage(stage, substage)
