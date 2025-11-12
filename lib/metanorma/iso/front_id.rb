@@ -10,11 +10,9 @@ module Metanorma
       def metadata_id(node, xml)
         if id = node.attr("docidentifier")
           add_noko_elem(xml, "docidentifier", id, type: "ISO", primary: "true")
-          # xml.docidentifier id, **attr_code(type: "ISO", primary: "true")
         else iso_id(node, xml)
         end
         node.attr("tc-docnumber")&.split(/,\s*/)&.each do |n|
-          # xml.docidentifier(n, **attr_code(type: "iso-tc"))
           add_noko_elem(xml, "docidentifier", n, type: "iso-tc")
         end
       end
@@ -169,39 +167,26 @@ module Metanorma
         add_noko_elem(xml, "docidentifier",
                       iso_id_default(params).to_s,
                       **attr_code(type: "CEN", primary: "true"))
-        # xml.docidentifier iso_id_default(params).to_s,
-        #                  **attr_code(type: "CEN", primary: "true")
       end
 
       def iso_id_out_common(xml, params, with_prf)
         add_noko_elem(xml, "docidentifier",
                       iso_id_default(params).to_s(with_prf:),
                       **attr_code(type: "ISO", primary: "true"))
-        # xml.docidentifier iso_id_default(params).to_s(with_prf:),
-        #                  **attr_code(type: "ISO", primary: "true")
         add_noko_elem(xml, "docidentifier", iso_id_reference(params)
                       .to_s(format: :ref_num_short, with_prf:),
                       **attr_code(type: "iso-reference"))
-        # xml.docidentifier iso_id_reference(params)
-        #   .to_s(format: :ref_num_short, with_prf:),
-        #                   **attr_code(type: "iso-reference")
         add_noko_elem(xml, "docidentifier", iso_id_reference(params).urn,
                       **attr_code(type: "URN"))
-        # xml.docidentifier iso_id_reference(params).urn, **attr_code(type: "URN")
       end
 
       def iso_id_out_non_amd(xml, params, with_prf)
         add_noko_elem(xml, "docidentifier",
                       iso_id_undated(params).to_s(with_prf:),
                       **attr_code(type: "iso-undated"))
-        # xml.docidentifier iso_id_undated(params).to_s(with_prf:),
-        #                  **attr_code(type: "iso-undated")
         add_noko_elem(xml, "docidentifier",
                       iso_id_with_lang(params).to_s(format: :ref_num_long, with_prf:),
                       **attr_code(type: "iso-with-lang"))
-        # xml.docidentifier iso_id_with_lang(params)
-        #   .to_s(format: :ref_num_long, with_prf:),
-        #                   **attr_code(type: "iso-with-lang")
       end
 
       def iso_id_default(params)
@@ -242,13 +227,6 @@ module Metanorma
             addendum: node.attr("addendum-number"),
             origyr: node.attr("created-date")
           ))
-          # i.project_number(node.attr("docnumber"), **attr_code(
-          #  part:, subpart:,
-          #  amendment: node.attr("amendment-number"),
-          ##  corrigendum: node.attr("corrigendum-number"),
-          #  # addendum: node.attr("addendum-number"),
-          #  origyr: node.attr("created-date")
-          # ))
         end
       end
 
