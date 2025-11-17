@@ -217,12 +217,11 @@ module Metanorma
       end
 
       def structured_id(node, xml)
-        node.attr("docnumber") or return
+        node.attr("docnumber") or return # allow empty node.attr("docnumber")
         part, subpart = node.attr("partnumber")&.split("-")
         xml.structuredidentifier do |i|
-          add_noko_elem(i, "project-number", node.attr("docnumber"), **attr_code(
-            part:, subpart:,
-            amendment: node.attr("amendment-number"),
+          i.project_number(node.attr("docnumber"), **attr_code(
+            part:, subpart:, amendment: node.attr("amendment-number"),
             corrigendum: node.attr("corrigendum-number"),
             addendum: node.attr("addendum-number"),
             origyr: node.attr("created-date")
