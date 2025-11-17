@@ -1,5 +1,0 @@
-gem "relaton-render", git: "https://github.com/relaton/relaton-render", branch: "main"
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
-gem "metanorma-utils", git: "https://github.com/metanorma/metanorma-utils", branch: "main"
-gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "fix/nokogiri-builder-add-elem"
-
