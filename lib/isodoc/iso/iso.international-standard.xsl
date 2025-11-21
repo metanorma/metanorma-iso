@@ -6965,7 +6965,7 @@
 	<xsl:variable name="non_white_space">[^\s\u3000-\u9FFF]</xsl:variable>
 	<xsl:variable name="regex_dots_units">((\b((<xsl:value-of select="$non_white_space"/>{1,3}\.<xsl:value-of select="$non_white_space"/>+)|(<xsl:value-of select="$non_white_space"/>+\.<xsl:value-of select="$non_white_space"/>{1,3}))\b)|(\.<xsl:value-of select="$non_white_space"/>{1,3})\b)</xsl:variable>
 
-	<xsl:template match="text()[not(ancestor::mn:bibdata or      ancestor::mn:fmt-link[not(contains(normalize-space(),' '))] or      ancestor::mn:sourcecode or      ancestor::*[local-name() = 'math'] or     ancestor::*[local-name() = 'svg'] or     ancestor::mn:name or ancestor::mn:fmt-name or     starts-with(., 'http://') or starts-with(., 'https://') or starts-with(., 'www.') or normalize-space() = '' )]" name="keep_together_standard_number" mode="update_xml_enclose_keep-together_within-line">
+	<xsl:template match="text()[not(ancestor::mn:bibdata or      ancestor::mn:fmt-link[not(contains(normalize-space(),' '))] or      ancestor::mn:sourcecode or      (ancestor::mn:tt and ancestor::mn:table and string-length() &gt; 20) or     ancestor::*[local-name() = 'math'] or     ancestor::*[local-name() = 'svg'] or     ancestor::mn:name or ancestor::mn:fmt-name or     starts-with(., 'http://') or starts-with(., 'https://') or starts-with(., 'www.') or normalize-space() = '' )]" name="keep_together_standard_number" mode="update_xml_enclose_keep-together_within-line">
 
 		<xsl:variable name="parent" select="local-name(..)"/>
 
