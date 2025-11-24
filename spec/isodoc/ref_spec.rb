@@ -196,7 +196,7 @@ RSpec.describe IsoDoc do
                   </semx>
                   <eref bibitemid="ref12" id="_"/>
                   <semx element="eref" source="_">
-                     <fmt-xref target="ref12">Citn</fmt-xref>
+                     <fmt-xref target="ref12">[Citn]</fmt-xref>
                   </semx>
                </p>
             </foreword>
@@ -475,7 +475,7 @@ RSpec.describe IsoDoc do
                   <docidentifier type="IETF">IETF RFC 20</docidentifier>
                   <docidentifier scope="biblio-tag">IETF RFC 20</docidentifier>
                   <biblio-tag>
-                     Citn
+                     [Citn]
                      <tab/>
                      <span class="stdpublisher">IETF </span>
                      <span class="stdpublisher">RFC </span>
@@ -526,7 +526,7 @@ RSpec.describe IsoDoc do
                       </a>
                       <a href="#ref1">ICC 167</a>
                       <a href="#ref10">[4]</a>
-                      <a href="#ref12">Citn</a>
+                      <a href="#ref12">[Citn]</a>
                    </p>
                 </div>
                 <div>
@@ -634,7 +634,7 @@ RSpec.describe IsoDoc do
                       </i>
                    </p>
                    <p id="ref12" class="Biblio">
-                      Citn#{' '}
+                      [Citn]#{' '}
                       <span class="stdpublisher">IETF </span>
                       <span class="stdpublisher">RFC </span>
                       <span class="stddocNumber">20</span>
