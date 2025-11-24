@@ -1,0 +1,4 @@
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "features/relaton-config-param"
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "features/relaton-config-param"
+gem "relaton-render", git: "https://github.com/relaton/relaton-render", branch: "main"
+
