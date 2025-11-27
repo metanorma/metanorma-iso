@@ -36,6 +36,7 @@ draft_comment_1: Ce document est un projet diffusé pour observations et approba
 draft_comment_2: Outre le fait d’être examinés pour établir s’ils sont acceptables à des fins industrielles, technologiques et commerciales, ainsi que du point de vue des utilisateurs, les projets de normes internationales doivent parfois être considérés du point de vue de leur possibilité de devenir des normes pouvant servir de référence dans la réglementation nationale.
 draft_comment_3: Les destinataires du présent projet sont invités à présenter, avec leurs observations, notification des droits de propriété dont ils auraient éventuellement connaissance et à fournir une documentation explicative.
 website: site web
+subclause: ""
 doctype_dict:
   international-standard: Norme internationale
   technical-specification: Spécification technique

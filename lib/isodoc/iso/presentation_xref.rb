@@ -147,6 +147,11 @@ module IsoDoc
         locality_span_wrap(super, @xrefs.anchor(node["target"], :subtype) ||
                            @xrefs.anchor(node["target"], :type))
       end
+
+      def anchor_xref(node, target, container: false)
+        #require "debug"; binding.b
+        super
+      end
     end
   end
 end

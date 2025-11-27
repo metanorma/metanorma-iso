@@ -30,26 +30,38 @@ module IsoDoc
         clause.at(ns("./clause")) and
           @anchors[clause["id"]] = { label: nil, level: 1, type: "clause",
                                      xref: clause.at(ns("./title"))&.text }
-        i = clause_counter(0)
-        clause.xpath(ns("./clause")).each do |c|
+        clause.xpath(ns("./clause"))
+          .each_with_object(clause_counter(0)) do |c, i|
           section_names1(c, semx(clause, "0"), i.increment(c).print, 2)
         end
       end
 
-      # subclauses are not prefixed with "Clause"
-      # retaining subtype for the semantics
       def section_name_anchors(clause, num, level)
         if clause["type"] == "section"
-          xref = labelled_autonum(@labels["section"], num)
-          label = labelled_autonum(@labels["section"], num)
-          @anchors[clause["id"]] =
-            { label:, xref:, elem: @labels["section"],
-              title: clause_title(clause), level: level, type: "clause" }
+          section_name_anchors_section(clause, num, level)
         elsif level > 1
-          @anchors[clause["id"]] =
-            { label: num, level: level, xref: num, subtype: "clause" }
-        else super
+          section_name_anchors_subclause(clause, num, level)
+        else
+          super
         end
+      end
+
+      def section_name_anchors_section(clause, num, level)
+        xref = labelled_autonum(@labels["section"], num)
+        label = labelled_autonum(@labels["section"], num)
+        @anchors[clause["id"]] =
+          { label:, xref:, elem: @labels["section"],
+            title: clause_title(clause), level: level, type: "clause" }
+      end
+
+      # subclauses are not prefixed with "Clause" but @labels["subclause"],
+      # which in ISO is "" (but in inheriting flavors/tastes may be "Subclause")
+      # Retaining subtype for the semantics
+      def section_name_anchors_subclause(clause, num, level)
+        xref = labelled_autonum(@labels["subclause"], num)
+        @anchors[clause["id"]] =
+          { label: num, level: level, xref:, subtype: "clause",
+            title: subclause_title(clause), elem: @labels["subclause"] }
       end
 
       def annex_name_anchors1(clause, num, level)
@@ -62,6 +74,15 @@ module IsoDoc
                  { xref: semx(clause, num) }
                end
         @anchors[clause["id"]] = ret.merge(ret2)
+      end
+
+      def subclause_title(clause, use_elem_name: false)
+        ret = clause.at(ns("./title"))&.text
+        if use_elem_name && ret.blank?
+          @i18n.labels["subclause"]&.capitalize
+        else
+          clause_title(clause, use_elem_name: use_elem_name)
+        end
       end
     end
   end
