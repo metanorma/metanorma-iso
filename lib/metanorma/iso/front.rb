@@ -34,7 +34,8 @@ module Metanorma
         id = iso_id_default(iso_id_params(node))
         id.stage or return
         if abbr = id.typed_stage_abbrev
-          abbr = abbr.to_s.upcase.strip
+          # remove IS: work around breakages in pubid-iso
+          abbr = abbr.to_s.upcase.strip.sub(/^IS /, "")
         end
         xml.stagename metadata_stagename(id)&.strip,
                       **attr_code(abbreviation: abbr)

@@ -5,6 +5,7 @@ availablefrom: 入手先
 website: ウェブサイト
 see: 参照
 see_also: 第参照
+subclause: ""
 stage_dict:
   "00": Preliminary work item
   "10": New work item proposal

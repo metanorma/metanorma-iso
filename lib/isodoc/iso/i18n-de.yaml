@@ -38,6 +38,7 @@ iso-cen-parallel: ISO/CEN PARALLELVERARBEITUNG
 draft_comment_1: Bei diesem Dokument handelt es sich um einen Entwurf, der zur Kommentierung und Genehmigung in Umlauf gebracht wird. Sie unterliegt daher Änderungen und darf nicht als internationale Norm bezeichnet werden, bis sie als solche veröffentlicht wird.
 draft_comment_2: Zusätzlich zu ihrer Bewertung als akzeptabel für industrielle, technologische, kommerzielle und Benutzerzwecke müssen Entwürfe internationaler Normen gelegentlich auch im Hinblick auf ihr Potenzial geprüft werden, Normen zu werden, auf die in nationalen Vorschriften Bezug genommen werden kann.
 draft_comment_3: Empfänger dieses Entwurfs werden gebeten, mit ihren Kommentaren eine Mitteilung über alle relevanten Patentrechte einzureichen, die ihnen bekannt sind, und unterstützende Unterlagen einzureichen.
+subclause: ""
 doctype_dict:
   international-standard: Internationaler Standard
   technical-specification: Technische Spezifikation
