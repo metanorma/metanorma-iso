@@ -55,7 +55,7 @@ RSpec.describe Metanorma::Iso do
       === Bibliography Subsection
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR.sub(%r{<doctype>standard</doctype>}, '<doctype>amendment</doctype>').sub(%r{<stagename>International Standard</stagename>}, '<stagename/>')}
+      #{BLANK_HDR.sub(%r{<doctype>standard</doctype>}, '<doctype>amendment</doctype>').sub(%r{<stagename abbreviation="IS">International Standard</stagename>}, '<stagename abbreviation="IS"/>')}
            <sections>
              <clause id="_" obligation="normative">
                 <title id="_">Foreword</title>
@@ -583,7 +583,7 @@ RSpec.describe Metanorma::Iso do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage>60</stage>
+            <stage abbreviation="IS">60</stage>
             <substage>60</substage>
           </status>
           <copyright>
@@ -813,7 +813,7 @@ RSpec.describe Metanorma::Iso do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage>60</stage>
+            <stage abbreviation="IS">60</stage>
             <substage>60</substage>
           </status>
           <copyright>
@@ -902,7 +902,7 @@ RSpec.describe Metanorma::Iso do
           <language>en</language>
           <script>Latn</script>
           <status>
-            <stage>60</stage>
+            <stage abbreviation="IS">60</stage>
             <substage>60</substage>
           </status>
           <copyright>

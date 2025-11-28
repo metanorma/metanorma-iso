@@ -1114,7 +1114,7 @@ RSpec.describe IsoDoc do
               <language current="true">en</language>
               <script current="true">Latn</script>
               <status>
-                 <stage>60</stage>
+                 <stage abbreviation="IS">60</stage>
                  <substage>60</substage>
               </status>
               <copyright>
@@ -1130,7 +1130,7 @@ RSpec.describe IsoDoc do
                  <doctype>standard</doctype>
                  <subdoctype>vocabulary</subdoctype>
                  <flavor>iso</flavor>
-                 <stagename>International Standard</stagename>
+                 <stagename abbreviation="IS">International Standard</stagename>
               </ext>
            </bibdata>
            <preface>

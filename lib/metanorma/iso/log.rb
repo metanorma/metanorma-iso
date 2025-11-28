@@ -137,6 +137,9 @@ module Metanorma
         "ISO_51": { category: "Style",
                     error: "non-terms clauses cannot cross-reference terms clause (%s)",
                     severity: 2 },
+        "ISO_52": { category: "Style",
+                    error: "non-terms clauses cannot cross-reference terms clause (%s)",
+                    severity: 0 },
       }.freeze
       # rubocop:enable Naming/VariableNumber
 

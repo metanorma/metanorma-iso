@@ -35,8 +35,9 @@ Gem::Specification.new do |spec|
   spec.add_dependency "metanorma-standoc", "~> 3.2.0"
   spec.add_dependency "mnconvert", "~> 1.14"
   spec.add_dependency "pubid"
-  spec.add_dependency "pubid-cen"
-  spec.add_dependency "pubid-iec"
+  #spec.add_dependency "pubid-cen"
+  #spec.add_dependency "pubid-iec"
+  #spec.add_dependency "pubid-iso", "~> 0.7.0"
   spec.add_dependency "tokenizer", "~> 0.3.0"
 
   spec.add_development_dependency "canon", "= 0.1.3"

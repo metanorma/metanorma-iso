@@ -125,6 +125,7 @@ module Metanorma
         if stage && !cen?(node.attr("publisher"))
           ret[:stage] = stage
           ret[:stage] == "60.00" and ret[:stage] = :PRF
+          #ret[:stage] == "60.60" and ret[:stage] = nil
         end
         ret
       end
@@ -160,6 +161,7 @@ module Metanorma
         @amd and return
         iso_id_out_non_amd(xml, params, with_prf)
       rescue StandardError, *STAGE_ERROR => e
+        @log.add("ISO_52", "Document identifier: #{e}")
         clean_abort("Document identifier: #{e}", xml)
       end
 
@@ -170,10 +172,11 @@ module Metanorma
       end
 
       def iso_id_out_common(xml, params, with_prf)
+        params1 = skip_60_60(params)
         add_noko_elem(xml, "docidentifier",
-                      iso_id_default(params).to_s(with_prf:),
+                      iso_id_default(params1).to_s(with_prf:),
                       **attr_code(type: "ISO", primary: "true"))
-        add_noko_elem(xml, "docidentifier", iso_id_reference(params)
+        add_noko_elem(xml, "docidentifier", iso_id_reference(params1)
                       .to_s(format: :ref_num_short, with_prf:),
                       **attr_code(type: "iso-reference"))
         add_noko_elem(xml, "docidentifier", iso_id_reference(params).urn,
@@ -181,12 +184,21 @@ module Metanorma
       end
 
       def iso_id_out_non_amd(xml, params, with_prf)
+        params1 = skip_60_60(params)
         add_noko_elem(xml, "docidentifier",
-                      iso_id_undated(params).to_s(with_prf:),
+                      iso_id_undated(params1).to_s(with_prf:),
                       **attr_code(type: "iso-undated"))
         add_noko_elem(xml, "docidentifier",
-                      iso_id_with_lang(params).to_s(format: :ref_num_long, with_prf:),
+                      iso_id_with_lang(params1).to_s(format: :ref_num_long, with_prf:),
                       **attr_code(type: "iso-with-lang"))
+      end
+
+      # work around breakages in pubid-iso
+      def skip_60_60(params)
+        ret = params.dup
+        ret[:stage] == "60.60" and ret[:stage] = nil
+        warn ret
+        ret
       end
 
       def iso_id_default(params)
