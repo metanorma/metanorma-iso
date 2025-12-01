@@ -19,7 +19,7 @@ module IsoDoc
         id = elem["bibitemid"] or return
         b = @bibitem_lookup[id] or return
         b["type"] != "standard" ||
-          !b.at(ns("./docidentifier[not(@type = 'metanorma' or @type = 'metanorma-ordinal')]"))
+          !b.at(ns("./docidentifier[not(@type = 'metanorma' or @type = 'metanorma-ordinal' or @type='author-date')]"))
       end
 
       # style [1] references as [Reference 1], eref or origin
