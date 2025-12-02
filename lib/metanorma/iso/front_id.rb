@@ -94,7 +94,8 @@ module Metanorma
       end
 
       def iso_id_pub(node)
-        (node.attr("publisher") || default_publisher).split(/[;,]/)
+        (node.attr("publisher_abbr") || node.attr("publisher") ||
+         default_publisher).split(/[;,]/)
           .map(&:strip).map { |x| org_abbrev[x] || x }
       end
 
@@ -197,7 +198,6 @@ module Metanorma
       def skip_60_60(params)
         ret = params.dup
         ret[:stage] == "60.60" and ret[:stage] = nil
-        warn ret
         ret
       end
 
@@ -226,19 +226,6 @@ module Metanorma
       def iso_id_reference(params)
         params1 = params.dup.tap { |hs| hs.delete(:unpublished) }
         pubid_select(params1).create(**params1)
-      end
-
-      def structured_id(node, xml)
-        node.attr("docnumber") or return # allow empty node.attr("docnumber")
-        part, subpart = node.attr("partnumber")&.split("-")
-        xml.structuredidentifier do |i|
-          i.project_number(node.attr("docnumber"), **attr_code(
-            part:, subpart:, amendment: node.attr("amendment-number"),
-            corrigendum: node.attr("corrigendum-number"),
-            addendum: node.attr("addendum-number"),
-            origyr: node.attr("created-date")
-          ))
-        end
       end
 
       def id_add_year(docnum, node)

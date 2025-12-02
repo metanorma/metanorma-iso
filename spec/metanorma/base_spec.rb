@@ -530,7 +530,7 @@ RSpec.describe Metanorma::Iso do
       .to be_equivalent_to Canon.format_xml(output)
   end
 
-  it "processes multiple committees" do
+  it "processes multiple committees; publisher abbreviations" do
     xml = Nokogiri::XML(Asciidoctor.convert(<<~INPUT, *OPTIONS))
       = Document title
       Author
@@ -539,6 +539,8 @@ RSpec.describe Metanorma::Iso do
       :novalid:
       :no-isobib:
       :docnumber: 1000
+      :publisher_abbr: EXP
+      :publisher: EXPRESS Foundation
       :technical-committee: Electrical equipment in medical practice
       :technical-committee-number: 62
       :subcommittee_2: Common aspects of electrical equipment used in medical practice
@@ -554,18 +556,18 @@ RSpec.describe Metanorma::Iso do
 
     INPUT
     output = <<~OUTPUT
-      <bibdata type="standard">
-          <docidentifier type="ISO" primary="true">ISO 1000:2025</docidentifier>
-          <docidentifier type="iso-reference">ISO 1000:2025(E)</docidentifier>
-          <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
-          <docidentifier type="iso-undated">ISO 1000</docidentifier>
-          <docidentifier type="iso-with-lang">ISO 1000:2025(en)</docidentifier>
+       <bibdata type="standard">
+          <docidentifier type="ISO" primary="true">EXP 1000:#{Date.today.year}</docidentifier>
+          <docidentifier type="iso-reference">EXP 1000:#{Date.today.year}(E)</docidentifier>
+          <docidentifier type="URN">urn:iso:std:exp:1000:stage-60.60:en</docidentifier>
+          <docidentifier type="iso-undated">EXP 1000</docidentifier>
+          <docidentifier type="iso-with-lang">EXP 1000:#{Date.today.year}(en)</docidentifier>
           <docnumber>1000</docnumber>
           <contributor>
              <role type="author"/>
              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
+                <name>EXPRESS Foundation</name>
+                <abbreviation>EXP</abbreviation>
              </organization>
           </contributor>
           <contributor>
@@ -587,7 +589,7 @@ RSpec.describe Metanorma::Iso do
                 <description>committee</description>
              </role>
              <organization>
-                <name>International Organization for Standardization</name>
+                <name>EXPRESS Foundation</name>
                 <subdivision type="Technical committee" subtype="TC">
                    <name>Quality management and corresponding general aspects for medical devices</name>
                    <identifier>TC 210</identifier>
@@ -601,7 +603,6 @@ RSpec.describe Metanorma::Iso do
                    <name>Working group on defibulators</name>
                    <identifier>WG 62A1</identifier>
                 </subdivision>
-                <abbreviation>ISO</abbreviation>
              </organization>
           </contributor>
           <contributor>
@@ -621,15 +622,14 @@ RSpec.describe Metanorma::Iso do
                 <description>Agency</description>
              </role>
              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
+                <name>EXPRESS Foundation</name>
              </organization>
           </contributor>
           <contributor>
              <role type="publisher"/>
              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
+                <name>EXPRESS Foundation</name>
+                <abbreviation>EXP</abbreviation>
              </organization>
           </contributor>
           <contributor>
@@ -690,8 +690,8 @@ RSpec.describe Metanorma::Iso do
              <from>#{Date.today.year}</from>
              <owner>
                 <organization>
-                   <name>International Organization for Standardization</name>
-                   <abbreviation>ISO</abbreviation>
+                   <name>EXPRESS Foundation</name>
+                   <abbreviation>EXP</abbreviation>
                 </organization>
              </owner>
           </copyright>
@@ -699,7 +699,7 @@ RSpec.describe Metanorma::Iso do
              <doctype>standard</doctype>
              <flavor>iso</flavor>
              <structuredidentifier>
-                <project-number>ISO 1000</project-number>
+                <project-number>EXP 1000</project-number>
              </structuredidentifier>
              <stagename abbreviation="IS">International Standard</stagename>
           </ext>
