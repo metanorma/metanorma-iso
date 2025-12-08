@@ -663,6 +663,204 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to Canon.format_xml(html)
   end
 
+  it "processes non-home standards" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata>
+        <language>en</language>
+        </bibdata>
+        <bibliography>
+        <references normative="false">
+        <fmt-title id="_">Bibliography</fmt-title>
+      <bibitem id="_82cc2889-4280-b8ba-5e12-0943f5c742dc" type="standard" schema-version="v1.2.9" anchor="b">
+        <fetched>2025-12-08</fetched>
+
+      <title type="main" format="text/plain">Advanced Encryption Standard (AES) Key Wrap Algorithm</title>
+
+        <uri type="src">https://www.rfc-editor.org/info/rfc3394</uri>
+        <docidentifier type="IETF" primary="true">RFC 3394</docidentifier>
+        <docidentifier type="DOI">10.17487/RFC3394</docidentifier>
+        <docnumber>RFC3394</docnumber>
+        <date type="published">
+          <on>2002-09</on>
+        </date>
+        <contributor>
+          <role type="author"/>
+          <person>
+
+      <name>          <completename language="en" script="Latn">J. Schaad</completename>       </name>
+
+          </person>
+        </contributor>
+        <contributor>
+          <role type="author"/>
+          <person>
+
+      <name>          <completename language="en" script="Latn">R. Housley</completename>       </name>
+
+          </person>
+        </contributor>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+
+      <name>RFC Publisher</name>
+
+          </organization>
+        </contributor>
+        <contributor>
+          <role type="authorizer"/>
+          <organization>
+
+      <name>RFC Series</name>
+
+          </organization>
+        </contributor>
+        <language>en</language>
+        <script>Latn</script>
+        <series>
+
+      <title format="text/plain">RFC</title>
+
+          <number>3394</number>
+        </series>
+        <series type="stream">
+
+      <title format="text/plain">IETF</title>
+
+        </series>
+      </bibitem>
+      </references>
+      </bibliography>
+      </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <bibdata>
+             <language current="true">en</language>
+          </bibdata>
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1" id="_">Contents</fmt-title>
+             </clause>
+          </preface>
+          <bibliography>
+             <references normative="false" id="_" displayorder="2">
+                <fmt-title id="_" depth="1">Bibliography</fmt-title>
+                <bibitem id="b" type="standard" anchor="b">
+                   <biblio-tag>
+                      [1]
+                      <tab/>
+                      <span class="stdpublisher">IETF </span>
+                      <span class="stdpublisher">RFC </span>
+                      <span class="stddocNumber">3394</span>
+                      <fn id="_" reference="1" original-reference="_0f4bda71-60d4-4132-ba62-e3eefc638f93" target="_">
+                         <p>
+                            Available at
+                            <span class="biburl">
+                               <fmt-link target="https://www.rfc-editor.org/info/rfc3394">https://www.rfc-editor.org/info/rfc3394</fmt-link>
+                            </span>
+                         </p>
+                         <fmt-fn-label>
+                            <span class="fmt-caption-label">
+                               <sup>
+                                  <semx element="autonum" source="_">1</semx>
+                                  <span class="fmt-label-delim">)</span>
+                               </sup>
+                            </span>
+                         </fmt-fn-label>
+                      </fn>
+                      ,
+                   </biblio-tag>
+                   <formattedref>
+                      J. SCHAAD and R. HOUSLEY.
+                      <em>
+                         <span class="stddocTitle">Advanced Encryption Standard (AES) Key Wrap Algorithm</span>
+                      </em>
+                      . RFC Series
+                   </formattedref>
+                   <fetched/>
+                   <title type="main" format="text/plain">Advanced Encryption Standard (AES) Key Wrap Algorithm</title>
+                   <uri type="src">https://www.rfc-editor.org/info/rfc3394</uri>
+                   <docidentifier type="metanorma-ordinal">[1]</docidentifier>
+                   <docidentifier type="IETF" primary="true">IETF RFC 3394</docidentifier>
+                   <docidentifier type="DOI">DOI 10.17487/RFC3394</docidentifier>
+                   <docidentifier scope="biblio-tag">IETF RFC 3394</docidentifier>
+                   <docnumber>RFC3394</docnumber>
+                   <date type="published">
+                      <on>2002-09</on>
+                   </date>
+                   <contributor>
+                      <role type="author"/>
+                      <person>
+                         <name>
+                            <completename language="en" script="Latn">J. Schaad</completename>
+                         </name>
+                      </person>
+                   </contributor>
+                   <contributor>
+                      <role type="author"/>
+                      <person>
+                         <name>
+                            <completename language="en" script="Latn">R. Housley</completename>
+                         </name>
+                      </person>
+                   </contributor>
+                   <contributor>
+                      <role type="publisher"/>
+                      <organization>
+                         <name>RFC Publisher</name>
+                      </organization>
+                   </contributor>
+                   <contributor>
+                      <role type="authorizer"/>
+                      <organization>
+                         <name>RFC Series</name>
+                      </organization>
+                   </contributor>
+                   <language>en</language>
+                   <script>Latn</script>
+                   <series>
+                      <title format="text/plain">RFC</title>
+                      <number>3394</number>
+                   </series>
+                   <series type="stream">
+                      <title format="text/plain">IETF</title>
+                   </series>
+                </bibitem>
+             </references>
+          </bibliography>
+          <fmt-footnote-container>
+             <fmt-fn-body id="_" target="_" reference="1">
+                <semx element="fn" source="_">
+                   <p>
+                      <fmt-fn-label>
+                         <span class="fmt-caption-label">
+                            <sup>
+                               <semx element="autonum" source="_">1</semx>
+                            </sup>
+                         </span>
+                         <span class="fmt-caption-delim">
+                            <tab/>
+                         </span>
+                      </fmt-fn-label>
+                      Available at
+                      <span class="biburl">
+                         <fmt-link target="https://www.rfc-editor.org/info/rfc3394">https://www.rfc-editor.org/info/rfc3394</fmt-link>
+                      </span>
+                   </p>
+                </semx>
+             </fmt-fn-body>
+          </fmt-footnote-container>
+       </iso-standard>
+    OUTPUT
+    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
+      .to be_equivalent_to Canon.format_xml(strip_guid(output))
+  end
+
   it "processes websites" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
@@ -701,7 +899,7 @@ RSpec.describe IsoDoc do
                   <em>
                     <span class='stddocTitle'>IGNF. (IGN France) Registry</span>
                   </em>
-                   [website]. Available from:
+                   [website]. Available at:
                   <span class='biburl'>
                        <fmt-link target="https://registre.ign.fr/">https://registre.ign.fr/</fmt-link>
                   </span>
@@ -781,167 +979,167 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-       <sections>
-          <clause id="_" inline-header="false" obligation="normative" displayorder="2">
-             <title id="_">Clause</title>
-             <fmt-title depth="1" id="_">
-                <span class="fmt-caption-label">
-                   <semx element="autonum" source="_">1</semx>
-                </span>
-                <span class="fmt-caption-delim">
-                   <tab/>
-                </span>
-                <semx element="title" source="_">Clause</semx>
-             </fmt-title>
-             <fmt-xref-label>
-                <span class="fmt-element-name">Clause</span>
-                <semx element="autonum" source="_">1</semx>
-             </fmt-xref-label>
-             <p id="_">
-                Sentence
-                <eref type="inline" bibitemid="internet_standards" citeas="[1]" id="_"/>
-                <semx element="eref" source="_">
-                   Reference
-                   <fmt-xref type="inline" target="internet_standards">[1]</fmt-xref>
-                </semx>
-                .
-             </p>
-             <p id="_">
-                Sentence
-                <eref type="inline" style="superscript" bibitemid="internet_standards" citeas="[1]" id="_"/>
-                <semx element="eref" source="_">
-                   <sup>
-                      <fmt-xref type="inline" style="superscript" target="internet_standards">[1]</fmt-xref>
-                   </sup>
-                </semx>
-                .
-             </p>
-             <p id="_">
-                Sentence
-                <erefstack id="_">
-                   <eref connective="and" bibitemid="internet_standards" citeas="[1]" type="inline" id="_"/>
-                   <eref connective="and" bibitemid="graphql" citeas="[2]" type="inline" id="_"/>
-                </erefstack>
-                <semx element="erefstack" source="_">
-                   References
-                   <semx element="eref" source="_">
-                      <fmt-xref connective="and" type="inline" target="internet_standards">[1]</fmt-xref>
-                   </semx>
-                   <span class="fmt-conn">and</span>
-                   <semx element="eref" source="_">
-                      <fmt-xref connective="and" type="inline" target="graphql">[2]</fmt-xref>
-                   </semx>
-                </semx>
-                .
-             </p>
-             <p id="_">
-                Sentence
-                <erefstack id="_">
-                   <eref connective="and" bibitemid="internet_standards" citeas="[1]" type="inline" id="_"/>
-                   <eref connective="and" bibitemid="graphql" citeas="[2]" type="inline" id="_"/>
-                   <eref connective="and" bibitemid="internet_standards" citeas="[1]" type="inline" id="_"/>
-                </erefstack>
-                <semx element="erefstack" source="_">
-                   References
-                   <semx element="eref" source="_">
-                      <fmt-xref connective="and" type="inline" target="internet_standards">[1]</fmt-xref>
-                   </semx>
-                   <span class="fmt-enum-comma">,</span>
-                   <semx element="eref" source="_">
-                      <fmt-xref connective="and" type="inline" target="graphql">[2]</fmt-xref>
-                   </semx>
-                   <span class="fmt-conn">and</span>
-                   <semx element="eref" source="_">
-                      <fmt-xref connective="and" type="inline" target="internet_standards">[1]</fmt-xref>
-                   </semx>
-                </semx>
-                .
-             </p>
-             <p id="_">
-                Sentence
-                <erefstack style="superscript" id="_">
-                   <eref connective="and" bibitemid="internet_standards" citeas="[1]" type="inline" id="_"/>
-                   <eref connective="and" bibitemid="graphql" citeas="[2]" type="inline" id="_"/>
-                </erefstack>
-                <semx element="erefstack" source="_">
-                   <sup>
-                      <semx element="eref" source="_">
-                         <fmt-xref connective="and" type="inline" target="internet_standards">[1]</fmt-xref>
-                      </semx>
-                   </sup>
-                   <sup>
-                      <semx element="eref" source="_">
-                         <fmt-xref connective="and" type="inline" target="graphql">[2]</fmt-xref>
-                      </semx>
-                   </sup>
-                </semx>
-                .
-             </p>
-             <p id="_">
-                Sentence
-                <erefstack style="superscript" id="_">
-                   <eref connective="and" bibitemid="internet_standards" citeas="[1]" type="inline" id="_"/>
-                   <eref connective="and" bibitemid="graphql" citeas="[2]" type="inline" id="_"/>
-                   <eref connective="and" bibitemid="internet_standards" citeas="[1]" type="inline" id="_"/>
-                </erefstack>
-                <semx element="erefstack" source="_">
-                   <sup>
-                      <semx element="eref" source="_">
-                         <fmt-xref connective="and" type="inline" target="internet_standards">[1]</fmt-xref>
-                      </semx>
-                   </sup>
-                   <sup>
-                      <semx element="eref" source="_">
-                         <fmt-xref connective="and" type="inline" target="graphql">[2]</fmt-xref>
-                      </semx>
-                   </sup>
-                   <sup>
-                      <semx element="eref" source="_">
-                         <fmt-xref connective="and" type="inline" target="internet_standards">[1]</fmt-xref>
-                      </semx>
-                   </sup>
-                </semx>
-                .
-             </p>
-             <p id="_">
-                Sentence
-                <eref type="inline" bibitemid="internet_standards" citeas="[1]" id="_">
-                   <localityStack>
-                      <locality type="clause">
-                         <referenceFrom>3</referenceFrom>
-                      </locality>
-                   </localityStack>
-                </eref>
-                <semx element="eref" source="_">
-                   Reference
-                   <fmt-xref type="inline" target="internet_standards">
-                      [1],
-                      <span class="citesec">Clause 3</span>
-                   </fmt-xref>
-                </semx>
-                .
-             </p>
-             <p id="_">
-                Sentence
-                <eref type="inline" style="superscript" bibitemid="internet_standards" citeas="[1]" id="_">
-                   <localityStack>
-                      <locality type="clause">
-                         <referenceFrom>3</referenceFrom>
-                      </locality>
-                   </localityStack>
-                </eref>
-                <semx element="eref" source="_">
-                   <sup>
-                      <fmt-xref type="inline" style="superscript" target="internet_standards">
-                         [1],
-                         <span class="citesec">Clause 3</span>
-                      </fmt-xref>
-                   </sup>
-                </semx>
-                .
-             </p>
-          </clause>
-       </sections>
+      <sections>
+         <clause id="_" inline-header="false" obligation="normative" displayorder="2">
+            <title id="_">Clause</title>
+            <fmt-title depth="1" id="_">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="_">1</semx>
+               </span>
+               <span class="fmt-caption-delim">
+                  <tab/>
+               </span>
+               <semx element="title" source="_">Clause</semx>
+            </fmt-title>
+            <fmt-xref-label>
+               <span class="fmt-element-name">Clause</span>
+               <semx element="autonum" source="_">1</semx>
+            </fmt-xref-label>
+            <p id="_">
+               Sentence
+               <eref type="inline" bibitemid="internet_standards" citeas="[1]" id="_"/>
+               <semx element="eref" source="_">
+                  Reference
+                  <fmt-xref type="inline" target="internet_standards">[1]</fmt-xref>
+               </semx>
+               .
+            </p>
+            <p id="_">
+               Sentence
+               <eref type="inline" style="superscript" bibitemid="internet_standards" citeas="[1]" id="_"/>
+               <semx element="eref" source="_">
+                  <sup>
+                     <fmt-xref type="inline" style="superscript" target="internet_standards">[1]</fmt-xref>
+                  </sup>
+               </semx>
+               .
+            </p>
+            <p id="_">
+               Sentence
+               <erefstack id="_">
+                  <eref connective="and" bibitemid="internet_standards" citeas="[1]" type="inline" id="_"/>
+                  <eref connective="and" bibitemid="graphql" citeas="[2]" type="inline" id="_"/>
+               </erefstack>
+               <semx element="erefstack" source="_">
+                  References
+                  <semx element="eref" source="_">
+                     <fmt-xref connective="and" type="inline" target="internet_standards">[1]</fmt-xref>
+                  </semx>
+                  <span class="fmt-conn">and</span>
+                  <semx element="eref" source="_">
+                     <fmt-xref connective="and" type="inline" target="graphql">[2]</fmt-xref>
+                  </semx>
+               </semx>
+               .
+            </p>
+            <p id="_">
+               Sentence
+               <erefstack id="_">
+                  <eref connective="and" bibitemid="internet_standards" citeas="[1]" type="inline" id="_"/>
+                  <eref connective="and" bibitemid="graphql" citeas="[2]" type="inline" id="_"/>
+                  <eref connective="and" bibitemid="internet_standards" citeas="[1]" type="inline" id="_"/>
+               </erefstack>
+               <semx element="erefstack" source="_">
+                  References
+                  <semx element="eref" source="_">
+                     <fmt-xref connective="and" type="inline" target="internet_standards">[1]</fmt-xref>
+                  </semx>
+                  <span class="fmt-enum-comma">,</span>
+                  <semx element="eref" source="_">
+                     <fmt-xref connective="and" type="inline" target="graphql">[2]</fmt-xref>
+                  </semx>
+                  <span class="fmt-conn">and</span>
+                  <semx element="eref" source="_">
+                     <fmt-xref connective="and" type="inline" target="internet_standards">[1]</fmt-xref>
+                  </semx>
+               </semx>
+               .
+            </p>
+            <p id="_">
+               Sentence
+               <erefstack style="superscript" id="_">
+                  <eref connective="and" bibitemid="internet_standards" citeas="[1]" type="inline" id="_"/>
+                  <eref connective="and" bibitemid="graphql" citeas="[2]" type="inline" id="_"/>
+               </erefstack>
+               <semx element="erefstack" source="_">
+                  <sup>
+                     <semx element="eref" source="_">
+                        <fmt-xref connective="and" type="inline" target="internet_standards">[1]</fmt-xref>
+                     </semx>
+                  </sup>
+                  <sup>
+                     <semx element="eref" source="_">
+                        <fmt-xref connective="and" type="inline" target="graphql">[2]</fmt-xref>
+                     </semx>
+                  </sup>
+               </semx>
+               .
+            </p>
+            <p id="_">
+               Sentence
+               <erefstack style="superscript" id="_">
+                  <eref connective="and" bibitemid="internet_standards" citeas="[1]" type="inline" id="_"/>
+                  <eref connective="and" bibitemid="graphql" citeas="[2]" type="inline" id="_"/>
+                  <eref connective="and" bibitemid="internet_standards" citeas="[1]" type="inline" id="_"/>
+               </erefstack>
+               <semx element="erefstack" source="_">
+                  <sup>
+                     <semx element="eref" source="_">
+                        <fmt-xref connective="and" type="inline" target="internet_standards">[1]</fmt-xref>
+                     </semx>
+                  </sup>
+                  <sup>
+                     <semx element="eref" source="_">
+                        <fmt-xref connective="and" type="inline" target="graphql">[2]</fmt-xref>
+                     </semx>
+                  </sup>
+                  <sup>
+                     <semx element="eref" source="_">
+                        <fmt-xref connective="and" type="inline" target="internet_standards">[1]</fmt-xref>
+                     </semx>
+                  </sup>
+               </semx>
+               .
+            </p>
+            <p id="_">
+               Sentence
+               <eref type="inline" bibitemid="internet_standards" citeas="[1]" id="_">
+                  <localityStack>
+                     <locality type="clause">
+                        <referenceFrom>3</referenceFrom>
+                     </locality>
+                  </localityStack>
+               </eref>
+               <semx element="eref" source="_">
+                  Reference
+                  <fmt-xref type="inline" target="internet_standards">
+                     [1],
+                     <span class="citesec">Clause 3</span>
+                  </fmt-xref>
+               </semx>
+               .
+            </p>
+            <p id="_">
+               Sentence
+               <eref type="inline" style="superscript" bibitemid="internet_standards" citeas="[1]" id="_">
+                  <localityStack>
+                     <locality type="clause">
+                        <referenceFrom>3</referenceFrom>
+                     </locality>
+                  </localityStack>
+               </eref>
+               <semx element="eref" source="_">
+                  <sup>
+                     <fmt-xref type="inline" style="superscript" target="internet_standards">
+                        [1],
+                        <span class="citesec">Clause 3</span>
+                     </fmt-xref>
+                  </sup>
+               </semx>
+               .
+            </p>
+         </clause>
+      </sections>
     OUTPUT
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)

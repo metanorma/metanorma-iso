@@ -38,7 +38,7 @@ module IsoDoc
         requirement docxml
         recommendation docxml
         requirement_render docxml
-        @xrefs.anchors_previous = 
+        @xrefs.anchors_previous =
           @xrefs.anchors.transform_values(&:dup) # store old xrefs of reqts
         @xrefs.parse docxml
         # TODO move this dependency around: requirements at root should be processed before everything else
@@ -220,7 +220,23 @@ module IsoDoc
         end
         ret
       end
-      
+
+      def date_note_process(bib)
+        ret = super
+        data, = @bibrender.parse(bib)
+        ret + url_note_process(data)
+      end
+
+      def url_note_process(data)
+        data[:type] == "standard" && data[:home_standard] == false &&
+          !data[:uri].blank? or return ""
+        id = "_#{UUIDTools::UUID.random_create}"
+        @new_ids[id] = nil
+        <<~XML
+          <fn id='#{id}' reference='#{id}'><p>#{@i18n.labels['availablefrom']} <span class='biburl'>#{data[:uri]}</span></p></fn>
+        XML
+      end
+
       include Init
     end
   end
