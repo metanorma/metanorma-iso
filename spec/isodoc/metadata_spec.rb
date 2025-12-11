@@ -227,6 +227,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         activateddate: "2013",
         agency: "ISO",
         approvalgroup: "Approval IEC TC 62 and Approval TC 210/SC 62A/WG 62A1",
+        authorizer: ["International Organization for Standardization", "International Electrotechnical Commission", "International Organization for Standardization", "Institute of Electrical and Electronic Engineers"],
         createddate: "2010&#x2013;2011",
         docnumber: "ISO/PreCD3 17301-1",
         docnumber_lang: "ISO/PreCD3 17301-1 (E)",
@@ -686,6 +687,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     output =
       { agency: "ISO",
         approvalgroup: "Approval IEC TC 62/SC 62A/WG 62A1 и Approval TC 210",
+        authorizer: ["International Organization for Standardization", "International Electrotechnical Commission", "International Organization for Standardization", "Institute of Electrical and Electronic Engineers"],
         docnumber: "ISO/IEC/CD 17301-1-3",
         docnumber_lang: "ISO/IEC/CD 17301-1-3 (E)",
         docnumber_reference: "ISO/IEC/CD 17301-1-3 (E)",
