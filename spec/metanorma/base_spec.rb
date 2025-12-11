@@ -1681,166 +1681,181 @@ RSpec.describe Metanorma::Iso do
     INPUT
     output = <<~OUTPUT
       <bibdata type="standard">
-        <contributor>
-          <role type="author"/>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
-          </organization>
-        </contributor>
-        <contributor>
-          <role type="publisher"/>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
-          </organization>
-        </contributor>
-                    <contributor>
-          <role type="authorizer"><description>Agency</description></role>
-          <organization>
-            <name>International Organization for Standardization</name>
-            <abbreviation>ISO</abbreviation>
-          </organization>
-        </contributor>
-        <language>en</language>
-        <script>Latn</script>
-        <status>
-          <stage abbreviation="IS">60</stage>
-          <substage>60</substage>
-        </status>
-        <copyright>
-          <from>#{Date.today.year}</from>
-          <owner>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </owner>
-        </copyright>
-        <relation type="obsoletes">
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 1</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="successorOf">
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 2</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="manifestationOf">
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 3</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="related">
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 4</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="annotationOf">
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 3a</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="updates">
-          <description>amends</description>
-          <bibitem type="standard">
-            <docidentifier type="iso-reference">ISO 123:2001(E)</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="updates">
-          <description>amends</description>
-          <bibitem type="standard">
-            <docidentifier type="iso-reference">ISO 124(E)</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="obsoletes">
-          <description>replaces</description>
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 5</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="obsoletes">
-          <description>supersedes</description>
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 6</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="updates">
-          <description>corrects</description>
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 7</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="isCitedIn">
-          <description>informatively cited in</description>
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 8</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="cites">
-          <description>informatively cites</description>
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 9</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="cites">
-          <description>normatively cites</description>
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 11</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="adoptedFrom">
-          <description>identical adopted from</description>
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 12</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="adoptedFrom">
-          <description>modified adopted from</description>
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 13</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="related">
-          <description>related directive</description>
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 14</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="related">
-          <description>related mandate</description>
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 15</docidentifier>
-          </bibitem>
-        </relation>
-        <relation type="hasDraft">
-          <bibitem>
-            <title>--</title>
-            <docidentifier>ABC 16</docidentifier>
-          </bibitem>
-         </relation>
-        <ext>
-          <doctype>standard</doctype>
-              <flavor>iso</flavor>
-          <stagename abbreviation="IS">International Standard</stagename>
-        </ext>
-      </bibdata>
+          <contributor>
+             <role type="author"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="authorizer">
+                <description>Agency</description>
+             </role>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <contributor>
+             <role type="publisher"/>
+             <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+             </organization>
+          </contributor>
+          <language>en</language>
+          <script>Latn</script>
+          <status>
+             <stage abbreviation="IS">60</stage>
+             <substage>60</substage>
+          </status>
+          <copyright>
+             <from>#{Date.today.year}</from>
+             <owner>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </owner>
+          </copyright>
+          <relation type="obsoletes">
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 1</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="successorOf">
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 2</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="manifestationOf">
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 3</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="related">
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 4</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="annotationOf">
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 3a</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="hasDraft">
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 16</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="updates">
+             <description>amends</description>
+             <bibitem type="standard">
+                <docidentifier type="iso-reference">ISO 123:2001(E)</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="updates">
+             <description>amends</description>
+             <bibitem type="standard">
+                <fetched/>
+                <title format="text/plain" language="en" script="Latn">Latex, rubber — Determination of total solids content</title>
+                <docidentifier type="ISO">ISO 124</docidentifier>
+                <contributor>
+                   <role type="publisher"/>
+                   <organization>
+                      <name>International Organization for Standardization</name>
+                      <abbreviation>ISO</abbreviation>
+                      <uri>www.iso.org</uri>
+                   </organization>
+                </contributor>
+                <status>
+                   <stage>Published</stage>
+                </status>
+             </bibitem>
+          </relation>
+          <relation type="obsoletes">
+             <description>replaces</description>
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 5</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="obsoletes">
+             <description>supersedes</description>
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 6</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="updates">
+             <description>corrects</description>
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 7</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="isCitedIn">
+             <description>informatively cited in</description>
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 8</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="cites">
+             <description>informatively cites</description>
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 9</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="cites">
+             <description>normatively cites</description>
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 11</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="adoptedFrom">
+             <description>identical adopted from</description>
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 12</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="adoptedFrom">
+             <description>modified adopted from</description>
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 13</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="related">
+             <description>related directive</description>
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 14</docidentifier>
+             </bibitem>
+          </relation>
+          <relation type="related">
+             <description>related mandate</description>
+             <bibitem>
+                <title>--</title>
+                <docidentifier>ABC 15</docidentifier>
+             </bibitem>
+          </relation>
+          <ext>
+             <doctype>standard</doctype>
+             <flavor>iso</flavor>
+             <stagename abbreviation="IS">International Standard</stagename>
+          </ext>
+       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
     xml.xpath("//xmlns:docidentifier[@type='iso-reference']").each do |x|

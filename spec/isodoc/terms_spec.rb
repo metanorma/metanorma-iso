@@ -1081,6 +1081,7 @@ RSpec.describe IsoDoc do
           .at("//xmlns:terms").to_xml)))
       .to be_equivalent_to Canon.format_xml(output)
   end
+
   it "renders different types of termsource" do
     input = <<~INPUT
       <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="3.2.0" schema-version="v2.1.3" flavor="iso">

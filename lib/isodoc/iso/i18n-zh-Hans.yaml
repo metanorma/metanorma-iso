@@ -9,7 +9,7 @@ reference_number_abbrev: 参考编号
 price_based_on: 价格基于%页
 descriptor: 描述符
 reference: 参考文献
-under_preparation: 制定中（出版时最新状态为%）
+under_preparation: "制定中。出版时最新状态为%"
 withdrawn: 撤回 .
 cancelled_and_replaced: 已取消并由%取代。
 date: 日期

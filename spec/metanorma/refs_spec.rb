@@ -22,152 +22,141 @@ RSpec.describe Metanorma::Iso do
     INPUT
     output = <<~OUTPUT
       #{BLANK_HDR}
-        <sections>
-          <clause id="_" inline-header="false" obligation="normative">
-            <title id="_">Clause</title>
-            <p id="_">
-              <eref bibitemid="iso123" citeas="ISO&#xa0;123:--" type="inline"/>
-              <fn id="_" reference="1"><p id="_">The standard is in press</p></fn>
-              <eref bibitemid="iso123" citeas="ISO&#xa0;123:--" type="inline"/>A.
-              <fn id="_" reference="2">
-                <p id="_">a footnote</p></fn>
-              <eref bibitemid="fdis" citeas="ISO/FDIS&#xa0;17664-1" type="inline"/>
-              <fn id="_" reference="3">
-                <p id="_">Under preparation. (Stage at the time of publication ISO/FDIS 17664-1).</p>
-              </fn>
-              <eref bibitemid="fdis" citeas="ISO/FDIS&#xa0;17664-1" type="inline"/>
-            </p>
-          </clause>
-        </sections>
-        <bibliography>
-          <references id="_" normative="true" obligation="informative">
-            <title id="_">Normative references</title>
-            <p id="_">The following documents are referred to in the text in such a way that
-                       some or all of their content constitutes requirements of this document.
-                       For dated references, only the edition cited applies. For undated
-                       references, the latest edition of the referenced document (including any
-                       amendments) applies.
-                     </p>
-            <bibitem id="_" anchor="iso123" type="standard">
-              <title format="text/plain">Standard</title>
-              <docidentifier type="ISO">ISO 123:—</docidentifier>
-              <docnumber>123</docnumber>
-              <date type="published">
-                <on>–</on>
-              </date>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <name>International Organization for Standardization</name>
-                  <abbreviation>ISO</abbreviation>
-                </organization>
-              </contributor>
-              <language>en</language>
-              <script>Latn</script>
-              <note format="text/plain" type="Unpublished-Status">The standard is in press</note>
-            </bibitem>
-            <bibitem id="_" anchor="fdis" type="standard">
-              <fetched/>
-              <title format="text/plain" language="fr" script="Latn" type="title-intro">Traitement de produits de soins de santé</title>
-              <title format="text/plain" language="fr" script="Latn" type="title-main">Informations relatives au traitement des dispositifs médicaux à
-                         fournir par le fabricant du dispositif
-                       </title>
-              <title format="text/plain" language="fr" script="Latn" type="title-part">Partie 1: Titre manque</title>
-              <title format="text/plain" language="fr" script="Latn" type="main">Traitement de produits de soins de santé — Informations relatives au
-                         traitement des dispositifs médicaux à fournir par le fabricant du
-                         dispositif — Partie 1: Titre manque
-                       </title>
-              <uri type="src">https://www.iso.org/standard/81720.html</uri>
-              <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
-              <docidentifier type="ISO">ISO/FDIS 17664-1</docidentifier>
-              <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
-              <docnumber>17664</docnumber>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <name>International Organization for Standardization</name>
-                  <abbreviation>ISO</abbreviation>
-                  <uri>www.iso.org</uri>
-                </organization>
-              </contributor>
-              <edition>1</edition>
-              <note type="Unpublished-Status">
-                <p id="_">Under preparation. (Stage at the time of publication ISO/FDIS 17664-1).</p>
-              </note>
-              <language>en</language>
-              <language>fr</language>
-              <script>Latn</script>
-              <status>
-                <stage>50</stage>
-                <substage>00</substage>
-              </status>
-              <copyright>
-                <from>unknown</from>
-                <owner>
-                  <organization>
-                    <name>ISO/FDIS</name>
-                  </organization>
-                </owner>
-              </copyright>
-              <relation type="obsoletes">
-                <bibitem type="standard">
-                  <formattedref format="text/plain">ISO 17664:2017</formattedref>
-                </bibitem>
-              </relation>
-              <relation type="instance">
-                <bibitem type="standard">
-                  <fetched/>
-                  <title format="text/plain" language="fr" script="Latn" type="title-intro">Traitement de produits de soins de santé</title>
-                  <title format="text/plain" language="fr" script="Latn" type="title-main">Informations relatives au traitement des dispositifs médicaux à
-                             fournir par le fabricant du dispositif
-                           </title>
-                  <title format="text/plain" language="fr" script="Latn" type="title-part">Partie 1: Titre manque</title>
-                  <title format="text/plain" language="fr" script="Latn" type="main">Traitement de produits de soins de santé — Informations relatives
-                             au traitement des dispositifs médicaux à fournir par le fabricant
-                             du dispositif — Partie 1: Titre manque
-                           </title>
-                  <uri type="src">https://www.iso.org/standard/81720.html</uri>
-                  <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
-                  <docidentifier type="ISO">ISO/FDIS 17664-1</docidentifier>
-                  <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
-                  <docnumber>17664</docnumber>
-                  <contributor>
-                    <role type="publisher"/>
-                    <organization>
-                      <name>International Organization for Standardization</name>
-                      <abbreviation>ISO</abbreviation>
-                      <uri>www.iso.org</uri>
-                    </organization>
-                  </contributor>
-                  <edition>1</edition>
-                  <language>en</language>
-                  <language>fr</language>
-                  <script>Latn</script>
-                  <status>
-                    <stage>50</stage>
-                    <substage>00</substage>
-                  </status>
-                  <copyright>
-                    <from>unknown</from>
-                    <owner>
+          <sections>
+             <clause id="_" inline-header="false" obligation="normative">
+                <title id="_">Clause</title>
+                <p id="_">
+                   <eref type="inline" bibitemid="iso123" citeas="ISO 123:--"/>
+                   <fn id="_" reference="1">
+                      <p id="_">The standard is in press</p>
+                   </fn>
+                   <eref type="inline" bibitemid="iso123" citeas="ISO 123:--"/>
+                   A.
+                   <fn id="_" reference="2">
+                      <p id="_">a footnote</p>
+                   </fn>
+                   <eref type="inline" bibitemid="fdis" citeas="ISO/FDIS 17664-1"/>
+                   <fn id="_" reference="3">
+                      <p id="_">Under preparation. Stage at the time of publication: ISO/FDIS 17664-1.</p>
+                   </fn>
+                   <eref type="inline" bibitemid="fdis" citeas="ISO/FDIS 17664-1"/>
+                </p>
+             </clause>
+          </sections>
+          <bibliography>
+             <references id="_" normative="true" obligation="informative">
+                <title id="_">Normative references</title>
+                <p id="_">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+                <bibitem anchor="iso123" id="_" type="standard">
+                   <title format="text/plain">Standard</title>
+                   <docidentifier type="ISO">ISO 123:—</docidentifier>
+                   <docnumber>123</docnumber>
+                   <date type="published">
+                      <on>–</on>
+                   </date>
+                   <contributor>
+                      <role type="publisher"/>
                       <organization>
-                        <name>ISO/FDIS</name>
+                         <name>International Organization for Standardization</name>
+                         <abbreviation>ISO</abbreviation>
                       </organization>
-                    </owner>
-                  </copyright>
-                  <relation type="obsoletes">
-                    <bibitem type="standard">
-                      <formattedref format="text/plain">ISO 17664:2017</formattedref>
-                    </bibitem>
-                  </relation>
-                  <place>Geneva</place>
+                   </contributor>
+                   <note format="text/plain" type="Unpublished-Status">The standard is in press</note>
+                   <language>en</language>
+                   <script>Latn</script>
                 </bibitem>
-              </relation>
-              <place>Geneva</place>
-            </bibitem>
-          </references>
-        </bibliography>
-      </metanorma>
+                <bibitem id="_" type="standard" anchor="fdis">
+                   <fetched/>
+                   <title type="title-intro" format="text/plain" language="fr" script="Latn">Traitement de produits de soins de santé</title>
+                   <title type="title-main" format="text/plain" language="fr" script="Latn">Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif</title>
+                   <title type="title-part" format="text/plain" language="fr" script="Latn">Partie 1: Titre manque</title>
+                   <title type="main" format="text/plain" language="fr" script="Latn">Traitement de produits de soins de santé — Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif — Partie 1: Titre manque</title>
+                   <uri type="src">https://www.iso.org/standard/81720.html</uri>
+                   <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
+                   <docidentifier type="ISO">ISO/FDIS 17664-1</docidentifier>
+                   <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
+                   <docnumber>17664</docnumber>
+                   <contributor>
+                      <role type="publisher"/>
+                      <organization>
+                         <name>International Organization for Standardization</name>
+                         <abbreviation>ISO</abbreviation>
+                         <uri>www.iso.org</uri>
+                      </organization>
+                   </contributor>
+                   <edition>1</edition>
+                   <note type="Unpublished-Status">
+                      <p id="_">Under preparation. Stage at the time of publication: ISO/FDIS 17664-1.</p>
+                   </note>
+                   <language>en</language>
+                   <language>fr</language>
+                   <script>Latn</script>
+                   <status>
+                      <stage>50</stage>
+                      <substage>00</substage>
+                   </status>
+                   <copyright>
+                      <from>unknown</from>
+                      <owner>
+                         <organization>
+                            <name>ISO/FDIS</name>
+                         </organization>
+                      </owner>
+                   </copyright>
+                   <relation type="obsoletes">
+                      <bibitem type="standard">
+                         <formattedref format="text/plain">ISO 17664:2017</formattedref>
+                      </bibitem>
+                   </relation>
+                   <relation type="instance">
+                      <bibitem type="standard">
+                         <fetched/>
+                         <title type="title-intro" format="text/plain" language="fr" script="Latn">Traitement de produits de soins de santé</title>
+                         <title type="title-main" format="text/plain" language="fr" script="Latn">Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif</title>
+                         <title type="title-part" format="text/plain" language="fr" script="Latn">Partie 1: Titre manque</title>
+                         <title type="main" format="text/plain" language="fr" script="Latn">Traitement de produits de soins de santé — Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif — Partie 1: Titre manque</title>
+                         <uri type="src">https://www.iso.org/standard/81720.html</uri>
+                         <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
+                         <docidentifier type="ISO">ISO/FDIS 17664-1</docidentifier>
+                         <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
+                         <docnumber>17664</docnumber>
+                         <contributor>
+                            <role type="publisher"/>
+                            <organization>
+                               <name>International Organization for Standardization</name>
+                               <abbreviation>ISO</abbreviation>
+                               <uri>www.iso.org</uri>
+                            </organization>
+                         </contributor>
+                         <edition>1</edition>
+                         <language>en</language>
+                         <language>fr</language>
+                         <script>Latn</script>
+                         <status>
+                            <stage>50</stage>
+                            <substage>00</substage>
+                         </status>
+                         <copyright>
+                            <from>unknown</from>
+                            <owner>
+                               <organization>
+                                  <name>ISO/FDIS</name>
+                               </organization>
+                            </owner>
+                         </copyright>
+                         <relation type="obsoletes">
+                            <bibitem type="standard">
+                               <formattedref format="text/plain">ISO 17664:2017</formattedref>
+                            </bibitem>
+                         </relation>
+                         <place>Geneva</place>
+                      </bibitem>
+                   </relation>
+                   <place>Geneva</place>
+                </bibitem>
+             </references>
+          </bibliography>
+       </metanorma>
     OUTPUT
     expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
       .to be_equivalent_to Canon.format_xml(output)
