@@ -1764,20 +1764,7 @@ RSpec.describe Metanorma::Iso do
           <relation type="updates">
              <description>amends</description>
              <bibitem type="standard">
-                <fetched/>
-                <title format="text/plain" language="en" script="Latn">Latex, rubber — Determination of total solids content</title>
-                <docidentifier type="ISO">ISO 124</docidentifier>
-                <contributor>
-                   <role type="publisher"/>
-                   <organization>
-                      <name>International Organization for Standardization</name>
-                      <abbreviation>ISO</abbreviation>
-                      <uri>www.iso.org</uri>
-                   </organization>
-                </contributor>
-                <status>
-                   <stage>Published</stage>
-                </status>
+                <docidentifier type="iso-reference">ISO 124(E)</docidentifier>
              </bibitem>
           </relation>
           <relation type="obsoletes">
