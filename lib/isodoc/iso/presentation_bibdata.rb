@@ -15,7 +15,12 @@ module IsoDoc
 
       def edition_translate(bibdata)
         super
-        @lang == "fr" and e = bibdata.at(ns("./edition[@language = 'fr']")) and
+        edition_translate_iso(bibdata)
+      end
+
+      def edition_translate_iso(bibdata)
+        edition_integer?(bibdata) && @lang == "fr" and
+          e = bibdata.at(ns("./edition[@language = 'fr']")) and
           e.children = e.text.sub(/(\d+)(\p{L}+)/, "\\1<sup>\\2</sup>")
         @docscheme == "1951" and edition_replacement(bibdata)
         edition_printing_date(bibdata)
@@ -30,9 +35,8 @@ module IsoDoc
       end
 
       def edition_replacement(bibdata)
-        e = bibdata.at(ns("./edition[not(@language) or @language = '']"))&.text
-        if /^\d+$/.match?(e) && e.to_i > 1
-          h = { "var1" => e.to_i, "var2" => e.to_i - 1 }
+        if (e = edition_integer?(bibdata)) && e > 1
+          h = { "var1" => e, "var2" => e - 1 }
           x = @i18n.populate("edition_replacement", h)
           bibdata.at(ns("./ext")) << "<edn-replacement>#{x}</edn-replacement>"
         end

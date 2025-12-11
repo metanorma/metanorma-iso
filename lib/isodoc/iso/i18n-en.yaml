@@ -13,7 +13,7 @@ date_first_printing: Date of the first printing
 date_printing: "Date of the {{ var1 | ordinal_word: '', '' }} printing"
 descriptor: Descriptor
 reference: Reference
-under_preparation: Under preparation. (Stage at the time of publication %).
+under_preparation: "Under preparation. Stage at the time of publication: %."
 withdrawn: Withdrawn.
 cancelled_and_replaced: Cancelled and replaced by %.
 table_of_contents: Contents

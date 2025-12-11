@@ -221,6 +221,14 @@ RSpec.describe IsoDoc do
         .sub("<edition>2</edition>", "<edition>1</edition>"), true))
     expect(xml.at("//xmlns:edn-replacement"))
       .to be_nil
+
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input
+      .sub("<edition>2</edition>", "<edition>2.1</edition>"), true))
+    expect(xml.at("//xmlns:edn-replacement"))
+      .to be_nil
+
   end
 
   it "add printing number text" do
