@@ -184,7 +184,7 @@ module IsoDoc
       COMMITTEE = "//bibdata/contributor[role/@type = 'author'] " \
         "[role/description = 'committee']/organization".freeze
 
-      def tc_base(xml, grouptype)
+      def tc_base(xml, _grouptype)
         s = xml.at(ns("#{COMMITTEE}/subdivision[@type = 'Technical committee']"))
         s or return nil
         s.at(ns("./identifier[not(@type = 'full')]"))&.text
@@ -195,7 +195,7 @@ module IsoDoc
         set(:sc, scid)
       end
 
-      def sc_base(xml, grouptype)
+      def sc_base(xml, _grouptype)
         s = xml.at(ns("#{COMMITTEE}/subdivision[@type = 'Subcommittee']"))
         s or return nil
         s.at(ns("./identifier[not(@type = 'full')]"))&.text
@@ -206,7 +206,7 @@ module IsoDoc
         set(:wg, wgid)
       end
 
-      def wg_base(xml, grouptype)
+      def wg_base(xml, _grouptype)
         s = xml.at(ns("#{COMMITTEE}/subdivision[@type = 'Workgroup']"))
         s or return nil
         s.at(ns("./identifier[not(@type = 'full')]"))&.text

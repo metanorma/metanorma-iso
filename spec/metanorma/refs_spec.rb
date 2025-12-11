@@ -1,10 +1,12 @@
 require "spec_helper"
 require "relaton_iso"
+require "relaton_iec"
 require "relaton_ietf"
 
 RSpec.describe Metanorma::Iso do
   it "processes draft ISO reference" do
-    mock_fdis
+    mock_fdis_iso
+    mock_fdis_iec
     input = <<~INPUT
       #{ISOBIB_BLANK_HDR}
       == Clause
@@ -18,7 +20,8 @@ RSpec.describe Metanorma::Iso do
       == Normative References
 
       * [[[iso123,ISO 123:--]]] footnote:[The standard is in press] _Standard_
-      * [[[fdis,ISO/FDIS 17664-1]]] Title
+      * [[[fdis,ISO/FDIS 17664-1:2020]]] Title
+      * [[[fdis2,IEC PWI 100-44 ED1]]] Title
     INPUT
     output = <<~OUTPUT
       #{BLANK_HDR}
@@ -35,11 +38,11 @@ RSpec.describe Metanorma::Iso do
                    <fn id="_" reference="2">
                       <p id="_">a footnote</p>
                    </fn>
-                   <eref type="inline" bibitemid="fdis" citeas="ISO/FDIS 17664-1"/>
+                   <eref type="inline" bibitemid="fdis" citeas="ISO 17664-1:—"/>
                    <fn id="_" reference="3">
-                      <p id="_">Under preparation. Stage at the time of publication: ISO/FDIS 17664-1.</p>
+                      <p id="_">Under preparation. Stage at the time of publication: ISO/FDIS 17664-1:2020.</p>
                    </fn>
-                   <eref type="inline" bibitemid="fdis" citeas="ISO/FDIS 17664-1"/>
+                   <eref type="inline" bibitemid="fdis" citeas="ISO 17664-1:—"/>
                 </p>
              </clause>
           </sections>
@@ -73,7 +76,7 @@ RSpec.describe Metanorma::Iso do
                    <title type="main" format="text/plain" language="fr" script="Latn">Traitement de produits de soins de santé — Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif — Partie 1: Titre manque</title>
                    <uri type="src">https://www.iso.org/standard/81720.html</uri>
                    <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
-                   <docidentifier type="ISO">ISO/FDIS 17664-1</docidentifier>
+                   <docidentifier type="ISO">ISO 17664-1:—</docidentifier>
                    <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
                    <docnumber>17664</docnumber>
                    <contributor>
@@ -86,7 +89,7 @@ RSpec.describe Metanorma::Iso do
                    </contributor>
                    <edition>1</edition>
                    <note type="Unpublished-Status">
-                      <p id="_">Under preparation. Stage at the time of publication: ISO/FDIS 17664-1.</p>
+                      <p id="_">Under preparation. Stage at the time of publication: ISO/FDIS 17664-1:2020.</p>
                    </note>
                    <language>en</language>
                    <language>fr</language>
@@ -103,55 +106,46 @@ RSpec.describe Metanorma::Iso do
                          </organization>
                       </owner>
                    </copyright>
-                   <relation type="obsoletes">
-                      <bibitem type="standard">
-                         <formattedref format="text/plain">ISO 17664:2017</formattedref>
-                      </bibitem>
-                   </relation>
-                   <relation type="instance">
-                      <bibitem type="standard">
-                         <fetched/>
-                         <title type="title-intro" format="text/plain" language="fr" script="Latn">Traitement de produits de soins de santé</title>
-                         <title type="title-main" format="text/plain" language="fr" script="Latn">Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif</title>
-                         <title type="title-part" format="text/plain" language="fr" script="Latn">Partie 1: Titre manque</title>
-                         <title type="main" format="text/plain" language="fr" script="Latn">Traitement de produits de soins de santé — Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif — Partie 1: Titre manque</title>
-                         <uri type="src">https://www.iso.org/standard/81720.html</uri>
-                         <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
-                         <docidentifier type="ISO">ISO/FDIS 17664-1</docidentifier>
-                         <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
-                         <docnumber>17664</docnumber>
-                         <contributor>
-                            <role type="publisher"/>
-                            <organization>
-                               <name>International Organization for Standardization</name>
-                               <abbreviation>ISO</abbreviation>
-                               <uri>www.iso.org</uri>
-                            </organization>
-                         </contributor>
-                         <edition>1</edition>
-                         <language>en</language>
-                         <language>fr</language>
-                         <script>Latn</script>
-                         <status>
-                            <stage>50</stage>
-                            <substage>00</substage>
-                         </status>
-                         <copyright>
-                            <from>unknown</from>
-                            <owner>
-                               <organization>
-                                  <name>ISO/FDIS</name>
-                               </organization>
-                            </owner>
-                         </copyright>
-                         <relation type="obsoletes">
-                            <bibitem type="standard">
-                               <formattedref format="text/plain">ISO 17664:2017</formattedref>
-                            </bibitem>
-                         </relation>
-                         <place>Geneva</place>
-                      </bibitem>
-                   </relation>
+                   <place>Geneva</place>
+                </bibitem>
+                <bibitem id="_" type="standard" anchor="fdis2">
+                   <fetched/>
+                   <title type="title-intro" format="text/plain" language="fr" script="Latn">Traitement de produits de soins de santé</title>
+                   <title type="title-main" format="text/plain" language="fr" script="Latn">Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif</title>
+                   <title type="title-part" format="text/plain" language="fr" script="Latn">Partie 1: Titre manque</title>
+                   <title type="main" format="text/plain" language="fr" script="Latn">Traitement de produits de soins de santé — Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif — Partie 1: Titre manque</title>
+                   <uri type="src">https://www.iso.org/standard/81720.html</uri>
+                   <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
+                   <docidentifier type="IEC">IEC 100-44:— ED1</docidentifier>
+                   <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
+                   <docnumber>17664</docnumber>
+                   <contributor>
+                      <role type="publisher"/>
+                      <organization>
+                         <name>International Electrotechnical Commission</name>
+                         <abbreviation>IEC</abbreviation>
+                         <uri>www.iso.org</uri>
+                      </organization>
+                   </contributor>
+                   <edition>1</edition>
+                   <note type="Unpublished-Status">
+                      <p id="_">Under preparation. Stage at the time of publication: IEC PWI 100-44 ED1.</p>
+                   </note>
+                   <language>en</language>
+                   <language>fr</language>
+                   <script>Latn</script>
+                   <status>
+                      <stage>50</stage>
+                      <substage>00</substage>
+                   </status>
+                   <copyright>
+                      <from>unknown</from>
+                      <owner>
+                         <organization>
+                            <name>ISO/FDIS</name>
+                         </organization>
+                      </owner>
+                   </copyright>
                    <place>Geneva</place>
                 </bibitem>
              </references>
@@ -627,9 +621,9 @@ RSpec.describe Metanorma::Iso do
 
   private
 
-  def mock_fdis
+  def mock_fdis_iso
     expect(RelatonIso::IsoBibliography).to receive(:get)
-      .with("ISO/FDIS 17664-1", nil, anything) do
+      .with("ISO/FDIS 17664-1", "2020", anything) do
       RelatonIsoBib::XMLParser.from_xml(<<~"OUTPUT")
         <bibitem id="_" anchor="x" type="standard">
           <fetched>#{Date.today}</fetched>
@@ -639,7 +633,7 @@ RSpec.describe Metanorma::Iso do
           <title format="text/plain" language="fr" script="Latn" type="main">Traitement de produits de soins de santé — Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif — Partie 1: Titre manque</title>
           <uri type="src">https://www.iso.org/standard/81720.html</uri>
           <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
-          <docidentifier type="ISO">ISO/FDIS 17664-1</docidentifier>
+          <docidentifier type="ISO">ISO/FDIS 17664-1:2020</docidentifier>
           <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
           <docnumber>17664</docnumber>
           <contributor>
@@ -666,58 +660,54 @@ RSpec.describe Metanorma::Iso do
               </organization>
             </owner>
           </copyright>
-          <relation type="obsoletes">
-            <bibitem type="standard">
-              <formattedref format="text/plain">ISO 17664:2017</formattedref>
-            </bibitem>
-          </relation>
-          <relation type="instance">
-            <bibitem type="standard">
-              <fetched>2020-11-03</fetched>
-              <title format="text/plain" language="fr" script="Latn" type="title-intro">Traitement de produits de soins de santé</title>
-              <title format="text/plain" language="fr" script="Latn" type="title-main">Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif</title>
-              <title format="text/plain" language="fr" script="Latn" type="title-part">Partie 1: Titre manque</title>
-              <title format="text/plain" language="fr" script="Latn" type="main">Traitement de produits de soins de santé — Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif — Partie 1: Titre manque</title>
-              <uri type="src">https://www.iso.org/standard/81720.html</uri>
-              <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
-              <docidentifier type="ISO">ISO/FDIS 17664-1</docidentifier>
-              <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
-              <docnumber>17664</docnumber>
-              <contributor>
-                <role type="publisher"/>
-                <organization>
-                  <name>International Organization for Standardization</name>
-                  <abbreviation>ISO</abbreviation>
-                  <uri>www.iso.org</uri>
-                </organization>
-              </contributor>
-              <edition>1</edition>
-              <language>en</language>
-              <language>fr</language>
-              <script>Latn</script>
-              <status>
-                <stage>50</stage>
-                <substage>00</substage>
-              </status>
-              <copyright>
-                <from>unknown</from>
-                <owner>
-                  <organization>
-                    <name>ISO/FDIS</name>
-                  </organization>
-                </owner>
-              </copyright>
-              <relation type="obsoletes">
-                <bibitem type="standard">
-                  <formattedref format="text/plain">ISO 17664:2017</formattedref>
-                </bibitem>
-              </relation>
-              <place>Geneva</place>
-            </bibitem>
-          </relation>
           <place>Geneva</place>
         </bibitem>
       OUTPUT
     end
+
+      def mock_fdis_iec
+    expect(RelatonIec::IecBibliography).to receive(:get)
+      .with("IEC PWI 100-44 ED1", nil, anything) do
+      RelatonIsoBib::XMLParser.from_xml(<<~"OUTPUT")
+        <bibitem id="_" anchor="x" type="standard">
+          <fetched>#{Date.today}</fetched>
+          <title format="text/plain" language="fr" script="Latn" type="title-intro">Traitement de produits de soins de santé</title>
+          <title format="text/plain" language="fr" script="Latn" type="title-main">Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif</title>
+          <title format="text/plain" language="fr" script="Latn" type="title-part">Partie 1: Titre manque</title>
+          <title format="text/plain" language="fr" script="Latn" type="main">Traitement de produits de soins de santé — Informations relatives au traitement des dispositifs médicaux à fournir par le fabricant du dispositif — Partie 1: Titre manque</title>
+          <uri type="src">https://www.iso.org/standard/81720.html</uri>
+          <uri type="rss">https://www.iso.org/contents/data/standard/08/17/81720.detail.rss</uri>
+          <docidentifier type="IEC">IEC PWI 100-44 ED1</docidentifier>
+          <docidentifier type="URN">urn:iso:std:iso-fdis:17664:-1:ed-1:fr</docidentifier>
+          <docnumber>17664</docnumber>
+          <contributor>
+            <role type="publisher"/>
+            <organization>
+              <name>International Electrotechnical Commission</name>
+              <abbreviation>IEC</abbreviation>
+              <uri>www.iso.org</uri>
+            </organization>
+          </contributor>
+          <edition>1</edition>
+          <language>en</language>
+          <language>fr</language>
+          <script>Latn</script>
+          <status>
+            <stage>50</stage>
+            <substage>00</substage>
+          </status>
+          <copyright>
+            <from>unknown</from>
+            <owner>
+              <organization>
+                <name>ISO/FDIS</name>
+              </organization>
+            </owner>
+          </copyright>
+          <place>Geneva</place>
+        </bibitem>
+      OUTPUT
+    end
+      end
   end
 end

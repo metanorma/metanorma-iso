@@ -81,12 +81,30 @@ module Metanorma
       def unpublished_note(xmldoc)
         xmldoc.xpath("//bibitem[not(./ancestor::bibitem)]" \
                      "[not(note[@type = 'Unpublished-Status'])]").each do |b|
-          pub_class(b) > 2 and next
-          ((s = b.at("./status/stage")) && s.text.match?(/\d/) &&
-           (s.text.to_i < 60)) or next
-          insert_unpub_note(b, @i18n.under_preparation
-            .sub("%", b.at("docidentifier").text))
+          unpublished_ref?(b) and next
+          docid = b.at("./docidentifier[@primary = 'true']") ||
+            b.at("./docidentifier[@type = 'ISO' or @type = 'IEC']") ||
+            b.at("./docidentifier")
+          insert_unpub_note(b, @i18n.under_preparation.sub("%", docid.text))
+          draft_biblio_docid(docid, b)
         end
+      end
+
+      def draft_biblio_docid(docid, bibitem)
+        publisher = pub_class(bibitem)
+        base_pubid = publisher == 1 ? Pubid::Iso::Identifier : Pubid::Iec::Identifier
+        orig = base_pubid.parse(docid.text).to_h
+        orig[:year] = "123456789"
+        orig.delete(:stage)
+        new = base_pubid.create(**orig).to_s.sub("123456789", "—")
+        docid.children = new
+      end
+
+      def unpublished_ref?(bibitem)
+        pub_class(bibitem) > 2 and return true
+        ((s = bibitem.at("./status/stage")) && s.text.match?(/\d/) &&
+         (s.text.to_i < 60)) or return true
+        false
       end
 
       def withdrawn_note(xmldoc)
@@ -100,10 +118,10 @@ module Metanorma
           end
       end
 
-      def withdrawn_ref?(biblio)
-        pub_class(biblio) > 2 and return false
-        (s = biblio.at("./status/stage")) && (s.text.to_i == 95) &&
-          (t = biblio.at("./status/substage")) && (t.text.to_i == 99)
+      def withdrawn_ref?(bibitem)
+        pub_class(bibitem) > 2 and return false
+        (s = bibitem.at("./status/stage")) && (s.text.to_i == 95) &&
+          (t = bibitem.at("./status/substage")) && (t.text.to_i == 99)
       end
 
       def replacement_standard(biblio)
