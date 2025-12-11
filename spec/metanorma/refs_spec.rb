@@ -40,7 +40,7 @@ RSpec.describe Metanorma::Iso do
                    </fn>
                    <eref type="inline" bibitemid="fdis" citeas="ISO 17664-1:—"/>
                    <fn id="_" reference="3">
-                      <p id="_">Under preparation. Stage at the time of publication: ISO/FDIS 17664-1:2020.</p>
+                      <p id="_">Under preparation. Stage at the time of publication: ISO/FDIS 17664-1:#{Date.today.year}.</p>
                    </fn>
                    <eref type="inline" bibitemid="fdis" citeas="ISO 17664-1:—"/>
                 </p>
@@ -89,7 +89,7 @@ RSpec.describe Metanorma::Iso do
                    </contributor>
                    <edition>1</edition>
                    <note type="Unpublished-Status">
-                      <p id="_">Under preparation. Stage at the time of publication: ISO/FDIS 17664-1:2020.</p>
+                      <p id="_">Under preparation. Stage at the time of publication: ISO/FDIS 17664-1:#{Date.today.year}.</p>
                    </note>
                    <language>en</language>
                    <language>fr</language>
@@ -129,7 +129,7 @@ RSpec.describe Metanorma::Iso do
                    </contributor>
                    <edition>1</edition>
                    <note type="Unpublished-Status">
-                      <p id="_">Under preparation. Stage at the time of publication: IEC PWI 100-44 ED1.</p>
+                      <p id="_">Under preparation. Stage at the time of publication: IEC PWI 100-44:#{Date.today.year} ED1.</p>
                    </note>
                    <language>en</language>
                    <language>fr</language>

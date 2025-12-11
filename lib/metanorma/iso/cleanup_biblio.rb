@@ -81,23 +81,39 @@ module Metanorma
       def unpublished_note(xmldoc)
         xmldoc.xpath("//bibitem[not(./ancestor::bibitem)]" \
                      "[not(note[@type = 'Unpublished-Status'])]").each do |b|
-          unpublished_ref?(b) and next
-          docid = b.at("./docidentifier[@primary = 'true']") ||
-            b.at("./docidentifier[@type = 'ISO' or @type = 'IEC']") ||
-            b.at("./docidentifier")
-          insert_unpub_note(b, @i18n.under_preparation.sub("%", docid.text))
-          draft_biblio_docid(docid, b)
-        end
+                       unpublished_note1(b)
+                     end
       end
 
-      def draft_biblio_docid(docid, bibitem)
+      def unpublished_note1(bibitem)
+        unpublished_ref?(bibitem) and return
+        docid = bibitem.at("./docidentifier[@primary = 'true']") ||
+          bibitem.at("./docidentifier[@type = 'ISO' or @type = 'IEC']") ||
+          bibitem.at("./docidentifier")
+        base_pubid, orig = parse_draft_docid(docid, bibitem)
+        insert_unpub_note(bibitem, @i18n.under_preparation
+          .sub("%", dated_draft_id(orig, base_pubid)))
+        draft_biblio_docid(orig, base_pubid, docid)
+      end
+
+      def parse_draft_docid(docid, bibitem)
         publisher = pub_class(bibitem)
         base_pubid = publisher == 1 ? Pubid::Iso::Identifier : Pubid::Iec::Identifier
-        orig = base_pubid.parse(docid.text).to_h
-        orig[:year] = "123456789"
-        orig.delete(:stage)
-        new = base_pubid.create(**orig).to_s.sub("123456789", "—")
+        [base_pubid, base_pubid.parse(docid.text).to_h]
+      end
+
+      def draft_biblio_docid(orig, base_pubid, docid)
+        ret = orig.dup
+        ret[:year] = "123456789"
+        ret.delete(:stage)
+        new = base_pubid.create(**ret).to_s.sub("123456789", "—")
         docid.children = new
+      end
+
+      def dated_draft_id(orig, base_pubid)
+        ret = orig.dup
+        ret[:year] = Date.today.year
+        base_pubid.create(**ret).to_s
       end
 
       def unpublished_ref?(bibitem)
