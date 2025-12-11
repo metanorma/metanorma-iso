@@ -15,6 +15,10 @@ module IsoDoc
 
       def edition_translate(bibdata)
         super
+        edition_translate_iso(bibdata)
+      end
+
+      def edition_translate_iso(bibdata)
         edition_integer?(bibdata) && @lang == "fr" and
           e = bibdata.at(ns("./edition[@language = 'fr']")) and
           e.children = e.text.sub(/(\d+)(\p{L}+)/, "\\1<sup>\\2</sup>")
