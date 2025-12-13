@@ -103,8 +103,8 @@ module IsoDoc
         opt[:node]["droploc"] != "true" &&
           !subclause?(opt[:target], opt[:type], opt[:from]) and
           ret = eref_locality_populate(opt[:type], opt[:node], opt[:number])
-        ret += " #{opt[:from]}" if opt[:from]
-        ret += "&#x2013;#{opt[:upto]}" if opt[:upto]
+        ret += " <esc>#{opt[:from]}</esc>" if opt[:from]
+        ret += "&#x2013;<esc>#{opt[:upto]}</esc>" if opt[:upto]
         ret += ")" if opt[:type] == "list"
         ret = l10n(ret)
         locality_span_wrap(ret, opt[:type])
