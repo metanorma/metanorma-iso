@@ -9553,6 +9553,12 @@
 		</xsl:if>
 	</xsl:template>
 
+	<xsl:attribute-set name="term-kind-style">
+	</xsl:attribute-set>
+
+	<xsl:template name="refine_term-kind-style">
+	</xsl:template>
+
 	<xsl:attribute-set name="term-number-style">
 		<xsl:attribute name="keep-with-next">always</xsl:attribute>
 		<xsl:attribute name="font-weight">bold</xsl:attribute>
