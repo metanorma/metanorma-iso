@@ -82,6 +82,8 @@ module IsoDoc
         ret.join
       end
 
+      # Suspended, introduced for GB as ordinal, not desired for non-integer
+      # localities, or for JIS
       def eref_localities1_zh(opt)
         ret = " 第<esc>#{opt[:from]}</esc>" if opt[:from]
         ret += "&#x2013;<esc>#{opt[:upto]}</esc>" if opt[:upto]
@@ -95,8 +97,8 @@ module IsoDoc
       def eref_localities1(opt)
         opt[:type] == "anchor" and return nil
         opt[:type] = opt[:type].downcase
-        %w(zh ko ja).include?(opt[:lang]) and
-          return l10n(eref_localities1_zh(opt))
+        # %w(zh ko ja).include?(opt[:lang]) and
+        # return l10n(eref_localities1_zh(opt))
         ret = ""
         opt[:node]["droploc"] != "true" &&
           !subclause?(opt[:target], opt[:type], opt[:from]) and
@@ -149,7 +151,7 @@ module IsoDoc
       end
 
       def anchor_xref(node, target, container: false)
-        #require "debug"; binding.b
+        # require "debug"; binding.b
         super
       end
     end

@@ -1,2 +1,2 @@
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "fix/edition_cardinal"
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
 

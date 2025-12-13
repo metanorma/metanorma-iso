@@ -2245,7 +2245,7 @@ RSpec.describe IsoDoc do
                          <span class="stdpublisher">ISO </span>
                          <span class="stddocNumber">712</span>
                          ，
-                         <span class="citetbl">第1〜1表</span>
+                         <span class="citetbl">表1〜1</span>
                       </fmt-xref>
                    </semx>
                 </p>
@@ -2576,7 +2576,7 @@ RSpec.describe IsoDoc do
                          <span class="stdpublisher">ISO </span>
                          <span class="stddocNumber">712</span>
                          ，
-                         <span class="citetbl">第1〜1表</span>
+                         <span class="citetbl">表1〜1</span>
                       </a>
                    </p>
                 </div>
