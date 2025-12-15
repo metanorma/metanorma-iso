@@ -1244,8 +1244,11 @@
 									</xsl:if>
 									<xsl:if test="$layoutVersion = '2024'">
 										<fo:static-content flow-name="xsl-footnote-separator" role="artifact">
-											<fo:block margin-bottom="6pt">
-												<fo:leader leader-pattern="rule" leader-length="51mm" rule-thickness="0.5pt"/>
+											<fo:block xsl:use-attribute-sets="footnote-separator-block-style">
+												<xsl:call-template name="refine_footnote-separator-block-style"/>
+												<fo:leader xsl:use-attribute-sets="footnote-separator-leader-style">
+													<xsl:call-template name="refine_footnote-separator-leader-style"/>
+												</fo:leader>
 											</fo:block>
 										</fo:static-content>
 									</xsl:if>
@@ -1308,15 +1311,10 @@
 								<xsl:attribute name="force-page-count"><xsl:value-of select="$force-page-count-main_sections"/></xsl:attribute>
 							</xsl:if>
 							<fo:static-content flow-name="xsl-footnote-separator" role="artifact">
-								<fo:block>
-									<xsl:if test="$layoutVersion = '2024'">
-										<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
-									</xsl:if>
-									<fo:leader leader-pattern="rule" leader-length="30%">
-										<xsl:if test="$layoutVersion = '2024'">
-											<xsl:attribute name="leader-length">51mm</xsl:attribute>
-											<xsl:attribute name="rule-thickness">0.5pt</xsl:attribute>
-										</xsl:if>
+								<fo:block xsl:use-attribute-sets="footnote-separator-block-style">
+									<xsl:call-template name="refine_footnote-separator-block-style"/>
+									<fo:leader xsl:use-attribute-sets="footnote-separator-leader-style">
+										<xsl:call-template name="refine_footnote-separator-leader-style"/>
 									</fo:leader>
 								</fo:block>
 							</fo:static-content>
@@ -16222,10 +16220,25 @@
 	<!-- END Lists processing -->
 	<!-- ===================================== -->
 
+	<xsl:attribute-set name="footnote-separator-block-style">
+	</xsl:attribute-set>
+
+	<xsl:template name="refine_footnote-separator-block-style">
+		<xsl:if test="$layoutVersion = '2024'">
+			<xsl:attribute name="margin-bottom">6pt</xsl:attribute>
+		</xsl:if>
+	</xsl:template>
+
 	<xsl:attribute-set name="footnote-separator-leader-style">
+		<xsl:attribute name="leader-pattern">rule</xsl:attribute>
+		<xsl:attribute name="leader-length">30%</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_footnote-separator-leader-style">
+		<xsl:if test="$layoutVersion = '2024'">
+			<xsl:attribute name="leader-length">51mm</xsl:attribute>
+			<xsl:attribute name="rule-thickness">0.5pt</xsl:attribute>
+		</xsl:if>
 	</xsl:template>
 
 	<xsl:attribute-set name="fn-container-body-style">
