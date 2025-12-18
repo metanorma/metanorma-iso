@@ -68,31 +68,18 @@ module IsoDoc
       def part_title(part, titlenums, lang)
         part or return ""
         suffix = to_xml(part.children)
-        p = titlenums[:part]
-        titlenums[:part] && titlenums[:subpart] and
-          p = "#{titlenums[:part]}&#x2013;#{titlenums[:subpart]}"
-        titlenums[:part] and
-          suffix = "#{PART_LABEL[lang.to_sym]}&#xa0;#{p}: " + suffix
+        if titlenums[:part] &&
+            t = title_part_prefix(titlenums[:part].document.root, "part", lang)
+          i = IsoDoc::I18n.new(lang, ::Metanorma::Utils.default_script(lang))
+          suffix = i.l10n("<esc>#{t}</esc>: <esc>#{suffix}</esc>")
+        end
         suffix
       end
 
-      def part_prefix(titlenums, lang)
-        p = titlenums[:part]
-        titlenums[:part] && titlenums[:subpart] and
-          p = "#{titlenums[:part]}&#x2013;#{titlenums[:subpart]}"
-        "#{self.class::PART_LABEL[lang.to_sym]}&#xa0;#{p}"
-      end
-
-      def amd_prefix(titlenums, lang)
-        "#{self.class::AMD_LABEL[lang.to_sym]}&#xa0;#{titlenums[:amd]}"
-      end
-
-      def add_prefix(titlenums, lang)
-        "#{self.class::ADD_LABEL[lang.to_sym]}&#xa0;#{titlenums[:add]}"
-      end
-
-      def corr_prefix(titlenums, lang)
-        "#{self.class::CORR_LABEL[lang.to_sym]}&#xa0;#{titlenums[:corr]}"
+      def title_part_prefix(xml, part, lang)
+        t = xml.at(ns("//bibdata/title[@language='#{lang}']"\
+          "[@type='title-#{part}-prefix']")) or return
+        to_xml(t.children)
       end
 
       def compose_title(tparts, tnums, lang)
@@ -129,22 +116,24 @@ module IsoDoc
                when "fr", "ru" then @lang
                else "en"
                end
-        # intro, main, complementary, part, amd = title_parts(isoxml, lang)
         tp = title_parts(isoxml, lang)
         tn = title_nums(isoxml)
         set(:doctitlemain, tp[:main] ? to_xml(tp[:main].children) : "")
-        main = compose_title(tp, tn, lang)
-        set(:doctitle, main)
         tp[:intro] and set(:doctitleintro, to_xml(tp[:intro].children))
         tp[:complementary] and
           set(:doctitlecomplementary, to_xml(tp[:complementary].children))
-        set(:doctitlepartlabel, part_prefix(tn, lang))
-        set(:doctitlepart, to_xml(tp[:part].children)) if tp[:part]
-        set(:doctitleamdlabel, amd_prefix(tn, lang)) if tn[:amd]
-        set(:doctitleamd, to_xml(tp[:amd].children)) if tp[:amd]
-        set(:doctitlecorrlabel, corr_prefix(tn, lang)) if tn[:corr]
-        set(:doctitleaddlabel, add_prefix(tn, lang)) if tn[:add]
-        set(:doctitleadd, to_xml(tp[:add].children)) if tp[:add]
+        set(:doctitlepartlabel, title_part_prefix(isoxml, "part", lang))
+        tp[:part] and set(:doctitlepart, to_xml(tp[:part].children))
+        tn[:amd] and
+          set(:doctitleamdlabel, title_part_prefix(isoxml, "amendment", lang))
+        tp[:amd] and set(:doctitleamd, to_xml(tp[:amd].children))
+        tn[:corr] and set(:doctitlecorrlabel,
+                          title_part_prefix(isoxml, "corrigendum", lang))
+        tn[:add] and set(:doctitleaddlabel,
+                         title_part_prefix(isoxml, "addendum", lang))
+        tp[:add] and set(:doctitleadd, to_xml(tp[:add].children))
+        main = compose_title(tp, tn, lang)
+        set(:doctitle, main)
       end
 
       def subtitle(isoxml, _out)
@@ -153,18 +142,21 @@ module IsoDoc
         tn = title_nums(isoxml)
 
         set(:docsubtitlemain, tp[:main] ? to_xml(tp[:main].children) : "")
-        main = compose_title(tp, tn, lang)
-        set(:docsubtitle, main)
         tp[:intro] and set(:docsubtitleintro, to_xml(tp[:intro].children))
         tp[:complementary] and
           set(:docsubtitlecomplementary, to_xml(tp[:complementary].children))
-        set(:docsubtitlepartlabel, part_prefix(tn, lang))
+        set(:docsubtitlepartlabel, title_part_prefix(isoxml, "part", lang))
         tp[:part] and set(:docsubtitlepart, to_xml(tp[:part].children))
-        set(:docsubtitleamdlabel, amd_prefix(tn, lang)) if tn[:amd]
-        set(:docsubtitleamd, to_xml(tp[:amd].children)) if tp[:amd]
-        set(:docsubtitleaddlabel, add_prefix(tn, lang)) if tn[:add]
-        set(:docsubtitleadd, to_xml(tp[:add].children)) if tp[:add]
-        set(:docsubtitlecorrlabel, corr_prefix(tn, lang)) if tn[:corr]
+        tn[:amd] and set(:docsubtitleamdlabel,
+                         title_part_prefix(isoxml, "amendment", lang))
+        tp[:amd] and set(:docsubtitleamd, to_xml(tp[:amd].children))
+        tn[:add] and set(:docsubtitleaddlabel,
+                         title_part_prefix(isoxml, "addendum", lang))
+        tp[:add] and set(:docsubtitleadd, to_xml(tp[:add].children))
+        tn[:corr] and set(:docsubtitlecorrlabel,
+                          title_part_prefix(isoxml, "corrigendum", lang))
+        main = compose_title(tp, tn, lang)
+        set(:docsubtitle, main)
       end
 
       def author(xml, _out)

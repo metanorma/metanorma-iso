@@ -14,10 +14,12 @@ RSpec.describe IsoDoc::Iso::Metadata do
           <title format="text/plain" language="en" type="title-main">Specifications and test methods H<sup>2</sup></title>
           <title format="text/plain" language="en" type="title-part">Rice H<sup>2</sup></title>
           <title format="text/plain" language="en" type="title-complementary">Complement</title>
+          <title language="en" type="title-part-prefix">Part 1</title>
           <title format="text/plain" language="fr" type="title-intro">Céréales et légumineuses H<sup>2</sup></title>
           <title format="text/plain" language="fr" type="title-main">Spécification et méthodes d'essai H<sup>2</sup></title>
           <title format="text/plain" language="fr" type="title-part">Riz H<sup>2</sup></title>
           <title format="text/plain" language="fr" type="title-complementary">Complément</title>
+          <title language="fr" type="title-part-prefix">Partie 1</title>
           <docidentifier type="ISO">ISO/PreCD3 17301-1</docidentifier>
           <docidentifier type="iso-with-lang">ISO/PreCD3 17301-1 (E)</docidentifier>
           <docidentifier type="iso-reference">ISO/PreCD3 17301-1:2000 (E)</docidentifier>
@@ -233,13 +235,13 @@ RSpec.describe IsoDoc::Iso::Metadata do
         docnumber_lang: "ISO/PreCD3 17301-1 (E)",
         docnumber_reference: "ISO/PreCD3 17301-1:2000 (E)",
         docnumeric: "1730",
-        docsubtitle: "C&#xE9;r&#xE9;ales et l&#xE9;gumineuses H<sup>2</sup>&#xa0;&#x2014; Sp&#xE9;cification et m&#xE9;thodes d'essai H<sup>2</sup>&#xa0;&#x2014; Compl&#xE9;ment&#xa0;&#x2014; Partie&#xa0;1: Riz H<sup>2</sup>",
+        docsubtitle: "C&#xE9;r&#xE9;ales et l&#xE9;gumineuses H<sup>2</sup>&#xa0;&#x2014; Sp&#xE9;cification et m&#xE9;thodes d'essai H<sup>2</sup>&#xa0;&#x2014; Compl&#xE9;ment&#xa0;&#x2014; Partie 1 : Riz H<sup>2</sup>",
         docsubtitlecomplementary: "Compl&#xE9;ment",
         docsubtitleintro: "C&#xE9;r&#xE9;ales et l&#xE9;gumineuses H<sup>2</sup>",
         docsubtitlemain: "Sp&#xE9;cification et m&#xE9;thodes d'essai H<sup>2</sup>",
         docsubtitlepart: "Riz H<sup>2</sup>",
         docsubtitlepartlabel: "Partie&#xa0;1",
-        doctitle: "Cereals and pulses H<sup>2</sup>&#xa0;&#x2014; Specifications and test methods H<sup>2</sup>&#xa0;&#x2014; Complement&#xa0;&#x2014; Part&#xa0;1: Rice H<sup>2</sup>",
+        doctitle: "Cereals and pulses H<sup>2</sup>&#xa0;&#x2014; Specifications and test methods H<sup>2</sup>&#xa0;&#x2014; Complement&#xa0;&#x2014; Part 1: Rice H<sup>2</sup>",
         doctitlecomplementary: "Complement",
         doctitleintro: "Cereals and pulses H<sup>2</sup>",
         doctitlemain: "Specifications and test methods H<sup>2</sup>",
@@ -290,6 +292,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
             <title type="title-intro" language="en" format="text/plain">Cereals and pulses</title>
             <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
             <title type="title-part" language="en" format="text/plain">Rice</title>
+            <title language="en" type="title-part-prefix">Part 1–1</title>
+            <title language="fr" type="title-part-prefix">Partie 1–1</title>
           <docidentifier type="ISO">ISO/IEC/CD 17301-1-3</docidentifier>
           <docidentifier type="iso-with-lang">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
           <docidentifier type="iso-reference">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
@@ -358,12 +362,12 @@ RSpec.describe IsoDoc::Iso::Metadata do
         docnumber: "ISO/IEC/CD 17301-1-3",
         docnumber_lang: "ISO/IEC/CD 17301-1-3 (E)",
         docnumber_reference: "ISO/IEC/CD 17301-1-3 (E)",
-        docsubtitlepartlabel: "Partie&#xa0;1&#x2013;3",
-        doctitle: "Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Part&#xa0;1&#x2013;3: Rice",
+        docsubtitlepartlabel: "Partie 1–1",
+        doctitle: "Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Part 1–1: Rice",
         doctitleintro: "Cereals and pulses",
         doctitlemain: "Specifications and test methods",
         doctitlepart: "Rice",
-        doctitlepartlabel: "Part&#xa0;1&#x2013;3",
+        doctitlepartlabel: "Part 1–1",
         doctype: "International Standard",
         doctype_display: "International Standard",
         docyear: "2016",
@@ -404,6 +408,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
             <title type="title-main" language="fr" format="text/plain">Spécification et méthodes d'essai</title>
             <title type="title-part" language="fr" format="text/plain">Riz</title>
             <title type="title-complementary" language="fr" format="text/plain">Complément</title>
+            <title language="en" type="title-part-prefix">Part 1–3</title>
+            <title language="fr" type="title-part-prefix">Partie 1–3</title>
           <docidentifier type="ISO">ISO/IEC/CD 17301-1-3</docidentifier>
           <docidentifier type="iso-with-lang">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
           <docidentifier type="iso-reference">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
@@ -469,18 +475,18 @@ RSpec.describe IsoDoc::Iso::Metadata do
         docnumber: "ISO/IEC/CD 17301-1-3",
         docnumber_lang: "ISO/IEC/CD 17301-1-3 (E)",
         docnumber_reference: "ISO/IEC/CD 17301-1-3 (E)",
-        docsubtitle: "Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Complement&#xa0;&#x2014; Part&#xa0;1&#x2013;3: Rice",
+        docsubtitle: "Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Complement&#xa0;&#x2014; Part 1–3: Rice",
         docsubtitlecomplementary: "Complement",
         docsubtitleintro: "Cereals and pulses",
         docsubtitlemain: "Specifications and test methods",
         docsubtitlepart: "Rice",
         docsubtitlepartlabel: "Part&#xa0;1&#x2013;3",
-        doctitle: "C&#xE9;r&#xE9;ales et l&#xE9;gumineuses&#xa0;&#x2014; Sp&#xE9;cification et m&#xE9;thodes d'essai&#xa0;&#x2014; Compl&#xE9;ment&#xa0;&#x2014; Partie&#xa0;1&#x2013;3: Riz",
+        doctitle: "C&#xE9;r&#xE9;ales et l&#xE9;gumineuses&#xa0;&#x2014; Sp&#xE9;cification et m&#xE9;thodes d'essai&#xa0;&#x2014; Compl&#xE9;ment&#xa0;&#x2014; Partie 1–3 : Riz",
         doctitlecomplementary: "Compl&#xE9;ment",
         doctitleintro: "C&#xe9;r&#xe9;ales et l&#xe9;gumineuses",
         doctitlemain: "Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai",
         doctitlepart: "Riz",
-        doctitlepartlabel: "Partie&#xa0;1&#x2013;3",
+        doctitlepartlabel: "Partie 1–3",
         doctype: "International Standard",
         doctype_display: "Standard International",
         docyear: "2016",
@@ -525,6 +531,9 @@ RSpec.describe IsoDoc::Iso::Metadata do
             <title type="title-main" language="ru" format="text/plain">Технические характеристики и методы испытаний</title>
             <title type="title-part" language="ru" format="text/plain">Рис</title>
             <title format="text/plain" language="ru" type="title-complementary">Дополнение</title>
+            <title language="en" type="title-part-prefix">Part 1–3</title>
+            <title language="fr" type="title-part-prefix">Partie 1–3</title>
+            <title language="ru" type="title-part-prefix">Частъ 1–3</title>
           <docidentifier type="ISO">ISO/IEC/CD 17301-1-3</docidentifier>
           <docidentifier type="iso-with-lang">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
           <docidentifier type="iso-reference">ISO/IEC/CD 17301-1-3 (E)</docidentifier>
@@ -691,18 +700,18 @@ RSpec.describe IsoDoc::Iso::Metadata do
         docnumber: "ISO/IEC/CD 17301-1-3",
         docnumber_lang: "ISO/IEC/CD 17301-1-3 (E)",
         docnumber_reference: "ISO/IEC/CD 17301-1-3 (E)",
-        docsubtitle: "Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Complement&#xa0;&#x2014; Part&#xa0;1&#x2013;3: Rice",
+        docsubtitle: "Cereals and pulses&#xa0;&#x2014; Specifications and test methods&#xa0;&#x2014; Complement&#xa0;&#x2014; Part 1–3: Rice",
         docsubtitlecomplementary: "Complement",
         docsubtitleintro: "Cereals and pulses",
         docsubtitlemain: "Specifications and test methods",
         docsubtitlepart: "Rice",
-        docsubtitlepartlabel: "Part&#xa0;1&#x2013;3",
-        doctitle: "Зерновые и бобовые&#xa0;&#x2014; Технические характеристики и методы испытаний&#xa0;&#x2014; Дополнение&#xa0;&#x2014; Часть&#xa0;1&#x2013;3: Рис",
+        docsubtitlepartlabel: "Part 1–3",
+        doctitle: "Зерновые и бобовые&#xa0;&#x2014; Технические характеристики и методы испытаний&#xa0;&#x2014; Дополнение&#xa0;&#x2014; Частъ 1–3: Рис",
         doctitlecomplementary: "Дополнение",
         doctitleintro: "Зерновые и бобовые",
         doctitlemain: "Технические характеристики и методы испытаний",
         doctitlepart: "Рис",
-        doctitlepartlabel: "Часть&#xa0;1&#x2013;3",
+        doctitlepartlabel: "Частъ 1–3",
         doctype: "International Standard",
         doctype_display: "International Standard",
         docyear: "2016",
