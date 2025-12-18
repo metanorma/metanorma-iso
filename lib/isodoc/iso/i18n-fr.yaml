@@ -37,6 +37,11 @@ draft_comment_2: Outre le fait d’être examinés pour établir s’ils sont ac
 draft_comment_3: Les destinataires du présent projet sont invités à présenter, avec leurs observations, notification des droits de propriété dont ils auraient éventuellement connaissance et à fournir une documentation explicative.
 website: site web
 subclause: ""
+title_prefixes:
+  part: Partie
+  amendment: Amendement
+  corrigendum: Rectificatif
+  addendum: Additif
 doctype_dict:
   international-standard: Norme internationale
   technical-specification: Spécification technique

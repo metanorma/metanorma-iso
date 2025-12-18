@@ -37,6 +37,11 @@ doctype_dict:
   directive: 指令
   committee-document: 委员会文件
   recommendation: ISO推荐
+title_prefixes:
+  part: 部分
+  amendment: 修正
+  corrigendum: 更正
+  addendum: 附录
 stage_dict:
   "00": 初步工作项
   "10": 新工作项提案

@@ -193,11 +193,17 @@ RSpec.describe Metanorma::Iso do
              <title language="en" type="title-main">Main Title — Title</title>
              <title language="en" type="title-part">Title Part</title>
              <title language="en" type="title-amd">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+                   <title language="en" type="title-part-prefix">Part 1</title>
+      <title language="en" type="title-amendment-prefix">Amendment 1</title>
+      <title language="ru" type="title-part-prefix">Часть 1</title>
+      <title language="ru" type="title-amendment-prefix">Поправка 1</title>
              <title language="fr" type="main">Introduction Française — Titre Principal — Part du Titre — Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
              <title language="fr" type="title-intro">Introduction Française</title>
              <title language="fr" type="title-main">Titre Principal</title>
              <title language="fr" type="title-part">Part du Titre</title>
              <title language="fr" type="title-amd">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+             <title language="fr" type="title-part-prefix">Partie 1</title>
+      <title language="fr" type="title-amendment-prefix">Amendement 1</title>
              <docidentifier type="ISO" primary="true">ISO 17301-1:2016/NP Amd 1.3:2017</docidentifier>
              <docidentifier type="iso-reference">ISO 17301-1:2016/NP Amd 1.3:2017(E)</docidentifier>
              <docidentifier type="URN">urn:iso:std:iso:17301:-1:ed-1:stage-10.20:amd:2017:v1</docidentifier>
@@ -397,8 +403,14 @@ RSpec.describe Metanorma::Iso do
         <bibdata type="standard">
           <title language="en" type="main">Main Title — Title</title>
           <title language="en" type="title-main">Main Title — Title</title>
+               <title language="en" type="title-part-prefix">Part 1</title>
+     <title language="en" type="title-amendment-prefix">Amendment 1</title>
+     <title language="ru" type="title-part-prefix">Часть 1</title>
+     <title language="ru" type="title-amendment-prefix">Поправка 1</title>
           <title language="fr" type="main">Titre Principal</title>
           <title language="fr" type="title-main">Titre Principal</title>
+               <title language="fr" type="title-part-prefix">Partie 1</title>
+     <title language="fr" type="title-amendment-prefix">Amendement 1</title>
           <docidentifier type="ISO" primary="true">ISO 17301-1:2016/CD Amd 1:2017</docidentifier>
              <docidentifier type="iso-reference">ISO 17301-1:2016/CD Amd 1:2017(E)</docidentifier>
              <docidentifier type="URN">urn:iso:std:iso:17301:-1:ed-1:stage-30.00:amd:2017:v1</docidentifier>
@@ -479,6 +491,12 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
+              <title language="en" type="title-part-prefix">Part 1</title>
+      <title language="en" type="title-amendment-prefix">Amendment 1</title>
+      <title language="ru" type="title-part-prefix">Часть 1</title>
+      <title language="ru" type="title-amendment-prefix">Поправка 1</title>
+      <title language="fr" type="title-part-prefix">Partie 1</title>
+      <title language="fr" type="title-amendment-prefix">Amendement 1</title>
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/DAM 1:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/DAM 1:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-40.00:amd:#{Date.today.year}:v1</docidentifier>
@@ -555,6 +573,12 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
+              <title language="en" type="title-part-prefix">Part 1</title>
+      <title language="en" type="title-amendment-prefix">Amendment 1</title>
+      <title language="ru" type="title-part-prefix">Часть 1</title>
+      <title language="ru" type="title-amendment-prefix">Поправка 1</title>
+      <title language="fr" type="title-part-prefix">Partie 1</title>
+      <title language="fr" type="title-amendment-prefix">Amendement 1</title>
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Amd 1:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Amd 1:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:amd:#{Date.today.year}:v1</docidentifier>
@@ -632,6 +656,12 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
+              <title language="en" type="title-part-prefix">Part 1</title>
+      <title language="en" type="title-corrigendum-prefix">Corrigendum 3</title>
+      <title language="ru" type="title-part-prefix">Часть 1</title>
+      <title language="ru" type="title-corrigendum-prefix">Исправление 3</title>
+      <title language="fr" type="title-part-prefix">Partie 1</title>
+      <title language="fr" type="title-corrigendum-prefix">Rectificatif 3</title>
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/CD Cor 3:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/CD Cor 3:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-30.00:cor:#{Date.today.year}:v3</docidentifier>
@@ -709,6 +739,12 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       <metanorma xmlns='https://www.metanorma.org/ns/standoc'  type="semantic" version="#{Metanorma::Iso::VERSION}" flavor="iso">
         <bibdata type='standard'>
+              <title language="en" type="title-part-prefix">Part 1</title>
+      <title language="en" type="title-corrigendum-prefix">Corrigendum 3</title>
+      <title language="ru" type="title-part-prefix">Часть 1</title>
+      <title language="ru" type="title-corrigendum-prefix">Исправление 3</title>
+      <title language="fr" type="title-part-prefix">Partie 1</title>
+      <title language="fr" type="title-corrigendum-prefix">Rectificatif 3</title>
           <docidentifier type='ISO' primary="true">ISO 17301-1:2030/FDCOR 3:#{Date.today.year}</docidentifier>
           <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCOR 3:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-50.00:cor:#{Date.today.year}:v3</docidentifier>
@@ -785,6 +821,12 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
+          <title language="en" type="title-part-prefix">Part 1</title>
+      <title language="en" type="title-corrigendum-prefix">Corrigendum 3</title>
+      <title language="ru" type="title-part-prefix">Часть 1</title>
+      <title language="ru" type="title-corrigendum-prefix">Исправление 3</title>
+      <title language="fr" type="title-part-prefix">Partie 1</title>
+      <title language="fr" type="title-corrigendum-prefix">Rectificatif 3</title>
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Cor 3:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Cor 3:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:cor:#{Date.today.year}:v3</docidentifier>
@@ -869,9 +911,15 @@ RSpec.describe Metanorma::Iso do
              <title language="en" type="main">Rice — Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
              <title language="en" type="title-main">Rice</title>
              <title language="en" type="title-add">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+             <title language="en" type="title-part-prefix">Part 1</title>
+      <title language="en" type="title-addendum-prefix">Addendum 3</title>
+      <title language="ru" type="title-part-prefix">Часть 1</title>
+      <title language="ru" type="title-addendum-prefix">Дополнение 3</title>
              <title language="fr" type="main">Riz — Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
              <title language="fr" type="title-main">Riz</title>
              <title language="fr" type="title-add">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+                   <title language="fr" type="title-part-prefix">Partie 1</title>
+      <title language="fr" type="title-addendum-prefix">Additif 3</title>
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Add 3:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Add 3:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:sup:iso:#{Date.today.year}:v3</docidentifier>
