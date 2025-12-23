@@ -233,7 +233,7 @@ module IsoDoc
         id = "_#{UUIDTools::UUID.random_create}"
         @new_ids[id] = nil
         <<~XML
-          <fn id='#{id}' reference='#{id}'><p>#{@i18n.labels['availablefrom']} <span class='biburl'>#{data[:uri]}</span></p></fn>
+          <fn id='#{id}' reference='#{id}'><p>#{@i18n.labels['availablefrom']} <span class='biburl'>#{data[:uri].gsub(/<\/?esc>/, '')}</span></p></fn>
         XML
       end
 

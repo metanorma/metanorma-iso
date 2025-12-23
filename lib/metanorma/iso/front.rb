@@ -113,6 +113,7 @@ module Metanorma
         node.attr("addendum-number") and
           title_component(node, xml, lang,
                           { name: "addendum", abbr: "add" })
+        title_nums(node, xml, lang)
       end
 
       def relaton_relations
@@ -139,13 +140,11 @@ module Metanorma
 
       def structured_id(node, xml)
         node.attr("docnumber") or return # allow empty node.attr("docnumber")
-        part, subpart = node.attr("partnumber")&.split("-")
         xml.structuredidentifier do |i|
           i.project_number(node.attr("docnumber"), **attr_code(
-            part:, subpart:, amendment: node.attr("amendment-number"),
-            corrigendum: node.attr("corrigendum-number"),
-            addendum: node.attr("addendum-number"),
-            origyr: node.attr("created-date")
+            title_nums_prep(node).merge(
+              origyr: node.attr("created-date"),
+            ),
           ))
         end
       end
