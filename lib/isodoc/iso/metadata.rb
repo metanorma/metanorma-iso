@@ -56,15 +56,6 @@ module IsoDoc
         end
       end
 
-      # we don't leave this to i18n.rb, because we have both English and
-      # French titles in the same document
-      PART_LABEL = { en: "Part", fr: "Partie", ru: "Часть" }.freeze
-      AMD_LABEL = { en: "AMENDMENT", fr: "AMENDMENT", ru: "ПОПРАВКА" }.freeze
-      ADD_LABEL = { en: "ADDENDUM", fr: "ADDITIF", ru: "ДОПОЛНЕНИЕ" }.freeze
-      CORR_LABEL = { en: "TECHNICAL CORRIGENDUM",
-                     fr: "RECTIFICATIF TECHNIQUE",
-                     ru: "ТЕХНИЧЕСКОЕ ИСПРАВЛЕНИЕ" }.freeze
-
       def part_title(part, titlenums, lang)
         part or return ""
         suffix = to_xml(part.children)

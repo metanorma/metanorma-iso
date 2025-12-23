@@ -843,6 +843,9 @@ RSpec.describe IsoDoc do
           <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
           <title format="text/plain" language="en" type="title-part">Title Part</title>
           <title format="text/plain" language="en" type="title-amd">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+          <title format="text/plain" language="en" type="title-part-prefix">Part&#xa0;1</title>
+          <title format="text/plain" language="en" type="title-amendment-prefix">AMENDMENT&#xa0;1</title>
+          <title format="text/plain" language="en" type="title-corrigendum-prefix">TECHNICAL CORRIGENDUM&#xa0;2</title>
           <title format="text/plain" language="fr" type="main">Introduction Française — Titre Principal — Part du Titre — Fraction
               massique de matière étrangère, riz usiné (non gluant), diviseurs
               d’échantillon et recommandations relatives aux conditions d’entreposage et
@@ -852,6 +855,9 @@ RSpec.describe IsoDoc do
           <title format="text/plain" language="fr" type="title-main">Titre Principal</title>
           <title format="text/plain" language="fr" type="title-part">Part du Titre</title>
           <title format="text/plain" language="fr" type="title-amd">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+          <title format="text/plain" language="fr" type="title-part-prefix">Partie&#xa0;1</title>
+          <title format="text/plain" language="fr" type="title-amendment-prefix">AMENDEMENT&#xa0;1</title>
+          <title format="text/plain" language="fr" type="title-corrigendum-prefix">RECTIFICATIF TECHNIQUE&#xa0;2</title>
           <docidentifier type="ISO">ISO/PreNWIP3 17301-1:2016/Amd.1</docidentifier>
           <docidentifier type="iso-with-lang">ISO/PreNWIP3 17301-1:2016/Amd.1(E)</docidentifier>
           <docidentifier type="iso-reference">ISO/PreNWIP3 17301-1:2016/Amd.1:2017(E)</docidentifier>
@@ -996,9 +1002,9 @@ RSpec.describe IsoDoc do
         docnumber_lang: "ISO/PreNWIP3 17301-1:2016/Amd.1(E)",
         docnumber_reference: "ISO/PreNWIP3 17301-1:2016/Amd.1:2017(E)",
         docnumeric: "17301",
-        docsubtitle: "Introduction Fran&#xe7;aise&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie&#xa0;1: Part du Titre",
+        docsubtitle: "Introduction Fran&#xe7;aise&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie&#xa0;1 : Part du Titre",
         docsubtitleamd: "Fraction massique de mati&#xe8;re &#xe9;trang&#xe8;re, riz usin&#xe9; (non gluant), diviseurs d&#x2019;&#xe9;chantillon et recommandations relatives aux conditions d&#x2019;entreposage et de transport",
-        docsubtitleamdlabel: "AMENDMENT&#xa0;1",
+        docsubtitleamdlabel: "AMENDEMENT&#xa0;1",
         docsubtitlecorrlabel: "RECTIFICATIF TECHNIQUE&#xa0;2",
         docsubtitleintro: "Introduction Fran&#xe7;aise",
         docsubtitlemain: "Titre Principal",
@@ -1058,6 +1064,9 @@ RSpec.describe IsoDoc do
           <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
           <title format="text/plain" language="en" type="title-part">Title Part</title>
           <title format="text/plain" language="en" type="title-amd">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+          <title format="text/plain" language="en" type="title-part-prefix">Part&#xa0;1</title>
+          <title format="text/plain" language="en" type="title-amendment-prefix">AMENDMENT&#xa0;1</title>
+          <title format="text/plain" language="en" type="title-corrigendum-prefix">TECHNICAL CORRIGENDUM&#xa0;2</title>
           <title format="text/plain" language="fr" type="main">Introduction Française — Titre Principal — Part du Titre — Fraction
         massique de matière étrangère, riz usiné (non gluant), diviseurs
         d’échantillon et recommandations relatives aux conditions d’entreposage et
@@ -1067,6 +1076,9 @@ RSpec.describe IsoDoc do
           <title format="text/plain" language="fr" type="title-main">Titre Principal</title>
           <title format="text/plain" language="fr" type="title-part">Part du Titre</title>
           <title format="text/plain" language="fr" type="title-amd">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+          <title format="text/plain" language="fr" type="title-part-prefix">Partie&#xa0;1</title>
+          <title format="text/plain" language="fr" type="title-amendment-prefix">AMENDEMENT&#xa0;1</title>
+          <title format="text/plain" language="fr" type="title-corrigendum-prefix">RECTIFICATIF TECHNIQUE&#xa0;2</title>
           <docidentifier type="ISO">ISO/PreNWIP3 17301-1:2016/Amd.1</docidentifier>
           <docidentifier type="iso-with-lang">ISO/PreNWIP3 17301-1:2016/Amd.1(E)</docidentifier>
           <docidentifier type="iso-reference">ISO/PreNWIP3 17301-1:2016/Amd.1:2017(E)</docidentifier>
@@ -1160,9 +1172,9 @@ RSpec.describe IsoDoc do
         docsubtitlemain: "Main Title&#x2009;&#x2014;&#x2009;Title",
         docsubtitlepart: "Title Part",
         docsubtitlepartlabel: "Part&#xa0;1",
-        doctitle: "Introduction Française&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie&#xa0;1: Part du Titre",
+        doctitle: "Introduction Française&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie&#xa0;1 : Part du Titre",
         doctitleamd: "Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport",
-        doctitleamdlabel: "AMENDMENT&#xa0;1",
+        doctitleamdlabel: "AMENDEMENT&#xa0;1",
         doctitlecorrlabel: "RECTIFICATIF TECHNIQUE&#xa0;2",
         doctitleintro: "Introduction Française",
         doctitlemain: "Titre Principal",
@@ -1204,6 +1216,9 @@ RSpec.describe IsoDoc do
           <title format="text/plain" language="en" type="title-intro">Introduction</title>
           <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
           <title format="text/plain" language="en" type="title-part">Title Part</title>
+          <title format="text/plain" language="en" type="title-part-prefix">Part&#xa0;1</title>
+          <title format="text/plain" language="en" type="title-addendum-prefix">ADDENDUM&#xa0;1</title>
+          <title format="text/plain" language="en" type="title-corrigendum-prefix">TECHNICAL CORRIGENDUM&#xa0;2</title>
           <title format="text/plain" language="en" type="title-add">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
           <title format="text/plain" language="fr" type="main">Introduction Française — Titre Principal — Part du Titre — Fraction
               massique de matière étrangère, riz usiné (non gluant), diviseurs
@@ -1213,6 +1228,9 @@ RSpec.describe IsoDoc do
           <title format="text/plain" language="fr" type="title-intro">Introduction Française</title>
           <title format="text/plain" language="fr" type="title-main">Titre Principal</title>
           <title format="text/plain" language="fr" type="title-part">Part du Titre</title>
+          <title format="text/plain" language="fr" type="title-part-prefix">Partie&#xa0;1</title>
+          <title format="text/plain" language="fr" type="title-addendum-prefix">ADDITIF&#xa0;1</title>
+          <title format="text/plain" language="fr" type="title-corrigendum-prefix">RECTIFICATIF TECHNIQUE&#xa0;2</title>
           <title format="text/plain" language="fr" type="title-add">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
           <docidentifier type="ISO">ISO/PreNWIP3 17301-1:2016/Add.1</docidentifier>
           <docidentifier type="iso-with-lang">ISO/PreNWIP3 17301-1:2016/Add.1(E)</docidentifier>
@@ -1298,7 +1316,7 @@ RSpec.describe IsoDoc do
         docnumber_lang: "ISO/PreNWIP3 17301-1:2016/Add.1(E)",
         docnumber_reference: "ISO/PreNWIP3 17301-1:2016/Add.1:2017(E)",
         docnumeric: "17301",
-        docsubtitle: "Introduction Fran&#xe7;aise&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie&#xa0;1: Part du Titre",
+        docsubtitle: "Introduction Fran&#xe7;aise&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie&#xa0;1 : Part du Titre",
         docsubtitleadd: "Fraction massique de mati&#xe8;re &#xe9;trang&#xe8;re, riz usin&#xe9; (non gluant), diviseurs d&#x2019;&#xe9;chantillon et recommandations relatives aux conditions d&#x2019;entreposage et de transport",
         docsubtitleaddlabel: "ADDITIF&#xa0;1",
         docsubtitlecorrlabel: "RECTIFICATIF TECHNIQUE&#xa0;2",
@@ -1344,6 +1362,9 @@ RSpec.describe IsoDoc do
           <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
           <title format="text/plain" language="en" type="title-part">Title Part</title>
           <title format="text/plain" language="en" type="title-amd">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+          <title format="text/plain" language="en" type="title-part-prefix">Part 1</title>
+          <title format="text/plain" language="en" type="title-amendment-prefix">AMENDMENT 1</title>
+          <title format="text/plain" language="en" type="title-corrigendum-prefix">TECHNICAL CORRIGENDUM 2</title>
           <ext>
             <structuredidentifier>
               <project-number amendment="1" corrigendum="2" origyr="2016-05-01" part="1">17301</project-number>
@@ -1365,6 +1386,9 @@ RSpec.describe IsoDoc do
           <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
           <title format="text/plain" language="en" type="title-part">Title Part</title>
           <title format="text/plain" language="en" type="title-amd">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+          <title format="text/plain" language="en" type="title-part-prefix">Part 1</title>
+          <title format="text/plain" language="en" type="title-amendment-prefix">AMENDMENT 1</title>
+          <title format="text/plain" language="en" type="title-corrigendum-prefix">TECHNICAL CORRIGENDUM 2</title>
           <ext>
             <structuredidentifier>
               <project-number amendment="1" corrigendum="2" origyr="2016-05-01" part="1">17301</project-number>

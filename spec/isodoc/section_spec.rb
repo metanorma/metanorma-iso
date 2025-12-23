@@ -1345,6 +1345,7 @@ RSpec.describe IsoDoc do
           <title format="text/plain" language="en" type="title-intro">Introduction</title>
           <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
           <title format="text/plain" language="en" type="title-part">Title Part</title>
+          <title format="text/plain" language="en" type="title-part-prefix">Part 1</title>
           <ext>
             <structuredidentifier>
               <project-number origyr="2016-05-01" part="1">17301</project-number>
@@ -1362,6 +1363,7 @@ RSpec.describe IsoDoc do
            <title format="text/plain" language="en" type="title-intro">Introduction</title>
            <title format="text/plain" language="en" type="title-main">Main Title&#x2009;&#x2014;&#x2009;Title</title>
            <title format="text/plain" language="en" type="title-part">Title Part</title>
+          <title format="text/plain" language="en" type="title-part-prefix">Part 1</title>
            <ext>
              <structuredidentifier>
                <project-number origyr="2016-05-01" part="1">17301</project-number>
@@ -1371,7 +1373,7 @@ RSpec.describe IsoDoc do
        <preface> <clause type="toc" id="_" displayorder="1"> 
             <fmt-title id="_" depth="1">Contents</fmt-title> 
           </clause> </preface>
-         <sections><p class="zzSTDTitle1" displayorder="2"><span class="boldtitle">Introduction &#x2014; Main Title&#x2009;&#x2014;&#x2009;Title &#x2014; </span><span class="nonboldtitle">Part&#xA0;1:</span> <span class="boldtitle">Title Part</span></p>
+         <sections><p class="zzSTDTitle1" displayorder="2"><span class="boldtitle">Introduction &#x2014; Main Title&#x2009;&#x2014;&#x2009;Title &#x2014; </span><span class="nonboldtitle">Part 1:</span> <span class="boldtitle">Title Part</span></p>
          <clause id="A" displayorder="3">
                   <fmt-title id="_" depth="1">
             <span class="fmt-caption-label">
@@ -1390,7 +1392,7 @@ RSpec.describe IsoDoc do
       #{HTML_HDR}
                    <p class="zzSTDTitle1">
                <span class="boldtitle">Introduction — Main Title — Title — </span>
-               <span class="nonboldtitle">Part 1:</span>
+               <span class="nonboldtitle">Part 1:</span>
                <span class="boldtitle">Title Part</span>
              </p>
              <div id="A">

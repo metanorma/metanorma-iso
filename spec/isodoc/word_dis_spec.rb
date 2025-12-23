@@ -935,6 +935,7 @@ RSpec.describe IsoDoc do
         <title language="en" format="text/plain" type="title-intro">Date and time</title>
           <title language="en" format="text/plain" type="title-main">Representations for information interchange</title>
         <title language="en" format="text/plain" type="title-part">Basic rules</title>
+        <title language="en" format="text/plain" type="title-part-prefix">Part 1</title>
         <date type="published"><on>2011</on></date>
           <status><stage>50</stage></status>
           <ext><doctype>international-standard</doctype>
@@ -1013,6 +1014,8 @@ RSpec.describe IsoDoc do
           <title language="en" format="text/plain" type="title-main">Representations for information interchange</title>
         <title language="en" format="text/plain" type="title-part">Basic rules</title>
         <title language="en" format="text/plain" type="title-amd">Technical corrections</title>
+        <title language="en" format="text/plain" type="title-amendment-prefix">AMENDMENT 1</title>
+        <title language="en" format="text/plain" type="title-part-prefix">Part 1</title>
         <date type="published"><on>2011</on></date>
           <status><stage>50</stage></status>
           <ext><doctype>amendment</doctype>
