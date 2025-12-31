@@ -1163,9 +1163,11 @@ RSpec.describe IsoDoc do
         <div>
         <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
         <div class="boilerplate-copyright">
+        <div class="zzCopyrightContainer">
         <div>
         <a name="added" id="added"/>
         <p class="zzCopyright">Is there anybody out there?</p>
+        </div>
         </div>
         </div>
         </div>
@@ -1225,9 +1227,11 @@ RSpec.describe IsoDoc do
         <div>
         <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
         <div class="boilerplate-copyright">
+        <div class="zzCopyrightContainer">
         <div>
         <a name="added" id="added"/>
         <p class="zzCopyright">Is there anybody out there?</p>
+        </div>
         </div>
         </div>
         </div>

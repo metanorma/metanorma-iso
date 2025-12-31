@@ -135,7 +135,7 @@ module IsoDoc
         auth.xpath(".//p[@id = 'boilerplate-place']").each do |p|
           p["class"] = "zzCopyright1"
         end
-        auth.children = "<div class='zzCopyrightContainer'>#{to_xml(auth)}</div>"
+        auth.children = "<div class='zzCopyrightContainer'>#{to_xml(auth.children)}</div>"
       end
 
       def authority_copyright_populate(doc, auth)
