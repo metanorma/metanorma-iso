@@ -1308,7 +1308,7 @@ RSpec.describe IsoDoc do
       </metanorma>
     INPUT
     output = <<~OUTPUT
-       <terms id="_" obligation="normative" displayorder="3">
+      <terms id="_" obligation="normative" displayorder="3">
           <title id="_">Terms and definitions</title>
           <fmt-title depth="1" id="_">
              <span class="fmt-caption-label">
@@ -1406,14 +1406,15 @@ RSpec.describe IsoDoc do
                       </localityStack>
                    </origin>
                    <semx element="origin" source="_">
-                      <fmt-xref type="inline" style="short" target="internet_standards">
-                         INTERNET ENGINEERING TASK FORCE.
+                      <fmt-origin bibitemid="internet_standards" type="inline" citeas="[3]" style="short">
+                         <fmt-xref target="internet_standards">INTERNET ENGINEERING TASK FORCE</fmt-xref>
+                         .
                          <em>
                             <span class="stddocTitle">Internet Standards</span>
                          </em>
                          [website]. 2024,
                          <span class="citesec">Clause 3</span>
-                      </fmt-xref>
+                      </fmt-origin>
                       <fmt-xref target="internet_standards">
                          <sup>[3]</sup>
                       </fmt-xref>
@@ -1504,14 +1505,15 @@ RSpec.describe IsoDoc do
                       </localityStack>
                    </origin>
                    <semx element="origin" source="_">
-                      <fmt-xref type="inline" style="short" target="internet_standards">
-                         INTERNET ENGINEERING TASK FORCE.
+                      <fmt-origin bibitemid="internet_standards" type="inline" citeas="[3]" style="short">
+                         <fmt-xref target="internet_standards">INTERNET ENGINEERING TASK FORCE</fmt-xref>
+                         .
                          <em>
                             <span class="stddocTitle">Internet Standards</span>
                          </em>
                          [website]. 2024,
                          <span class="citesec">Clause 3</span>
-                      </fmt-xref>
+                      </fmt-origin>
                       <fmt-xref target="internet_standards">
                          <sup>[3]</sup>
                       </fmt-xref>
@@ -1527,14 +1529,15 @@ RSpec.describe IsoDoc do
                       </localityStack>
                    </origin>
                    <semx element="origin" source="_">
-                      <fmt-xref type="inline" style="short" target="graphql">
-                         JOINT DEVELOPMENT FOUNDATION PROJECTS, LLC.
+                      <fmt-origin bibitemid="graphql" type="inline" citeas="[4]" style="short">
+                         <fmt-xref target="graphql">JOINT DEVELOPMENT FOUNDATION PROJECTS, LLC</fmt-xref>
+                         .
                          <em>
                             <span class="stddocTitle">The GraphQL Specification Project</span>
                          </em>
                          ,
                          <span class="citesec">Clause 3</span>
-                      </fmt-xref>
+                      </fmt-origin>
                       <fmt-xref target="graphql">
                          <sup>[4]</sup>
                       </fmt-xref>

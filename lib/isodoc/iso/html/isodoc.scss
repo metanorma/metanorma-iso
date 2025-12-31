@@ -771,9 +771,6 @@ p.zzCopyright, li.zzCopyright, div.zzCopyright
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	tab-stops:20.15pt 25.7pt 481.15pt;
-	border:none;
-	padding:0cm;
-	mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
 	font-size:11.0pt;
 	font-family:$bodyfont;
 	mso-fareast-font-family:"SimSun",serif;
@@ -792,14 +789,16 @@ p.zzCopyright1
         line-height:12.0pt;
         mso-pagination:widow-orphan;
         tab-stops:20.15pt 25.7pt 481.15pt;
-        border:none;
-        padding:0cm;
-        mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
         font-size:10.0pt;
         font-family:$bodyfont;
         mso-fareast-font-family:"SimSun",serif;
         mso-bidi-font-family:$bodyfont;
         mso-ansi-language:EN-GB;}
+div.zzCopyrightContainer {
+  border: none;
+  padding: 0cm;
+  mso-padding-alt: 1pt 4pt 1pt 4pt;
+}
 p.zzAddress {
   margin:0cm;
   margin-bottom:12pt;

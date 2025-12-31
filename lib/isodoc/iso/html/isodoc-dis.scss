@@ -852,10 +852,6 @@ p.zzCopyright, li.zzCopyright, div.zzCopyright
 	line-height:12.0pt;
 	mso-pagination:widow-orphan;
 	tab-stops:25.7pt 481.15pt;
-	border:none;
-	mso-border-alt:solid blue .5pt;
-	padding:0cm;
-	mso-padding-alt:1.0pt 4.0pt 1.0pt 4.0pt;
 	font-size:$normalfontsize;
 	mso-bidi-font-size:10.0pt;
 	font-family:$bodyfont;
@@ -864,6 +860,12 @@ p.zzCopyright, li.zzCopyright, div.zzCopyright
 	color:blue;
 	mso-ansi-language:EN-GB;
 	mso-fareast-language:JA;}
+div.zzCopyrightContainer {
+  border: none;
+  mso-border-alt: solid blue 0.5pt;
+  padding: 0cm;
+  mso-padding-alt: 1pt 4pt 1pt 4pt;
+}
 p.zzAddress {
 mso-style-name:zzAddress;
   margin:0cm;
