@@ -307,16 +307,14 @@ RSpec.describe IsoDoc do
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <metanorma-extension>
             <presentation-metadata>
-              <name>TOC Heading Levels</name>
-              <value>3</value>
+              <toc-heading-levels>3</toc-heading-levels>
             </presentation-metadata>
             <presentation-metadata>
-              <name>HTML TOC Heading Levels</name>
+              <html-toc-heading-levels>2</html-toc-heading-levels>
               <value>2</value>
             </presentation-metadata>
             <presentation-metadata>
-              <name>DOC TOC Heading Levels</name>
-              <value>3</value>
+              <doc-toc-heading-levels>3</doc-toc-heading-levels>
             </presentation-metadata>
           </metanorma-extension>
                   <sections>

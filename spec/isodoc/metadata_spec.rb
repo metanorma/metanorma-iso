@@ -220,7 +220,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         <semantic-metadata>
         <stage-published>false</stage-published>
         </semantic-metadata>
-        <presentation-metadata><name>document-scheme</name><value>1951</value></presentation-metadata>
+        <presentation-metadata><document-scheme>1951</document-scheme></presentation-metadata>
         </metanorma-extension>
       </iso-standard>
     INPUT

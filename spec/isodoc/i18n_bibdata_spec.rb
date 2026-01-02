@@ -17,7 +17,7 @@ RSpec.describe IsoDoc do
       </ext>
       </bibdata>
       <metanorma-extension>
-      <presentation-metadata><name>document-scheme</name><value>2024</value></presentation-metadata>
+      <presentation-metadata><document-scheme>2024</document-scheme></presentation-metadata>
       </metanorma-extension>
       <sections>
           <clause id="D" obligation="normative" type="scope">
@@ -138,7 +138,7 @@ RSpec.describe IsoDoc do
       </ext>
       </bibdata>
       <metanorma-extension>
-      <presentation-metadata><name>document-scheme</name><value>2024</value></presentation-metadata>
+      <presentation-metadata><document-scheme>2024</document-scheme></presentation-metadata>
       </metanorma-extension>
       <sections>
           <clause id="D" obligation="normative" type="scope">
@@ -181,7 +181,7 @@ RSpec.describe IsoDoc do
       </ext>
       </bibdata>
       <metanorma-extension>
-      <presentation-metadata><name>document-scheme</name><value>1951</value></presentation-metadata>
+      <presentation-metadata><document-scheme>1951</document-scheme></presentation-metadata>
       </metanorma-extension>
       <sections>
           <clause id="D" obligation="normative" type="scope">
@@ -243,7 +243,7 @@ RSpec.describe IsoDoc do
       </ext>
       </bibdata>
       <metanorma-extension>
-      <presentation-metadata><name>document-scheme</name><value>1951</value></presentation-metadata>
+      <presentation-metadata><document-scheme>1951</document-scheme></presentation-metadata>
       <presentation-metadata><printing-date>2</printing-date>value></presentation-metadata>
       <presentation-metadata><printing-date>1965-12-01</printing-date>value></presentation-metadata>
       </metanorma-extension>

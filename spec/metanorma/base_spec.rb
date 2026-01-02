@@ -2059,25 +2059,20 @@ RSpec.describe Metanorma::Iso do
             <stage-published>true</stage-published>
         </semantic-metadata>
          <presentation-metadata>
-           <name>document-scheme</name>
-           <value>DOCUMENT-SCHEME</value>
+           <document-scheme>DOCUMENT-SCHEME</document-scheme>
          </presentation-metadata>
-         <presentation-metadata>
-           <name>TOC Heading Levels</name>
-           <value>2</value>
-         </presentation-metadata>
-         <presentation-metadata>
-           <name>HTML TOC Heading Levels</name>
-           <value>2</value>
-         </presentation-metadata>
-         <presentation-metadata>
-           <name>DOC TOC Heading Levels</name>
-           <value>3</value>
-         </presentation-metadata>
-         <presentation-metadata>
-           <name>PDF TOC Heading Levels</name>
-           <value>3</value>
-         </presentation-metadata>
+            <presentation-metadata>
+      <toc-heading-levels>2</toc-heading-levels>
+    </presentation-metadata>
+    <presentation-metadata>
+      <html-toc-heading-levels>2</html-toc-heading-levels>
+    </presentation-metadata>
+    <presentation-metadata>
+      <doc-toc-heading-levels>3</doc-toc-heading-levels>
+    </presentation-metadata>
+    <presentation-metadata>
+      <pdf-toc-heading-levels>3</pdf-toc-heading-levels>
+    </presentation-metadata>
        </metanorma-extension>
     OUTPUT
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
@@ -2094,49 +2089,49 @@ RSpec.describe Metanorma::Iso do
       .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 1960", ":copyright-year: 1973")
-    output.sub!("<value>1951</value>", "<value>1972</value>")
+    output.sub!("1951", "1972")
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
       .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 1973", ":copyright-year: 1980")
-    output.sub!("<value>1972</value>", "<value>1979</value>")
+    output.sub!("1972", "1979")
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
       .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 1980", ":copyright-year: 1988")
-    output.sub!("<value>1979</value>", "<value>1987</value>")
+    output.sub!("1979", "1987")
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
       .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 1988", ":copyright-year: 1990")
-    output.sub!("<value>1987</value>", "<value>1989</value>")
+    output.sub!("1987", "1989")
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
       .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 1990", ":copyright-year: 2012")
-    output.sub!("<value>1989</value>", "<value>2012</value>")
+    output.sub!("1989", "2012")
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
       .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 2012", ":copyright-year: 2014")
-    output.sub!("<value>2012</value>", "<value>2013</value>")
+    output.sub!("2012", "2013")
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))
       .to be_equivalent_to Canon.format_xml(output)
 
     input.sub!(":copyright-year: 2014", ":copyright-year: 2025")
-    output.sub!("<value>2013</value>", "<value>2024</value>")
+    output.sub!("2013", "2024")
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
       .at("//xmlns:metanorma-extension").to_xml)))

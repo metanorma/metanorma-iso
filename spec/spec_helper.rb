@@ -213,24 +213,19 @@ BLANK_HDR1 = <<~"HDR".freeze
          <stage-published>true</stage-published>
       </semantic-metadata>
     <presentation-metadata>
-      <name>document-scheme</name>
-      <value>2024</value>
+      <document-scheme>2024</document-scheme>
     </presentation-metadata>
     <presentation-metadata>
-      <name>TOC Heading Levels</name>
-      <value>2</value>
+      <toc-heading-levels>2</toc-heading-levels>
     </presentation-metadata>
     <presentation-metadata>
-      <name>HTML TOC Heading Levels</name>
-      <value>2</value>
+      <html-toc-heading-levels>2</html-toc-heading-levels>
     </presentation-metadata>
     <presentation-metadata>
-      <name>DOC TOC Heading Levels</name>
-      <value>3</value>
+      <doc-toc-heading-levels>3</doc-toc-heading-levels>
     </presentation-metadata>
     <presentation-metadata>
-      <name>PDF TOC Heading Levels</name>
-      <value>3</value>
+      <pdf-toc-heading-levels>3</pdf-toc-heading-levels>
     </presentation-metadata>
   </metanorma-extension>
 HDR

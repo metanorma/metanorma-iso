@@ -21,9 +21,7 @@ module IsoDoc
       end
 
       def update_i18n(docxml)
-        @docscheme =
-          docxml.at(ns("//presentation-metadata[name" \
-                       "[text() = 'document-scheme']]/value"))&.text || "2024"
+        @docscheme ||= "2024"
         %w(1951 1972).include?(@docscheme) and
           i18n_conditional_set("reference_number", "reference_number_abbrev")
         %w(1951).include?(@docscheme) and

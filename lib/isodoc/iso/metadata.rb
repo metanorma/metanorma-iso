@@ -27,9 +27,9 @@ module IsoDoc
         revdate = isoxml.at(ns("//bibdata/version/revision-date"))
         set(:revdate, revdate&.text)
         docstatus and docstatus1(isoxml, docstatus, published)
-        docscheme = isoxml.at(ns("//presentation-metadata[name" \
-          "[text() = 'document-scheme']]/value"))
-        docscheme and set(:document_scheme, docscheme.text)
+        #docscheme = isoxml.at(ns("//presentation-metadata/document-scheme"))
+        docscheme = get[:"presentation_metadata_document-scheme"]
+        docscheme && !docscheme.empty? and set(:document_scheme, docscheme.first)
       end
 
       def docstatus1(isoxml, docstatus, published)

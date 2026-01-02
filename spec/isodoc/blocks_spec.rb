@@ -1554,7 +1554,7 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
     input = input.sub("<preface>",
-               "<metanorma-extension><presentation-metadata><name>document-scheme</name><value>1951</value></presentation-metadata></metanorma-extension><preface>")
+               "<metanorma-extension><presentation-metadata><document-scheme>1951</document-scheme></presentation-metadata></metanorma-extension><preface>")
     pres_output = IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output
@@ -1752,7 +1752,7 @@ RSpec.describe IsoDoc do
        </iso-standard>
     INPUT
     input = input.sub("<preface>",
-               "<metanorma-extension><presentation-metadata><name>document-scheme</name><value>1951</value></presentation-metadata></metanorma-extension><preface>")
+               "<metanorma-extension><presentation-metadata><document-scheme>1951</document-scheme></presentation-metadata></metanorma-extension><preface>")
     pres_output = IsoDoc::Iso::PresentationXMLConvert.new({})
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output

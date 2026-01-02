@@ -2632,6 +2632,11 @@ links within an SVG file, so that the SVG file can hyperlink to anchors within t
         <a:documentation>Connective linking this location to its predecessor. _from/to_ are presumed to nest more closely than _and_ or _or_</a:documentation>
         <ref name="XrefConnectiveType"/>
       </attribute>
+      <optional>
+        <attribute name="custom-connective">
+          <a:documentation>Custom wording for connnective linking this location to its predecessor, custom wording. If provided, is treated as equivalent semantically to connective value</a:documentation>
+        </attribute>
+      </optional>
     </element>
   </define>
   <define name="XrefStyleType">
@@ -2656,6 +2661,11 @@ links within an SVG file, so that the SVG file can hyperlink to anchors within t
       <attribute name="connective">
         <a:documentation>Connective linking this location to its predecessor. _from/to_ are presumed to nest more closely than _and_ or _or_</a:documentation>
         <ref name="XrefConnectiveType"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="custom-connective">
+        <a:documentation>Custom wording for connnective linking this location to its predecessor, custom wording. If provided, is treated as equivalent semantically to connective value</a:documentation>
       </attribute>
     </optional>
     <ref name="erefType"/>
