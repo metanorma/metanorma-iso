@@ -2066,8 +2066,6 @@ RSpec.describe Metanorma::Iso do
     </presentation-metadata>
     <presentation-metadata>
       <html-toc-heading-levels>2</html-toc-heading-levels>
-      <name>HTML TOC Heading Levels</name>
-      <value>2</value>
     </presentation-metadata>
     <presentation-metadata>
       <doc-toc-heading-levels>3</doc-toc-heading-levels>
