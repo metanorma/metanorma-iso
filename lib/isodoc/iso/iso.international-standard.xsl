@@ -1630,7 +1630,7 @@
 			<xsl:variable name="fo_cover_page">
 			<!-- cover page -->
 			<xsl:choose>
-				<xsl:when test="/mn:metanorma/mn:metanorma-extension/mn:presentation-metadata[mn:name = 'coverpage-image']/mn:value/mn:image and          normalize-space(/mn:metanorma/mn:metanorma-extension/mn:presentation-metadata/mn:full-coverpage-replacement) = 'true'">
+				<xsl:when test="/mn:metanorma/mn:metanorma-extension/mn:presentation-metadata/mn:coverpage-image/mn:image and          normalize-space(/mn:metanorma/mn:metanorma-extension/mn:presentation-metadata/mn:full-coverpage-replacement) = 'true'">
 					<xsl:call-template name="insertCoverPageFullImage"/>
 				</xsl:when>
 
@@ -6017,7 +6017,7 @@
 	<xsl:variable name="root_element">metanorma</xsl:variable>
 
 	<!---examples: 2013, 2024 -->
-	<xsl:variable name="document_scheme" select="normalize-space(//mn:metanorma/mn:metanorma-extension/mn:presentation-metadata[mn:name = 'document-scheme']/mn:value)"/>
+	<xsl:variable name="document_scheme" select="normalize-space(//mn:metanorma/mn:metanorma-extension/mn:presentation-metadata/mn:document-scheme)"/>
 
 	<!-- external parameters -->
 	<xsl:param name="svg_images"/> <!-- svg images array -->
@@ -6337,8 +6337,22 @@
 		<xsl:param name="root-style"/>
 		<xsl:variable name="root-style_" select="xalan:nodeset($root-style)"/>
 
+		<xsl:variable name="additional_fonts___">
+			<xsl:for-each select="//mn:metanorma/mn:metanorma-extension/mn:presentation-metadata/mn:fonts |      //mn:metanorma[1]/mn:metanorma-extension/mn:presentation-metadata[mn:name = 'fonts']/mn:value |       //mn:metanorma[1]/mn:presentation-metadata[mn:name = 'fonts']/mn:value">
+				<font><xsl:value-of select="."/></font>
+			</xsl:for-each>
+		</xsl:variable>
+		<xsl:variable name="additional_fonts__">
+			<!-- unique fonts -->
+			<xsl:for-each select="xalan:nodeset($additional_fonts___)//font">
+				<xsl:choose>
+					<xsl:when test="preceding-sibling::font[text() = current()/text()]"><!-- skip --></xsl:when>
+					<xsl:otherwise><xsl:copy-of select="."/></xsl:otherwise>
+				</xsl:choose>
+			</xsl:for-each>
+		</xsl:variable>
 		<xsl:variable name="additional_fonts_">
-			<xsl:for-each select="//mn:metanorma[1]/mn:metanorma-extension/mn:presentation-metadata[mn:name = 'fonts']/mn:value |       //mn:metanorma[1]/mn:presentation-metadata[mn:name = 'fonts']/mn:value">
+			<xsl:for-each select="xalan:nodeset($additional_fonts__)//font">
 				<xsl:value-of select="."/><xsl:if test="position() != last()">, </xsl:if>
 			</xsl:for-each>
 		</xsl:variable>
@@ -18221,8 +18235,8 @@
 
 	<xsl:variable name="toc_level">
 		<!-- https://www.metanorma.org/author/ref/document-attributes/ -->
-		<xsl:variable name="pdftoclevels" select="normalize-space(//mn:metanorma-extension/mn:presentation-metadata[mn:name/text() = 'PDF TOC Heading Levels']/mn:value)"/> <!-- :toclevels-pdf  Number of table of contents levels to render in PDF output; used to override :toclevels:-->
-		<xsl:variable name="toclevels" select="normalize-space(//mn:metanorma-extension/mn:presentation-metadata[mn:name/text() = 'TOC Heading Levels']/mn:value)"/> <!-- Number of table of contents levels to render -->
+		<xsl:variable name="pdftoclevels" select="normalize-space(//mn:metanorma-extension/mn:presentation-metadata/mn:pdf-toc-heading-levels)"/> <!-- :toclevels-pdf  Number of table of contents levels to render in PDF output; used to override :toclevels:-->
+		<xsl:variable name="toclevels" select="normalize-space(//mn:metanorma-extension/mn:presentation-metadata/mn:toc-heading-levels)"/> <!-- Number of table of contents levels to render -->
 		<xsl:choose>
 			<xsl:when test="$pdftoclevels != ''"><xsl:value-of select="number($pdftoclevels)"/></xsl:when> <!-- if there is value in xml -->
 			<xsl:when test="$toclevels != ''"><xsl:value-of select="number($toclevels)"/></xsl:when>  <!-- if there is value in xml -->
@@ -20483,7 +20497,7 @@
 		<!-- background image -->
 		<fo:block-container absolute-position="fixed" left="0mm" top="0mm" font-size="0" id="__internal_layout__coverpage{$suffix}_{$name}_{$number}_{generate-id()}">
 			<fo:block>
-				<xsl:for-each select="/mn:metanorma/mn:metanorma-extension/mn:presentation-metadata[mn:name = $name][1]/mn:value/mn:image[$num]">
+				<xsl:for-each select="/mn:metanorma/mn:metanorma-extension/mn:presentation-metadata/*[local-name() = $name][1]/mn:image[$num]">
 
 					<xsl:call-template name="insertPageImage"/>
 
@@ -20495,7 +20509,7 @@
 	<!-- for https://github.com/metanorma/mn-native-pdf/issues/845 -->
 	<xsl:template name="insertCoverPageFullImage">
 		<xsl:param name="name">coverpage-image</xsl:param>
-		<xsl:for-each select="//mn:metanorma/mn:metanorma-extension/mn:presentation-metadata[mn:name = $name][1]/mn:value/mn:image">
+		<xsl:for-each select="//mn:metanorma/mn:metanorma-extension/mn:presentation-metadata/*[local-name() = $name][1]/mn:image">
 			<fo:page-sequence master-reference="cover-page" force-page-count="no-force">
 				<fo:flow flow-name="xsl-region-body">
 					<xsl:call-template name="insertBackgroundPageImage">
