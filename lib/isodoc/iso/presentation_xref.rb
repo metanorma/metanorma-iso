@@ -23,7 +23,8 @@ module IsoDoc
       end
 
       def locality_delimiter(loc)
-        loc&.next_element&.attribute("type")&.text == "list" and return " "
+        loc&.next_element&.attribute("type")&.text == "list" and
+          return { conn: " " }
         super
       end
 
