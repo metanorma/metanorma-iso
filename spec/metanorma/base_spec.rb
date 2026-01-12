@@ -2060,17 +2060,9 @@ RSpec.describe Metanorma::Iso do
         </semantic-metadata>
          <presentation-metadata>
            <document-scheme>DOCUMENT-SCHEME</document-scheme>
-         </presentation-metadata>
-            <presentation-metadata>
       <toc-heading-levels>2</toc-heading-levels>
-    </presentation-metadata>
-    <presentation-metadata>
       <html-toc-heading-levels>2</html-toc-heading-levels>
-    </presentation-metadata>
-    <presentation-metadata>
       <doc-toc-heading-levels>3</doc-toc-heading-levels>
-    </presentation-metadata>
-    <presentation-metadata>
       <pdf-toc-heading-levels>3</pdf-toc-heading-levels>
     </presentation-metadata>
        </metanorma-extension>
