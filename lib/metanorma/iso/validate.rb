@@ -66,7 +66,7 @@ module Metanorma
 
       # DRG directives 3.7; but anticipated by standoc
       def subfigure_validate(xmldoc)
-        elems = { footnote: "fn", note: "note", key: "dl" }
+        elems = { footnote: "fn", note: "note", key: "key" }
         xmldoc.xpath("//figure//figure").each do |f|
           elems.each do |k, v|
             f.xpath(".//#{v}").each do |n|

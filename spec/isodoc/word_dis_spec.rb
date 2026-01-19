@@ -484,10 +484,12 @@ RSpec.describe IsoDoc do
         <th>E</th><td><p>F</p></td>
         </tr>
         </tfoot>
-        <dl key="true">
-        <fmt-name id="_">Key</fmt-name>
+        <key>
+        <name>Key</name>
+        <dl>
         <dt>E</dt><dd>eee</dd>
         </dl>
+        </key>
         </table>
         <table class="rouge-line-table"><tbody><tr id="line-1" class="lineno"><td class="rouge-gutter gl" style="-moz-user-select: none;-ms-user-select: none;-webkit-user-select: none;user-select: none;"><pre>1</pre></td><td class="rouge-code"><sourcecode><span class="p">{</span></sourcecode></td></tr><tr id="line-2" class="lineno"><td class="rouge-gutter gl" style="-moz-user-select: none;-ms-user-select: none;-webkit-user-select: none;user-select: none;"><pre>2</pre></td><td class="rouge-code"><sourcecode><span class="w">  </span><span class="nl">"$schema"</span><span class="p">:</span><span class="w"> </span><span class="s2">"http://json-schema.org/draft/2019-09/schema"</span><span class="p">,</span></sourcecode></td></tr></table>
         </clause>
@@ -535,12 +537,14 @@ RSpec.describe IsoDoc do
                       <tr>
                          <td colspan="2" style="border-top:0pt;mso-border-top-alt:0pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">
                             <div class="Tablebody">
-                               <p class="KeyTitle">Key</p>
+                               <p style="page-break-after: avoid;" class="KeyTitle"><b>Key</b></p>
+                               <div class="figdl">
                                <p style="text-indent: -2.0cm; margin-left: 2.0cm; tab-stops: 2.0cm;" class="MsoBodyText">
                                   E
                                   <span style="mso-tab-count:1">  </span>
                                   eee
                                </p>
+                               </div>
                             </div>
                          </td>
                       </tr>
@@ -610,10 +614,12 @@ RSpec.describe IsoDoc do
         <note id="C"><fmt-name id="_">FIGURENOTE<span class="fmt-label-delim"><tab/></span></fmt-name>
         <p>Note</p></note>
         <example id="D"><p>Example</p></example>
-        <dl key="true">
-        <fmt-name id="_">Key</fmt-name>
+        <key>
+        <name>Key</name>
+        <dl>
         <dt>E</dt><dd>eee</dd>
         </dl>
+        </key>
         </figure>
         </clause>
         </sections>
@@ -644,8 +650,9 @@ RSpec.describe IsoDoc do
                       Example
                    </p>
                 </div>
-                <div align="left" style="page-break-after:avoid;">
-                <p class="KeyTitle">Key</p>
+                <div class="key" style="page-break-after:avoid;">
+                <p style="page-break-after: avoid;" class="KeyTitle"><b>Key</b></p>
+                <div align="left">
                 <div class="figdl" style="page-break-after:avoid;">
                    <table class="figdl">
                       <tr>
@@ -657,6 +664,7 @@ RSpec.describe IsoDoc do
                          </td>
                       </tr>
                    </table>
+                   </div>
                    </div>
                 </div>
                 <p class="Figuretitle" style="text-align:center;">Table1</p>

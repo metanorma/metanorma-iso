@@ -112,15 +112,15 @@ module IsoDoc
 
       def formula_where(dlist)
         dlist.nil? and return
-        dlist.xpath(ns("./dt")).size == 1 &&
-          dlist.at(ns("./dd"))&.elements&.size == 1 &&
-          dlist.at(ns("./dd/p")) or return super
+        dlist.xpath(ns(".//dt")).size == 1 &&
+          dlist.at(ns(".//dd"))&.elements&.size == 1 &&
+          dlist.at(ns(".//dd/p")) or return super
         formula_where_one(dlist)
       end
 
       def formula_where_one(dlist)
-        dt = to_xml(dlist.at(ns("./dt")).children)
-        dd = to_xml(dlist.at(ns("./dd/p")).children)
+        dt = to_xml(dlist.at(ns(".//dt")).children)
+        dd = to_xml(dlist.at(ns(".//dd/p")).children)
         dlist.previous = "<p>#{@i18n.where_one} #{dt} #{dd}</p>"
         dlist.remove
       end
@@ -152,7 +152,7 @@ module IsoDoc
       end
 
       def table1_key(elem)
-        elem.xpath(ns(".//dl[@key = 'true'][not(./name)]")).each do |dl|
+        elem.xpath(ns(".//key[not(./name)]")).each do |dl|
           dl.add_first_child "<name>#{@i18n.key}</name>"
         end
       end
