@@ -1012,10 +1012,12 @@ RSpec.describe IsoDoc do
           <fn reference="a">
           <p id="_ef2c85b8-5a5a-4ecd-a1e6-92acefaaa852">The time <stem type="AsciiMath">t_90</stem> was estimated to be 18,2 min for this example.</p>
         </fn>
+        <key>
           <dl>
           <dt>A</dt>
           <dd><p>B</p></dd>
           </dl>
+        </key>
                 <source status="generalisation">
           <origin bibitemid="ISO712" type="inline" citeas="ISO 712">
             <localityStack>
@@ -1130,10 +1132,9 @@ RSpec.describe IsoDoc do
                         </span>
                      </fmt-fn-label>
                   </fn>
-                  <p keep-with-next="true">
-                     <strong>Key</strong>
-                  </p>
-                  <dl class="formula_dl">
+           <key class="formula_dl">
+              <name>Key</name>
+              <dl>
                      <dt>
                         <p>
                            <fmt-fn-label>
@@ -1164,6 +1165,7 @@ RSpec.describe IsoDoc do
                         <p>B</p>
                      </dd>
                   </dl>
+                  </key>
                   <source status="generalisation" id="_">
                      <origin bibitemid="ISO712" type="inline" citeas="ISO 712">
                         <localityStack>

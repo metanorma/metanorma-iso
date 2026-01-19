@@ -235,7 +235,7 @@ module IsoDoc
       end
 
       def table_parse_tail(node, out)
-        (dl = node.at(ns("./dl"))) && parse(dl, out)
+        (key = node.at(ns("./key"))) && parse(key, out)
         node.xpath(ns("./fmt-source")).each { |n| parse(n, out) }
         node.xpath(ns("./note[not(@type = 'units')]"))
           .each { |n| parse(n, out) }

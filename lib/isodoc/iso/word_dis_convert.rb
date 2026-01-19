@@ -144,9 +144,20 @@ module IsoDoc
 
       def list_title_parse(node, out)
         name = node.at(ns("./fmt-name")) or return
-        klass = node["key"] == "true" ? "KeyTitle" : "ListTitle"
+        klass = "ListTitle"
         out.p class: klass do |p|
           name.children&.each { |n| parse(n, p) }
+        end
+      end
+
+      def key_name_parse(node, div)
+        a = keep_style(node)
+        a&.include?("page-break-after:") or
+          a = "page-break-after: avoid;#{a}"
+        div.p style: a, class: "KeyTitle" do |p|
+          p.b do |s|
+            children_parse(node, s)
+          end
         end
       end
     end
