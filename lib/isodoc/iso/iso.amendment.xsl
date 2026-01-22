@@ -15141,9 +15141,10 @@
 	</xsl:template>
 
 	<xsl:template match="mn:figure/mn:image[@mimetype = 'image/svg+xml' and @src[not(starts-with(., 'data:image/'))]]" priority="2">
-		<xsl:variable name="svg_content" select="document(@src)"/>
+		<xsl:variable name="src"><xsl:call-template name="getImageSrcExternal"/></xsl:variable>
+		<xsl:variable name="svg_content" select="document($src)"/>
 		<xsl:variable name="name" select="ancestor::mn:figure/mn:fmt-name"/>
-		<xsl:for-each select="xalan:nodeset($svg_content)/node()">
+		<xsl:for-each select="xalan:nodeset($svg_content)/*"> <!-- node() -->
 			<xsl:call-template name="image_svg">
 				<xsl:with-param name="name" select="$name"/>
 			</xsl:call-template>
