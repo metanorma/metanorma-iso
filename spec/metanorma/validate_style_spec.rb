@@ -369,6 +369,24 @@ RSpec.describe Metanorma::Iso do
     INPUT
     expect(File.read("test.err.html"))
       .to include("no space between number and SI unit")
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      A measurement of U+05Bq was taken.
+    INPUT
+    expect(File.read("test.err.html"))
+      .not_to include("no space between number and SI unit")
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      A measurement of 05Bq was taken.
+    INPUT
+    expect(File.read("test.err.html"))
+      .not_to include("no space between number and SI unit")
   end
 
   it "Style warning if mins used" do

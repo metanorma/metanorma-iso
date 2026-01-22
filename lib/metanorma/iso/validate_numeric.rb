@@ -84,7 +84,7 @@ module Metanorma
         style_regex(/\b(?<num>[0-9][0-9,]*\p{Zs}+[\u00b0\u2032\u2033])/,
                     "space between number and degrees/minutes/seconds",
                     node, text)
-        style_regex(/\b(?<num>[0-9][0-9,]*#{SI_UNIT})\b/o,
+        style_regex(/(?<![A-Za-z0-9])(?<num>[1-9][0-9,]*#{SI_UNIT})\b/o,
                     "no space between number and SI unit", node, text)
         style_non_std_units(node, text)
       end
