@@ -115,8 +115,8 @@ module Metanorma
         style_regex(/(?:\A|\p{Zs})(?!e\.g\.|i\.e\.)
                     (?<num>[a-z]{1,2}\.(?:[a-z]{1,2}|\.))\b/ix,
                     "no dots in abbreviations", node, text)
-        style_regex(/\b(?<num>ppm)\b/i,
-                    "language-specific abbreviation", node, text)
+        style_regex(/\d\s*(?<num>ppm)\b/i,
+                    "language-specific abbreviation of unit (ppm)", node, text)
       end
 
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-and

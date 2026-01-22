@@ -318,6 +318,15 @@ RSpec.describe Metanorma::Iso do
     INPUT
     expect(File.read("test.err.html"))
       .to include("language-specific abbreviation")
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      ppm
+    INPUT
+    expect(File.read("test.err.html"))
+      .not_to include("language-specific abbreviation")
   end
 
   it "Style warning if space between number and degree" do
