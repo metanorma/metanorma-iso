@@ -19,25 +19,25 @@ journaltemplate: "<em>{% if series_abbr %}{{series_abbr}}{% else %}{{series_titl
 
 citetemplate:
   short:
-    standard: "{% if home_standard %}<em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }}{% else %}{{ creatornames | selective_upcase }}$$$ <em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }} $$$  {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{labels['updated'] | capitalize }}_{{date_updated}}$$$ {{status | capitalize}}$$$ {{ authorizer }}{% endif %}"
-    website: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em><span_class='stddocTitle'>{{ title }}</span></em> [{{ labels['website'] }}]$$$ {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{place}}: {{ publisher | selective_upcase }}$$$ {{date}}"
-    book: "{{ creatornames | selective_upcase }}$$$ ({{role}}) <em>{{ title }}</em> $$$ {{ edition | capitalize_first }}$$$ ({{ series }})$$$ {% if place %}{{place}}:{%endif%} {{publisher | selective_upcase}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}"
+    standard: "{% if home_standard %}<em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }}{% else %}{{ creatornames | selective_upcase }}$$$ <em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }} $$$  {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{labels['updated'] | capitalize }}_{{date_updated}}$$$ {{status | capitalize}}$$$ {{ authorizer | replace: '+++', '' }}{% endif %}"
+    website: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em><span_class='stddocTitle'>{{ title }}</span></em> [{{ labels['website'] }}]$$$ {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{place}}: {{ publisher | replace: '+++', '' }}$$$ {{date}}"
+    book: "{{ creatornames | selective_upcase }}$$$ ({{role}}) <em>{{ title }}</em> $$$ {{ edition | capitalize_first }}$$$ ({{ series }})$$$ {% if place %}{{place}}:{%endif%} {{publisher | replace: '+++', ''}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}"
     booklet: book
     manual: book
     techreport: book
     proceedings: book
-    inbook: "{{ creatornames | selective_upcase }}$$$ ({{role}}) {{ title }} $$$ <em>{{host_title}}</em> ({{host_role}} {{ host_creatornames | replace: '+++', ''}}) $$$ {{ edition | capitalize_first }}$$$ ({{ series }})$$$ {% if place %}{{place}}:{%endif%} {{publisher | selective_upcase}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}"
+    inbook: "{{ creatornames | selective_upcase }}$$$ ({{role}}) {{ title }} $$$ <em>{{host_title}}</em> ({{host_role}} {{ host_creatornames | replace: '+++', ''}}) $$$ {{ edition | capitalize_first }}$$$ ({{ series }})$$$ {% if place %}{{place}}:{%endif%} {{publisher | replace: '+++', ''}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}"
     inproceedings: inbook
     incollection: inbook
-    journal: "<em>{{ title}}</em> $$$ {{ edition | capitalize_first }}$$$ {{place}}: {{publisher | selective_upcase}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}"
+    journal: "<em>{{ title}}</em> $$$ {{ edition | capitalize_first }}$$$ {{place}}: {{publisher | replace: '+++', ''}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}"
     article: "{{ creatornames | selective_upcase }}$$$ ({{role}}) {{ title }}$$$ {{ series }} $$$ {{date}}, {{ extent }}$$$ {{ labels['updated'] | capitalize }}:_{{date_updated}}"
-    software: "{{ creatornames | selective_upcase }}$$$ ({{ role}}) <em>{{ title }}</em> $$$ {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{medium | capitalize}}$$$ {{place}}: {{publisher | selective_upcase}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}"
+    software: "{{ creatornames | selective_upcase }}$$$ ({{ role}}) <em>{{ title }}</em> $$$ {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{medium | capitalize}}$$$ {{place}}: {{publisher | replace: '+++', ''}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}"
     electronic resource:  software
     dataset: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{medium | capitalize }}$$$ {{ labels['in'] | capitalize }}:_{{series}}$$$ {{date}}$$$ {{ labels['updated'] | capitalize }}:_{{date_updated}}$$$ {{ authoritative_identifier | join '$$$ ' }}$$$ {{ other_identifier | join '$$$ ' }}"
     webresource: website
     unpublished: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ medium | capitalize }}$$$ {{ date }}$$$ {{ labels['at'] | capitalize}}:_{{ access_location }}"
     presentation: unpublished
-    thesis: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ medium | capitalize }}$$$ {{place}}: {{ publisher | selective_upcase }}$$$ {{ date }}"
+    thesis: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ medium | capitalize }}$$$ {{place}}: {{ publisher | replace: '+++', '' }}$$$ {{ date }}"
     misc:  "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ date }}$$$"
     # following are # unsupported types:
     map: misc
@@ -58,25 +58,25 @@ citetemplate:
 
 template:
   # skip standardidentifier, it is inserted in front of formattedref within metanorma
-  standard: "{% if home_standard %}<em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }}{% else %}{{ creatornames | selective_upcase }}$$$ <em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }} $$$  {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{labels['updated'] | capitalize }}_{{date_updated}}$$$ {{status | capitalize}}$$$ {{ authorizer }}{% endif %}" 
-  website: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em><span_class='stddocTitle'>{{ title }}</span></em> [{{ labels['website'] }}]$$$ {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{place}}: {{ publisher | selective_upcase }}$$$ {{date}}$$$ {{ labels['updated'] | capitalize }}:_{{date_updated}}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$ "
-  book: "{{ creatornames | selective_upcase }}$$$ ({{role}}) <em>{{ title }}</em> $$$ {{ edition | capitalize_first }}$$$ ({{ series }})$$$ {% if place %}{{place}}:{%endif%} {{publisher | selective_upcase}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ {{ labels['at'] | capitalize}}:_{{ access_location }}$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$"
+  standard: "{% if home_standard %}<em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }}{% else %}{{ creatornames | selective_upcase }}$$$ <em><span_class='stddocTitle'>{{ title }}</span></em> ,_{{ extent }} $$$  {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{labels['updated'] | capitalize }}_{{date_updated}}$$$ {{status | capitalize}}$$$ {{ authorizer | replace: '+++', '' }}{% endif %}" 
+  website: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em><span_class='stddocTitle'>{{ title }}</span></em> [{{ labels['website'] }}]$$$ {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{place}}: {{ publisher | replace: '+++', '' }}$$$ {{date}}$$$ {{ labels['updated'] | capitalize }}:_{{date_updated}}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$ "
+  book: "{{ creatornames | selective_upcase }}$$$ ({{role}}) <em>{{ title }}</em> $$$ {{ edition | capitalize_first }}$$$ ({{ series }})$$$ {% if place %}{{place}}:{%endif%} {{publisher | replace: '+++', ''}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ {{ labels['at'] | capitalize}}:_{{ access_location }}$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$"
   booklet: book
   manual: book
   techreport: book
   proceedings: book
-  inbook: "{{ creatornames | selective_upcase }}$$$ ({{role}}) {{ title }} $$$ <em>{{host_title}}</em> ({{host_role}} {{ host_creatornames | replace: '+++', ''}}) $$$ {{ edition | capitalize_first }}$$$ ({{ series }})$$$ {% if place %}{{place}}:{%endif%} {{publisher}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ {{ labels['at'] | capitalize}}:_{{ access_location }}$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$"
+  inbook: "{{ creatornames | selective_upcase }}$$$ ({{role}}) {{ title }} $$$ <em>{{host_title}}</em> ({{host_role}} {{ host_creatornames | replace: '+++', ''}}) $$$ {{ edition | capitalize_first }}$$$ ({{ series }})$$$ {% if place %}{{place}}:{%endif%} {{publisher | replace: '+++', ''}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ {{ labels['at'] | capitalize}}:_{{ access_location }}$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$"
   inproceedings: inbook
   incollection: inbook
-  journal: "<em>{{ title}}</em> $$$ {{ edition | capitalize_first }}$$$ {{place}}: {{publisher | selective_upcase}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ {{ labels['at'] | capitalize}}:_{{ access_location }}$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$"
+  journal: "<em>{{ title}}</em> $$$ {{ edition | capitalize_first }}$$$ {{place}}: {{publisher | replace: '+++', ''}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ {{ labels['at'] | capitalize}}:_{{ access_location }}$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$"
   article: "{{ creatornames | selective_upcase }}$$$ ({{role}}) {{ title }}$$$ {{ series }} $$$ {{date}}, {{ extent }}$$$ {{ labels['updated'] | capitalize }}:_{{date_updated}}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ {{ labels['at'] | capitalize}}:_{{ access_location }}$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$"
-  software: "{{ creatornames | selective_upcase }}$$$ ({{ role}}) <em>{{ title }}</em> $$$ {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{medium | capitalize}}$$$ {{place}}: {{publisher | selective_upcase}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}$$$ {{ labels['updated'] | capitalize }}:_{{date_updated}}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$ "
+  software: "{{ creatornames | selective_upcase }}$$$ ({{ role}}) <em>{{ title }}</em> $$$ {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{medium | capitalize}}$$$ {{place}}: {{publisher | replace: '+++', ''}}$$$ {{date}}$$$ {{size}}$$$ {{extent}}$$$ {{ labels['updated'] | capitalize }}:_{{date_updated}}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$ "
   electronic resource:  software
   dataset: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ labels['version'] | capitalize }}_{{ edition_raw }}$$$ {{medium | capitalize }}$$$ {{ labels['in'] | capitalize }}:_{{series}}$$$ {{date}}$$$ {{ labels['updated'] | capitalize }}:_{{date_updated}}$$$ {{ authoritative_identifier | join '$$$ ' }}$$$ {{ other_identifier | join '$$$ ' }}$$$  $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ {{ size }}$$$ {{ extent}}$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$ "
   webresource: website
   unpublished: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ medium | capitalize }}$$$ {{ date }}$$$ {{ labels['at'] | capitalize}}:_{{ access_location }}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$"
   presentation: unpublished
-  thesis: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ medium | capitalize }}$$$ {{place}}: {{ publisher | selective_upcase }}$$$ {{ date }}$$$ {{ labels['at'] | capitalize}}:_{{ access_location }}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$"
+  thesis: "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ medium | capitalize }}$$$ {{place}}: {{ publisher | replace: '+++', '' }}$$$ {{ date }}$$$ {{ labels['at'] | capitalize}}:_{{ access_location }}$$$ $$$_{{ labels['availablefrom'] }}:_<span_class='biburl'>{{ uri }}</span>$$$ [{{ labels['viewed'] }}:_{{date_accessed}}]$$$"
   misc:  "{{ creatornames | selective_upcase }}$$$ ({{ role }}) <em>{{ title }}</em> $$$ {{ date }}$$$"
   # following are # unsupported types:
   map: misc
