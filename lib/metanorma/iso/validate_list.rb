@@ -102,7 +102,7 @@ module Metanorma
       def list_full_sentence(elem)
         %w(Cyrl Latn Grek).include?(@script) or return
         text = elem.text.strip
-        starts_uppercase?(text) or
+        starts_uppercase?(text) || starts_numeric?(elem) or
           style_warning(elem, "List entry of separate sentences must start " \
                               "with uppercase letter", text, display: false)
         punct = text.strip.sub(/^.*?(\S)\z/m, "\\1")
@@ -119,6 +119,34 @@ module Metanorma
 
       def starts_uppercase?(text)
         text.match?(/^[^[[:upper:]][[:lower:]]]*[[:upper:]]/)
+      end
+
+      def starts_numeric?(elem)
+        traverse_breadth_first(elem) do |n|
+          n.name == "stem" and return true
+          %w(xref eref).include?(n.name) &&
+            n.text.strip.empty? and return true
+          n.text? or next
+          t = n.text.strip
+          t.empty? and next
+          return /^\d/.match?(t)
+        end
+        false
+      end
+
+      private
+
+      # Breadth-first traversal of Nokogiri nodes (counterpart to depth-first traverse)
+      def traverse_breadth_first(elem, &block)
+        queue = [elem]
+
+        while !queue.empty?
+          node = queue.shift
+          yield node
+
+          # Add children to end of queue for breadth-first processing
+          queue.concat(node.children.to_a) if node.respond_to?(:children)
+        end
       end
     end
   end
