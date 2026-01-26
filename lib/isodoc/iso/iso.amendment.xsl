@@ -6023,6 +6023,7 @@
 	<xsl:param name="svg_images"/> <!-- svg images array -->
 	<xsl:variable name="images" select="document($svg_images)"/>
 	<xsl:param name="basepath"/> <!-- base path for images -->
+	<xsl:param name="mn2pdfpath"/> <!-- mn2pdf working directory -->
 	<xsl:param name="inputxml_basepath"/> <!-- input xml file path -->
 	<xsl:param name="inputxml_filename"/> <!-- input xml file name -->
 	<xsl:param name="output_path"/> <!-- output PDF file name -->
@@ -14678,9 +14679,14 @@
 			<xsl:otherwise>
 				<xsl:variable name="src_with_basepath" select="concat($basepath, @src)"/>
 				<xsl:variable name="file_exists" select="normalize-space(java:exists(java:java.io.File.new($src_with_basepath)))"/>
+				<xsl:variable name="src_with_mn2pdfpath" select="concat($mn2pdfpath, @src)"/>
+				<xsl:variable name="file_exists_in_mn2pdf_path" select="normalize-space(java:exists(java:java.io.File.new($src_with_mn2pdfpath)))"/>
 				<xsl:choose>
 					<xsl:when test="$file_exists = 'true'">
 						<xsl:value-of select="$src_with_basepath"/>
+					</xsl:when>
+					<xsl:when test="$file_exists_in_mn2pdf_path = 'true'">
+						<xsl:value-of select="$src_with_mn2pdfpath"/>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:value-of select="@src"/>
