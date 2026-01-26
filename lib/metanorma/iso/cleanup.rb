@@ -71,7 +71,7 @@ module Metanorma
 
       def unpub_footnotes(xmldoc)
         xmldoc.xpath("//bibitem/note").each do |n|
-          t = n["type"]&.split(",")&.map(&:strip)
+          t = n["type"]&.split(",")&.map(&:strip) || []
           t.include?("Unpublished-Status") or next
           e = xmldoc.at("//eref[@bibitemid = '#{n.parent['anchor']}']") or next
           fn = n.children.to_xml
