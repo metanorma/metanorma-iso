@@ -2041,4 +2041,113 @@ RSpec.describe IsoDoc do
     .at("//xmlns:foreword").to_xml)))
       .to be_equivalent_to Canon.format_xml(output)
   end
+
+  it "cross-references bibliographic notes" do
+    input = <<~INPUT
+                  <iso-standard xmlns="http://riboseinc.com/isoxml">
+                  <preface>
+          <foreword>
+          <p>
+          <xref target="note1"/>
+          <xref target="note2"/>
+          <xref target="note3"/>
+          </p>
+          </foreword>
+          </preface>
+          <bibliography><references id="_normative_references" obligation="informative" normative="true"><title>Normative References</title>
+      <bibitem id="ISO712" type="standard">
+        <title format="text/plain">Cereals or cereal products</title>
+        <title type="main" format="text/plain">Cereals and cereal products</title>
+        <docidentifier type="ISO">ISO 712</docidentifier>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+          </organization>
+        </contributor>
+      </bibitem>
+      <note id="note1">Note</note>
+      <note id="note2">Note</note>
+      </references></bibliography>
+      <bibliography><references id="_bibliography" obligation="informative" normative="false"><title>Bibliography</title>
+      <bibitem id="ISO713" type="standard">
+        <title format="text/plain">Cereals or cereal products</title>
+        <title type="main" format="text/plain">Cereals and cereal products</title>
+        <docidentifier type="ISO">ISO 713</docidentifier>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+          </organization>
+        </contributor>
+      </bibitem>
+      <note id="note3">Note</note>
+      </references></bibliography>
+          </iso-standard>
+    INPUT
+    output = <<~OUTPUT
+          <foreword id="_" displayorder="2">
+         <title id="_">Foreword</title>
+         <fmt-title depth="1" id="_">
+            <semx element="title" source="_">Foreword</semx>
+         </fmt-title>
+         <p>
+            <xref target="note1" id="_"/>
+            <semx element="xref" source="_">
+               <fmt-xref target="note1">
+                  <span class="fmt-xref-container">
+                     <span class="fmt-xref-container">
+                        <span class="fmt-element-name">Clause</span>
+                        <semx element="autonum" source="_">1</semx>
+                     </span>
+                     <span class="fmt-comma">,</span>
+                     <span class="stdpublisher">ISO </span>
+                     <span class="stddocNumber">712</span>
+                  </span>
+                  <span class="fmt-comma">,</span>
+                  <span class="fmt-element-name">Note</span>
+                  <semx element="autonum" source="note1">1</semx>
+               </fmt-xref>
+            </semx>
+            <xref target="note2" id="_"/>
+            <semx element="xref" source="_">
+               <fmt-xref target="note2">
+                  <span class="fmt-xref-container">
+                     <span class="fmt-xref-container">
+                        <span class="fmt-element-name">Clause</span>
+                        <semx element="autonum" source="_">1</semx>
+                     </span>
+                     <span class="fmt-comma">,</span>
+                     <span class="stdpublisher">ISO </span>
+                     <span class="stddocNumber">712</span>
+                  </span>
+                  <span class="fmt-comma">,</span>
+                  <span class="fmt-element-name">Note</span>
+                  <semx element="autonum" source="note2">2</semx>
+               </fmt-xref>
+            </semx>
+            <xref target="note3" id="_"/>
+            <semx element="xref" source="_">
+               <fmt-xref target="note3">
+                  <span class="fmt-xref-container">
+                     <span class="fmt-xref-container">
+                        <semx element="references" source="_">Bibliography</semx>
+                     </span>
+                     <span class="fmt-comma">,</span>
+                     <span class="stdpublisher">ISO </span>
+                     <span class="stddocNumber">713</span>
+                  </span>
+                  <span class="fmt-comma">,</span>
+                  <span class="fmt-element-name">Note</span>
+               </fmt-xref>
+            </semx>
+         </p>
+      </foreword>
+    OUTPUT
+    expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+       .new(presxml_options)
+     .convert("test", input, true))
+     .at("//xmlns:foreword").to_xml)))
+      .to be_equivalent_to Canon.format_xml(output)
+  end
 end
