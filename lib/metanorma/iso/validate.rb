@@ -100,8 +100,9 @@ module Metanorma
 
       def bibitem_validate(xmldoc)
         xmldoc.xpath("//bibitem[date/on = '–']").each do |b|
-          b.at("./note[@type = 'Unpublished-Status']") or
-            @log.add("ISO_8", b)
+          n = b.xpath("./note/@type").map { |n| n.text.split(",").map(&:strip) }
+            .flatten
+          n.include?("Unpublished-Status") or @log.add("ISO_8", b)
         end
       end
 

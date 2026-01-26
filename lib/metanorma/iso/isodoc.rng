@@ -167,12 +167,6 @@ Sources are currently only rendered in metanorma-plateau</a:documentation>
     </define>
     <define name="DlAttributes">
       <ref name="BlockAttributes"/>
-      <optional>
-        <attribute name="key">
-          <a:documentation>This definition list is the key of a figure or formula</a:documentation>
-          <data type="boolean"/>
-        </attribute>
-      </optional>
     </define>
     <define name="DlBody">
       <optional>
@@ -311,7 +305,7 @@ and is intended to be referenced by a callout within the source code</a:document
         </ref>
       </optional>
       <choice>
-        <a:documentation>Content of the figure     </a:documentation>
+        <a:documentation>Content of the figure</a:documentation>
         <ref name="image">
           <a:documentation>by default the content of a figure is a media file</a:documentation>
         </ref>
@@ -340,8 +334,8 @@ and is intended to be referenced by a callout within the source code</a:document
         </ref>
       </zeroOrMore>
       <optional>
-        <ref name="dl">
-          <a:documentation>An optional definitions list defining any symbols used in the figure</a:documentation>
+        <ref name="key">
+          <a:documentation>An key defining any symbols used in the figure</a:documentation>
         </ref>
       </optional>
       <zeroOrMore>
@@ -365,7 +359,7 @@ and is intended to be referenced by a callout within the source code</a:document
         </ref>
       </optional>
       <choice>
-        <a:documentation>Content of the figure     </a:documentation>
+        <a:documentation>Content of the figure</a:documentation>
         <ref name="image-no-id">
           <a:documentation>by default the content of a figure is a media file</a:documentation>
         </ref>
@@ -429,7 +423,7 @@ in order to be applicable in this standardisation document</a:documentation>
       </element>
     </define>
     <define name="sourcecodebody">
-      <a:documentation>The computer code or other such text presented in the block, as a single unformatted string. 
+      <a:documentation>The computer code or other such text presented in the block, as a single unformatted string.
 (The string should be treated as pre-formatted text, with whitespace treated as significant)</a:documentation>
       <element name="body">
         <oneOrMore>
@@ -549,7 +543,7 @@ normative or informative references, some split references into sections organiz
           <choice>
             <a:documentation>Table cell contains a block</a:documentation>
             <ref name="paragraph-with-footnote"/>
-            <ref name="dl"/>
+            <ref name="key"/>
             <ref name="ul"/>
             <ref name="ol"/>
             <ref name="figure"/>
@@ -632,8 +626,40 @@ This is done if the footnote reference is already presented in some other form, 
         <a:documentation>The number of the footnote, used to identify it visually</a:documentation>
       </attribute>
     </define>
+    <define name="FormulaBody">
+      <ref name="stem">
+        <a:documentation>The content of the formula, as a mathematical expression</a:documentation>
+      </ref>
+      <optional>
+        <ref name="key">
+          <a:documentation>A key defining any symbols used in the formula</a:documentation>
+        </ref>
+      </optional>
+      <zeroOrMore>
+        <ref name="note">
+          <a:documentation>Notes whose scope is the current block</a:documentation>
+        </ref>
+      </zeroOrMore>
+    </define>
   </include>
   <!-- end overrides -->
+  <define name="key">
+    <a:documentation>Key to a table, figure, or formula</a:documentation>
+    <element name="key">
+      <optional>
+        <ref name="tname">
+          <a:documentation>optional title of key</a:documentation>
+        </ref>
+      </optional>
+      <oneOrMore>
+        <choice>
+          <a:documentation>Definition list and/or paragraph content</a:documentation>
+          <ref name="dl"/>
+          <ref name="paragraph"/>
+        </choice>
+      </oneOrMore>
+    </element>
+  </define>
   <define name="TdAttributes" combine="interleave">
     <ref name="RequiredId"/>
     <optional>
@@ -1042,7 +1068,7 @@ parargaph sources are currently only rendered in metanorma-plateau</a:documentat
       </optional>
       <optional>
         <attribute name="custom-charset">
-          <a:documentation>Character set that the contained text belongs to; 
+          <a:documentation>Character set that the contained text belongs to;
 is used in particular to capture mutually agreed definitions of codepoints in Unicode Private Use Area</a:documentation>
         </attribute>
       </optional>
@@ -1623,7 +1649,7 @@ numbers</a:documentation>
   <define name="definitions">
     <a:documentation>One or more definition lists, used to define symbols and abbreviations used in the remainder of the document.
 These can also be used as glossaries, with simple definitions, in contrast to the more elaborate definitions given in
-terms sections </a:documentation>
+terms sections</a:documentation>
     <element name="definitions">
       <ref name="OptionalId"/>
       <ref name="LocalizedStringAttributes"/>
@@ -1864,7 +1890,7 @@ used in document amendments</a:documentation>
       </zeroOrMore>
       <zeroOrMore>
         <ref name="related">
-          <a:documentation>Zero or more names which are related to the term being defined. </a:documentation>
+          <a:documentation>Zero or more names which are related to the term being defined.</a:documentation>
         </ref>
       </zeroOrMore>
       <optional>
@@ -2025,7 +2051,7 @@ used in document amendments</a:documentation>
     <element name="letter-symbol">
       <optional>
         <attribute name="isInternational">
-          <a:documentation>Whether the designation is the same across languages, or language-specific   </a:documentation>
+          <a:documentation>Whether the designation is the same across languages, or language-specific</a:documentation>
           <data type="boolean"/>
         </attribute>
       </optional>

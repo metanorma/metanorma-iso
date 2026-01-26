@@ -460,6 +460,17 @@ RSpec.describe Metanorma::Iso do
     expect(File.read("test.err.html"))
       .to include("Reference does not have an associated footnote " \
                   "indicating unpublished status")
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      [bibliography]
+      == Bibliography
+      * [[[ISO8,amend(ISO 8)]]], _Title_ span:note.Unpublished-Status,display[Unpub]
+    INPUT
+    expect(File.read("test.err.html"))
+      .not_to include("Reference does not have an associated footnote " \
+                  "indicating unpublished status")
   end
 
   it "Warn if more than one ordered lists in a clause" do
