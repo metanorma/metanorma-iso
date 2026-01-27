@@ -8173,9 +8173,129 @@
 	<xsl:variable name="sourcecode_css" select="xalan:nodeset($sourcecode_css_)"/>
 
 	<xsl:template match="*[local-name() = 'property']" mode="css">
-		<xsl:attribute name="{@name}">
-			<xsl:value-of select="@value"/>
-		</xsl:attribute>
+		<!-- don't delete leading and trailing spaces -->
+		<!-- the list from https://www.data2type.de/en/xml-xslt-xslfo/xsl-fo/xsl-fo-introduction/blocks -->
+		<xsl:variable name="allowed_attributes_">
+			<xsl:text>
+				background-attachment
+				background-color
+				background-image
+				background-position-horizontal
+				background-position-vertical
+				background-repeat
+				border
+				border-after-color
+				border-after-style
+				border-after-width
+				border-before-color
+				border-before-style
+				border-before-width
+				border-bottom-color
+				border-bottom-style
+				border-bottom-width
+				border-color
+				border-end-color
+				border-end-style
+				border-end-width
+				border-left-color
+				border-left-style
+				border-left-width
+				border-right-color
+				border-right-style
+				border-right-width
+				border-start-color
+				border-start-style
+				border-start-width
+				border-style
+				border-top-color
+				border-top-style
+				border-top-width
+				border-width
+				break-after
+				break-before
+				color
+				country
+				end-indent
+				font-family
+				font-model
+				font-selection-strategy
+				font-size
+				font-size-adjust
+				font-stretch
+				font-style
+				font-variant
+				font-weight
+				hyphenate
+				hyphenation-character
+				hyphenation-keep
+				hyphenation-ladder-count
+				hyphenation-push-character-count
+				hyphenation-remain-character-count
+				id
+				intrusion-displace
+				keep-together
+				keep-with-next
+				keep-with-previous
+				language
+				last-line-end-indent
+				line-height
+				line-height-shift-adjustment
+				line-stacking-strategy
+				linefeed-treatment
+				margin
+				margin-bottom
+				margin-left
+				margin-right
+				margin-top
+				orphans
+				padding
+				padding-after
+				padding-before
+				padding-bottom
+				padding-end
+				padding-left
+				padding-right
+				pause-after
+				padding-start
+				padding-top
+				reference-orientation
+				relative-position
+				richness
+				role
+				script
+				source-document
+				space-after
+				space-before
+				span
+				start-indent
+				text-align
+				text-align-last
+				text-altitude
+				text-depth
+				text-indent
+				visibility
+				white-space-collapse
+				white-space-treatment
+				widows
+				wrap-option
+			</xsl:text>
+		</xsl:variable>
+		<xsl:variable name="allowed_attributes" select="concat(' ', normalize-space($allowed_attributes_), ' ')"/>
+		<xsl:choose>
+			<xsl:when test="contains($allowed_attributes, concat(' ', @name, ' '))">
+				<xsl:attribute name="{@name}">
+					<xsl:value-of select="@value"/>
+				</xsl:attribute>
+			</xsl:when>
+			<xsl:when test="@name = 'border-radius'">
+				<xsl:attribute name="fox:border-radius">
+					<xsl:value-of select="@value"/>
+				</xsl:attribute>
+			</xsl:when>
+			<xsl:otherwise>
+				<!-- skip -->
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template name="get_sourcecode_attributes">
@@ -8212,11 +8332,12 @@
 
 		<xsl:choose>
 			<xsl:when test="$isGenerateTableIF = 'true' and (ancestor::*[local-name() = 'td'] or ancestor::*[local-name() = 'th'])">
-				<xsl:for-each select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*">
-					<xsl:attribute name="{local-name()}">
+				<!-- <xsl:for-each select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*">					
+					<xsl:attribute name="{name()}">
 						<xsl:value-of select="."/>
 					</xsl:attribute>
-				</xsl:for-each>
+				</xsl:for-each> -->
+				<xsl:copy-of select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*"/>
 				<xsl:apply-templates select="node()[not(self::mn:fmt-name)]"/>
 			</xsl:when>
 
@@ -8234,11 +8355,12 @@
 
 						<fo:block xsl:use-attribute-sets="sourcecode-style">
 
-							<xsl:for-each select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*">
-								<xsl:attribute name="{local-name()}">
+							<!-- <xsl:for-each select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*">					
+								<xsl:attribute name="{name()}">
 									<xsl:value-of select="."/>
 								</xsl:attribute>
-							</xsl:for-each>
+							</xsl:for-each> -->
+							<xsl:copy-of select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*"/>
 
 							<xsl:call-template name="refine_sourcecode-style"/>
 
@@ -8349,7 +8471,7 @@
 					</xsl:for-each>
 				</xsl:variable>
 				<xsl:for-each select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*[not(starts-with(local-name(), 'margin-') or starts-with(local-name(), 'space-'))]">
-					<xsl:attribute name="{local-name()}">
+					<xsl:attribute name="{name()}">
 						<xsl:value-of select="."/>
 					</xsl:attribute>
 				</xsl:for-each>
