@@ -144,10 +144,6 @@ module IsoDoc
       def move_norm_ref_to_sections(docxml)
         amd?(docxml) or super
       end
-
-      def enable_indexsect
-        true
-      end
     end
   end
 end
