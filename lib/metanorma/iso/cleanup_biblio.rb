@@ -78,11 +78,17 @@ module Metanorma
         withdrawn_note(xmldoc)
       end
 
+      def bibitem_note_types(bib)
+        bib.xpath("./note/@type").map do |n|
+          n.text.split(",").map(&:strip)
+        end.flatten
+      end
+
       def unpublished_note(xmldoc)
-        xmldoc.xpath("//bibitem[not(./ancestor::bibitem)]" \
-                     "[not(note[@type = 'Unpublished-Status'])]").each do |b|
-                       unpublished_note1(b)
-                     end
+        xmldoc.xpath("//bibitem[not(./ancestor::bibitem)]").each do |b|
+          n = bibitem_note_types(b)
+          n.include?("Unpublished-Status") or unpublished_note1(b)
+        end
       end
 
       def unpublished_note1(bibitem)
@@ -124,14 +130,15 @@ module Metanorma
       end
 
       def withdrawn_note(xmldoc)
-        xmldoc.xpath("//bibitem[not(note[@type = 'Unpublished-Status'])]")
-          .each do |b|
-            withdrawn_ref?(b) or next
-            if id = replacement_standard(b)
-              insert_unpub_note(b, @i18n.cancelled_and_replaced.sub("%", id))
-            else insert_unpub_note(b, @i18n.withdrawn)
-            end
+        xmldoc.xpath("//bibitem").each do |b|
+          n = bibitem_note_types(b)
+          n.include?("Unpublished-Status") and next
+          withdrawn_ref?(b) or next
+          if id = replacement_standard(b)
+            insert_unpub_note(b, @i18n.cancelled_and_replaced.sub("%", id))
+          else insert_unpub_note(b, @i18n.withdrawn)
           end
+        end
       end
 
       def withdrawn_ref?(bibitem)
