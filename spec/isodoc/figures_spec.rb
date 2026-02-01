@@ -830,99 +830,99 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-         <preface>
-            <clause type="toc" id="_" displayorder="1">
-               <fmt-title id="_" depth="1">Contents</fmt-title>
-            </clause>
-         </preface>
-         <sections>
-            <clause id="widgets" displayorder="2">
-               <title id="_">Widgets</title>
-               <fmt-title id="_" depth="1">
-                  <span class="fmt-caption-label">
-                     <semx element="autonum" source="widgets">1</semx>
-                  </span>
-                  <span class="fmt-caption-delim">
-                     <tab/>
-                  </span>
-                  <semx element="title" source="_">Widgets</semx>
-               </fmt-title>
-               <fmt-xref-label>
-                  <span class="fmt-element-name">Clause</span>
-                  <semx element="autonum" source="widgets">1</semx>
-               </fmt-xref-label>
-               <figure id="N" autonum="1">
-                  <name id="_">Figure 1</name>
-                  <fmt-name id="_">
-                     <span class="fmt-caption-label">
-                        <span class="fmt-element-name">Figure</span>
-                        <semx element="autonum" source="N">1</semx>
-                     </span>
-                     <span class="fmt-caption-delim"> &#x2014; </span>
-                     <semx element="name" source="_">Figure 1</semx>
-                  </fmt-name>
-                  <fmt-xref-label>
-                     <span class="fmt-element-name">Figure</span>
-                     <semx element="autonum" source="N">1</semx>
-                  </fmt-xref-label>
-                  <image src="rice_images/rice_image1.png" id="_" mimetype="image/png"/>
-                  <note id="A" autonum="1">
-                     <fmt-name id="_">
-                        <span class="fmt-caption-label">
-                           <span class="fmt-element-name">NOTE</span>
-                           <semx element="autonum" source="A">1</semx>
-                        </span>
-                        <span class="fmt-label-delim">
-                           <tab/>
-                        </span>
-                     </fmt-name>
-                     <fmt-xref-label>
-                        <span class="fmt-element-name">Note</span>
-                        <semx element="autonum" source="A">1</semx>
-                     </fmt-xref-label>
-                     <fmt-xref-label container="widgets">
-                        <span class="fmt-xref-container">
-                           <span class="fmt-element-name">Clause</span>
-                           <semx element="autonum" source="widgets">1</semx>
-                        </span>
-                        <span class="fmt-comma">,</span>
-                        <span class="fmt-element-name">Note</span>
-                        <semx element="autonum" source="A">1</semx>
-                     </fmt-xref-label>
-                     Note 1
-                  </note>
-                  <note id="B" type="units">Units in mm</note>
-                  <note id="C" autonum="2">
-                     <fmt-name id="_">
-                        <span class="fmt-caption-label">
-                           <span class="fmt-element-name">NOTE</span>
-                           <semx element="autonum" source="C">2</semx>
-                        </span>
-                        <span class="fmt-label-delim">
-                           <tab/>
-                        </span>
-                     </fmt-name>
-                     <fmt-xref-label>
-                        <span class="fmt-element-name">Note</span>
-                        <semx element="autonum" source="C">2</semx>
-                     </fmt-xref-label>
-                     <fmt-xref-label container="widgets">
-                        <span class="fmt-xref-container">
-                           <span class="fmt-element-name">Clause</span>
-                           <semx element="autonum" source="widgets">1</semx>
-                        </span>
-                        <span class="fmt-comma">,</span>
-                        <span class="fmt-element-name">Note</span>
-                        <semx element="autonum" source="C">2</semx>
-                     </fmt-xref-label>
-                     Note 2
-                  </note>
-                  <note id="D" type="units">Other units in sec</note>
-               </figure>
-            </clause>
-         </sections>
-      </iso-standard>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1" id="_">Contents</fmt-title>
+             </clause>
+          </preface>
+          <sections>
+             <clause id="widgets" displayorder="2">
+                <title id="_">Widgets</title>
+                <fmt-title depth="1" id="_">
+                   <span class="fmt-caption-label">
+                      <semx element="autonum" source="widgets">1</semx>
+                   </span>
+                   <span class="fmt-caption-delim">
+                      <tab/>
+                   </span>
+                   <semx element="title" source="_">Widgets</semx>
+                </fmt-title>
+                <fmt-xref-label>
+                   <span class="fmt-element-name">Clause</span>
+                   <semx element="autonum" source="widgets">1</semx>
+                </fmt-xref-label>
+                <figure id="N" autonum="1">
+                   <name id="_">Figure 1</name>
+                   <fmt-name id="_">
+                      <span class="fmt-caption-label">
+                         <span class="fmt-element-name">Figure</span>
+                         <semx element="autonum" source="N">1</semx>
+                      </span>
+                      <span class="fmt-caption-delim"> — </span>
+                      <semx element="name" source="_">Figure 1</semx>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Figure</span>
+                      <semx element="autonum" source="N">1</semx>
+                   </fmt-xref-label>
+                   <image src="rice_images/rice_image1.png" id="_" mimetype="image/png"/>
+                   <note id="A" autonum="1">
+                      <fmt-name id="_">
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                            <semx element="autonum" source="A">1</semx>
+                         </span>
+                         <span class="fmt-label-delim">
+                            <tab/>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="A">1</semx>
+                      </fmt-xref-label>
+                      <fmt-xref-label container="N">
+                         <span class="fmt-xref-container">
+                            <span class="fmt-element-name">Figure</span>
+                            <semx element="autonum" source="N">1</semx>
+                         </span>
+                         <span class="fmt-comma">,</span>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="A">1</semx>
+                      </fmt-xref-label>
+                      Note 1
+                   </note>
+                   <note id="B" type="units">Units in mm</note>
+                   <note id="C" autonum="2">
+                      <fmt-name id="_">
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                            <semx element="autonum" source="C">2</semx>
+                         </span>
+                         <span class="fmt-label-delim">
+                            <tab/>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="C">2</semx>
+                      </fmt-xref-label>
+                      <fmt-xref-label container="N">
+                         <span class="fmt-xref-container">
+                            <span class="fmt-element-name">Figure</span>
+                            <semx element="autonum" source="N">1</semx>
+                         </span>
+                         <span class="fmt-comma">,</span>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="C">2</semx>
+                      </fmt-xref-label>
+                      Note 2
+                   </note>
+                   <note id="D" type="units">Other units in sec</note>
+                </figure>
+             </clause>
+          </sections>
+       </iso-standard>
     OUTPUT
     html = <<~OUTPUT
           #{HTML_HDR}

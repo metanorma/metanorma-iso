@@ -640,115 +640,117 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     presxml = <<~OUTPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-         <preface>
-            <clause type="toc" id="_" displayorder="1">
-               <fmt-title id="_" depth="1">Contents</fmt-title>
-            </clause>
-            <foreword id="_" displayorder="2">
-               <title id="_">Foreword</title>
-               <fmt-title id="_" depth="1">
-                  <semx element="title" source="_">Foreword</semx>
-               </fmt-title>
-               <table id="tableD-1" autonum="1">
-                  <name id="_">
-                     Repeatability and reproducibility of
-                     <em>husked</em>
-                     rice yield
-                  </name>
-                  <fmt-name id="_">
-                     <span class="fmt-caption-label">
-                        <span class="fmt-element-name">Table</span>
-                        <semx element="autonum" source="tableD-1">1</semx>
-                     </span>
-                     <span class="fmt-caption-delim"> — </span>
-                     <semx element="name" source="_">
-                        Repeatability and reproducibility of
-                        <em>husked</em>
-                        rice yield
-                     </semx>
-                  </fmt-name>
-                  <fmt-xref-label>
-                     <span class="fmt-element-name">Table</span>
-                     <semx element="autonum" source="tableD-1">1</semx>
-                  </fmt-xref-label>
-                  <thead>
-                     <tr>
-                        <td>Description</td>
-                        <td>Rice sample</td>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr>
-                        <th align="left">Number of laboratories retained after eliminating outliers</th>
-                        <td align="center">13</td>
-                     </tr>
-                     <tr>
-                        <td align="left">Mean value, g/100 g</td>
-                        <td align="center">81,2</td>
-                     </tr>
-                  </tbody>
-                  <key>
-                  <name>Key</name>
-                  <dl>
-                     <dt>Drago</dt>
-                     <dd>A type of rice</dd>
-                  </dl>
-                  </key>
-                  <note id="A" autonum="1">
-                     <fmt-name id="_">
-                        <span class="fmt-caption-label">
-                           <span class="fmt-element-name">NOTE</span>
-                           <semx element="autonum" source="A">1</semx>
-                        </span>
-                        <span class="fmt-label-delim">
-                           <tab/>
-                        </span>
-                     </fmt-name>
-                     <fmt-xref-label>
-                        <span class="fmt-element-name">Note</span>
-                        <semx element="autonum" source="A">1</semx>
-                     </fmt-xref-label>
-                     <fmt-xref-label container="_">
-                        <span class="fmt-xref-container">
-                           <semx element="foreword" source="_">Foreword</semx>
-                        </span>
-                        <span class="fmt-comma">,</span>
-                        <span class="fmt-element-name">Note</span>
-                        <semx element="autonum" source="A">1</semx>
-                     </fmt-xref-label>
-                     Note 1
-                  </note>
-                  <note id="B" type="units">Units in mm</note>
-                  <note id="C" autonum="2">
-                     <fmt-name id="_">
-                        <span class="fmt-caption-label">
-                           <span class="fmt-element-name">NOTE</span>
-                           <semx element="autonum" source="C">2</semx>
-                        </span>
-                        <span class="fmt-label-delim">
-                           <tab/>
-                        </span>
-                     </fmt-name>
-                     <fmt-xref-label>
-                        <span class="fmt-element-name">Note</span>
-                        <semx element="autonum" source="C">2</semx>
-                     </fmt-xref-label>
-                     <fmt-xref-label container="_">
-                        <span class="fmt-xref-container">
-                           <semx element="foreword" source="_">Foreword</semx>
-                        </span>
-                        <span class="fmt-comma">,</span>
-                        <span class="fmt-element-name">Note</span>
-                        <semx element="autonum" source="C">2</semx>
-                     </fmt-xref-label>
-                     Note 2
-                  </note>
-                  <note id="D" type="units">Other units in sec</note>
-               </table>
-            </foreword>
-         </preface>
-      </iso-standard>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+          <preface>
+             <clause type="toc" id="_" displayorder="1">
+                <fmt-title depth="1" id="_">Contents</fmt-title>
+             </clause>
+             <foreword id="_" displayorder="2">
+                <title id="_">Foreword</title>
+                <fmt-title depth="1" id="_">
+                   <semx element="title" source="_">Foreword</semx>
+                </fmt-title>
+                <table id="tableD-1" autonum="1">
+                   <name id="_">
+                      Repeatability and reproducibility of
+                      <em>husked</em>
+                      rice yield
+                   </name>
+                   <fmt-name id="_">
+                      <span class="fmt-caption-label">
+                         <span class="fmt-element-name">Table</span>
+                         <semx element="autonum" source="tableD-1">1</semx>
+                      </span>
+                      <span class="fmt-caption-delim"> — </span>
+                      <semx element="name" source="_">
+                         Repeatability and reproducibility of
+                         <em>husked</em>
+                         rice yield
+                      </semx>
+                   </fmt-name>
+                   <fmt-xref-label>
+                      <span class="fmt-element-name">Table</span>
+                      <semx element="autonum" source="tableD-1">1</semx>
+                   </fmt-xref-label>
+                   <thead>
+                      <tr>
+                         <td>Description</td>
+                         <td>Rice sample</td>
+                      </tr>
+                   </thead>
+                   <tbody>
+                      <tr>
+                         <th align="left">Number of laboratories retained after eliminating outliers</th>
+                         <td align="center">13</td>
+                      </tr>
+                      <tr>
+                         <td align="left">Mean value, g/100 g</td>
+                         <td align="center">81,2</td>
+                      </tr>
+                   </tbody>
+                   <key>
+                      <name>Key</name>
+                      <dl>
+                         <dt>Drago</dt>
+                         <dd>A type of rice</dd>
+                      </dl>
+                   </key>
+                   <note id="A" autonum="1">
+                      <fmt-name id="_">
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                            <semx element="autonum" source="A">1</semx>
+                         </span>
+                         <span class="fmt-label-delim">
+                            <tab/>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="A">1</semx>
+                      </fmt-xref-label>
+                      <fmt-xref-label container="tableD-1">
+                         <span class="fmt-xref-container">
+                            <span class="fmt-element-name">Table</span>
+                            <semx element="autonum" source="tableD-1">1</semx>
+                         </span>
+                         <span class="fmt-comma">,</span>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="A">1</semx>
+                      </fmt-xref-label>
+                      Note 1
+                   </note>
+                   <note id="B" type="units">Units in mm</note>
+                   <note id="C" autonum="2">
+                      <fmt-name id="_">
+                         <span class="fmt-caption-label">
+                            <span class="fmt-element-name">NOTE</span>
+                            <semx element="autonum" source="C">2</semx>
+                         </span>
+                         <span class="fmt-label-delim">
+                            <tab/>
+                         </span>
+                      </fmt-name>
+                      <fmt-xref-label>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="C">2</semx>
+                      </fmt-xref-label>
+                      <fmt-xref-label container="tableD-1">
+                         <span class="fmt-xref-container">
+                            <span class="fmt-element-name">Table</span>
+                            <semx element="autonum" source="tableD-1">1</semx>
+                         </span>
+                         <span class="fmt-comma">,</span>
+                         <span class="fmt-element-name">Note</span>
+                         <semx element="autonum" source="C">2</semx>
+                      </fmt-xref-label>
+                      Note 2
+                   </note>
+                   <note id="D" type="units">Other units in sec</note>
+                </table>
+             </foreword>
+          </preface>
+       </iso-standard>
     OUTPUT
     html = <<~OUTPUT
           #{HTML_HDR}
