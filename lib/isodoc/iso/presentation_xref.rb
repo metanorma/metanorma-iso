@@ -114,7 +114,7 @@ module IsoDoc
       # 7 a) : Clause 7 a), but Clause 7 List 1 a)
       def prefix_container(container, linkend, node, target)
         prefix_container?(container, node) or return linkend
-        container_container = @xrefs.anchor(container, :container, false)
+        container_container = prefix_container_container(container)
         nested_xref, container_label =
           prefix_container_template(container, node, target)
         container_label = prefix_container(container_container,

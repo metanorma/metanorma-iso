@@ -6023,6 +6023,7 @@
 	<xsl:param name="svg_images"/> <!-- svg images array -->
 	<xsl:variable name="images" select="document($svg_images)"/>
 	<xsl:param name="basepath"/> <!-- base path for images -->
+	<xsl:param name="mn2pdfpath"/> <!-- mn2pdf working directory -->
 	<xsl:param name="inputxml_basepath"/> <!-- input xml file path -->
 	<xsl:param name="inputxml_filename"/> <!-- input xml file name -->
 	<xsl:param name="output_path"/> <!-- output PDF file name -->
@@ -8172,9 +8173,129 @@
 	<xsl:variable name="sourcecode_css" select="xalan:nodeset($sourcecode_css_)"/>
 
 	<xsl:template match="*[local-name() = 'property']" mode="css">
-		<xsl:attribute name="{@name}">
-			<xsl:value-of select="@value"/>
-		</xsl:attribute>
+		<!-- don't delete leading and trailing spaces -->
+		<!-- the list from https://www.data2type.de/en/xml-xslt-xslfo/xsl-fo/xsl-fo-introduction/blocks -->
+		<xsl:variable name="allowed_attributes_">
+			<xsl:text>
+				background-attachment
+				background-color
+				background-image
+				background-position-horizontal
+				background-position-vertical
+				background-repeat
+				border
+				border-after-color
+				border-after-style
+				border-after-width
+				border-before-color
+				border-before-style
+				border-before-width
+				border-bottom-color
+				border-bottom-style
+				border-bottom-width
+				border-color
+				border-end-color
+				border-end-style
+				border-end-width
+				border-left-color
+				border-left-style
+				border-left-width
+				border-right-color
+				border-right-style
+				border-right-width
+				border-start-color
+				border-start-style
+				border-start-width
+				border-style
+				border-top-color
+				border-top-style
+				border-top-width
+				border-width
+				break-after
+				break-before
+				color
+				country
+				end-indent
+				font-family
+				font-model
+				font-selection-strategy
+				font-size
+				font-size-adjust
+				font-stretch
+				font-style
+				font-variant
+				font-weight
+				hyphenate
+				hyphenation-character
+				hyphenation-keep
+				hyphenation-ladder-count
+				hyphenation-push-character-count
+				hyphenation-remain-character-count
+				id
+				intrusion-displace
+				keep-together
+				keep-with-next
+				keep-with-previous
+				language
+				last-line-end-indent
+				line-height
+				line-height-shift-adjustment
+				line-stacking-strategy
+				linefeed-treatment
+				margin
+				margin-bottom
+				margin-left
+				margin-right
+				margin-top
+				orphans
+				padding
+				padding-after
+				padding-before
+				padding-bottom
+				padding-end
+				padding-left
+				padding-right
+				pause-after
+				padding-start
+				padding-top
+				reference-orientation
+				relative-position
+				richness
+				role
+				script
+				source-document
+				space-after
+				space-before
+				span
+				start-indent
+				text-align
+				text-align-last
+				text-altitude
+				text-depth
+				text-indent
+				visibility
+				white-space-collapse
+				white-space-treatment
+				widows
+				wrap-option
+			</xsl:text>
+		</xsl:variable>
+		<xsl:variable name="allowed_attributes" select="concat(' ', normalize-space($allowed_attributes_), ' ')"/>
+		<xsl:choose>
+			<xsl:when test="contains($allowed_attributes, concat(' ', @name, ' '))">
+				<xsl:attribute name="{@name}">
+					<xsl:value-of select="@value"/>
+				</xsl:attribute>
+			</xsl:when>
+			<xsl:when test="@name = 'border-radius'">
+				<xsl:attribute name="fox:border-radius">
+					<xsl:value-of select="@value"/>
+				</xsl:attribute>
+			</xsl:when>
+			<xsl:otherwise>
+				<!-- skip -->
+			</xsl:otherwise>
+		</xsl:choose>
 	</xsl:template>
 
 	<xsl:template name="get_sourcecode_attributes">
@@ -8211,11 +8332,12 @@
 
 		<xsl:choose>
 			<xsl:when test="$isGenerateTableIF = 'true' and (ancestor::*[local-name() = 'td'] or ancestor::*[local-name() = 'th'])">
-				<xsl:for-each select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*">
-					<xsl:attribute name="{local-name()}">
+				<!-- <xsl:for-each select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*">					
+					<xsl:attribute name="{name()}">
 						<xsl:value-of select="."/>
 					</xsl:attribute>
-				</xsl:for-each>
+				</xsl:for-each> -->
+				<xsl:copy-of select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*"/>
 				<xsl:apply-templates select="node()[not(self::mn:fmt-name)]"/>
 			</xsl:when>
 
@@ -8233,11 +8355,12 @@
 
 						<fo:block xsl:use-attribute-sets="sourcecode-style">
 
-							<xsl:for-each select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*">
-								<xsl:attribute name="{local-name()}">
+							<!-- <xsl:for-each select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*">					
+								<xsl:attribute name="{name()}">
 									<xsl:value-of select="."/>
 								</xsl:attribute>
-							</xsl:for-each>
+							</xsl:for-each> -->
+							<xsl:copy-of select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*"/>
 
 							<xsl:call-template name="refine_sourcecode-style"/>
 
@@ -8247,10 +8370,10 @@
 								<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
 							</xsl:if>
 
-							<xsl:apply-templates select="node()[not(self::mn:fmt-name or self::mn:dl)]"/>
+							<xsl:apply-templates select="node()[not(self::mn:fmt-name or self::mn:dl or self::mn:key)]"/>
 						</fo:block>
 
-						<xsl:apply-templates select="mn:dl"/> <!-- Key table -->
+						<xsl:apply-templates select="mn:dl | mn:key"/> <!-- Key table -->
 
 						<!-- <xsl:choose>
 							<xsl:when test="$namespace = 'rsd'"></xsl:when>
@@ -8348,7 +8471,7 @@
 					</xsl:for-each>
 				</xsl:variable>
 				<xsl:for-each select="xalan:nodeset($sourcecode_attributes)/sourcecode_attributes/@*[not(starts-with(local-name(), 'margin-') or starts-with(local-name(), 'space-'))]">
-					<xsl:attribute name="{local-name()}">
+					<xsl:attribute name="{name()}">
 						<xsl:value-of select="."/>
 					</xsl:attribute>
 				</xsl:for-each>
@@ -10652,7 +10775,7 @@
 									<xsl:apply-templates select="*[local-name()='thead']" mode="process_tbody"/>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:apply-templates select="node()[not(self::mn:fmt-name) and not(self::mn:note) and not(self::mn:example) and not(self::mn:dl) and not(self::mn:fmt-source) and not(self::mn:p)          and not(self::mn:thead) and not(self::mn:tfoot) and not(self::mn:fmt-footnote-container)]"/> <!-- process all table' elements, except name, header, footer, note, source and dl which render separaterely -->
+									<xsl:apply-templates select="node()[not(self::mn:fmt-name) and not(self::mn:note) and not(self::mn:example) and not(self::mn:dl) and not(self::mn:key) and not(self::mn:fmt-source) and not(self::mn:p)          and not(self::mn:thead) and not(self::mn:tfoot) and not(self::mn:fmt-footnote-container)]"/> <!-- process all table' elements, except name, header, footer, note, source and dl which render separaterely -->
 								</xsl:otherwise>
 							</xsl:choose>
 
@@ -11256,7 +11379,7 @@
 		<xsl:param name="colwidths"/>
 		<xsl:param name="colgroup"/>
 
-		<xsl:variable name="isNoteOrFnExist" select="../mn:note[not(@type = 'units')] or ../mn:example or ../mn:dl or ..//mn:fn[not(parent::mn:fmt-name)] or ../mn:fmt-source or ../mn:p"/>
+		<xsl:variable name="isNoteOrFnExist" select="../mn:note[not(@type = 'units')] or ../mn:example or ../mn:dl or ../mn:key or ..//mn:fn[not(parent::mn:fmt-name)] or ../mn:fmt-source or ../mn:p"/>
 
 		<xsl:variable name="isNoteOrFnExistShowAfterTable">
 		</xsl:variable>
@@ -11339,7 +11462,7 @@
 
 								<!-- fn will be processed inside 'note' processing -->
 								<xsl:apply-templates select="../mn:p"/>
-								<xsl:apply-templates select="../mn:dl"/>
+								<xsl:apply-templates select="../mn:dl | ../mn:key"/>
 								<xsl:apply-templates select="../mn:note[not(@type = 'units')]"/>
 								<xsl:apply-templates select="../mn:example"/>
 								<xsl:apply-templates select="../mn:fmt-source"/>
@@ -12692,7 +12815,7 @@
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_dl-block-style">
-		<xsl:if test="@key = 'true' and ancestor::mn:figure">
+		<xsl:if test="(@key = 'true' or ancestor::mn:key) and ancestor::mn:figure">
 			<xsl:attribute name="keep-together.within-column">always</xsl:attribute>
 		</xsl:if>
 	</xsl:template>
@@ -12803,16 +12926,16 @@
 			<fo:block-container margin-left="0mm" role="SKIP">
 				<xsl:attribute name="margin-right">0mm</xsl:attribute>
 
-				<xsl:variable name="parent" select="local-name(..)"/>
+				<xsl:variable name="parent" select="local-name(../..)"/>
 
 				<xsl:variable name="key_iso">
-					<xsl:if test="$parent = 'figure' or $parent = 'formula' or ../@key = 'true'">true</xsl:if> <!-- and  (not(../@class) or ../@class !='pseudocode') -->
+					<xsl:if test="($parent = 'figure' or $parent = 'formula') and (../@key = 'true' or ancestor::mn:key)">true</xsl:if> <!-- and  (not(../@class) or ../@class !='pseudocode') -->
 				</xsl:variable>
 
-				<xsl:variable name="onlyOneComponent" select="normalize-space($parent = 'formula' and count(mn:dt) = 1)"/>
+				<xsl:variable name="onlyOneFormulaKeyItem" select="normalize-space($parent = 'formula' and count(mn:dt) = 1)"/>
 
 				<xsl:choose>
-					<xsl:when test="$onlyOneComponent = 'true'"> <!-- only one component -->
+					<xsl:when test="$onlyOneFormulaKeyItem = 'true'"> <!-- only one component -->
 						<fo:block margin-bottom="12pt" text-align="left">
 								<xsl:attribute name="margin-bottom">0</xsl:attribute>
 							<!-- <xsl:variable name="title-where">
@@ -12821,7 +12944,7 @@
 										</xsl:call-template>
 									</xsl:variable>
 									<xsl:value-of select="$title-where"/> -->
-							<xsl:apply-templates select="preceding-sibling::*[1][self::mn:p and @keep-with-next = 'true']/node()"/>
+							<xsl:apply-templates select="ancestor::mn:key/preceding-sibling::*[1][self::mn:p and @keep-with-next = 'true']/node()"/>
 							<xsl:text> </xsl:text>
 							<xsl:apply-templates select="mn:dt/*"/>
 							<xsl:if test="mn:dd/node()[normalize-space() != ''][1][self::text()]">
@@ -12842,15 +12965,16 @@
 							</xsl:variable>
 							<xsl:value-of select="$title-where"/><xsl:if test="$namespace = 'bsi' or $namespace = 'itu'">:</xsl:if> -->
 							<!-- preceding 'p' with word 'where' -->
-							<xsl:apply-templates select="preceding-sibling::*[1][self::mn:p and @keep-with-next = 'true']/node()"/>
+							<!-- <xsl:apply-templates select="preceding-sibling::*[1][self::mn:p and @keep-with-next = 'true']/node()"/> -->
+							<xsl:apply-templates select="ancestor::mn:key/preceding-sibling::*[1][self::mn:p and @keep-with-next = 'true']/node()"/>
 						</fo:block>
 					</xsl:when>  <!-- END: a few components -->
 					<xsl:when test="$parent = 'figure' and  (not(../@class) or ../@class !='pseudocode')"> <!-- definition list in a figure -->
 						<!-- Presentation XML contains 'Key' caption, https://github.com/metanorma/isodoc/issues/607 -->
-						<xsl:if test="not(preceding-sibling::*[1][self::mn:p and @keep-with-next])"> <!-- for old Presentation XML -->
+						<xsl:if test="not(preceding-sibling::*[1][self::mn:p and @keep-with-next]) and 1 = 2"> <!-- for old Presentation XML -->
 							<fo:block font-weight="bold" text-align="left" margin-bottom="12pt" keep-with-next="always">
 
-								<xsl:call-template name="refine_figure_key_style"/>
+								<xsl:call-template name="refine_figure-key-name-style"/>
 
 								<xsl:variable name="title-key">
 									<xsl:call-template name="getLocalizedString">
@@ -12864,7 +12988,7 @@
 				</xsl:choose>
 
 				<!-- a few components -->
-				<xsl:if test="$onlyOneComponent = 'false'">
+				<xsl:if test="$onlyOneFormulaKeyItem = 'false'">
 					<fo:block role="SKIP">
 
 						<xsl:call-template name="refine_multicomponent_style"/>
@@ -12877,7 +13001,7 @@
 
 							<xsl:call-template name="refine_multicomponent_block_style"/>
 
-							<xsl:apply-templates select="mn:fmt-name">
+							<xsl:apply-templates select="mn:fmt-name | parent::mn:key[parent::mn:table]/mn:name">
 								<xsl:with-param name="process">true</xsl:with-param>
 							</xsl:apply-templates>
 
@@ -13056,7 +13180,7 @@
 	</xsl:template> <!-- refine_dl_formula_where_style -->
 
 	<xsl:template name="refine_multicomponent_style">
-		<xsl:variable name="parent" select="local-name(..)"/>
+		<xsl:variable name="parent" select="local-name(../..)"/>
 		<xsl:if test="$parent = 'formula'">
 			<xsl:attribute name="margin-left">4mm</xsl:attribute>
 		</xsl:if>
@@ -13064,7 +13188,7 @@
 	</xsl:template> <!-- refine_multicomponent_style -->
 
 	<xsl:template name="refine_multicomponent_block_style">
-		<xsl:variable name="parent" select="local-name(..)"/>
+		<xsl:variable name="parent" select="local-name(../..)"/>
 	</xsl:template> <!-- refine_multicomponent_block_style -->
 
 	<!-- dl/name -->
@@ -14174,6 +14298,20 @@
 		</xsl:if>
 	</xsl:template>
 
+	<xsl:attribute-set name="figure-key-name-style">
+		<xsl:attribute name="text-align">left</xsl:attribute>
+		<xsl:attribute name="font-weight">bold</xsl:attribute>
+		<xsl:attribute name="margin-bottom">12pt</xsl:attribute>
+		<xsl:attribute name="keep-with-next">always</xsl:attribute>
+		<xsl:attribute name="keep-with-previous">always</xsl:attribute>
+		<xsl:attribute name="font-size">10pt</xsl:attribute>
+		<xsl:attribute name="margin-bottom">0</xsl:attribute>
+	</xsl:attribute-set> <!-- figure-key-name-style -->
+
+	<xsl:template name="refine_figure-key-name-style">
+
+	</xsl:template> <!-- refine_figure-key-name-style -->
+
 	<!-- ============================ -->
 	<!-- figure's footnotes rendering -->
 	<!-- ============================ -->
@@ -14336,7 +14474,7 @@
 	<!-- added for https://github.com/metanorma/isodoc/issues/607 -->
 	<!-- figure's footnote label -->
 	<!-- figure/dl[@key = 'true']/dt/p/sup -->
-	<xsl:template match="mn:figure/mn:dl[@key = 'true']/mn:dt/     mn:p[count(node()[normalize-space() != '']) = 1]/mn:sup" priority="3">
+	<xsl:template match="mn:figure/mn:dl[@key = 'true']/mn:dt/     mn:p[count(node()[normalize-space() != '']) = 1]/mn:sup |     mn:figure/mn:key/mn:dl/mn:dt/     mn:p[count(node()[normalize-space() != '']) = 1]/mn:sup" priority="3">
 		<xsl:variable name="key_iso">true
 		</xsl:variable>
 		<xsl:if test="normalize-space($key_iso) = 'true'">
@@ -14354,17 +14492,12 @@
 	<!-- ============================ -->
 
 	<!-- caption for figure key and another caption, https://github.com/metanorma/isodoc/issues/607 -->
-	<xsl:template match="mn:figure/mn:p[@keep-with-next = 'true' and mn:strong]" priority="3">
-		<fo:block text-align="left" margin-bottom="12pt" keep-with-next="always" keep-with-previous="always">
-			<xsl:call-template name="refine_figure_key_style"/>
+	<xsl:template match="mn:figure/mn:p[@keep-with-next = 'true' and mn:strong] | mn:figure/mn:key/mn:name" priority="3">
+		<fo:block xsl:use-attribute-sets="figure-key-name-style">
+			<xsl:call-template name="refine_figure-key-name-style"/>
 			<xsl:apply-templates/>
 		</fo:block>
 	</xsl:template>
-
-	<xsl:template name="refine_figure_key_style">
-		<xsl:attribute name="font-size">10pt</xsl:attribute>
-		<xsl:attribute name="margin-bottom">0</xsl:attribute>
-	</xsl:template> <!-- refine_figure_key_style -->
 
 	<!-- ====== -->
 	<!-- figure    -->
@@ -14678,9 +14811,15 @@
 			<xsl:otherwise>
 				<xsl:variable name="src_with_basepath" select="concat($basepath, @src)"/>
 				<xsl:variable name="file_exists" select="normalize-space(java:exists(java:java.io.File.new($src_with_basepath)))"/>
+				<xsl:variable name="src_with_mn2pdfpath" select="concat($mn2pdfpath, @src)"/>
+				<xsl:variable name="file_exists_in_mn2pdf_path" select="normalize-space(java:exists(java:java.io.File.new($src_with_mn2pdfpath)))"/>
 				<xsl:choose>
 					<xsl:when test="$file_exists = 'true'">
-						<xsl:value-of select="$src_with_basepath"/>
+						<xsl:value-of select="java:org.metanorma.fop.Util.getURIFromPath($src_with_basepath)"/>
+					</xsl:when>
+					<xsl:when test="$file_exists_in_mn2pdf_path = 'true'">
+						<!-- <xsl:value-of select="$src_with_mn2pdfpath"/> -->
+						<xsl:value-of select="java:org.metanorma.fop.Util.getURIFromPath($src_with_mn2pdfpath)"/>
 					</xsl:when>
 					<xsl:otherwise>
 						<xsl:value-of select="@src"/>
@@ -15140,10 +15279,12 @@
 		</xsl:for-each>
 	</xsl:template>
 
-	<xsl:template match="mn:figure/mn:image[@mimetype = 'image/svg+xml' and @src[not(starts-with(., 'data:image/'))]]" priority="2">
-		<xsl:variable name="svg_content" select="document(@src)"/>
+	<!-- <p id="."><image id="" src="..." mimetype="image/svg+xml" height="auto" width="auto"/></p> -->
+	<xsl:template match="mn:figure/mn:image[@mimetype = 'image/svg+xml' and @src[not(starts-with(., 'data:image/'))]] |    *[not(self::mn:figure)]/mn:image[@mimetype = 'image/svg+xml' and @src[not(starts-with(., 'data:image/'))] and count(node()) = 0]" priority="2">
+		<xsl:variable name="src"><xsl:call-template name="getImageSrcExternal"/></xsl:variable>
+		<xsl:variable name="svg_content" select="document($src)"/>
 		<xsl:variable name="name" select="ancestor::mn:figure/mn:fmt-name"/>
-		<xsl:for-each select="xalan:nodeset($svg_content)/node()">
+		<xsl:for-each select="xalan:nodeset($svg_content)/*"> <!-- node() -->
 			<xsl:call-template name="image_svg">
 				<xsl:with-param name="name" select="$name"/>
 			</xsl:call-template>
@@ -15418,7 +15559,7 @@
 	<!-- ====== -->
 
 	<!-- ignore 'p' with 'where' in formula, before 'dl' -->
-	<xsl:template match="mn:formula/*[self::mn:p and @keep-with-next = 'true' and following-sibling::*[1][self::mn:dl]]"/>
+	<xsl:template match="mn:formula/*[self::mn:p and @keep-with-next = 'true' and following-sibling::*[1][self::mn:dl or self::mn:key]]"/>
 
 	<!-- ======================================= -->
 	<!-- math -->
@@ -19026,6 +19167,35 @@
 		<!-- $namespace = 'iso' -->
 		<xsl:attribute name="role">H<xsl:value-of select="$level"/></xsl:attribute>
 	</xsl:template> <!-- refine_title-style -->
+
+	<xsl:attribute-set name="key-style">
+
+	</xsl:attribute-set>
+
+	<xsl:template name="refine_key-style">
+
+	</xsl:template>
+
+	<xsl:attribute-set name="key-name-style" use-attribute-sets="dl-name-style">
+
+	</xsl:attribute-set>
+
+	<xsl:template name="refine_key-name-style">
+	</xsl:template>
+
+	<xsl:template match="mn:key">
+		<xsl:apply-templates/>
+	</xsl:template>
+
+	<xsl:template match="mn:key/mn:name">
+		<xsl:param name="process">false</xsl:param>
+		<xsl:if test="$process = 'true'">
+			<fo:block xsl:use-attribute-sets="key-name-style">
+				<xsl:call-template name="refine_key-name-style"/>
+				<xsl:apply-templates/>
+			</fo:block>
+		</xsl:if>
+	</xsl:template>
 
 	<xsl:template name="processPrefaceSectionsDefault">
 		<xsl:param name="num"/>

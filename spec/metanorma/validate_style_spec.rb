@@ -318,6 +318,15 @@ RSpec.describe Metanorma::Iso do
     INPUT
     expect(File.read("test.err.html"))
       .to include("language-specific abbreviation")
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      ppm
+    INPUT
+    expect(File.read("test.err.html"))
+      .not_to include("language-specific abbreviation")
   end
 
   it "Style warning if space between number and degree" do
@@ -369,6 +378,24 @@ RSpec.describe Metanorma::Iso do
     INPUT
     expect(File.read("test.err.html"))
       .to include("no space between number and SI unit")
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      A measurement of U+05Bq was taken.
+    INPUT
+    expect(File.read("test.err.html"))
+      .not_to include("no space between number and SI unit")
+
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      A measurement of 05Bq was taken.
+    INPUT
+    expect(File.read("test.err.html"))
+      .not_to include("no space between number and SI unit")
   end
 
   it "Style warning if mins used" do
@@ -610,9 +637,11 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "Warn of list punctuation after full stop" do
+    FileUtils.rm_rf("test.err.html")
     Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{VALIDATING_BLANK_HDR}
 
+      [[x]]
       == Clause
 
       X.
@@ -620,6 +649,8 @@ RSpec.describe Metanorma::Iso do
       * This is;
       * Another broken up.
       * sentence.
+      * <<x,A>> sentence.
+      * <<x,b>> sentence.
 
     INPUT
     f = File.read("test.err.html")
@@ -632,6 +663,35 @@ RSpec.describe Metanorma::Iso do
     expect(f)
       .to include("List entry of separate sentences must start with " \
                   "uppercase letter: sentence.")
+    expect(f)
+      .not_to include("List entry of separate sentences must start with " \
+                  "uppercase letter: A sentence.")
+    expect(f)
+      .to include("List entry of separate sentences must start with " \
+                  "uppercase letter: b sentence.")
+
+    FileUtils.rm_rf("test.err.html")
+    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+
+      [x]
+      === Clause
+
+      X.
+
+      * This is.
+      * 32 bytes.
+      * stem:[n] bytes.
+      * <<x>> bytes.
+
+    INPUT
+    f = File.read("test.err.html")
+      warn f
+    expect(f)
+      .not_to include("List entry of separate sentences must start with " \
+                  "uppercase letter")
   end
 
   it "Skips punctuation check for short entries in lists" do
