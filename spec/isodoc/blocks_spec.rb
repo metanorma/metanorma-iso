@@ -624,7 +624,8 @@ RSpec.describe IsoDoc do
                      <semx element="stem" source="_">r = 1 %</semx>
                   </fmt-stem>
                   <p keep-with-next="true">where</p>
-                  <dl id="_" class="formula_dl">
+                  <key class="formula_dl">
+                    <dl id="_">
                      <dt>
                         <stem type="AsciiMath" id="_">r</stem>
                         <fmt-stem type="AsciiMath">
@@ -644,6 +645,7 @@ RSpec.describe IsoDoc do
                         <p id="_">is the other repeatability limit.</p>
                      </dd>
                   </dl>
+                  </key>
                   <note id="_" autonum="">
                      <fmt-name id="_">
                         <span class="fmt-caption-label">
@@ -712,8 +714,9 @@ RSpec.describe IsoDoc do
                       </p>
                     </div>
                     <p style='page-break-after: avoid;'>where</p>
+                     <div class="key formula_dl">
                     <div class="figdl">
-                    <dl id='_' class='formula_dl'>
+                    <dl id='_'>
                       <dt>
                         <span class='stem'>(#(r)#)</span>
                       </dt>
@@ -727,6 +730,7 @@ RSpec.describe IsoDoc do
                         <p id='_'>is the other repeatability limit.</p>
                       </dd>
                     </dl>
+                    </div>
                     </div>
                     <div id='_' class='Note'>
                       <p>
@@ -761,6 +765,7 @@ RSpec.describe IsoDoc do
               </p>
             </div>
             <p class="ForewordText" style="page-break-after: avoid;">where</p>
+            <div class="key formula_dl">
             <div align="left">
             <table id="_" style="text-align:left;" class="formula_dl">
               <tr>
@@ -784,6 +789,7 @@ RSpec.describe IsoDoc do
                 </td>
               </tr>
             </table>
+            </div>
             </div>
             <div id='_' class='Note'>
               <p class='Note'>

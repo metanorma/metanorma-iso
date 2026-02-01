@@ -457,12 +457,14 @@ RSpec.describe Metanorma::Iso do
                 <td id="_" align="left" valign="top">c</td>
               </tr>
             </tbody>
-            <dl id="_" key="true">
+            <key>
+            <dl id="_">
               <dt>a</dt>
               <dd id="_">
                 <p id="_">b</p>
               </dd>
             </dl>
+            </key>
           </table>
         </sections>
       </metanorma>
@@ -633,12 +635,14 @@ RSpec.describe Metanorma::Iso do
               </math>
               <asciimath>Formula</asciimath>
             </stem>
-            <dl id="_" key="true">
+            <key>
+            <dl id="_">
               <dt>a</dt>
               <dd id="_">
                 <p id="_">b</p>
               </dd>
             </dl>
+            </key>
           </formula>
         </sections>
       </metanorma>
@@ -689,12 +693,14 @@ RSpec.describe Metanorma::Iso do
         <sections>
           <figure id="_">
             <image id="_" src="spec/examples/rice_images/rice_image1.png" mimetype="image/png" height="auto" width="auto" filename="spec/examples/rice_images/rice_image1.png"/>
-            <dl id="_" key="true">
+            <key>
+            <dl id="_">
               <dt>a</dt>
               <dd id="_">
                 <p id="_">b</p>
               </dd>
             </dl>
+            </key>
           </figure>
         </sections>
       </metanorma>
