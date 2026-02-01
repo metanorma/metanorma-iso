@@ -16897,6 +16897,8 @@
 
 			<xsl:call-template name="processBibitem"/>
 		</fo:block>
+			<!-- for tags structure, see https://github.com/metanorma/metanorma-standoc/issues/1140#issuecomment-3831538094 -->
+			<xsl:call-template name="processFormattedrefNotes"/>
 
 	</xsl:template> <!-- bibitem -->
 <!-- start list for bibitem sequence -->
@@ -16951,7 +16953,7 @@
 								<xsl:with-param name="biblio_tag_part">last</xsl:with-param>
 							</xsl:call-template>
 						</fo:block>
-						<xsl:call-template name="processBibitemFollowingNotes"/>
+						<xsl:call-template name="processFormattedrefNotes"/>
 					</fo:list-item-body>
 				</fo:list-item>
 			</xsl:otherwise>
@@ -16972,12 +16974,22 @@
 			<xsl:with-param name="biblio_tag_part" select="$biblio_tag_part"/>
 		</xsl:apply-templates>
 		<xsl:apply-templates select="mn:formattedref"/>
-				<xsl:if test="ancestor::mn:references[@normative = 'true']">
-					<xsl:call-template name="processBibitemFollowingNotes"/>
-				</xsl:if>
+				<!-- no processing for https://github.com/metanorma/metanorma-standoc/issues/1140#issuecomment-3831538094 -->
+				<!-- <xsl:if test="ancestor::mn:references[@normative = 'true']">
+							<xsl:call-template name="processBibitemFollowingNotes"/>
+						</xsl:if> -->
 
 		<!-- end bibitem processing -->
 	</xsl:template> <!-- processBibitem (bibitem) -->
+
+	<!-- note at the end of formattedref, will be processed in processFormattedrefNotes -->
+	<xsl:template match="mn:formattedref/mn:note[not(following-sibling::node()[normalize-space() != '' and not(self::mn:note)])]"/>
+
+	<xsl:template name="processFormattedrefNotes">
+		<xsl:for-each select="mn:formattedref/mn:note[not(following-sibling::node()[normalize-space() != '' and not(self::mn:note)])]">
+			<xsl:call-template name="note"/>
+		</xsl:for-each>
+	</xsl:template>
 
 	<xsl:template name="processBibitemFollowingNotes">
 		<!-- current context is bibitem element -->
