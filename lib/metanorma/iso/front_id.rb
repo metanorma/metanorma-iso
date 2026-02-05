@@ -7,11 +7,11 @@ require "pubid-iec"
 module Metanorma
   module Iso
     class Converter < Standoc::Converter
-      def metadata_id(node, xml)
-        if id = node.attr("docidentifier")
-          add_noko_elem(xml, "docidentifier", id, type: "ISO", primary: "true")
-        else iso_id(node, xml)
-        end
+      def metadata_id_primary_type
+        "ISO"
+      end
+
+      def metadata_id_nonprimary(node, xml)
         node.attr("tc-docnumber")&.split(/,\s*/)&.each do |n|
           add_noko_elem(xml, "docidentifier", n, type: "iso-tc")
         end
@@ -32,7 +32,7 @@ module Metanorma
         DOCTYPE2HASHID[doctype(node).to_sym]
       end
 
-      def iso_id(node, xml)
+      def metadata_id_primary(node, xml)
         (!@amd && node.attr("docnumber") || node.attr("adopted-from")) ||
           (@amd && node.attr("updates")) or return
         params = iso_id_params(node)
@@ -126,7 +126,7 @@ module Metanorma
         if stage && !cen?(node.attr("publisher"))
           ret[:stage] = stage
           ret[:stage] == "60.00" and ret[:stage] = :PRF
-          #ret[:stage] == "60.60" and ret[:stage] = nil
+          # ret[:stage] == "60.60" and ret[:stage] = nil
         end
         ret
       end
