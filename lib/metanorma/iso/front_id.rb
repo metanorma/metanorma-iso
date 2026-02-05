@@ -7,7 +7,7 @@ require "pubid-iec"
 module Metanorma
   module Iso
     class Converter < Standoc::Converter
-      def metadata_id_primary_type
+      def metadata_id_primary_type(node)
         "ISO"
       end
 
