@@ -58,7 +58,8 @@ module Metanorma
       def metadata_status(node, xml)
         stage = get_stage(node)
         substage = get_substage(node)
-        abbrev = iso_id_default(iso_id_params(node)).stage&.abbr&.upcase
+        abbrev = node.attr("docstage-abbrev") ||
+          iso_id_default(iso_id_params(node)).stage&.abbr&.upcase
         xml.status do |s|
           add_noko_elem(s, "stage", stage, **attr_code(abbreviation: abbrev))
           add_noko_elem(s, "substage", substage)
