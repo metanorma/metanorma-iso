@@ -2318,7 +2318,7 @@
 									</fo:table-row>
 
 									<fo:table-row height="13mm">
-										<fo:table-cell number-columns-spanned="2" border-right="{$COVER_PAGE_BORDER}" display-align="after" padding-bottom="-1mm" line-height="1.1">&gt;
+										<fo:table-cell number-columns-spanned="2" border-right="{$COVER_PAGE_BORDER}" display-align="after" padding-bottom="-1mm" line-height="1.1">
 											<fo:block font-size="10pt">
 												<!-- Reference number -->
 												<xsl:value-of select="$i18n_reference_number"/>
