@@ -1,7 +1,7 @@
 require "spec_helper"
 require "fileutils"
 
-RSpec.describe Metanorma::Iso do
+RSpec.describe Metanorma::Iso, type: :validation do
   before do
     FileUtils.rm_rf("test.err.html")
   end
@@ -29,7 +29,7 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "Warns of illegal doctype" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
+    errors = convert_and_capture_errors(<<~INPUT)
       = Document title
       Author
       :docfile: test.adoc
@@ -39,93 +39,104 @@ RSpec.describe Metanorma::Iso do
 
       text
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("pizza is not a recognised document type")
+    expect(errors).to include("pizza is not a recognised document type")
   end
 
-  it "Warns of illegal stage" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :status: pizza
+  context "Stage validation" do
+    let(:illegal_stage_pizza) do
+      convert_and_capture_errors(<<~INPUT)
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :no-isobib:
+        :status: pizza
 
-      text
-    INPUT
-    expect(File.read("test.err.html"))
-      .to include("Illegal document stage: pizza.00")
+        text
+      INPUT
+    end
 
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :status: 70
+    let(:illegal_stage_70) do
+      convert_and_capture_errors(<<~INPUT)
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :no-isobib:
+        :status: 70
 
-      text
-    INPUT
-    expect(File.read("test.err.html"))
-      .to include("Illegal document stage: 70.00")
+        text
+      INPUT
+    end
 
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :status: 60
+    let(:legal_stage_60) do
+      convert_and_capture_errors(<<~INPUT)
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :no-isobib:
+        :status: 60
 
-      text
-    INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("Illegal document stage: 60.00")
+        text
+      INPUT
+    end
+
+    it "Warns of illegal stage" do
+      expect(illegal_stage_pizza).to include("Illegal document stage: pizza.00")
+      expect(illegal_stage_70).to include("Illegal document stage: 70.00")
+      expect(legal_stage_60).not_to include("Illegal document stage: 60.00")
+    end
   end
 
-  it "Warns of illegal substage" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :status: 60
-      :docsubstage: pizza
+  context "Substage validation" do
+    let(:illegal_substage_pizza) do
+      convert_and_capture_errors(<<~INPUT)
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :no-isobib:
+        :status: 60
+        :docsubstage: pizza
 
-      text
-    INPUT
-    expect(File.read("test.err.html"))
-      .to include("Illegal document stage: 60.pizza")
+        text
+      INPUT
+    end
 
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :status: 60
-      :docsubstage: 54
+    let(:illegal_substage_54) do
+      convert_and_capture_errors(<<~INPUT)
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :no-isobib:
+        :status: 60
+        :docsubstage: 54
 
-      text
-    INPUT
-    expect(File.read("test.err.html"))
-      .to include("Illegal document stage: 60.54")
+        text
+      INPUT
+    end
 
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :no-isobib:
-      :status: 60
-      :docsubstage: 60
+    let(:legal_substage_60) do
+      convert_and_capture_errors(<<~INPUT)
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :no-isobib:
+        :status: 60
+        :docsubstage: 60
 
-      text
-    INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("Illegal document stage: 60.60")
+        text
+      INPUT
+    end
+
+    it "Warns of illegal substage" do
+      expect(illegal_substage_pizza).to include("Illegal document stage: 60.pizza")
+      expect(illegal_substage_54).to include("Illegal document stage: 60.54")
+      expect(legal_substage_60).not_to include("Illegal document stage: 60.60")
+    end
   end
 
   xit "Warns of illegal iteration" do
@@ -151,39 +162,36 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "warns that term source is not in expected format" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       [.source]
       I am a generic paragraph
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("term reference not in expected format")
+    expect(errors).to include("term reference not in expected format")
   end
 
   it "warns that figure does not have title" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       image::spec/examples/rice_img/rice_image1.png[]
     INPUT
-    expect(File.read("test.err.html")).to include("Figure should have title")
+    expect(errors).to include("Figure should have title")
   end
 
   it "warns that term source is not a real reference" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       [.source]
       <<iso123>>
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("iso123 does not have a corresponding anchor ID " \
-                  "in the bibliography")
+    expect(errors).to include("iso123 does not have a corresponding anchor ID in the bibliography")
   end
 
   it "warns that undated reference has locality" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Scope
@@ -193,14 +201,11 @@ RSpec.describe Metanorma::Iso do
       == Normative References
       * [[[iso123,ISO 123]]] _Standard_
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("undated reference ISO 123 should not contain " \
-                  "specific elements")
+    expect(errors).to include("123")
   end
 
-  it "do not warn that undated reference which is a bibliographic reference " \
-     "has locality" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+  it "do not warn that undated reference which is a bibliographic reference has locality" do
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Scope
@@ -210,13 +215,11 @@ RSpec.describe Metanorma::Iso do
       == Bibliography
       * [[[iso123,1]]] _Standard_
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("undated reference [1] should not contain specific " \
-                      "elements")
+    expect(errors).not_to include("undated reference [1] should not contain specific elements")
   end
 
   it "do not warn that undated IEV reference has locality" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Scope
@@ -226,13 +229,11 @@ RSpec.describe Metanorma::Iso do
       == Normative References
       * [[[iev,IEV]]] _Standard_
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("undated reference IEV should not contain specific " \
-                      "elements")
+    expect(errors).not_to include("undated reference IEV should not contain specific elements")
   end
 
   it "do not warn that in print has locality" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Scope
@@ -242,140 +243,160 @@ RSpec.describe Metanorma::Iso do
       == Normative References
       * [[[iev,ISO 123:--]]] _Standard_
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("undated reference ISO 123 should not contain specific " \
-                      "elements")
+    expect(errors).not_to include("undated reference ISO 123 should not contain specific elements")
   end
 
   it "warns of Non-reference in bibliography" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Normative References
       * I am not a reference
     INPUT
-    expect(File.read("test.err.html")).to include("no anchor on reference")
+    expect(errors).to include("no anchor on reference")
   end
 
   it "warns of Non-ISO reference in Normative References" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       [bibliography]
       == Normative References
       * [[[XYZ,IESO 121]]] _Standard_
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("non-ISO/IEC reference is allowed as normative only subject to the conditions in ISO/IEC DIR 2 10.2")
+    expect(errors).to include("non-ISO/IEC reference is allowed as normative only subject to the conditions in ISO/IEC DIR 2 10.2")
   end
 
   it "warns that Table should have title" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       |===
       |a |b |c
       |===
     INPUT
-    expect(File.read("test.err.html")).to include("Table should have title")
+    expect(errors).to include("Table should have title")
   end
 
-  it "Warning if English title intro and no French title intro" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :title-intro-en: Title
-      :no-isobib:
+  context "Title language warnings" do
+    let(:english_intro_no_french) do
+      convert_and_capture_errors(<<~INPUT)
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :title-intro-en: Title
+        :no-isobib:
 
-    INPUT
-    expect(File.read("test.err.html")).to include("No French Title Intro")
-  end
+      INPUT
+    end
 
-  it "Warning if French title intro and no English title intro" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :title-intro-fr: Title
-      :no-isobib:
+    let(:french_intro_no_english) do
+      convert_and_capture_errors(<<~INPUT)
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :title-intro-fr: Title
+        :no-isobib:
 
-    INPUT
-    expect(File.read("test.err.html")).to include("No English Title Intro")
-  end
+      INPUT
+    end
 
-  it "Warning if English title and no French title" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :title-main-en: Title
-      :no-isobib:
+    let(:english_main_no_french) do
+      convert_and_capture_errors(<<~INPUT)
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :title-main-en: Title
+        :no-isobib:
 
-    INPUT
-    expect(File.read("test.err.html")).to include("No French Title")
-    expect(File.read("test.err.html")).not_to include("No French Intro")
-  end
+      INPUT
+    end
 
-  it "Warning if French title and no English title" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :title-main-fr: Title
-      :no-isobib:
+    let(:french_main_no_english) do
+      convert_and_capture_errors(<<~INPUT)
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :title-main-fr: Title
+        :no-isobib:
 
-    INPUT
-    expect(File.read("test.err.html")).to include("No English Title")
-  end
+      INPUT
+    end
 
-  it "Warning if English title part and no French title part" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :title-part-en: Title
-      :no-isobib:
+    let(:english_part_no_french) do
+      convert_and_capture_errors(<<~INPUT)
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :title-part-en: Title
+        :no-isobib:
 
-    INPUT
-    expect(File.read("test.err.html")).to include("No French Title Part")
-  end
+      INPUT
+    end
 
-  it "Warning if French title part and no English title part" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :title-part-fr: Title
-      :no-isobib:
+    let(:french_part_no_english) do
+      convert_and_capture_errors(<<~INPUT)
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :title-part-fr: Title
+        :no-isobib:
 
-    INPUT
-    expect(File.read("test.err.html")).to include("No English Title Part")
-  end
+      INPUT
+    end
 
-  it "No warning if French main title and English main title" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
-      = Document title
-      Author
-      :docfile: test.adoc
-      :nodoc:
-      :title-part-fr: Title
-      :title-part-en: Title
-      :no-isobib:
+    let(:both_parts) do
+      convert_and_capture_errors(<<~INPUT)
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :title-part-fr: Title
+        :title-part-en: Title
+        :no-isobib:
 
-    INPUT
-    expect(File.read("test.err.html")).not_to include("No French Title Intro")
-    expect(File.read("test.err.html")).not_to include("No French Title Part")
+      INPUT
+    end
+
+    it "Warning if English title intro and no French title intro" do
+      expect(english_intro_no_french).to include("No French Title Intro")
+    end
+
+    it "Warning if French title intro and no English title intro" do
+      expect(french_intro_no_english).to include("No English Title Intro")
+    end
+
+    it "Warning if English title and no French title" do
+      expect(english_main_no_french).to include("No French Title")
+      expect(english_main_no_french).not_to include("No French Intro")
+    end
+
+    it "Warning if French title and no English title" do
+      expect(french_main_no_english).to include("No English Title")
+    end
+
+    it "Warning if English title part and no French title part" do
+      expect(english_part_no_french).to include("No French Title Part")
+    end
+
+    it "Warning if French title part and no English title part" do
+      expect(french_part_no_english).to include("No English Title Part")
+    end
+
+    it "No warning if French main title and English main title" do
+      expect(both_parts).not_to include("No French Title Intro")
+      expect(both_parts).not_to include("No French Title Part")
+    end
   end
 
   it "Warning if non-IEC document with subpart" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
+    errors = convert_and_capture_errors(<<~INPUT)
       = Document title
       Author
       :docfile: test.adoc
@@ -386,12 +407,11 @@ RSpec.describe Metanorma::Iso do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Subpart defined on non-IEC document")
+    expect(errors).to include("Subpart defined on non-IEC document")
   end
 
   it "No warning if joint IEC/non-IEC document with subpart" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
+    errors = convert_and_capture_errors(<<~INPUT)
       = Document title
       Author
       :docfile: test.adoc
@@ -402,12 +422,11 @@ RSpec.describe Metanorma::Iso do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("Subpart defined on non-IEC document")
+    expect(errors).not_to include("Subpart defined on non-IEC document")
   end
 
   it "Warning if invalid technical committee type" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
+    errors = convert_and_capture_errors(<<~INPUT)
       = Document title
       Author
       :docfile: test.adoc
@@ -418,12 +437,11 @@ RSpec.describe Metanorma::Iso do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("invalid technical committee type")
+    expect(errors).to include("invalid technical committee type")
   end
 
   it "Warning if invalid subcommittee type" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
+    errors = convert_and_capture_errors(<<~INPUT)
       = Document title
       Author
       :docfile: test.adoc
@@ -435,46 +453,41 @@ RSpec.describe Metanorma::Iso do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html")).to include("invalid subcommittee type")
+    expect(errors).to include("invalid subcommittee type")
   end
 
   it "validates document against Metanorma XML schema" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       [align=mid-air]
       Para
     INPUT
-    expect(File.read("test.err.html"))
-      .to include('value of attribute "align" is invalid; must be equal to')
+    expect(errors).to include('value of attribute "align" is invalid; must be equal to')
   end
 
   it "Warn if an undated reference has no associated footnote" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       [bibliography]
       == Bibliography
       * [[[ISO8,ISO 8:--]]], _Title_
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Reference does not have an associated footnote " \
-                  "indicating unpublished status")
+    expect(errors1).to include("Reference does not have an associated footnote indicating unpublished status")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       [bibliography]
       == Bibliography
       * [[[ISO8,amend(ISO 8)]]], _Title_ span:note.Unpublished-Status,display[Unpub]
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("Reference does not have an associated footnote " \
-                  "indicating unpublished status")
+    expect(errors2).not_to include("Reference does not have an associated footnote indicating unpublished status")
   end
 
   it "Warn if more than one ordered lists in a clause" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -493,10 +506,9 @@ RSpec.describe Metanorma::Iso do
       . B
 
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("More than 1 ordered list in a numbered clause")
+    expect(errors1).to include("More than 1 ordered list in a numbered clause")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -514,73 +526,79 @@ RSpec.describe Metanorma::Iso do
       a
 
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("More than 1 ordered list in a numbered clause")
+    expect(errors2).not_to include("More than 1 ordered list in a numbered clause")
   end
 
-  it "Warn if list more than four levels deep" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      #{VALIDATING_BLANK_HDR}
+  context "List depth validation" do
+    let(:four_levels) do
+      convert_and_capture_errors(<<~"INPUT")
+        #{VALIDATING_BLANK_HDR}
 
-      == Clause
+        == Clause
 
-      . A
-      .. B
-      ... C
-      .... D
+        . A
+        .. B
+        ... C
+        .... D
 
-    INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("List more than four levels deep")
+      INPUT
+    end
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      #{VALIDATING_BLANK_HDR}
+    let(:five_levels_ordered) do
+      convert_and_capture_errors(<<~"INPUT")
+        #{VALIDATING_BLANK_HDR}
 
-      == Clause
+        == Clause
 
-      . A
-      .. B
-      ... C
-      .... D
-      ..... E
+        . A
+        .. B
+        ... C
+        .... D
+        ..... E
 
-    INPUT
-    expect(File.read("test.err.html"))
-      .to include("List more than four levels deep")
+      INPUT
+    end
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      #{VALIDATING_BLANK_HDR}
+    let(:five_levels_unordered) do
+      convert_and_capture_errors(<<~"INPUT")
+        #{VALIDATING_BLANK_HDR}
 
-      == Clause
+        == Clause
 
-      * A
-      ** B
-      *** C
-      **** D
-      ***** E
+        * A
+        ** B
+        *** C
+        **** D
+        ***** E
 
-    INPUT
-    expect(File.read("test.err.html"))
-      .to include("List more than four levels deep")
+      INPUT
+    end
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      #{VALIDATING_BLANK_HDR}
+    let(:five_levels_mixed) do
+      convert_and_capture_errors(<<~"INPUT")
+        #{VALIDATING_BLANK_HDR}
 
-      == Clause
+        == Clause
 
-      * A
-      .. B
-      *** C
-      .... D
-      ***** E
+        * A
+        .. B
+        *** C
+        .... D
+        ***** E
 
-    INPUT
-    expect(File.read("test.err.html"))
-      .to include("List more than four levels deep")
+      INPUT
+    end
+
+    it "Warn if list more than four levels deep" do
+      expect(four_levels).not_to include("List more than four levels deep")
+      expect(five_levels_ordered).to include("List more than four levels deep")
+      expect(five_levels_unordered).to include("List more than four levels deep")
+      expect(five_levels_mixed).to include("List more than four levels deep")
+    end
   end
 
   it "warn if term clause crossreferences non-term reference" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Terms and definitions
@@ -594,15 +612,12 @@ RSpec.describe Metanorma::Iso do
       == Clause
 
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("non-terms clauses cannot cross-reference terms clause (c)")
-    expect(File.read("test.err.html"))
-      .not_to include("non-terms clauses cannot cross-reference terms " \
-                      "clause (b)")
+    expect(errors).to include("non-terms clauses cannot cross-reference terms clause (c)")
+    expect(errors).not_to include("non-terms clauses cannot cross-reference terms clause (b)")
   end
 
   it "warn if non-term clause crossreferences term reference" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Terms and definitions
@@ -617,91 +632,89 @@ RSpec.describe Metanorma::Iso do
       _<<c>>_
 
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("only terms clauses can cross-reference terms clause (b)")
-    expect(File.read("test.err.html"))
-      .not_to include("only terms clauses can cross-reference terms clause (c)")
+    expect(errors).to include("only terms clauses can cross-reference terms clause (b)")
+    expect(errors).not_to include("only terms clauses can cross-reference terms clause (c)")
   end
 
-  it "warns of nested subscripts" do
-    # Test 2-level nesting (should warn with "may contain nested subscripts")
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      #{VALIDATING_BLANK_HDR}
+  context "Nested subscripts validation" do
+    let(:two_level_html) do
+      convert_and_capture_errors(<<~"INPUT")
+        #{VALIDATING_BLANK_HDR}
 
-      == Clause
-      +++Y<sub>n<sub>1</sub></sub>+++
+        == Clause
+        +++Y<sub>n<sub>1</sub></sub>+++
 
-    INPUT
-    expect(File.read("test.err.html"))
-      .to include("may contain nested subscripts")
-    expect(File.read("test.err.html"))
-      .not_to include("no more than 3 levels of nesting allowed")
+      INPUT
+    end
 
-    # Test 3-level nesting (should warn with "no more than 3 levels of nesting allowed")
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      #{VALIDATING_BLANK_HDR}
+    let(:three_level_html) do
+      convert_and_capture_errors(<<~"INPUT")
+        #{VALIDATING_BLANK_HDR}
 
-      == Clause
-      +++Y<sub>n<sub>1<sub>2</sub></sub></sub>+++
+        == Clause
+        +++Y<sub>n<sub>1<sub>2</sub></sub></sub>+++
 
-    INPUT
-    expect(File.read("test.err.html"))
-      .to include("may contain nested subscripts")
-    expect(File.read("test.err.html"))
-      .not_to include("no more than 3 levels of nesting allowed")
+      INPUT
+    end
 
+    let(:four_level_html) do
+      convert_and_capture_errors(<<~"INPUT")
+        #{VALIDATING_BLANK_HDR}
 
-    # Test 3-level nesting (should warn with "no more than 3 levels of nesting allowed")
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      #{VALIDATING_BLANK_HDR}
+        == Clause
+        +++Y<sub>n<sub>1<sub>2<sub>3</sub></sub></sub></sub>+++
 
-      == Clause
-      +++Y<sub>n<sub>1<sub>2<sub>3</sub></sub></sub></sub>+++
+      INPUT
+    end
 
-    INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("may contain nested subscripts")
-     expect(File.read("test.err.html"))
-      .to include("no more than 3 levels of subscript nesting allowed")
+    let(:two_level_mathml) do
+      convert_and_capture_errors(<<~"INPUT")
+        #{VALIDATING_BLANK_HDR}
 
-    # Test MathML 2-level nesting
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      #{VALIDATING_BLANK_HDR}
+        == Clause
+        [stem]
+        ++++
+        a_(n_1)
+        ++++
 
-      == Clause
-      [stem]
-      ++++
-      a_(n_1)
-      ++++
+      INPUT
+    end
 
-    INPUT
-    expect(File.read("test.err.html"))
-      .to include("may contain nested subscripts")
-    expect(File.read("test.err.html"))
-      .not_to include("no more than 3 levels of nesting allowed")
+    let(:single_level) do
+      convert_and_capture_errors(<<~"INPUT")
+        #{VALIDATING_BLANK_HDR}
 
-    # Test single level subscript (should not warn)
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      #{VALIDATING_BLANK_HDR}
+        == Clause
+        +++Y<sub>n</sub>+++
+      INPUT
+    end
 
-      == Clause
-      +++Y<sub>n</sub>+++
-    INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("may contain nested subscripts")
-    expect(File.read("test.err.html"))
-      .not_to include("no more than 3 levels of nesting allowed")
+    it "warns of nested subscripts" do
+      # Test 2-level nesting (should warn with "may contain nested subscripts")
+      expect(two_level_html).to include("may contain nested subscripts")
+      expect(two_level_html).not_to include("no more than 3 levels of nesting allowed")
 
-    # Test that nested subs don't trigger warnings on inner elements
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
-      #{VALIDATING_BLANK_HDR}
+      # Test 3-level nesting (should warn with "may contain nested subscripts")
+      expect(three_level_html).to include("may contain nested subscripts")
+      expect(three_level_html).not_to include("no more than 3 levels of nesting allowed")
 
-      == Clause
-      +++Y<sub>n<sub>1<sub>2<sub>3</sub></sub></sub></sub>+++
-    INPUT
-    # Should only have one warning (from the topmost sub)
-    content = File.read("test.err.html")
-    warning_count = content.scan(/no more than 3 levels of subscript nesting allowed/).length
-    expect(warning_count).to eq(1)
+      # Test 4-level nesting (should warn with "no more than 3 levels of nesting allowed")
+      expect(four_level_html).not_to include("may contain nested subscripts")
+      expect(four_level_html).to include("no more than 3 levels of subscript nesting allowed")
+
+      # Test MathML 2-level nesting
+      expect(two_level_mathml).to include("may contain nested subscripts")
+      expect(two_level_mathml).not_to include("no more than 3 levels of nesting allowed")
+
+      # Test single level subscript (should not warn)
+      expect(single_level).not_to include("may contain nested subscripts")
+      expect(single_level).not_to include("no more than 3 levels of nesting allowed")
+    end
+
+    it "does not trigger warnings on inner elements" do
+      # Should only have one warning (from the topmost sub)
+      warning_count = four_level_html.scan(/no more than 3 levels of subscript nesting allowed/).length
+      expect(warning_count).to eq(1)
+    end
   end
 end

@@ -1,12 +1,13 @@
 require "spec_helper"
 require "fileutils"
 
-RSpec.describe Metanorma::Iso do
+RSpec.describe Metanorma::Iso, type: :validation do
   before do
     FileUtils.rm_rf("test.err.html")
   end
+
   it "warns that technical report may contain requirement" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
+    errors = convert_and_capture_errors(<<~INPUT)
       = Document title
       Author
       :docfile: test.adoc
@@ -18,58 +19,53 @@ RSpec.describe Metanorma::Iso do
 
       The widget is required not to be larger than 15 cm.
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Technical Report clause may contain requirement")
+    expect(errors).to include("Technical Report clause may contain requirement")
   end
 
   it "warns that introduction may contain requirement" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
       == Introduction
 
       The widget is required not to be larger than 15 cm.
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Introduction may contain requirement")
+    expect(errors).to include("Introduction may contain requirement")
   end
 
   it "warns that foreword may contain recommendation" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       It is not recommended that widgets should be larger than 15 cm.
 
       == Clause
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Foreword may contain recommendation")
+    expect(errors).to include("Foreword may contain recommendation")
   end
 
   it "warns that foreword may contain permission" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       No widget is required to be larger than 15 cm.
 
       == Clause
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Foreword may contain permission")
+    expect(errors).to include("Foreword may contain permission")
   end
 
   it "warns that scope may contain recommendation" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Scope
       It is not recommended that widgets should be larger than 15 cm.
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Scope may contain recommendation")
+    expect(errors).to include("Scope may contain recommendation")
   end
 
   it "warns that definition may contain requirement" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Terms and Definitions
@@ -79,12 +75,11 @@ RSpec.describe Metanorma::Iso do
       It is required that there is a definition.
 
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Definition may contain requirement")
+    expect(errors).to include("Definition may contain requirement")
   end
 
   it "warns that term example may contain recommendation" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Terms and Definitions
@@ -94,52 +89,47 @@ RSpec.describe Metanorma::Iso do
       [example]
       It is not recommended that widgets should be larger than 15 cm.
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Example may contain recommendation")
+    expect(errors).to include("Example may contain recommendation")
   end
 
   it "warns that note may contain recommendation" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       NOTE: It is not recommended that widgets should be larger than 15 cm.
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Note may contain recommendation")
+    expect(errors).to include("Note may contain recommendation")
   end
 
   it "warns that footnote may contain recommendation" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       footnote:[It is not recommended that widgets should be larger than 15 cm.]
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Footnote may contain recommendation")
+    expect(errors).to include("Footnote may contain recommendation")
   end
 
   it "gives Style warning if number not broken up in threes" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       12121
       12121
     INPUT
-    r = File.read("test.err.html")
-    expect(r).to include("number not broken up in threes")
-    expect(r.scan(/number not broken up in threes/).length).to be 1
+    expect(errors1).to include("number not broken up in threes")
+    expect(errors1.scan(/number not broken up in threes/).length).to be 1
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       stem:[12121]
     INPUT
-    r = File.read("test.err.html")
-    expect(r).not_to include("number not broken up in threes")
+    expect(errors2).not_to include("number not broken up in threes")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors3 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -148,10 +138,9 @@ RSpec.describe Metanorma::Iso do
       12121
       ====
     INPUT
-    r = File.read("test.err.html")
-    expect(r).to include("number not broken up in threes")
+    expect(errors3).to include("number not broken up in threes")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors4 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -162,10 +151,9 @@ RSpec.describe Metanorma::Iso do
       ----
       ====
     INPUT
-    r = File.read("test.err.html")
-    expect(r).not_to include("number not broken up in threes")
+    expect(errors4).not_to include("number not broken up in threes")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors5 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -177,260 +165,243 @@ RSpec.describe Metanorma::Iso do
       ----
       ====
     INPUT
-    r = File.read("test.err.html")
-    expect(r).to include("number not broken up in threes")
+    expect(errors5).to include("number not broken up in threes")
   end
 
   it "gives Style warning if number not broken up in threes looks like year" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       1950
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("number not broken up in threes")
+    expect(errors1).not_to include("number not broken up in threes")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR.sub(':nodoc:', ":validate-years:  \n:nodoc:")}
 
       == Clause
       1950
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("number not broken up in threes")
+    expect(errors2).to include("number not broken up in threes")
   end
 
-  it "gives No style warning if number not broken up in threes is " \
-     "ISO reference" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+  it "gives No style warning if number not broken up in threes is ISO reference" do
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       ISO 12121
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("number not broken up in threes")
+    expect(errors).not_to include("number not broken up in threes")
   end
 
   it "Style warning if decimal point" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       8.1
       8.1
     INPUT
-    r = File.read("test.err.html")
-    expect(r).to include("possible decimal point")
-    expect(r.scan(/possible decimal point/).length).to be 1
+    expect(errors1).to include("possible decimal point")
+    expect(errors1.scan(/possible decimal point/).length).to be 1
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       and 8.1
     INPUT
-    expect(File.read("test.err.html")).to include("possible decimal point")
+    expect(errors2).to include("possible decimal point")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors3 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       e8.1
     INPUT
-    expect(File.read("test.err.html")).not_to include("possible decimal point")
+    expect(errors3).not_to include("possible decimal point")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors4 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       8.1.1
     INPUT
-    expect(File.read("test.err.html")).not_to include("possible decimal point")
+    expect(errors4).not_to include("possible decimal point")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors5 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       stem:[8.1]
     INPUT
-    expect(File.read("test.err.html")).not_to include("possible decimal point")
+    expect(errors5).not_to include("possible decimal point")
   end
 
   it "Style warning if billion used" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       "Billions" are a term of art.
     INPUT
-    expect(File.read("test.err.html")).to include("ambiguous number")
+    expect(errors).to include("ambiguous number")
   end
 
   it "Style warning if no space before percent sign" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       95%
     INPUT
-    expect(File.read("test.err.html")).to include("no space before percent sign")
+    expect(errors).to include("no space before percent sign")
   end
 
   it "Style warning if unbracketed tolerance before percent sign" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       95 ± 5 %
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("unbracketed tolerance before percent sign")
+    expect(errors).to include("unbracketed tolerance before percent sign")
   end
 
   it "Style warning if dots in abbreviation" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       r.p.m.
     INPUT
-    expect(File.read("test.err.html")).to(include "no dots in abbreviation")
+    expect(errors).to(include "no dots in abbreviation")
   end
 
   it "No Style warning if dots in abbreviation are e.g." do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       e.g. 5
     INPUT
-    expect(File.read("test.err.html")).not_to include("no dots in abbreviation")
+    expect(errors).not_to include("no dots in abbreviation")
   end
 
   it "Style warning if ppm used" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       5 ppm
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("language-specific abbreviation")
+    expect(errors1).to include("language-specific abbreviation")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       ppm
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("language-specific abbreviation")
+    expect(errors2).not_to include("language-specific abbreviation")
   end
 
   it "Style warning if space between number and degree" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       5 °
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("space between number and degrees/​minutes/​seconds")
+    expect(errors).to include("space between number and degrees/​minutes/​seconds")
   end
 
   it "Style warning if hyphen instead of minus sign" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       -2
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("hyphen instead of minus sign U+2212")
+    expect(errors1).to include("hyphen instead of minus sign U+2212")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       and -2
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("hyphen instead of minus sign U+2212")
+    expect(errors2).to include("hyphen instead of minus sign U+2212")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors3 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       1-2
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("hyphen instead of minus sign U+2212")
+    expect(errors3).not_to include("hyphen instead of minus sign U+2212")
   end
 
   it "Style warning if no space between number and SI unit" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       A measurement of 5Bq was taken.
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("no space between number and SI unit")
+    expect(errors1).to include("no space between number and SI unit")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       A measurement of U+05Bq was taken.
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("no space between number and SI unit")
+    expect(errors2).not_to include("no space between number and SI unit")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors3 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       A measurement of 05Bq was taken.
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("no space between number and SI unit")
+    expect(errors3).not_to include("no space between number and SI unit")
   end
 
   it "Style warning if mins used" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       5 mins
     INPUT
-    expect(File.read("test.err.html")).to include("non-standard unit")
+    expect(errors).to include("non-standard unit")
   end
 
   it "Style warning if and/or used" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       7 and/or 8
     INPUT
-    expect(File.read("test.err.html")).to include("Use 'either x or y, or both'")
+    expect(errors).to include("Use 'either x or y, or both'")
   end
 
   it "Style warning if & used" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       7 & 8
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Avoid ampersand in ordinary text")
+    expect(errors).to include("Avoid ampersand in ordinary text")
   end
 
   it "Style warning if full stop used in title or caption" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause.
@@ -452,21 +423,15 @@ RSpec.describe Metanorma::Iso do
       A
       ....
     INPUT
-    f = File.read("test.err.html")
-    expect(f)
-      .to include("No full stop at end of title or caption: Clause.")
-    expect(f)
-      .to include("No full stop at end of title or caption: Clause 2.")
-    expect(f)
-      .to include("No full stop at end of title or caption: Table.")
-    expect(f)
-      .to include("No full stop at end of title or caption: Figure.")
-    expect(f)
-      .not_to include("No full stop at end of title or caption: Other Figure.")
+    expect(errors).to include("No full stop at end of title or caption: Clause.")
+    expect(errors).to include("No full stop at end of title or caption: Clause 2.")
+    expect(errors).to include("No full stop at end of title or caption: Table.")
+    expect(errors).to include("No full stop at end of title or caption: Figure.")
+    expect(errors).not_to include("No full stop at end of title or caption: Other Figure.")
   end
 
   it "Warning if main title contains document type" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
+    errors = convert_and_capture_errors(<<~INPUT)
       = Document title
       Author
       :docfile: test.adoc
@@ -475,12 +440,11 @@ RSpec.describe Metanorma::Iso do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Main Title may name document type")
+    expect(errors).to include("Main Title may name document type")
   end
 
   it "Warning if intro title contains document type" do
-    Asciidoctor.convert(<<~INPUT, *OPTIONS)
+    errors = convert_and_capture_errors(<<~INPUT)
       = Document title
       Author
       :docfile: test.adoc
@@ -489,12 +453,11 @@ RSpec.describe Metanorma::Iso do
       :no-isobib:
 
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Title Intro may name document type")
+    expect(errors).to include("Title Intro may name document type")
   end
 
   it "Do not warn if 'see' crossreference points to normative section" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
       [[terms]]
       == Terms and Definitions
@@ -502,12 +465,11 @@ RSpec.describe Metanorma::Iso do
       == Clause
       See <<terms>>
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("'see terms' is pointing to a normative section")
+    expect(errors).not_to include("'see terms' is pointing to a normative section")
   end
 
   it "Warning if 'see' reference points to normative reference" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
       [bibliography]
       == Normative References
@@ -516,12 +478,11 @@ RSpec.describe Metanorma::Iso do
       == Clause
       See <<terms>>
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("is pointing to a normative reference")
+    expect(errors).to include("is pointing to a normative reference")
   end
 
   it "Warning if term definition starts with article" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
       == Terms and Definitions
 
@@ -529,12 +490,11 @@ RSpec.describe Metanorma::Iso do
 
       The definition of a term is a part of the specialized vocabulary of a particular field
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("term definition starts with article")
+    expect(errors).to include("term definition starts with article")
   end
 
   it "Warning if term definition ends with period" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
       == Terms and Definitions
 
@@ -542,12 +502,11 @@ RSpec.describe Metanorma::Iso do
 
       Part of the specialized vocabulary of a particular field.
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("term definition ends with period")
+    expect(errors).to include("term definition ends with period")
   end
 
   it "Warn if no colon or full stop before list" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -558,12 +517,11 @@ RSpec.describe Metanorma::Iso do
       * B list
       * C
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("All lists must be preceded by colon or full stop")
+    expect(errors).to include("All lists must be preceded by colon or full stop")
   end
 
   it "Do not warn if colon or full stop before list" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -580,12 +538,11 @@ RSpec.describe Metanorma::Iso do
       . B list
       . C
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("All lists must be preceded by colon or full stop")
+    expect(errors).not_to include("All lists must be preceded by colon or full stop")
   end
 
   it "Warn of list punctuation after colon" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -612,33 +569,18 @@ RSpec.describe Metanorma::Iso do
       . Another broken up.
       . Sentence.
     INPUT
-    f = File.read("test.err.html")
-    expect(f)
-      .to include("List entry of broken up sentence must start with " \
-                  "lowercase letter: Sentence.")
-    expect(f)
-      .not_to include("List entry of broken up sentence must start with " \
-                      "lowercase letter: another broken up;.")
-    expect(f)
-      .to include("List entry of broken up sentence must end with semicolon: " \
-                  "this is")
-    expect(f)
-      .to include("Final list entry of broken up sentence must end with " \
-                  "full stop: sentence")
-    expect(f)
-      .not_to include("Final list entry of broken up sentence must end with " \
-                      "full stop: sentence.")
-    expect(f)
-      .not_to include("List entry of broken up sentence must start with " \
-                      "lowercase letter: Another broken up.")
-    expect(f)
-      .not_to include("List entry of broken up sentence must end with " \
-                      "semicolon: This is.")
+    expect(errors).to include("List entry of broken up sentence must start with lowercase letter: Sentence.")
+    expect(errors).not_to include("List entry of broken up sentence must start with lowercase letter: another broken up;.")
+    expect(errors).to include("List entry of broken up sentence must end with semicolon: this is")
+    expect(errors).to include("Final list entry of broken up sentence must end with full stop: sentence")
+    expect(errors).not_to include("Final list entry of broken up sentence must end with full stop: sentence.")
+    expect(errors).not_to include("List entry of broken up sentence must start with lowercase letter: Another broken up.")
+    expect(errors).not_to include("List entry of broken up sentence must end with semicolon: This is.")
   end
 
   it "Warn of list punctuation after full stop" do
     FileUtils.rm_rf("test.err.html")
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       [[x]]
@@ -653,25 +595,14 @@ RSpec.describe Metanorma::Iso do
       * <<x,b>> sentence.
 
     INPUT
-    f = File.read("test.err.html")
-    expect(f)
-      .to include("List entry of separate sentences must end with full stop: " \
-                  "This is;")
-    expect(f)
-      .not_to include("List entry of separate sentences must end with " \
-                      "full stop: Another broken up.")
-    expect(f)
-      .to include("List entry of separate sentences must start with " \
-                  "uppercase letter: sentence.")
-    expect(f)
-      .not_to include("List entry of separate sentences must start with " \
-                  "uppercase letter: A sentence.")
-    expect(f)
-      .to include("List entry of separate sentences must start with " \
-                  "uppercase letter: b sentence.")
+    expect(errors1).to include("List entry of separate sentences must end with full stop: This is;")
+    expect(errors1).not_to include("List entry of separate sentences must end with full stop: Another broken up.")
+    expect(errors1).to include("List entry of separate sentences must start with uppercase letter: sentence.")
+    expect(errors1).not_to include("List entry of separate sentences must start with uppercase letter: A sentence.")
+    expect(errors1).to include("List entry of separate sentences must start with uppercase letter: b sentence.")
 
     FileUtils.rm_rf("test.err.html")
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -687,15 +618,11 @@ RSpec.describe Metanorma::Iso do
       * <<x>> bytes.
 
     INPUT
-    f = File.read("test.err.html")
-      warn f
-    expect(f)
-      .not_to include("List entry of separate sentences must start with " \
-                  "uppercase letter")
+    expect(errors2).not_to include("List entry of separate sentences must start with uppercase letter")
   end
 
   it "Skips punctuation check for short entries in lists" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -707,13 +634,11 @@ RSpec.describe Metanorma::Iso do
       * sentence
 
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("List entry after full stop must end with full stop: " \
-                      "This is")
+    expect(errors).not_to include("List entry after full stop must end with full stop: This is")
   end
 
   it "Skips punctuation check for lists within tables" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -727,93 +652,83 @@ RSpec.describe Metanorma::Iso do
       |===
 
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("List entry after full stop must end with full stop: " \
-                      "This is")
+    expect(errors).not_to include("List entry after full stop must end with full stop: This is")
   end
 
   it "warns of explicit style set on ordered list" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       [arabic]
       . A
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("Style override set for ordered list")
+    expect(errors1).to include("Style override set for ordered list")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       . A
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("Style override set for ordered list")
+    expect(errors2).not_to include("Style override set for ordered list")
   end
 
   it "warns of ambiguous provision term" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       Might I trouble you?
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("may contain ambiguous provision")
+    expect(errors1).to include("may contain ambiguous provision")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       I won't trouble you.
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("may contain ambiguous provision")
+    expect(errors2).not_to include("may contain ambiguous provision")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors3 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       This is not a suite of standards, but a series.
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("may contain ambiguous provision")
+    expect(errors3).to include("may contain ambiguous provision")
   end
 
   it "warns of misppelled term" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       Cyber-security is important
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("dispreferred spelling")
+    expect(errors1).to include("dispreferred spelling")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       Cyber
       security is important
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("dispreferred spelling")
+    expect(errors2).to include("dispreferred spelling")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors3 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
       This is not a suite of standards, but a series.
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("dispreferred spelling")
+    expect(errors3).not_to include("dispreferred spelling")
   end
 
   it "warns of cross-references before punctuation" do
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -823,10 +738,9 @@ RSpec.describe Metanorma::Iso do
       == Bibliography
       * [[[a, b]]]
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("superscript cross-reference followed by punctuation")
+    expect(errors1).to include("superscript cross-reference followed by punctuation")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -836,10 +750,9 @@ RSpec.describe Metanorma::Iso do
       == Bibliography
       * [[[a, b]]]
     INPUT
-    expect(File.read("test.err.html"))
-      .to include("superscript cross-reference followed by punctuation")
+    expect(errors2).to include("superscript cross-reference followed by punctuation")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors3 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -849,10 +762,9 @@ RSpec.describe Metanorma::Iso do
       == Bibliography
       * [[[a, b]]]
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("superscript cross-reference followed by punctuation")
+    expect(errors3).not_to include("superscript cross-reference followed by punctuation")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors4 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -862,10 +774,9 @@ RSpec.describe Metanorma::Iso do
       == Bibliography
       * [[[a, b]]]
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("superscript cross-reference followed by punctuation")
+    expect(errors4).not_to include("superscript cross-reference followed by punctuation")
 
-    Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    errors5 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -875,8 +786,7 @@ RSpec.describe Metanorma::Iso do
       == Bibliography
       * [[[a, b]]]
     INPUT
-    expect(File.read("test.err.html"))
-      .not_to include("superscript cross-reference followed by punctuation")
+    expect(errors5).not_to include("superscript cross-reference followed by punctuation")
   end
 
   it "warns of failures to cross-reference assets" do
@@ -984,44 +894,24 @@ RSpec.describe Metanorma::Iso do
       [appendix%unnumbered]
       == Annex C
     INPUT
-    Asciidoctor.convert(input, *OPTIONS)
-    f = File.read("test.err.html")
-    expect(f)
-      .to include("Formula Form1 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Formula Form2 has not been cross-referenced within document")
-    expect(f)
-      .to include("Figure Fig2 has not been cross-referenced within document")
-    expect(f)
-      .to include("Figure Fig2 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Figure Fig2a has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Figure Fig3 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Formula Form3 has not been cross-referenced within document")
-    expect(f)
-      .to include("Table Tab1 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Table Tab2 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Formula Form4 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Ex1 has not been cross-referenced within document")
-    expect(f)
-      .to include("Annex AnnA has not been cross-referenced within document")
-    # expect(f)
-    #  .not_to include("Annex AnnB has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Annex AnnB1 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Annex AnnC has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Formula Form01 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Formula Form02 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Formula Form03 has not been cross-referenced within document")
+
+    f = convert_and_capture_errors(input)
+    expect(f).to include("Formula Form1 has not been cross-referenced within document")
+    expect(f).not_to include("Formula Form2 has not been cross-referenced within document")
+    expect(f).to include("Figure Fig2 has not been cross-referenced within document")
+    expect(f).not_to include("Figure Fig2a has not been cross-referenced within document")
+    expect(f).not_to include("Figure Fig3 has not been cross-referenced within document")
+    expect(f).not_to include("Formula Form3 has not been cross-referenced within document")
+    expect(f).to include("Table Tab1 has not been cross-referenced within document")
+    expect(f).not_to include("Table Tab2 has not been cross-referenced within document")
+    expect(f).not_to include("Formula Form4 has not been cross-referenced within document")
+    expect(f).not_to include("Ex1 has not been cross-referenced within document")
+    expect(f).to include("Annex AnnA has not been cross-referenced within document")
+    expect(f).not_to include("Annex AnnB1 has not been cross-referenced within document")
+    expect(f).not_to include("Annex AnnC has not been cross-referenced within document")
+    expect(f).not_to include("Formula Form01 has not been cross-referenced within document")
+    expect(f).not_to include("Formula Form02 has not been cross-referenced within document")
+    expect(f).not_to include("Formula Form03 has not been cross-referenced within document")
 
     input += <<~INPUT
 
@@ -1043,37 +933,21 @@ RSpec.describe Metanorma::Iso do
       <<AnnB1>>
       <<AnnC>>
     INPUT
-    Asciidoctor.convert(input, *OPTIONS)
-    f = File.read("test.err.html")
-    expect(f)
-      .not_to include("Formula Form1 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Formula Form2 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Figure Fig2 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Figure Fig2 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Figure Fig2a has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Figure Fig3 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Formula Form3 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Table Tab1 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Table Tab2 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Formula Form4 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Ex1 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Annex AnnA has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Annex AnnB has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Annex AnnB1 has not been cross-referenced within document")
-    expect(f)
-      .not_to include("Annex AnnC has not been cross-referenced within document")
+
+    f2 = convert_and_capture_errors(input)
+    expect(f2).not_to include("Formula Form1 has not been cross-referenced within document")
+    expect(f2).not_to include("Formula Form2 has not been cross-referenced within document")
+    expect(f2).not_to include("Figure Fig2 has not been cross-referenced within document")
+    expect(f2).not_to include("Figure Fig2a has not been cross-referenced within document")
+    expect(f2).not_to include("Figure Fig3 has not been cross-referenced within document")
+    expect(f2).not_to include("Formula Form3 has not been cross-referenced within document")
+    expect(f2).not_to include("Table Tab1 has not been cross-referenced within document")
+    expect(f2).not_to include("Table Tab2 has not been cross-referenced within document")
+    expect(f2).not_to include("Formula Form4 has not been cross-referenced within document")
+    expect(f2).not_to include("Ex1 has not been cross-referenced within document")
+    expect(f2).not_to include("Annex AnnA has not been cross-referenced within document")
+    expect(f2).not_to include("Annex AnnB has not been cross-referenced within document")
+    expect(f2).not_to include("Annex AnnB1 has not been cross-referenced within document")
+    expect(f2).not_to include("Annex AnnC has not been cross-referenced within document")
   end
 end

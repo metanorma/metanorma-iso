@@ -42,7 +42,7 @@ end
 def strip_guid(xml)
   xml.gsub(%r{ id=['"]_[^"']+['"]}, ' id="_"')
     .gsub(%r{ id="(fn:|ftn)_[^"]+"}, ' id="fn:_"')
-    .gsub(%r{ semx-id="[^"]*"}, '')
+    .gsub(%r{ semx-id="[^"]*"}, "")
     .gsub(%r{ name="_[^"]+"}, ' name="_"')
     .gsub(%r{ from="_[^"]+"}, ' from="_"')
     .gsub(%r{ to="_[^"]+"}, ' to="_"')
@@ -155,8 +155,8 @@ def boilerplate(xmldoc, lang: "en")
   file = File.join(File.dirname(__FILE__), "..", "lib", "metanorma", "iso",
                    "boilerplate#{lang}.adoc")
   ret = Nokogiri::XML(boilerplate_read(
-    File.read(file, encoding: "utf-8"), xmldoc
-  ))
+                        File.read(file, encoding: "utf-8"), xmldoc
+                      ))
   ret.xpath("//passthrough").each(&:remove)
   strip_guid(ret.root.to_xml(encoding: "UTF-8", indent: 2,
                              save_with: Nokogiri::XML::Node::SaveOptions::AS_XML))
@@ -287,7 +287,40 @@ WORD_HDR = <<~HDR.freeze
       <div class="WordSection3">
 HDR
 
-OPTIONS = [backend: :iso, header_footer: true].freeze
+OPTIONS = [{ backend: :iso, header_footer: true }].freeze
+
+# Helper module for in-memory error capture in validation tests
+module ValidationTestHelpers
+  # Convert document and return errors without file I/O
+  def convert_and_capture_errors(input, options = OPTIONS)
+    # Use a StringIO to capture the error HTML content
+    error_file = "test.err.html"
+    FileUtils.rm_rf(error_file)
+
+    # Perform conversion
+    Asciidoctor.convert(input, *options)
+
+    # Read and return errors if file exists
+    File.exist?(error_file) ? File.read(error_file) : ""
+  end
+
+  # Memoized conversion helper - converts once and caches result
+  def make_shared_convert(input)
+    @_shared_conversion_cache ||= {}
+    cache_key = input.hash
+
+    @_shared_conversion_cache[cache_key] ||= convert_and_capture_errors(input)
+  end
+end
+
+RSpec.configure do |config|
+  config.include ValidationTestHelpers, type: :validation
+
+  # Clean up conversion cache between test files
+  config.before(:suite) do
+    @_shared_conversion_cache = {}
+  end
+end
 
 def mock_pdf
   allow(Mn2pdf).to receive(:convert) do |url, output,|
