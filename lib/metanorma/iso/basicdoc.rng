@@ -208,10 +208,14 @@ Applicable to modify and delete</a:documentation>
     </zeroOrMore>
     <optional>
       <element name="newcontent">
-        <a:documentation>New content to be added to the document; applicable to add and modify</a:documentation>
+        <a:documentation>New content to be added to the document; applicable to add and modify.
+Can be blocks and/or sections</a:documentation>
         <ref name="OptionalId"/>
         <zeroOrMore>
           <ref name="BasicBlock"/>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="section"/>
         </zeroOrMore>
       </element>
     </optional>

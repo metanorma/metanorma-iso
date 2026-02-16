@@ -27,7 +27,7 @@ module IsoDoc
       def example_p_parse(node, div)
         name = node.at(ns("./fmt-name"))
         para = node.at(ns("./p")) || node.at(ns("./semx/p"))
-        div.p **attr_code(class: example_p_class) do |p|
+        div.p(**attr_code(class: example_p_class)) do |p|
           name and p.span class: "example_label" do |s|
             name.children.each { |n| parse(n, s) }
           end
@@ -100,10 +100,10 @@ module IsoDoc
       end
 
       def clause_etc1(clause, out, num)
-        out.div **attr_code(
+        out.div(**attr_code(
           id: clause["id"],
           class: clause.name == "definitions" ? "Symbols" : nil,
-        ) do |div|
+        )) do |div|
           num = num + 1
           clause_name(clause, clause&.at(ns("./fmt-title")), div, nil)
           clause.elements.each do |e|
@@ -116,7 +116,7 @@ module IsoDoc
         @in_table = true
         table_title_parse(node, out)
         measurement_units(node, out)
-        out.table **table_attrs(node) do |t|
+        out.table(**table_attrs(node)) do |t|
           table_parse_core(node, t)
           table_parse_tail(node, t)
         end
@@ -135,7 +135,7 @@ module IsoDoc
 
       def figure_parse1(node, out)
         measurement_units(node, out)
-        out.div **figure_attrs(node) do |div|
+        out.div(**figure_attrs(node)) do |div|
           node.children.each do |n|
             n.name == "note" && n["type"] == "units" and next
             parse(n, div) unless n.name == "fmt-name"

@@ -68,7 +68,7 @@ module IsoDoc
 
       def make_body(xml, docxml)
         body_attr = { lang: "EN-US", link: "blue", vlink: "#954F72" }
-        xml.body **body_attr do |body|
+        xml.body(**body_attr) do |body|
           make_body1(body, docxml)
           make_body2(body, docxml)
           make_body3(body, docxml)
@@ -134,7 +134,7 @@ module IsoDoc
         node["hidden"] != "true" or return
         page_break(out)
         out.div do |div|
-          div.h1 **bibliography_attrs do |h1|
+          div.h1(**bibliography_attrs) do |h1|
             node&.at(ns("./fmt-title"))&.children&.each { |c2| parse(c2, h1) }
           end
           biblio_list(node, div, true)
@@ -168,7 +168,7 @@ module IsoDoc
       end
 
       def termref_parse(node, out)
-        out.p **termref_attrs do |p|
+        out.p(**termref_attrs) do |p|
           children_parse(node, p)
         end
       end
@@ -180,7 +180,7 @@ module IsoDoc
 
       def figure_name_parse(node, div, name)
         name.nil? and return
-        div.p **figure_name_attrs(node) do |p|
+        div.p(**figure_name_attrs(node)) do |p|
           children_parse(name, p)
         end
       end
@@ -192,7 +192,7 @@ module IsoDoc
 
       def table_title_parse(node, out)
         name = node.at(ns("./fmt-name")) or return
-        out.p **table_title_attrs(node) do |p|
+        out.p(**table_title_attrs(node)) do |p|
           children_parse(name, p)
         end
       end
@@ -226,7 +226,7 @@ module IsoDoc
         table_title_parse(node, out)
         measurement_units(node, out)
         out.div align: "center", class: "table_container" do |div|
-          div.table **table_attrs(node) do |t|
+          div.table(**table_attrs(node)) do |t|
             table_parse_core(node, t)
             table_parse_tail(node, t)
           end

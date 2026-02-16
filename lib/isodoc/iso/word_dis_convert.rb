@@ -104,11 +104,11 @@ module IsoDoc
         st = node["style"]
         case node["class"]
         when "nonboldtitle"
-          out.span **attr_code(style: "#{st};font-weight:normal") do |s|
+          out.span(**attr_code(style: "#{st};font-weight:normal")) do |s|
             node.children.each { |n| parse(n, s) }
           end
         when "boldtitle"
-          out.span **attr_code(style: st) do |s|
+          out.span(**attr_code(style: st)) do |s|
             node.children.each { |n| parse(n, s) }
           end
         else super
