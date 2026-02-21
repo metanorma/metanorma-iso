@@ -1455,37 +1455,7 @@
 				</xsl:if>
 
 				<!-- Index -->
-				<!-- <xsl:message>START current_document_index_id</xsl:message> -->
-
-				<xsl:variable name="docid">
-					<xsl:call-template name="getDocumentId"/>
-				</xsl:variable>
-
-				<xsl:variable name="current_document_index_id">
-					<xsl:apply-templates select="//mn:indexsect" mode="index_add_id">
-						<xsl:with-param name="docid" select="$docid"/>
-					</xsl:apply-templates>
-				</xsl:variable>
-				<!-- <xsl:message>END current_document_index_id</xsl:message> -->
-
-				<!-- <xsl:message>START current_document_index</xsl:message> -->
-				<xsl:variable name="startTime1" select="java:getTime(java:java.util.Date.new())"/>
-				<xsl:variable name="current_document_index">
-					<xsl:apply-templates select="xalan:nodeset($current_document_index_id)" mode="index_update"/>
-				</xsl:variable>
-				<!-- <xsl:variable name="endTime1" select="java:getTime(java:java.util.Date.new())"/>
-				<xsl:message>DEBUG: processing time <xsl:value-of select="$endTime1 - $startTime1"/> msec.</xsl:message>
-				<xsl:message>END current_document_index</xsl:message> -->
-
-				<!-- <xsl:variable name="startTime2" select="java:getTime(java:java.util.Date.new())"/>
-				<xsl:message>START xalan:nodeset</xsl:message> -->
-				<!-- <xsl:apply-templates select="//mn:indexsect" mode="index"/> -->
-				<xsl:apply-templates select="xalan:nodeset($current_document_index)" mode="index">
-					<xsl:with-param name="num" select="$num"/>
-				</xsl:apply-templates>
-				<!-- <xsl:variable name="endTime2" select="java:getTime(java:java.util.Date.new())"/>
-				<xsl:message>DEBUG: processing time <xsl:value-of select="$endTime2 - $startTime2"/> msec.</xsl:message>
-				<xsl:message>END xalan:nodeset</xsl:message> -->
+				<xsl:call-template name="index-pages"/>
 
 				<xsl:call-template name="back-page">
 					<xsl:with-param name="num" select="$num"/>
@@ -3680,8 +3650,7 @@
 
 									<xsl:call-template name="refine_toc-item-style"/>
 
-									<fo:basic-link internal-destination="{@id}" fox:alt-text="{@section} {mnx:title}"> <!-- link at this level needs for PDF structure tags -->
-
+									<!-- <fo:basic-link internal-destination="{@id}" fox:alt-text="{@section} {mnx:title}"> --> <!-- link at this level needs for PDF structure tags --> <!-- role="Reference" -->
 										<fo:list-block role="SKIP">
 											<xsl:attribute name="margin-left"><xsl:value-of select="$margin-left * (@level - 1)"/>mm</xsl:attribute>
 
@@ -3723,7 +3692,7 @@
 											</xsl:attribute>
 
 											<fo:list-item role="SKIP">
-												<fo:list-item-label end-indent="label-end()" role="SKIP">
+												<fo:list-item-label end-indent="label-end()" role="Lbl"> <!-- role="SKIP" -->
 													<fo:block role="SKIP">
 														<xsl:if test="$layoutVersion = '1987'">
 															<xsl:attribute name="font-weight">bold</xsl:attribute>
@@ -3737,13 +3706,13 @@
 													</fo:block>
 												</fo:list-item-label>
 												<fo:list-item-body start-indent="body-start()" role="SKIP">
-													<fo:block text-align-last="justify" margin-left="12mm" text-indent="-12mm" role="SKIP">
+													<fo:block text-align-last="justify" margin-left="12mm" text-indent="-12mm" role="Reference"> <!-- role="SKIP" -->
 
 														<xsl:if test="$layoutVersion = '1987' and @type = 'section'">
 															<xsl:attribute name="font-weight">bold</xsl:attribute>
 														</xsl:if>
 
-														<fo:basic-link internal-destination="{@id}" fox:alt-text="{mnx:title}" role="SKIP">
+														<fo:basic-link internal-destination="{@id}" fox:alt-text="{mnx:title}"> <!-- role="SKIP" -->
 
 															<xsl:if test="$layoutVersion = '1987' and @type = 'section'">
 																<xsl:value-of select="concat(@section, ' ')"/>
@@ -3769,7 +3738,7 @@
 												</fo:list-item-body>
 											</fo:list-item>
 										</fo:list-block>
-									</fo:basic-link>
+									<!-- </fo:basic-link> -->
 								</fo:block>
 
 							</xsl:for-each>
@@ -3863,16 +3832,18 @@
 
 	<xsl:template name="insertListOf_Item">
 		<fo:block xsl:use-attribute-sets="toc-listof-item-style">
-			<fo:basic-link internal-destination="{@id}">
-				<xsl:call-template name="setAltText">
-					<xsl:with-param name="value" select="@alt-text"/>
-				</xsl:call-template>
-				<xsl:apply-templates select="." mode="contents"/>
-				<fo:inline keep-together.within-line="always">
-					<fo:leader xsl:use-attribute-sets="toc-leader-style"/>
-					<fo:inline><fo:page-number-citation ref-id="{@id}"/></fo:inline>
-				</fo:inline>
-			</fo:basic-link>
+			<fo:wrapper role="Reference">
+				<fo:basic-link internal-destination="{@id}">
+					<xsl:call-template name="setAltText">
+						<xsl:with-param name="value" select="@alt-text"/>
+					</xsl:call-template>
+					<xsl:apply-templates select="." mode="contents"/>
+					<fo:inline keep-together.within-line="always">
+						<fo:leader xsl:use-attribute-sets="toc-leader-style"/>
+						<fo:inline><fo:page-number-citation ref-id="{@id}"/></fo:inline>
+					</fo:inline>
+				</fo:basic-link>
+			</fo:wrapper>
 		</fo:block>
 	</xsl:template>
 
@@ -4872,7 +4843,7 @@
 			</xsl:call-template>
 
 			<fo:flow flow-name="xsl-region-body">
-				<fo:block id="{@id}" text-align="center" span="all">
+				<fo:block id="{@id}" xsl:use-attribute-sets="indexsect-title-block-style">
 					<xsl:apply-templates select="mn:fmt-title"/>
 				</fo:block>
 				<fo:block role="Index">
@@ -7658,7 +7629,23 @@
 			<xsl:sort select="@displayorder" data-type="number"/>
 			<xsl:element name="page_sequence" namespace="{$namespace_full}">
 				<xsl:attribute name="main_page_sequence"/>
-				<xsl:apply-templates select="." mode="update_xml_step_move_pagebreak"/>
+
+				<!-- from common <xsl:template name="index-pages"> -->
+				<xsl:variable name="docid">
+					<xsl:call-template name="getDocumentId"/>
+				</xsl:variable>
+
+				<xsl:variable name="current_document_index_id">
+					<xsl:apply-templates select="." mode="index_add_id">
+						<xsl:with-param name="docid" select="$docid"/>
+					</xsl:apply-templates>
+				</xsl:variable>
+				<xsl:variable name="current_document_index">
+					<xsl:apply-templates select="xalan:nodeset($current_document_index_id)" mode="index_update"/>
+				</xsl:variable>
+
+				<!-- xalan:nodeset($current_document_index) -->
+				<xsl:apply-templates select="xalan:nodeset($current_document_index)" mode="update_xml_step_move_pagebreak"/>
 			</xsl:element>
 		</xsl:for-each>
 	</xsl:template>
@@ -10625,6 +10612,11 @@
 			<!-- Display table's name before table as standalone block -->
 			<!-- $namespace = 'iso' or  -->
 			<xsl:apply-templates select="mn:fmt-name"/> <!-- table's title rendered before table -->
+			<xsl:if test="not(mn:fmt-name)"> <!-- for https://github.com/metanorma/mn-samples-jis/issues/75#issuecomment-3922169930 -->
+				<xsl:apply-templates select="mn:name">
+					<xsl:with-param name="process">true</xsl:with-param>
+				</xsl:apply-templates>
+			</xsl:if>
 
 			<xsl:variable name="cols-count" select="count(xalan:nodeset($simple-table)/*/mn:tr[1]/mn:td)"/>
 
@@ -10883,7 +10875,13 @@
 	</xsl:template>
 
 	<!-- table/name-->
-	<xsl:template match="*[local-name()='table']/mn:fmt-name">
+	<xsl:template match="mn:table[not(mn:fmt-name)]/mn:name"> <!-- for https://github.com/metanorma/mn-samples-jis/issues/75#issuecomment-3922169930 -->
+		<xsl:param name="process">false</xsl:param>
+		<xsl:if test="$process = 'true'">
+			<xsl:call-template name="table_name"/>
+		</xsl:if>
+	</xsl:template>
+	<xsl:template match="*[local-name()='table']/mn:fmt-name" name="table_name">
 		<xsl:param name="continued"/>
 		<xsl:param name="cols-count"/>
 		<xsl:if test="normalize-space() != ''">
@@ -11379,12 +11377,14 @@
 		<xsl:param name="colwidths"/>
 		<xsl:param name="colgroup"/>
 
-		<xsl:variable name="isNoteOrFnExist" select="../mn:note[not(@type = 'units')] or ../mn:example or ../mn:dl or ../mn:key or ..//mn:fn[not(parent::mn:fmt-name)] or ../mn:fmt-source or ../mn:p"/>
+		<xsl:variable name="isNoteOrFnExist" select="../mn:note[not(@type = 'units')] or       ../mn:example or       ../mn:dl or       ../mn:key or       (..//mn:fn[not(parent::mn:fmt-name)] and not(ancestor::mn:table[1]//mn:tfoot//mn:fmt-footnote-container)) or       ../mn:fmt-source or ../mn:p"/>
+		<!-- in JIS fmt-footnote-container renders in tfoot, so no need render fn in the separate table -->
 
-		<xsl:variable name="isNoteOrFnExistShowAfterTable">
+		<xsl:variable name="isNoteOrFnExistShowAfterTable_">
 		</xsl:variable>
+		<xsl:variable name="isNoteOrFnExistShowAfterTable" select="normalize-space($isNoteOrFnExistShowAfterTable_)"/>
 
-		<xsl:if test="$isNoteOrFnExist = 'true' or normalize-space($isNoteOrFnExistShowAfterTable) = 'true'">
+		<xsl:if test="$isNoteOrFnExist = 'true' or $isNoteOrFnExistShowAfterTable = 'true'">
 
 			<xsl:variable name="cols-count">
 				<xsl:choose>
@@ -17194,10 +17194,23 @@
 	<!-- End Highlight syntax styles -->
 
 	<!-- Index section styles -->
+
+	<xsl:attribute-set name="indexsect-region-body-style">
+		<xsl:attribute name="column-count">2</xsl:attribute>
+		<xsl:attribute name="column-gap">10mm</xsl:attribute>
+	</xsl:attribute-set>
+
+	<xsl:attribute-set name="indexsect-title-block-style">
+		<xsl:attribute name="role">SKIP</xsl:attribute>
+		<xsl:attribute name="span">all</xsl:attribute>
+		<xsl:attribute name="text-align">center</xsl:attribute>
+	</xsl:attribute-set>
+
 	<xsl:attribute-set name="indexsect-title-style">
 		<xsl:attribute name="role">H1</xsl:attribute>
-		<xsl:attribute name="font-size">16pt</xsl:attribute>
 		<xsl:attribute name="font-weight">bold</xsl:attribute>
+		<xsl:attribute name="margin-bottom">24pt</xsl:attribute>
+		<xsl:attribute name="font-size">16pt</xsl:attribute>
 		<xsl:attribute name="margin-bottom">84pt</xsl:attribute>
 	</xsl:attribute-set> <!-- indexsect-title-style -->
 
@@ -17226,6 +17239,27 @@
 			<bookmark><xsl:value-of select="@id"/></bookmark>
 		</xsl:for-each>
 	</xsl:variable>
+
+	<xsl:template name="index-pages">
+		<xsl:variable name="num"><xsl:number level="any" count="mn:metanorma"/></xsl:variable>
+
+		<xsl:variable name="docid">
+			<xsl:call-template name="getDocumentId"/>
+		</xsl:variable>
+
+		<xsl:variable name="current_document_index_id">
+			<xsl:apply-templates select="//mn:indexsect" mode="index_add_id">
+				<xsl:with-param name="docid" select="$docid"/>
+			</xsl:apply-templates>
+		</xsl:variable>
+		<xsl:variable name="current_document_index">
+			<xsl:apply-templates select="xalan:nodeset($current_document_index_id)" mode="index_update"/>
+		</xsl:variable>
+
+		<xsl:apply-templates select="xalan:nodeset($current_document_index)" mode="index">
+			<xsl:with-param name="num" select="$num"/>
+		</xsl:apply-templates>
+	</xsl:template>
 
 	<xsl:template match="@*|node()" mode="index_add_id">
 		<xsl:param name="docid"/>
@@ -17279,7 +17313,7 @@
 	<xsl:template match="mn:indexsect//mn:li" mode="index_update">
 		<xsl:copy>
 			<xsl:apply-templates select="@*" mode="index_update"/>
-		<xsl:apply-templates select="node()[not(self::mn:fmt-name)][1]" mode="process_li_element"/>
+			<xsl:apply-templates select="node()[not(self::mn:fmt-name)][1]" mode="process_li_element"/>
 		</xsl:copy>
 	</xsl:template>
 
@@ -17647,6 +17681,7 @@
 	</xsl:template>
 
 	<xsl:attribute-set name="toc-pagenumber-style">
+		<xsl:attribute name="role">SKIP</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_toc-pagenumber-style">
@@ -19717,7 +19752,12 @@
 		<xsl:variable name="external-destination" select="normalize-space(count($element_node/fo:basic-link/@external-destination[. != '']) = 1)"/>
 		<xsl:variable name="internal-destination" select="normalize-space(count($element_node/fo:basic-link/@internal-destination[. != '']) = 1)"/>
 		<xsl:choose>
-			<xsl:when test="$external-destination = 'true' or $internal-destination = 'true'">
+			<xsl:when test="$internal-destination = 'true'">
+				<fo:wrapper role="Reference">
+					<xsl:copy-of select="$element_node"/>
+				</fo:wrapper>
+			</xsl:when>
+			<xsl:when test="$external-destination = 'true'">
 				<xsl:copy-of select="$element_node"/>
 			</xsl:when>
 			<xsl:otherwise>
