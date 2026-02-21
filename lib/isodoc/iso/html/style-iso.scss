@@ -530,6 +530,10 @@ p.Biblio, p.NormRef, div.Biblio, div.NormRef {
     margin-left: 2em;
 }
 
+.Biblio.note, .Biblio.Note, .NormRef.note, .NormRef.Note {
+  margin-left: 3.5em;
+}
+
 /*
 3.6 Source Code + figures
 */
