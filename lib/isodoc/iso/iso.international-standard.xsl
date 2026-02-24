@@ -8729,6 +8729,7 @@
 
 	<xsl:attribute-set name="tt-style">
 		<xsl:attribute name="font-family">Courier New, <xsl:value-of select="$font_noto_sans_mono"/></xsl:attribute>
+		<xsl:attribute name="font-family">Courier New, <xsl:value-of select="$font_noto_sans_mono"/></xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_tt-style">
