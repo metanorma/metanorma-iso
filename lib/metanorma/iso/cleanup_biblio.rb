@@ -1,6 +1,6 @@
 module Metanorma
   module Iso
-    class Converter < Standoc::Converter
+    class Cleanup < Standoc::Cleanup
       def id_prefix(prefix, id, amd: false)
         # we're just inheriting the prefixes from parent doc
         amd and return id.text

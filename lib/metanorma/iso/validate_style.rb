@@ -4,7 +4,7 @@ require "tokenizer"
 
 module Metanorma
   module Iso
-    class Converter < Standoc::Converter
+    class Validate < Standoc::Validate
       def extract_text(node)
         node.nil? and return ""
         node1 = Nokogiri::XML.fragment(node.to_s)

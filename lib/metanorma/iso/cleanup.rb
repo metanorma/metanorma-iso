@@ -2,7 +2,11 @@ require_relative "cleanup_biblio"
 
 module Metanorma
   module Iso
-    class Converter < Standoc::Converter
+    class Cleanup < Standoc::Cleanup
+      def copied_instance_variables
+        super + %i[amd vocab]
+      end
+
       PRE_NORMREF_FOOTNOTES = "//preface//fn | " \
                               "//clause[@type = 'scope']//fn".freeze
 

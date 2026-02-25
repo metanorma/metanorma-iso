@@ -2,7 +2,7 @@ require "metanorma-standoc"
 
 module Metanorma
   module Iso
-    class Converter < Standoc::Converter
+    class Validate < Standoc::Validate
       REQUIREMENT_RE_STR = <<~REGEXP.freeze
         \\b
          ( shall | (is|are)_to |

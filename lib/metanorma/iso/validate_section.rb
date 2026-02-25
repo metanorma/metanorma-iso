@@ -2,7 +2,7 @@ require "nokogiri"
 
 module Metanorma
   module Iso
-    class Converter < Standoc::Converter
+    class Validate < Standoc::Validate
       def section_validate(doc)
         unless %w(amendment technical-corrigendum).include? @doctype
           foreword_validate(doc.root)

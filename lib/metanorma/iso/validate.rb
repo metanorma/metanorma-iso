@@ -12,19 +12,25 @@ require "iev"
 
 module Metanorma
   module Iso
-    class Converter < Standoc::Converter
+    class Validate < Standoc::Validate
+      def copied_instance_vars
+        super + %i[amd vocab validate_years]
+      end
+
       COMMITTEE_XPATH = <<~XPATH.freeze
         //contributor[role/description = 'committee']/organization/subdivision
       XPATH
 
       def isosubgroup_validate(root)
-        root.xpath("#{COMMITTEE_XPATH}[@type = 'Technical committee']/@subtype").each do |t|
-          %w{TC PC JTC JPC}.include?(t.text) or
-            @log.add("ISO_2", nil, params: [t.text])
+        root.xpath("#{COMMITTEE_XPATH}[@type = 'Technical committee']/@subtype")
+          .each do |t|
+            %w{TC PC JTC JPC}.include?(t.text) or
+              @log.add("ISO_2", nil, params: [t.text])
         end
-        root.xpath("#{COMMITTEE_XPATH}[@type = 'Subcommittee']/@subtype").each do |t|
-          %w{SC JSC}.include?(t.text) or
-            @log.add("ISO_3", nil, params: [t.text])
+        root.xpath("#{COMMITTEE_XPATH}[@type = 'Subcommittee']/@subtype")
+          .each do |t|
+            %w{SC JSC}.include?(t.text) or
+              @log.add("ISO_3", nil, params: [t.text])
         end
       end
 
