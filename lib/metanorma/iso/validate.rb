@@ -13,7 +13,7 @@ require "iev"
 module Metanorma
   module Iso
     class Validate < Standoc::Validate
-      def copied_instance_vars
+      def copied_instance_variables
         super + %i[amd vocab validate_years]
       end
 
