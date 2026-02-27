@@ -39,7 +39,7 @@ module Metanorma
         return 2 if bib.at("#{PUBLISHER}[name = 'International " \
                            "Electrotechnical Commission']")
         return 3 if bib.at("./docidentifier[@type]" \
-                           "[not(#{@converter.skip_docid} or @type = 'metanorma')]") ||
+                           "[not(#{@conv.skip_docid} or @type = 'metanorma')]") ||
           bib.at("./docidentifier[not(@type)]")
 
         4
@@ -60,7 +60,7 @@ module Metanorma
         pubclass = pub_class(bib)
         num = bib.at("./docnumber")&.text
         id = bib.at("./docidentifier[@primary]") ||
-          bib.at("./docidentifier[not(#{@converter.skip_docid} or @type = 'metanorma')]")
+          bib.at("./docidentifier[not(#{@conv.skip_docid} or @type = 'metanorma')]")
         metaid = bib.at("./docidentifier[@type = 'metanorma']")&.text
         abbrid = metaid unless /^\[\d+\]$/.match?(metaid)
         /\d-(?<partid>\d+)/ =~ id&.text
