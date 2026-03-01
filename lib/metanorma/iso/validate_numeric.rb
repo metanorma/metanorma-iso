@@ -1,6 +1,6 @@
 module Metanorma
   module Iso
-    class Converter < Standoc::Converter
+    class Validate < Standoc::Validate
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-s-quantity
       def style_subscript(node)
         style_subscript_proper(node)

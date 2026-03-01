@@ -1,6 +1,6 @@
 module Metanorma
   module Iso
-    class Converter < Standoc::Converter
+    class Validate < Standoc::Validate
       # ISO/IEC DIR 2, 15.5.3, 20.2
       # does not deal with preceding text marked up
       def see_xrefs_validate(root)
