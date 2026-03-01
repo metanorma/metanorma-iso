@@ -559,8 +559,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
            <div id='A'>
                          <h1 class="ForewordTitle">Preface</h1>
                           <div class="permission" id="_">
-              <p class="TableTitle" style="text-align:center;">Table 1 — Permission 1: First</p>
               <table id="A1" class="modspec" style="border-width:1px;border-spacing:0;">
+              <caption>Table 1 — Permission 1: First</captionp>
                 <tbody>
                   <tr>
                     <th style="font-weight:bold;border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.0pt;" scope="row">Identifier</th>
