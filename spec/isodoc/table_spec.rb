@@ -339,13 +339,11 @@ RSpec.describe IsoDoc do
                <a class="anchor" href="#_"/>
                <a class="header" href="#_">Foreword</a>
             </h1>
-            <p class="TableTitle" style="text-align:center;">
+            <table id="tableD-1" class="MsoISOTable" style="border-width:1px;border-spacing:0;" title="tool tip">
+               <caption>
                Table 1 — Repeatability and reproducibility of
                <i>husked</i>
                rice yield
-            </p>
-            <table id="tableD-1" class="MsoISOTable" style="border-width:1px;border-spacing:0;" title="tool tip">
-               <caption>
                   <span style="display:none">long desc</span>
                </caption>
                <thead>
@@ -447,8 +445,8 @@ RSpec.describe IsoDoc do
                   <b>Annex</b>
                </a>
             </h1>
-            <p class="TableTitle" style="text-align:center;">Table A.1 — Another table</p>
             <table id="AnnexTable" class="MsoISOTable" style="border-width:1px;border-spacing:0;">
+            <caption>Table A.1 — Another table</captionp>
                <tbody>
                   <tr/>
                </tbody>
@@ -757,16 +755,17 @@ RSpec.describe IsoDoc do
             <br/>
             <div id="_">
               <h1 class="ForewordTitle">Foreword</h1>
-              <p class="TableTitle" style="text-align:center;">Table 1 — Repeatability and reproducibility of
+              <table id="tableD-1" class="MsoISOTable" style="border-width:1px;border-spacing:0;">
+              <caption>Table 1 — Repeatability and reproducibility of
                  <i>husked</i>
-                 rice yield</p>
+                 rice yield
               <div align="right">
                 <b>Units in mm</b>
               </div>
               <div align="right">
                 <b>Other units in sec</b>
               </div>
-              <table id="tableD-1" class="MsoISOTable" style="border-width:1px;border-spacing:0;">
+              </caption>
                 <thead>
                   <tr>
                     <td style="border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;" scope="col">Description</td>

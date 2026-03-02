@@ -117,12 +117,9 @@ module IsoDoc
 
       def word_toc_preface(level)
         <<~TOC.freeze
-          <span lang="EN-GB"><span
-            style='mso-element:field-begin'></span><span
-            style='mso-spacerun:yes'>&#xA0;</span>TOC
+          <span lang="EN-GB"><span style='mso-element:field-begin'></span><span style='mso-spacerun:yes'>&#xA0;</span>TOC
             \\o "1-#{level}" \\h \\z \\t "Heading
-            1;1;ANNEX;1;Biblio Title;1;Foreword Title;1;Intro Title;1" <span
-            style='mso-element:field-separator'></span></span>
+            1;1;ANNEX;1;Biblio Title;1;Foreword Title;1;Intro Title;1" <span style='mso-element:field-separator'></span></span>
         TOC
       end
 
@@ -194,6 +191,17 @@ module IsoDoc
         name = node.at(ns("./fmt-name")) or return
         out.p(**table_title_attrs(node)) do |p|
           children_parse(name, p)
+        end
+      end
+
+      def figure_parse1(node, out)
+        measurement_units(node, out)
+        out.div(**figure_attrs(node)) do |div|
+          node.children.each do |n|
+            n.name == "note" && n["type"] == "units" and next
+            parse(n, div) unless n.name == "fmt-name"
+          end
+          figure_name_parse(node, div, node.at(ns("./fmt-name")))
         end
       end
 

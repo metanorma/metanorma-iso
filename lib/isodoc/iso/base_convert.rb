@@ -83,13 +83,6 @@ module IsoDoc
         para << " "
       end
 
-      def figure_name_parse(_node, div, name)
-        name.nil? and return
-        div.p class: "FigureTitle", style: "text-align:center;" do |p|
-          name.children.each { |n| parse(n, p) }
-        end
-      end
-
       def top_element_render(elem, out)
         if %w(clause terms definitions).include?(elem.name) &&
             elem.parent.name == "sections" &&
@@ -114,13 +107,26 @@ module IsoDoc
 
       def table_parse(node, out)
         @in_table = true
-        table_title_parse(node, out)
-        measurement_units(node, out)
         out.table(**table_attrs(node)) do |t|
+          table_title_parse(node, t)
           table_parse_core(node, t)
           table_parse_tail(node, t)
         end
         @in_table = false
+      end
+
+      def table_title_parse(node, out)
+        name = node.at(ns("./fmt-name"))
+        summ = node["summary"]
+        meas = node.at(ns("./note[@type = 'units']"))
+        name || summ || meas or return
+        out.caption do |p|
+          children_parse(name, p)
+          measurement_units(node, p)
+          summ and p.span style: "display:none" do |s|
+            s << summ
+          end
+        end
       end
 
       def table_parse_tail(node, out)
@@ -134,8 +140,8 @@ module IsoDoc
       end
 
       def figure_parse1(node, out)
-        measurement_units(node, out)
-        out.div(**figure_attrs(node)) do |div|
+        out.figure(**figure_attrs(node)) do |div|
+          measurement_units(node, out)
           node.children.each do |n|
             n.name == "note" && n["type"] == "units" and next
             parse(n, div) unless n.name == "fmt-name"
@@ -158,7 +164,7 @@ module IsoDoc
         super
         docxml.xpath("//tfoot//div[@class = 'figdl']/p[@class = 'ListTitle']")
           .each do |p|
-            p["align"] = "left"
+          p["align"] = "left"
         end
         docxml
       end

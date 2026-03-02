@@ -270,18 +270,18 @@ nav {
     }
 }
 
-.figure,
+figure,
 pre,
 .pseudocode {
     @include pseudocodeBlock(#f7f7f7);
     font-size: $normalfontsize;
 }
 
-div.figure {
+figure {
     @include figureBlock();
 }
 
-table div.figure {
+table figure {
   padding: 0;
   margin: 0;
 }
@@ -538,7 +538,7 @@ p.Biblio, p.NormRef, div.Biblio, div.NormRef {
 3.6 Source Code + figures
 */
 
-.figure,
+figure,
 pre,
 .pseudocode {
     @include pseudocodeBlock(#f7f7f7);
@@ -553,11 +553,11 @@ pre {
 @include recommendationBlock();
 @include listBlock();
 
-.figure-title, .FigureTitle, .SourceTitle, .AdmonitionTitle, .RecommendationTitle {
+figcaption, .SourceTitle, .AdmonitionTitle, .RecommendationTitle {
     @include blockTitle()
 }
 
-.figure dl {
+figure dl {
 }
 
 /*
@@ -640,7 +640,7 @@ td > p:last-child, th > p:last-child {
 }
 
 
-p.TableTitle {
+table > caption {
     text-align: center;
     margin-top: 2.5em;
     font-weight: 800;
