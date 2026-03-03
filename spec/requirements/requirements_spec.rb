@@ -616,7 +616,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                   <tr>
                     <td colspan="2" style="border-top:none;border-bottom:solid windowtext 1.0pt;">
                       <p id="_">The following code will be run for verification:</p>
-                            <pre id="_" class="sourcecode">
+                            <pre id="_" class="sourcecode" spellcheck="false" translation="no">
                                CoreRoot(success): HttpResponse
                                <br/>
                                      if (success)
