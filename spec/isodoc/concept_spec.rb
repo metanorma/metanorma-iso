@@ -137,13 +137,15 @@ RSpec.describe IsoDoc do
                    </fmt-xref-label>
                    <preferred id="_">
                       <expression>
-                         <name>B</name>
+                         <name id="_">B</name>
                       </expression>
                    </preferred>
                    <fmt-preferred>
                       <p>
                          <semx element="preferred" source="_">
-                            <strong>B</strong>
+                            <strong>
+                               <semx element="expression/name" source="_">B</semx>
+                            </strong>
                          </semx>
                       </p>
                    </fmt-preferred>
@@ -457,6 +459,11 @@ RSpec.describe IsoDoc do
                 </fmt-xref-label>
                 <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                 <bibitem id="ISO712" type="standard">
+                   <biblio-tag>
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">712</span>
+                      ,
+                   </biblio-tag>
                    <formattedref>
                       <em>
                          <span class="stddocTitle">Cereals and cereal products</span>
@@ -472,11 +479,6 @@ RSpec.describe IsoDoc do
                          <name>International Organization for Standardization</name>
                       </organization>
                    </contributor>
-                   <biblio-tag>
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">712</span>
-                      ,
-                   </biblio-tag>
                 </bibitem>
              </references>
           </sections>
@@ -501,7 +503,7 @@ RSpec.describe IsoDoc do
                    <h1>2</h1>
                    <p class="TermNum" id="B">2.1</p>
                    <p class="Terms" style="text-align:left;">
-                      <b>B</b>
+                      <b><dfn>B</dfn></b>
                    </p>
                    <p>
                       <div class="ul_wrap">
@@ -1212,13 +1214,15 @@ RSpec.describe IsoDoc do
                    </fmt-xref-label>
                    <preferred id="_">
                       <expression>
-                         <name>B</name>
+                         <name id="_">B</name>
                       </expression>
                    </preferred>
                    <fmt-preferred>
                       <p>
                          <semx element="preferred" source="_">
-                            <strong>B</strong>
+                            <strong>
+                               <semx element="expression/name" source="_">B</semx>
+                            </strong>
                          </semx>
                       </p>
                    </fmt-preferred>
@@ -1458,7 +1462,7 @@ RSpec.describe IsoDoc do
                    <h1>2</h1>
                    <p class="TermNum" id="B">2.1</p>
                    <p class="Terms" style="text-align:left;">
-                      <b>B</b>
+                      <b><dfn>B</dfn></b>
                    </p>
                    <p>
                       <div class="ul_wrap">
