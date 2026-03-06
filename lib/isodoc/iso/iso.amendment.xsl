@@ -6339,18 +6339,21 @@
 
 	<xsl:attribute-set name="page-sequence-preface">
 		<xsl:attribute name="format">i</xsl:attribute>
-	</xsl:attribute-set>
+	</xsl:attribute-set> <!-- page-sequence-preface -->
 
 	<xsl:template name="refine_page-sequence-preface">
 		<xsl:param name="layoutVersion"/>
-	</xsl:template>
+		<xsl:param name="doctype"/>
+		<xsl:param name="num"/>
+		<xsl:param name="skip_force_page_count">false</xsl:param>
+	</xsl:template> <!-- refine_page-sequence-preface -->
 
 	<xsl:attribute-set name="page-sequence-main">
-
-	</xsl:attribute-set>
+	</xsl:attribute-set> <!-- page-sequence-main -->
 
 	<xsl:template name="refine_page-sequence-main">
 		<xsl:param name="layoutVersion"/>
+		<xsl:param name="doctype"/>
 		<xsl:if test="position() = 1">
 			<xsl:attribute name="initial-page-number">1</xsl:attribute>
 		</xsl:if>
@@ -6358,7 +6361,7 @@
 			<xsl:attribute name="initial-page-number">auto</xsl:attribute>
 			<xsl:attribute name="force-page-count">end-on-even</xsl:attribute>
 		</xsl:if>
-	</xsl:template>
+	</xsl:template> <!-- refine_page-sequence-main -->
 
 	<xsl:variable name="font_noto_sans">Noto Sans, Noto Sans HK, Noto Sans JP, Noto Sans KR, Noto Sans SC, Noto Sans TC</xsl:variable>
 	<xsl:variable name="font_noto_sans_mono">Noto Sans Mono, Noto Sans Mono CJK HK, Noto Sans Mono CJK JP, Noto Sans Mono CJK KR, Noto Sans Mono CJK SC, Noto Sans Mono CJK TC</xsl:variable>
@@ -19887,16 +19890,17 @@
 	<!-- insert fo:basic-link, if external-destination or internal-destination is non-empty, otherwise insert fo:inline -->
 	<xsl:template name="insert_basic_link">
 		<xsl:param name="element"/>
+		<xsl:param name="wrapper">true</xsl:param>
 		<xsl:variable name="element_node" select="xalan:nodeset($element)"/>
 		<xsl:variable name="external-destination" select="normalize-space(count($element_node/fo:basic-link/@external-destination[. != '']) = 1)"/>
 		<xsl:variable name="internal-destination" select="normalize-space(count($element_node/fo:basic-link/@internal-destination[. != '']) = 1)"/>
 		<xsl:choose>
-			<xsl:when test="$internal-destination = 'true'">
+			<xsl:when test="$internal-destination = 'true' and $wrapper = 'true'">
 				<fo:wrapper role="Reference">
 					<xsl:copy-of select="$element_node"/>
 				</fo:wrapper>
 			</xsl:when>
-			<xsl:when test="$external-destination = 'true'">
+			<xsl:when test="$internal-destination = 'true' or $external-destination = 'true'">
 				<xsl:copy-of select="$element_node"/>
 			</xsl:when>
 			<xsl:otherwise>
