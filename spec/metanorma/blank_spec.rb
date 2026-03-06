@@ -6,12 +6,12 @@ RSpec.describe Metanorma::Iso do
       #{ASCIIDOC_BLANK_HDR}
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections/>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(strip_guid(output))
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to strip_guid(output)
   end
 
   it "converts a blank document" do
@@ -23,12 +23,12 @@ RSpec.describe Metanorma::Iso do
       :no-isobib:
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections/>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(strip_guid(output))
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to strip_guid(output)
     expect(File.exist?("test_alt.html")).to be true
     expect(File.exist?("test.html")).to be true
     expect(File.exist?("test.doc")).to be true

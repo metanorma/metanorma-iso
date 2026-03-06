@@ -105,8 +105,8 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output)))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true)))).to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true))).to be_html5_equivalent_to html
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, true)
     expect(Canon.format_xml(strip_guid(output
       .sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>"))))
@@ -250,9 +250,9 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output)))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, true)
     expect(Canon.format_xml(strip_guid(output
       .sub(/^.*<body/m, "<body").sub(%r{</body>.*$}m, "</body>"))))
@@ -566,9 +566,9 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output)))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
       .at("//div[@class = 'WordSection2']").to_xml)))
@@ -817,8 +817,8 @@ RSpec.describe IsoDoc do
     expect(Canon.format_xml(strip_guid(pres_output)))
       .to be_equivalent_to Canon.format_xml(presxml)
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", pres_output, true)
-    expect(Canon.format_xml(strip_guid(output)))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(output))
+      .to be_html5_equivalent_to html
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, true)
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(output)
       .at("//div[@id = 'A']").to_xml)))
@@ -967,8 +967,8 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to Canon.format_xml(presxml)
     output = IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)
-    expect(Canon.format_xml(strip_guid(output)))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(output))
+      .to be_html5_equivalent_to html
   end
 
   it "adds ordered list classes for HTML" do
@@ -1262,9 +1262,9 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output)))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
   end
 
   it "processes ordered lists with start" do
@@ -1344,9 +1344,9 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output)))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
       .at("//div[@class = 'WordSection2']").to_xml)))

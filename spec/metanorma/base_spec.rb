@@ -91,127 +91,127 @@ RSpec.describe Metanorma::Iso do
         <docidentifier type="iso-with-lang">ISO/WD 1000-1.3:2000(en)</docidentifier>
         <docnumber>1000</docnumber>
           <contributor>
-             <role type="author"/>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-             </organization>
+            <role type="author" />
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
           </contributor>
           <contributor>
-             <role type="author">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee" subtype="A">
-                   <name>TC</name>
-                   <identifier>A 1</identifier>
-                   <identifier type="full">A 1/B 2/C 3</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee" subtype="B">
-                   <name>SC</name>
-                   <identifier>B 2</identifier>
-                </subdivision>
-                <subdivision type="Workgroup" subtype="C">
-                   <name>WG</name>
-                   <identifier>C 3</identifier>
-                </subdivision>
-                <abbreviation>ISO</abbreviation>
-             </organization>
+            <role type="author">
+              <description>committee</description>
+            </role>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <subdivision type="Technical committee" subtype="A">
+                <name>TC</name>
+                <identifier>A 1</identifier>
+                <identifier type="full">A 1/B 2/C 3</identifier>
+              </subdivision>
+              <subdivision type="Subcommittee" subtype="B">
+                <name>SC</name>
+                <identifier>B 2</identifier>
+              </subdivision>
+              <subdivision type="Workgroup" subtype="C">
+                <name>WG</name>
+                <identifier>C 3</identifier>
+              </subdivision>
+              <abbreviation>ISO</abbreviation>
+            </organization>
           </contributor>
           <contributor>
-             <role type="author">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee" subtype="A1">
-                   <name>TC1</name>
-                   <identifier>A1 11</identifier>
-                   <identifier type="full">A1 11/B1 21/C1 31</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee" subtype="B1">
-                   <name>SC1</name>
-                   <identifier>B1 21</identifier>
-                </subdivision>
-                <subdivision type="Workgroup" subtype="C1">
-                   <name>WG1</name>
-                   <identifier>C1 31</identifier>
-                </subdivision>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-             <contributor>
-      <role type="author">
-         <description>secretariat</description>
-      </role>
-      <organization>
-         <name>International Organization for Standardization</name>
-         <subdivision type="Secretariat">
-            <name>SECRETARIAT</name>
-         </subdivision>
-         <abbreviation>ISO</abbreviation>
-      </organization>
-   </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>Agency</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-             </organization>
+            <role type="author">
+              <description>committee</description>
+            </role>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <subdivision type="Technical committee" subtype="A1">
+                <name>TC1</name>
+                <identifier>A1 11</identifier>
+                <identifier type="full">A1 11/B1 21/C1 31</identifier>
+              </subdivision>
+              <subdivision type="Subcommittee" subtype="B1">
+                <name>SC1</name>
+                <identifier>B1 21</identifier>
+              </subdivision>
+              <subdivision type="Workgroup" subtype="C1">
+                <name>WG1</name>
+                <identifier>C1 31</identifier>
+              </subdivision>
+              <abbreviation>ISO</abbreviation>
+            </organization>
           </contributor>
           <contributor>
-             <role type="publisher"/>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-             </organization>
+            <role type="authorizer">
+              <description>Agency</description>
+            </role>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
           </contributor>
           <contributor>
-             <role type="authorizer">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization, International Electrotechnical Commission</name>
-                <subdivision type="Technical committee" subtype="Aa">
-                   <name>TCa</name>
-                   <identifier>Aa 1a</identifier>
-                   <identifier type="full">ISO/IEC Aa 1a/Ba 2a/Ca 3a</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee" subtype="Ba">
-                   <name>SCa</name>
-                   <identifier>Ba 2a</identifier>
-                </subdivision>
-                <subdivision type="Workgroup" subtype="Ca">
-                   <name>WGa</name>
-                   <identifier>Ca 3a</identifier>
-                </subdivision>
-                <abbreviation>ISO/IEC</abbreviation>
-             </organization>
+            <role type="author">
+              <description>secretariat</description>
+            </role>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <subdivision type="Secretariat">
+                <name>SECRETARIAT</name>
+              </subdivision>
+              <abbreviation>ISO</abbreviation>
+            </organization>
           </contributor>
           <contributor>
-             <role type="authorizer">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization, International Electrotechnical Commission</name>
-                <subdivision type="Technical committee" subtype="A1a">
-                   <name>TC1a</name>
-                   <identifier>A1a 11a</identifier>
-                   <identifier type="full">ISO/IEC A1a 11a/B1a 21a/C1a 31a</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee" subtype="B1a">
-                   <name>SC1a</name>
-                   <identifier>B1a 21a</identifier>
-                </subdivision>
-                <subdivision type="Workgroup" subtype="C1a">
-                   <name>WG1a</name>
-                   <identifier>C1a 31a</identifier>
-                </subdivision>
-                <abbreviation>ISO/IEC</abbreviation>
-             </organization>
+            <role type="publisher" />
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
+            <role type="authorizer">
+              <description>committee</description>
+            </role>
+            <organization>
+              <name>International Organization for Standardization, International Electrotechnical Commission</name>
+              <subdivision type="Technical committee" subtype="Aa">
+                <name>TCa</name>
+                <identifier>Aa 1a</identifier>
+                <identifier type="full">ISO/IEC Aa 1a/Ba 2a/Ca 3a</identifier>
+              </subdivision>
+              <subdivision type="Subcommittee" subtype="Ba">
+                <name>SCa</name>
+                <identifier>Ba 2a</identifier>
+              </subdivision>
+              <subdivision type="Workgroup" subtype="Ca">
+                <name>WGa</name>
+                <identifier>Ca 3a</identifier>
+              </subdivision>
+              <abbreviation>ISO/IEC</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
+            <role type="authorizer">
+              <description>committee</description>
+            </role>
+            <organization>
+              <name>International Organization for Standardization, International Electrotechnical Commission</name>
+              <subdivision type="Technical committee" subtype="A1a">
+                <name>TC1a</name>
+                <identifier>A1a 11a</identifier>
+                <identifier type="full">ISO/IEC A1a 11a/B1a 21a/C1a 31a</identifier>
+              </subdivision>
+              <subdivision type="Subcommittee" subtype="B1a">
+                <name>SC1a</name>
+                <identifier>B1a 21a</identifier>
+              </subdivision>
+              <subdivision type="Workgroup" subtype="C1a">
+                <name>WG1a</name>
+                <identifier>C1a 31a</identifier>
+              </subdivision>
+              <abbreviation>ISO/IEC</abbreviation>
+            </organization>
           </contributor>
           <edition>2</edition>
           <version>
@@ -249,8 +249,8 @@ RSpec.describe Metanorma::Iso do
        </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes complex metadata" do
@@ -437,8 +437,8 @@ RSpec.describe Metanorma::Iso do
        </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes full publisher names" do
@@ -532,8 +532,8 @@ RSpec.describe Metanorma::Iso do
       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes multiple committees; publisher abbreviations" do
@@ -712,8 +712,8 @@ RSpec.describe Metanorma::Iso do
        </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes committee type of Other" do
@@ -845,8 +845,8 @@ RSpec.describe Metanorma::Iso do
        </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "supplies missing committee attributes" do
@@ -966,8 +966,8 @@ RSpec.describe Metanorma::Iso do
        </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes tech specification identifier" do
@@ -1004,19 +1004,19 @@ RSpec.describe Metanorma::Iso do
           </organization>
         </contributor>
         <contributor>
-          <role type='publisher'/>
+          <role type="authorizer"><description>Agency</description></role>
           <organization>
             <name>International Organization for Standardization</name>
             <abbreviation>ISO</abbreviation>
           </organization>
         </contributor>
-                    <contributor>
-            <role type="authorizer"><description>Agency</description></role>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </contributor>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
         <language>en</language>
         <script>Latn</script>
         <status>
@@ -1043,8 +1043,8 @@ RSpec.describe Metanorma::Iso do
       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes committee document metadata" do
@@ -1083,8 +1083,8 @@ RSpec.describe Metanorma::Iso do
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
 
     input1 = input.gsub(/:technical-committee-type:.+?[\r\n]+/m, "")
       .gsub(/:subcommittee-type:.+?[\r\n]+/m, "")
@@ -1094,8 +1094,8 @@ RSpec.describe Metanorma::Iso do
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input1, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
 
     input1 = input.gsub(/:technical-committee-type:.+?[\r\n]+/m, "")
       .gsub(/:subcommittee-type:.+?[\r\n]+/m, "")
@@ -1104,8 +1104,8 @@ RSpec.describe Metanorma::Iso do
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input1, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
 
     input2 = input.gsub(/:workgroup.+?[\r\n]+/m, "")
     output = <<~OUTPUT
@@ -1113,8 +1113,8 @@ RSpec.describe Metanorma::Iso do
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input2, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
 
     input2 = input.gsub(/:subcommittee.+?[\r\n]+/m, "")
       .gsub(/:workgroup.+?[\r\n]+/m, "")
@@ -1123,15 +1123,15 @@ RSpec.describe Metanorma::Iso do
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input2, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
     output = <<~OUTPUT
       <docidentifier type="ISO" primary="true">ISO/A 1 N1000</docidentifier>
     OUTPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input2, *OPTIONS))
     xml = xml.xpath("//xmlns:bibdata/xmlns:docidentifier")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes Russian titles" do
@@ -1200,19 +1200,19 @@ RSpec.describe Metanorma::Iso do
           </organization>
         </contributor>
         <contributor>
-          <role type='publisher'/>
+          <role type="authorizer"><description>Agency</description></role>
           <organization>
             <name>International Organization for Standardization</name>
             <abbreviation>ISO</abbreviation>
           </organization>
         </contributor>
-                    <contributor>
-            <role type="authorizer"><description>Agency</description></role>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </contributor>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
         <edition>2</edition>
         <version>
           <revision-date>2000-01-01</revision-date>
@@ -1245,8 +1245,8 @@ RSpec.describe Metanorma::Iso do
       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes subdivisions; override docidentifier" do
@@ -1374,8 +1374,8 @@ RSpec.describe Metanorma::Iso do
        </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "defaults substage, defines iteration on stage 50" do
@@ -1408,19 +1408,19 @@ RSpec.describe Metanorma::Iso do
                   </organization>
                 </contributor>
                 <contributor>
+                  <role type="authorizer"><description>Agency</description></role>
+                  <organization>
+                    <name>International Organization for Standardization</name>
+                    <abbreviation>ISO</abbreviation>
+                  </organization>
+                </contributor>
+                <contributor>
                   <role type="publisher"/>
                   <organization>
                     <name>International Organization for Standardization</name>
                     <abbreviation>ISO</abbreviation>
                   </organization>
                 </contributor>
-                            <contributor>
-              <role type="authorizer"><description>Agency</description></role>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-              </organization>
-            </contributor>
                 <language>fr</language>
                 <script>Latn</script>
                 <status>
@@ -1448,8 +1448,8 @@ RSpec.describe Metanorma::Iso do
               </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "defaults substage for stage 60" do
@@ -1480,20 +1480,19 @@ RSpec.describe Metanorma::Iso do
           </organization>
         </contributor>
         <contributor>
+          <role type="authorizer"><description>Agency</description></role>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
+        <contributor>
           <role type="publisher"/>
           <organization>
             <name>International Organization for Standardization</name>
             <abbreviation>ISO</abbreviation>
           </organization>
         </contributor>
-                    <contributor>
-              <role type="authorizer"><description>Agency</description></role>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-              </organization>
-            </contributor>
-
         <language>en</language>
         <script>Latn</script>
         <status>
@@ -1520,8 +1519,8 @@ RSpec.describe Metanorma::Iso do
       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "populates metadata for PRF" do
@@ -1552,20 +1551,19 @@ RSpec.describe Metanorma::Iso do
           </organization>
         </contributor>
         <contributor>
+          <role type="authorizer"><description>Agency</description></role>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
+        <contributor>
           <role type="publisher"/>
           <organization>
             <name>International Organization for Standardization</name>
             <abbreviation>ISO</abbreviation>
           </organization>
         </contributor>
-                    <contributor>
-            <role type="authorizer"><description>Agency</description></role>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </contributor>
-
         <language>en</language>
         <script>Latn</script>
         <status>
@@ -1592,8 +1590,8 @@ RSpec.describe Metanorma::Iso do
       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "defaults metadata for DIR" do
@@ -1624,19 +1622,19 @@ RSpec.describe Metanorma::Iso do
           </organization>
         </contributor>
         <contributor>
-          <role type='publisher'/>
+          <role type="authorizer"><description>Agency</description></role>
           <organization>
             <name>International Organization for Standardization</name>
             <abbreviation>ISO</abbreviation>
           </organization>
         </contributor>
-                    <contributor>
-            <role type="authorizer"><description>Agency</description></role>
-            <organization>
-              <name>International Organization for Standardization</name>
-              <abbreviation>ISO</abbreviation>
-            </organization>
-          </contributor>
+        <contributor>
+          <role type="publisher"/>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </contributor>
         <language>en</language>
         <script>Latn</script>
         <status>
@@ -1663,8 +1661,8 @@ RSpec.describe Metanorma::Iso do
       </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes document relations" do
@@ -1864,8 +1862,8 @@ RSpec.describe Metanorma::Iso do
       x.xpath(".//following-sibling::*").each(&:remove)
       x.xpath(".//preceding-sibling::*").each(&:remove)
     end
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes adopted-from identifiers, CEN identifiers" do
@@ -1935,8 +1933,8 @@ RSpec.describe Metanorma::Iso do
       x.xpath(".//following-sibling::*").each(&:remove)
       x.xpath(".//preceding-sibling::*").each(&:remove)
     end
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "reads scripts into blank HTML document" do

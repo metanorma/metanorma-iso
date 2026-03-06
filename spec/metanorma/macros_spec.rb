@@ -51,13 +51,6 @@ RSpec.describe Metanorma::Standoc do
                    <abbreviation>ISO</abbreviation>
                  </organization>
                </contributor>
-               <contributor>
-                 <role type='publisher'/>
-                 <organization>
-                   <name>International Organization for Standardization</name>
-                   <abbreviation>ISO</abbreviation>
-                 </organization>
-               </contributor>
                 <contributor>
                   <role type="authorizer"><description>Agency</description></role>
                   <organization>
@@ -65,6 +58,13 @@ RSpec.describe Metanorma::Standoc do
                     <abbreviation>ISO</abbreviation>
                   </organization>
                 </contributor>
+                <contributor>
+                 <role type='publisher'/>
+                 <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                 </organization>
+               </contributor>
                <language>en</language>
                <script>Latn</script>
                <status>
@@ -98,7 +98,7 @@ RSpec.describe Metanorma::Standoc do
     xml = Nokogiri::XML(Asciidoctor
       .convert(input, backend: :standoc, header_footer: true))
     xml.at("//xmlns:metanorma-extension")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 end

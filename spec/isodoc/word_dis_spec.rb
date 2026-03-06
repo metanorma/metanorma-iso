@@ -975,27 +975,23 @@ RSpec.describe IsoDoc do
       </div>
     WORD
     title = <<~WORD
-      <div class='WordSection1'>
-          <p class="zzCover" align="right" style="text-align:right;font-weight:normal;">
-              <span lang="EN-GB" xml:lang="EN-GB">Date: <span style="mso-no-proof:yes">2011</span></span>
-          </p>
-        <p class='zzCover' style='font-weight:normal;'>
-           <span lang='EN-GB' xml:lang='EN-GB'>Reference number of project: </span>
-         </p>
-         <p class='zzCover' style='font-weight:normal;'>
-           <span lang='EN-GB' xml:lang='EN-GB'>Committee identification: </span>
-         </p>
-         <p class='zzCover'>
-           <span lang='EN-GB' xml:lang='EN-GB'>
-             <b>
-               Date and time — Representations for information interchange
-               — Part 1: Basic rules
-             </b>
-           </span>
-         </p>
-         <p class='zzCover' style='font-weight:normal;'>
-           <i/>
-         </p>
+      <div class="WordSection1">
+        <p class="zzCover" align="right" style="text-align:right;font-weight:normal;">
+          <span lang="EN-GB" xml:lang="EN-GB">Date: <span style="mso-no-proof:yes">2011</span></span>
+        </p>
+        <p class="zzCover" style="font-weight:normal;">
+          <span lang="EN-GB" xml:lang="EN-GB">Reference number of project: </span>
+        </p>
+        <p class="zzCover" style="font-weight:normal;">
+          <span lang="EN-GB" xml:lang="EN-GB">Committee identification: </span>
+        </p>
+        <!--
+        -->
+        <p class="zzCover">
+        <span lang="EN-GB" xml:lang="EN-GB"><b>Date and time &#x2014; Representations for information interchange &#x2014; Part&#xA0;1: Basic rules</b></span></p>
+        <p class="zzCover" style="font-weight:normal;">
+          <i/>
+        </p>
       </div>
     WORD
     FileUtils.rm_f "test.doc"
@@ -1006,12 +1002,12 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(Canon.format_xml(Nokogiri::XML(output)
-      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to Canon.format_xml(word)
-    expect(strip_guid(Canon.format_xml(Nokogiri::XML(output)
-      .at("//xmlns:div[@class = 'WordSection1']").to_xml)))
-      .to be_equivalent_to Canon.format_xml(title)
+    expect(strip_guid(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml))
+      .to be_xml_equivalent_to word
+    expect(strip_guid(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection1']").to_xml))
+      .to be_xml_equivalent_to title
   end
 
   it "deals with amendments" do
@@ -1128,8 +1124,8 @@ RSpec.describe IsoDoc do
                                                     "</body>")
     contents = Nokogiri::XML(contents)
       .at("//div[a/@id = 'boilerplate-copyright-destination']")
-    expect(Canon.format_xml(contents.to_xml))
-      .to be_equivalent_to Canon.format_xml(<<~OUTPUT)
+    expect(contents.to_xml)
+      .to be_xml_equivalent_to <<~OUTPUT
         <div>
         <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"/>
         <div>
@@ -1192,8 +1188,8 @@ RSpec.describe IsoDoc do
                                                     "</body>")
     contents = Nokogiri::XML(contents)
       .at("//div[a/@id = 'boilerplate-copyright-destination']")
-    expect(Canon.format_xml(contents.to_xml))
-      .to be_equivalent_to Canon.format_xml(<<~OUTPUT)
+    expect(contents.to_xml)
+      .to be_xml_equivalent_to <<~OUTPUT
         <div>
         <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"/>
         <div>

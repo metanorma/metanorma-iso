@@ -55,7 +55,7 @@ RSpec.describe Metanorma::Iso do
       === Bibliography Subsection
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR.sub(%r{<doctype>standard</doctype>}, '<doctype>amendment</doctype>').sub(%r{<stagename abbreviation="IS">International Standard</stagename>}, '<stagename abbreviation="IS"/>')}
+      #{BLANK_HDR_2.sub(%r{<doctype>standard</doctype>}, '<doctype>amendment</doctype>').sub(%r{<stagename abbreviation="IS">International Standard</stagename>}, '<stagename abbreviation="IS"/>')}
            <sections>
              <clause id="_" obligation="normative">
                 <title id="_">Foreword</title>
@@ -129,8 +129,8 @@ RSpec.describe Metanorma::Iso do
        </metanorma>
     OUTPUT
     xml = Nokogiri::XML(input)
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes default metadata, amendment" do
@@ -371,8 +371,8 @@ RSpec.describe Metanorma::Iso do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes metadata, amendment, stage 30; empty amendment title" do
@@ -426,19 +426,19 @@ RSpec.describe Metanorma::Iso do
             </organization>
           </contributor>
           <contributor>
+            <role type="authorizer"><description>Agency</description></role>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
             <role type="publisher"/>
             <organization>
               <name>International Organization for Standardization</name>
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
-                      <contributor>
-              <role type="authorizer"><description>Agency</description></role>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-              </organization>
-            </contributor>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -469,8 +469,8 @@ RSpec.describe Metanorma::Iso do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes metadata, amendment, stage 40" do
@@ -509,19 +509,19 @@ RSpec.describe Metanorma::Iso do
             </organization>
           </contributor>
           <contributor>
+            <role type="authorizer"><description>Agency</description></role>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
             <role type="publisher"/>
             <organization>
               <name>International Organization for Standardization</name>
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
-                      <contributor>
-              <role type="authorizer"><description>Agency</description></role>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-              </organization>
-            </contributor>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -552,8 +552,8 @@ RSpec.describe Metanorma::Iso do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes metadata, amendment, published" do
@@ -591,19 +591,19 @@ RSpec.describe Metanorma::Iso do
             </organization>
           </contributor>
           <contributor>
+            <role type="authorizer"><description>Agency</description></role>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
             <role type="publisher"/>
             <organization>
               <name>International Organization for Standardization</name>
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
-                      <contributor>
-              <role type="authorizer"><description>Agency</description></role>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-              </organization>
-            </contributor>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -634,8 +634,8 @@ RSpec.describe Metanorma::Iso do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes metadata, corrigendum, stage 30" do
@@ -674,19 +674,19 @@ RSpec.describe Metanorma::Iso do
             </organization>
           </contributor>
           <contributor>
+            <role type="authorizer"><description>Agency</description></role>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
             <role type="publisher"/>
             <organization>
               <name>International Organization for Standardization</name>
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
-                      <contributor>
-              <role type="authorizer"><description>Agency</description></role>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-              </organization>
-            </contributor>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -717,8 +717,8 @@ RSpec.describe Metanorma::Iso do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes metadata, corrigendum, stage 50" do
@@ -757,19 +757,19 @@ RSpec.describe Metanorma::Iso do
             </organization>
           </contributor>
           <contributor>
-            <role type='publisher'/>
+            <role type="authorizer"><description>Agency</description></role>
             <organization>
               <name>International Organization for Standardization</name>
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
-                      <contributor>
-              <role type="authorizer"><description>Agency</description></role>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-              </organization>
-            </contributor>
+          <contributor>
+            <role type="publisher"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -800,8 +800,8 @@ RSpec.describe Metanorma::Iso do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes metadata, corrigendum, published" do
@@ -839,19 +839,19 @@ RSpec.describe Metanorma::Iso do
             </organization>
           </contributor>
           <contributor>
+            <role type="authorizer"><description>Agency</description></role>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
             <role type="publisher"/>
             <organization>
               <name>International Organization for Standardization</name>
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
-                        <contributor>
-              <role type="authorizer"><description>Agency</description></role>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-              </organization>
-            </contributor>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -882,8 +882,8 @@ RSpec.describe Metanorma::Iso do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes metadata, addendum" do
@@ -934,19 +934,19 @@ RSpec.describe Metanorma::Iso do
             </organization>
           </contributor>
           <contributor>
+            <role type="authorizer"><description>Agency</description></role>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
             <role type="publisher"/>
             <organization>
               <name>International Organization for Standardization</name>
               <abbreviation>ISO</abbreviation>
             </organization>
           </contributor>
-                        <contributor>
-              <role type="authorizer"><description>Agency</description></role>
-              <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-              </organization>
-            </contributor>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -977,7 +977,7 @@ RSpec.describe Metanorma::Iso do
     xml = Nokogiri::XML(input)
     xml.at("//xmlns:metanorma-extension")&.remove
     xml.at("//xmlns:boilerplate")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 end

@@ -12,7 +12,7 @@ RSpec.describe Metanorma::Iso do
       |===
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <table id="_">
             <name id="_">Table Name</name>
@@ -34,8 +34,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-.to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "inserts header rows in a table with a name and no header" do
@@ -50,7 +50,7 @@ RSpec.describe Metanorma::Iso do
       |===
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <table id="_">
             <name id="_">Table Name</name>
@@ -77,8 +77,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-.to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "inserts header rows in a table without a name and no header" do
@@ -92,7 +92,7 @@ RSpec.describe Metanorma::Iso do
       |===
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <table id="_">
             <thead>
@@ -118,8 +118,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-.to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes complex tables" do
@@ -154,7 +154,7 @@ RSpec.describe Metanorma::Iso do
       |===
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
                <sections>
            <table id="_">
              <name id="_">Maximum permissible mass fraction of defects</name>
@@ -302,6 +302,7 @@ RSpec.describe Metanorma::Iso do
          </sections>
        </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS)))).to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 end

@@ -608,9 +608,9 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output)))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to output
   end
 
   it "processes concept markup by context" do
@@ -1538,7 +1538,7 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output)))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true)))).to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true))).to be_html5_equivalent_to output
   end
 end

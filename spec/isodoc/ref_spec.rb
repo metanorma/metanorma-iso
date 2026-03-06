@@ -720,11 +720,11 @@ RSpec.describe IsoDoc do
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
       .gsub(/reference="[^"]+"/, 'reference="1"'))))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)
       .gsub(/fn:[^"]+"/, 'fn:1"')
-      .gsub(/<sup>[^<]+</, "<sup>1<"))))
-      .to be_equivalent_to Canon.format_xml(html)
+      .gsub(/<sup>[^<]+</, "<sup>1<")))
+      .to be_html5_equivalent_to html
   end
 
   it "processes non-home standards" do
@@ -1209,7 +1209,7 @@ RSpec.describe IsoDoc do
       .new(presxml_options)
       .convert("test", input, true))
     xml = xml.at("//xmlns:sections")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 end

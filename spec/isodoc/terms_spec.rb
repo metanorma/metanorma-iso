@@ -719,9 +719,9 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output)))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
     expect(Canon.format_xml(strip_guid(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true)
       .sub(%r{^.*<div class="WordSection3">}m, "")

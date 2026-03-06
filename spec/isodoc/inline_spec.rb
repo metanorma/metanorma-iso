@@ -27,7 +27,7 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    expect(Canon.format_xml(output)).to be_equivalent_to Canon.format_xml(<<~"OUTPUT")
+    expect(output).to be_html5_equivalent_to <<~"OUTPUT"
       #{HTML_HDR}
             <br/>
             <div id="_">
@@ -68,7 +68,7 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    expect(Canon.format_xml(output)).to be_equivalent_to Canon.format_xml(<<~"OUTPUT")
+    expect(output).to be_html5_equivalent_to <<~"OUTPUT"
       #{HTML_HDR}
             <br/>
             <div id="_">
@@ -103,10 +103,10 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    expect(Canon.format_xml(output
-      .sub(/<html/, "<html xmlns:m='m'")))
-      .to be_equivalent_to Canon.format_xml(<<~"OUTPUT")
-        #{HTML_HDR.sub(/<html/, "<html xmlns:m='m'")}
+    expect(output
+      .sub(/<html/, "<html xmlns:m='https://m'"))
+      .to be_html5_equivalent_to <<~"OUTPUT"
+        #{HTML_HDR.sub(/<html/, "<html xmlns:m='https://m'")}
               <br/>
               <div id="_">
                 <h1 class="ForewordTitle">Foreword</h1>
@@ -140,7 +140,7 @@ RSpec.describe IsoDoc do
         <sections>
       </iso-standard>
     INPUT
-    expect(Canon.format_xml(output)).to be_equivalent_to Canon.format_xml(<<~"OUTPUT")
+    expect(output).to be_html5_equivalent_to <<~"OUTPUT"
       #{HTML_HDR}
               <br/>
               <div id="_">
@@ -1633,9 +1633,9 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output)))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(strip_guid(html))
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to strip_guid(html)
     expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
       .at("//body").to_xml)))

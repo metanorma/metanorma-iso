@@ -14,6 +14,20 @@ require "iev"
 require "canon"
 require "relaton_iso"
 
+Canon::Config.instance.tap do |cfg|
+  # Configure Canon to use spec-friendly match profiles
+  cfg.xml.match.profile = :spec_friendly
+  cfg.html.match.profile = :spec_friendly
+
+  # Configure Canon to show all diffs (including inactive diffs)
+  cfg.html.diff.show_diffs = :normative
+  cfg.xml.diff.show_diffs = :normative
+
+  # Enable verbose diff output for debugging
+  cfg.html.diff.verbose_diff = true
+  cfg.xml.diff.verbose_diff = true
+end
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
@@ -223,9 +237,74 @@ BLANK_HDR1 = <<~"HDR".freeze
   </metanorma-extension>
 HDR
 
+BLANK_HDR2 = <<~"HDR".freeze
+  <?xml version="1.0" encoding="UTF-8"?>
+  <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="#{Metanorma::Iso::VERSION}" flavor="iso">
+    <bibdata type="standard">
+      <contributor>
+        <role type="author"/>
+        <organization>
+          <name>International Organization for Standardization</name>
+          <abbreviation>ISO</abbreviation>
+        </organization>
+      </contributor>
+      <contributor>
+        <role type="authorizer"><description>Agency</description></role>
+        <organization>
+          <name>International Organization for Standardization</name>
+          <abbreviation>ISO</abbreviation>
+        </organization>
+      </contributor>
+      <contributor>
+        <role type="publisher"/>
+        <organization>
+          <name>International Organization for Standardization</name>
+          <abbreviation>ISO</abbreviation>
+        </organization>
+      </contributor>
+      <language>en</language>
+      <script>Latn</script>
+      <status>
+        <stage abbreviation="IS">60</stage>
+        <substage>60</substage>
+      </status>
+      <copyright>
+        <from>#{Time.new.year}</from>
+        <owner>
+          <organization>
+            <name>International Organization for Standardization</name>
+            <abbreviation>ISO</abbreviation>
+          </organization>
+        </owner>
+      </copyright>
+      <ext>
+        <doctype>standard</doctype>
+        <flavor>iso</flavor>
+        <stagename abbreviation="IS">International Standard</stagename>
+      </ext>
+    </bibdata>
+        <metanorma-extension>
+        <semantic-metadata>
+        <stage-published>true</stage-published>
+      </semantic-metadata>
+    <presentation-metadata>
+      <document-scheme>2024</document-scheme>
+      <toc-heading-levels>2</toc-heading-levels>
+      <html-toc-heading-levels>2</html-toc-heading-levels>
+      <doc-toc-heading-levels>3</doc-toc-heading-levels>
+      <pdf-toc-heading-levels>3</pdf-toc-heading-levels>
+    </presentation-metadata>
+  </metanorma-extension>
+HDR
+
 BLANK_HDR = <<~"HDR".freeze
   #{BLANK_HDR1}
   #{boilerplate(Nokogiri::XML("#{BLANK_HDR1}</metanorma>"))}
+HDR
+
+BLANK_HDR_2 = <<~"HDR".freeze
+  #{BLANK_HDR2}
+  #{boilerplate(Nokogiri::XML("#{BLANK_HDR2}</metanorma>"))}
 HDR
 
 BLANK_HDR_FR = <<~"HDR".freeze

@@ -108,9 +108,10 @@ RSpec.describe Metanorma::Iso::Processor do
   end
 
   it "registers output formats against metanorma" do
-    expect(processor.output_formats.sort.to_s).to be_equivalent_to <<~OUTPUT
+    output = <<~OUTPUT
       [[:doc, "doc"], [:html, "html"], [:html_alt, "alt.html"], [:isosts, "iso.sts.xml"], [:pdf, "pdf"], [:presentation, "presentation.xml"], [:rxl, "rxl"], [:sts, "sts.xml"], [:xml, "xml"]]
     OUTPUT
+    expect(processor.output_formats.sort.to_s).to be_equivalent_to output.chop
   end
 
   it "registers version against metanorma" do
@@ -122,12 +123,12 @@ RSpec.describe Metanorma::Iso::Processor do
       #{ASCIIDOC_BLANK_HDR}
     INPUT
     output = <<~OUTPUT
-        #{BLANK_HDR}
+        #{BLANK_HDR_2}
         <sections/>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(processor.input_to_isodoc(input, nil))))
-      .to be_equivalent_to Canon.format_xml(strip_guid(output))
+    expect(strip_guid(processor.input_to_isodoc(input, nil)))
+      .to be_xml_equivalent_to strip_guid(output)
   end
 
   it "generates HTML from Metanorma XML" do

@@ -13,7 +13,7 @@ RSpec.describe Metanorma::Iso do
       --
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <p id="_">x</p>
           <p id="_">y</p>
@@ -21,8 +21,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes review blocks if  document is not in draft mode" do
@@ -40,7 +40,7 @@ RSpec.describe Metanorma::Iso do
       ****
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
           <sections>
              <p id="_" anchor="foreword">Foreword</p>
           </sections>
@@ -55,8 +55,8 @@ RSpec.describe Metanorma::Iso do
           </annotation-container>
        </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes review blocks if document is in draft mode" do
@@ -111,7 +111,7 @@ RSpec.describe Metanorma::Iso do
       NOTE: This is a note
     INPUT
     output = <<~OUTPUT
-        #{BLANK_HDR}
+        #{BLANK_HDR_2}
         <sections>
           <terms id="_" obligation="normative">
             <title id="_">Terms and definitions</title>
@@ -125,8 +125,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes notes" do
@@ -135,7 +135,7 @@ RSpec.describe Metanorma::Iso do
       NOTE: This is a note
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
         <note id="_">
           <p id="_">This is a note</p>
@@ -143,8 +143,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes literals" do
@@ -155,7 +155,7 @@ RSpec.describe Metanorma::Iso do
       ....
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <figure id="_">
             <pre id="_">LITERAL</pre>
@@ -163,8 +163,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes simple admonitions with Asciidoc names" do
@@ -173,7 +173,7 @@ RSpec.describe Metanorma::Iso do
       CAUTION: Only use paddy or parboiled rice for the determination of husked rice yield.
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <admonition id="_" type="caution">
             <p id="_">Only use paddy or parboiled rice for the determination of husked rice yield.</p>
@@ -181,8 +181,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes editorial notes" do
@@ -194,7 +194,7 @@ RSpec.describe Metanorma::Iso do
       ====
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <admonition id="_" type="editorial">
             <p id="_">Editorial note</p>
@@ -202,8 +202,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes complex admonitions with non-Asciidoc names" do
@@ -220,7 +220,7 @@ RSpec.describe Metanorma::Iso do
       ====
     INPUT
     output = <<~OUTPUT
-        #{BLANK_HDR}
+        #{BLANK_HDR_2}
         <sections>
           <admonition id="_" type="safety precautions">
             <name id="_">Safety Precautions</name>
@@ -240,8 +240,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes term examples" do
@@ -255,7 +255,7 @@ RSpec.describe Metanorma::Iso do
       This is an example
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <terms id="_" obligation="normative">
             <title id="_">Terms and definitions</title>
@@ -269,8 +269,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes examples" do
@@ -284,7 +284,7 @@ RSpec.describe Metanorma::Iso do
       ====
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <example id="_">
             <p id="_">This is an example</p>
@@ -293,8 +293,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes preambles" do
@@ -305,7 +305,7 @@ RSpec.describe Metanorma::Iso do
       == Section 1
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <preface>
           <foreword id="_" obligation="informative">
             <title id="_">Foreword</title>
@@ -319,8 +319,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes images" do
@@ -331,7 +331,7 @@ RSpec.describe Metanorma::Iso do
 
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <figure id="_">
             <name id="_">Split-it-right sample divider</name>
@@ -340,8 +340,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "accepts width and height attributes on images" do
@@ -352,7 +352,7 @@ RSpec.describe Metanorma::Iso do
 
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <figure id="_" width="3" height="4">
             <image id="_" src="spec/examples/rice_images/rice_image1.png" mimetype="image/png" height="4" width="3" filename="spec/examples/rice_images/rice_image1.png"/>
@@ -360,8 +360,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "accepts auto for width and height attributes on images" do
@@ -372,7 +372,7 @@ RSpec.describe Metanorma::Iso do
 
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <figure id="_"  width="auto" height="4">
             <image id="_" src="spec/examples/rice_images/rice_image1.png" mimetype="image/png" height="4" width="auto" filename="spec/examples/rice_images/rice_image1.png"/>
@@ -380,8 +380,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "accepts alignment attribute on paragraphs" do
@@ -391,14 +391,14 @@ RSpec.describe Metanorma::Iso do
       This para is right-aligned.
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
            <p align="right" id="_">This para is right-aligned.</p>
          </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes blockquotes" do
@@ -410,7 +410,7 @@ RSpec.describe Metanorma::Iso do
       ____
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <quote id="_">
             <source bibitemid="ISO7301" citeas="" type="inline">
@@ -426,8 +426,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes unmodified term sources" do
@@ -443,7 +443,7 @@ RSpec.describe Metanorma::Iso do
       <<ISO2191,section=1>>
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <terms id="_" obligation="normative">
             <title id="_">Terms and definitions</title>
@@ -468,8 +468,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes modified term sources" do
@@ -485,7 +485,7 @@ RSpec.describe Metanorma::Iso do
       <<ISO2191,section=1>>, with adjustments
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <terms id="_" obligation="normative">
             <title id="_">Terms and definitions</title>
@@ -513,7 +513,7 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 end

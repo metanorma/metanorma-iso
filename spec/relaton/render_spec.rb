@@ -65,7 +65,7 @@ RSpec.describe Relaton::Render::Iso do
     expect(p.render(input, embedded: false))
       .to be_equivalent_to output
     expect(p.render(input, embedded: true))
-      .to be_equivalent_to output.gsub("<formattedref>", "")
+      .to be_xml_equivalent_to output.gsub("<formattedref>", "")
         .gsub("</formattedref>", "")
   end
 

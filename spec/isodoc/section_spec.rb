@@ -809,9 +809,9 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output)))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
     expect(Canon.format_xml(strip_guid(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true)
       .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>"))))
@@ -1046,9 +1046,9 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(Canon.format_xml(strip_guid(pres_output)))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
   end
 
   it "processes simple terms & definitions" do
@@ -1080,8 +1080,8 @@ RSpec.describe IsoDoc do
         </body>
       </html>
     OUTPUT
-    expect(Canon.format_xml(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", input, true))).to be_equivalent_to Canon.format_xml(output)
+    expect(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", input, true)).to be_html5_equivalent_to output
   end
 
   it "processes multiple terms & definitions sections" do
@@ -1250,8 +1250,8 @@ RSpec.describe IsoDoc do
     xml = Nokogiri::XML(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true))
     xml.at("//div[@class = 'authority']")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "processes inline section headers" do
@@ -1276,7 +1276,7 @@ RSpec.describe IsoDoc do
         </sections>
       </iso-standard>
     INPUT
-    expect(Canon.format_xml(output)).to be_equivalent_to Canon.format_xml(<<~"OUTPUT")
+    expect(output).to be_html5_equivalent_to <<~"OUTPUT"
       #{HTML_HDR}
             <div id="M">
               <h1>Clause 4</h1>
@@ -1427,9 +1427,9 @@ RSpec.describe IsoDoc do
     xml.at("//xmlns:metanorma-extension")&.remove
     expect(strip_guid(Canon.format_xml(xml.to_xml)))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
   end
 
   it "processes middle title, complementary" do
@@ -1504,9 +1504,9 @@ RSpec.describe IsoDoc do
     xml.at("//xmlns:metanorma-extension")&.remove
     expect(strip_guid(Canon.format_xml(xml.to_xml)))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
   end
 
   it "generates an index in English" do
@@ -1745,7 +1745,7 @@ RSpec.describe IsoDoc do
        </iso-standard>
     OUTPUT
     html = <<~OUTPUT
-          <html lang='en'>
+      <html lang='en'>
         <head/>
         <body lang='en'>
           <div class='title-section'>
@@ -1757,7 +1757,7 @@ RSpec.describe IsoDoc do
           </div>
           <br/>
           <div class='main-section'>
-                <br/>
+            <br/>
             <div class="TOC" id="_">
               <h1 class="IntroTitle">Contents</h1>
             </div>
@@ -1780,76 +1780,42 @@ RSpec.describe IsoDoc do
                 <a id='_'/>
               </div>
             </div>
-            <div id='_'>
+            <div id="_">
               <h1>Index</h1>
               <div class="ul_wrap">
-              <ul>
-                <li id="_">
-                  <i>Dasein</i>
-                   , see
-                  <i>Eman</i>
-                   cipation, &#234;tre
-                </li>
-                <li id="_">
-                   &#233;long&#233;,
-                  <a href='#_'>Clause 1</a>
-                </li>
-                <li id="_">
-                  <i>Eman</i>
-                   cipation,
-                  <a href='#_'>Clause 1</a>
-                   ,
-                  <a href='#_'>1.1</a>
-                  <div class="ul_wrap">
-                  <ul>
-                    <li id="_">
-                       dans la France,
-                      <a href='#_'>Clause 1</a>
-                      <div class="ul_wrap">
+                <ul>
+                  <li id="_"><i>Dasein</i>, see <i>Eman</i>cipation, être</li>
+                  <li id="_">élongé,  <a href="#_">Clause 1</a></li>
+                  <li id="_"><i>Eman</i>cipation,  <a href="#_">Clause 1</a>, <a href="#_">1.1</a>
+                    <div class="ul_wrap">
                       <ul>
-                        <li id="_">
-                           &#224; Paris,
-                          <a href='#_'>1.1</a>
+                        <li id="_">dans la France,  <a href="#_">Clause 1</a>
+                          <div class="ul_wrap">
+                            <ul>
+                              <li id="_">à Paris,  <a href="#_">1.1</a></li>
+                              <li id="_">en Bretagne,  <a href="#_">Clause 1</a></li>
+                            </ul>
+                          </div>
                         </li>
-                        <li id="_">
-                           en Bretagne,
-                          <a href='#_'>Clause 1</a>
+                        <li id="_">dans les États-Unis,  <a href="#_">1.1</a></li>
+                      </ul>
+                    </div>
+                  </li>
+                  <li id="_">être
+                    <div class="ul_wrap">
+                      <ul>
+                        <li id="_">Husserl, see zebra, see also <i>Eman</i>cipation, zebra
+                          <div class="ul_wrap">
+                            <ul>
+                              <li id="_">en allemand,  <a href="#_">Clause 1</a></li>
+                            </ul>
+                          </div>
                         </li>
                       </ul>
-                      </div>
-                    </li>
-                    <li id="_">
-                       dans les &#201;tats-Unis,
-                      <a href='#_'>1.1</a>
-                    </li>
-                  </ul>
-                  </div>
-                </li>
-                <li id="_">
-                   &#234;tre
-                   <div class="ul_wrap">
-                  <ul>
-                    <li id="_">
-                       Husserl, see zebra, see also
-                      <i>Eman</i>
-                       cipation, zebra
-                       <div class="ul_wrap">
-                      <ul>
-                        <li id="_">
-                           en allemand,
-                          <a href='#_'>Clause 1</a>
-                        </li>
-                      </ul>
-                      </div>
-                    </li>
-                  </ul>
-                  </div>
-                </li>
-                <li id="_">
-                   zebra,
-                  <a href='#_'>1.1</a>
-                </li>
-              </ul>
+                    </div>
+                  </li>
+                  <li id="_">zebra,  <a href="#_">1.1</a></li>
+                </ul>
               </div>
             </div>
           </div>
@@ -1949,9 +1915,9 @@ RSpec.describe IsoDoc do
     expect(Canon.format_xml(strip_guid(pres_output
       .gsub(%r{<localized-strings>.*</localized-strings>}m, ""))))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_xml_equivalent_to html
     FileUtils.rm_f("test.doc")
     IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, false)
     expect(File.exist?("test.doc")).to be true

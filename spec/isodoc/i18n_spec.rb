@@ -576,7 +576,7 @@ RSpec.describe IsoDoc do
        </html>
     OUTPUT
     word = <<~WORD
-      <html xmlns:epub='http://www.idpf.org/2007/ops' lang='en'>
+      <html xmlns:epub="http://www.idpf.org/2007/ops" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns:m="http://schemas.microsoft.com/office/2004/12/omml" lang="en">
          <head>
            <style></style>
            <style></style>
@@ -776,9 +776,9 @@ RSpec.describe IsoDoc do
     expect(Canon.format_xml(strip_guid(pres_output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
     expect(Canon.format_xml(strip_guid(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))))
       .to be_equivalent_to Canon.format_xml(word)
@@ -1495,9 +1495,9 @@ RSpec.describe IsoDoc do
     expect(Canon.format_xml(strip_guid(pres_output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
   end
 
   it "processes Russian" do
@@ -2080,9 +2080,9 @@ RSpec.describe IsoDoc do
     expect(Canon.format_xml(strip_guid(pres_output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
   end
 
   it "processes Simplified Chinese" do
@@ -2720,9 +2720,9 @@ RSpec.describe IsoDoc do
     expect(Canon.format_xml(strip_guid(pres_output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
   end
 
   it "internationalises locality" do
