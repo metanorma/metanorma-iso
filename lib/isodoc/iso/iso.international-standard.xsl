@@ -2097,7 +2097,7 @@
 
 											<fo:block-container font-family="Cambria" line-height="1.1" role="SKIP" height="110mm">
 												<!-- for role see coment https://github.com/pdf-association/extension-brotli/issues/5#issuecomment-3931742869 -->
-												<fo:block margin-right="3.5mm"> <!-- role="SKIP" -->
+												<fo:block margin-right="3.5mm" role="P/Title"> <!-- role="SKIP" -->
 													<fo:block font-size="18pt" font-weight="bold" margin-top="2.5mm" role="SKIP"> <!-- role="H1" -->
 														<xsl:call-template name="insertTitlesLangMain"><xsl:with-param name="num" select="$num"/></xsl:call-template>
 													</fo:block>
@@ -2532,7 +2532,7 @@
 
 										<fo:block-container line-height="1.1" margin-top="3mm" role="SKIP">
 											<xsl:call-template name="insertTripleLine"/>
-											<fo:block margin-right="5mm"> <!-- role="SKIP" -->
+											<fo:block margin-right="5mm" role="P/Title"> <!-- role="SKIP" -->
 												<fo:block font-size="18pt" font-weight="bold" margin-top="6pt" role="SKIP"> <!-- role="H1" -->
 													<xsl:if test="$layoutVersion = '1989'">
 														<xsl:attribute name="font-size">16pt</xsl:attribute>
@@ -2782,7 +2782,7 @@
 													<fo:table-cell role="SKIP">
 														<xsl:call-template name="insertTripleLine"/>
 														<fo:block-container line-height="1.1" role="SKIP">
-															<fo:block margin-right="3.5mm"> <!-- role="SKIP" -->
+															<fo:block margin-right="3.5mm" role="P/Title"> <!-- role="SKIP" -->
 																<xsl:variable name="font_size">
 																	<xsl:choose>
 																		<xsl:when test="$layoutVersion = '1989'">16pt</xsl:when>
@@ -2929,7 +2929,7 @@
 
 								<xsl:call-template name="insertTripleLine"/>
 								<fo:block-container line-height="1.1" role="SKIP">
-									<fo:block margin-right="40mm"> <!-- role="SKIP" -->
+									<fo:block margin-right="40mm" role="P/Title"> <!-- role="SKIP" -->
 										<fo:block font-size="18pt" font-weight="bold" margin-top="12pt" role="SKIP"> <!--  role="H1" -->
 											<xsl:if test="$layoutVersion = '1989'">
 												<xsl:attribute name="font-size">16pt</xsl:attribute>
@@ -3010,7 +3010,7 @@
 								</fo:block>
 							</fo:block-container>
 
-							<fo:block-container font-size="16pt" role="P"> <!-- role="SKIP" -->
+							<fo:block-container font-size="16pt" role="P/Title"> <!-- role="SKIP" -->
 								<!-- Information and documentation — Codes for transcription systems  -->
 									<fo:block font-weight="bold" role="SKIP"> <!-- role="H1" -->
 										<xsl:call-template name="insertTitlesLangMain"><xsl:with-param name="num" select="$num"/></xsl:call-template>
@@ -3748,25 +3748,25 @@
 													</fo:block>
 												</fo:list-item-label>
 												<fo:list-item-body start-indent="body-start()" role="SKIP">
-													<fo:block text-align-last="justify" margin-left="12mm" text-indent="-12mm" role="SKIP"> <!-- role="SKIP" role="Reference" -->
+													<fo:block text-align-last="justify" margin-left="12mm" text-indent="-12mm" role="Reference"> <!-- role="SKIP" role="Reference" -->
 
 														<xsl:if test="$layoutVersion = '1987' and @type = 'section'">
 															<xsl:attribute name="font-weight">bold</xsl:attribute>
 														</xsl:if>
 
 														<!-- Reference/Link for title -->
-														<fo:wrapper role="Reference">
+														<!-- <fo:wrapper role="Reference"> -->
 															<fo:basic-link internal-destination="{@id}" fox:alt-text="{mnx:title}"> <!-- role="SKIP" -->
 																<xsl:if test="$layoutVersion = '1987' and @type = 'section'">
 																	<xsl:value-of select="concat(@section, ' ')"/>
 																</xsl:if>
 																<xsl:apply-templates select="mnx:title"/>
-															</fo:basic-link>
-														</fo:wrapper>
+															<!-- </fo:basic-link> -->
+														<!-- </fo:wrapper> -->
 
 														<!-- Reference/Link for page number -->
-														<fo:wrapper role="Reference">
-															<fo:basic-link internal-destination="{@id}" fox:alt-text="{mnx:title}">
+														<!-- <fo:wrapper role="Reference"> -->
+															<!-- <fo:basic-link internal-destination="{@id}" fox:alt-text="{mnx:title}"> -->
 																<fo:inline keep-together.within-line="always" role="SKIP">
 																	<fo:leader xsl:use-attribute-sets="toc-leader-style"><xsl:call-template name="refine_toc-leader-style"/></fo:leader>
 																	<fo:inline role="SKIP">
@@ -3784,7 +3784,7 @@
 																	</fo:inline>
 																</fo:inline>
 															</fo:basic-link>
-														</fo:wrapper>
+														<!-- </fo:wrapper> -->
 
 													</fo:block>
 												</fo:list-item-body>
@@ -3795,28 +3795,38 @@
 
 							</xsl:for-each>
 
-							<!-- List of Tables -->
-							<xsl:for-each select="$contents/mnx:doc[@num = $num]//mnx:tables/mnx:table">
-								<xsl:if test="position() = 1">
-									<xsl:call-template name="insertListOf_Title">
-										<xsl:with-param name="title" select="$title-list-tables"/>
-									</xsl:call-template>
-								</xsl:if>
-								<xsl:call-template name="insertListOf_Item"/>
-							</xsl:for-each>
-
-							<!-- List of Figures -->
-							<xsl:for-each select="$contents/mnx:doc[@num = $num]//mnx:figures/mnx:figure">
-								<xsl:if test="position() = 1">
-									<xsl:call-template name="insertListOf_Title">
-										<xsl:with-param name="title" select="$title-list-figures"/>
-									</xsl:call-template>
-								</xsl:if>
-								<xsl:call-template name="insertListOf_Item"/>
-							</xsl:for-each>
-
 						</xsl:if>
 					</fo:block>
+
+					<xsl:if test="count(*) = 1 and mn:fmt-title"> <!-- if there isn't user ToC -->
+						<xsl:if test="$contents/mnx:doc[@num = $num]//mnx:tables/mnx:table">
+							<fo:block-container>
+								<!-- List of Tables -->
+								<xsl:call-template name="insertListOf_Title">
+									<xsl:with-param name="title" select="$title-list-tables"/>
+								</xsl:call-template>
+								<fo:block role="TOC">
+									<xsl:for-each select="$contents/mnx:doc[@num = $num]//mnx:tables/mnx:table">
+										<xsl:call-template name="insertListOf_Item"/>
+									</xsl:for-each>
+								</fo:block>
+							</fo:block-container>
+						</xsl:if>
+
+						<xsl:if test="$contents/mnx:doc[@num = $num]//mnx:figures/mnx:figure">
+							<fo:block-container>
+								<!-- List of Figures -->
+								<xsl:call-template name="insertListOf_Title">
+									<xsl:with-param name="title" select="$title-list-figures"/>
+								</xsl:call-template>
+								<fo:block role="TOC">
+									<xsl:for-each select="$contents/mnx:doc[@num = $num]//mnx:figures/mnx:figure">
+										<xsl:call-template name="insertListOf_Item"/>
+									</xsl:for-each>
+								</fo:block>
+							</fo:block-container>
+						</xsl:if>
+					</xsl:if>
 				</fo:block-container>
 			</xsl:otherwise>
 		</xsl:choose>
@@ -3890,9 +3900,9 @@
 						<xsl:with-param name="value" select="@alt-text"/>
 					</xsl:call-template>
 					<xsl:apply-templates select="." mode="contents"/>
-					<fo:inline keep-together.within-line="always">
+					<fo:inline keep-together.within-line="always" role="SKIP">
 						<fo:leader xsl:use-attribute-sets="toc-leader-style"/>
-						<fo:inline><fo:page-number-citation ref-id="{@id}"/></fo:inline>
+						<fo:inline role="SKIP"><fo:page-number-citation ref-id="{@id}" role="SKIP"/></fo:inline>
 					</fo:inline>
 				</fo:basic-link>
 			</fo:wrapper>
@@ -4068,7 +4078,7 @@
 	<xsl:template match="mn:sections//mn:p[@class = 'zzSTDTitle1']" priority="4">
 		<xsl:choose>
 			<xsl:when test="$layoutVersion = '1951'">
-				<fo:block font-size="13pt" font-weight="bold" text-align="center" margin-top="49mm" margin-bottom="20mm" text-transform="uppercase" line-height="1.1" role="P">
+				<fo:block font-size="13pt" font-weight="bold" text-align="center" margin-top="49mm" margin-bottom="20mm" text-transform="uppercase" line-height="1.1" role="P/Title">
 					<xsl:if test="$revision_date_num &gt;= 19680101">
 						<xsl:attribute name="font-family">Arial</xsl:attribute>
 						<xsl:attribute name="font-size">10.5pt</xsl:attribute>
@@ -4103,7 +4113,7 @@
 			</xsl:when>
 			<xsl:when test="$layoutVersion = '1987' and $doctype = 'technical-report'"/>
 			<xsl:when test="$layoutVersion = '1972' or $layoutVersion = '1979' or $layoutVersion = '1987' or $layoutVersion = '1989'">
-				<fo:block font-size="16pt" font-weight="bold" margin-top="40pt" margin-bottom="40pt" line-height="1.1" role="P" span="all">
+				<fo:block font-size="16pt" font-weight="bold" margin-top="40pt" margin-bottom="40pt" line-height="1.1" role="P/Title" span="all">
 					<xsl:if test="following-sibling::*[1][self::mn:p][starts-with(@class, 'zzSTDTitle')]">
 						<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
 					</xsl:if>
@@ -4119,7 +4129,7 @@
 				</xsl:if>
 			</xsl:when>
 			<xsl:otherwise>
-				<fo:block font-size="18pt" font-weight="bold" margin-top="40pt" margin-bottom="20pt" line-height="1.1" role="P">
+				<fo:block font-size="18pt" font-weight="bold" margin-top="40pt" margin-bottom="20pt" line-height="1.1" role="P/Title">
 					<xsl:if test="$layoutVersion = '2024'">
 						<xsl:attribute name="margin-top">50pt</xsl:attribute>
 					</xsl:if>
@@ -4151,7 +4161,7 @@
 	<xsl:template match="mn:sections//mn:p[@class = 'zzSTDTitle2']" priority="4">
 		<!-- Example: <p class="zzSTDTitle2" displayorder="3">AMENDMENT 1: Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</p> -->
 		<xsl:if test="$doctype = 'amendment'">
-			<fo:block font-size="18pt" margin-top="12pt" margin-bottom="20pt" margin-right="0mm" font-weight="normal" line-height="1.1" role="P">
+			<fo:block font-size="18pt" margin-top="12pt" margin-bottom="20pt" margin-right="0mm" font-weight="normal" line-height="1.1" role="P/Title">
 				<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1979' or $layoutVersion = '1987' or $layoutVersion = '1989'">
 				<xsl:attribute name="font-size">16pt</xsl:attribute>
 			</xsl:if>
@@ -17756,6 +17766,7 @@
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_toc-style">
+		<xsl:copy-of select="@id"/>
 		<xsl:if test="$layoutVersion = '1987'">
 			<xsl:attribute name="font-size">9pt</xsl:attribute>
 			<xsl:attribute name="font-weight">normal</xsl:attribute>
@@ -17831,7 +17842,7 @@
 
 	<!-- List of Figures, Tables -->
 	<xsl:attribute-set name="toc-listof-title-style">
-		<xsl:attribute name="role">TOCI</xsl:attribute>
+		<xsl:attribute name="role">H2</xsl:attribute> <!-- TOCI -->
 		<xsl:attribute name="margin-top">5pt</xsl:attribute>
 		<xsl:attribute name="keep-with-next">always</xsl:attribute>
 	</xsl:attribute-set>
@@ -17857,13 +17868,13 @@
 
 	<xsl:template name="processPrefaceSectionsDefault_Contents">
 		<xsl:variable name="nodes_preface_">
-			<xsl:for-each select="/*/mn:preface/*[not(self::mn:note or self::mn:admonition or @type = 'toc')]">
+			<xsl:for-each select="/*/mn:preface/*[not(self::mn:note or self::mn:admonition)]"> <!--  or @type = 'toc' -->
 				<node id="{@id}"/>
 			</xsl:for-each>
 		</xsl:variable>
 		<xsl:variable name="nodes_preface" select="xalan:nodeset($nodes_preface_)"/>
 
-		<xsl:for-each select="/*/mn:preface/*[not(self::mn:note or self::mn:admonition or @type = 'toc')]">
+		<xsl:for-each select="/*/mn:preface/*[not(self::mn:note or self::mn:admonition)]"> <!--  or @type = 'toc' -->
 			<xsl:sort select="@displayorder" data-type="number"/>
 
 			<!-- process Section's title -->
@@ -17874,6 +17885,23 @@
 
 			<xsl:apply-templates select="." mode="contents"/>
 		</xsl:for-each>
+	</xsl:template>
+
+	<xsl:template match="*[@type = 'toc'][mn:title or mn:fmt-title]" mode="contents" priority="2">
+		<xsl:variable name="title">
+			<xsl:call-template name="getName"/>
+		</xsl:variable>
+		<xsl:variable name="root">
+			<xsl:if test="ancestor-or-self::mn:preface">preface</xsl:if>
+			<xsl:if test="ancestor-or-self::mn:annex">annex</xsl:if>
+		</xsl:variable>
+		<mnx:item id="{@id}" level="1" section="" type="toc" root="{$root}" display="false">
+			<mnx:title>
+				<xsl:apply-templates select="xalan:nodeset($title)" mode="contents_item">
+					<xsl:with-param name="element" select="$root"/>
+				</xsl:apply-templates>
+			</mnx:title>
+		</mnx:item>
 	</xsl:template>
 
 	<xsl:template name="processMainSectionsDefault_Contents">
