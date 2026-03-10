@@ -8,7 +8,6 @@ require_relative "validate_list"
 require_relative "validate_xref"
 require "nokogiri"
 require "jing"
-require "iev"
 
 module Metanorma
   module Iso
@@ -24,13 +23,13 @@ module Metanorma
       def isosubgroup_validate(root)
         root.xpath("#{COMMITTEE_XPATH}[@type = 'Technical committee']/@subtype")
           .each do |t|
-            %w{TC PC JTC JPC}.include?(t.text) or
-              @log.add("ISO_2", nil, params: [t.text])
+          %w{TC PC JTC JPC}.include?(t.text) or
+            @log.add("ISO_2", nil, params: [t.text])
         end
         root.xpath("#{COMMITTEE_XPATH}[@type = 'Subcommittee']/@subtype")
           .each do |t|
-            %w{SC JSC}.include?(t.text) or
-              @log.add("ISO_3", nil, params: [t.text])
+          %w{SC JSC}.include?(t.text) or
+            @log.add("ISO_3", nil, params: [t.text])
         end
       end
 
