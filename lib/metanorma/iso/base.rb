@@ -67,6 +67,8 @@ module Metanorma
       def ol_attrs(node)
         ret = super
         ret.delete(:type)
+        # test
+        #ret[:display] = node.attr("display")
         ret
       end
 

@@ -115,7 +115,14 @@ module IsoDoc
 
       def ol_attrs(node)
         ret = super
-        ret.merge(class: OL_STYLE.invert[ret[:type]])
+        klass = OL_STYLE.invert[ret[:type]]
+        ret = ret.merge(class: klass)
+        if (start = node["start"]) && klass
+          start_val = start.to_i - 1
+          existing_style = ret[:style] ? "#{ret[:style]};" : ""
+          ret = ret.merge(style: "#{existing_style}counter-reset: #{klass} #{start_val}")
+        end
+        ret
       end
 
       include BaseConvert
