@@ -1307,7 +1307,7 @@ RSpec.describe IsoDoc do
              <div id="A">
                <h1 class='ForewordTitle'>Foreword</h1>
                <div class="ol_wrap">
-               <ol type='a' start='4' id="B" class='alphabet'>
+               <ol type='a' start='4' id="B" class='alphabet' style="counter-reset: alphabet 3">
                  <li id="_">List</li>
                </ol>
                </div>

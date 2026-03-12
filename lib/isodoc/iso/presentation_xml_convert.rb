@@ -31,6 +31,7 @@ module IsoDoc
         formula docxml
         admonition docxml
         source docxml
+        #list_to_table docxml
         ul docxml
         ol docxml
         quote docxml
