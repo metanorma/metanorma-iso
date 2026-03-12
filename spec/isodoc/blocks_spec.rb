@@ -299,7 +299,7 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
       <div id="_">
         <h1 class='ForewordTitle'>Foreword</h1>
-        <div id='_' class='Admonition'>
+        <div id='_' class='Admonition AdmonitionCaution'>
           <p>
              CAUTION &#x2014; Only use paddy or parboiled rice for the
             determination of husked rice yield.
@@ -405,8 +405,8 @@ RSpec.describe IsoDoc do
     output = <<~OUTPUT
       <div id="_">
                <h1 class='ForewordTitle'>Foreword</h1>
-               <div id='_' class='Admonition'>
-                        <p class="AdmonitionTitle" style="text-align:center;">Title</p>
+               <div id='_' class='Admonition AdmonitionCaution'>
+                        <p class="AdmonitionTitle AdmonitionCaution" style="text-align:center;">Title</p>
                         <div class="ul_wrap">
          <ul>
            <li id="_">List</li>
@@ -529,7 +529,7 @@ RSpec.describe IsoDoc do
                    <br/>
              <div id="_">
                <h1 class='ForewordTitle'>Foreword</h1>
-               <div id='_' class='zzHelp'>
+               <div id='_' class='Admonition AdmonitionEditorial'>
                  <p>EDITORIAL NOTE &#x2014; Only use paddy or parboiled rice for the
                    determination of husked rice yield.
                  </p>

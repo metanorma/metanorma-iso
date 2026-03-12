@@ -641,8 +641,85 @@ This is done if the footnote reference is already presented in some other form, 
         </ref>
       </zeroOrMore>
     </define>
+    <define name="altsource">
+      <a:documentation>Alternative file to use as media</a:documentation>
+      <element name="altsource">
+        <ref name="MediaAttributes"/>
+        <optional>
+          <attribute name="tag">
+            <a:documentation>Comma-delimited tag to indicate when the alternate file is to be used, 
+at minimum allows contain `html`, `doc`, `pdf` as the main target formats of Metanorma,
+and `default` for the fallback. The presence of an altsource tagged `default` is required</a:documentation>
+          </attribute>
+        </optional>
+        <optional>
+          <attribute name="media">
+            <a:documentation>CSS media query to indicate when the alternate file is to be used</a:documentation>
+          </attribute>
+        </optional>
+      </element>
+    </define>
+    <define name="image">
+      <a:documentation>Container for image content</a:documentation>
+      <choice>
+        <element name="image">
+          <ref name="RequiredId"/>
+          <ref name="ImageAttributes">
+            <a:documentation>When specified along with altsource, ImageAttributes give the default image to be rendered</a:documentation>
+          </ref>
+          <ref name="ImageBody"/>
+        </element>
+        <element name="svg">
+          <a:documentation>Add svg mark up to image</a:documentation>
+          <oneOrMore>
+            <choice>
+              <text/>
+              <ref name="AnyElement"/>
+            </choice>
+          </oneOrMore>
+        </element>
+      </choice>
+    </define>
+    <define name="ImageAttributes">
+      <optional>
+        <ref name="MediaAttributes">
+          <a:documentation>If the image contains altsource, the media attributes are given on each of the altsource elements instead of the root node</a:documentation>
+        </ref>
+      </optional>
+      <ref name="MediaAccessibilityAttributes"/>
+      <optional>
+        <attribute name="width">
+          <a:documentation>Height of image</a:documentation>
+          <ref name="ImageSize"/>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="height">
+          <a:documentation>Width of image</a:documentation>
+          <ref name="ImageSize"/>
+        </attribute>
+      </optional>
+    </define>
   </include>
   <!-- end overrides -->
+  <define name="ImageBody">
+    <optional>
+      <element name="svg">
+        <a:documentation>image can contain SVG XML, which is used to access its identifiers within the Metanorma XML</a:documentation>
+        <oneOrMore>
+          <choice>
+            <text/>
+            <ref name="AnyElement"/>
+          </choice>
+        </oneOrMore>
+      </element>
+    </optional>
+    <zeroOrMore>
+      <ref name="altsource">
+        <a:documentation>Alternative files to use as media</a:documentation>
+      </ref>
+    </zeroOrMore>
+  </define>
   <define name="key">
     <a:documentation>Key to a table, figure, or formula</a:documentation>
     <element name="key">
@@ -929,34 +1006,6 @@ titlecase, or lowercase</a:documentation>
       </ref>
       <ref name="ReducedBibliographicItem"/>
     </element>
-  </define>
-  <define name="image" combine="choice">
-    <choice>
-      <element name="image">
-        <ref name="RequiredId"/>
-        <ref name="ImageAttributes"/>
-        <optional>
-          <element name="svg">
-            <a:documentation>Allow svg in image/svg, for consistency</a:documentation>
-            <oneOrMore>
-              <choice>
-                <text/>
-                <ref name="AnyElement"/>
-              </choice>
-            </oneOrMore>
-          </element>
-        </optional>
-      </element>
-      <element name="svg">
-        <a:documentation>Add svg mark up to image</a:documentation>
-        <oneOrMore>
-          <choice>
-            <text/>
-            <ref name="AnyElement"/>
-          </choice>
-        </oneOrMore>
-      </element>
-    </choice>
   </define>
   <define name="ParagraphFnBody" combine="interleave">
     <ref name="BlockSource">

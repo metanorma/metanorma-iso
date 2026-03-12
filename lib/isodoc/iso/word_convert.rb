@@ -251,6 +251,12 @@ module IsoDoc
           .each { |n| parse(n, out) }
       end
 
+      def admonition_class(node)
+        if node["type"] == "editorial" then "zzHelp"
+        else super
+        end
+      end
+
       include BaseConvert
       include Init
     end
