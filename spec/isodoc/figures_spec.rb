@@ -68,7 +68,9 @@ RSpec.describe IsoDoc do
           <div id="scope">
             <h1>Scope</h1>
             <figure id="N" class="figure">
+              <picture>
               <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+              </picture>
               <figcaption>Figure 1&#160;&#8212; Split-it-right sample divider</figcaption>
             </figure>
             <p>
@@ -78,11 +80,15 @@ RSpec.describe IsoDoc do
             <h1>Widgets</h1>
             <div id="widgets1">
               <figure id="note1" class="figure">
+              <picture>
                 <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+              </picture>
                 <figcaption>Figure 2&#160;&#8212; Split-it-right sample divider</figcaption>
               </figure>
               <figure id="note2" class="figure">
+              <picture>
                 <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+              </picture>
                 <figcaption>Figure 3&#160;&#8212; Split-it-right sample divider</figcaption>
               </figure>
               <p>   </p>
@@ -92,17 +98,23 @@ RSpec.describe IsoDoc do
           <div id="annex1" class="Section3">
             <div id="annex1a">
               <figure id="AN" class="figure">
+              <picture>
                 <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+              </picture>
                 <figcaption>Figure A.1&#160;&#8212; Split-it-right sample divider</figcaption>
               </figure>
             </div>
             <div id="annex1b">
               <figure id="Anote1" class="figure">
+              <picture>
                   <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+              </picture>
                   <figcaption>Figure A.2&#160;&#8212; Split-it-right sample divider</figcaption>
                 </figure>
                 <figure id="Anote2" class="figure">
+              <picture>
                   <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+              </picture>
                   <figcaption>Figure A.3&#160;&#8212; Split-it-right sample divider</figcaption>
                 </figure>
               </div>
@@ -345,25 +357,33 @@ RSpec.describe IsoDoc do
                    <h1 class="ForewordTitle">Foreword</h1>
                    <figure id="figureA-1" class="figure" style="page-break-after: avoid;page-break-inside: avoid;">
                       <figure id="note1" class="figure">
+                         <picture>
                          <img src="rice_images/rice_image1.png" height="20" width="30" title="titletxt" alt="alttext"/>
+                         </picture>
                          <figcaption>a)  Subfigure 1</figcaption>
                       </figure>
                       <figure id="note2" class="figure">
+                         <picture>
                          <img src="rice_images/rice_image1.png" height="20" width="auto"/>
+                         </picture>
                          <figcaption>b)  Subfigure 2</figcaption>
                       </figure>
                       <figcaption>Figure 1 — Overall title</figcaption>
                    </figure>
                    <figure id="figureA-2" class="figure" style="page-break-after: avoid;page-break-inside: avoid;">
                       <figure id="note3" class="figure">
+                         <picture>
                          <img src="rice_images/rice_image1.png" height="20" width="30" title="titletxt" alt="alttext"/>
+                         </picture>
                          <figcaption>a)  Subfigure 1</figcaption>
                       </figure>
                       <figcaption>Overall title</figcaption>
                    </figure>
                    <figure id="figureA-3" class="figure" style="page-break-after: avoid;page-break-inside: avoid;">
                       <figure id="note4" class="figure">
+                         <picture>
                          <img src="rice_images/rice_image1.png" height="20" width="30" title="titletxt" alt="alttext"/>
+                         </picture>
                          <figcaption>Subfigure 1</figcaption>
                       </figure>
                       <figcaption>Figure 2 — Overall title</figcaption>
@@ -435,7 +455,7 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
     expect(strip_guid(Canon.format_xml(pres_output
-      .gsub(/&lt;/, "&#x3c;"))))
+      .gsub("&lt;", "&#x3c;"))))
       .to be_equivalent_to Canon.format_xml(presxml)
     expect(strip_guid(Canon.format_xml(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true))))
@@ -654,13 +674,17 @@ RSpec.describe IsoDoc do
                             <tr>
                                <td style="border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;">
                                   <figure id="note1" class="figure">
+                                    <picture>
                                      <img src="rice_images/rice_image1.png" height="20" width="30" title="titletxt" alt="alttext"/>
+                                    </picture>
                                      <figcaption>a)  Subfigure 1</figcaption>
                                   </figure>
                                </td>
                                <td style="border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;">
                                   <figure id="note2" class="figure">
+                                    <picture>
                                      <img src="rice_images/rice_image1.png" height="20" width="auto"/>
+                                    </picture>
                                      <figcaption>b)  Subfigure 2</figcaption>
                                   </figure>
                                </td>
@@ -675,7 +699,9 @@ RSpec.describe IsoDoc do
                             <tr>
                                <td style="border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;">
                                   <figure id="note3" class="figure">
+                                    <picture>
                                      <img src="rice_images/rice_image1.png" height="20" width="30" title="titletxt" alt="alttext"/>
+                                    </picture>
                                      <figcaption>a)  Subfigure 1</figcaption>
                                   </figure>
                                </td>
@@ -690,7 +716,9 @@ RSpec.describe IsoDoc do
                             <tr>
                                <td style="border-top:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;">
                                   <figure id="note4" class="figure">
+                                    <picture>
                                      <img src="rice_images/rice_image1.png" height="20" width="30" title="titletxt" alt="alttext"/>
+                                    </picture>
                                      <figcaption>Subfigure 1</figcaption>
                                   </figure>
                                </td>
@@ -798,7 +826,7 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
     expect(strip_guid(Canon.format_xml(pres_output
-      .gsub(/&lt;/, "&#x3c;"))))
+      .gsub("&lt;", "&#x3c;"))))
       .to be_equivalent_to Canon.format_xml(presxml)
     expect(strip_guid(Canon.format_xml(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true))))
@@ -935,7 +963,9 @@ RSpec.describe IsoDoc do
               <div align="right">
                 <b>Other units in sec</b>
               </div>
+               <picture>
                 <img src="rice_images/rice_image1.png" height="auto" width="auto"/>
+               </picture>
                 <div id="A" class="Note"><p><span class="note_label">NOTE  1  </span></p>Note 1</div>
                 <div id="C" class="Note"><p><span class="note_label">NOTE  2  </span></p>Note 2</div>
                 <figcaption>Figure 1 &#x2014; Figure 1</figcaption>
@@ -1312,7 +1342,7 @@ RSpec.describe IsoDoc do
     OUTPUT
     expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert
        .new(presxml_options)
-       .convert("test", input, true).gsub(/&lt;/, "&#x3c;"))))
+       .convert("test", input, true).gsub("&lt;", "&#x3c;"))))
       .to be_equivalent_to Canon.format_xml(presxml)
   end
 end
