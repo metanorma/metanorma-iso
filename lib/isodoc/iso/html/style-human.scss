@@ -747,16 +747,14 @@ span.keyword {
 }
 
 .Admonition p,
-.admonition p,
-.zzHelp p {
+.admonition p
+{
     margin: 0;
 }
 
-div.zzHelp {
+div.Admonition.AdmonitionEditorial {
   color: green;
-  padding: 0.5em;
-  margin: 1.5em 0 1.5em 0;
-  text-align: left;
+  background-color: white;
 }
 
 /* Collapse TOC */

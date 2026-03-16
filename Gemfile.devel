@@ -1,4 +1,4 @@
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "features/ol_to_table"
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "fix/admonition_styles"
 gem "html2doc", git: "https://github.com/metanorma/html2doc", branch: "main"
 gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "main"
 
