@@ -136,7 +136,18 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 
 {% if doctype == "Amendment" or doctype == "Technical Corrigendum" %}
 
-h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+h1:not(.AmendNewcontent *),
+h2:not(.AmendNewcontent *),
+h3:not(.AmendNewcontent *),
+h4:not(.AmendNewcontent *),
+h5:not(.AmendNewcontent *),
+h6:not(.AmendNewcontent *),
+.h1:not(.AmendNewcontent *),
+.h2:not(.AmendNewcontent *),
+.h3:not(.AmendNewcontent *),
+.h4:not(.AmendNewcontent *),
+.h5:not(.AmendNewcontent *),
+.h6:not(.AmendNewcontent *) {
     font-weight: normal;
     font-size: initial;
     font-style: italic;
