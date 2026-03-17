@@ -750,6 +750,19 @@ ol > li > p::before {
     @include blockquoteBlock(#f7f7f7);
 }
 
+.Quote .Quote {
+  margin-top: 0px;
+}
+
+.Quote .h1,
+.Quote .h2,
+.Quote .h3,
+.Quote .h4,
+.Quote .h5,
+.Quote .h6 {
+  margin-top: 0px;
+}
+
 /*
 3.12 Formulas
 */
