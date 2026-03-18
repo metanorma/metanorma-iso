@@ -144,6 +144,14 @@ module IsoDoc
       def move_norm_ref_to_sections(docxml)
         amd?(docxml) or super
       end
+
+      # number amend subclauses in amendments
+      def amend_subclause(clause, depth)
+        old_suppressheadingnumbers = @suppressheadingnumbers
+        @suppressheadingnumbers = false
+        super
+        @suppressheadingnumbers = old_suppressheadingnumbers
+      end
     end
   end
 end
