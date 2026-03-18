@@ -6676,7 +6676,24 @@
 	<xsl:template match="mn:metanorma-extension/*[local-name() = 'UnitsML']" mode="update_xml_step1"/>
 
 	<!-- remove image/emf -->
-	<xsl:template match="mn:image/mn:emf" mode="update_xml_step1"/>
+	<xsl:template match="mn:image//mn:emf" mode="update_xml_step1"/>
+
+	<!-- https://github.com/metanorma/metanorma/issues/540 -->
+	<xsl:template match="mn:image[mn:altsource]" priority="3" mode="update_xml_step1">
+		<xsl:copy>
+			<xsl:apply-templates select="@*" mode="update_xml_step1"/>
+			<xsl:choose>
+				<xsl:when test="mn:altsource[contains(@tag, 'pdf')]">
+					<xsl:apply-templates select="mn:altsource[contains(@tag, 'pdf')]/@*" mode="update_xml_step1"/>
+					<xsl:apply-templates select="mn:altsource[contains(@tag, 'pdf')]/node()" mode="update_xml_step1"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:apply-templates select="mn:altsource[contains(@tag, 'default')]/@*" mode="update_xml_step1"/>
+					<xsl:apply-templates select="mn:altsource[contains(@tag, 'default')]/node()" mode="update_xml_step1"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:copy>
+	</xsl:template>
 
 	<!-- remove preprocess-xslt -->
 	<xsl:template match="mn:preprocess-xslt" mode="update_xml_step1"/>
