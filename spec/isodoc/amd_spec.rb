@@ -599,9 +599,7 @@ RSpec.describe IsoDoc do
              </clause>
           </sections>
           <annex id="P" inline-header="false" obligation="normative" autonum="A" displayorder="9">
-             <title id="_">
-                <strong>Annex</strong>
-             </title>
+             <title id="_">Annex</title>
              <fmt-title id="_">
                 <strong>
                    <span class="fmt-caption-label">
@@ -623,6 +621,16 @@ RSpec.describe IsoDoc do
                 <span class="fmt-element-name">Annex</span>
                 <semx element="autonum" source="P">A</semx>
              </fmt-xref-label>
+      <variant-title type="toc">
+         <span class="fmt-caption-label">
+            <span class="fmt-element-name">Annex</span>
+            <semx element="autonum" source="P">A</semx>
+         </span>
+         <span class="fmt-caption-delim">
+            <tab/>
+         </span>
+         <semx element="title" source="_">Annex</semx>
+      </variant-title>
              <clause id="Q" inline-header="false" obligation="normative">
                 <title id="_">Annex A.1</title>
                 <fmt-title id="_" depth="2">
@@ -668,6 +676,12 @@ RSpec.describe IsoDoc do
              </clause>
           </annex>
           <annex id="P1" inline-header="false" obligation="normative" autonum="B" displayorder="10">
+                <variant-title type="toc">
+         <span class="fmt-caption-label">
+            <span class="fmt-element-name">Annex</span>
+            <semx element="autonum" source="P1">B</semx>
+         </span>
+      </variant-title>
              <fmt-title id="_">
                 <strong>
                    <span class="fmt-caption-label">
@@ -793,6 +807,7 @@ RSpec.describe IsoDoc do
                 <br/>
                 <br/>
                 <b>Annex</b></h1>
+                <p style="display:none;" class="variant-title-toc">Annex A  Annex</p>
               <div id="Q">
                 <h2>A.1&#160; Annex A.1</h2>
                 <div id="Q1">
@@ -802,6 +817,7 @@ RSpec.describe IsoDoc do
             </div>
             <br/>
             <div class="Section3" id="P1">
+            <p style="display:none;" class="variant-title-toc">Annex B</p>
               <h1 class="Annex">
                 <b>Annex B</b>
                 <br/><span class="obligation">(normative)</span></h1>
