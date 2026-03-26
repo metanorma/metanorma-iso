@@ -391,10 +391,10 @@ RSpec.describe IsoDoc do
          </p>
       </foreword>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)).at("//xmlns:foreword").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+      .convert("test", input, true)).at("//xmlns:foreword").to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "prefix subclauses if so specified in i18n" do
@@ -540,11 +540,11 @@ RSpec.describe IsoDoc do
       </foreword>
     OUTPUT
 
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options
           .merge({ i18nyaml: "spec/assets/i18n.yaml" }))
-      .convert("test", input, true)).at("//xmlns:foreword").to_xml)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+      .convert("test", input, true)).at("//xmlns:foreword").to_xml))
+      .to be_xml_equivalent_to presxml
   end
 
   it "cross-references sections" do
@@ -727,10 +727,10 @@ RSpec.describe IsoDoc do
          </p>
       </foreword>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)).at("//xmlns:foreword").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+      .convert("test", input, true)).at("//xmlns:foreword").to_xml))
+      .to be_xml_equivalent_to output
   end
 
   private

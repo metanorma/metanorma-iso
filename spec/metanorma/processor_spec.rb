@@ -135,10 +135,10 @@ RSpec.describe Metanorma::Iso::Processor do
     FileUtils.rm_f "test.xml"
     FileUtils.rm_f "test.html"
     processor.output(inputxml, "test.xml", "test.html", :html)
-    expect(Canon.format_xml(strip_guid(File.read("test.html", encoding: "utf-8")
+    expect(strip_guid(File.read("test.html", encoding: "utf-8")
       .gsub(%r{^.*<main}m, "<main")
-      .gsub(%r{</main>.*}m, "</main>"))))
-      .to be_equivalent_to Canon.format_xml(<<~OUTPUT)
+      .gsub(%r{</main>.*}m, "</main>")))
+      .to be_xml_equivalent_to <<~OUTPUT
         <main class="main-section">
           <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
           <div class="authority"/>

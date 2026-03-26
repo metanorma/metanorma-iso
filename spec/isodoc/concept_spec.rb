@@ -606,8 +606,8 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(pres_output))
+      .to be_xml_equivalent_to presxml
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to output
@@ -995,10 +995,10 @@ RSpec.describe IsoDoc do
           </sections>
        </iso-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-       .convert("test", input, true))))
-      .to be_equivalent_to Canon.format_xml(presxml)
+       .convert("test", input, true)))
+      .to be_xml_equivalent_to presxml
   end
 
   it "processes concept markup in term definitions" do
@@ -1115,10 +1115,10 @@ RSpec.describe IsoDoc do
           </sections>
        </iso-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-       .convert("test", input, true))))
-      .to be_equivalent_to Canon.format_xml(presxml)
+       .convert("test", input, true)))
+      .to be_xml_equivalent_to presxml
   end
 
   it "processes concept attributes" do
@@ -1536,8 +1536,8 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(pres_output))
+      .to be_xml_equivalent_to presxml
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true))).to be_html5_equivalent_to output
   end

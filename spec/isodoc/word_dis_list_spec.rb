@@ -369,8 +369,8 @@ RSpec.describe IsoDoc do
     xml = Nokogiri::XML(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
-    expect(strip_guid(Canon.format_xml(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(word)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to word
   end
 
   it "deals with lists types" do
@@ -522,8 +522,8 @@ RSpec.describe IsoDoc do
     xml = Nokogiri::XML(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
-    expect(strip_guid(Canon.format_xml(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(word)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to word
   end
 
   it "deals with lists and paragraphs" do
@@ -587,8 +587,8 @@ RSpec.describe IsoDoc do
     xml = Nokogiri::XML(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
-    expect(strip_guid(Canon.format_xml(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(word)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to word
   end
 
   it "deals with ordered list start" do
@@ -788,8 +788,8 @@ RSpec.describe IsoDoc do
     xml = Nokogiri::XML(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
-    expect(strip_guid(Canon.format_xml(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(word)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to word
   end
 
   it "deals with unordered lists embedded within notes and examples" do
@@ -996,8 +996,8 @@ RSpec.describe IsoDoc do
     xml = Nokogiri::XML(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
-    expect(strip_guid(Canon.format_xml(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(word)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to word
   end
 
   it "deals with ordered lists embedded within notes and examples" do
@@ -1204,8 +1204,8 @@ RSpec.describe IsoDoc do
     xml = Nokogiri::XML(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
-    expect(strip_guid(Canon.format_xml(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(word)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to word
   end
 
   it "ignores intervening ul in numbering ol" do
@@ -1298,8 +1298,8 @@ RSpec.describe IsoDoc do
     xml = Nokogiri::XML(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
-    expect(strip_guid(Canon.format_xml(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(word)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to word
   end
 
   it "deals with definition lists embedded within notes and examples" do
@@ -1353,8 +1353,8 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(Canon.format_xml(Nokogiri::XML(output)
-      .at("//xmlns:div[@class = 'WordSection3']").to_xml)))
-      .to be_equivalent_to Canon.format_xml(word)
+    expect(strip_guid(Nokogiri::XML(output)
+      .at("//xmlns:div[@class = 'WordSection3']").to_xml))
+      .to be_xml_equivalent_to word
   end
 end

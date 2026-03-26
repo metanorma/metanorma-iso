@@ -326,10 +326,10 @@ RSpec.describe IsoDoc do
           </ext>
        </bibdata>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new({}).convert("test", input, true))
-      .at("//xmlns:bibdata").to_xml)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+      .at("//xmlns:bibdata").to_xml))
+      .to be_xml_equivalent_to presxml
     presxml = <<~OUTPUT
       <bibdata>
          <language current="true">fr</language>
@@ -350,11 +350,11 @@ RSpec.describe IsoDoc do
          </ext>
       </bibdata>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new({}).convert("test", input.sub("<language>en</language>",
                                          "<language>fr</language>"), true))
-      .at("//xmlns:bibdata").to_xml)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+      .at("//xmlns:bibdata").to_xml))
+      .to be_xml_equivalent_to presxml
     presxml = <<~OUTPUT
       <bibdata>
          <language current="true">de</language>
@@ -375,10 +375,10 @@ RSpec.describe IsoDoc do
          </ext>
       </bibdata>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new({}).convert("test", input.sub("<language>en</language>",
                                          "<language>de</language>"), true))
-      .at("//xmlns:bibdata").to_xml)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+      .at("//xmlns:bibdata").to_xml))
+      .to be_xml_equivalent_to presxml
   end
 end

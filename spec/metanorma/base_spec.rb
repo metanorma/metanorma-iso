@@ -2065,72 +2065,72 @@ RSpec.describe Metanorma::Iso do
     </presentation-metadata>
        </metanorma-extension>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
-      .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+      .at("//xmlns:metanorma-extension").to_xml))
+      .to be_xml_equivalent_to output
 
     input.sub!(":document-scheme: DOCUMENT-SCHEME",
                ":copyright-year: 1960")
     output.sub!("DOCUMENT-SCHEME", "1951")
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
-      .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+      .at("//xmlns:metanorma-extension").to_xml))
+      .to be_xml_equivalent_to output
 
     input.sub!(":copyright-year: 1960", ":copyright-year: 1973")
     output.sub!("1951", "1972")
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
-      .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+      .at("//xmlns:metanorma-extension").to_xml))
+      .to be_xml_equivalent_to output
 
     input.sub!(":copyright-year: 1973", ":copyright-year: 1980")
     output.sub!("1972", "1979")
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
-      .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+      .at("//xmlns:metanorma-extension").to_xml))
+      .to be_xml_equivalent_to output
 
     input.sub!(":copyright-year: 1980", ":copyright-year: 1988")
     output.sub!("1979", "1987")
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
-      .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+      .at("//xmlns:metanorma-extension").to_xml))
+      .to be_xml_equivalent_to output
 
     input.sub!(":copyright-year: 1988", ":copyright-year: 1990")
     output.sub!("1987", "1989")
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
-      .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+      .at("//xmlns:metanorma-extension").to_xml))
+      .to be_xml_equivalent_to output
 
     input.sub!(":copyright-year: 1990", ":copyright-year: 2012")
     output.sub!("1989", "2012")
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
-      .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+      .at("//xmlns:metanorma-extension").to_xml))
+      .to be_xml_equivalent_to output
 
     input.sub!(":copyright-year: 2012", ":copyright-year: 2014")
     output.sub!("2012", "2013")
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
-      .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+      .at("//xmlns:metanorma-extension").to_xml))
+      .to be_xml_equivalent_to output
 
     input.sub!(":copyright-year: 2014", ":copyright-year: 2025")
     output.sub!("2013", "2024")
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
-      .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+      .at("//xmlns:metanorma-extension").to_xml))
+      .to be_xml_equivalent_to output
 
     input.sub!(":copyright-year: 2014", "")
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(Asciidoctor
+    expect(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
-      .at("//xmlns:metanorma-extension").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+      .at("//xmlns:metanorma-extension").to_xml))
+      .to be_xml_equivalent_to output
   end
 end

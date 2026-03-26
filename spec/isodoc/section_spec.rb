@@ -807,15 +807,15 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(pres_output))
+      .to be_xml_equivalent_to presxml
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to html
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::WordConvert.new({})
+    expect(strip_guid(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true)
-      .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>"))))
-      .to be_equivalent_to Canon.format_xml(word)
+      .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>")))
+      .to be_xml_equivalent_to word
   end
 
   it "processes section titles" do
@@ -926,10 +926,10 @@ RSpec.describe IsoDoc do
         </iso-standard>
     OUTPUT
 
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true))))
-      .to be_equivalent_to Canon.format_xml(presxml)
+      .convert("test", input, true)))
+      .to be_xml_equivalent_to presxml
   end
 
   it "processes subclauses with and without titles" do
@@ -1044,8 +1044,8 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(pres_output))
+      .to be_xml_equivalent_to presxml
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to html
@@ -1245,8 +1245,8 @@ RSpec.describe IsoDoc do
     xml.at("//xmlns:localized-strings")&.remove
     xml.at("//xmlns:boilerplate")&.remove
     xml.at("//xmlns:metanorma-extension")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to presxml
     xml = Nokogiri::XML(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true))
     xml.at("//div[@class = 'authority']")&.remove
@@ -1305,9 +1305,9 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    expect(Canon.format_xml(output.sub(/^.*<body /m, "<body ")
-      .sub(%r{</body>.*$}m, "</body>")))
-      .to be_equivalent_to Canon.format_xml(<<~OUTPUT)
+    expect(output.sub(/^.*<body /m, "<body ")
+      .sub(%r{</body>.*$}m, "</body>"))
+      .to be_xml_equivalent_to <<~OUTPUT
         <body lang="EN-US" link="blue" vlink="#954F72">
           <div class="WordSection1">
             <p>&#160;</p>
@@ -1336,9 +1336,9 @@ RSpec.describe IsoDoc do
         <sections/>
       </iso-standard>
     INPUT
-    expect(Canon.format_xml(output.sub(/^.*<body /m, "<body ")
-      .sub(%r{</body>.*$}m, "</body>")))
-      .to be_equivalent_to Canon.format_xml(<<~OUTPUT)
+    expect(output.sub(/^.*<body /m, "<body ")
+      .sub(%r{</body>.*$}m, "</body>"))
+      .to be_xml_equivalent_to <<~OUTPUT
         <body lang="EN-US" link="blue" vlink="#954F72">
           <div class="WordSection1">
             <p>&#160;</p>
@@ -1425,8 +1425,8 @@ RSpec.describe IsoDoc do
     xml.at("//xmlns:localized-strings")&.remove
     xml.at("//xmlns:boilerplate")&.remove
     xml.at("//xmlns:metanorma-extension")&.remove
-    expect(strip_guid(Canon.format_xml(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to presxml
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to html
@@ -1502,8 +1502,8 @@ RSpec.describe IsoDoc do
     xml.at("//xmlns:localized-strings")&.remove
     xml.at("//xmlns:boilerplate")&.remove
     xml.at("//xmlns:metanorma-extension")&.remove
-    expect(strip_guid(Canon.format_xml(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to presxml
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to html
@@ -1912,9 +1912,9 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output
-      .gsub(%r{<localized-strings>.*</localized-strings>}m, ""))))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(pres_output
+      .gsub(%r{<localized-strings>.*</localized-strings>}m, "")))
+      .to be_xml_equivalent_to presxml
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_xml_equivalent_to html
@@ -1927,7 +1927,7 @@ RSpec.describe IsoDoc do
     wordxml.xpath("//div[@class = 'WordSection1' or @class = 'WordSection2']")
       .each(&:remove)
     wordxml.at("//div[@class = 'WordSection3']")&.remove
-    expect(Canon.format_xml(strip_guid(wordxml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(doc)
+    expect(strip_guid(wordxml.to_xml))
+      .to be_xml_equivalent_to doc
   end
 end

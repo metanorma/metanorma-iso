@@ -383,10 +383,10 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
        </ogc-standard>
     OUTPUT
 
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true))))
-      .to be_equivalent_to Canon.format_xml(presxml)
+      .convert("test", input, true)))
+      .to be_xml_equivalent_to presxml
   end
 
   it "processes requirement components for recommendation classes" do
@@ -718,11 +718,11 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </preface>
        </ogc-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+    expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
       .gsub(%r{^.*<body}m, "<body")
-      .gsub(%r{</body>.*}m, "</body>"))))
-      .to be_equivalent_to Canon.format_xml(presxml)
+      .gsub(%r{</body>.*}m, "</body>")))
+      .to be_xml_equivalent_to presxml
   end
 
   it "processes nested requirement steps" do
@@ -876,9 +876,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </preface>
        </ogc-standard>
     PRESXML
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))
+      .to be_xml_equivalent_to presxml
   end
 
   it "processes bidirectional requirement/conformance tests" do
@@ -1190,8 +1190,8 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
           </preface>
        </ogc-standard>
     PRESXML
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))
+      .to be_xml_equivalent_to presxml
   end
 end

@@ -202,8 +202,8 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", input, true)
     expect(output).to be_html5_equivalent_to html
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", input, true)
-    expect(Canon.format_xml(Nokogiri::XML(output).at("//body").to_xml))
-      .to be_equivalent_to Canon.format_xml(word)
+    expect(Nokogiri::XML(output).at("//body").to_xml)
+      .to be_xml_equivalent_to word
   end
 
   it "renders subfigures" do
@@ -454,18 +454,18 @@ RSpec.describe IsoDoc do
     OUTPUT
     pres_output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
-    expect(strip_guid(Canon.format_xml(pres_output
-      .gsub("&lt;", "&#x3c;"))))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(pres_output
+      .gsub("&lt;", "&#x3c;")))
+      .to be_xml_equivalent_to presxml
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to html
     FileUtils.rm_rf "spec/assets/odf1.emf"
-    expect(strip_guid(Canon.format_xml(IsoDoc::Iso::WordConvert.new({})
+    expect(strip_guid(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true)
       .gsub(/['"][^'".]+\.(gif|xml)['"]/, "'_.\\1'")
-      .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref"))))
-      .to be_equivalent_to Canon.format_xml(word)
+      .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref")))
+      .to be_xml_equivalent_to word
   end
 
   it "processes tabular subfigures" do
@@ -825,18 +825,18 @@ RSpec.describe IsoDoc do
     OUTPUT
     pres_output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)
-    expect(strip_guid(Canon.format_xml(pres_output
-      .gsub("&lt;", "&#x3c;"))))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(pres_output
+      .gsub("&lt;", "&#x3c;")))
+      .to be_xml_equivalent_to presxml
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to html
     FileUtils.rm_rf "spec/assets/odf1.emf"
-    expect(strip_guid(Canon.format_xml(IsoDoc::Iso::WordConvert.new({})
+    expect(strip_guid(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true)
       .gsub(/['"][^'".]+\.(gif|xml)['"]/, "'_.\\1'")
-      .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref"))))
-      .to be_equivalent_to Canon.format_xml(word)
+      .gsub(/mso-bookmark:_Ref\d+/, "mso-bookmark:_Ref")))
+      .to be_xml_equivalent_to word
   end
 
   it "processes units statements in figures" do
@@ -1019,14 +1019,14 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(pres_output))
+      .to be_xml_equivalent_to presxml
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to html
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, true)
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(output).at("//body").to_xml)))
-      .to be_equivalent_to Canon.format_xml(word)
+    expect(strip_guid(Nokogiri::XML(output).at("//body").to_xml))
+      .to be_xml_equivalent_to word
   end
 
   it "processes figures" do
@@ -1340,9 +1340,9 @@ RSpec.describe IsoDoc do
          </fmt-footnote-container>
       </iso-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert
        .new(presxml_options)
-       .convert("test", input, true).gsub("&lt;", "&#x3c;"))))
-      .to be_equivalent_to Canon.format_xml(presxml)
+       .convert("test", input, true).gsub("&lt;", "&#x3c;")))
+      .to be_xml_equivalent_to presxml
   end
 end

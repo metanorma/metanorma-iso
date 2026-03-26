@@ -96,9 +96,9 @@ RSpec.describe Metanorma::Iso do
           </annotation-container>
        </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(input)
-      .sub(/^.+<sections>/m, "<metanorma><sections>")))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(input)
+      .sub(/^.+<sections>/m, "<metanorma><sections>"))
+      .to be_xml_equivalent_to output
   end
 
   it "processes term notes" do
