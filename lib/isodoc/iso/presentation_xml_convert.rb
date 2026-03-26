@@ -113,9 +113,9 @@ module IsoDoc
 
       def formula_where(dlist)
         dlist.nil? and return
-        dlist.xpath(ns(".//dt")).size == 1 &&
+        (dlist.xpath(ns(".//dt")).size == 1 &&
           dlist.at(ns(".//dd"))&.elements&.size == 1 &&
-          dlist.at(ns(".//dd/p")) or return super
+          dlist.at(ns(".//dd/p"))) or return super
         formula_where_one(dlist)
       end
 
@@ -129,11 +129,7 @@ module IsoDoc
       def table1(elem)
         table1_key(elem)
         if elem["class"] == "modspec"
-          if n = elem.at(ns(".//fmt-name"))
-            n.remove.name = "name"
-            elem.add_first_child(n)
-          end
-          elem.at(ns("./thead"))&.remove
+          table1_modspec_name(elem)
           super
           elem.at(ns("./name"))&.remove
           table1_fmt_xref_modspec(elem)
@@ -141,15 +137,23 @@ module IsoDoc
         end
       end
 
+      def table1_modspec_name(elem)
+        if n = elem.at(ns(".//fmt-name"))
+          n.remove.name = "name"
+          elem.add_first_child(n)
+        end
+        elem.at(ns("./thead"))&.remove
+      end
+
       def table1_fmt_xref_modspec(elem)
         p = elem.parent.parent.at(ns("./fmt-xref-label")) or return
-        t = elem.at(ns("./fmt-xref-label"))&.remove or return
+        t = elem.at(ns("./fmt-xref-label")) or return
         n = t.at(ns("./span[@class='fmt-element-name'][2]")) or return
         while i = n.next
           i.remove
         end
         n.remove
-        p.children.first.previous = to_xml(t.children)
+        p.children.first.previous = to_xml(t.remove.children)
       end
 
       def table1_key(elem)
@@ -229,8 +233,8 @@ module IsoDoc
       end
 
       def url_note_process(data)
-        data[:type] == "standard" && data[:home_standard] == false &&
-          !data[:uri].blank? or return ""
+        (data[:type] == "standard" && data[:home_standard] == false &&
+          !data[:uri].blank?) or return ""
         id = "_#{UUIDTools::UUID.random_create}"
         @new_ids[id] = nil
         <<~XML

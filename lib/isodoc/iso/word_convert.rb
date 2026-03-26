@@ -51,19 +51,11 @@ module IsoDoc
 
       def convert(input_filename, file = nil, debug = false,
                 output_filename = nil)
-        if @dis && use_dis?(input_filename, file)
+        if @dis&.use_dis?(input_filename, file, @wordtemplate)
           swap_renderer(self, @dis, file, input_filename, debug)
           @dis.convert(input_filename, file, debug, output_filename)
         else super
         end
-      end
-
-      def use_dis?(input_filename, file)
-        file ||= File.read(input_filename, encoding: "utf-8")
-        stage = Nokogiri::XML(file, &:huge)
-          .at(ns("//bibdata/status/stage"))&.text
-        (/^[4569].$/.match?(stage) && @wordtemplate != "simple") ||
-          (/^[0-3].$/.match?(stage) && @wordtemplate == "dis")
       end
 
       def make_body(xml, docxml)
@@ -132,7 +124,7 @@ module IsoDoc
         page_break(out)
         out.div do |div|
           div.h1(**bibliography_attrs) do |h1|
-            node&.at(ns("./fmt-title"))&.children&.each { |c2| parse(c2, h1) }
+            children_parse(node&.at(ns("./fmt-title")), h1)
           end
           biblio_list(node, div, true)
         end
