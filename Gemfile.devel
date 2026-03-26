@@ -1,5 +1,8 @@
-gem "relaton-render", git: "https://github.com/relaton/relaton-render", branch: "features/disambiguated_date"
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "features/ol_to_table"
-gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "features/ol_to_table"
-
+gem "relaton-cli", git: "https://github.com/relaton/relaton-cli", tag: "v2.0.0-alpha.1"
+gem "relaton-render", git: "https://github.com/relaton/relaton-render", branch: "fix/relaton-2.0"
+gem "relaton-iev", git: "https://github.com/relaton/relaton-iev", branch: "fix/relaton-2.0"
+gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "fix/relaton-2.0"
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "fix/relaton-2.0"
+gem "metanorma", git: "https://github.com/metanorma/metanorma", branch: "fix/relaton-2.0"
+gem "glossarist", git: "https://github.com/glossarist/glossarist-ruby", branch: "fix/relaton-2.0"
 
