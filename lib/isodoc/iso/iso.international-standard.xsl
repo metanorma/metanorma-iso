@@ -1491,7 +1491,9 @@
 				</xsl:if>
 
 				<!-- Index -->
-				<xsl:call-template name="index-pages"/>
+				<xsl:call-template name="index-pages">
+					<xsl:with-param name="num" select="$num"/>
+				</xsl:call-template>
 
 				<xsl:call-template name="back-page">
 					<xsl:with-param name="num" select="$num"/>
@@ -6053,18 +6055,6 @@
 	<xsl:template name="insertLastBlock">
 		<xsl:param name="num"/>
 		<fo:block id="lastBlock{$num}" font-size="1pt" keep-with-previous="always" role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:block>
-	</xsl:template>
-
-	<xsl:template name="insert_firstpage_id">
-		<xsl:param name="num"/>
-		<fo:wrapper role="artifact">
-			<fo:block-container absolute-position="fixed" top="1mm">
-				<xsl:if test="$num = 1">
-					<xsl:attribute name="id">firstpage_id_0</xsl:attribute>
-				</xsl:if>
-				<fo:block id="firstpage_id_{$num}" role="SKIP"> </fo:block>
-			</fo:block-container>
-		</fo:wrapper>
 	</xsl:template>
 
 	<!-- https://www.metanorma.org/ns/standoc -->
@@ -17402,7 +17392,7 @@
 	</xsl:variable>
 
 	<xsl:template name="index-pages">
-		<xsl:variable name="num"><xsl:number level="any" count="mn:metanorma"/></xsl:variable>
+		<xsl:param name="num"/>
 
 		<xsl:variable name="docid">
 			<xsl:call-template name="getDocumentId"/>
@@ -19497,6 +19487,15 @@
 		</xsl:if>
 	</xsl:template>
 
+	<!-- debug templates -->
+	<xsl:template name="debug_contents">
+		<xsl:if test="$debug = 'true'">
+			<redirect:write file="contents_.xml"> <!-- {java:getTime(java:java.util.Date.new())} -->
+				<xsl:copy-of select="$contents"/>
+			</redirect:write>
+		</xsl:if>
+	</xsl:template>
+
 	<xsl:template name="processPrefaceSectionsDefault">
 		<xsl:param name="num"/>
 		<xsl:for-each select="/*/mn:preface/*[not(self::mn:note or self::mn:admonition)]">
@@ -20986,7 +20985,7 @@
 	<xsl:template name="insertCoverPageFullImage">
 		<xsl:param name="name">coverpage-image</xsl:param>
 		<xsl:for-each select="//mn:metanorma/mn:metanorma-extension/mn:presentation-metadata/*[local-name() = $name][1]/mn:image">
-			<fo:page-sequence master-reference="cover-page" force-page-count="no-force">
+			<fo:page-sequence master-reference="cover-page" force-page-count="no-force" initial-page-number="1">
 				<fo:flow flow-name="xsl-region-body">
 					<xsl:call-template name="insertBackgroundPageImage">
 						<xsl:with-param name="number" select="position()"/>
@@ -21448,6 +21447,18 @@
 				<xsl:otherwise>_</xsl:otherwise>
 			</xsl:choose>
 		</xsl:attribute>
+	</xsl:template>
+
+	<xsl:template name="insert_firstpage_id">
+		<xsl:param name="num"/>
+		<fo:wrapper role="artifact">
+			<fo:block-container absolute-position="fixed" top="1mm">
+				<xsl:if test="$num = 1">
+					<xsl:attribute name="id">firstpage_id_0</xsl:attribute>
+				</xsl:if>
+				<fo:block id="firstpage_id_{$num}" role="SKIP"> </fo:block>
+			</fo:block-container>
+		</fo:wrapper>
 	</xsl:template>
 
 	<xsl:template name="getCharByCodePoint">
