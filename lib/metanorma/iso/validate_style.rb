@@ -9,16 +9,17 @@ module Metanorma
         node.nil? and return ""
         node1 = Nokogiri::XML.fragment(node.to_s)
         node1.xpath(".//link | .//locality | .//localityStack | " \
-          ".//stem | .//sourcecode").each(&:remove)
+                    ".//stem | .//sourcecode").each(&:remove)
         ret = ""
         node1.traverse { |x| ret += x.text if x.text? }
         HTMLEntities.new.decode(ret)
       end
 
       # ISO/IEC DIR 2, 12.2
-      def foreword_style(node)
+      # Annulled, ISO's own foreword text fails this test
+      def foreword_style(_node)
         @novalid and return
-        style_no_guidance(node, extract_text(node), "Foreword")
+        # style_no_guidance(node, extract_text(node), "Foreword")
       end
 
       # ISO/IEC DIR 2, 14.2

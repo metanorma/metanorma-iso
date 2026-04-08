@@ -59,7 +59,7 @@ module Metanorma
       def sort_biblio_key(bib)
         pubclass = pub_class(bib)
         num = bib.at("./docnumber")&.text
-        id = bib.at("./docidentifier[@primary]") ||
+        id = bib.at("./docidentifier[@primary = 'true']") ||
           bib.at("./docidentifier[not(#{@conv.skip_docid} or @type = 'metanorma')]")
         metaid = bib.at("./docidentifier[@type = 'metanorma']")&.text
         abbrid = metaid unless /^\[\d+\]$/.match?(metaid)

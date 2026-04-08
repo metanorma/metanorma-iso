@@ -5,6 +5,14 @@ module IsoDoc
     class WordDISConvert < WordConvert
       attr_accessor :bgstripcolor
 
+      def use_dis?(input_filename, file, wordtemplate)
+        file ||= File.read(input_filename, encoding: "utf-8")
+        stage = Nokogiri::XML(file, &:huge)
+          .at(ns("//bibdata/status/stage"))&.text
+        (/^[4569].$/.match?(stage) && wordtemplate != "simple") ||
+          (/^[0-3].$/.match?(stage) && wordtemplate == "dis")
+      end
+
       def default_file_locations(_options)
         { wordstylesheet: html_doc_path("wordstyle-dis.scss"),
           standardstylesheet: html_doc_path("isodoc-dis.scss"),
