@@ -1,3 +1,2 @@
-gem "relaton-render", git: "https://github.com/relaton/relaton-render", branch: "features/disambiguated_date"
-gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "fix/html-toc-formatting"
+gem "canon", git: "https://github.com/lutaml/canon", branch: "fix/nn-apr2026"
 
