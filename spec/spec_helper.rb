@@ -10,9 +10,9 @@ require "rspec/matchers"
 require "equivalent-xml"
 require "metanorma"
 require "metanorma/iso"
-require "iev"
+# require "iev"
 require "canon"
-require "relaton_iso"
+require "relaton/iso"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
