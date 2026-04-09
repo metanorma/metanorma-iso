@@ -685,7 +685,7 @@ RSpec.describe Metanorma::Iso do
                       </bibitem>
                    </relation>
                    <place>
-                      <city>Geneva</city>
+                      <formattedPlace>Geneva</formattedPlace>
                    </place>
                 </bibitem>
              </references>
