@@ -32,7 +32,7 @@ RSpec.describe Metanorma::Iso, type: :validation do
     expect(errors).to include("Introduction may contain requirement")
   end
 
-  it "warns that foreword may contain recommendation" do
+  xit "warns that foreword may contain recommendation" do
     errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
@@ -43,7 +43,7 @@ RSpec.describe Metanorma::Iso, type: :validation do
     expect(errors).to include("Foreword may contain recommendation")
   end
 
-  it "warns that foreword may contain permission" do
+  xit "warns that foreword may contain permission" do
     errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 

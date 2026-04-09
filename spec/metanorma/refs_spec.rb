@@ -106,9 +106,7 @@ RSpec.describe Metanorma::Iso do
                          </organization>
                       </owner>
                    </copyright>
-                               <place>
-               <formattedPlace>Geneva</formattedPlace>
-            </place>
+                   <place><city>Geneva</city></place>
                 </bibitem>
                 <bibitem id="_" type="standard" anchor="fdis2">
                    <fetched/>
@@ -148,9 +146,7 @@ RSpec.describe Metanorma::Iso do
                          </organization>
                       </owner>
                    </copyright>
-                               <place>
-               <formattedPlace>Geneva</formattedPlace>
-            </place>
+                   <place><city>Geneva</city></place>
                 </bibitem>
              </references>
           </bibliography>
@@ -689,7 +685,7 @@ RSpec.describe Metanorma::Iso do
                       </bibitem>
                    </relation>
                    <place>
-                      <formattedPlace>Geneva</formattedPlace>
+                      <city>Geneva</city>
                    </place>
                 </bibitem>
              </references>
@@ -741,9 +737,7 @@ RSpec.describe Metanorma::Iso do
               </organization>
             </owner>
           </copyright>
-                      <place>
-               <formattedPlace>Geneva</formattedPlace>
-            </place>
+          <place><city>Geneva</city></place>
         </bibitem>
       OUTPUT
     end
@@ -788,7 +782,7 @@ RSpec.describe Metanorma::Iso do
               </owner>
             </copyright>
                         <place>
-               <formattedPlace>Geneva</formattedPlace>
+               <city>Geneva</city>
             </place>
           </bibitem>
         OUTPUT
