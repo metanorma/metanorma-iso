@@ -20772,7 +20772,7 @@
 			<xsl:if test="@id and       normalize-space(java:matches(java:java.lang.String.new(@id), '_[0-9a-z]{8}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{4}-[0-9a-z]{12}.*')) = 'false'">
 				<fox:destination internal-destination="{@id}"/>
 			</xsl:if>
-			<xsl:for-each select=". | *[1][self::mn:fmt-title] | *[1][self::mn:fmt-name]">
+			<xsl:for-each select=". | mn:fmt-title[1] | mn:fmt-name[1]">
 				<xsl:if test="@named_dest">
 					<fox:destination internal-destination="{@named_dest}"/>
 				</xsl:if>
