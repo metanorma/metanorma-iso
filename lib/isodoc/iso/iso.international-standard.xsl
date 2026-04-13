@@ -2097,7 +2097,7 @@
 									<fo:table-row>
 										<fo:table-cell number-columns-spanned="2" border-right="{$COVER_PAGE_BORDER}" padding-right="4mm">
 
-											<fo:block-container font-family="Cambria" line-height="1.1" role="SKIP" height="110mm">
+											<fo:block-container font-family="Cambria" line-height="1.1" role="SKIP" height="110mm" id="{concat('__internal_layout__coverpage_p_title_', $num , '_', generate-id())}">
 												<!-- for role see coment https://github.com/pdf-association/extension-brotli/issues/5#issuecomment-3931742869 -->
 												<fo:block margin-right="3.5mm" role="P/Title"> <!-- role="SKIP" -->
 													<fo:block font-size="18pt" font-weight="bold" margin-top="2.5mm" role="SKIP"> <!-- role="H1" -->
