@@ -1769,7 +1769,7 @@ RSpec.describe Metanorma::Iso do
   private
 
   def mock_fdis
-    expect(RelatonIso::IsoBibliography).to receive(:get)
+    expect(Relaton::Iso::Bibliography).to receive(:get)
       .with("ISO/FDIS 17664-1", nil, anything)
       .and_return("spec/assets/boilerplate.adoc")
   end

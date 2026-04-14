@@ -10,9 +10,9 @@ require "rspec/matchers"
 require "equivalent-xml"
 require "metanorma"
 require "metanorma/iso"
-require "iev"
+# require "iev"
 require "canon"
-require "relaton_iso"
+require "relaton/iso"
 
 Canon::Config.instance.tap do |cfg|
   # The diffs generated with :none are unusable,

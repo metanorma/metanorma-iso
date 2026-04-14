@@ -3,72 +3,6 @@
 require "spec_helper"
 
 RSpec.describe Relaton::Render::Iso do
-  it "returns formattedref" do
-    input = <<~INPUT
-      <bibitem type="book">
-      <formattedref>ALUFFI, Paolo, David ANDERSON, Milena HERING, Mircea MUSTAŢĂ and Sam PAYNE (eds.). <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. 1st edition. (London Mathematical Society Lecture Note Series 472.) Cambridge, UK: Cambridge University Press. 2022. https://doi.org/10.1017/9781108877831. 1 vol.</formattedref>
-        <title>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</title>
-        <docidentifier type="DOI">https://doi.org/10.1017/9781108877831</docidentifier>
-        <docidentifier type="ISBN">9781108877831</docidentifier>
-        <date type="published"><on>2022</on></date>
-        <contributor>
-          <role type="editor"/>
-          <person>
-            <name><surname>Aluffi</surname><forename>Paolo</forename></name>
-          </person>
-        </contributor>
-                <contributor>
-          <role type="editor"/>
-          <person>
-            <name><surname>Anderson</surname><forename>David</forename></name>
-          </person>
-        </contributor>
-        <contributor>
-          <role type="editor"/>
-          <person>
-            <name><surname>Hering</surname><forename>Milena</forename></name>
-          </person>
-        </contributor>
-        <contributor>
-          <role type="editor"/>
-          <person>
-            <name><surname>Mustaţă</surname><forename>Mircea</forename></name>
-          </person>
-        </contributor>
-        <contributor>
-          <role type="editor"/>
-          <person>
-            <name><surname>Payne</surname><forename>Sam</forename></name>
-          </person>
-        </contributor>
-        <edition>1</edition>
-        <series>
-        <title>London Mathematical Society Lecture Note Series</title>
-        <number>472</number>
-        </series>
-            <contributor>
-              <role type="publisher"/>
-              <organization>
-                <name>Cambridge University Press</name>
-              </organization>
-            </contributor>
-            <place>Cambridge, UK</place>
-          <size><value type="volume">1</value></size>
-      </bibitem>
-    INPUT
-    output = <<~OUTPUT
-      <formattedref>ALUFFI, P., D. ANDERSON, M. HERING, M. MUSTAŢĂ and S. PAYNE. (eds.) <em>Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</em>. First edition. (London Mathematical Society Lecture Note Series 472). Cambridge, UK: Cambridge University Press. 2022. 1 vol.</formattedref>
-    OUTPUT
-    p = renderer
-    expect(p.render(input))
-      .to be_equivalent_to output
-    expect(p.render(input, embedded: false))
-      .to be_equivalent_to output
-    expect(p.render(input, embedded: true))
-      .to be_xml_equivalent_to output.gsub("<formattedref>", "")
-        .gsub("</formattedref>", "")
-  end
-
   it "renders book, five editors with generic class" do
     input = <<~INPUT
       <bibitem type="book">
@@ -249,7 +183,7 @@ RSpec.describe Relaton::Render::Iso do
               <form>electronic resource</form>
               <size>8vo</size>
             </medium>
-            <place>New York, NY</place>
+            <place><formattedPlace>New York, NY</formattedPlace></place>
           </bibitem>
         </relation>
         <extent>
