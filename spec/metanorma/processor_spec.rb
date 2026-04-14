@@ -108,9 +108,10 @@ RSpec.describe Metanorma::Iso::Processor do
   end
 
   it "registers output formats against metanorma" do
-    expect(processor.output_formats.sort.to_s).to be_equivalent_to <<~OUTPUT
+    output = <<~OUTPUT
       [[:doc, "doc"], [:html, "html"], [:html_alt, "alt.html"], [:isosts, "iso.sts.xml"], [:pdf, "pdf"], [:presentation, "presentation.xml"], [:rxl, "rxl"], [:sts, "sts.xml"], [:xml, "xml"]]
     OUTPUT
+    expect(processor.output_formats.sort.to_s).to be_equivalent_to output.chop
   end
 
   it "registers version against metanorma" do
@@ -122,22 +123,22 @@ RSpec.describe Metanorma::Iso::Processor do
       #{ASCIIDOC_BLANK_HDR}
     INPUT
     output = <<~OUTPUT
-        #{BLANK_HDR}
+        #{BLANK_HDR_2}
         <sections/>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(processor.input_to_isodoc(input, nil))))
-      .to be_equivalent_to Canon.format_xml(strip_guid(output))
+    expect(strip_guid(processor.input_to_isodoc(input, nil)))
+      .to be_xml_equivalent_to strip_guid(output)
   end
 
   it "generates HTML from Metanorma XML" do
     FileUtils.rm_f "test.xml"
     FileUtils.rm_f "test.html"
     processor.output(inputxml, "test.xml", "test.html", :html)
-    expect(Canon.format_xml(strip_guid(File.read("test.html", encoding: "utf-8")
+    expect(strip_guid(File.read("test.html", encoding: "utf-8")
       .gsub(%r{^.*<main}m, "<main")
-      .gsub(%r{</main>.*}m, "</main>"))))
-      .to be_equivalent_to Canon.format_xml(<<~OUTPUT)
+      .gsub(%r{</main>.*}m, "</main>")))
+      .to be_xml_equivalent_to <<~OUTPUT
         <main class="main-section">
           <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
           <div class="authority"/>

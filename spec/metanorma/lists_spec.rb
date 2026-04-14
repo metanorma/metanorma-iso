@@ -16,8 +16,8 @@ RSpec.describe Metanorma::Iso do
       List F:: List G
 
     INPUT
-    expect(Canon.format_xml(strip_guid(output))).to be_equivalent_to Canon.format_xml(<<~"OUTPUT")
-      #{BLANK_HDR}
+    expect(strip_guid(output)).to be_xml_equivalent_to <<~OUTPUT
+      #{BLANK_HDR_2}
         <sections>
           <ul id="_">
             <li>
@@ -98,8 +98,8 @@ RSpec.describe Metanorma::Iso do
       Note 3.
 
     INPUT
-    expect(Canon.format_xml(strip_guid(output))).to be_equivalent_to Canon.format_xml(<<~"OUTPUT")
-      #{BLANK_HDR}
+    expect(strip_guid(output)).to be_xml_equivalent_to <<~OUTPUT
+      #{BLANK_HDR_2}
         <sections>
           <ul id="_" anchor="id">
             <li>
@@ -173,14 +173,16 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "anchors lists and list items" do
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(<<~"INPUT", *OPTIONS)))).to be_equivalent_to Canon.format_xml(<<~"OUTPUT")
+    output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
       #{ASCIIDOC_BLANK_HDR}
       [[id1]]
       * [[id2]] List item
       * Hello [[id3]] List item
 
     INPUT
-      #{BLANK_HDR}
+
+    expect(strip_guid(output)).to be_xml_equivalent_to <<~OUTPUT
+      #{BLANK_HDR_2}
         <sections>
           <ul id="_" anchor="id1">
             <li id="_" anchor="id2">

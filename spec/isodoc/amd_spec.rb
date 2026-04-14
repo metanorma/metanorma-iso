@@ -156,8 +156,8 @@ RSpec.describe IsoDoc do
           </p>
        </foreword>
       OUTPUT
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "cross-references sections" do
@@ -384,9 +384,9 @@ RSpec.describe IsoDoc do
           </p>
        </foreword>
       OUTPUT
-    expect(Canon.format_xml(strip_guid(xml.to_xml))
+    expect(strip_guid(xml.to_xml)
     .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to Canon.format_xml(output)
+      .to be_xml_equivalent_to output
   end
 
   it "processes section names" do
@@ -720,7 +720,7 @@ RSpec.describe IsoDoc do
        </iso-standard>
     OUTPUT
     html = <<~OUTPUT
-      <html lang="en" xmlns:epub="http://www.idpf.org/2007/ops">
+      <html lang="en">
         <head/>
         <body lang="en">
           <div class="title-section">
@@ -782,9 +782,6 @@ RSpec.describe IsoDoc do
             <div class="Section3" id="_">
               <h1 class="IntroTitle">Acknowledgements</h1>
             </div>
-            <div>
-              <h1>Normative References</h1>
-            </div>
             <div id="M">
               <h1>Clause 4</h1>
               <div id="N">
@@ -822,6 +819,9 @@ RSpec.describe IsoDoc do
                 <b>Annex B</b>
                 <br/><span class="obligation">(normative)</span></h1>
             </div>
+            <div>
+              <h1>Normative References</h1>
+            </div>
             <br/>
             <div>
               <h1 class="Section3">Bibliography</h1>
@@ -836,12 +836,12 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output))
+    expect(strip_guid(pres_output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+      .to be_xml_equivalent_to presxml
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
   end
 
   it "processes IsoXML metadata for amendment" do
@@ -1018,22 +1018,22 @@ RSpec.describe IsoDoc do
         docnumber_lang: "ISO/PreNWIP3 17301-1:2016/Amd.1(E)",
         docnumber_reference: "ISO/PreNWIP3 17301-1:2016/Amd.1:2017(E)",
         docnumeric: "17301",
-        docsubtitle: "Introduction Fran&#xe7;aise&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie&#xa0;1 : Part du Titre",
-        docsubtitleamd: "Fraction massique de mati&#xe8;re &#xe9;trang&#xe8;re, riz usin&#xe9; (non gluant), diviseurs d&#x2019;&#xe9;chantillon et recommandations relatives aux conditions d&#x2019;entreposage et de transport",
-        docsubtitleamdlabel: "AMENDEMENT&#xa0;1",
-        docsubtitlecorrlabel: "RECTIFICATIF TECHNIQUE&#xa0;2",
-        docsubtitleintro: "Introduction Fran&#xe7;aise",
+        docsubtitle: "Introduction Française&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie\u00a01 : Part du Titre",
+        docsubtitleamd: "Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport",
+        docsubtitleamdlabel: "AMENDEMENT\u00a01",
+        docsubtitlecorrlabel: "RECTIFICATIF TECHNIQUE\u00a02",
+        docsubtitleintro: "Introduction Française",
         docsubtitlemain: "Titre Principal",
         docsubtitlepart: "Part du Titre",
-        docsubtitlepartlabel: "Partie&#xa0;1",
-        doctitle: "Introduction&#xa0;&#x2014; Main Title&#x2009;&#x2014;&#x2009;Title&#xa0;&#x2014; Part&#xa0;1: Title Part",
+        docsubtitlepartlabel: "Partie\u00a01",
+        doctitle: "Introduction&#xa0;&#x2014; Main Title\u2009\u2014\u2009Title&#xa0;&#x2014; Part\u00a01: Title Part",
         doctitleamd: "Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions",
-        doctitleamdlabel: "AMENDMENT&#xa0;1",
-        doctitlecorrlabel: "TECHNICAL CORRIGENDUM&#xa0;2",
+        doctitleamdlabel: "AMENDMENT\u00a01",
+        doctitlecorrlabel: "TECHNICAL CORRIGENDUM\u00a02",
         doctitleintro: "Introduction",
-        doctitlemain: "Main Title&#x2009;&#x2014;&#x2009;Title",
+        doctitlemain: "Main Title\u2009\u2014\u2009Title",
         doctitlepart: "Title Part",
-        doctitlepartlabel: "Part&#xa0;1",
+        doctitlepartlabel: "Part\u00a01",
         doctype: "Amendment",
         doctype_display: "Amendment",
         docyear: "2017",
@@ -1180,22 +1180,22 @@ RSpec.describe IsoDoc do
         docnumber_lang: "ISO/PreNWIP3 17301-1:2016/Amd.1(E)",
         docnumber_reference: "ISO/PreNWIP3 17301-1:2016/Amd.1:2017(E)",
         docnumeric: "17301",
-        docsubtitle: "Introduction&#xa0;&#x2014; Main Title&#x2009;&#x2014;&#x2009;Title&#xa0;&#x2014; Part&#xa0;1: Title Part",
+        docsubtitle: "Introduction&#xa0;&#x2014; Main Title\u2009—\u2009Title&#xa0;&#x2014; Part\u00a01: Title Part",
         docsubtitleamd: "Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions",
-        docsubtitleamdlabel: "AMENDMENT&#xa0;1",
-        docsubtitlecorrlabel: "TECHNICAL CORRIGENDUM&#xa0;2",
+        docsubtitleamdlabel: "AMENDMENT\u00a01",
+        docsubtitlecorrlabel: "TECHNICAL CORRIGENDUM\u00a02",
         docsubtitleintro: "Introduction",
-        docsubtitlemain: "Main Title&#x2009;&#x2014;&#x2009;Title",
+        docsubtitlemain: "Main Title\u2009\u2014\u2009Title",
         docsubtitlepart: "Title Part",
-        docsubtitlepartlabel: "Part&#xa0;1",
-        doctitle: "Introduction Française&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie&#xa0;1 : Part du Titre",
+        docsubtitlepartlabel: "Part\u00a01",
+        doctitle: "Introduction Française&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie\u00a01 : Part du Titre",
         doctitleamd: "Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport",
-        doctitleamdlabel: "AMENDEMENT&#xa0;1",
-        doctitlecorrlabel: "RECTIFICATIF TECHNIQUE&#xa0;2",
+        doctitleamdlabel: "AMENDEMENT\u00a01",
+        doctitlecorrlabel: "RECTIFICATIF TECHNIQUE\u00a02",
         doctitleintro: "Introduction Française",
         doctitlemain: "Titre Principal",
         doctitlepart: "Part du Titre",
-        doctitlepartlabel: "Partie&#xa0;1",
+        doctitlepartlabel: "Partie\u00a01",
         doctype: "Amendment",
         doctype_display: "Amendment",
         docyear: "2017",
@@ -1332,22 +1332,22 @@ RSpec.describe IsoDoc do
         docnumber_lang: "ISO/PreNWIP3 17301-1:2016/Add.1(E)",
         docnumber_reference: "ISO/PreNWIP3 17301-1:2016/Add.1:2017(E)",
         docnumeric: "17301",
-        docsubtitle: "Introduction Fran&#xe7;aise&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie&#xa0;1 : Part du Titre",
-        docsubtitleadd: "Fraction massique de mati&#xe8;re &#xe9;trang&#xe8;re, riz usin&#xe9; (non gluant), diviseurs d&#x2019;&#xe9;chantillon et recommandations relatives aux conditions d&#x2019;entreposage et de transport",
-        docsubtitleaddlabel: "ADDITIF&#xa0;1",
-        docsubtitlecorrlabel: "RECTIFICATIF TECHNIQUE&#xa0;2",
-        docsubtitleintro: "Introduction Fran&#xe7;aise",
+        docsubtitle: "Introduction Française&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie\u00a01 : Part du Titre",
+        docsubtitleadd: "Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport",
+        docsubtitleaddlabel: "ADDITIF\u00a01",
+        docsubtitlecorrlabel: "RECTIFICATIF TECHNIQUE\u00a02",
+        docsubtitleintro: "Introduction Française",
         docsubtitlemain: "Titre Principal",
         docsubtitlepart: "Part du Titre",
-        docsubtitlepartlabel: "Partie&#xa0;1",
-        doctitle: "Introduction&#xa0;&#x2014; Main Title&#x2009;&#x2014;&#x2009;Title&#xa0;&#x2014; Part&#xa0;1: Title Part",
+        docsubtitlepartlabel: "Partie\u00a01",
+        doctitle: "Introduction&#xa0;&#x2014; Main Title\u2009—\u2009Title&#xa0;&#x2014; Part\u00a01: Title Part",
         doctitleadd: "Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions",
-        doctitleaddlabel: "ADDENDUM&#xa0;1",
-        doctitlecorrlabel: "TECHNICAL CORRIGENDUM&#xa0;2",
+        doctitleaddlabel: "ADDENDUM\u00a01",
+        doctitlecorrlabel: "TECHNICAL CORRIGENDUM\u00a02",
         doctitleintro: "Introduction",
-        doctitlemain: "Main Title&#x2009;&#x2014;&#x2009;Title",
+        doctitlemain: "Main Title\u2009\u2014\u2009Title",
         doctitlepart: "Title Part",
-        doctitlepartlabel: "Part&#xa0;1",
+        doctitlepartlabel: "Part\u00a01",
         doctype: "Addendum",
         doctype_display: "Addendum",
         docyear: "2017",
@@ -1463,12 +1463,12 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output))
+    expect(strip_guid(pres_output)
       .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
-      .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
+      .to be_xml_equivalent_to presxml
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
   end
 
   it "processes amend subclauses" do
@@ -1915,12 +1915,12 @@ RSpec.describe IsoDoc do
       .new(presxml_options)
       .convert("test", input, true)
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
-    expect(strip_guid(Canon.format_xml(pres_output)))
-      .to be_equivalent_to Canon.format_xml(presxml)
-    expect(strip_guid(Canon.format_xml(Nokogiri::XML(IsoDoc::Iso::HtmlConvert.new({})
+    expect(strip_guid(pres_output))
+      .to be_xml_equivalent_to presxml
+    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true))
-      .at("//div[@id ='A']").to_xml)))
-      .to be_equivalent_to Canon.format_xml(html)
+      .at("//div[@id ='A']").to_xml))
+      .to be_xml_equivalent_to html
 
     presxml = <<~OUTPUT
        <semx element="amend" source="_">
@@ -2138,8 +2138,8 @@ RSpec.describe IsoDoc do
       .new(presxml_options)
       .convert("test", input, true)
     pres_output = Nokogiri::XML(pres_output).at("//xmlns:semx[@element='amend']")
-    expect(strip_guid(Canon.format_xml(pres_output.to_xml)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(pres_output.to_xml))
+      .to be_xml_equivalent_to presxml
   end
 end
 

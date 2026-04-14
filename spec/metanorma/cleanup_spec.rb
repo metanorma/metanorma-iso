@@ -7,14 +7,14 @@ RSpec.describe Metanorma::Iso do
       == {blank}
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <clause id="_" inline-header="false" obligation="normative"/>
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "moves term domains out of the term definition paragraph" do
@@ -27,7 +27,7 @@ RSpec.describe Metanorma::Iso do
       domain:[relativity] Time
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <terms id="_" obligation="normative">
             <title id="_">Terms and definitions</title>#{TERM_BOILERPLATE}
@@ -42,8 +42,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "permits multiple blocks in term definition paragraph" do
@@ -71,7 +71,7 @@ RSpec.describe Metanorma::Iso do
       --
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <terms id="_" obligation="normative">
             <title id="_">Terms and definitions</title>
@@ -117,8 +117,8 @@ RSpec.describe Metanorma::Iso do
          </sections>
        </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes initial boilerplate in Asciidoc without succumbing to recursion" do
@@ -135,7 +135,7 @@ RSpec.describe Metanorma::Iso do
       This paragraph is extraneous
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <terms id="_" obligation="normative">
             <title id="_">Terms and definitions</title>#{TERM_BOILERPLATE}
@@ -155,8 +155,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "keeps any initial boilerplate from terms and definitions" do
@@ -173,7 +173,7 @@ RSpec.describe Metanorma::Iso do
       This paragraph is extraneous
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <terms id="_" obligation="normative">
             <title id="_">Terms and definitions</title>#{TERM_BOILERPLATE}
@@ -193,8 +193,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "converts xrefs to references into erefs" do
@@ -207,7 +207,7 @@ RSpec.describe Metanorma::Iso do
       * [[[iso216,ISO 216:2001]]], _Reference_
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <preface>
           <foreword id="_" obligation="informative">
             <title id="_">Foreword</title>
@@ -243,8 +243,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "extracts localities from erefs" do
@@ -257,7 +257,7 @@ RSpec.describe Metanorma::Iso do
       * [[[iso216,ISO 216]]], _Reference_
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <preface>
           <foreword id="_" obligation="informative">
             <title id="_">Foreword</title>
@@ -304,8 +304,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "strips type from xrefs" do
@@ -318,7 +318,7 @@ RSpec.describe Metanorma::Iso do
       * [[[iso216,ISO 216]]], _Reference_
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <preface>
           <foreword id="_" obligation="informative">
             <title id="_">Foreword</title>
@@ -350,8 +350,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes localities in term sources" do
@@ -367,7 +367,7 @@ RSpec.describe Metanorma::Iso do
       <<ISO2191,section=1>>
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <terms id="_" obligation="normative">
             <title id="_">Terms and definitions</title>
@@ -392,8 +392,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "removes extraneous material from Normative References" do
@@ -407,7 +407,7 @@ RSpec.describe Metanorma::Iso do
       * [[[iso216,ISO 216]]], _Reference_
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections></sections>
         <bibliography>
           <references id="_" normative="true" obligation="informative">
@@ -431,8 +431,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "moves table key inside table" do
@@ -447,7 +447,7 @@ RSpec.describe Metanorma::Iso do
       a:: b
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <table id="_">
             <tbody>
@@ -469,8 +469,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes headerrows attribute for table without header rows" do
@@ -485,7 +485,7 @@ RSpec.describe Metanorma::Iso do
       |===
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <table id="_">
             <thead>
@@ -516,8 +516,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes headerrows attribute for table with header rows" do
@@ -533,7 +533,7 @@ RSpec.describe Metanorma::Iso do
       |===
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <table id="_">
             <thead>
@@ -564,8 +564,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "moves table notes inside table" do
@@ -580,7 +580,7 @@ RSpec.describe Metanorma::Iso do
       NOTE: Note 2
     INPUT
     output = <<~OUTPUT
-       #{BLANK_HDR}
+       #{BLANK_HDR_2}
         <sections>
           <table id="_">
             <tbody>
@@ -600,8 +600,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "moves formula key inside formula" do
@@ -617,7 +617,7 @@ RSpec.describe Metanorma::Iso do
       a:: b
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <formula id="_">
             <stem type="MathML" block="true">
@@ -647,8 +647,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "moves footnotes inside figures" do
@@ -661,7 +661,7 @@ RSpec.describe Metanorma::Iso do
       footnote:[This is another footnote to a figure]
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <figure id="_">
              <image id="_" src="spec/examples/rice_images/rice_image1.png" mimetype="image/png" height="auto" width="auto" filename="spec/examples/rice_images/rice_image1.png"/>
@@ -675,8 +675,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "moves figure key inside figure" do
@@ -689,7 +689,7 @@ RSpec.describe Metanorma::Iso do
       a:: b
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <figure id="_">
             <image id="_" src="spec/examples/rice_images/rice_image1.png" mimetype="image/png" height="auto" width="auto" filename="spec/examples/rice_images/rice_image1.png"/>
@@ -705,8 +705,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "numbers bibliographic notes and footnotes sequentially" do
@@ -723,7 +723,7 @@ RSpec.describe Metanorma::Iso do
       footnote:[Footnote2]
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <preface>
           <foreword id="_" obligation="informative">
             <title id="_">Foreword</title>
@@ -770,8 +770,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "defaults section obligations" do
@@ -787,7 +787,7 @@ RSpec.describe Metanorma::Iso do
       Text
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
             <title id="_">Clause</title>
@@ -800,8 +800,8 @@ RSpec.describe Metanorma::Iso do
         </annex>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "extends clause levels past 5" do
@@ -834,7 +834,7 @@ RSpec.describe Metanorma::Iso do
 
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
            <sections>
               <clause id="_" inline-header="false" obligation="normative">
                  <title id="_">Clause1</title>
@@ -869,8 +869,8 @@ RSpec.describe Metanorma::Iso do
            </sections>
         </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "reorders references in bibliography, and renumbers citations accordingly" do
@@ -917,7 +917,7 @@ RSpec.describe Metanorma::Iso do
       * [[[ref17,(A)]]], _Standard 30_
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
                <sections>
            <clause id='_' inline-header='false' obligation='normative'>
              <title id="_">Clause 1</title>
@@ -1147,8 +1147,8 @@ RSpec.describe Metanorma::Iso do
          </bibliography>
        </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   context "terms & definitions boilerplate" do
@@ -1161,7 +1161,7 @@ RSpec.describe Metanorma::Iso do
         === Term1
       INPUT
       output = <<~OUTPUT
-        #{BLANK_HDR}
+        #{BLANK_HDR_2}
         <sections>
           <terms id='_' obligation='normative'>
             <title id="_">Terms and definitions</title>
@@ -1191,8 +1191,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
         </metanorma>
       OUTPUT
-      expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to Canon.format_xml(output)
+      expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+        .to be_xml_equivalent_to output
     end
 
     it "places normal terms & definitions boilerplate in multi-clause" do
@@ -1210,7 +1210,7 @@ RSpec.describe Metanorma::Iso do
         ==== Term 2
       INPUT
       output = <<~OUTPUT
-        #{BLANK_HDR}
+        #{BLANK_HDR_2}
             <sections>
               <clause id="_" obligation="normative" type="terms">
                  <title id="_">Terms and definitions</title>
@@ -1254,8 +1254,8 @@ RSpec.describe Metanorma::Iso do
            </sections>
         </metanorma>
       OUTPUT
-      expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to Canon.format_xml(output)
+      expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+        .to be_xml_equivalent_to output
     end
 
     it "places normal terms & definitions boilerplate in single clause that excludes symbols" do
@@ -1277,7 +1277,7 @@ RSpec.describe Metanorma::Iso do
         === Symbols and abbreviated terms
       INPUT
       output = <<~OUTPUT
-        #{BLANK_HDR}
+        #{BLANK_HDR_2}
            <sections>
               <clause id="_" obligation="normative" type="terms">
                  <title id="_">Terms, definitions, symbols and abbreviated terms</title>
@@ -1327,8 +1327,8 @@ RSpec.describe Metanorma::Iso do
            </sections>
         </metanorma>
       OUTPUT
-      expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to Canon.format_xml(output)
+      expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+        .to be_xml_equivalent_to output
     end
 
     it "places normal terms & definitions boilerplate in first of multiple clauses that excludes symbols" do
@@ -1349,7 +1349,7 @@ RSpec.describe Metanorma::Iso do
         === Symbols and abbreviated terms
       INPUT
       output = <<~OUTPUT
-        #{BLANK_HDR}
+        #{BLANK_HDR_2}
           <sections>
             <clause id='_' obligation='normative' type="terms">
               <title id="_">Terms, definitions, symbols and abbreviated terms</title>
@@ -1391,8 +1391,8 @@ RSpec.describe Metanorma::Iso do
           </sections>
         </metanorma>
       OUTPUT
-      expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to Canon.format_xml(output)
+      expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+        .to be_xml_equivalent_to output
     end
 
     it "places normal terms & definitions boilerplate at root if first of multiple clauses that excludes symbols is preceded by clause" do
@@ -1416,7 +1416,7 @@ RSpec.describe Metanorma::Iso do
         === Symbols and abbreviated terms
       INPUT
       output = <<~OUTPUT
-        #{BLANK_HDR}
+        #{BLANK_HDR_2}
            <sections>
               <clause id="_" obligation="normative" type="terms">
                  <title id="_">Terms, definitions, symbols and abbreviated terms</title>
@@ -1466,8 +1466,8 @@ RSpec.describe Metanorma::Iso do
            </sections>
         </metanorma>
       OUTPUT
-      expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to Canon.format_xml(output)
+      expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+        .to be_xml_equivalent_to output
     end
 
     it "places boilerplate in Normative References subclause" do
@@ -1486,7 +1486,7 @@ RSpec.describe Metanorma::Iso do
         === Normative references
       INPUT
       output = <<~OUTPUT
-        #{BLANK_HDR}
+        #{BLANK_HDR_2}
            <sections>
               <clause id="_" type="section" inline-header="false" obligation="normative">
                  <title id="_">General</title>
@@ -1502,8 +1502,8 @@ RSpec.describe Metanorma::Iso do
            </sections>
         </metanorma>
       OUTPUT
-      expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to Canon.format_xml(output)
+      expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+        .to be_xml_equivalent_to output
     end
 
     it "places user-defined boilerplate in Normative References subclause" do
@@ -1527,7 +1527,7 @@ RSpec.describe Metanorma::Iso do
         --
       INPUT
       output = <<~OUTPUT
-        #{BLANK_HDR}
+        #{BLANK_HDR_2}
             <sections>
               <clause id="_" type="section" inline-header="false" obligation="normative">
                  <title id="_">General</title>
@@ -1543,8 +1543,8 @@ RSpec.describe Metanorma::Iso do
            </sections>
         </metanorma>
       OUTPUT
-      expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to Canon.format_xml(output)
+      expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+        .to be_xml_equivalent_to output
     end
 
     it "modifies normal terms & definitions boilerplate in vocabulary document" do
@@ -1562,7 +1562,7 @@ RSpec.describe Metanorma::Iso do
         === Term1
       INPUT
       output = <<~OUTPUT
-        #{BLANK_HDR.sub(%r{</doctype>}, '</doctype><subdoctype>vocabulary</subdoctype>')}
+        #{BLANK_HDR_2.sub(%r{</doctype>}, '</doctype><subdoctype>vocabulary</subdoctype>')}
         <sections>
           <terms id='_' obligation='normative'>
             <title id="_">Terms and definitions</title>
@@ -1591,8 +1591,8 @@ RSpec.describe Metanorma::Iso do
         </sections>
         </metanorma>
       OUTPUT
-      expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to Canon.format_xml(output)
+      expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+        .to be_xml_equivalent_to output
     end
 
     it "does not allows subterms outside of vocabulary document" do
@@ -1613,7 +1613,7 @@ RSpec.describe Metanorma::Iso do
         ==== Term2a
       INPUT
       output = <<~OUTPUT
-         #{BLANK_HDR}
+         #{BLANK_HDR_2}
            <sections>
               <terms id="_" obligation="normative">
                  <title id="_">Terms and definitions</title>
@@ -1654,8 +1654,8 @@ RSpec.describe Metanorma::Iso do
            </sections>
         </metanorma>
       OUTPUT
-      expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to Canon.format_xml(output)
+      expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+        .to be_xml_equivalent_to output
     end
 
     it "allows subterms in document" do
@@ -1690,7 +1690,7 @@ RSpec.describe Metanorma::Iso do
 
       INPUT
       output = <<~OUTPUT
-         #{BLANK_HDR}
+         #{BLANK_HDR_2}
            <sections>
               <terms id="_" obligation="normative">
                  <title id="_">Terms and definitions</title>
@@ -1761,8 +1761,8 @@ RSpec.describe Metanorma::Iso do
            </sections>
         </metanorma>
       OUTPUT
-      expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-        .to be_equivalent_to Canon.format_xml(output)
+      expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+        .to be_xml_equivalent_to output
     end
   end
 

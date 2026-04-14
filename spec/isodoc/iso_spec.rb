@@ -177,8 +177,8 @@ RSpec.describe IsoDoc::Iso do
       INPUT
     output = IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", presxml, true)
-    expect(Canon.format_xml(strip_guid(output)))
-      .to be_equivalent_to Canon.format_xml(strip_guid(<<~"OUTPUT"))
+    expect(strip_guid(output))
+      .to be_html5_equivalent_to strip_guid(<<~"OUTPUT")
         #{HTML_HDR}
               <br/>
               <div id="A">

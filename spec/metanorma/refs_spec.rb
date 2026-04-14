@@ -24,7 +24,7 @@ RSpec.describe Metanorma::Iso do
       * [[[fdis2,IEC PWI 100-44 ED1]]] Title
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
           <sections>
              <clause id="_" inline-header="false" obligation="normative">
                 <title id="_">Clause</title>
@@ -152,8 +152,8 @@ RSpec.describe Metanorma::Iso do
           </bibliography>
        </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes all-parts ISO reference" do
@@ -170,7 +170,7 @@ RSpec.describe Metanorma::Iso do
       * [[[iso123,ISO 123:1066 (all parts)]]] _Standard_
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
           <clause id="_" inline-header="false" obligation="normative">
             <title id="_">Clause</title>
@@ -207,8 +207,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes non-ISO reference in Normative References" do
@@ -220,7 +220,7 @@ RSpec.describe Metanorma::Iso do
       * [[[iso123,XYZ 123:1066 (all parts)]]] _Standard_
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
 
         </sections>
@@ -241,8 +241,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes non-ISO reference in Bibliography" do
@@ -254,7 +254,7 @@ RSpec.describe Metanorma::Iso do
       * [[[iso123,1]]] _Standard_
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR}
+      #{BLANK_HDR_2}
         <sections>
 
         </sections>
@@ -273,8 +273,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "sort ISO references in Bibliography" do
@@ -289,7 +289,7 @@ RSpec.describe Metanorma::Iso do
       * [[[iso4,ISO 9]]]
     INPUT
     output = <<~OUTPUT
-            #{BLANK_HDR}
+            #{BLANK_HDR_2}
               <sections> </sections>
         <bibliography>
           <references id='_' normative='false' obligation='informative'>
@@ -350,8 +350,8 @@ RSpec.describe Metanorma::Iso do
         </bibliography>
       </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   it "renders withdrawn and cancelled ISO references" do
@@ -368,7 +368,7 @@ RSpec.describe Metanorma::Iso do
       * [[[iso2,ISO 31-0]]]
     INPUT
     output = <<~OUTPUT
-        #{BLANK_HDR}
+        #{BLANK_HDR_2}
                  <preface>
           <foreword id="_" obligation="informative">
             <title id="_">Foreword</title>
@@ -692,8 +692,8 @@ RSpec.describe Metanorma::Iso do
           </bibliography>
        </metanorma>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Asciidoctor.convert(input, *OPTIONS))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(Asciidoctor.convert(input, *OPTIONS)))
+      .to be_xml_equivalent_to output
   end
 
   private

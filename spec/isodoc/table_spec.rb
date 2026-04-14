@@ -466,7 +466,7 @@ RSpec.describe IsoDoc do
 
     doc = <<~OUTPUT
       <div>
-         <table xmlns:m="m" class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;" title="tool tip" summary="long desc">
+         <table xmlns:m="https://m" class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;" title="tool tip" summary="long desc">
             <a name="tableD-1" id="tableD-1"/>
             <thead>
                <tr>
@@ -589,26 +589,26 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output)))
-      .to be_equivalent_to Canon.format_xml(presxml)
+    expect(strip_guid(pres_output))
+      .to be_xml_equivalent_to presxml
     IsoDoc::Iso::HtmlConvert.new({}).convert("test", pres_output, false)
     expect(File.exist?("test.html")).to be true
     out = File.read("test.html")
       .sub(/^.*<main /m, "<main ")
       .sub(%r{</main>.*$}m, "</main>")
-    expect(Canon.format_xml(strip_guid(out)))
-      .to be_equivalent_to Canon.format_xml(html)
+    expect(strip_guid(out))
+      .to be_xml_equivalent_to html
     IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, false)
     expect(File.exist?("test.doc")).to be true
     out = File.read("test.doc")
-      .sub(/^.+?<table /m, '<table xmlns:m="m" ')
+      .sub(/^.+?<table /m, '<table xmlns:m="https://m" ')
       .sub(%r{</div>\s*<p class="MsoNormal">.*$}m, "")
-    expect(Canon.format_xml("<div>#{strip_guid(out)}"))
-      .to be_equivalent_to Canon.format_xml(doc)
+    expect("<div>#{strip_guid(out)}")
+      .to be_xml_equivalent_to doc
     out = File.read("test.doc")
       .sub(/^.+?<div class="Section3"/m, '<div class="Section3"')
       .sub(%r{</div>\s*<br[^>]+>\s*<div class="colophon".*$}m, "")
-    expect(Canon.format_xml(strip_guid(out))).to be_equivalent_to Canon.format_xml(doc2)
+    expect(strip_guid(out)).to be_xml_equivalent_to doc2
   end
 
   it "processes units statements in tables" do
@@ -891,13 +891,13 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output)))
-      .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
+    expect(strip_guid(pres_output))
+      .to be_xml_equivalent_to presxml
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
+    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
-      .at("//body").to_xml))).to be_equivalent_to Canon.format_xml(doc)
+      .at("//body").to_xml)).to be_xml_equivalent_to doc
   end
 end

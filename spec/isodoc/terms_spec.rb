@@ -717,16 +717,16 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output)))
-      .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
-      .convert("test", pres_output, true))))
-      .to be_equivalent_to Canon.format_xml(html)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::WordConvert.new({})
+    expect(strip_guid(pres_output))
+      .to be_xml_equivalent_to presxml
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .convert("test", pres_output, true)))
+      .to be_html5_equivalent_to html
+    expect(strip_guid(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true)
       .sub(%r{^.*<div class="WordSection3">}m, "")
-      .sub(%r{</div>\s*<br.*$}m, ""))))
-      .to be_equivalent_to Canon.format_xml(word)
+      .sub(%r{</div>\s*<br.*$}m, "")))
+      .to be_xml_equivalent_to word
   end
 
   it "processes related terms" do
@@ -882,9 +882,9 @@ RSpec.describe IsoDoc do
           </sections>
        </iso-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", input, true))))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
+      .convert("test", input, true)))
+      .to be_xml_equivalent_to output
   end
 
   it "processes IsoXML term with different term source statuses" do
@@ -1110,11 +1110,11 @@ RSpec.describe IsoDoc do
            </term>
         </terms>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
           .new(presxml_options)
            .convert("test", input, true))
-          .at("//xmlns:terms").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+          .at("//xmlns:terms").to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "renders different types of termsource" do
@@ -1696,10 +1696,10 @@ RSpec.describe IsoDoc do
            </term>
         </terms>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
           .new(presxml_options)
            .convert("test", input, true))
-          .at("//xmlns:terms").to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+          .at("//xmlns:terms").to_xml))
+      .to be_xml_equivalent_to output
   end
 end

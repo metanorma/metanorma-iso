@@ -716,15 +716,15 @@ RSpec.describe IsoDoc do
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
-    expect(Canon.format_xml(strip_guid(pres_output
+    expect(strip_guid(pres_output
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
-      .gsub(/reference="[^"]+"/, 'reference="1"'))))
-      .to be_equivalent_to Canon.format_xml(presxml)
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
+      .gsub(/reference="[^"]+"/, 'reference="1"')))
+      .to be_xml_equivalent_to presxml
+    expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)
       .gsub(/fn:[^"]+"/, 'fn:1"')
-      .gsub(/<sup>[^<]+</, "<sup>1<"))))
-      .to be_equivalent_to Canon.format_xml(html)
+      .gsub(/<sup>[^<]+</, "<sup>1<")))
+      .to be_html5_equivalent_to html
   end
 
   it "processes non-home standards" do
@@ -918,11 +918,11 @@ RSpec.describe IsoDoc do
           </fmt-footnote-container>
        </iso-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
-      .to be_equivalent_to Canon.format_xml(strip_guid(output))
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_xml_equivalent_to strip_guid(output)
   end
 
   it "processes websites" do
@@ -979,11 +979,11 @@ RSpec.describe IsoDoc do
             </bibliography>
           </iso-standard>
     OUTPUT
-    expect(Canon.format_xml(strip_guid(IsoDoc::Iso::PresentationXMLConvert
+    expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
-      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
-      .to be_equivalent_to Canon.format_xml(output)
+      .sub(%r{<localized-strings>.*</localized-strings>}m, ""))
+      .to be_xml_equivalent_to output
   end
 
   it "renders bibliography [1] references" do
@@ -1209,7 +1209,7 @@ RSpec.describe IsoDoc do
       .new(presxml_options)
       .convert("test", input, true))
     xml = xml.at("//xmlns:sections")
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 end

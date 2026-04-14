@@ -235,18 +235,18 @@ RSpec.describe IsoDoc::Iso::Metadata do
         docnumber_lang: "ISO/PreCD3 17301-1 (E)",
         docnumber_reference: "ISO/PreCD3 17301-1:2000 (E)",
         docnumeric: "1730",
-        docsubtitle: "C&#xE9;r&#xE9;ales et l&#xE9;gumineuses H<sup>2</sup>&#xa0;&#x2014; Sp&#xE9;cification et m&#xE9;thodes d'essai H<sup>2</sup>&#xa0;&#x2014; Compl&#xE9;ment&#xa0;&#x2014; Partie 1 : Riz H<sup>2</sup>",
-        docsubtitlecomplementary: "Compl&#xE9;ment",
-        docsubtitleintro: "C&#xE9;r&#xE9;ales et l&#xE9;gumineuses H<sup>2</sup>",
-        docsubtitlemain: "Sp&#xE9;cification et m&#xE9;thodes d'essai H<sup>2</sup>",
+        docsubtitle: "Céréales et légumineuses H<sup>2</sup>&#xa0;&#x2014; Spécification et méthodes d'essai H<sup>2</sup>&#xa0;&#x2014; Complément&#xa0;&#x2014; Partie 1 : Riz H<sup>2</sup>",
+        docsubtitlecomplementary: "Complément",
+        docsubtitleintro: "Céréales et légumineuses H<sup>2</sup>",
+        docsubtitlemain: "Spécification et méthodes d'essai H<sup>2</sup>",
         docsubtitlepart: "Riz H<sup>2</sup>",
-        docsubtitlepartlabel: "Partie&#xa0;1",
+        docsubtitlepartlabel: "Partie\u00a01",
         doctitle: "Cereals and pulses H<sup>2</sup>&#xa0;&#x2014; Specifications and test methods H<sup>2</sup>&#xa0;&#x2014; Complement&#xa0;&#x2014; Part 1: Rice H<sup>2</sup>",
         doctitlecomplementary: "Complement",
         doctitleintro: "Cereals and pulses H<sup>2</sup>",
         doctitlemain: "Specifications and test methods H<sup>2</sup>",
         doctitlepart: "Rice H<sup>2</sup>",
-        doctitlepartlabel: "Part&#xa0;1",
+        doctitlepartlabel: "Part\u00a01",
         doctype: "International Standard",
         doctype_display: "International Standard",
         document_scheme: "1951",
@@ -480,11 +480,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
         docsubtitleintro: "Cereals and pulses",
         docsubtitlemain: "Specifications and test methods",
         docsubtitlepart: "Rice",
-        docsubtitlepartlabel: "Part&#xa0;1&#x2013;3",
-        doctitle: "C&#xE9;r&#xE9;ales et l&#xE9;gumineuses&#xa0;&#x2014; Sp&#xE9;cification et m&#xE9;thodes d'essai&#xa0;&#x2014; Compl&#xE9;ment&#xa0;&#x2014; Partie 1–3 : Riz",
-        doctitlecomplementary: "Compl&#xE9;ment",
-        doctitleintro: "C&#xe9;r&#xe9;ales et l&#xe9;gumineuses",
-        doctitlemain: "Sp&#xe9;cification et m&#xe9;thodes d&#x27;essai",
+        docsubtitlepartlabel: "Part\u00a01\u20133",
+        doctitle: "Céréales et légumineuses&#xa0;&#x2014; Spécification et méthodes d'essai&#xa0;&#x2014; Complément&#xa0;&#x2014; Partie 1–3 : Riz",
+        doctitlecomplementary: "Complément",
+        doctitleintro: "Céréales et légumineuses",
+        doctitlemain: "Spécification et méthodes d'essai",
         doctitlepart: "Riz",
         doctitlepartlabel: "Partie 1–3",
         doctype: "International Standard",
@@ -832,8 +832,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
     xml.at("//xmlns:localized-strings")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "warns of missing publication date" do
@@ -928,8 +928,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
     xml.at("//xmlns:localized-strings")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "warns of missing editorial groups" do
@@ -1024,8 +1024,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
     xml.at("//xmlns:localized-strings")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "does not warn of missing metadata in compliant document" do
@@ -1086,8 +1086,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
     xml.at("//xmlns:localized-strings")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 
   it "does not warn of missing metadata in published document" do
@@ -1146,7 +1146,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
     xml.at("//xmlns:localized-strings")&.remove
-    expect(Canon.format_xml(strip_guid(xml.to_xml)))
-      .to be_equivalent_to Canon.format_xml(output)
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
   end
 end
