@@ -286,6 +286,7 @@ RSpec.describe Metanorma::Iso, type: :validation do
         :docfile: test.adoc
         :nodoc:
         :title-intro-en: Title
+        :title-main-en: Title
         :no-isobib:
 
       INPUT
@@ -298,6 +299,7 @@ RSpec.describe Metanorma::Iso, type: :validation do
         :docfile: test.adoc
         :nodoc:
         :title-intro-fr: Title
+        :title-main-fr: Title
         :no-isobib:
 
       INPUT
@@ -333,6 +335,7 @@ RSpec.describe Metanorma::Iso, type: :validation do
         Author
         :docfile: test.adoc
         :nodoc:
+        :title-main-en: Title
         :title-part-en: Title
         :no-isobib:
 
@@ -345,6 +348,7 @@ RSpec.describe Metanorma::Iso, type: :validation do
         Author
         :docfile: test.adoc
         :nodoc:
+        :title-main-fr: Title
         :title-part-fr: Title
         :no-isobib:
 
@@ -357,6 +361,8 @@ RSpec.describe Metanorma::Iso, type: :validation do
         Author
         :docfile: test.adoc
         :nodoc:
+        :title-main-en: Title
+        :title-main-fr: Title
         :title-part-fr: Title
         :title-part-en: Title
         :no-isobib:

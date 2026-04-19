@@ -100,6 +100,7 @@ module Metanorma
 
       def title(node, xml)
         %w(en ru fr).each do |lang|
+          node.attr("title-main-#{lang}") or next
           title1(node, xml, lang)
         end
       end

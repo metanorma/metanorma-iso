@@ -450,6 +450,7 @@ RSpec.describe Metanorma::Iso, type: :validation do
       :docfile: test.adoc
       :nodoc:
       :title-intro-en: A Technical Specification on Widgets
+      :title-main-en: Main
       :no-isobib:
 
     INPUT

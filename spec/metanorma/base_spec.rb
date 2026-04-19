@@ -78,7 +78,6 @@ RSpec.describe Metanorma::Iso do
         <title language="en" type="title-main">Main Title — Title</title>
         <title language="en" type="title-part">Title Part</title>
         <title language="en" type="title-part-prefix">Part 1</title>
-        <title language="ru" type="title-part-prefix">Часть 1</title>
         <title language="fr" type="main">Introduction Française — Titre Principal — Part du Titre</title>
         <title language="fr" type="title-intro">Introduction Française</title>
         <title language="fr" type="title-main">Titre Principal</title>
@@ -300,7 +299,6 @@ RSpec.describe Metanorma::Iso do
           <title language="en" type="title-main">Main Title — Title</title>
           <title language="en" type="title-complementary">Title Complement</title>
           <title language="en" type="title-part-prefix">Part 1–1</title>
-          <title language="ru" type="title-part-prefix">Часть 1–1</title>
           <title language="fr" type="main">Titre Principal — Complement du Titre</title>
           <title language="fr" type="title-main">Titre Principal</title>
           <title language="fr" type="title-complementary">Complement du Titre</title>
@@ -987,9 +985,6 @@ RSpec.describe Metanorma::Iso do
     INPUT
     output = <<~OUTPUT
       <bibdata type='standard'>
-         <title language="en" type="title-part-prefix">Part 1–1</title>
-        <title language="ru" type="title-part-prefix">Часть 1–1</title>
-        <title language="fr" type="title-part-prefix">Partie 1–1</title>
         <docidentifier type='ISO' primary="true">ISO/FDTS 1000-1-1:2001</docidentifier>
         <docidentifier type='iso-reference'>ISO/FDTS 1000-1-1:2001(E)</docidentifier>
         <docidentifier type='URN'>urn:iso:std:iso:ts:1000:-1-1:stage-50.00:en</docidentifier>
@@ -1276,9 +1271,6 @@ RSpec.describe Metanorma::Iso do
     INPUT
     output = <<~OUTPUT
       <bibdata type="standard">
-        <title language="en" type="title-part-prefix">Part 1–1</title>
-        <title language="ru" type="title-part-prefix">Часть 1–1</title>
-        <title language="fr" type="title-part-prefix">Partie 1–1</title>
          <docidentifier type="ISO" primary="true">OVERRIDE</docidentifier>
          <docidentifier type="iso-tc">2000</docidentifier>
          <docnumber>1000</docnumber>
