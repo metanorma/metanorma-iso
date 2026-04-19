@@ -608,11 +608,7 @@ RSpec.describe IsoDoc do
                 <div class="Section3" id="B">
                    <h1 class="IntroTitle">Introduction</h1>
                    <div id="C">
-                      <h2>
-                         0.1
-                         <span style="mso-tab-count:1">  </span>
-                         Introduction Subsection
-                      </h2>
+                      <h2>0.1<span style="mso-tab-count:1">  </span>Introduction Subsection</h2>
                    </div>
                    <p>This is patent boilerplate</p>
                 </div>
@@ -623,50 +619,26 @@ RSpec.describe IsoDoc do
              </p>
              <div class="WordSection3">
                 <div id="D">
-                   <h1>
-                      1
-                      <span style="mso-tab-count:1">  </span>
-                      Scope
-                   </h1>
+                   <h1>1<span style="mso-tab-count:1">  </span>Scope</h1>
                    <p id="E">Text</p>
                 </div>
                 <div>
-                   <h1>
-                      2
-                      <span style="mso-tab-count:1">  </span>
-                      Normative References
-                   </h1>
+                   <h1>2<span style="mso-tab-count:1">  </span>Normative References</h1>
                 </div>
                 <div id="D0">
-                   <h1>
-                      Section 3:
-                      <span style="mso-tab-count:1">  </span>
-                      General
-                   </h1>
+                   <h1>Section 3:<span style="mso-tab-count:1">  </span>General</h1>
                 </div>
                 <div id="H">
-                   <h1>
-                      4
-                      <span style="mso-tab-count:1">  </span>
-                      Terms, definitions, symbols and abbreviated terms
-                   </h1>
+                   <h1>4<span style="mso-tab-count:1">  </span>Terms, definitions, symbols and abbreviated terms</h1>
                    <div id="I">
-                      <h2>
-                         4.1
-                         <span style="mso-tab-count:1">  </span>
-                         Normal Terms
-                      </h2>
+                      <h2>4.1<span style="mso-tab-count:1">  </span>Normal Terms</h2>
                       <p class="TermNum" id="J">4.1.1</p>
                       <p class="Terms" style="text-align:left;">
                          <b>Term2</b>
                       </p>
                    </div>
                    <div id="K">
-                      <h2>
-                         4.2
-                         <span style="mso-tab-count:1">  </span>
-                         Symbols
-                      </h2>
+                      <h2>4.2<span style="mso-tab-count:1">  </span>Symbols</h2>
                       <div align="left">
                       <table class="dl">
                          <tr>
@@ -680,11 +652,7 @@ RSpec.describe IsoDoc do
                    </div>
                 </div>
                 <div id="L" class="Symbols">
-                   <h1>
-                      5
-                      <span style="mso-tab-count:1">  </span>
-                      Symbols
-                   </h1>
+                   <h1>5<span style="mso-tab-count:1">  </span>Symbols</h1>
                    <div align="left">
                    <table class="dl">
                       <tr>
@@ -697,24 +665,12 @@ RSpec.describe IsoDoc do
                    </div>
                 </div>
                 <div id="M">
-                   <h1>
-                      6
-                      <span style="mso-tab-count:1">  </span>
-                      Clause 4
-                   </h1>
+                   <h1>6<span style="mso-tab-count:1">  </span>Clause 4</h1>
                    <div id="N">
-                      <h2>
-                         6.1
-                         <span style="mso-tab-count:1">  </span>
-                         Introduction
-                      </h2>
+                      <h2>6.1<span style="mso-tab-count:1">  </span>Introduction</h2>
                    </div>
                    <div id="O">
-                      <h2>
-                         6.2
-                         <span style="mso-tab-count:1">  </span>
-                         Clause 4.2
-                      </h2>
+                      <h2>6.2<span style="mso-tab-count:1">  </span>Clause 4.2</h2>
                    </div>
                 </div>
                 <p class="page-break">
@@ -728,31 +684,15 @@ RSpec.describe IsoDoc do
                       <br/>
                       <b>Annex</b>
                    </h1>
-            <p style="display:none;" class="variant-title-toc">
-               Annex A
-               <span style="mso-tab-count:1">  </span>
-               Annex
-            </p>
+            <p style="display:none;" class="variant-title-toc">Annex A<span style="mso-tab-count:1">  </span>Annex</p>
                    <div id="Q">
-                      <h2>
-                         A.1
-                         <span style="mso-tab-count:1">  </span>
-                         Annex A.1
-                      </h2>
+                      <h2>A.1<span style="mso-tab-count:1">  </span>Annex A.1</h2>
                       <div id="Q1">
-                         <h3>
-                            A.1.1
-                            <span style="mso-tab-count:1">  </span>
-                            Annex A.1a
-                         </h3>
+                         <h3>A.1.1<span style="mso-tab-count:1">  </span>Annex A.1a</h3>
                       </div>
                    </div>
                    <div id="Q2">
-                      <h2>
-                         Appendix 1
-                         <span style="mso-tab-count:1">  </span>
-                         An Appendix
-                      </h2>
+                      <h2>Appendix 1<span style="mso-tab-count:1">  </span>An Appendix</h2>
                    </div>
                 </div>
                 <p class="page-break">

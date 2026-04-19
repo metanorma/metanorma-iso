@@ -793,10 +793,6 @@ RSpec.describe Metanorma::Iso do
     output = <<~OUTPUT
       <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
         <bibdata type="standard">
-          <title language="en" type="title-part-prefix">Part 1</title>
-      <title language="en" type="title-corrigendum-prefix">TECHNICAL CORRIGENDUM 3</title>
-      <title language="fr" type="title-part-prefix">Partie 1</title>
-      <title language="fr" type="title-corrigendum-prefix">RECTIFICATIF TECHNIQUE 3</title>
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Cor 3:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Cor 3:#{Date.today.year}(E)</docidentifier>
           <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:cor:#{Date.today.year}:v3</docidentifier>

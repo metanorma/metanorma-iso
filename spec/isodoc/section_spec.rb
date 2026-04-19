@@ -664,13 +664,9 @@ RSpec.describe IsoDoc do
               <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
             </p>
             <div class="Section3" id="B">
-              <h1 class="IntroTitle">
-                Introduction</h1>
+              <h1 class="IntroTitle">Introduction</h1>
               <div id="C">
-                <h2>0.1
-                  <span style="mso-tab-count:1">&#160; </span>
-                  Introduction Subsection</h2>
-              </div>
+                <h2>0.1<span style="mso-tab-count:1">&#160; </span>Introduction Subsection</h2></div>
               <p>This is patent boilerplate</p>
             </div>
             <p>&#160;</p>
@@ -680,24 +676,16 @@ RSpec.describe IsoDoc do
           </p>
           <div class="WordSection3">
             <div id="D">
-              <h1>1
-                <span style="mso-tab-count:1">&#160; </span>
-                Scope</h1>
+              <h1>1<span style="mso-tab-count:1">&#160; </span>Scope</h1>
               <p id="E">Text</p>
             </div>
             <div>
-              <h1>2
-                <span style="mso-tab-count:1">&#160; </span>
-                Normative References</h1>
+              <h1>2<span style="mso-tab-count:1">&#160; </span>Normative References</h1>
             </div>
             <div id="H">
-              <h1>3
-                <span style="mso-tab-count:1">&#160; </span>
-                Terms, Definitions, Symbols and Abbreviated Terms</h1>
+              <h1>3<span style="mso-tab-count:1">&#160; </span>Terms, Definitions, Symbols and Abbreviated Terms</h1>
               <div id="I">
-                <h2>3.1
-                  <span style="mso-tab-count:1">&#160; </span>
-                  Normal Terms</h2>
+                <h2>3.1<span style="mso-tab-count:1">&#160; </span>Normal Terms</h2>
                 <p class="TermNum" id="J">3.1.1</p>
                 <p class="Terms" style="text-align:left;"><b>Term2</b></p>
               </div>
@@ -729,18 +717,12 @@ RSpec.describe IsoDoc do
               </div>
             </div>
             <div id="M">
-              <h1>5
-                <span style="mso-tab-count:1">&#160; </span>
-                Clause 4</h1>
+              <h1>5<span style="mso-tab-count:1">&#160; </span>Clause 4</h1>
               <div id="N">
-                <h2>5.1
-                  <span style="mso-tab-count:1">&#160; </span>
-                  Introduction</h2>
+                <h2>5.1<span style="mso-tab-count:1">&#160; </span>Introduction</h2>
               </div>
               <div id="O">
-                <h2>5.2
-                  <span style="mso-tab-count:1">&#160; </span>
-                  Clause 4.2</h2>
+                <h2>5.2<span style="mso-tab-count:1">&#160; </span>Clause 4.2</h2>
               </div>
             </div>
             <p class="page-break">
@@ -752,42 +734,24 @@ RSpec.describe IsoDoc do
                 <br/>
                 <br/>
                 <b>Annex</b></h1>
-              <p style="display:none;" class="variant-title-toc">
-            Annex A
-            <span style="mso-tab-count:1">  </span>
-            Annex
-         </p>
+              <p style="display:none;" class="variant-title-toc">Annex A<span style="mso-tab-count:1">  </span>Annex</p>
               <div id="Q">
-                <h2>A.1
-                  <span style="mso-tab-count:1">&#160; </span>
-                  Annex A.1</h2>
+                <h2>A.1<span style="mso-tab-count:1">&#160; </span>Annex A.1</h2>
                 <div id="Q1">
-                  <h3>A.1.1
-                    <span style="mso-tab-count:1">&#160; </span>
-                    Annex A.1a</h3>
+                  <h3>A.1.1<span style="mso-tab-count:1">&#160; </span>Annex A.1a</h3>
                 </div>
               </div>
               <div id="Q2">
-                <h2>Appendix 1
-                  <span style="mso-tab-count:1">&#160; </span>
-                  An Appendix</h2>
+                <h2>Appendix 1<span style="mso-tab-count:1">&#160; </span>An Appendix</h2>
                 <div id="Q2a">
-                  <h3>Appendix 1.1
-                    <span style="mso-tab-count:1">&#160; </span>
-                    Appendix subclause</h3>
+                  <h3>Appendix 1.1<span style="mso-tab-count:1">&#160; </span>Appendix subclause</h3>
                                    <div id="Q2b">
-                  <h4>
-                     Appendix 1.1.1
-                     <span style="mso-tab-count:1">  </span>
-                     Appendix subsubclause
-                  </h4>
+                  <h4>Appendix 1.1.1<span style="mso-tab-count:1">  </span>Appendix subsubclause</h4>
                </div>
                 </div>
               </div>
               <div>
-                <h2 class="BiblioTitle">A.2
-                  <span style="mso-tab-count:1">&#160; </span>
-                  Annex Bibliography</h2>
+                <h2 class="BiblioTitle">A.2<span style="mso-tab-count:1">&#160; </span>Annex Bibliography</h2>
               </div>
             </div>
             <p class="page-break">
@@ -1801,11 +1765,9 @@ RSpec.describe IsoDoc do
                       </ul>
                     </div>
                   </li>
-                  <li id="_">être
-                    <div class="ul_wrap">
+                  <li id="_">être<div class="ul_wrap">
                       <ul>
-                        <li id="_">Husserl, see zebra, see also <i>Eman</i>cipation, zebra
-                          <div class="ul_wrap">
+                        <li id="_">Husserl, see zebra, see also <i>Eman</i>cipation, zebra<div class="ul_wrap">
                             <ul>
                               <li id="_">en allemand,  <a href="#_">Clause 1</a></li>
                             </ul>

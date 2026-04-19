@@ -1542,27 +1542,19 @@ RSpec.describe IsoDoc do
                 <p class="ForewordText">
                    A.
                    <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
-                      <a class="FootnoteRef" epub:type="footnote" href="#fn:_">1</a>
-                      )
-                   </span>
+                      <a class="FootnoteRef" epub:type="footnote" href="#fn:_">1</a>)</span>
                 </p>
                 <p class="ForewordText">
                    B.
                    <span class="MsoFootnoteReference">
                       <span style="mso-element:field-begin"/>
                       NOTEREF _Ref \\f \\h
-                      <span style="mso-element:field-separator"/>
-                      1
-                      <span style="mso-element:field-end"/>
-                      )
-                   </span>
+                      <span style="mso-element:field-separator"/>1<span style="mso-element:field-end"/>)</span>
                 </p>
                 <p class="ForewordText">
                    C.
                    <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
-                      <a class="FootnoteRef" epub:type="footnote" href="#fn:_">2</a>
-                      )
-                   </span>
+                      <a class="FootnoteRef" epub:type="footnote" href="#fn:_">2</a>)</span>
                 </p>
              </div>
              <p> </p>
@@ -1576,18 +1568,10 @@ RSpec.describe IsoDoc do
                 <span class="MsoFootnoteReference">
                    <span style="mso-element:field-begin"/>
                    NOTEREF _Ref \\f \\h
-                   <span style="mso-element:field-separator"/>
-                   1
-                   <span style="mso-element:field-end"/>
-                   )
-                </span>
+                   <span style="mso-element:field-separator"/>1<span style="mso-element:field-end"/>)</span>
              </p>
              <div>
-                <h1>
-                   1
-                   <span style="mso-tab-count:1">  </span>
-                   Normative References
-                </h1>
+                <h1>1<span style="mso-tab-count:1">  </span>Normative References</h1>
                 <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                 <p id="ISO712" class="NormRef">
                    <span class="stdpublisher">ISO </span>
@@ -1597,19 +1581,14 @@ RSpec.describe IsoDoc do
                       <span class="stddocTitle">
                          Cereals and cereal products
                          <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
-                            <a class="FootnoteRef" epub:type="footnote" href="#fn:_">3</a>
-                            )
-                         </span>
-                      </span>
+                            <a class="FootnoteRef" epub:type="footnote" href="#fn:_">3</a>)</span></span>
                    </i>
                 </p>
              </div>
              <div id="A">
                 <h1>2</h1>
                 <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
-                   <a class="FootnoteRef" epub:type="footnote" href="#fn:_">4</a>
-                   )
-                </span>
+                   <a class="FootnoteRef" epub:type="footnote" href="#fn:_">4</a>)</span>
              </div>
              <aside id="fn:_">
                 <p id="_">Formerly denoted as 15 % (m/m).</p>
