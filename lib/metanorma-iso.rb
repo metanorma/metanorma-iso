@@ -12,7 +12,7 @@ require_relative "isodoc/iso/isosts_convert"
 require_relative "isodoc/iso/presentation_xml_convert"
 require_relative "html2doc/lists"
 require "asciidoctor/extensions"
-require "metanorma"
+require "metanorma-core"
 
 if defined? Metanorma::Registry
   require_relative "metanorma/iso"

@@ -1,5 +1,5 @@
 require "spec_helper"
-require "metanorma"
+require "metanorma-core"
 require "fileutils"
 
 # RSpec.describe Asciidoctor::Gb do
