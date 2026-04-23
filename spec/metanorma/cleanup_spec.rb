@@ -956,6 +956,20 @@ RSpec.describe Metanorma::Iso do
                  <language>en</language>
                  <script>Latn</script>
                </bibitem>
+               <bibitem id="_" anchor="ref1a" type='standard'>
+                 <title format='text/plain'>Standard ISO 123</title>
+                 <docidentifier>ISO 123-100</docidentifier>
+                 <docnumber>123-100</docnumber>
+                 <contributor>
+                   <role type='publisher'/>
+                   <organization>
+                     <name>International Organization for Standardization</name>
+                     <abbreviation>ISO</abbreviation>
+                   </organization>
+                 </contributor>
+                 <language>en</language>
+                 <script>Latn</script>
+               </bibitem>
                <bibitem id="_" anchor="ref2" type='standard'>
                  <title format='text/plain'>Standard ISO/IEC 123</title>
                  <docidentifier>ISO/IEC 123</docidentifier>
@@ -992,20 +1006,6 @@ RSpec.describe Metanorma::Iso do
                    <role type='publisher'/>
                    <organization>
                      <name>TS</name>
-                   </organization>
-                 </contributor>
-                 <language>en</language>
-                 <script>Latn</script>
-               </bibitem>
-               <bibitem id="_" anchor="ref1a" type='standard'>
-                 <title format='text/plain'>Standard ISO 123</title>
-                 <docidentifier>ISO 123-100</docidentifier>
-                 <docnumber>123-100</docnumber>
-                 <contributor>
-                   <role type='publisher'/>
-                   <organization>
-                     <name>International Organization for Standardization</name>
-                     <abbreviation>ISO</abbreviation>
                    </organization>
                  </contributor>
                  <language>en</language>
