@@ -30,19 +30,32 @@ module Metanorma
       end
 
       PUBLISHER = "./contributor[role/@type = 'publisher']/organization".freeze
+      ISO_NAME = "International Organization for Standardization".freeze
+      IEC_NAME = "International Electrotechnical Commission".freeze
 
       def pub_class(bib)
-        return 1 if bib.at("#{PUBLISHER}[abbreviation = 'ISO']")
-        return 1 if bib.at("#{PUBLISHER}[name = 'International Organization " \
-                           "for Standardization']")
-        return 2 if bib.at("#{PUBLISHER}[abbreviation = 'IEC']")
-        return 2 if bib.at("#{PUBLISHER}[name = 'International " \
-                           "Electrotechnical Commission']")
-        return 3 if bib.at("./docidentifier[@type]" \
-                           "[not(#{@conv.skip_docid} or @type = 'metanorma')]") ||
-          bib.at("./docidentifier[not(@type)]")
-
+        bib.at("#{PUBLISHER}[abbreviation = 'ISO']") ||
+          bib.at("#{PUBLISHER}[name = '#{ISO_NAME}']") and return 1
+        bib.at("#{PUBLISHER}[abbreviation = 'IEC']") ||
+          bib.at("#{PUBLISHER}[name = '#{IEC_NAME}']") and return 2
+        bib.at("./docidentifier[@type]" \
+               "[not(#{@conv.skip_docid} or @type = 'metanorma')]") ||
+          bib.at("./docidentifier[not(@type)]") and return 3
         4
+      end
+
+      def second_pub_class(bib, first_pub)
+        case first_pub
+        when 1
+          n = bib.at("#{PUBLISHER}[not(abbreviation = 'ISO')]" \
+                     "[not(name = '#{ISO_NAME}')]")
+          n&.at("./abbreviation") || n&.at("./name") || ""
+        when 2
+          n = bib.at("#{PUBLISHER}[not(abbreviation = 'IEC')]" \
+                     "[not(name = '#{IEC_NAME}')]")
+          n&.at("./abbreviation") || n&.at("./name") || ""
+        else ""
+        end
       end
 
       def sort_biblio(bib)
@@ -50,6 +63,7 @@ module Metanorma
       end
 
       # sort by: doc class (ISO, IEC, other standard (not DOI &c), other
+      # then second publisher
       # then standard class (docid class other than DOI &c)
       # then docnumber if present, numeric sort
       #      else alphanumeric metanorma id (abbreviation)
@@ -58,6 +72,7 @@ module Metanorma
       # then title
       def sort_biblio_key(bib)
         pubclass = pub_class(bib)
+        second_pubclass = second_pub_class(bib, pubclass)
         num = bib.at("./docnumber")&.text
         id = bib.at("./docidentifier[@primary = 'true']") ||
           bib.at("./docidentifier[not(#{@conv.skip_docid} or @type = 'metanorma')]")
@@ -67,7 +82,7 @@ module Metanorma
         type = id["type"] if id
         title = bib.at("./title[@type = 'main']")&.text ||
           bib.at("./title")&.text || bib&.at("./formattedref")&.text
-        "#{pubclass} :: #{type} :: " \
+        "#{pubclass} :: #{second_pubclass} :: #{type} :: " \
           "#{num.nil? ? abbrid : sprintf('%09d', num.to_i)} :: " \
           "#{sprintf('%09d', partid.to_i)} :: #{id&.text} :: #{title}"
       end
