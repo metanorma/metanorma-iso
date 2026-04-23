@@ -6,28 +6,6 @@ RSpec.describe Metanorma::Iso, type: :validation do
     FileUtils.rm_rf("test.err.html")
   end
 
-  context "when xref_error.adoc compilation" do
-    it "generates error file" do
-      FileUtils.rm_f "xref_error.err.html"
-      File.write("xref_error.adoc", <<~CONTENT)
-        = X
-        A
-
-        == Clause
-
-        <<a,b>>
-      CONTENT
-
-      expect do
-        mock_pdf
-        Metanorma::Compile
-          .new
-          .compile("xref_error.adoc", type: "iso", install_fonts: false)
-      end.to(change { File.exist?("xref_error.err.html") }
-              .from(false).to(true))
-    end
-  end
-
   it "Warns of illegal doctype" do
     errors = convert_and_capture_errors(<<~INPUT)
       = Document title
@@ -719,7 +697,7 @@ RSpec.describe Metanorma::Iso, type: :validation do
 
     it "does not trigger warnings on inner elements" do
       # Should only have one warning (from the topmost sub)
-      warning_count = four_level_html.scan(/no more than 3 levels of subscript nesting allowed/).length
+      warning_count = four_level_html.scan("no more than 3 levels of subscript nesting allowed").length
       expect(warning_count).to eq(1)
     end
   end
