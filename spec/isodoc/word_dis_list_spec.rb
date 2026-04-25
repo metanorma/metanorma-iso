@@ -366,7 +366,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
+    xml = Nokogiri::HTML5(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
@@ -519,7 +519,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
+    xml = Nokogiri::HTML5(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
@@ -584,7 +584,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
+    xml = Nokogiri::HTML5(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
@@ -785,7 +785,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
+    xml = Nokogiri::HTML5(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
@@ -993,7 +993,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
+    xml = Nokogiri::HTML5(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
@@ -1201,7 +1201,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
+    xml = Nokogiri::HTML5(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
@@ -1295,7 +1295,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
+    xml = Nokogiri::HTML5(output)
     xml = xml.at("//xmlns:div[@class = 'WordSection3']")
     xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
@@ -1353,7 +1353,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(Nokogiri::XML(output)
+    expect(strip_guid(Nokogiri::HTML5(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml))
       .to be_xml_equivalent_to word
   end
