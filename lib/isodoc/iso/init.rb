@@ -51,6 +51,7 @@ module IsoDoc
         ::Metanorma::Requirements::Iso
       end
 
+=begin
       def std_docid_semantic(id)
         id.nil? and return nil
         ret = Nokogiri::XML.fragment(id)
@@ -82,6 +83,7 @@ module IsoDoc
           .sub(/-([0-9]+)/, "-<span class='stddocPartNumber'>\\1</span>")
           .sub(/:([0-9]{4})(?!\d)/, ":<span class='stdyear'>\\1</span>")
       end
+=end
     end
   end
 end

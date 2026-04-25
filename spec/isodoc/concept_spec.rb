@@ -234,7 +234,7 @@ RSpec.describe IsoDoc do
                                   <semx element="eref" source="_">
                                      (
                                      <fmt-xref type="inline" target="ISO712">
-                                        <span class="stdpublisher">ISO </span>
+                                        <span class="stdpublisher">ISO</span>&#xa0;
                                         <span class="stddocNumber">712</span>
                                      </fmt-xref>
                                      )
@@ -284,7 +284,7 @@ RSpec.describe IsoDoc do
                                   <semx element="eref" source="_">
                                      (
                                      <fmt-xref type="inline" target="ISO712">
-                                        <span class="stdpublisher">ISO </span>
+                                        <span class="stdpublisher">ISO</span>&#xa0;
                                         <span class="stddocNumber">712</span>
                                         ,
                                         <span class="citesec">3.1</span>
@@ -322,7 +322,7 @@ RSpec.describe IsoDoc do
                                   <semx element="eref" source="_">
                                      (
                                      <fmt-xref type="inline" target="ISO712">
-                                        <span class="stdpublisher">ISO </span>
+                                        <span class="stdpublisher">ISO</span>&#xa0;
                                         <span class="stddocNumber">712</span>
                                         ,
                                         <span class="citesec">3.1</span>
@@ -460,7 +460,7 @@ RSpec.describe IsoDoc do
                 <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                 <bibitem id="ISO712" type="standard">
                    <biblio-tag>
-                      <span class="stdpublisher">ISO </span>
+                      <span class="stdpublisher">ISO</span> 
                       <span class="stddocNumber">712</span>
                       ,
                    </biblio-tag>
@@ -491,7 +491,7 @@ RSpec.describe IsoDoc do
                    <h1>1  Normative References</h1>
                    <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                    <p id="ISO712" class="NormRef">
-                      <span class="stdpublisher">ISO </span>
+                      <span class="stdpublisher">ISO</span> 
                       <span class="stddocNumber">712</span>
                       ,
                       <i>
@@ -533,7 +533,7 @@ RSpec.describe IsoDoc do
                                <i>term</i>
                                (
                                <a href="#ISO712">
-                                  <span class="stdpublisher">ISO </span>
+                                  <span class="stdpublisher">ISO</span>  
                                   <span class="stddocNumber">712</span>
                                </a>
                                )
@@ -548,7 +548,7 @@ RSpec.describe IsoDoc do
                                <i>word</i>
                                (
                                <a href="#ISO712">
-                                  <span class="stdpublisher">ISO </span>
+                                  <span class="stdpublisher">ISO</span>  
                                   <span class="stddocNumber">712</span>
                                   ,
                                   <span class="citesec">3.1</span>
@@ -561,7 +561,7 @@ RSpec.describe IsoDoc do
                                <i>word</i>
                                (
                                <a href="#ISO712">
-                                  <span class="stdpublisher">ISO </span>
+                                  <span class="stdpublisher">ISO</span> 
                                   <span class="stddocNumber">712</span>
                                   ,
                                   <span class="citesec">3.1</span>
@@ -797,9 +797,7 @@ RSpec.describe IsoDoc do
                                   (
                                   <fmt-xref target="clause1">
                                      <span class="citesec">
-                                        <semx element="autonum" source="Terms">1</semx>
-                                        <span class="fmt-autonum-delim">.</span>
-                                        <semx element="autonum" source="clause1">2</semx>
+                                        <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause1">2</semx>
                                      </span>
                                   </fmt-xref>
                                   )
@@ -825,9 +823,7 @@ RSpec.describe IsoDoc do
                 <term id="clause2">
                    <fmt-name id="_">
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="Terms">1</semx>
-                         <span class="fmt-autonum-delim">.</span>
-                         <semx element="autonum" source="clause2">3</semx>
+                         <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause2">3</semx>
                       </span>
                    </fmt-name>
                    <fmt-xref-label>
@@ -852,9 +848,7 @@ RSpec.describe IsoDoc do
                                   (
                                   <fmt-xref target="clause1">
                                      <span class="citesec">
-                                        <semx element="autonum" source="Terms">1</semx>
-                                        <span class="fmt-autonum-delim">.</span>
-                                        <semx element="autonum" source="clause1">2</semx>
+                                        <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause1">2</semx>
                                      </span>
                                   </fmt-xref>
                                   )
@@ -880,15 +874,11 @@ RSpec.describe IsoDoc do
                 <term id="clause3">
                    <fmt-name id="_">
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="Terms">1</semx>
-                         <span class="fmt-autonum-delim">.</span>
-                         <semx element="autonum" source="clause3">4</semx>
+                         <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause3">4</semx>
                       </span>
                    </fmt-name>
                    <fmt-xref-label>
-                      <semx element="autonum" source="Terms">1</semx>
-                      <span class="fmt-autonum-delim">.</span>
-                      <semx element="autonum" source="clause3">4</semx>
+                      <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause3">4</semx>
                    </fmt-xref-label>
                    <ul>
                       <li id="_">
@@ -907,9 +897,7 @@ RSpec.describe IsoDoc do
                                   (
                                   <fmt-xref target="clause1">
                                      <span class="citesec">
-                                        <semx element="autonum" source="Terms">1</semx>
-                                        <span class="fmt-autonum-delim">.</span>
-                                        <semx element="autonum" source="clause1">2</semx>
+                                        <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause1">2</semx>
                                      </span>
                                   </fmt-xref>
                                   )
@@ -934,19 +922,11 @@ RSpec.describe IsoDoc do
                    <term id="clause4">
                       <fmt-name id="_">
                          <span class="fmt-caption-label">
-                            <semx element="autonum" source="Terms">1</semx>
-                            <span class="fmt-autonum-delim">.</span>
-                            <semx element="autonum" source="clause3">4</semx>
-                            <span class="fmt-autonum-delim">.</span>
-                            <semx element="autonum" source="clause4">1</semx>
+                            <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause3">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause4">1</semx>
                          </span>
                       </fmt-name>
                       <fmt-xref-label>
-                         <semx element="autonum" source="Terms">1</semx>
-                         <span class="fmt-autonum-delim">.</span>
-                         <semx element="autonum" source="clause3">4</semx>
-                         <span class="fmt-autonum-delim">.</span>
-                         <semx element="autonum" source="clause4">1</semx>
+                         <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause3">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause4">1</semx>
                       </fmt-xref-label>
                       <ul>
                          <li id="_">
@@ -965,9 +945,7 @@ RSpec.describe IsoDoc do
                                      (
                                      <fmt-xref target="clause1">
                                         <span class="citesec">
-                                           <semx element="autonum" source="Terms">1</semx>
-                                           <span class="fmt-autonum-delim">.</span>
-                                           <semx element="autonum" source="clause1">2</semx>
+                                           <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause1">2</semx>
                                         </span>
                                      </fmt-xref>
                                      )

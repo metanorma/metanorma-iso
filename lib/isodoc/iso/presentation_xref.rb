@@ -153,16 +153,7 @@ module IsoDoc
                            @xrefs.anchor(node["target"], :type))
       end
 
-      def std_docid_semantic(id)
-        id.nil? and return nil
-        ret = Nokogiri::XML.fragment(id)
-        ret.traverse do |x|
-          x.text? or next
-          x.replace(std_docid_semantic1(x.text))
-        end
-        to_xml(ret)
-      end
-
+      # KILL
       def std_docid_semantic1(id)
         id1 = id.sub(%r{\p{Zs}\(all\p{Zs}parts\)}, "###ALLPARTS###")
         ids = id1.split(/(\p{Zs})/)
@@ -186,6 +177,32 @@ module IsoDoc
       end
 
       def std_docid_semantic(id)
+        id.nil? || id.empty? || id == "IEV" || /^\[?\d+\]?$/.match?(id) and
+          return id
+        nbsp = id.include?("\u00a0")
+        bracket = id.match?(/\A\[.+\]\Z/m)
+        id = id.gsub("\u00a0", " ").sub(/\A\[(.+)\]\Z/m, "\\1")
+        ret = std_docid_span_classes(std_docid_semantic_parse(id))
+        std_docid_semantic_restore_format(ret, nbsp, bracket)
+      end
+
+      def std_docid_semantic_restore_format(id, nbsp, bracket)
+        nbsp and Nokogiri::XML(id).traverse do |n|
+          n.text? or next
+          n.replace(n.text.gsub(" ", "\u00a0"))
+        end
+        bracket and id = "[#{id}]"
+        id
+      end
+
+      def std_docid_span_classes(id)
+        id.gsub('class="publisher"', 'class="stdpublisher"')
+          .gsub('class="docnumber"', 'class="stddocNumber"')
+          .gsub('class="part"', 'class="stddocPartNumber"')
+          .gsub('class="year"', 'class="stdyear"')
+      end
+
+      def std_docid_semantic_parse(id)
         Pubid::Registry.parse(id).to_s(annotated: true)
       rescue Pubid::Core::Errors::ParseError
         std_docid_semantic_full(id)

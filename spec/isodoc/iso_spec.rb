@@ -191,7 +191,7 @@ RSpec.describe IsoDoc::Iso do
                  <div>
                    <h1>1  Normative References</h1>
                    <p id="ISO20483" class="NormRef">
-                      <span class="stdpublisher">ISO </span>
+                      <span class="stdpublisher">ISO</span> 
                       <span class="stddocNumber">20483</span>
                       ,
                       <i>Cereals and pulses</i>

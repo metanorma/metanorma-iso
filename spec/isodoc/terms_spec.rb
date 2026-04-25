@@ -213,8 +213,7 @@ RSpec.describe IsoDoc do
                                <locality type="clause">
                                   <referenceFrom>3.1</referenceFrom>
                                </locality>
-                               <span class="stdpublisher">ISO </span>
-                               <span class="stddocNumber">7301</span>
+                               <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">7301</span>
                                :
                                <span class="stdyear">2011</span>
                                ,
@@ -404,8 +403,7 @@ RSpec.describe IsoDoc do
                                <locality type="clause">
                                   <referenceFrom>3.1</referenceFrom>
                                </locality>
-                               <span class="stdpublisher">ISO </span>
-                               <span class="stddocNumber">7301</span>
+                               <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">7301</span>
                                :
                                <span class="stdyear">2011</span>
                                ,
@@ -528,8 +526,7 @@ RSpec.describe IsoDoc do
                    </div>
                    <p>
                       [SOURCE:
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">7301</span>
+                      <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">7301</span>
                       :
                       <span class="stdyear">2011</span>
                       ,
@@ -583,8 +580,7 @@ RSpec.describe IsoDoc do
                    </div>
                    <p>
                       [SOURCE:
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">7301</span>
+                      <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">7301</span>
                       :
                       <span class="stdyear">2011</span>
                       ,
@@ -648,8 +644,7 @@ RSpec.describe IsoDoc do
          </div>
          <p class="Source">
             [SOURCE:
-            <span class="stdpublisher">ISO </span>
-            <span class="stddocNumber">7301</span>
+            <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">7301</span>
             :
             <span class="stdyear">2011</span>
             ,
@@ -694,8 +689,7 @@ RSpec.describe IsoDoc do
          </div>
          <p class="Source">
             [SOURCE:
-            <span class="stdpublisher">ISO </span>
-            <span class="stddocNumber">7301</span>
+            <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">7301</span>
             :
             <span class="stdyear">2011</span>
             ,
@@ -1593,8 +1587,7 @@ RSpec.describe IsoDoc do
                     </origin>
                     <semx element="origin" source="_">
                        <fmt-xref type="inline" target="iso643">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">643</span>
+                          <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">643</span>
                           ,
                           <span class="citesec">Clause 3</span>
                        </fmt-xref>
@@ -1611,9 +1604,7 @@ RSpec.describe IsoDoc do
                     </origin>
                     <semx element="origin" source="_">
                        <fmt-xref type="inline" target="ietf643">
-                          <span class="stdpublisher">IETF </span>
-                          <span class="stdpublisher">RFC </span>
-                          <span class="stddocNumber">643</span>
+                          <span class="stdpublisher">IETF&#xa0;RFC</span>&#xa0;<span class="stddocNumber">643</span>
                           ,
                           <span class="citesec">Clause 3</span>
                        </fmt-xref>

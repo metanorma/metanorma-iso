@@ -1208,8 +1208,7 @@ RSpec.describe IsoDoc do
                         <p id="_">with adjustments</p>
                      </modification>
                   </source>
-                  <fmt-source>
-                     [SOURCE:
+                  <fmt-source>[SOURCE:
                      <semx element="source" source="_">
                         <origin bibitemid="ISO712" type="inline" citeas="ISO 712" id="_">
                            <localityStack>
@@ -1217,18 +1216,9 @@ RSpec.describe IsoDoc do
                                  <referenceFrom>1</referenceFrom>
                               </locality>
                            </localityStack>
-                        </origin>
-                        <semx element="origin" source="_">
-                           <fmt-xref type="inline" target="ISO712">
-                              <span class="stdpublisher">ISO </span>
-                              <span class="stddocNumber">712</span>
-                              , Section 1
-                           </fmt-xref>
-                        </semx>
-                        —
-                        <semx element="modification" source="_">with adjustments</semx>
-                     </semx>
-                     ;
+                        </origin><semx element="origin" source="_">
+                           <fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>, Section 1</fmt-xref>
+                        </semx>—<semx element="modification" source="_">with adjustments</semx></semx>;
                      <semx element="source" source="_">
                         <origin bibitemid="ISO712" type="inline" citeas="ISO 712" id="_">
                            <localityStack>
@@ -1238,15 +1228,9 @@ RSpec.describe IsoDoc do
                            </localityStack>
                         </origin>
                         <semx element="origin" source="_">
-                           <fmt-xref type="inline" target="ISO712">
-                              <span class="stdpublisher">ISO </span>
-                              <span class="stddocNumber">712</span>
-                              , Section 2
-                           </fmt-xref>
+                           <fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>, Section 2</fmt-xref>
                         </semx>
-                     </semx>
-                     ]
-                  </fmt-source>
+                     </semx>]</fmt-source>
                   <source status="specialisation" id="_">
                      <origin bibitemid="ISO712" type="inline" citeas="ISO 712">
                         <localityStack>
@@ -1295,7 +1279,7 @@ RSpec.describe IsoDoc do
                </fmt-xref-label>
                <bibitem id="ISO712" type="standard">
                   <biblio-tag>
-                     <span class="stdpublisher">ISO </span>
+                     <span class="stdpublisher">ISO</span> 
                      <span class="stddocNumber">712</span>
                      ,
                   </biblio-tag>
