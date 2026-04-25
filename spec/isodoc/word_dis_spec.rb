@@ -118,7 +118,7 @@ RSpec.describe IsoDoc do
       </div>
     OUTPUT
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", input, true)
-    expect(Nokogiri::HTML5(output)
+    expect(Nokogiri::XML(output)
       .at("//div[@class = 'WordSection3']").to_xml)
       .to be_xml_equivalent_to word
 
@@ -146,7 +146,7 @@ RSpec.describe IsoDoc do
       </div>
     OUTPUT
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", input, true)
-    expect(Nokogiri::HTML5(output)
+    expect(Nokogiri::XML(output)
       .at("//div[@class = 'WordSection3']").to_xml)
       .to be_xml_equivalent_to word
   end
@@ -199,7 +199,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    doc = Nokogiri::HTML5(output)
+    doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection2']")
     expect(strip_guid(doc.to_xml))
       .to be_xml_equivalent_to word
@@ -249,7 +249,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    doc = Nokogiri::HTML5(output)
+    doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection2']")
     expect(strip_guid(doc.to_xml))
       .to be_xml_equivalent_to word
@@ -295,7 +295,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    doc = Nokogiri::HTML5(output)
+    doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']")
     expect(doc.to_xml)
       .to be_xml_equivalent_to word
@@ -381,7 +381,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    doc = Nokogiri::HTML5(output)
+    doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection2']")
     expect(strip_guid(doc.to_xml))
       .to be_xml_equivalent_to word
@@ -453,7 +453,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    doc = Nokogiri::HTML5(output)
+    doc = Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection2']")
     expect(strip_guid(doc.to_xml))
       .to be_xml_equivalent_to word
@@ -595,7 +595,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(Nokogiri::HTML5(output)
+    expect(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml)
       .to be_xml_equivalent_to word
   end
@@ -678,7 +678,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(Nokogiri::HTML5(output)
+    expect(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml))
       .to be_xml_equivalent_to word
   end
@@ -735,7 +735,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(Nokogiri::HTML5(output)
+    expect(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml))
       .to be_xml_equivalent_to word
   end
@@ -773,7 +773,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(Nokogiri::HTML5(output)
+    expect(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml))
       .to be_xml_equivalent_to word
   end
@@ -829,7 +829,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(Nokogiri::HTML5(output)
+    expect(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml))
       .to be_xml_equivalent_to word
   end
@@ -873,7 +873,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(Nokogiri::HTML5(output)
+    expect(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml))
       .to be_xml_equivalent_to word
   end
@@ -931,7 +931,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(Nokogiri::HTML5(output)
+    expect(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml))
       .to be_xml_equivalent_to word
   end
@@ -1002,10 +1002,10 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(Nokogiri::HTML5(output)
+    expect(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml))
       .to be_xml_equivalent_to word
-    expect(strip_guid(Nokogiri::HTML5(output)
+    expect(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection1']").to_xml))
       .to be_xml_equivalent_to title
   end
@@ -1062,7 +1062,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(Nokogiri::HTML5(output)
+    expect(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml))
       .to be_xml_equivalent_to word
   end
@@ -1122,7 +1122,7 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
     contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m,
                                                     "</body>")
-    contents = Nokogiri::HTML5(contents)
+    contents = Nokogiri::XML(contents)
       .at("//div[a/@id = 'boilerplate-copyright-destination']")
     expect(contents.to_xml)
       .to be_xml_equivalent_to <<~OUTPUT
@@ -1186,7 +1186,7 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
     contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m,
                                                     "</body>")
-    contents = Nokogiri::HTML5(contents)
+    contents = Nokogiri::XML(contents)
       .at("//div[a/@id = 'boilerplate-copyright-destination']")
     expect(contents.to_xml)
       .to be_xml_equivalent_to <<~OUTPUT
@@ -1361,7 +1361,7 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(Nokogiri::HTML5(output)
+    expect(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:div[@class = 'WordSection3']").to_xml))
       .to be_xml_equivalent_to word
   end

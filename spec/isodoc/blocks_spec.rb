@@ -313,7 +313,7 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(strip_guid(pres_output))
       .to be_xml_equivalent_to presxml
-    expect(strip_guid(Nokogiri::HTML5(
+    expect(strip_guid(Nokogiri::XML(
       IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true),
     )
@@ -421,7 +421,7 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(strip_guid(pres_output))
       .to be_xml_equivalent_to presxml
-    expect(strip_guid(Nokogiri::HTML5(
+    expect(strip_guid(Nokogiri::XML(
       IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true),
     )
@@ -569,7 +569,7 @@ RSpec.describe IsoDoc do
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to html
-    expect(strip_guid(Nokogiri::HTML5(IsoDoc::Iso::WordConvert.new({})
+    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
       .at("//div[@class = 'WordSection2']").to_xml))
       .to be_xml_equivalent_to word
@@ -820,7 +820,7 @@ RSpec.describe IsoDoc do
     expect(strip_guid(output))
       .to be_html5_equivalent_to html
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, true)
-    expect(strip_guid(Nokogiri::HTML5(output)
+    expect(strip_guid(Nokogiri::XML(output)
       .at("//div[@id = 'A']").to_xml))
       .to be_xml_equivalent_to word
   end
@@ -1347,7 +1347,7 @@ RSpec.describe IsoDoc do
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to html
-    expect(strip_guid(Nokogiri::HTML5(IsoDoc::Iso::WordConvert.new({})
+    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
       .at("//div[@class = 'WordSection2']").to_xml))
       .to be_xml_equivalent_to word

@@ -249,7 +249,7 @@ RSpec.describe IsoDoc do
         </iso-standard>
       INPUT
 
-    html = Nokogiri::HTML5(File.read("test.html", encoding: "UTF-8"))
+    html = Nokogiri::XML(File.read("test.html", encoding: "UTF-8"))
       .at("//div[@id = 'toc']").to_xml
 
     expect(strip_guid(html))
@@ -748,7 +748,7 @@ RSpec.describe IsoDoc do
       .convert("test", pres_output, false)
     word = File.read("test.doc", encoding: "UTF-8")
     contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m, "</body>")
-    contents = Nokogiri::HTML5(contents)
+    contents = Nokogiri::XML(contents)
       .at("//div[a/@id = 'boilerplate-copyright-destination']")
     expect(contents.to_xml)
       .to be_xml_equivalent_to <<~"OUTPUT"
