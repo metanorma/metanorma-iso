@@ -727,7 +727,7 @@ RSpec.describe IsoDoc do
 
   it "defaults to English" do
     output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", <<~"INPUT", true)
+      .convert("test", <<~INPUT, true)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata>
               <status>
@@ -814,7 +814,7 @@ RSpec.describe IsoDoc do
       INPUT
     expect(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:preface").to_xml))
-      .to be_xml_equivalent_to <<~"OUTPUT"
+      .to be_xml_equivalent_to <<~OUTPUT
         <preface>
            <clause type="toc" id="_" displayorder="1">
               <fmt-title id="_" depth="1">Table of contents</fmt-title>
@@ -1333,7 +1333,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     html = <<~OUTPUT
-      #{HTML_HDR.gsub(/"en"/, '"fr"').sub(/Contents/, 'Sommaire')}
+      #{HTML_HDR.gsub('"en"', '"fr"').sub('Contents', 'Sommaire')}
       <br/>
              <div id="_">
                <h1 class="ForewordTitle">Foreword</h1>
@@ -1918,7 +1918,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     html = <<~OUTPUT
-      #{HTML_HDR.gsub(/"en"/, '"ru"').sub(/Contents/, 'Содержание')}
+      #{HTML_HDR.gsub('"en"', '"ru"').sub('Contents', 'Содержание')}
        <br/>
              <div id="_">
                <h1 class="ForewordTitle">Foreword</h1>
@@ -2186,10 +2186,7 @@ RSpec.describe IsoDoc do
                       <span class="fmt-element-name">条</span>
                       <semx element="autonum" source="D0">3</semx>
                    </span>
-                   <span class="fmt-caption-delim">
-                      ：
-                      <tab/>
-                   </span>
+                   <span class="fmt-caption-delim">：<tab/></span>
                    <semx element="title" source="_">一般的</semx>
                 </fmt-title>
                 <fmt-xref-label>
@@ -2220,12 +2217,7 @@ RSpec.describe IsoDoc do
                       </locality>
                    </eref>
                    <semx element="eref" source="_">
-                      <fmt-xref type="inline" target="ISO712">
-                         <span class="stdpublisher">ISO </span>
-                         <span class="stddocNumber">712</span>
-                         ，
-                         <span class="citetbl">表1〜1</span>
-                      </fmt-xref>
+                      <fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>， <span class="citetbl">表1〜1</span></fmt-xref>
                    </semx>
                 </p>
              </clause>
@@ -2410,7 +2402,7 @@ RSpec.describe IsoDoc do
                 </fmt-xref-label>
                 <bibitem id="ISO712" type="standard">
                    <biblio-tag>
-                      <span class="stdpublisher">ISO </span>
+                      <span class="stdpublisher">ISO</span>#{' '}
                       <span class="stddocNumber">712</span>
                       ，
                    </biblio-tag>
@@ -2544,7 +2536,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     html = <<~OUTPUT
-      #{HTML_HDR.gsub(/"en"/, '"zh"').sub(/Contents/, '目　次')}
+      #{HTML_HDR.gsub('"en"', '"zh"').sub('Contents', '目　次')}
                    <br/>
                <div id="_">
                    <h1 class="ForewordTitle">Foreword</h1>
@@ -2562,7 +2554,7 @@ RSpec.describe IsoDoc do
                    <h1>1　Scope</h1>
                    <p id="E">
                       <a href="#ISO712">
-                         <span class="stdpublisher">ISO </span>
+                         <span class="stdpublisher">ISO</span>#{' '}
                          <span class="stddocNumber">712</span>
                          ，
                          <span class="citetbl">表1〜1</span>
@@ -2572,7 +2564,7 @@ RSpec.describe IsoDoc do
                 <div>
                    <h1>2　Normative References</h1>
                    <p id="ISO712" class="NormRef">
-                      <span class="stdpublisher">ISO </span>
+                      <span class="stdpublisher">ISO</span>#{' '}
                       <span class="stddocNumber">712</span>
                        ，
                       <i>Cereals and cereal products</i>
@@ -2667,7 +2659,7 @@ RSpec.describe IsoDoc do
   end
 
   it "internationalises locality" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
       <language>fr</language>
@@ -2716,11 +2708,7 @@ RSpec.describe IsoDoc do
                </locality>
             </eref>
             <semx element="eref" source="_">
-               <fmt-xref type="inline" target="ISO712">
-                  <span class="stdpublisher">ISO </span>
-                  <span class="stddocNumber">712</span>
-                  , Appendice 7
-               </fmt-xref>
+               <fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>, Appendice 7</fmt-xref>
             </semx>
          </p>
          <p id="B">
@@ -2730,12 +2718,7 @@ RSpec.describe IsoDoc do
                </locality>
             </eref>
             <semx element="eref" source="_">
-               <fmt-xref type="inline" target="ISO712">
-                  <span class="stdpublisher">ISO </span>
-                  <span class="stddocNumber">712</span>
-                  ,
-                  <span class="citeapp">Annexe 7</span>
-               </fmt-xref>
+               <fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>,<span class="citeapp">Annexe 7</span></fmt-xref>
             </semx>
          </p>
       </foreword>
@@ -2744,5 +2727,22 @@ RSpec.describe IsoDoc do
       .new({}).convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
       .to be_xml_equivalent_to presxml
+  end
+
+  it "test test test" do
+    input = <<~INPUT
+          <fmt-title depth="1" id="_">
+             <span class="fmt-caption-delim">
+                :
+                <tab/>
+             </span>
+             <semx element="title" source="_">General</semx>
+          </fmt-title>
+    INPUT
+    output = <<~OUTPUT
+      <fmt-title depth="1" id="_"><span class="fmt-caption-delim">:<tab/></span><semx element="title" source="_">General</semx></fmt-title>
+    OUTPUT
+    expect(input)
+      .to be_xml_equivalent_to output
   end
 end

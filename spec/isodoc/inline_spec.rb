@@ -644,7 +644,7 @@ RSpec.describe IsoDoc do
                      </organization>
                   </contributor>
                   <biblio-tag>
-                     <span class="stdpublisher">ISO </span>
+                     <span class="stdpublisher">ISO</span> 
                      <span class="stddocNumber">712</span>
                      ,
                   </biblio-tag>
@@ -750,241 +750,95 @@ RSpec.describe IsoDoc do
     expect(strip_guid(output.sub(/citeas="\[ISO 10303-32[^"]+"/, "citeas"))
       .sub(%r{<i18nyaml>.*</i18nyaml>}m, ""))
       .to be_xml_equivalent_to <<~OUTPUT
-        <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-           <preface>
-              <clause type="toc" id="_" displayorder="1">
-                 <fmt-title id="_" depth="1">Contents</fmt-title>
-              </clause>
-              <foreword id="_" displayorder="2">
-                 <title id="_">Foreword</title>
-                 <fmt-title id="_" depth="1">
-                    <semx element="title" source="_">Foreword</semx>
-                 </fmt-title>
-                 <p>
-                    <eref bibitemid="IEV" citeas="IEV" type="inline" id="_">
-                       <locality type="clause">
-                          <referenceFrom>1-2-3</referenceFrom>
-                       </locality>
-                    </eref>
-                    <semx element="eref" source="_">
-                       <fmt-eref bibitemid="IEV" citeas="IEV" type="inline">
-                          <locality type="clause">
-                             <referenceFrom>1-2-3</referenceFrom>
-                          </locality>
-                          <span class="stdpublisher">IEV</span>
-                          ,
-                          <span class="citesec">1-2-3</span>
-                       </fmt-eref>
-                    </semx>
-                    <eref bibitemid="ISO712" citeas="ISO 712" type="inline" id="_"/>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">712</span>
-                       </fmt-xref>
-                    </semx>
-                    <eref bibitemid="ISO712" citeas="ISO/IEEE/IEV/IEC/BREAKINGSPACE 712" type="inline" id="_"/>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">712</span>
-                       </fmt-xref>
-                    </semx>
-                    <eref bibitemid="ISO712" type="inline" id="_"/>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">712</span>
-                       </fmt-xref>
-                    </semx>
-                    <eref bibitemid="ISO712" type="inline" id="_">
-                       <locality type="table">
-                          <referenceFrom>1</referenceFrom>
-                       </locality>
-                    </eref>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">712</span>
-                          ,
-                          <span class="citetbl">Table 1</span>
-                       </fmt-xref>
-                    </semx>
-                    <eref bibitemid="ISO712" type="inline" id="_">
-                       <locality type="table">
-                          <referenceFrom>1</referenceFrom>
-                          <referenceTo>1</referenceTo>
-                       </locality>
-                    </eref>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">712</span>
-                          ,
-                          <span class="citetbl">Table 1–1</span>
-                       </fmt-xref>
-                    </semx>
-                    <eref bibitemid="ISO712" type="inline" id="_">
-                       <locality type="clause">
-                          <referenceFrom>1</referenceFrom>
-                       </locality>
-                       <locality type="table">
-                          <referenceFrom>1</referenceFrom>
-                       </locality>
-                    </eref>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">712</span>
-                          ,
-                          <span class="citesec">Clause 1</span>
-                          ,
-                          <span class="citetbl">Table 1</span>
-                       </fmt-xref>
-                    </semx>
-                    <eref bibitemid="ISO712" type="inline" id="_">
-                       <locality type="clause">
-                          <referenceFrom>1</referenceFrom>
-                       </locality>
-                       <locality type="list">
-                          <referenceFrom>a</referenceFrom>
-                       </locality>
-                    </eref>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">712</span>
-                          ,
-                          <span class="citesec">Clause 1</span>
-                          a)
-                       </fmt-xref>
-                    </semx>
-                    <eref bibitemid="ISO712" type="inline" id="_">
-                       <locality type="clause">
-                          <referenceFrom>1</referenceFrom>
-                       </locality>
-                    </eref>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">712</span>
-                          ,
-                          <span class="citesec">Clause 1</span>
-                       </fmt-xref>
-                    </semx>
-                    <eref bibitemid="ISO712" type="inline" id="_">
-                       <locality type="clause">
-                          <referenceFrom>1.5</referenceFrom>
-                       </locality>
-                    </eref>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">712</span>
-                          ,
-                          <span class="citesec">1.5</span>
-                       </fmt-xref>
-                    </semx>
-                    <eref bibitemid="ISO712" type="inline" id="_">
-                       <locality type="table">
-                          <referenceFrom>1</referenceFrom>
-                       </locality>
-                       A
-                    </eref>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">
-                  A</fmt-xref>
-                    </semx>
-                    <eref bibitemid="ISO712" type="inline" id="_">
-                       <locality type="whole"/>
-                    </eref>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">712</span>
-                          , Whole of text
-                       </fmt-xref>
-                    </semx>
-                    <eref bibitemid="ISO712" type="inline" id="_">
-                       <locality type="locality:prelude">
-                          <referenceFrom>7</referenceFrom>
-                       </locality>
-                    </eref>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">712</span>
-                          , Prelude 7
-                       </fmt-xref>
-                    </semx>
-                    <eref bibitemid="ISO712" citeas="ISO 712" type="inline" id="_">A</eref>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">A</fmt-xref>
-                    </semx>
-                    <eref bibitemid="ISO712" citeas="ISO/IEC DIR 1" type="inline" id="_"/>
-                    <semx element="eref" source="_">
-                       <fmt-xref type="inline" target="ISO712">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">712</span>
-                       </fmt-xref>
-                    </semx>
-                    <eref type="inline" bibitemid="ISO_10303_32"/>
-                    id="_"/&gt;
-                    <semx element="eref" source="_">
-                       <fmt-eref type="inline" bibitemid="ISO_10303_32" citeas="[ISO 10303-32&lt;fn reference=&quot;1&quot;&gt;&lt;p&gt;To be published.&lt;/p&gt;&#10;&lt;/fn&gt;]">
-                          [ISO 10303-32
-                          <fn reference="1">
-                             <p>To be published.</p>
-                          </fn>
-                          ]
-                       </fmt-eref>
-                    </semx>
-                 </p>
-              </foreword>
-           </preface>
-           <sections>
-              <references id="_" normative="true" obligation="informative" displayorder="3">
-                 <title id="_">Normative References</title>
-                 <fmt-title id="_" depth="1">
-                    <span class="fmt-caption-label">
-                       <semx element="autonum" source="_">1</semx>
-                    </span>
-                    <span class="fmt-caption-delim">
-                       <tab/>
-                    </span>
-                    <semx element="title" source="_">Normative References</semx>
-                 </fmt-title>
-                 <fmt-xref-label>
-                    <span class="fmt-element-name">Clause</span>
-                    <semx element="autonum" source="_">1</semx>
-                 </fmt-xref-label>
-                 <bibitem id="ISO712" type="standard">
-                    <formattedref>
-                       <em>
-                          <span class="stddocTitle">Cereals and cereal products</span>
-                       </em>
-                    </formattedref>
-                    <title format="text/plain">Cereals and cereal products</title>
-                    <docidentifier>ISO 712</docidentifier>
-                    <docidentifier scope="biblio-tag">ISO 712</docidentifier>
-                    <contributor>
-                       <role type="publisher"/>
-                       <organization>
-                          <name>ISO</name>
-                       </organization>
-                    </contributor>
-                    <biblio-tag>
-                       <span class="stdpublisher">ISO </span>
-                       <span class="stddocNumber">712</span>
-                       ,
-                    </biblio-tag>
-                 </bibitem>
-              </references>
-           </sections>
-           <bibliography>
-        #{'    '}
-          </bibliography>
-        </iso-standard>
+       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <preface><clause type="toc" id="_" displayorder="1"><fmt-title depth="1" id="_">Contents</fmt-title></clause>
+     
+           <foreword id="_" displayorder="2"><title id="_">Foreword</title><fmt-title depth="1" id="_"><semx element="title" source="_">Foreword</semx></fmt-title>
+             <p>
+               <eref bibitemid="IEV" citeas="IEV" type="inline" id="_">
+                 <locality type="clause">
+                   <referenceFrom>1-2-3</referenceFrom>
+                 </locality>
+               </eref><semx element="eref" source="_"><fmt-eref bibitemid="IEV" citeas="IEV" type="inline"><locality type="clause">
+                   <referenceFrom>1-2-3</referenceFrom>
+                 </locality>IEV,  <span class="citesec">1-2-3</span></fmt-eref></semx>
+               <eref bibitemid="ISO712" citeas="ISO 712" type="inline" id="_"/><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span></fmt-xref></semx>
+               <eref bibitemid="ISO712" citeas="ISO/IEEE/IEV/IEC/BREAKINGSPACE 712" type="inline" id="_"/><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span></fmt-xref></semx>
+               <eref bibitemid="ISO712" type="inline" id="_"/><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span></fmt-xref></semx>
+               <eref bibitemid="ISO712" type="inline" id="_">
+                 <locality type="table">
+                   <referenceFrom>1</referenceFrom>
+                 </locality>
+               </eref><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>,  <span class="citetbl">Table 1</span></fmt-xref></semx>
+               <eref bibitemid="ISO712" type="inline" id="_">
+                 <locality type="table">
+                   <referenceFrom>1</referenceFrom>
+                   <referenceTo>1</referenceTo>
+                 </locality>
+               </eref><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>,  <span class="citetbl">Table 1&#x2013;1</span></fmt-xref></semx>
+               <eref bibitemid="ISO712" type="inline" id="_">
+                 <locality type="clause">
+                   <referenceFrom>1</referenceFrom>
+                 </locality>
+                 <locality type="table">
+                   <referenceFrom>1</referenceFrom>
+                 </locality>
+               </eref><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>,  <span class="citesec">Clause 1</span>,  <span class="citetbl">Table 1</span></fmt-xref></semx>
+               <eref bibitemid="ISO712" type="inline" id="_">
+                 <locality type="clause">
+                   <referenceFrom>1</referenceFrom>
+                 </locality>
+                 <locality type="list">
+                   <referenceFrom>a</referenceFrom>
+                 </locality>
+               </eref><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>,  <span class="citesec">Clause 1</span>  a)</fmt-xref></semx>
+               <eref bibitemid="ISO712" type="inline" id="_">
+                 <locality type="clause">
+                   <referenceFrom>1</referenceFrom>
+                 </locality>
+               </eref><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>,  <span class="citesec">Clause 1</span></fmt-xref></semx>
+               <eref bibitemid="ISO712" type="inline" id="_">
+                 <locality type="clause">
+                   <referenceFrom>1.5</referenceFrom>
+                 </locality>
+               </eref><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>,  <span class="citesec">1.5</span></fmt-xref></semx>
+               <eref bibitemid="ISO712" type="inline" id="_">
+                 <locality type="table">
+                   <referenceFrom>1</referenceFrom>
+                 </locality>A</eref><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712">
+                 A</fmt-xref></semx>
+               <eref bibitemid="ISO712" type="inline" id="_">
+                 <locality type="whole"/>
+               </eref><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>, Whole of text</fmt-xref></semx>
+               <eref bibitemid="ISO712" type="inline" id="_">
+                 <locality type="locality:prelude">
+                   <referenceFrom>7</referenceFrom>
+                 </locality>
+               </eref><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>,  Prelude 7</fmt-xref></semx>
+               <eref bibitemid="ISO712" citeas="ISO 712" type="inline" id="_">A</eref><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712">A</fmt-xref></semx>
+               <eref bibitemid="ISO712" citeas="ISO/IEC DIR 1" type="inline" id="_"/><semx element="eref" source="_"><fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span></fmt-xref></semx>
+               <eref type="inline" bibitemid="ISO_10303_32" citeas id="_"/><semx element="eref" source="_"><fmt-eref type="inline" bibitemid="ISO_10303_32" citeas="[ISO 10303-32&#x3c;fn reference=&quot;1&quot;&#x3e;&#x3c;p&#x3e;To be published.&#x3c;/p&#x3e;&#10;&#x3c;/fn&#x3e;]">[<span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">10303</span>-<span class="stddocPartNumber">32</span><fn reference="1">
+                  <p>To be published.</p>
+       </fn>]</fmt-eref></semx>
+             </p>
+           </foreword>
+         </preface><sections><references id="_" normative="true" obligation="informative" displayorder="3">
+             <title id="_">Normative References</title><fmt-title depth="1" id="_"><span class="fmt-caption-label"><semx element="autonum" source="_">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_">Normative References</semx></fmt-title><fmt-xref-label><span class="fmt-element-name">Clause</span> <semx element="autonum" source="_">1</semx></fmt-xref-label>
+             <bibitem id="ISO712" type="standard"><biblio-tag><span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span>, </biblio-tag>
+               <formattedref><em><span class="stddocTitle">Cereals and cereal products</span></em></formattedref>
+               <title format="text/plain">Cereals and cereal products</title>
+               <docidentifier>ISO&#xA0;712</docidentifier><docidentifier scope="biblio-tag">ISO&#xA0;712</docidentifier>
+               <contributor>
+                 <role type="publisher"/>
+                 <organization>
+                   <name>ISO</name>
+                 </organization>
+               </contributor>
+             </bibitem>
+           </references></sections>
+         <bibliography>
+         </bibliography>
+       </iso-standard>
       OUTPUT
   end
 
@@ -1044,137 +898,90 @@ RSpec.describe IsoDoc do
             </itu-standard>
     INPUT
     output = <<~OUTPUT
-      <itu-standard xmlns="https://www.calconnect.org/standards/itu" type="presentation">
-         <p id="_">
-            <eref type="inline" bibitemid="ref1" citeas="ITU" id="_">
-               <localityStack connective="from">
-                  <locality type="clause">
+       <itu-standard xmlns="https://www.calconnect.org/standards/itu" type="presentation">
+                   <p id="_">
+               <eref type="inline" bibitemid="ref1" citeas="ITU" id="_">
+                 <localityStack connective="from">
+                   <locality type="clause">
                      <referenceFrom>3</referenceFrom>
-                  </locality>
-               </localityStack>
-               <localityStack connective="to">
-                  <locality type="clause">
+                   </locality>
+                 </localityStack>
+                 <localityStack connective="to">
+                   <locality type="clause">
                      <referenceFrom>5</referenceFrom>
-                  </locality>
-               </localityStack>
-            </eref>
-            <semx element="eref" source="_">
-               <fmt-eref type="inline" bibitemid="ref1" citeas="ITU" droploc="">
-                  <localityStack connective="from">
-                     <locality type="clause">
-                        <referenceFrom>3</referenceFrom>
-                     </locality>
-                  </localityStack>
-                  <localityStack connective="to">
-                     <locality type="clause">
-                        <referenceFrom>5</referenceFrom>
-                     </locality>
-                  </localityStack>
-                  <span class="stdpublisher">ITU</span>
-                  ,
-                  <span class="citesec">
-                     Clauses
-                     <span class="citesec">3</span>
-                     <span class="fmt-conn">to</span>
-                     <span class="citesec">5</span>
-                  </span>
-               </fmt-eref>
-            </semx>
-            <eref type="inline" bibitemid="ref1" citeas="ITU" id="_">
-               <localityStack connective="from">
-                  <locality type="clause">
+                   </locality>
+                 </localityStack>
+               </eref><semx element="eref" source="_"><fmt-eref type="inline" bibitemid="ref1" citeas="ITU" droploc=""><localityStack connective="from">
+                   <locality type="clause">
+                     <referenceFrom>3</referenceFrom>
+                   </locality>
+                 </localityStack><localityStack connective="to">
+                   <locality type="clause">
+                     <referenceFrom>5</referenceFrom>
+                   </locality>
+                 </localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">Clauses <span class="citesec">3</span> <span class="fmt-conn">to</span> <span class="citesec">5</span></span></fmt-eref></semx>
+               <eref type="inline" bibitemid="ref1" citeas="ITU" id="_">
+                 <localityStack connective="from">
+                   <locality type="clause">
                      <referenceFrom>3.1</referenceFrom>
-                  </locality>
-               </localityStack>
-               <localityStack connective="to">
-                  <locality type="clause">
+                   </locality>
+                 </localityStack>
+                 <localityStack connective="to">
+                   <locality type="clause">
                      <referenceFrom>5.1</referenceFrom>
-                  </locality>
-               </localityStack>
-            </eref>
-            <semx element="eref" source="_">
-               <fmt-eref type="inline" bibitemid="ref1" citeas="ITU" droploc="">
-                  <localityStack connective="from">
-                     <locality type="clause">
-                        <referenceFrom>3.1</referenceFrom>
-                     </locality>
-                  </localityStack>
-                  <localityStack connective="to">
-                     <locality type="clause">
-                        <referenceFrom>5.1</referenceFrom>
-                     </locality>
-                  </localityStack>
-                  <span class="stdpublisher">ITU</span>
-                  ,
-                  <span class="citesec">3.1</span>
-                  <span class="fmt-conn">to</span>
-                  <span class="citesec">5.1</span>
-               </fmt-eref>
-            </semx>
-            <eref type="inline" bibitemid="ref1" citeas="ITU" id="_">
-               <localityStack connective="from">
-                  <locality type="clause">
+                   </locality>
+                 </localityStack>
+               </eref><semx element="eref" source="_"><fmt-eref type="inline" bibitemid="ref1" citeas="ITU" droploc=""><localityStack connective="from">
+                   <locality type="clause">
                      <referenceFrom>3.1</referenceFrom>
-                  </locality>
-               </localityStack>
-               <localityStack connective="to">
-                  <locality type="clause">
-                     <referenceFrom>5</referenceFrom>
-                  </locality>
-               </localityStack>
-            </eref>
-            <semx element="eref" source="_">
-               <fmt-eref type="inline" bibitemid="ref1" citeas="ITU">
-                  <localityStack connective="from">
-                     <locality type="clause">
-                        <referenceFrom>3.1</referenceFrom>
-                     </locality>
-                  </localityStack>
-                  <localityStack connective="to">
-                     <locality type="clause">
-                        <referenceFrom>5</referenceFrom>
-                     </locality>
-                  </localityStack>
-                  <span class="stdpublisher">ITU</span>
-                  ,
-                  <span class="citesec">3.1</span>
-                  <span class="fmt-conn">to</span>
-                  <span class="citesec">Clause 5</span>
-               </fmt-eref>
-            </semx>
-            <eref type="inline" bibitemid="ref1" citeas="ITU" id="_">
-               <localityStack connective="from">
-                  <locality type="clause">
+                   </locality>
+                 </localityStack><localityStack connective="to">
+                   <locality type="clause">
+                     <referenceFrom>5.1</referenceFrom>
+                   </locality>
+                 </localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">3.1</span> <span class="fmt-conn">to</span> <span class="citesec">5.1</span></fmt-eref></semx>
+               <eref type="inline" bibitemid="ref1" citeas="ITU" id="_">
+                 <localityStack connective="from">
+                   <locality type="clause">
                      <referenceFrom>3.1</referenceFrom>
-                  </locality>
-               </localityStack>
-               <localityStack connective="to">
-                  <locality type="table">
+                   </locality>
+                 </localityStack>
+                 <localityStack connective="to">
+                   <locality type="clause">
                      <referenceFrom>5</referenceFrom>
-                  </locality>
-               </localityStack>
-            </eref>
-            <semx element="eref" source="_">
-               <fmt-eref type="inline" bibitemid="ref1" citeas="ITU">
-                  <localityStack connective="from">
-                     <locality type="clause">
-                        <referenceFrom>3.1</referenceFrom>
-                     </locality>
-                  </localityStack>
-                  <localityStack connective="to">
-                     <locality type="table">
-                        <referenceFrom>5</referenceFrom>
-                     </locality>
-                  </localityStack>
-                  <span class="stdpublisher">ITU</span>
-                  ,
-                  <span class="citesec">3.1</span>
-                  <span class="fmt-conn">to</span>
-                  <span class="citetbl">Table 5</span>
-               </fmt-eref>
-            </semx>
-         </p>
-      </itu-standard>
+                   </locality>
+                 </localityStack>
+               </eref><semx element="eref" source="_"><fmt-eref type="inline" bibitemid="ref1" citeas="ITU"><localityStack connective="from">
+                   <locality type="clause">
+                     <referenceFrom>3.1</referenceFrom>
+                   </locality>
+                 </localityStack><localityStack connective="to">
+                   <locality type="clause">
+                     <referenceFrom>5</referenceFrom>
+                   </locality>
+                 </localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">3.1</span> <span class="fmt-conn">to</span>  <span class="citesec">Clause 5</span></fmt-eref></semx>
+               <eref type="inline" bibitemid="ref1" citeas="ITU" id="_">
+                 <localityStack connective="from">
+                   <locality type="clause">
+                     <referenceFrom>3.1</referenceFrom>
+                   </locality>
+                 </localityStack>
+                 <localityStack connective="to">
+                   <locality type="table">
+                     <referenceFrom>5</referenceFrom>
+                   </locality>
+                 </localityStack>
+               </eref><semx element="eref" source="_"><fmt-eref type="inline" bibitemid="ref1" citeas="ITU"><localityStack connective="from">
+                   <locality type="clause">
+                     <referenceFrom>3.1</referenceFrom>
+                   </locality>
+                 </localityStack><localityStack connective="to">
+                   <locality type="table">
+                     <referenceFrom>5</referenceFrom>
+                   </locality>
+                 </localityStack><span class="stdpublisher">ITU</span>,  <span class="citesec">3.1</span> <span class="fmt-conn">to</span>  <span class="citetbl">Table 5</span></fmt-eref></semx>
+             </p>
+             </itu-standard>
     OUTPUT
     expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true)))
@@ -1186,15 +993,9 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
           <preface>
           <foreword id="F"><title>Foreword</title>
-          <p>A.<fn reference="2">
-        <p id="_1e228e29-baef-4f38-b048-b05a051747e4">Formerly denoted as 15 % (m/m).</p>
-      </fn></p>
-          <p>B.<fn reference="2">
-        <p id="_1e228e29-baef-4f38-b048-b05a051747e4">Formerly denoted as 15 % (m/m).</p>
-      </fn></p>
-          <p>C.<fn reference="1">
-        <p id="_1e228e29-baef-4f38-b048-b05a051747e4">Hello! denoted as 15 % (m/m).</p>
-      </fn></p>
+          <p>A.<fn reference="2"><p id="_1e228e29-baef-4f38-b048-b05a051747e4">Formerly denoted as 15 % (m/m).</p></fn></p>
+          <p>B.<fn reference="2"><p id="_1e228e29-baef-4f38-b048-b05a051747e4">Formerly denoted as 15 % (m/m).</p></fn></p>
+          <p>C.<fn reference="1"><p id="_1e228e29-baef-4f38-b048-b05a051747e4">Hello! denoted as 15 % (m/m).</p></fn></p>
           </foreword>
           </preface>
           <sections>
@@ -1236,48 +1037,18 @@ RSpec.describe IsoDoc do
                <fmt-title depth="1" id="_">
                   <semx element="title" source="_">Foreword</semx>
                </fmt-title>
-               <p>
-                  A.
-                  <fn reference="1" id="_" original-reference="2" target="_">
-                     <p original-id="_">Formerly denoted as 15 % (m/m).</p>
-                     <fmt-fn-label>
-                        <span class="fmt-caption-label">
-                           <sup>
-                              <semx element="autonum" source="_">1</semx>
-                              <span class="fmt-label-delim">)</span>
-                           </sup>
-                        </span>
-                     </fmt-fn-label>
-                  </fn>
-               </p>
-               <p>
-                  B.
-                  <fn reference="1" id="_" original-reference="2" target="_">
+               <p>A.<fn reference="1" id="_" original-reference="2" target="_">
+                  <p original-id="_">Formerly denoted as 15 % (m/m).</p>
+                  <fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label>
+                  </fn></p>
+               <p>B.<fn reference="1" id="_" original-reference="2" target="_">
                      <p id="_">Formerly denoted as 15 % (m/m).</p>
-                     <fmt-fn-label>
-                        <span class="fmt-caption-label">
-                           <sup>
-                              <semx element="autonum" source="_">1</semx>
-                              <span class="fmt-label-delim">)</span>
-                           </sup>
-                        </span>
-                     </fmt-fn-label>
-                  </fn>
-               </p>
-               <p>
-                  C.
-                  <fn reference="2" id="_" original-reference="1" target="_">
+                     <fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label>
+                  </fn></p>
+               <p>C.<fn reference="2" id="_" original-reference="1" target="_">
                      <p original-id="_">Hello! denoted as 15 % (m/m).</p>
-                     <fmt-fn-label>
-                        <span class="fmt-caption-label">
-                           <sup>
-                              <semx element="autonum" source="_">2</semx>
-                              <span class="fmt-label-delim">)</span>
-                           </sup>
-                        </span>
-                     </fmt-fn-label>
-                  </fn>
-               </p>
+                     <fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">2</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label>
+                  </fn></p>
             </foreword>
          </preface>
          <sections>
@@ -1308,16 +1079,8 @@ RSpec.describe IsoDoc do
                B.
                <fn reference="1" id="_" original-reference="2" target="_">
                   <p id="_">Formerly denoted as 15 % (m/m).</p>
-                  <fmt-fn-label>
-                     <span class="fmt-caption-label">
-                        <sup>
-                           <semx element="autonum" source="_">1</semx>
-                           <span class="fmt-label-delim">)</span>
-                        </sup>
-                     </span>
-                  </fmt-fn-label>
-               </fn>
-            </p>
+                  <fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label>
+               </fn></p>
             <references id="_" obligation="informative" normative="true" displayorder="4">
                <title id="_">Normative References</title>
                <fmt-title depth="1" id="_">
@@ -1336,35 +1099,19 @@ RSpec.describe IsoDoc do
                <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                <bibitem id="ISO712" type="standard">
                   <biblio-tag>
-                     <span class="stdpublisher">ISO </span>
+                     <span class="stdpublisher">ISO</span> 
                      <span class="stddocNumber">712</span>
                      ,
                   </biblio-tag>
                   <formattedref>
-                     <em>
-                        <span class="stddocTitle">
-                           Cereals and cereal products
-                           <fn reference="3" id="_" original-reference="7" target="_">
+                     <em><span class="stddocTitle">Cereals and cereal products<fn reference="3" id="_" original-reference="7" target="_">
                               <p original-id="_">ISO is a standards organisation.</p>
                               <fmt-fn-label>
-                                 <span class="fmt-caption-label">
-                                    <sup>
-                                       <semx element="autonum" source="_">3</semx>
-                                       <span class="fmt-label-delim">)</span>
-                                    </sup>
-                                 </span>
-                              </fmt-fn-label>
-                           </fn>
-                        </span>
-                     </em>
+                                 <span class="fmt-caption-label"><sup><semx element="autonum" source="_">3</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label>
+                           </fn></span></em>
                   </formattedref>
                   <title format="text/plain">Cereals or cereal products</title>
-                  <title type="main" format="text/plain">
-                     Cereals and cereal products
-                     <fn id="_" original-reference="7">
-                        <p id="_">ISO is a standards organisation.</p>
-                     </fn>
-                  </title>
+                  <title type="main" format="text/plain">Cereals and cereal products<fn id="_" original-reference="7"><p id="_">ISO is a standards organisation.</p></fn></title>
                   <docidentifier type="ISO">ISO 712</docidentifier>
                   <docidentifier scope="biblio-tag">ISO 712</docidentifier>
                   <contributor>
@@ -1483,25 +1230,11 @@ RSpec.describe IsoDoc do
                 <div>
                    <h1>1  Normative References</h1>
                    <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-                   <p id="ISO712" class="NormRef">
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">712</span>
-                      ,
-                      <i>
-                         <span class="stddocTitle">
-                            Cereals and cereal products
-                            <a class="FootnoteRef" href="#fn:_">
-                               <sup>3)</sup>
-                            </a>
-                         </span>
-                      </i>
-                   </p>
+                   <p id="ISO712" class="NormRef"><span class="stdpublisher">ISO</span> span class="stddocNumber">712</span>,
+                      <i><span class="stddocTitle">Cereals and cereal products<a class="FootnoteRef" href="#fn:_"><sup>3)</sup></a></span></i></p>
                 </div>
                 <div id="A">
-                   <h1>2</h1>
-                   <a class="FootnoteRef" href="#fn:_">
-                      <sup>4)</sup>
-                   </a>
+                   <h1>2</h1><a class="FootnoteRef" href="#fn:_"><sup>4)</sup></a>
                 </div>
                 <aside id="fn:_" class="footnote">
                    <p id="_">Formerly denoted as 15 % (m/m).</p>
@@ -1520,91 +1253,59 @@ RSpec.describe IsoDoc do
        </html>
     OUTPUT
     doc = <<~OUTPUT
-      <body lang="EN-US" link="blue" vlink="#954F72">
-          <div class="WordSection1">
-             <p> </p>
-          </div>
-          <p class="section-break">
-             <br clear="all" class="section"/>
-          </p>
-          <div class="WordSection2">
-             <p class="page-break">
-                <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-             </p>
-             <div id="_" class="TOC">
-                <p class="zzContents">Contents</p>
-             </div>
-             <p class="page-break">
-                <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
-             </p>
-             <div id="F">
-                <h1 class="ForewordTitle">Foreword</h1>
-                <p class="ForewordText">
-                   A.
-                   <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
-                      <a class="FootnoteRef" epub:type="footnote" href="#fn:_">1</a>)</span>
-                </p>
-                <p class="ForewordText">
-                   B.
-                   <span class="MsoFootnoteReference">
-                      <span style="mso-element:field-begin"/>
-                      NOTEREF _Ref \\f \\h
-                      <span style="mso-element:field-separator"/>1<span style="mso-element:field-end"/>)</span>
-                </p>
-                <p class="ForewordText">
-                   C.
-                   <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
-                      <a class="FootnoteRef" epub:type="footnote" href="#fn:_">2</a>)</span>
-                </p>
-             </div>
-             <p> </p>
-          </div>
-          <p class="section-break">
-             <br clear="all" class="section"/>
-          </p>
-          <div class="WordSection3">
-             <p>
-                B.
-                <span class="MsoFootnoteReference">
-                   <span style="mso-element:field-begin"/>
-                   NOTEREF _Ref \\f \\h
-                   <span style="mso-element:field-separator"/>1<span style="mso-element:field-end"/>)</span>
-             </p>
-             <div>
-                <h1>1<span style="mso-tab-count:1">  </span>Normative References</h1>
-                <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-                <p id="ISO712" class="NormRef">
-                   <span class="stdpublisher">ISO </span>
-                   <span class="stddocNumber">712</span>
-                   ,
-                   <i>
-                      <span class="stddocTitle">
-                         Cereals and cereal products
-                         <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
-                            <a class="FootnoteRef" epub:type="footnote" href="#fn:_">3</a>)</span></span>
-                   </i>
-                </p>
-             </div>
-             <div id="A">
-                <h1>2</h1>
-                <span style="mso-bookmark:_Ref" class="MsoFootnoteReference">
-                   <a class="FootnoteRef" epub:type="footnote" href="#fn:_">4</a>)</span>
-             </div>
-             <aside id="fn:_">
-                <p id="_">Formerly denoted as 15 % (m/m).</p>
-             </aside>
-             <aside id="fn:_">
-                <p id="_">Hello! denoted as 15 % (m/m).</p>
-             </aside>
-             <aside id="fn:_">
-                <p id="_">ISO is a standards organisation.</p>
-             </aside>
-             <aside id="fn:_">
-                <p id="_">Third footnote.</p>
-             </aside>
-          </div>
-          <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
-          <div class="colophon"/>
+       <body lang="EN-US" link="blue" vlink="#954F72">
+         <div class="WordSection1">
+           <p>&#xA0;</p>
+         </div>
+         <p class="section-break">
+           <br clear="all" class="section"/>
+         </p>
+         <div class="WordSection2">
+           <p class="page-break">
+             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+           </p>
+           <div id="_" class="TOC">
+             <p class="zzContents">Contents</p>
+           </div>
+           <p class="page-break">
+             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+           </p>
+           <div id="F">
+             <h1 class="ForewordTitle">Foreword</h1>
+             <p class="ForewordText">A.<span style="mso-bookmark:_Ref" class="MsoFootnoteReference"><a class="FootnoteRef" epub:type="footnote" href="#fn:_">1</a>)</span></p>
+             <p class="ForewordText">B.<span class="MsoFootnoteReference"><span style="mso-element:field-begin"/> NOTEREF _Ref \\f \\h<span style="mso-element:field-separator"/>1<span style="mso-element:field-end"/>)</span></p>
+             <p class="ForewordText">C.<span style="mso-bookmark:_Ref" class="MsoFootnoteReference"><a class="FootnoteRef" epub:type="footnote" href="#fn:_">2</a>)</span></p>
+           </div>
+           <p>&#xA0;</p>
+         </div>
+         <p class="section-break">
+           <br clear="all" class="section"/>
+         </p>
+         <div class="WordSection3">
+           <p>B.<span class="MsoFootnoteReference"><span style="mso-element:field-begin"/> NOTEREF _Ref \\f \\h<span style="mso-element:field-separator"/>1<span style="mso-element:field-end"/>)</span></p>
+           <div><h1>1<span style="mso-tab-count:1">&#xA0; </span>Normative References</h1>
+           <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+       <p id="ISO712" class="NormRef"><span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span>, <i><span class="stddocTitle">Cereals and cereal products<span style="mso-bookmark:_Ref" class="MsoFootnoteReference"><a class="FootnoteRef" epub:type="footnote" href="#fn:_">3</a>)</span></span></i></p>
+       </div>
+           <div id="A">
+             <h1>2</h1>
+             <span style="mso-bookmark:_Ref" class="MsoFootnoteReference"><a class="FootnoteRef" epub:type="footnote" href="#fn:_">4</a>)</span>
+           </div>
+           <aside id="fn:_">
+             <p id="_">Formerly denoted as 15 % (m/m).</p>
+           </aside>
+           <aside id="fn:_">
+             <p id="_">Hello! denoted as 15 % (m/m).</p>
+           </aside>
+           <aside id="fn:_">
+             <p id="_">ISO is a standards organisation.</p>
+           </aside>
+           <aside id="fn:_">
+           <p id="_">Third footnote.</p>
+       </aside>
+         </div>
+         <br clear="all" style="page-break-before:left;mso-break-type:section-break"/>
+         <div class="colophon"/>
        </body>
     OUTPUT
     pres_output = IsoDoc::Iso::PresentationXMLConvert

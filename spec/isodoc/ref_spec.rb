@@ -166,8 +166,7 @@ RSpec.describe IsoDoc do
                    <eref bibitemid="ISO712" id="_"/>
                    <semx element="eref" source="_">
                       <fmt-xref target="ISO712">
-                         <span class="stdpublisher">ISO </span>
-                         <span class="stddocNumber">712</span>
+                         <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>
                       </fmt-xref>
                    </semx>
                    <eref bibitemid="ISBN" id="_"/>
@@ -181,14 +180,13 @@ RSpec.describe IsoDoc do
                    <eref bibitemid="ISO16634" id="_"/>
                    <semx element="eref" source="_">
                       <fmt-xref target="ISO16634">
-                         <span class="stdpublisher">ISO </span>
-                         <span class="stddocNumber">16634</span>
+                         <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">16634</span>
                          :--
                       </fmt-xref>
                    </semx>
                    <eref bibitemid="ref1" id="_"/>
                    <semx element="eref" source="_">
-                      <fmt-xref target="ref1">ICC 167</fmt-xref>
+                      <fmt-xref target="ref1"><span class="stdpublisher">ICC</span>&#xa0;<span class="stddocNumber">167</span></fmt-xref>
                    </semx>
                    <eref bibitemid="ref10" id="_"/>
                    <semx element="eref" source="_">
@@ -220,8 +218,7 @@ RSpec.describe IsoDoc do
                 <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                 <bibitem id="ISO712" type="standard">
                    <biblio-tag>
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">712</span>
+                      <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>
                       ,
                    </biblio-tag>
                    <formattedref>
@@ -242,8 +239,7 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem id="ISO16634" type="standard">
                    <biblio-tag>
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">16634</span>
+                      <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">16634</span>
                       :-- (all parts)
                       <fn id="_" reference="1" original-reference="1" target="_">
                          <p>Under preparation. (Stage at the time of publication ISO/DIS 16634)</p>
@@ -283,8 +279,7 @@ RSpec.describe IsoDoc do
                 </bibitem>
                 <bibitem id="ISO20483" type="standard">
                    <biblio-tag>
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">20483</span>
+                      <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">20483</span>
                       :
                       <span class="stdyear">2013</span>
                       -
@@ -311,7 +306,7 @@ RSpec.describe IsoDoc do
                    </contributor>
                 </bibitem>
                 <bibitem id="ref1">
-                   <biblio-tag>ICC 167, </biblio-tag>
+                   <biblio-tag><span class="stdpublisher">ICC</span>&#xa0;<span class="stddocNumber">167</span>, </biblio-tag>
                    <formattedref format="application/x-isodoc+xml">
                       <smallcap>Standard No I.C.C 167</smallcap>
                       .
@@ -341,7 +336,7 @@ RSpec.describe IsoDoc do
                                   <semx element="autonum" source="_">1</semx>
                                </span>
                                <span class="fmt-comma">,</span>
-                               ICC 167
+                               <span class="stdpublisher">ICC</span>&#xa0;<span class="stddocNumber">167</span>
                             </span>
                             <span class="fmt-comma">,</span>
                             <span class="fmt-element-name">Note</span>
@@ -473,8 +468,7 @@ RSpec.describe IsoDoc do
                    <biblio-tag>
                       [3]
                       <tab/>
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">3696</span>
+                      <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">3696</span>
                       ,
                    </biblio-tag>
                    <formattedref>
@@ -515,9 +509,7 @@ RSpec.describe IsoDoc do
                    <biblio-tag>
                       [5]
                       <tab/>
-                      <span class="stdpublisher">IETF </span>
-                      <span class="stdpublisher">RFC </span>
-                      <span class="stddocNumber">10</span>
+                      <span class="stdpublisher">IETF&#xa0;RFC</span>&#xa0;<span class="stddocNumber">10</span>
                       ,
                    </biblio-tag>
                    <formattedref>
@@ -534,9 +526,7 @@ RSpec.describe IsoDoc do
                    <biblio-tag>
                       [Citn]
                       <tab/>
-                      <span class="stdpublisher">IETF </span>
-                      <span class="stdpublisher">RFC </span>
-                      <span class="stddocNumber">20</span>
+                      <span class="stdpublisher">IETF&#xa0;RFC</span>&#xa0;<span class="stddocNumber">20</span>
                       ,
                    </biblio-tag>
                    <formattedref format="application/x-isodoc+xml">
@@ -578,17 +568,15 @@ RSpec.describe IsoDoc do
                    <h1 class="ForewordTitle">Foreword</h1>
                    <p id="_">
                       <a href="#ISO712">
-                         <span class="stdpublisher">ISO </span>
-                         <span class="stddocNumber">712</span>
+                         <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>
                       </a>
                       <a href="#ISBN">[1]</a>
                       <a href="#ISSN">[2]</a>
                       <a href="#ISO16634">
-                         <span class="stdpublisher">ISO </span>
-                         <span class="stddocNumber">16634</span>
+                         <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">16634</span>
                          :--
                       </a>
-                      <a href="#ref1">ICC 167</a>
+                      <a href="#ref1"><span class="stdpublisher">ICC</span>&#xa0;<span class="stddocNumber">167</span></a>
                       <a href="#ref10">[4]</a>
                       <a href="#ref12">[Citn]</a>
                    </p>
@@ -597,16 +585,14 @@ RSpec.describe IsoDoc do
                    <h1>1  Normative References</h1>
                    <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                    <p id="ISO712" class="NormRef">
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">712</span>
+                      <span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span>
                       ,
                       <i>
                          <span class="stddocTitle">Cereals and cereal products</span>
                       </i>
                    </p>
                    <p id="ISO16634" class="NormRef">
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">16634</span>
+                      <span class="stdpublisher">ISO</span> <span class="stddocNumber">16634</span>
                       :-- (all parts)
                       <a class="FootnoteRef" href="#fn:1">
                          <sup>1</sup>
@@ -617,8 +603,7 @@ RSpec.describe IsoDoc do
                       </i>
                    </p>
                    <p id="ISO20483" class="NormRef">
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">20483</span>
+                      <span class="stdpublisher">ISO</span> <span class="stddocNumber">20483</span>
                       :
                       <span class="stdyear">2013</span>
                       -
@@ -629,7 +614,7 @@ RSpec.describe IsoDoc do
                       </i>
                    </p>
                    <p id="ref1" class="NormRef">
-                      ICC 167,
+                      <span class="stdpublisher">ICC</span> <span class="stddocNumber">167</span>,
                       <span style="font-variant:small-caps;">Standard No I.C.C 167</span>
                       .
                       <i>Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method</i>
@@ -671,8 +656,7 @@ RSpec.describe IsoDoc do
                    </div>
                    <p id="ISO3696" class="Biblio">
                       [3] 
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">3696</span>
+                      <span class="stdpublisher">ISO</span> <span class="stddocNumber">3696</span>
                       ,
                       <i>
                          <span class="stddocTitle">Water for analytical laboratory use</span>
@@ -689,9 +673,7 @@ RSpec.describe IsoDoc do
                    </p>
                    <p id="ref11" class="Biblio">
                       [5] 
-                      <span class="stdpublisher">IETF </span>
-                      <span class="stdpublisher">RFC </span>
-                      <span class="stddocNumber">10</span>
+                      <span class="stdpublisher">IETF RFC</span> <span class="stddocNumber">10</span>
                       ,
                       <i>
                          <span class="stddocTitle">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</span>
@@ -699,9 +681,7 @@ RSpec.describe IsoDoc do
                    </p>
                    <p id="ref12" class="Biblio">
                       [Citn] 
-                      <span class="stdpublisher">IETF </span>
-                      <span class="stdpublisher">RFC </span>
-                      <span class="stddocNumber">20</span>
+                      <span class="stdpublisher">IETF RFC</span> <span class="stddocNumber">20</span>
                       , CitationWorks. 2019.
                       <i>How to cite a reference</i>
                    </p>
@@ -815,9 +795,7 @@ RSpec.describe IsoDoc do
                    <biblio-tag>
                       [1]
                       <tab/>
-                      <span class="stdpublisher">IETF </span>
-                      <span class="stdpublisher">RFC </span>
-                      <span class="stddocNumber">3394</span>
+                      <span class="stdpublisher">IETF&#xa0;RFC</span>&#xa0;<span class="stddocNumber">3394</span>
                       <fn id="_" reference="1" original-reference="_0f4bda71-60d4-4132-ba62-e3eefc638f93" target="_">
                          <p>
                             Available at
