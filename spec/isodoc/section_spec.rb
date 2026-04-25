@@ -1211,7 +1211,7 @@ RSpec.describe IsoDoc do
     xml.at("//xmlns:metanorma-extension")&.remove
     expect(strip_guid(xml.to_xml))
       .to be_xml_equivalent_to presxml
-    xml = Nokogiri::XML(IsoDoc::Iso::HtmlConvert.new({})
+    xml = Nokogiri::HTML5(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true))
     xml.at("//div[@class = 'authority']")&.remove
     expect(strip_guid(xml.to_xml))
@@ -1885,7 +1885,7 @@ RSpec.describe IsoDoc do
     expect(File.exist?("test.doc")).to be true
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>")
-    wordxml = Nokogiri::XML(word)
+    wordxml = Nokogiri::HTML5(word)
     wordxml.xpath("//div[@class = 'WordSection1' or @class = 'WordSection2']")
       .each(&:remove)
     wordxml.at("//div[@class = 'WordSection3']")&.remove
