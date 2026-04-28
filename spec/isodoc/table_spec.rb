@@ -796,6 +796,7 @@ RSpec.describe IsoDoc do
                     <td style="text-align:center;border-top:none;border-bottom:solid windowtext 1.5pt;">81,2</td>
                   </tr>
                 </tbody>
+                <tfoot><tr><td colspan="2" style="border-top:0pt;border-bottom:solid windowtext 1.5pt;">
                 <div class="key">
                   <p style="page-break-after: avoid;">
                      <b>Key</b>
@@ -811,6 +812,7 @@ RSpec.describe IsoDoc do
                 </div>
                 <div id="A" class="Note"><p><span class="note_label">NOTE  1  </span></p>Note 1</div>
                 <div id="C" class="Note"><p><span class="note_label">NOTE  2  </span></p>Note 2</div>
+                </td></tr></tfoot>
               </table>
             </div>
           </div>
@@ -864,6 +866,7 @@ RSpec.describe IsoDoc do
                     <td align="center" style="border-top:none;mso-border-top-alt:none;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">81,2</td>
                   </tr>
                 </tbody>
+                <tfoot><tr><td colspan="2" style="border-top:0pt;mso-border-top-alt:0pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;">
                                <div class="key">
                   <p style="page-break-after: avoid;">
                      <b>Key</b>
@@ -874,6 +877,7 @@ RSpec.describe IsoDoc do
                 </div>
                 <div id="A" class="Note"><p class="Note"><span class="note_label">NOTE  1<span style="mso-tab-count:1">  </span></span></p>Note 1</div>
                 <div id="C" class="Note"><p class="Note"><span class="note_label">NOTE  2<span style="mso-tab-count:1">  </span></span></p>Note 2</div>
+                </td></tr></tfoot>
               </table>
             </div>
           </div>
