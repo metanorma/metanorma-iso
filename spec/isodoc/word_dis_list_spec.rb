@@ -76,286 +76,106 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
       <div class="WordSection3">
-                   <div>
-                       <a name="A" id="A"/>
-                       <h1>1</h1>
-                       <p class="MsoBodyText">
-                          <div class="ol_wrap">
-                             <p class="ListNumber1">
-                                a)
-                                <span style="mso-tab-count:1"> </span>
-                                A
-                             </p>
-                             <p class="ListNumber1">
-                                b)
-                                <span style="mso-tab-count:1"> </span>
-                                B
-                             </p>
-                             <p class="MsoNormal">
-                                <a name="_" id="_"/>
-                                <div class="ol_wrap">
-                                   <p class="MsoListNumber2">
-                                      <a name="_" id="_"/>
-                                      1)
-                                      <span style="mso-tab-count:1"> </span>
-                                      C
-                                   </p>
-                                   <p class="MsoListNumber2">
-                                      <a name="_" id="_"/>
-                                      2)
-                                      <span style="mso-tab-count:1"> </span>
-                                      D
-                                   </p>
-                                   <p class="MsoNormal">
-                                      <a name="_" id="_"/>
-                                      <div class="ol_wrap">
-                                         <p class="MsoListNumber3">
-                                            <a name="_" id="_"/>
-                                            i)
-                                            <span style="mso-tab-count:1"> </span>
-                                            E
-                                         </p>
-                                         <p class="MsoListNumber3">
-                                            <a name="_" id="_"/>
-                                            ii)
-                                            <span style="mso-tab-count:1"> </span>
-                                            F
-                                         </p>
-                                         <p class="MsoNormal">
-                                            <a name="_" id="_"/>
-                                            <div class="ol_wrap">
-                                               <p class="MsoListNumber4">
-                                                  <a name="_" id="_"/>
-                                                  A)
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  G
-                                               </p>
-                                               <p class="MsoListNumber4">
-                                                  <a name="_" id="_"/>
-                                                  B)
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  H
-                                               </p>
-                                               <p class="MsoNormal">
-                                                  <a name="_" id="_"/>
-                                                  <div class="ol_wrap">
-                                                     <p class="MsoListNumber5">
-                                                        <a name="_" id="_"/>
-                                                        I)
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        I
-                                                     </p>
-                                                     <p class="MsoListNumber5">
-                                                        <a name="_" id="_"/>
-                                                        II)
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        J
-                                                     </p>
-                                                     <p class="MsoNormal">
-                                                        <a name="_" id="_"/>
-                                                        <div class="ol_wrap">
-                                                           <p class="MsoListNumber5">
-                                                              <a name="_" id="_"/>
-                                                              a)
-                                                              <span style="mso-tab-count:1"> </span>
-                                                              K
-                                                           </p>
-                                                           <p class="MsoListNumber5">
-                                                              <a name="_" id="_"/>
-                                                              b)
-                                                              <span style="mso-tab-count:1"> </span>
-                                                              L
-                                                           </p>
-                                                           <p class="MsoListNumber5">
-                                                              <a name="_" id="_"/>
-                                                              c)
-                                                              <span style="mso-tab-count:1"> </span>
-                                                              M
-                                                           </p>
-                                                        </div>
-                                                     </p>
-                                                     <p class="MsoListNumber5">
-                                                        <a name="_" id="_"/>
-                                                        III)
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        N
-                                                     </p>
-                                                  </div>
-                                               </p>
-                                               <p class="MsoListNumber4">
-                                                  <a name="_" id="_"/>
-                                                  C)
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  O
-                                               </p>
-                                            </div>
-                                         </p>
-                                         <p class="MsoListNumber3">
-                                            <a name="_" id="_"/>
-                                            iii)
-                                            <span style="mso-tab-count:1"> </span>
-                                            P
-                                         </p>
-                                      </div>
-                                   </p>
-                                   <p class="MsoListNumber2">
-                                      <a name="_" id="_"/>
-                                      3)
-                                      <span style="mso-tab-count:1"> </span>
-                                      Q
-                                   </p>
-                                </div>
-                             </p>
-                             <p class="ListNumber1">
-                                <a name="_" id="_"/>
-                                c)
-                                <span style="mso-tab-count:1"> </span>
-                                R
-                             </p>
-                          </div>
-                          <div class="ul_wrap">
-                             <p class="ListContinue1">
-                                —
-                                <span style="mso-tab-count:1"> </span>
-                                A
-                             </p>
-                             <p class="ListContinue1">
-                                —
-                                <span style="mso-tab-count:1"> </span>
-                                B
-                             </p>
-                             <p class="ListContinue1">
-                                <a name="_" id="_"/>
-                                <p class="ListContinue1">
-                                   —
-                                   <span style="mso-tab-count:1"> </span>
-                                   B1
-                                </p>
-                                <div class="ListContLevel1">
-                                   <div class="ul_wrap">
-                                      <p class="MsoListContinue2">
-                                         <a name="_" id="_"/>
-                                         —
-                                         <span style="mso-tab-count:1"> </span>
-                                         C
-                                      </p>
-                                      <p class="MsoListContinue2">
-                                         <a name="_" id="_"/>
-                                         —
-                                         <span style="mso-tab-count:1"> </span>
-                                         D
-                                      </p>
-                                      <p class="MsoNormal">
-                                         <a name="_" id="_"/>
-                                         <div class="ul_wrap">
-                                            <p class="MsoListContinue3">
-                                               <a name="_" id="_"/>
-                                               —
-                                               <span style="mso-tab-count:1"> </span>
-                                               E
-                                            </p>
-                                            <p class="MsoListContinue3">
-                                               <a name="_" id="_"/>
-                                               —
-                                               <span style="mso-tab-count:1"> </span>
-                                               F
-                                            </p>
-                                            <p class="MsoNormal">
-                                               <a name="_" id="_"/>
-                                               <div class="ul_wrap">
-                                                  <p class="MsoListContinue4">
-                                                     <a name="_" id="_"/>
-                                                     —
-                                                     <span style="mso-tab-count:1"> </span>
-                                                     G
-                                                  </p>
-                                                  <p class="MsoListContinue4">
-                                                     <a name="_" id="_"/>
-                                                     —
-                                                     <span style="mso-tab-count:1"> </span>
-                                                     H
-                                                  </p>
-                                                  <p class="MsoNormal">
-                                                     <a name="_" id="_"/>
-                                                     <div class="ul_wrap">
-                                                        <p class="MsoListContinue5">
-                                                           <a name="_" id="_"/>
-                                                           —
-                                                           <span style="mso-tab-count:1"> </span>
-                                                           I
-                                                        </p>
-                                                        <p class="MsoListContinue5">
-                                                           <a name="_" id="_"/>
-                                                           —
-                                                           <span style="mso-tab-count:1"> </span>
-                                                           J
-                                                        </p>
-                                                        <p class="MsoNormal">
-                                                           <a name="_" id="_"/>
-                                                           <div class="ul_wrap">
-                                                              <p class="MsoListContinue5">
-                                                                 <a name="_" id="_"/>
-                                                                 —
-                                                                 <span style="mso-tab-count:1"> </span>
-                                                                 K
-                                                              </p>
-                                                              <p class="MsoListContinue5">
-                                                                 <a name="_" id="_"/>
-                                                                 —
-                                                                 <span style="mso-tab-count:1"> </span>
-                                                                 L
-                                                              </p>
-                                                              <p class="MsoListContinue5">
-                                                                 <a name="_" id="_"/>
-                                                                 —
-                                                                 <span style="mso-tab-count:1"> </span>
-                                                                 M
-                                                              </p>
-                                                           </div>
-                                                        </p>
-                                                        <p class="MsoListContinue5">
-                                                           <a name="_" id="_"/>
-                                                           —
-                                                           <span style="mso-tab-count:1"> </span>
-                                                           N
-                                                        </p>
-                                                     </div>
-                                                  </p>
-                                                  <p class="MsoListContinue4">
-                                                     <a name="_" id="_"/>
-                                                     —
-                                                     <span style="mso-tab-count:1"> </span>
-                                                     O
-                                                  </p>
-                                               </div>
-                                            </p>
-                                            <p class="MsoListContinue3">
-                                               <a name="_" id="_"/>
-                                               —
-                                               <span style="mso-tab-count:1"> </span>
-                                               P
-                                            </p>
-                                         </div>
-                                      </p>
-                                      <p class="MsoListContinue2">
-                                         <a name="_" id="_"/>
-                                         —
-                                         <span style="mso-tab-count:1"> </span>
-                                         Q
-                                      </p>
-                                   </div>
-                                </div>
-                             </p>
-                             <p class="ListContinue1">
-                                <a name="_" id="_"/>
-                                —
-                                <span style="mso-tab-count:1"> </span>
-                                R
-                             </p>
-                          </div>
+         <div>
+           <a name="A" id="A"/>
+           <h1>1</h1>
+           <p class="MsoBodyText">
+         </p>
+           <div class="ol_wrap">
+             <p class="ListNumber1">a)<span style="mso-tab-count:1"> </span>A</p>
+             <p class="ListNumber1">b)<span style="mso-tab-count:1"> </span>B</p>
+             <p class="MsoNormal">
+               <a name="_" id="_"/>
+             </p>
+             <div class="ol_wrap">
+               <p class="MsoListNumber2"><a name="_" id="_"/>1)<span style="mso-tab-count:1"> </span>C</p>
+               <p class="MsoListNumber2"><a name="_" id="_"/>2)<span style="mso-tab-count:1"> </span>D</p>
+               <p class="MsoNormal">
+                 <a name="_" id="_"/>
+               </p>
+               <div class="ol_wrap">
+                 <p class="MsoListNumber3"><a name="_" id="_"/>i)<span style="mso-tab-count:1"> </span>E</p>
+                 <p class="MsoListNumber3"><a name="_" id="_"/>ii)<span style="mso-tab-count:1"> </span>F</p>
+                 <p class="MsoNormal">
+                   <a name="_" id="_"/>
+                 </p>
+                 <div class="ol_wrap">
+                   <p class="MsoListNumber4"><a name="_" id="_"/>A)<span style="mso-tab-count:1"> </span>G</p>
+                   <p class="MsoListNumber4"><a name="_" id="_"/>B)<span style="mso-tab-count:1"> </span>H</p>
+                   <p class="MsoNormal">
+                     <a name="_" id="_"/>
+                   </p>
+                   <div class="ol_wrap">
+                     <p class="MsoListNumber5"><a name="_" id="_"/>I)<span style="mso-tab-count:1"> </span>I</p>
+                     <p class="MsoListNumber5"><a name="_" id="_"/>II)<span style="mso-tab-count:1"> </span>J</p>
+                     <p class="MsoNormal">
+                       <a name="_" id="_"/>
+                     </p>
+                     <div class="ol_wrap">
+                       <p class="MsoListNumber5"><a name="_" id="_"/>a)<span style="mso-tab-count:1"> </span>K</p>
+                       <p class="MsoListNumber5"><a name="_" id="_"/>b)<span style="mso-tab-count:1"> </span>L</p>
+                       <p class="MsoListNumber5"><a name="_" id="_"/>c)<span style="mso-tab-count:1"> </span>M</p>
+                     </div>
+                     <p class="MsoListNumber5"><a name="_" id="_"/>III)<span style="mso-tab-count:1"> </span>N</p>
+                   </div>
+                   <p class="MsoListNumber4"><a name="_" id="_"/>C)<span style="mso-tab-count:1"> </span>O</p>
+                 </div>
+                 <p class="MsoListNumber3"><a name="_" id="_"/>iii)<span style="mso-tab-count:1"> </span>P</p>
+               </div>
+               <p class="MsoListNumber2"><a name="_" id="_"/>3)<span style="mso-tab-count:1"> </span>Q</p>
+             </div>
+             <p class="ListNumber1"><a name="_" id="_"/>c)<span style="mso-tab-count:1"> </span>R</p>
+           </div>
+           <div class="ul_wrap">
+             <p class="ListContinue1">—<span style="mso-tab-count:1"> </span>A</p>
+             <p class="ListContinue1">—<span style="mso-tab-count:1"> </span>B</p>
+             <p class="ListContinue1">
+               <a name="_" id="_"/>
+             </p>
+             <p class="ListContinue1">—<span style="mso-tab-count:1"> </span>B1</p>
+             <div class="ListContLevel1">
+               <div class="ul_wrap">
+                 <p class="MsoListContinue2"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>C</p>
+                 <p class="MsoListContinue2"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>D</p>
+                 <p class="MsoNormal">
+                   <a name="_" id="_"/>
+                 </p>
+                 <div class="ul_wrap">
+                   <p class="MsoListContinue3"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>E</p>
+                   <p class="MsoListContinue3"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>F</p>
+                   <p class="MsoNormal">
+                     <a name="_" id="_"/>
+                   </p>
+                   <div class="ul_wrap">
+                     <p class="MsoListContinue4"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>G</p>
+                     <p class="MsoListContinue4"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>H</p>
+                     <p class="MsoNormal">
+                       <a name="_" id="_"/>
+                     </p>
+                     <div class="ul_wrap">
+                       <p class="MsoListContinue5"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>I</p>
+                       <p class="MsoListContinue5"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>J</p>
+                       <p class="MsoNormal">
+                         <a name="_" id="_"/>
                        </p>
-                    </div>
-        </div>
+                       <div class="ul_wrap">
+                         <p class="MsoListContinue5"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>K</p>
+                         <p class="MsoListContinue5"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>L</p>
+                         <p class="MsoListContinue5"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>M</p>
+                       </div>
+                       <p class="MsoListContinue5"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>N</p>
+                     </div>
+                     <p class="MsoListContinue4"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>O</p>
+                   </div>
+                   <p class="MsoListContinue3"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>P</p>
+                 </div>
+                 <p class="MsoListContinue2"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>Q</p>
+               </div>
+             </div>
+             <p class="ListContinue1"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>R</p>
+           </div>
+         </div>
+       </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -366,11 +186,11 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
-    xml = xml.at("//xmlns:div[@class = 'WordSection3']")
-    xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
+    xml = Nokogiri::HTML(output)
+    xml = xml.at("//div[@class = 'WordSection3']")
+    xml.at("//div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
-      .to be_xml_equivalent_to word
+      .to be_html4_equivalent_to word
   end
 
   it "deals with lists types" do
@@ -410,105 +230,51 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
        <div class="WordSection3">
-                   <div>
-                       <a name="A" id="A"/>
-                       <h1>1</h1>
-                       <p class="MsoBodyText">
-                          <div class="ol_wrap">
-                             <p class="ListNumber1">
-                                1)
-                                <span style="mso-tab-count:1"> </span>
-                                A
-                             </p>
-                             <p class="MsoNormal">
-                                <a name="_" id="_"/>
-                                <div class="ol_wrap">
-                                   <p class="MsoListNumber2">
-                                      <a name="_" id="_"/>
-                                      A)
-                                      <span style="mso-tab-count:1"> </span>
-                                      C
-                                   </p>
-                                   <p class="MsoNormal">
-                                      <a name="_" id="_"/>
-                                      <div class="ol_wrap">
-                                         <p class="MsoListNumber3">
-                                            <a name="_" id="_"/>
-                                            I)
-                                            <span style="mso-tab-count:1"> </span>
-                                            E
-                                         </p>
-                                         <p class="MsoNormal">
-                                            <a name="_" id="_"/>
-                                            <div class="ol_wrap">
-                                               <p class="MsoListNumber4">
-                                                  <a name="_" id="_"/>
-                                                  i)
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  G
-                                               </p>
-                                               <p class="MsoNormal">
-                                                  <a name="_" id="_"/>
-                                                  <div class="ol_wrap">
-                                                     <p class="MsoListNumber5">
-                                                        <a name="_" id="_"/>
-                                                        a)
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        I
-                                                     </p>
-                                                     <p class="MsoNormal">
-                                                        <a name="_" id="_"/>
-                                                        <div class="ol_wrap">
-                                                           <p class="MsoListNumber5">
-                                                              <a name="_" id="_"/>
-                                                              I)
-                                                              <span style="mso-tab-count:1"> </span>
-                                                              K
-                                                           </p>
-                                                        </div>
-                                                     </p>
-                                                     <p class="MsoListNumber5">
-                                                        <a name="_" id="_"/>
-                                                        b)
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        N
-                                                     </p>
-                                                  </div>
-                                               </p>
-                                               <p class="MsoListNumber4">
-                                                  <a name="_" id="_"/>
-                                                  ii)
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  O
-                                               </p>
-                                            </div>
-                                         </p>
-                                         <p class="MsoListNumber3">
-                                            <a name="_" id="_"/>
-                                            II)
-                                            <span style="mso-tab-count:1"> </span>
-                                            P
-                                         </p>
-                                      </div>
-                                   </p>
-                                   <p class="MsoListNumber2">
-                                      <a name="_" id="_"/>
-                                      B)
-                                      <span style="mso-tab-count:1"> </span>
-                                      Q
-                                   </p>
-                                </div>
-                             </p>
-                             <p class="ListNumber1">
-                                <a name="_" id="_"/>
-                                2)
-                                <span style="mso-tab-count:1"> </span>
-                                R
-                             </p>
-                          </div>
-                       </p>
-                    </div>
-        </div>
+         <div>
+           <a name="A" id="A"/>
+           <h1>1</h1>
+           <p class="MsoBodyText">
+         </p>
+           <div class="ol_wrap">
+             <p class="ListNumber1">1)<span style="mso-tab-count:1"> </span>A</p>
+             <p class="MsoNormal">
+               <a name="_" id="_"/>
+             </p>
+             <div class="ol_wrap">
+               <p class="MsoListNumber2"><a name="_" id="_"/>A)<span style="mso-tab-count:1"> </span>C</p>
+               <p class="MsoNormal">
+                 <a name="_" id="_"/>
+               </p>
+               <div class="ol_wrap">
+                 <p class="MsoListNumber3"><a name="_" id="_"/>I)<span style="mso-tab-count:1"> </span>E</p>
+                 <p class="MsoNormal">
+                   <a name="_" id="_"/>
+                 </p>
+                 <div class="ol_wrap">
+                   <p class="MsoListNumber4"><a name="_" id="_"/>i)<span style="mso-tab-count:1"> </span>G</p>
+                   <p class="MsoNormal">
+                     <a name="_" id="_"/>
+                   </p>
+                   <div class="ol_wrap">
+                     <p class="MsoListNumber5"><a name="_" id="_"/>a)<span style="mso-tab-count:1"> </span>I</p>
+                     <p class="MsoNormal">
+                       <a name="_" id="_"/>
+                     </p>
+                     <div class="ol_wrap">
+                       <p class="MsoListNumber5"><a name="_" id="_"/>I)<span style="mso-tab-count:1"> </span>K</p>
+                     </div>
+                     <p class="MsoListNumber5"><a name="_" id="_"/>b)<span style="mso-tab-count:1"> </span>N</p>
+                   </div>
+                   <p class="MsoListNumber4"><a name="_" id="_"/>ii)<span style="mso-tab-count:1"> </span>O</p>
+                 </div>
+                 <p class="MsoListNumber3"><a name="_" id="_"/>II)<span style="mso-tab-count:1"> </span>P</p>
+               </div>
+               <p class="MsoListNumber2"><a name="_" id="_"/>B)<span style="mso-tab-count:1"> </span>Q</p>
+             </div>
+             <p class="ListNumber1"><a name="_" id="_"/>2)<span style="mso-tab-count:1"> </span>R</p>
+           </div>
+         </div>
+       </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -519,11 +285,11 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
-    xml = xml.at("//xmlns:div[@class = 'WordSection3']")
-    xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
+    xml = Nokogiri::HTML(output)
+    xml = xml.at("//div[@class = 'WordSection3']")
+    xml.at("//div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
-      .to be_xml_equivalent_to word
+      .to be_html4_equivalent_to word
   end
 
   it "deals with lists and paragraphs" do
@@ -584,11 +350,11 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
-    xml = xml.at("//xmlns:div[@class = 'WordSection3']")
-    xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
+    xml = Nokogiri::HTML(output)
+    xml = xml.at("//div[@class = 'WordSection3']")
+    xml.at("//div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
-      .to be_xml_equivalent_to word
+      .to be_html4_equivalent_to word
   end
 
   it "deals with ordered list start" do
@@ -635,146 +401,58 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~OUTPUT
        <div class="WordSection3">
-                    <div>
-                       <a name="A" id="A"/>
-                       <h1>1</h1>
-                       <p class="MsoBodyText">
-                          <div class="ol_wrap">
-                             <p class="ListNumber1">
-                                c)
-                                <span style="mso-tab-count:1"> </span>
-                                A
-                             </p>
-                             <p class="ListNumber1">
-                                d)
-                                <span style="mso-tab-count:1"> </span>
-                                B
-                             </p>
-                             <p class="MsoNormal">
-                                <a name="_" id="_"/>
-                                <div class="ol_wrap">
-                                   <p class="MsoListNumber2">
-                                      <a name="_" id="_"/>
-                                      3)
-                                      <span style="mso-tab-count:1"> </span>
-                                      C
-                                   </p>
-                                   <p class="MsoListNumber2">
-                                      <a name="_" id="_"/>
-                                      4)
-                                      <span style="mso-tab-count:1"> </span>
-                                      D
-                                   </p>
-                                   <p class="MsoNormal">
-                                      <a name="_" id="_"/>
-                                      <div class="ol_wrap">
-                                         <p class="MsoListNumber3">
-                                            <a name="_" id="_"/>
-                                            iii)
-                                            <span style="mso-tab-count:1"> </span>
-                                            E
-                                         </p>
-                                         <p class="MsoListNumber3">
-                                            <a name="_" id="_"/>
-                                            iv)
-                                            <span style="mso-tab-count:1"> </span>
-                                            F
-                                         </p>
-                                         <p class="MsoNormal">
-                                            <a name="_" id="_"/>
-                                            <div class="ol_wrap">
-                                               <p class="MsoListNumber4">
-                                                  <a name="_" id="_"/>
-                                                  C)
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  G
-                                               </p>
-                                               <p class="MsoListNumber4">
-                                                  <a name="_" id="_"/>
-                                                  D)
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  H
-                                               </p>
-                                               <p class="MsoNormal">
-                                                  <a name="_" id="_"/>
-                                                  <div class="ol_wrap">
-                                                     <p class="MsoListNumber5">
-                                                        <a name="_" id="_"/>
-                                                        III)
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        I
-                                                     </p>
-                                                     <p class="MsoListNumber5">
-                                                        <a name="_" id="_"/>
-                                                        IV)
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        J
-                                                     </p>
-                                                     <p class="MsoNormal">
-                                                        <a name="_" id="_"/>
-                                                        <div class="ol_wrap">
-                                                           <p class="MsoListNumber5">
-                                                              <a name="_" id="_"/>
-                                                              c)
-                                                              <span style="mso-tab-count:1"> </span>
-                                                              K
-                                                           </p>
-                                                           <p class="MsoListNumber5">
-                                                              <a name="_" id="_"/>
-                                                              d)
-                                                              <span style="mso-tab-count:1"> </span>
-                                                              L
-                                                           </p>
-                                                           <p class="MsoListNumber5">
-                                                              <a name="_" id="_"/>
-                                                              e)
-                                                              <span style="mso-tab-count:1"> </span>
-                                                              M
-                                                           </p>
-                                                        </div>
-                                                     </p>
-                                                     <p class="MsoListNumber5">
-                                                        <a name="_" id="_"/>
-                                                        V)
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        N
-                                                     </p>
-                                                  </div>
-                                               </p>
-                                               <p class="MsoListNumber4">
-                                                  <a name="_" id="_"/>
-                                                  E)
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  O
-                                               </p>
-                                            </div>
-                                         </p>
-                                         <p class="MsoListNumber3">
-                                            <a name="_" id="_"/>
-                                            v)
-                                            <span style="mso-tab-count:1"> </span>
-                                            P
-                                         </p>
-                                      </div>
-                                   </p>
-                                   <p class="MsoListNumber2">
-                                      <a name="_" id="_"/>
-                                      5)
-                                      <span style="mso-tab-count:1"> </span>
-                                      Q
-                                   </p>
-                                </div>
-                             </p>
-                             <p class="ListNumber1">
-                                <a name="_" id="_"/>
-                                e)
-                                <span style="mso-tab-count:1"> </span>
-                                R
-                             </p>
-                          </div>
-                       </p>
-                    </div>
-        </div>
+         <div>
+           <a name="A" id="A"/>
+           <h1>1</h1>
+           <p class="MsoBodyText">
+         </p>
+           <div class="ol_wrap">
+             <p class="ListNumber1">c)<span style="mso-tab-count:1"> </span>A</p>
+             <p class="ListNumber1">d)<span style="mso-tab-count:1"> </span>B</p>
+             <p class="MsoNormal">
+               <a name="_" id="_"/>
+             </p>
+             <div class="ol_wrap">
+               <p class="MsoListNumber2"><a name="_" id="_"/>3)<span style="mso-tab-count:1"> </span>C</p>
+               <p class="MsoListNumber2"><a name="_" id="_"/>4)<span style="mso-tab-count:1"> </span>D</p>
+               <p class="MsoNormal">
+                 <a name="_" id="_"/>
+               </p>
+               <div class="ol_wrap">
+                 <p class="MsoListNumber3"><a name="_" id="_"/>iii)<span style="mso-tab-count:1"> </span>E</p>
+                 <p class="MsoListNumber3"><a name="_" id="_"/>iv)<span style="mso-tab-count:1"> </span>F</p>
+                 <p class="MsoNormal">
+                   <a name="_" id="_"/>
+                 </p>
+                 <div class="ol_wrap">
+                   <p class="MsoListNumber4"><a name="_" id="_"/>C)<span style="mso-tab-count:1"> </span>G</p>
+                   <p class="MsoListNumber4"><a name="_" id="_"/>D)<span style="mso-tab-count:1"> </span>H</p>
+                   <p class="MsoNormal">
+                     <a name="_" id="_"/>
+                   </p>
+                   <div class="ol_wrap">
+                     <p class="MsoListNumber5"><a name="_" id="_"/>III)<span style="mso-tab-count:1"> </span>I</p>
+                     <p class="MsoListNumber5"><a name="_" id="_"/>IV)<span style="mso-tab-count:1"> </span>J</p>
+                     <p class="MsoNormal">
+                       <a name="_" id="_"/>
+                     </p>
+                     <div class="ol_wrap">
+                       <p class="MsoListNumber5"><a name="_" id="_"/>c)<span style="mso-tab-count:1"> </span>K</p>
+                       <p class="MsoListNumber5"><a name="_" id="_"/>d)<span style="mso-tab-count:1"> </span>L</p>
+                       <p class="MsoListNumber5"><a name="_" id="_"/>e)<span style="mso-tab-count:1"> </span>M</p>
+                     </div>
+                     <p class="MsoListNumber5"><a name="_" id="_"/>V)<span style="mso-tab-count:1"> </span>N</p>
+                   </div>
+                   <p class="MsoListNumber4"><a name="_" id="_"/>E)<span style="mso-tab-count:1"> </span>O</p>
+                 </div>
+                 <p class="MsoListNumber3"><a name="_" id="_"/>v)<span style="mso-tab-count:1"> </span>P</p>
+               </div>
+               <p class="MsoListNumber2"><a name="_" id="_"/>5)<span style="mso-tab-count:1"> </span>Q</p>
+             </div>
+             <p class="ListNumber1"><a name="_" id="_"/>e)<span style="mso-tab-count:1"> </span>R</p>
+           </div>
+         </div>
+       </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -785,11 +463,11 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
-    xml = xml.at("//xmlns:div[@class = 'WordSection3']")
-    xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
+    xml = Nokogiri::HTML(output)
+    xml = xml.at("//div[@class = 'WordSection3']")
+    xml.at("//div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
-      .to be_xml_equivalent_to word
+      .to be_html4_equivalent_to word
   end
 
   it "deals with unordered lists embedded within notes and examples" do
@@ -837,152 +515,61 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~WORD
-       <div class="WordSection3">
-                    <div>
-                       <a name="A" id="A"/>
-                       <h1>1</h1>
-                       <div>
-                          <a name="B" id="B"/>
-                          <p class="Note">
-                             NOTE
-                             <span style="mso-tab-count:1">  </span>
-                          </p>
-                          <div class="ul_wrap">
-                             <p class="ListContinue2-">
-                                —
-                                <span style="mso-tab-count:1"> </span>
-                                A
-                             </p>
-                             <p class="ListContinue2-">
-                                —
-                                <span style="mso-tab-count:1"> </span>
-                                B
-                             </p>
-                             <p class="MsoNormal">
-                                <a name="_" id="_"/>
-                                <div class="ul_wrap">
-                                   <p class="ListContinue3-">
-                                      <a name="_" id="_"/>
-                                      —
-                                      <span style="mso-tab-count:1"> </span>
-                                      C
-                                   </p>
-                                   <p class="ListContinue3-">
-                                      <a name="_" id="_"/>
-                                      —
-                                      <span style="mso-tab-count:1"> </span>
-                                      D
-                                   </p>
-                                   <p class="MsoNormal">
-                                      <a name="_" id="_"/>
-                                      <div class="ul_wrap">
-                                         <p class="ListContinue4-">
-                                            <a name="_" id="_"/>
-                                            —
-                                            <span style="mso-tab-count:1"> </span>
-                                            E
-                                         </p>
-                                         <p class="ListContinue4-">
-                                            <a name="_" id="_"/>
-                                            —
-                                            <span style="mso-tab-count:1"> </span>
-                                            F
-                                         </p>
-                                         <p class="MsoNormal">
-                                            <a name="_" id="_"/>
-                                            <div class="ul_wrap">
-                                               <p class="ListContinue5-">
-                                                  <a name="_" id="_"/>
-                                                  —
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  G
-                                               </p>
-                                               <p class="ListContinue5-">
-                                                  <a name="_" id="_"/>
-                                                  —
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  H
-                                               </p>
-                                               <p class="MsoNormal">
-                                                  <a name="_" id="_"/>
-                                                  <div class="ul_wrap">
-                                                     <p class="ListContinue5-">
-                                                        <a name="_" id="_"/>
-                                                        —
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        I
-                                                     </p>
-                                                     <p class="ListContinue5-">
-                                                        <a name="_" id="_"/>
-                                                        —
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        J
-                                                     </p>
-                                                     <p class="MsoNormal">
-                                                        <a name="_" id="_"/>
-                                                        <div class="ul_wrap">
-                                                           <p class="ListContinue5-">
-                                                              <a name="_" id="_"/>
-                                                              —
-                                                              <span style="mso-tab-count:1"> </span>
-                                                              K
-                                                           </p>
-                                                           <p class="ListContinue5-">
-                                                              <a name="_" id="_"/>
-                                                              —
-                                                              <span style="mso-tab-count:1"> </span>
-                                                              L
-                                                           </p>
-                                                           <p class="ListContinue5-">
-                                                              <a name="_" id="_"/>
-                                                              —
-                                                              <span style="mso-tab-count:1"> </span>
-                                                              M
-                                                           </p>
-                                                        </div>
-                                                     </p>
-                                                     <p class="ListContinue5-">
-                                                        <a name="_" id="_"/>
-                                                        —
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        N
-                                                     </p>
-                                                  </div>
-                                               </p>
-                                               <p class="ListContinue5-">
-                                                  <a name="_" id="_"/>
-                                                  —
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  O
-                                               </p>
-                                            </div>
-                                         </p>
-                                         <p class="ListContinue4-">
-                                            <a name="_" id="_"/>
-                                            —
-                                            <span style="mso-tab-count:1"> </span>
-                                            P
-                                         </p>
-                                      </div>
-                                   </p>
-                                   <p class="ListContinue3-">
-                                      <a name="_" id="_"/>
-                                      —
-                                      <span style="mso-tab-count:1"> </span>
-                                      Q
-                                   </p>
-                                </div>
-                             </p>
-                             <p class="ListContinue2-">
-                                <a name="_" id="_"/>
-                                —
-                                <span style="mso-tab-count:1"> </span>
-                                R
-                             </p>
-                          </div>
+      <div class="WordSection3">
+         <div>
+           <a name="A" id="A"/>
+           <h1>1</h1>
+           <div>
+             <a name="B" id="B"/>
+             <p class="Note">NOTE<span style="mso-tab-count:1">  </span></p>
+             <div class="ul_wrap">
+               <p class="ListContinue2-">—<span style="mso-tab-count:1"> </span>A</p>
+               <p class="ListContinue2-">—<span style="mso-tab-count:1"> </span>B</p>
+               <p class="MsoNormal">
+                 <a name="_" id="_"/>
+               </p>
+               <div class="ul_wrap">
+                 <p class="ListContinue3-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>C</p>
+                 <p class="ListContinue3-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>D</p>
+                 <p class="MsoNormal">
+                   <a name="_" id="_"/>
+                 </p>
+                 <div class="ul_wrap">
+                   <p class="ListContinue4-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>E</p>
+                   <p class="ListContinue4-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>F</p>
+                   <p class="MsoNormal">
+                     <a name="_" id="_"/>
+                   </p>
+                   <div class="ul_wrap">
+                     <p class="ListContinue5-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>G</p>
+                     <p class="ListContinue5-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>H</p>
+                     <p class="MsoNormal">
+                       <a name="_" id="_"/>
+                     </p>
+                     <div class="ul_wrap">
+                       <p class="ListContinue5-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>I</p>
+                       <p class="ListContinue5-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>J</p>
+                       <p class="MsoNormal">
+                         <a name="_" id="_"/>
+                       </p>
+                       <div class="ul_wrap">
+                         <p class="ListContinue5-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>K</p>
+                         <p class="ListContinue5-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>L</p>
+                         <p class="ListContinue5-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>M</p>
                        </div>
-                    </div>
-        </div>
+                       <p class="ListContinue5-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>N</p>
+                     </div>
+                     <p class="ListContinue5-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>O</p>
+                   </div>
+                   <p class="ListContinue4-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>P</p>
+                 </div>
+                 <p class="ListContinue3-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>Q</p>
+               </div>
+               <p class="ListContinue2-"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>R</p>
+             </div>
+           </div>
+         </div>
+       </div>
     WORD
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -993,11 +580,11 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
-    xml = xml.at("//xmlns:div[@class = 'WordSection3']")
-    xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
+    xml = Nokogiri::HTML(output)
+    xml = xml.at("//div[@class = 'WordSection3']")
+    xml.at("//div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
-      .to be_xml_equivalent_to word
+      .to be_html4_equivalent_to word
   end
 
   it "deals with ordered lists embedded within notes and examples" do
@@ -1046,151 +633,60 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
        <div class="WordSection3">
-                    <div>
-                       <a name="A" id="A"/>
-                       <h1>1</h1>
-                       <div>
-                          <a name="B" id="B"/>
-                          <p class="Example">
-                             EXAMPLE
-                             <span style="mso-tab-count:1">  </span>
-                          </p>
-                          <div class="ol_wrap">
-                             <p class="ListNumber2-">
-                                a)
-                                <span style="mso-tab-count:1"> </span>
-                                A
-                             </p>
-                             <p class="ListNumber2-">
-                                b)
-                                <span style="mso-tab-count:1"> </span>
-                                B
-                             </p>
-                             <p class="MsoNormal">
-                                <a name="_" id="_"/>
-                                <div class="ol_wrap">
-                                   <p class="ListNumber3-">
-                                      <a name="_" id="_"/>
-                                      1)
-                                      <span style="mso-tab-count:1"> </span>
-                                      C
-                                   </p>
-                                   <p class="ListNumber3-">
-                                      <a name="_" id="_"/>
-                                      2)
-                                      <span style="mso-tab-count:1"> </span>
-                                      D
-                                   </p>
-                                   <p class="MsoNormal">
-                                      <a name="_" id="_"/>
-                                      <div class="ol_wrap">
-                                         <p class="ListNumber4-">
-                                            <a name="_" id="_"/>
-                                            i)
-                                            <span style="mso-tab-count:1"> </span>
-                                            E
-                                         </p>
-                                         <p class="ListNumber4-">
-                                            <a name="_" id="_"/>
-                                            ii)
-                                            <span style="mso-tab-count:1"> </span>
-                                            F
-                                         </p>
-                                         <p class="MsoNormal">
-                                            <a name="_" id="_"/>
-                                            <div class="ol_wrap">
-                                               <p class="ListNumber5-">
-                                                  <a name="_" id="_"/>
-                                                  A)
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  G
-                                               </p>
-                                               <p class="ListNumber5-">
-                                                  <a name="_" id="_"/>
-                                                  B)
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  H
-                                               </p>
-                                               <p class="MsoNormal">
-                                                  <a name="_" id="_"/>
-                                                  <div class="ol_wrap">
-                                                     <p class="ListNumber5-">
-                                                        <a name="_" id="_"/>
-                                                        I)
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        I
-                                                     </p>
-                                                     <p class="ListNumber5-">
-                                                        <a name="_" id="_"/>
-                                                        II)
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        J
-                                                     </p>
-                                                     <p class="MsoNormal">
-                                                        <a name="_" id="_"/>
-                                                        <div class="ol_wrap">
-                                                           <p class="ListNumber5-">
-                                                              <a name="_" id="_"/>
-                                                              a)
-                                                              <span style="mso-tab-count:1"> </span>
-                                                              K
-                                                           </p>
-                                                           <p class="ListNumber5-">
-                                                              <a name="_" id="_"/>
-                                                              b)
-                                                              <span style="mso-tab-count:1"> </span>
-                                                              L
-                                                           </p>
-                                                           <p class="ListNumber5-">
-                                                              <a name="_" id="_"/>
-                                                              c)
-                                                              <span style="mso-tab-count:1"> </span>
-                                                              M
-                                                           </p>
-                                                        </div>
-                                                     </p>
-                                                     <p class="ListNumber5-">
-                                                        <a name="_" id="_"/>
-                                                        III)
-                                                        <span style="mso-tab-count:1"> </span>
-                                                        N
-                                                     </p>
-                                                  </div>
-                                               </p>
-                                               <p class="ListNumber5-">
-                                                  <a name="_" id="_"/>
-                                                  C)
-                                                  <span style="mso-tab-count:1"> </span>
-                                                  O
-                                               </p>
-                                            </div>
-                                         </p>
-                                         <p class="ListNumber4-">
-                                            <a name="_" id="_"/>
-                                            iii)
-                                            <span style="mso-tab-count:1"> </span>
-                                            P
-                                         </p>
-                                      </div>
-                                   </p>
-                                   <p class="ListNumber3-">
-                                      <a name="_" id="_"/>
-                                      3)
-                                      <span style="mso-tab-count:1"> </span>
-                                      Q
-                                   </p>
-                                </div>
-                             </p>
-                             <p class="ListNumber2-">
-                                <a name="_" id="_"/>
-                                c)
-                                <span style="mso-tab-count:1"> </span>
-                                R
-                             </p>
-                          </div>
+         <div>
+           <a name="A" id="A"/>
+           <h1>1</h1>
+           <div>
+             <a name="B" id="B"/>
+             <p class="Example">EXAMPLE<span style="mso-tab-count:1">  </span></p>
+             <div class="ol_wrap">
+               <p class="ListNumber2-">a)<span style="mso-tab-count:1"> </span>A</p>
+               <p class="ListNumber2-">b)<span style="mso-tab-count:1"> </span>B</p>
+               <p class="MsoNormal">
+                 <a name="_" id="_"/>
+               </p>
+               <div class="ol_wrap">
+                 <p class="ListNumber3-"><a name="_" id="_"/>1)<span style="mso-tab-count:1"> </span>C</p>
+                 <p class="ListNumber3-"><a name="_" id="_"/>2)<span style="mso-tab-count:1"> </span>D</p>
+                 <p class="MsoNormal">
+                   <a name="_" id="_"/>
+                 </p>
+                 <div class="ol_wrap">
+                   <p class="ListNumber4-"><a name="_" id="_"/>i)<span style="mso-tab-count:1"> </span>E</p>
+                   <p class="ListNumber4-"><a name="_" id="_"/>ii)<span style="mso-tab-count:1"> </span>F</p>
+                   <p class="MsoNormal">
+                     <a name="_" id="_"/>
+                   </p>
+                   <div class="ol_wrap">
+                     <p class="ListNumber5-"><a name="_" id="_"/>A)<span style="mso-tab-count:1"> </span>G</p>
+                     <p class="ListNumber5-"><a name="_" id="_"/>B)<span style="mso-tab-count:1"> </span>H</p>
+                     <p class="MsoNormal">
+                       <a name="_" id="_"/>
+                     </p>
+                     <div class="ol_wrap">
+                       <p class="ListNumber5-"><a name="_" id="_"/>I)<span style="mso-tab-count:1"> </span>I</p>
+                       <p class="ListNumber5-"><a name="_" id="_"/>II)<span style="mso-tab-count:1"> </span>J</p>
+                       <p class="MsoNormal">
+                         <a name="_" id="_"/>
+                       </p>
+                       <div class="ol_wrap">
+                         <p class="ListNumber5-"><a name="_" id="_"/>a)<span style="mso-tab-count:1"> </span>K</p>
+                         <p class="ListNumber5-"><a name="_" id="_"/>b)<span style="mso-tab-count:1"> </span>L</p>
+                         <p class="ListNumber5-"><a name="_" id="_"/>c)<span style="mso-tab-count:1"> </span>M</p>
                        </div>
-                    </div>
-        </div>
+                       <p class="ListNumber5-"><a name="_" id="_"/>III)<span style="mso-tab-count:1"> </span>N</p>
+                     </div>
+                     <p class="ListNumber5-"><a name="_" id="_"/>C)<span style="mso-tab-count:1"> </span>O</p>
+                   </div>
+                   <p class="ListNumber4-"><a name="_" id="_"/>iii)<span style="mso-tab-count:1"> </span>P</p>
+                 </div>
+                 <p class="ListNumber3-"><a name="_" id="_"/>3)<span style="mso-tab-count:1"> </span>Q</p>
+               </div>
+               <p class="ListNumber2-"><a name="_" id="_"/>c)<span style="mso-tab-count:1"> </span>R</p>
+             </div>
+           </div>
+         </div>
+       </div>
             WORD
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -1201,11 +697,11 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
-    xml = xml.at("//xmlns:div[@class = 'WordSection3']")
-    xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
+    xml = Nokogiri::HTML(output)
+    xml = xml.at("//div[@class = 'WordSection3']")
+    xml.at("//div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
-      .to be_xml_equivalent_to word
+      .to be_html4_equivalent_to word
   end
 
   it "ignores intervening ul in numbering ol" do
@@ -1239,52 +735,32 @@ RSpec.describe IsoDoc do
     INPUT
     word = <<~WORD
        <div class="WordSection3">
-                     <div>
-                       <a name="A" id="A"/>
-                       <h1>1</h1>
-                       <div class="ul_wrap">
-                          <p class="ListContinue1">
-                             <a name="_" id="_"/>
-                             —
-                             <span style="mso-tab-count:1"> </span>
-                             A
-                          </p>
-                          <p class="MsoNormal">
-                             <a name="_" id="_"/>
-                             <div class="ol_wrap">
-                                <p class="MsoListNumber2">
-                                   <a name="_" id="_"/>
-                                   a)
-                                   <span style="mso-tab-count:1"> </span>
-                                   List
-                                </p>
-                                <p class="MsoNormal">
-                                   <a name="_" id="_"/>
-                                   <div class="ul_wrap">
-                                      <p class="MsoListContinue3">
-                                         <a name="_" id="_"/>
-                                         —
-                                         <span style="mso-tab-count:1"> </span>
-                                         B
-                                      </p>
-                                      <p class="MsoNormal">
-                                         <a name="_" id="_"/>
-                                         <div class="ol_wrap">
-                                            <p class="MsoListNumber4">
-                                               <a name="_" id="_"/>
-                                               1)
-                                               <span style="mso-tab-count:1"> </span>
-                                               List 2
-                                            </p>
-                                         </div>
-                                      </p>
-                                   </div>
-                                </p>
-                             </div>
-                          </p>
-                       </div>
-                    </div>
-        </div>
+         <div>
+           <a name="A" id="A"/>
+           <h1>1</h1>
+           <div class="ul_wrap">
+             <p class="ListContinue1"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>A</p>
+             <p class="MsoNormal">
+               <a name="_" id="_"/>
+             </p>
+             <div class="ol_wrap">
+               <p class="MsoListNumber2"><a name="_" id="_"/>a)<span style="mso-tab-count:1"> </span>List</p>
+               <p class="MsoNormal">
+                 <a name="_" id="_"/>
+               </p>
+               <div class="ul_wrap">
+                 <p class="MsoListContinue3"><a name="_" id="_"/>—<span style="mso-tab-count:1"> </span>B</p>
+                 <p class="MsoNormal">
+                   <a name="_" id="_"/>
+                 </p>
+                 <div class="ol_wrap">
+                   <p class="MsoListNumber4"><a name="_" id="_"/>1)<span style="mso-tab-count:1"> </span>List 2</p>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+       </div>
     WORD
     FileUtils.rm_f "test.doc"
     presxml = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
@@ -1295,11 +771,11 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    xml = Nokogiri::XML(output)
-    xml = xml.at("//xmlns:div[@class = 'WordSection3']")
-    xml.at("//xmlns:div[@style = 'mso-element:comment-list']")&.remove
+    xml = Nokogiri::HTML(output)
+    xml = xml.at("//div[@class = 'WordSection3']")
+    xml.at("//div[@style = 'mso-element:comment-list']")&.remove
     expect(strip_guid(xml.to_xml))
-      .to be_xml_equivalent_to word
+      .to be_html4_equivalent_to word
   end
 
   it "deals with definition lists embedded within notes and examples" do
@@ -1353,8 +829,8 @@ RSpec.describe IsoDoc do
     output = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
-    expect(strip_guid(Nokogiri::XML(output)
-      .at("//xmlns:div[@class = 'WordSection3']").to_xml))
-      .to be_xml_equivalent_to word
+    expect(strip_guid(Nokogiri::HTML(output)
+      .at("//div[@class = 'WordSection3']").to_xml))
+      .to be_html4_equivalent_to word
   end
 end

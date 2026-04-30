@@ -1916,10 +1916,10 @@ RSpec.describe IsoDoc do
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
     expect(strip_guid(pres_output))
       .to be_xml_equivalent_to presxml
-    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::HtmlConvert.new({})
+    expect(strip_guid(Nokogiri::HTML(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true))
       .at("//div[@id ='A']").to_xml))
-      .to be_xml_equivalent_to html
+      .to be_html5_equivalent_to html
 
     presxml = <<~OUTPUT
       <semx element="amend" source="_">

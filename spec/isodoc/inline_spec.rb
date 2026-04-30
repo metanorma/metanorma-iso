@@ -1615,9 +1615,9 @@ RSpec.describe IsoDoc do
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to strip_guid(html)
-    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
+    expect(strip_guid(Nokogiri::HTML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
       .at("//body").to_xml))
-      .to be_xml_equivalent_to strip_guid(doc)
+      .to be_html4_equivalent_to strip_guid(doc)
   end
 end

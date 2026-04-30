@@ -313,12 +313,12 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(strip_guid(pres_output))
       .to be_xml_equivalent_to presxml
-    expect(strip_guid(Nokogiri::XML(
+    expect(strip_guid(Nokogiri::HTML(
       IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true),
     )
       .at("//div[h1/@class = 'ForewordTitle']").to_xml))
-      .to be_xml_equivalent_to output
+      .to be_html5_equivalent_to output
   end
 
   it "processes empty admonitions" do
@@ -421,12 +421,12 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(strip_guid(pres_output))
       .to be_xml_equivalent_to presxml
-    expect(strip_guid(Nokogiri::XML(
+    expect(strip_guid(Nokogiri::HTML(
       IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true),
     )
       .at("//div[h1/@class = 'ForewordTitle']").to_xml))
-      .to be_xml_equivalent_to output
+      .to be_html5_equivalent_to output
   end
 
   it "processes admonitions outside of clauses" do
@@ -569,10 +569,10 @@ RSpec.describe IsoDoc do
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to html
-    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
+    expect(strip_guid(Nokogiri::HTML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
       .at("//div[@class = 'WordSection2']").to_xml))
-      .to be_xml_equivalent_to word
+      .to be_html4_equivalent_to word
   end
 
   it "processes formulae" do
@@ -820,9 +820,9 @@ RSpec.describe IsoDoc do
     expect(strip_guid(output))
       .to be_html5_equivalent_to html
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, true)
-    expect(strip_guid(Nokogiri::XML(output)
+    expect(strip_guid(Nokogiri::HTML(output)
       .at("//div[@id = 'A']").to_xml))
-      .to be_xml_equivalent_to word
+      .to be_html4_equivalent_to word
   end
 
   it "processes formulae with single definition list entry" do
@@ -1347,10 +1347,10 @@ RSpec.describe IsoDoc do
     expect(strip_guid(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to html
-    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::WordConvert.new({})
+    expect(strip_guid(Nokogiri::HTML(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
       .at("//div[@class = 'WordSection2']").to_xml))
-      .to be_xml_equivalent_to word
+      .to be_html4_equivalent_to word
   end
 
   it "ignores intervening ul in numbering ol" do

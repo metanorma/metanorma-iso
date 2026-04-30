@@ -249,11 +249,11 @@ RSpec.describe IsoDoc do
         </iso-standard>
       INPUT
 
-    html = Nokogiri::XML(File.read("test.html", encoding: "UTF-8"))
+    html = Nokogiri::HTML(File.read("test.html", encoding: "UTF-8"))
       .at("//div[@id = 'toc']").to_xml
 
     expect(strip_guid(html))
-      .to be_xml_equivalent_to <<~OUTPUT
+      .to be_html5_equivalent_to <<~OUTPUT
              <div id="toc">
            <ul>
              <li class="h1">
@@ -748,10 +748,10 @@ RSpec.describe IsoDoc do
       .convert("test", pres_output, false)
     word = File.read("test.doc", encoding: "UTF-8")
     contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m, "</body>")
-    contents = Nokogiri::XML(contents)
+    contents = Nokogiri::HTML(contents)
       .at("//div[a/@id = 'boilerplate-copyright-destination']")
     expect(contents.to_xml)
-      .to be_xml_equivalent_to <<~"OUTPUT"
+      .to be_html4_equivalent_to <<~"OUTPUT"
            <div>
           <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"/>
           <div style="mso-element:para-border-div;border:solid windowtext 1.0pt; border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt: solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt; margin-left:5.1pt;margin-right:5.1pt">

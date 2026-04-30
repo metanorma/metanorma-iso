@@ -202,8 +202,8 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", input, true)
     expect(output).to be_html5_equivalent_to html
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", input, true)
-    expect(Nokogiri::XML(output).at("//body").to_xml)
-      .to be_xml_equivalent_to word
+    expect(Nokogiri::HTML(output).at("//body").to_xml)
+      .to be_html4_equivalent_to word
   end
 
   it "renders subfigures" do
@@ -1025,8 +1025,8 @@ RSpec.describe IsoDoc do
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to html
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, true)
-    expect(strip_guid(Nokogiri::XML(output).at("//body").to_xml))
-      .to be_xml_equivalent_to word
+    expect(strip_guid(Nokogiri::HTML(output).at("//body").to_xml))
+      .to be_html4_equivalent_to word
   end
 
   it "processes figures" do
