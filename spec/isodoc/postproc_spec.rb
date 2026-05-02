@@ -253,7 +253,7 @@ RSpec.describe IsoDoc do
       .at("//div[@id = 'toc']").to_xml
 
     expect(strip_guid(html))
-      .to be_xml_equivalent_to <<~OUTPUT
+      .to be_html5_equivalent_to <<~OUTPUT
              <div id="toc">
            <ul>
              <li class="h1">
@@ -751,7 +751,7 @@ RSpec.describe IsoDoc do
     contents = Nokogiri::HTML5(contents)
       .at("//div[a/@id = 'boilerplate-copyright-destination']")
     expect(contents.to_xml)
-      .to be_xml_equivalent_to <<~"OUTPUT"
+      .to be_html4_equivalent_to <<~"OUTPUT"
            <div>
           <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"/>
           <div style="mso-element:para-border-div;border:solid windowtext 1.0pt; border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt: solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt; margin-left:5.1pt;margin-right:5.1pt">
