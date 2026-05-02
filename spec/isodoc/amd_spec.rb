@@ -1918,8 +1918,8 @@ RSpec.describe IsoDoc do
       .to be_xml_equivalent_to presxml
     expect(strip_guid(Nokogiri::HTML5(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true))
-      .at("//div[@id ='A']").to_xml))
-      .to be_xml_equivalent_to html
+      .at("//div[@id ='A']").to_xhtml))
+      .to be_html5_equivalent_to html
 
     presxml = <<~OUTPUT
       <semx element="amend" source="_">
