@@ -317,7 +317,7 @@ RSpec.describe IsoDoc do
       IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true),
     )
-      .at("//div[h1/@class = 'ForewordTitle']").to_xml))
+      .at("//div[h1/@class = 'ForewordTitle']").to_xhtml))
       .to be_html5_equivalent_to output
   end
 
