@@ -313,7 +313,7 @@ RSpec.describe IsoDoc do
       .convert("test", input, true)
     expect(strip_guid(pres_output))
       .to be_xml_equivalent_to presxml
-    expect(strip_guid(Nokogiri::HTML5(
+    expect(strip_guid(Nokogiri::HTML(
       IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true),
     )

@@ -747,8 +747,7 @@ RSpec.describe IsoDoc do
     IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup)
       .convert("test", pres_output, false)
     word = File.read("test.doc", encoding: "UTF-8")
-    contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m,
-                                                    "</body>")
+    contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m, "</body>")
     contents = Nokogiri::HTML5(contents)
       .at("//div[a/@id = 'boilerplate-copyright-destination']")
     output = <<~OUTPUT
