@@ -719,118 +719,111 @@ RSpec.describe IsoDoc do
        </iso-standard>
     OUTPUT
     html = <<~OUTPUT
-      <html lang="en">
-        <head/>
-        <body lang="en">
-          <div class="title-section">
-            <p> </p>
-          </div>
-          <br/>
-          <div class="prefatory-section">
-            <p> </p>
-          </div>
-          <br/>
-          <div class="main-section">
-            <div class="authority">
-              <div class="boilerplate-copyright">
-                <div id="_">
-                  <h1>Copyright</h1>
-                </div>
-              </div>
-              <div class="boilerplate-license">
-                <div id="_">
-                  <h1>License</h1>
-                </div>
-              </div>
-              <div class="boilerplate-legal">
-                <div id="_">
-                  <h1>Legal</h1>
-                </div>
-              </div>
-              <div class="boilerplate-feedback">
-                <div id="_">
-                  <h1>Feedback</h1>
-                </div>
-              </div>
-            </div>
-            <br/>
-            <div id="_">
-              <h1 class="AbstractTitle">Abstract</h1>
-            </div>
-            <br/>
-            <div id="_">
-              <h1 class="ForewordTitle">Foreword</h1>
-              <p id="A">This is a preamble</p>
-            </div>
-            <br/>
-            <div class="Section3" id="B">
-              <h1 class="IntroTitle">Introduction</h1>
-              <div id="C">
-                <h2>Introduction Subsection</h2>
-              </div>
-            </div>
-            <br/>
-            <div class="Section3" id="B1">
-              <h1 class="IntroTitle">Dedication</h1>
-            </div>
-            <br/>
-            <div class="Section3" id="B2">
-              <h1 class="IntroTitle">Note to reader</h1>
-            </div>
-            <br/>
-            <div class="Section3" id="_">
-              <h1 class="IntroTitle">Acknowledgements</h1>
-            </div>
-            <div id="M">
-              <h1>Clause 4</h1>
-              <div id="N">
-                <h2>Introduction</h2>
-              </div>
-              <div id="O">
-                <h2>Clause 4.2</h2>
-              </div>
-              <div id="O1"></div>
-            </div>
-            <div id="D">
-              <h1>Scope</h1>
-              <p id="E">Text</p>
-            </div>
-            <br/>
-            <div class="Section3" id="P">
-              <h1 class="Annex">
-                <b>Annex A</b>
-                <br/><span class="obligation">(normative)</span>
-                <br/>
-                <br/>
-                <b>Annex</b></h1>
-                <p style="display:none;" class="variant-title-toc">Annex A  Annex</p>
-              <div id="Q">
-                <h2>A.1&#160; Annex A.1</h2>
-                <div id="Q1">
-                  <h3>A.1.1&#160; Annex A.1a</h3>
-                </div>
-              </div>
-            </div>
-            <br/>
-            <div class="Section3" id="P1">
-            <p style="display:none;" class="variant-title-toc">Annex B</p>
-              <h1 class="Annex">
-                <b>Annex B</b>
-                <br/><span class="obligation">(normative)</span></h1>
-            </div>
-            <div>
-              <h1>Normative References</h1>
-            </div>
-            <br/>
-            <div>
-              <h1 class="Section3">Bibliography</h1>
-              <div>
-                <h2 class="Section3">Bibliography Subsection</h2>
-              </div>
-            </div>
-          </div>
-        </body>
-      </html>
+       <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+         <head></head>
+         <body lang="en" xml:lang="en">
+           <div class="title-section">
+             <p>&#xA0;</p>
+           </div>
+           <br />
+           <div class="prefatory-section">
+             <p>&#xA0;</p>
+           </div>
+           <br />
+           <div class="main-section">
+             <div class="authority">
+               <div class="boilerplate-copyright">
+                 <div id="_">
+                   <h1>Copyright</h1>
+                 </div>
+               </div>
+               <div class="boilerplate-license">
+                 <div id="_">
+                   <h1>License</h1>
+                 </div>
+               </div>
+               <div class="boilerplate-legal">
+                 <div id="_">
+                   <h1>Legal</h1>
+                 </div>
+               </div>
+               <div class="boilerplate-feedback">
+                 <div id="_">
+                   <h1>Feedback</h1>
+                 </div>
+               </div>
+             </div>
+             <br />
+             <div id="_">
+               <h1 class="AbstractTitle">Abstract</h1>
+             </div>
+             <br />
+             <div id="_">
+               <h1 class="ForewordTitle">Foreword</h1>
+               <p id="A">This is a preamble</p>
+             </div>
+             <br />
+             <div class="Section3" id="B">
+               <h1 class="IntroTitle">Introduction</h1>
+               <div id="C">
+                 <h2>Introduction Subsection</h2>
+               </div>
+             </div>
+             <br />
+             <div id="B1" class="Section3">
+               <h1 class="IntroTitle">Dedication</h1>
+             </div>
+             <br />
+             <div id="B2" class="Section3">
+               <h1 class="IntroTitle">Note to reader</h1>
+             </div>
+             <br />
+             <div class="Section3" id="_">
+               <h1 class="IntroTitle">Acknowledgements</h1>
+             </div>
+             <div id="M">
+               <h1>Clause 4</h1>
+               <div id="N">
+                 <h2>Introduction</h2>
+               </div>
+               <div id="O">
+                 <h2>Clause 4.2</h2>
+               </div>
+               <div id="O1"></div>
+             </div>
+             <div id="D">
+               <h1>Scope</h1>
+               <p id="E">Text</p>
+             </div>
+             <br />
+             <div id="P" class="Section3">
+               <h1 class="Annex"><b>Annex A</b><br /><span class="obligation">(normative)</span><br /><br /><b>Annex</b></h1>
+               <p style="display:none;" class="variant-title-toc">Annex A&#xA0; Annex</p>
+               <div id="Q">
+                 <h2>A.1&#xA0; Annex A.1</h2>
+                 <div id="Q1">
+                   <h3>A.1.1&#xA0; Annex A.1a</h3>
+                 </div>
+               </div>
+             </div>
+             <br />
+             <div id="P1" class="Section3">
+               <p style="display:none;" class="variant-title-toc">Annex B</p>
+               <h1 class="Annex"><b>Annex B</b><br /><span class="obligation">(normative)</span></h1>
+             </div>
+             <div>
+               <h1>Normative References</h1>
+             </div>
+             <br />
+             <div>
+               <h1 class="Section3">Bibliography</h1>
+               <div>
+                 <h2 class="Section3">Bibliography Subsection</h2>
+               </div>
+             </div>
+           </div>
+         </body>
+       </html>
     OUTPUT
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
@@ -1446,10 +1439,7 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR}
                    <p class="zzSTDTitle1">
-               <span class="boldtitle">Introduction — Main Title — Title — </span>
-               <span class="nonboldtitle">Part 1:</span>
-               <span class="boldtitle">Title Part</span>
-             </p>
+               <span class="boldtitle">Introduction — Main Title — Title — </span><span class="nonboldtitle">Part 1:</span><span class="boldtitle">Title Part</span></p>
              <p class="zzSTDTitle2">AMENDMENT 1: Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</p>
              <p class="zzSTDTitle2">TECHNICAL CORRIGENDUM 2</p>
              <div id="_">

@@ -43,7 +43,7 @@ RSpec.describe IsoDoc do
             </foreword>
           </preface>
         </iso-standard>
-    INPUT
+      INPUT
     expect(File.exist?("test.html")).to be true
     html = File.read("test.html", encoding: "UTF-8")
     expect(html).to include("<title>Cereals and pulses — Specifications " \
@@ -167,19 +167,19 @@ RSpec.describe IsoDoc do
     expect(word).to be_xml_equivalent_to <<~OUTPUT
       <div class='WordSection3'>
          <div>
-           <a name='_terms_and_definitions' id='_terms_and_definitions'/>
+           <a name='_terms_and_definitions' id='_terms_and_definitions'></a>
            <h1>
              1
              <span style='mso-tab-count:1'>&#xA0; </span>
               Terms and Definitions
            </h1>
            <p class='TermNum'>
-             <a name='paddy1' id='paddy1'/>
+             <a name='paddy1' id='paddy1'></a>
              1.1
            </p>
            <p class='Terms' style='text-align:left;'>paddy</p>
            <p class='Definition'>
-             <a name='_eb29b35e-123e-4d1c-b50b-2714d41e747f' id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'/>
+             <a name='_eb29b35e-123e-4d1c-b50b-2714d41e747f' id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'></a>
              rice retaining its husk after threshing
            </p>
            <p class='Source'>
@@ -250,7 +250,7 @@ RSpec.describe IsoDoc do
       INPUT
 
     html = Nokogiri::HTML5(File.read("test.html", encoding: "UTF-8"))
-      .at("//div[@id = 'toc']").to_xml
+      .at("//div[@id = 'toc']").to_xhtml
 
     expect(strip_guid(html))
       .to be_html5_equivalent_to <<~OUTPUT
@@ -259,14 +259,14 @@ RSpec.describe IsoDoc do
              <li class="h1">
                <div class="collapse-group">
                  <a href="#_">1
-                  
+        #{'          '}
                  Clause 4</a>
-                 <div class="collapse-button"/>
+                 <div class="collapse-button"></div>
                </div>
                <ul class="content collapse">
                  <li class="h2">
                    <a href="#_">      1.1
-                    
+        #{'            '}
                    Introduction
 
                    to this
@@ -275,7 +275,7 @@ RSpec.describe IsoDoc do
                  </li>
                  <li class="h2">
                    <a href="#_">      1.2
-                    
+        #{'            '}
                    Clause 4.2</a>
                  </li>
                </ul>
@@ -283,7 +283,7 @@ RSpec.describe IsoDoc do
                         <li class="h1">
               <div class="collapse-group">
                 <a href="#_">2  Clause 5</a>
-                <div class="collapse-button"/>
+                <div class="collapse-button"></div>
               </div>
               <ul class="content collapse">
                 <li class="h2">
@@ -350,92 +350,92 @@ RSpec.describe IsoDoc do
     word = File.read("test.doc", encoding: "UTF-8")
       .sub(/^.*An empty word intro page\./m, "")
       .sub(%r{</div>.*$}m, "</div>")
-      .gsub(/<o:p>&#xA0;<\/o:p>/, "")
+      .gsub("<o:p>&#xA0;</o:p>", "")
 
     expect("<div>#{word.gsub(/_Toc\d\d+/, '_Toc')}")
       .to be_xml_equivalent_to <<~'OUTPUT'
-           <div>
-         <p class="MsoToc1">
-           <span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"/><span style="mso-spacerun:yes"> </span>TOC
-         \o "1-3" \h \z \t "Heading
-         1;1;ANNEX;1;Biblio Title;1;Foreword Title;1;Intro Title;1" <span style="mso-element:field-separator"/></span>
-           <span class="MsoHyperlink">
-             <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-               <a href="#_Toc">1
+            <div>
+          <p class="MsoToc1">
+            <span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"></span><span style="mso-spacerun:yes"> </span>TOC
+          \o "1-3" \h \z \t "Heading
+          1;1;ANNEX;1;Biblio Title;1;Foreword Title;1;Intro Title;1" <span style="mso-element:field-separator"></span></span>
+            <span class="MsoHyperlink">
+              <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
+                <a href="#_Toc">1
 
-                       Clause 4<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"/><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"/></span></a>
-             </span>
-           </span>
-         </p>
-         <p class="MsoToc2">
-           <span class="MsoHyperlink">
-             <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-               <a href="#_Toc">1.1
+                        Clause 4<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"></span></span></a>
+              </span>
+            </span>
+          </p>
+          <p class="MsoToc2">
+            <span class="MsoHyperlink">
+              <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
+                <a href="#_Toc">1.1
 
-                         Introduction
+                          Introduction
 
-                         to this
+                          to this
 
-                       <span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"/><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"/></span></a>
-             </span>
-           </span>
-         </p>
-         <p class="MsoToc2">
-           <span class="MsoHyperlink">
-             <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-               <a href="#_Toc">1.2
+                        <span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"></span></span></a>
+              </span>
+            </span>
+          </p>
+          <p class="MsoToc2">
+            <span class="MsoHyperlink">
+              <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
+                <a href="#_Toc">1.2
 
-                         Clause 4.2<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"/><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"/></span></a>
-             </span>
-           </span>
-         </p>
-         <p class="MsoToc1">
-           <span class="MsoHyperlink">
-             <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
-               <a href="#_Toc">Annex A Annex First<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"/><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"/></span></a>
-             </span>
-           </span>
-         </p>
-         <p class="MsoToc1">
-           <span lang="EN-GB" xml:lang="EN-GB">
-             <span style="mso-element:field-end"/>
-           </span>
-           <span lang="EN-GB" xml:lang="EN-GB">
-             <o:p class="MsoNormal"> </o:p>
-           </span>
-         </p>
-         <p class="MsoNormal"> </p>
-       </div>
+                          Clause 4.2<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"></span></span></a>
+              </span>
+            </span>
+          </p>
+          <p class="MsoToc1">
+            <span class="MsoHyperlink">
+              <span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB">
+                <a href="#_Toc">Annex A Annex First<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"></span></span></a>
+              </span>
+            </span>
+          </p>
+          <p class="MsoToc1">
+            <span lang="EN-GB" xml:lang="EN-GB">
+              <span style="mso-element:field-end"></span>
+            </span>
+            <span lang="EN-GB" xml:lang="EN-GB">
+              <o:p class="MsoNormal"> </o:p>
+            </span>
+          </p>
+          <p class="MsoNormal"> </p>
+        </div>
       OUTPUT
 
-          FileUtils.rm_rf "test.doc"
+    FileUtils.rm_rf "test.doc"
     IsoDoc::WordConvert.new(WORD_HTML_CSS_WORDINTRO.dup)
-    .convert("test", <<~INPUT, false)
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <sections>
-          <clause id="A" inline-header="false" obligation="normative" displayorder="1">
-            <fmt-title id="_">Clause 4</fmt-title>
-            <clause id="N" inline-header="false" obligation="normative">
-              <fmt-title id="_">Introduction
-                <bookmark id="Q"/>
-                to this
-                <fn reference="1" id="F1">
-                  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p><fmt-fn-label><semx source="F1">1</semx></fmt-fn-label></fn>
-              </fmt-title>
-            </clause>
-            <clause id="O" inline-header="false" obligation="normative">
-              <fmt-title id="_">Clause 4.2</fmt-title>
-              <p>A
-                <fn reference="1" id="F2">
-                  <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p><fmt-fn-label><semx source="F2">1</semx></fmt-fn-label></fn>
-                </p>
-                <clause id="P" inline-header="false" obligation="normative">
-                  <fmt-title id="_">Clause 4.2.1</fmt-title>
+      .convert("test", <<~INPUT, false)
+        <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <sections>
+            <clause id="A" inline-header="false" obligation="normative" displayorder="1">
+              <fmt-title id="_">Clause 4</fmt-title>
+              <clause id="N" inline-header="false" obligation="normative">
+                <fmt-title id="_">Introduction
+                  <bookmark id="Q"/>
+                  to this
+                  <fn reference="1" id="F1">
+                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p><fmt-fn-label><semx source="F1">1</semx></fmt-fn-label></fn>
+                </fmt-title>
+              </clause>
+              <clause id="O" inline-header="false" obligation="normative">
+                <fmt-title id="_">Clause 4.2</fmt-title>
+                <p>A
+                  <fn reference="1" id="F2">
+                    <p id="_ff27c067-2785-4551-96cf-0a73530ff1e6">Formerly denoted as 15 % (m/m).</p><fmt-fn-label><semx source="F2">1</semx></fmt-fn-label></fn>
+                  </p>
+                  <clause id="P" inline-header="false" obligation="normative">
+                    <fmt-title id="_">Clause 4.2.1</fmt-title>
+                  </clause>
                 </clause>
               </clause>
-            </clause>
-          </sections>
-        </iso-standard>
+            </sections>
+          </iso-standard>
       INPUT
     word = File.read("test.doc")
       .sub(/^.*<div class="WordSection2">/m,
@@ -443,16 +443,16 @@ RSpec.describe IsoDoc do
       .sub(%r{<p class="MsoNormal">\s*<br clear="all" class="section"/>\s*</p>\s*<div class="WordSection3">.*$}m, "")
 
     expect(word.gsub(/_Toc\d\d+/, "_Toc")
-      .gsub(/<o:p>&#xA0;<\/o:p>/, ""))
+      .gsub("<o:p>&#xA0;</o:p>", ""))
       .to be_xml_equivalent_to <<~'OUTPUT'
         <div class="WordSection2">
          An empty word intro page.
 
-         <p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"/><span style="mso-spacerun:yes"> </span>TOC \o "1-2" \h \z \u <span style="mso-element:field-separator"/></span><span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB"><a href="#_Toc">Clause 4<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"/><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"/></span></a></span></span></p><p class="MsoToc2"><span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB"><a href="#_Toc">Introduction
+         <p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-begin"></span><span style="mso-spacerun:yes"> </span>TOC \o "1-2" \h \z \u <span style="mso-element:field-separator"></span></span><span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB"><a href="#_Toc">Clause 4<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"></span></span></a></span></span></p><p class="MsoToc2"><span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB"><a href="#_Toc">Introduction
 
                    to this
 
-                 <span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"/><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"/></span></a></span></span></p><p class="MsoToc2"><span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB"><a href="#_Toc">Clause 4.2<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"/></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"/><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"/></span></a></span></span></p><p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-end"/></span><span lang="EN-GB" xml:lang="EN-GB"><o:p class="MsoNormal"> </o:p></span></p><p class="MsoNormal"> </p></div>
+                 <span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"></span></span></a></span></span></p><p class="MsoToc2"><span class="MsoHyperlink"><span lang="EN-GB" style="mso-no-proof:yes" xml:lang="EN-GB"><a href="#_Toc">Clause 4.2<span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-tab-count:1 dotted">. </span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-begin"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"> PAGEREF _Toc \h </span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-separator"></span></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB">1</span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"></span><span lang="EN-GB" class="MsoTocTextSpan" xml:lang="EN-GB"><span style="mso-element:field-end"></span></span></a></span></span></p><p class="MsoToc1"><span lang="EN-GB" xml:lang="EN-GB"><span style="mso-element:field-end"></span></span><span lang="EN-GB" xml:lang="EN-GB"><o:p class="MsoNormal"> </o:p></span></p><p class="MsoNormal"> </p></div>
       OUTPUT
   end
 
@@ -560,14 +560,14 @@ RSpec.describe IsoDoc do
           <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
         </p>
         <div class="Section3">
-          <a id="P" name="P"/>
+          <a id="P" name="P"></a>
           <div class="Example">
-            <a id="_63112cbc-cde0-435f-9553-e0b8c4f5851c" name="_63112cbc-cde0-435f-9553-e0b8c4f5851c"/>
+            <a id="_63112cbc-cde0-435f-9553-e0b8c4f5851c" name="_63112cbc-cde0-435f-9553-e0b8c4f5851c"></a>
             <p class="Example">
               <span style="mso-tab-count:1">  </span>'1M', '01M', and '0001M' all describe the calendar month January.</p>
           </div>
           <div class="Example">
-            <a id="_63112cbc-cde0-435f-9553-e0b8c4f5851d" name="_63112cbc-cde0-435f-9553-e0b8c4f5851d"/>
+            <a id="_63112cbc-cde0-435f-9553-e0b8c4f5851d" name="_63112cbc-cde0-435f-9553-e0b8c4f5851d"></a>
             <p class="Example">
               <span style="mso-tab-count:1">  </span>'2M', '02M', and '0002M' all describe the calendar month February.</p>
           </div>
@@ -602,12 +602,12 @@ RSpec.describe IsoDoc do
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
          </p>
          <div class='Section3'>
-           <a name='P' id='P'/>
+           <a name='P' id='P'></a>
            <div class='zzHelp'>
-             <a name='_' id='_'/>
+             <a name='_' id='_'></a>
              <p class='zzHelp'> Only use paddy or parboiled rice for the determination of husked rice yield. </p>
              <p class='zzHelp'>
-               <a name='_' id='_'/>
+               <a name='_' id='_'></a>
                Para 2.
              </p>
            </div>
@@ -747,61 +747,63 @@ RSpec.describe IsoDoc do
     IsoDoc::Iso::WordConvert.new(WORD_HTML_CSS.dup)
       .convert("test", pres_output, false)
     word = File.read("test.doc", encoding: "UTF-8")
-    contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m, "</body>")
+    contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m,
+                                                    "</body>")
     contents = Nokogiri::HTML5(contents)
       .at("//div[a/@id = 'boilerplate-copyright-destination']")
-    expect(contents.to_xml)
-      .to be_html4_equivalent_to <<~"OUTPUT"
-           <div>
-          <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"/>
-          <div style="mso-element:para-border-div;border:solid windowtext 1.0pt; border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt: solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt; margin-left:5.1pt;margin-right:5.1pt">
-             <div>
-                <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
-                <div>
-                   <a name="boilerplate-copyright-default" id="boilerplate-copyright-default"/>
-                   <p class="zzCopyright">
-                      <a name="boilerplate-year" id="boilerplate-year"/>
-                      © ISO 2019, Published in Switzerland
-                   </p>
-                   <p class="zzCopyright1">
-                      <a name="boilerplate-message" id="boilerplate-message"/>
-                      I am the Walrus.
-                   </p>
-                   <p class="zzCopyright">
-                      <a name="boilerplate-name" id="boilerplate-name"/>
-                      ISO copyright office
-                   </p>
-                   <p style="text-align:left;" align="left" class="zzAddress">
-                      <a name="boilerplate-address" id="boilerplate-address"/>
-                      ISO copyright office
-                      <br/>
-                      Ch. de Blandonnet 8 ?~@? CP 401
-                      <br/>
-                      CH-1214 Vernier, Geneva, Switzerland
-                      <br/>
-                      Phone: +41 22 749 01 11
-                      <br/>
-                      Email: copyright@iso.org
-                      <br/>
-                      www.iso.org
-                   </p>
-                </div>
-             </div>
-          </div>
+    output = <<~OUTPUT
           <div>
-             <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
-             <div class="boilerplate-copyright">
-             <div class="zzCopyrightContainer">
-                <div>
-                   <a name="added" id="added"/>
-                   <p class="zzCopyright">Is there anybody out there?</p>
-                </div>
-                </div>
-             </div>
-          </div>
-       </div>
-      OUTPUT
+         <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"></a>
+         <div style="mso-element:para-border-div;border:solid windowtext 1.0pt; border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt: solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt; margin-left:5.1pt;margin-right:5.1pt">
+            <div>
+               <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"></a>
+               <div>
+                  <a name="boilerplate-copyright-default" id="boilerplate-copyright-default"></a>
+                  <p class="zzCopyright">
+                     <a name="boilerplate-year" id="boilerplate-year"></a>
+                     © ISO 2019, Published in Switzerland
+                  </p>
+                  <p class="zzCopyright1">
+                     <a name="boilerplate-message" id="boilerplate-message"></a>
+                     I am the Walrus.
+                  </p>
+                  <p class="zzCopyright">
+                     <a name="boilerplate-name" id="boilerplate-name"></a>
+                     ISO copyright office
+                  </p>
+                  <p style="text-align:left;" align="left" class="zzAddress">
+                     <a name="boilerplate-address" id="boilerplate-address"></a>
+                     ISO copyright office
+                     <br/>
+                     Ch. de Blandonnet 8 ?~@? CP 401
+                     <br/>
+                     CH-1214 Vernier, Geneva, Switzerland
+                     <br/>
+                     Phone: +41 22 749 01 11
+                     <br/>
+                     Email: copyright@iso.org
+                     <br/>
+                     www.iso.org
+                  </p>
+               </div>
+            </div>
+         </div>
+         <div>
+            <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"></a>
+            <div class="boilerplate-copyright">
+            <div class="zzCopyrightContainer">
+               <div>
+                  <a name="added" id="added"></a>
+                  <p class="zzCopyright">Is there anybody out there?</p>
+               </div>
+               </div>
+            </div>
+         </div>
+      </div>
+    OUTPUT
+    expect(contents.to_xhtml)
+      .to be_html4_equivalent_to output
     expect(word).to include('<p class="zzWarning">This document is not ' \
                             "an ISO International Standard")
   end
-  end
+end

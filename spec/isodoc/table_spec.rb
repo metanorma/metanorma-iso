@@ -902,6 +902,6 @@ RSpec.describe IsoDoc do
       .to be_html5_equivalent_to html
     expect(strip_guid(Nokogiri::HTML5(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
-      .at("//body").to_xml)).to be_html4_equivalent_to doc
+      .at("//body").to_xhtml)).to be_html4_equivalent_to doc
   end
 end

@@ -110,7 +110,7 @@ RSpec.describe IsoDoc do
     word = <<~OUTPUT
       <div class='WordSection3'>
         <div id='A'>
-          <h1/>
+          <h1></h1>
           <p>
             <span class="C"><i>H</i> I</span>
           </p>
@@ -119,7 +119,7 @@ RSpec.describe IsoDoc do
     OUTPUT
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", input, true)
     expect(Nokogiri::HTML5(output)
-      .at("//div[@class = 'WordSection3']").to_xml)
+      .at("//div[@class = 'WordSection3']").to_xhtml)
       .to be_html4_equivalent_to word
 
     input = <<~INPUT
@@ -135,7 +135,7 @@ RSpec.describe IsoDoc do
     word = <<~OUTPUT
       <div class='WordSection3'>
         <div id='A'>
-          <h1/>
+          <h1></h1>
           <p>
             <span class='C'>
               <i>H</i>
@@ -147,7 +147,7 @@ RSpec.describe IsoDoc do
     OUTPUT
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", input, true)
     expect(Nokogiri::HTML(output)
-      .at("//div[@class = 'WordSection3']").to_xml)
+      .at("//div[@class = 'WordSection3']").to_xhtml)
       .to be_html4_equivalent_to word
   end
 
@@ -166,27 +166,27 @@ RSpec.describe IsoDoc do
     word = <<~OUTPUT
       <div class="WordSection2">
           <div>
-             <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"/>
+             <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"></a>
              <div style="mso-element:para-border-div;border:solid windowtext 1.0pt; border-bottom-alt:solid windowtext .5pt;mso-border-top-alt:solid windowtext .5pt;mso-border-left-alt: solid windowtext .5pt;mso-border-right-alt:solid windowtext .5pt;padding:1.0pt 4.0pt 0cm 4.0pt; margin-left:5.1pt;margin-right:5.1pt">
                 <div>
-                   <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
+                   <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"></a>
                 </div>
              </div>
              <div>
-                <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
+                <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"></a>
              </div>
           </div>
           <p class="MsoNormal">
-             <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+             <br clear="all" style="mso-special-character:line-break;page-break-before:always"></a>
           </p>
-          <div><a name="A" id="A"/>
+          <div><a name="A" id="A"></a>
              <p class="ForewordTitle">Foreword</p>
              <p class="ForewordText">Para</p>
           </div>
           <p class="MsoNormal">
              <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
           </p>
-          <div class="Section3"><a name="B" id="B"/>
+          <div class="Section3"><a name="B" id="B"></a>
              <p class="IntroTitle">Foreword</p>
              <p class="MsoNormal">Para</p>
           </div>
@@ -201,7 +201,7 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::HTML(output)
       .at("//div[@class = 'WordSection2']")
-    expect(strip_guid(doc.to_xml))
+    expect(strip_guid(doc.to_xhtml))
       .to be_html4_equivalent_to word
 
     input = <<~INPUT
@@ -218,25 +218,25 @@ RSpec.describe IsoDoc do
     word = <<~OUTPUT
       <div class='WordSection2'>
            <div>
-             <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
+             <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'></a>
          <div>
-         <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
+         <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"></a>
       </div>
       <div>
-         <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
+         <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/></a>
       </div>
          </div>
          <p class='MsoBodyText'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
          </p>
-         <div><a name="A" id="A"/>
+         <div><a name="A" id="A"/></a>
            <p class='ForewordTitle'>Foreword</p>
            <p class='ForewordText'>Para</p>
          </div>
          <p class='MsoBodyText'>
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
          </p>
-         <div class='Section3'><a name="B" id="B"/>
+         <div class='Section3'><a name="B" id="B"/></a>
            <p class='IntroTitle'>Foreword</p>
            <p class='MsoBodyText'>Para</p>
          </div>
@@ -251,7 +251,7 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::HTML(output)
       .at("//div[@class = 'WordSection2']")
-    expect(strip_guid(doc.to_xml))
+    expect(strip_guid(doc.to_xhtml))
       .to be_html4_equivalent_to word
   end
 
@@ -285,7 +285,7 @@ RSpec.describe IsoDoc do
             references, the latest edition of the referenced document (including any
             amendments) applies.
           </p>
-          <p class="RefNorm"><a name="ISO712" id="ISO712"/><span class="stdpublisher" style="mso-pattern:none;mso-pattern:none;">ISO/IEC</span><span class="stddocNumber" style="mso-pattern:none;mso-pattern:none;">712</span>-<span class="stddocPartNumber" style="mso-pattern:none;mso-pattern:none;">3</span>:<span class="stdyear" style="mso-pattern:none;mso-pattern:none;">2022</span>, ALUFFI, Paolo, ed. (2022). <i><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></i>, 1st edition. Cambridge, UK: CUP.</p>
+          <p class="RefNorm"><a name="ISO712" id="ISO712"></a><span class="stdpublisher" style="mso-pattern:none;mso-pattern:none;">ISO/IEC</span><span class="stddocNumber" style="mso-pattern:none;mso-pattern:none;">712</span>-<span class="stddocPartNumber" style="mso-pattern:none;mso-pattern:none;">3</span>:<span class="stdyear" style="mso-pattern:none;mso-pattern:none;">2022</span>, ALUFFI, Paolo, ed. (2022). <i><span class="std_class">Facets of Algebraic Geometry: A Collection in Honor of William Fulton's 80th Birthday</span></i>, 1st edition. Cambridge, UK: CUP.</p></a>
         </div>
       </div>
     OUTPUT
@@ -297,7 +297,7 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::HTML(output)
       .at("//div[@class = 'WordSection3']")
-    expect(doc.to_xml)
+    expect(doc.to_xhtml)
       .to be_html4_equivalent_to word
   end
 
@@ -319,12 +319,12 @@ RSpec.describe IsoDoc do
     word = <<~OUTPUT
           <div class='WordSection2'>
           <div>
-            <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
+            <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'></a>
           <div>
-         <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
+         <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"></a>
       </div>
       <div>
-         <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
+         <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"></a>
       </div>
           </div>
         <p class='MsoBodyText'>
@@ -383,7 +383,7 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::HTML(output)
       .at("//div[@class = 'WordSection2']")
-    expect(strip_guid(doc.to_xml))
+    expect(strip_guid(doc.to_xhtml))
       .to be_html4_equivalent_to word
   end
 
@@ -407,20 +407,20 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     word = <<~OUTPUT
-          <div class='WordSection2'>
-          <div>
-            <a name='boilerplate-copyright-destination' id='boilerplate-copyright-destination'/>
-          <div>
-         <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
-      </div>
-      <div>
-         <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
-      </div>
-          </div>
-        <p class='MsoBodyText'>
-          <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
-        </p>
-        <div>
+       <div class="WordSection2">
+         <div>
+           <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"></a>
+           <div>
+             <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"></a>
+           </div>
+           <div>
+             <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"></a>
+           </div>
+         </div>
+         <p class="MsoBodyText">
+           <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
+         </p>
+         <div>
            <p class="ForewordTitle">Foreword</p>
            <div align="center" class="table_container">
              <table class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;">
@@ -429,23 +429,23 @@ RSpec.describe IsoDoc do
                    <td style="border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:auto;">
                      <p class="Tablebody" style="page-break-after:auto">
                        <span class="ISOCode">
-                         <span style="font-size: 9pt;">A <span class="ISOCodebold"><span style="font-size: 9pt;">B</span></span><span class="ISOCodeitalic"><span style="font-size: 9pt;">C</span></span><span class="ISOCodebold"><span style="font-size: 9pt;">D<span class="ISOCodeitalic"><span style="font-size: 9pt;">E</span></span>F</span></span><span class="ISOCodeitalic"><span style="font-size: 9pt;">G<b>H</b>I</span></span></span>
+                         <span style="font-size: 9pt;">A <span class="ISOCodebold"><span style="font-size: 9pt;">B</span></span> <span class="ISOCodeitalic"><span style="font-size: 9pt;">C</span></span> <span class="ISOCodebold"><span style="font-size: 9pt;">D<span class="ISOCodeitalic"><span style="font-size: 9pt;">E</span></span>F</span></span> <span class="ISOCodeitalic"><span style="font-size: 9pt;">G<b>H</b>I</span></span></span>
                        </span>
                      </p>
                      <p class="Tablebody" style="page-break-after:auto">
-                       <b>A <span class="ISOCodebold"><span style="font-size: 9pt;">B</span></span><i>C<span class="ISOCodeitalic"><span style="font-size: 9pt;">D</span></span>E</i></b>
+                       <b>A <span class="ISOCodebold"><span style="font-size: 9pt;">B</span></span> <i>C<span class="ISOCodeitalic"><span style="font-size: 9pt;">D</span></span>E</i></b>
                      </p>
                      <p class="Tablebody" style="page-break-after:auto">
-                       <i>A <span class="ISOCodeitalic"><span style="font-size: 9pt;">B</span></span><b>C<span class="ISOCodebold"><span style="font-size: 9pt;">D</span></span>E</b></i>
+                       <i>A <span class="ISOCodeitalic"><span style="font-size: 9pt;">B</span></span> <b>C<span class="ISOCodebold"><span style="font-size: 9pt;">D</span></span>E</b></i>
                      </p>
                    </td>
                  </tr>
                </tbody>
              </table>
            </div>
-        </div>
-        <p class='MsoBodyText'> </p>
-      </div>
+         </div>
+         <p class="MsoBodyText"> </p>
+       </div>
     OUTPUT
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new({}).convert("test", input, false)
@@ -455,7 +455,7 @@ RSpec.describe IsoDoc do
       .sub(/<\/html>.*$/m, "</html>")
     doc = Nokogiri::HTML(output)
       .at("//div[@class = 'WordSection2']")
-    expect(strip_guid(doc.to_xml))
+    expect(strip_guid(doc.to_xhtml))
       .to be_html4_equivalent_to word
   end
 
@@ -499,12 +499,12 @@ RSpec.describe IsoDoc do
     word = <<~WORD
        <div class="WordSection3">
           <div>
-             <a name="A" id="A"/>
-             <h1/>
+             <a name="A" id="A"></a>
+             <h1></h1>
              <p class="Tabletitle" style="text-align:center;">Table1</p>
              <div align="center" class="table_container">
                 <table class="MsoISOTable" style="mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;">
-                   <a name="B" id="B"/>
+                   <a name="B" id="B"></a>
                    <thead>
                       <tr>
                          <th style="font-weight:bold;border-top:solid windowtext 1.5pt;mso-border-top-alt:solid windowtext 1.5pt;border-bottom:solid windowtext 1.5pt;mso-border-bottom-alt:solid windowtext 1.5pt;page-break-after:avoid;" align="center" valign="middle">
@@ -596,7 +596,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     expect(Nokogiri::HTML(output)
-      .at("//div[@class = 'WordSection3']").to_xml)
+      .at("//div[@class = 'WordSection3']").to_xhtml)
       .to be_html4_equivalent_to word
   end
 
@@ -628,15 +628,15 @@ RSpec.describe IsoDoc do
     word = <<~WORD
        <div class="WordSection3">
           <div>
-             <a name="A" id="A"/>
-             <h1/>
+             <a name="A" id="A"></a>
+             <h1></h1>
              <div class="figure">
-                <a name="B" id="B"/>
+                <a name="B" id="B"></a>
                 <p class="FigureGraphic">
                    <img src="_.gif" height="20" width="20"/>
                 </p>
                 <div class="Figurenote">
-                   <a name="C" id="C"/>
+                   <a name="C" id="C"></a>
                    <p class="Figurenote">
                       FIGURENOTE
                       <span style="mso-tab-count:1">  </span>
@@ -644,7 +644,7 @@ RSpec.describe IsoDoc do
                    </p>
                 </div>
                 <div class="Figureexample">
-                   <a name="D" id="D"/>
+                   <a name="D" id="D"></a>
                    <p class="Figureexample">
                       <span style="mso-tab-count:1">  </span>
                       Example
@@ -679,7 +679,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     expect(strip_guid(Nokogiri::HTML(output)
-      .at("//div[@class = 'WordSection3']").to_xml))
+      .at("//div[@class = 'WordSection3']").to_xhtml))
       .to be_html4_equivalent_to word
   end
 
@@ -707,10 +707,10 @@ RSpec.describe IsoDoc do
     word = <<~WORD
       <div class='WordSection3'>
         <div>
-          <a name='A' id='A'/>
-          <h1/>
+          <a name='A' id='A'></a>
+          <h1></h1>
           <div>
-            <a name='B' id='B'/>
+            <a name='B' id='B'></a>
             <p class='Example'>
             EXAMPLE
               <span style='mso-tab-count:1'>  </span>
@@ -718,7 +718,7 @@ RSpec.describe IsoDoc do
             </p>
           </div>
           <div>
-            <a name='C' id='C'/>
+            <a name='C' id='C'></a>
             <p class='Example'>
               <span style='mso-tab-count:1'>  </span>
               Second example
@@ -736,7 +736,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     expect(strip_guid(Nokogiri::HTML(output)
-      .at("//div[@class = 'WordSection3']").to_xml))
+      .at("//div[@class = 'WordSection3']").to_xhtml))
       .to be_html4_equivalent_to word
   end
 
@@ -756,10 +756,10 @@ RSpec.describe IsoDoc do
     word = <<~WORD
           <div class="WordSection3">
         <div>
-          <a name="A" id="A"/>
-          <h1/>
+          <a name="A" id="A"></a>
+          <h1></h1>
           <div>
-            <a name="B" id="B"/>
+            <a name="B" id="B"></a>
             <div class="Formula">
               <p class="Formula"><span class="stem"><m:oMath><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math"/><w:i/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><m:t>S</m:t></m:r></m:e><m:sub><m:r><m:t>s</m:t></m:r><m:r><m:t>l</m:t></m:r><m:r><m:t>,</m:t></m:r><m:r><m:t>max</m:t></m:r></m:sub></m:sSub><m:r><m:t>=</m:t></m:r><m:r><m:t>⌊</m:t></m:r><m:f><m:fPr><m:ctrlPr><w:rPr><w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math"/><w:i/></w:rPr></m:ctrlPr></m:fPr><m:num><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math"/><w:i/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><m:t>L</m:t></m:r></m:e><m:sub><m:r><m:t>max</m:t></m:r></m:sub></m:sSub><m:r><m:t>×</m:t></m:r><m:sSub><m:sSubPr><m:ctrlPr><w:rPr><w:rFonts w:ascii="Cambria Math" w:hAnsi="Cambria Math"/><w:i/></w:rPr></m:ctrlPr></m:sSubPr><m:e><m:r><m:t>N</m:t></m:r></m:e><m:sub><m:r><m:t>b</m:t></m:r><m:r><m:t>p</m:t></m:r><m:r><m:t>p</m:t></m:r></m:sub></m:sSub></m:num><m:den><m:r><m:t>8</m:t></m:r></m:den></m:f><m:r><m:t> </m:t></m:r><m:r><m:t>⌋</m:t></m:r></m:oMath></span><span style="mso-tab-count:1">  </span>(A.1)</p>
             </div>
@@ -774,7 +774,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     expect(strip_guid(Nokogiri::HTML(output)
-      .at("//div[@class = 'WordSection3']").to_xml))
+      .at("//div[@class = 'WordSection3']").to_xhtml))
       .to be_html4_equivalent_to word
   end
 
@@ -802,10 +802,10 @@ RSpec.describe IsoDoc do
     word = <<~WORD
           <div class='WordSection3'>
         <div>
-          <a name='A' id='A'/>
-          <h1/>
+          <a name='A' id='A'></a>
+          <h1></h1>
           <div>
-            <a name='B' id='B'/>
+            <a name='B' id='B'></a>
             <p class='Note'>
               NOTE
               <span style='mso-tab-count:1'>  </span>
@@ -813,7 +813,7 @@ RSpec.describe IsoDoc do
             </p>
           </div>
           <div>
-             <a name='C' id='C'/>
+             <a name='C' id='C'></a>
              <p class='Note'>
                Second example
              </p>
@@ -830,7 +830,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     expect(strip_guid(Nokogiri::HTML(output)
-      .at("//div[@class = 'WordSection3']").to_xml))
+      .at("//div[@class = 'WordSection3']").to_xhtml))
       .to be_html4_equivalent_to word
   end
 
@@ -854,13 +854,13 @@ RSpec.describe IsoDoc do
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
          </p>
          <div class='Section3'>
-           <a name='A' id='A'/>
+           <a name='A' id='A'></a>
            <p class='ANNEX'>Annex</p>
            <div>
-             <a name='B' id='B'/>
+             <a name='B' id='B'></a>
              <p class='a2'>Subannex</p>
              <div>
-               <a name='C' id='C'/>
+               <a name='C' id='C'></a>
                <p class='a3'>Subsubannex</p>
              </div>
            </div>
@@ -874,7 +874,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     expect(strip_guid(Nokogiri::HTML(output)
-      .at("//div[@class = 'WordSection3']").to_xml))
+      .at("//div[@class = 'WordSection3']").to_xhtml))
       .to be_html4_equivalent_to word
   end
 
@@ -903,8 +903,8 @@ RSpec.describe IsoDoc do
     word = <<~WORD
       <div class='WordSection3'>
          <div>
-           <a name='A' id='A'/>
-           <h1/>
+           <a name='A' id='A'></a>
+           <h1></h1>
            <div>
              <p class='BodyTextindent1'>Normal clause</p>
              <div>
@@ -932,7 +932,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     expect(strip_guid(Nokogiri::HTML(output)
-      .at("//div[@class = 'WordSection3']").to_xml))
+      .at("//div[@class = 'WordSection3']").to_xhtml))
       .to be_html4_equivalent_to word
   end
 
@@ -966,7 +966,7 @@ RSpec.describe IsoDoc do
          <span>Basic rules</span>
         </p>
         <div>
-          <a name='A' id='A'/>
+          <a name='A' id='A'></a>
              <h1>1
                       <span style="mso-tab-count:1">  </span>
                    First clause
@@ -990,7 +990,7 @@ RSpec.describe IsoDoc do
         <p class="zzCover">
         <span lang="EN-GB" xml:lang="EN-GB"><b>Date and time &#x2014; Representations for information interchange &#x2014; Part&#xA0;1: Basic rules</b></span></p>
         <p class="zzCover" style="font-weight:normal;">
-          <i/>
+          <i></i>
         </p>
       </div>
     WORD
@@ -1003,10 +1003,10 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     expect(strip_guid(Nokogiri::HTML(output)
-      .at("//div[@class = 'WordSection3']").to_xml))
+      .at("//div[@class = 'WordSection3']").to_xhtml))
       .to be_html4_equivalent_to word
     expect(strip_guid(Nokogiri::HTML(output)
-      .at("//div[@class = 'WordSection1']").to_xml))
+      .at("//div[@class = 'WordSection1']").to_xhtml))
       .to be_html4_equivalent_to title
   end
 
@@ -1049,7 +1049,7 @@ RSpec.describe IsoDoc do
           <span style="font-weight:normal">AMENDMENT 1: Technical corrections</span>
         </p>
         <div>
-          <a name="A" id="A"/>
+          <a name="A" id="A"></a>
           <p style="font-style:italic;page-break-after:avoid;" class="MsoBodyText">First clause</p>
         </div>
       </div>
@@ -1063,7 +1063,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     expect(strip_guid(Nokogiri::HTML(output)
-      .at("//div[@class = 'WordSection3']").to_xml))
+      .at("//div[@class = 'WordSection3']").to_xhtml))
       .to be_html4_equivalent_to word
   end
 
@@ -1120,32 +1120,31 @@ RSpec.describe IsoDoc do
     IsoDoc::Iso::WordConvert.new(wordstylesheet: "spec/assets/word.css")
       .convert("test", presxml, false)
     word = File.read("test.doc", encoding: "UTF-8")
-    contents = word.sub(%r{^.*<body}m, "<body").sub(%r{</body>.*$}m,
-                                                    "</body>")
+    contents = word.sub(%r{^.*<body}m, "<body")
+      .sub(%r{</body>.*$}m, "</body>")
     contents = Nokogiri::HTML(contents)
       .at("//div[a/@id = 'boilerplate-copyright-destination']")
-    expect(contents.to_xml)
-      .to be_html4_equivalent_to <<~OUTPUT
+    output = <<~OUTPUT
         <div>
-        <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"/>
+        <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"></a>
         <div>
-        <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
+        <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"></a>
         <div>
-        <a name="boilerplate-copyright-default" id="boilerplate-copyright-default"/>
+        <a name="boilerplate-copyright-default" id="boilerplate-copyright-default"></a>
         <p class="zzCopyright">
-        <a name="boilerplate-year" id="boilerplate-year"/>
+        <a name="boilerplate-year" id="boilerplate-year"></a>
         © ISO 2019, Published in Switzerland
         </p>
         <p class="zzCopyright">
-        <a name="boilerplate-message" id="boilerplate-message"/>
+        <a name="boilerplate-message" id="boilerplate-message"></a>
         I am the Walrus.
           </p>
         <p class="zzCopyright">
-        <a name="boilerplate-name" id="boilerplate-name"/>
+        <a name="boilerplate-name" id="boilerplate-name"></a>
         ISO copyright office
         </p>
         <p style="text-align:left;" align="left" class="zzCopyright">
-        <a name="boilerplate-address" id="boilerplate-address"/>
+        <a name="boilerplate-address" id="boilerplate-address"></a>
         ISO copyright office
         </p>
         <p class="zzCopyright">
@@ -1165,11 +1164,11 @@ RSpec.describe IsoDoc do
         </div>
         </div>
         <div>
-        <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
+        <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"></a>
         <div class="boilerplate-copyright">
         <div class="zzCopyrightContainer">
         <div>
-        <a name="added" id="added"/>
+        <a name="added" id="added"></a>
         <p class="zzCopyright">Is there anybody out there?</p>
         </div>
         </div>
@@ -1177,6 +1176,8 @@ RSpec.describe IsoDoc do
         </div>
         </div>
       OUTPUT
+      expect(contents.to_xhtml)
+      .to be_html4_equivalent_to output
 
     FileUtils.rm_f "test.doc"
     IsoDoc::Iso::WordConvert.new(wordstylesheet: "spec/assets/word.css")
@@ -1188,28 +1189,27 @@ RSpec.describe IsoDoc do
                                                     "</body>")
     contents = Nokogiri::HTML(contents)
       .at("//div[a/@id = 'boilerplate-copyright-destination']")
-    expect(contents.to_xml)
-      .to be_html4_equivalent_to <<~OUTPUT
+      output = <<~OUTPUT
         <div>
-        <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"/>
+        <a name="boilerplate-copyright-destination" id="boilerplate-copyright-destination"></a>
         <div>
-        <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"/>
+        <a name="boilerplate-copyright-default-destination" id="boilerplate-copyright-default-destination"></a>
         <div>
-        <a name="boilerplate-copyright-default" id="boilerplate-copyright-default"/>
+        <a name="boilerplate-copyright-default" id="boilerplate-copyright-default"></a>
         <p class="zzCopyright">
-        <a name="boilerplate-year" id="boilerplate-year"/>
+        <a name="boilerplate-year" id="boilerplate-year"></a>
         © ISO 2019, Published in Switzerland
         </p>
         <p class="zzCopyright">
-        <a name="boilerplate-message" id="boilerplate-message"/>
+        <a name="boilerplate-message" id="boilerplate-message"></a>
         I am the Walrus.
           </p>
         <p class="zzCopyright">
-        <a name="boilerplate-name" id="boilerplate-name"/>
+        <a name="boilerplate-name" id="boilerplate-name"></a>
         ISO copyright office
         </p>
         <p style="text-indent:20.15pt;" align="left" class="zzCopyright">
-        <a name="boilerplate-address" id="boilerplate-address"/>
+        <a name="boilerplate-address" id="boilerplate-address"></a>
         ISO copyright office
         </p>
         <p class="zzCopyright" style="text-indent:20.15pt;">
@@ -1229,11 +1229,11 @@ RSpec.describe IsoDoc do
         </div>
         </div>
         <div>
-        <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"/>
+        <a name="boilerplate-copyright-append-destination" id="boilerplate-copyright-append-destination"></a>
         <div class="boilerplate-copyright">
         <div class="zzCopyrightContainer">
         <div>
-        <a name="added" id="added"/>
+        <a name="added" id="added"></a>
         <p class="zzCopyright">Is there anybody out there?</p>
         </div>
         </div>
@@ -1241,6 +1241,8 @@ RSpec.describe IsoDoc do
         </div>
         </div>
       OUTPUT
+    expect(contents.to_xhtml)
+      .to be_html4_equivalent_to output
   end
 
   it "deals with Simple Template styles" do
@@ -1283,22 +1285,20 @@ RSpec.describe IsoDoc do
     word = <<~WORD
       <div class='WordSection3'>
          <div>
-           <a name='A' id='A'/>
+           <a name='A' id='A'></a>
            <h1>Clause Title</h1>
            <div class="ul_wrap">
            <p style='mso-list:l3 level1 lfo1;' class='MsoListParagraphCxSpFirst'>List</p>
            </div>
            <div class='Note'>
-             <a name='B' id='B'/>
-             <p class='Note'>
-               Note
-             </p>
+             <a name='B' id='B'></a>
+             <p class='Note'>Note</p>
              <div class="ul_wrap">
              <p style='font-size:10.0pt;;mso-list:l3 level1 lfo2;' class='MsoListParagraphCxSpFirst'>Note List</p>
              </div>
            </div>
            <div class='Example'>
-             <a name='C' id='C'/>
+             <a name='C' id='C'></a>
              <p class='Example'>
                <span style='mso-tab-count:1'>  </span>
              Example
@@ -1308,17 +1308,17 @@ RSpec.describe IsoDoc do
              </div>
            </div>
            <div class='MsoNormal'  style='text-align:center;'>
-             <a name='D' id='D'/>
+             <a name='D' id='D'></a>
              <p class='FigureTitle' style='text-align:center;'>Figure Title</p>
            </div>
            <p class='Code'>
-             <a name='E' id='E'/>
+             <a name='E' id='E'></a>
              XYZ
            </p>
            <p class='Tabletitle' style='text-align:center;'>Table</p>
            <div align='center' class='table_container'>
              <table class='MsoISOTable' style='mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;'>
-               <a name='F' id='F'/>
+               <a name='F' id='F'></a>
              </table>
            </div>
          </div>
@@ -1326,16 +1326,16 @@ RSpec.describe IsoDoc do
            <br clear='all' style='mso-special-character:line-break;page-break-before:always'/>
          </p>
          <div class='Section3'>
-           <a name='G' id='G'/>
+           <a name='G' id='G'></a>
            <p class='ANNEX'>Annex Title</p>
            <p class='AnnexTableTitle' style='text-align:center;'>Annex Table</p>
            <div align='center' class='table_container'>
              <table class='MsoISOTable' style='mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;'>
-               <a name='H' id='H'/>
+               <a name='H' id='H'></a>
              </table>
            </div>
            <div>
-             <a name='I' id='I'/>
+             <a name='I' id='I'></a>
              <p class='a2'>Annex Clause Title</p>
            </div>
          </div>
@@ -1345,7 +1345,7 @@ RSpec.describe IsoDoc do
          <div>
            <p class='BiblioTitle'>Bibliography</p>
            <p class='MsoNormal'>
-             <a name='ISO712' id='ISO712'/>
+             <a name='ISO712' id='ISO712'></a>
              [1]
              <span style='mso-tab-count:1'>  </span>
              ISO/IEC 712-3:2022, ALUFFI, Paolo, ed. (2022).
@@ -1362,7 +1362,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<html/m, "<html")
       .sub(/<\/html>.*$/m, "</html>")
     expect(strip_guid(Nokogiri::HTML(output)
-      .at("//div[@class = 'WordSection3']").to_xml))
+      .at("//div[@class = 'WordSection3']").to_xhtml))
       .to be_html4_equivalent_to word
   end
 end

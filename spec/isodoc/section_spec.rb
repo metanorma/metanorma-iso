@@ -600,12 +600,7 @@ RSpec.describe IsoDoc do
             </div>
             <br/>
             <div class="Section3" id="P">
-              <h1 class="Annex">
-                <b>Annex A</b>
-                <br/><span class="obligation">(normative)</span>
-                <br/>
-                <br/>
-                <b>Annex</b></h1>
+              <h1 class="Annex"><b>Annex A</b><br/><span class="obligation">(normative)</span><br/><br/><b>Annex</b></h1>
                 <p style="display:none;" class="variant-title-toc">Annex A  Annex</p>
               <div id="Q">
                 <h2>A.1&#160; Annex A.1</h2>
@@ -729,11 +724,7 @@ RSpec.describe IsoDoc do
               <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
             </p>
             <div class="Section3" id="P">
-              <h1 class="Annex">
-                <br/><span style='font-weight:normal;'>(normative)</span>
-                <br/>
-                <br/>
-                <b>Annex</b></h1>
+              <h1 class="Annex"><br/><span style='font-weight:normal;'>(normative)</span><br/><br/><b>Annex</b></h1>
               <p style="display:none;" class="variant-title-toc">Annex A<span style="mso-tab-count:1">  </span>Annex</p>
               <div id="Q">
                 <h2>A.1<span style="mso-tab-count:1">&#160; </span>Annex A.1</h2>
@@ -1172,8 +1163,6 @@ RSpec.describe IsoDoc do
         </metanorma>
     OUTPUT
     output = <<~OUTPUT
-      <html lang="en">
-         <head/>
          <body lang="en">
             <div class="title-section">
                <p> </p>
@@ -1200,7 +1189,6 @@ RSpec.describe IsoDoc do
                </div>
             </div>
          </body>
-      </html>
     OUTPUT
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
@@ -1214,7 +1202,8 @@ RSpec.describe IsoDoc do
     xml = Nokogiri::HTML5(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true))
     xml.at("//div[@class = 'authority']")&.remove
-    expect(strip_guid(xml.to_xml))
+    xml = xml.at("//body")
+    expect(strip_guid(xml.to_xhtml))
       .to be_html5_equivalent_to output
   end
 
@@ -1370,11 +1359,7 @@ RSpec.describe IsoDoc do
     INPUT
     html = <<~OUTPUT
       #{HTML_HDR}
-                   <p class="zzSTDTitle1">
-               <span class="boldtitle">Introduction — Main Title — Title — </span>
-               <span class="nonboldtitle">Part 1:</span>
-               <span class="boldtitle">Title Part</span>
-             </p>
+                   <p class="zzSTDTitle1"><span class="boldtitle">Introduction — Main Title — Title — </span><span class="nonboldtitle">Part 1:</span><span class="boldtitle">Title Part</span></p>
              <div id="A">
                <h1>1</h1>
              </div>
@@ -1428,10 +1413,7 @@ RSpec.describe IsoDoc do
             <fmt-title id="_" depth="1">Contents</fmt-title>
           </clause> </preface>
          <sections>
-            <p class="zzSTDTitle1" displayorder="2">
-                <span class="boldtitle">Main Title — Title — </span>
-                <span class="boldtitle">Title Complement</span>
-             </p>
+            <p class="zzSTDTitle1" displayorder="2"><span class="boldtitle">Main Title — Title — </span><span class="boldtitle">Title Complement</span></p>
          <clause id="A" displayorder="3">
                   <fmt-title id="_" depth="1">
             <span class="fmt-caption-label">
@@ -1448,10 +1430,7 @@ RSpec.describe IsoDoc do
     INPUT
     html = <<~OUTPUT
       #{HTML_HDR}
-                   <p class="zzSTDTitle1">
-                 <span class="boldtitle">Main Title — Title — </span>
-              <span class="boldtitle">Title Complement</span>
-             </p>
+                   <p class="zzSTDTitle1"><span class="boldtitle">Main Title — Title — </span><span class="boldtitle">Title Complement</span></p>
              <div id="A">
                <h1>1</h1>
              </div>
@@ -1728,20 +1707,20 @@ RSpec.describe IsoDoc do
             <div id='A'>
               <h1>1</h1>
               <p>A</p>
-              <a id='_'/>
-              <a id='_'/>
-              <a id='_'/>
-              <a id='_'/>
-              <a id='_'/>
+              <a id='_'></a>
+              <a id='_'></a>
+              <a id='_'></a>
+              <a id='_'></a>
+              <a id='_'></a>
               <div id='B'>
                 <span class='zzMoveToFollowing inline-header'>
                   <b>1.1&#160; </b>
                 </span>
                 <p>B</p>
-                <a id='_'/>
-                <a id='_'/>
-                <a id='_'/>
-                <a id='_'/>
+                <a id='_'></a>
+                <a id='_'></a>
+                <a id='_'></a>
+                <a id='_'></a>
               </div>
             </div>
             <div id="_">
@@ -1785,79 +1764,23 @@ RSpec.describe IsoDoc do
       </html>
     OUTPUT
     doc = <<~DOC
-      <div class="index">
-         <div class="ul_wrap">
-            <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpFirst">
-               <a name="_" id="_"/>
-               <i>Dasein</i>
-               , see
-               <i>Eman</i>
-               cipation, être
-            </p>
-            <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle">
-               <a name="_" id="_"/>
-               élongé,
-               <a href="#_">Clause 1</a>
-            </p>
-            <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle">
-               <a name="_" id="_"/>
-               <i>Eman</i>
-               cipation,
-               <a href="#_">Clause 1</a>
-               ,
-               <a href="#_">1.1</a>
-               </p>
-               <div class="ul_wrap">
-                  <p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpFirst">
-                     <a name="_" id="_"/>
-                     dans la France,
-                     <a href="#_">Clause 1</a>
-                     </p>
-                     <div class="ul_wrap">
-                        <p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpFirst">
-                           <a name="_" id="_"/>
-                           à Paris,
-                           <a href="#_">1.1</a>
-                        </p>
-                        <p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpLast">
-                           <a name="_" id="_"/>
-                           en Bretagne,
-                           <a href="#_">Clause 1</a>
-                        </p>
-                     </div>
-                  <p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpLast">
-                     <a name="_" id="_"/>
-                     dans les États-Unis,
-                     <a href="#_">1.1</a>
-                  </p>
-               </div>
-            <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle">
-               <a name="_" id="_"/>
-               être
-               </p>
-               <div class="ul_wrap">
-                  <p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpFirst">
-                     <a name="_" id="_"/>
-                     Husserl, see zebra, see also
-                     <i>Eman</i>
-                     cipation, zebra
-                     </p>
-                     <div class="ul_wrap">
-                        <p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpFirst">
-                           <a name="_" id="_"/>
-                           en allemand,
-                           <a href="#_">Clause 1</a>
-                        </p>
-                     </div>
-               </div>
-            <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpLast">
-               <a name="_" id="_"/>
-               zebra,
-               <a href="#_">1.1</a>
-            </p>
-         </div>
-      </div>
-    DOC
+        <html><head></head><body><div class="index">
+              <div class="ul_wrap">
+                <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpFirst"><a name="_" id="_"></a><i>Dasein</i>, see <i>Eman</i>cipation, être</p>
+                <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle"><a name="_" id="_"></a>élongé,  <a href="#_">Clause 1</a></p>
+                <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle"><a name="_" id="_"></a><i>Eman</i>cipation,  <a href="#_">Clause 1</a>, <a href="#_">1.1</a></p>
+                <div class="ul_wrap">
+                  <p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpFirst"><a name="_" id="_"></a>dans la France,  <a href="#_">Clause 1</a></p>
+                 <div class="ul_wrap">
+                    <p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpFirst"><a name="_" id="_"></a>à Paris,  <a href="#_">1.1</a></p>
+                    <p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpLast"><a name="_" id="_"></a>en Bretagne,  <a href="#_">Clause 1</a></p></div>
+                    <p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpLast"><a name="_" id="_"></a>dans les États-Unis,  <a href="#_">1.1</a></p></div>
+                <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle"><a name="_" id="_"></a>être</p><div class="ul_wrap"><p style="margin-bottom:0px;;mso-list:l3 level2 lfo1;" class="MsoListParagraphCxSpFirst"><a name="_" id="_"></a>Husserl, see zebra, see also <i>Eman</i>cipation, zebra</p>
+                <div class="ul_wrap"><p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpFirst"><a name="_" id="_"></a>en allemand,  <a href="#_">Clause 1</a></p></div></div>
+                <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpLast"><a name="_" id="_"></a>zebra,  <a href="#_">1.1</a></p>
+              </div>
+            </div></body></html>
+  DOC
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true)
@@ -1874,7 +1797,7 @@ RSpec.describe IsoDoc do
       .sub(/^.*<body /m, "<body ").sub(%r{</body>.*$}m, "</body>")
     wordxml = Nokogiri::HTML(word)
     wordxml = wordxml.at("//div[@class='index']")
-    expect(strip_guid(wordxml.to_xml))
+    expect(strip_guid(wordxml.to_xhtml))
       .to be_html4_equivalent_to doc
   end
 end

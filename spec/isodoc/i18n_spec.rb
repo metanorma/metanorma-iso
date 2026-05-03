@@ -545,14 +545,7 @@ RSpec.describe IsoDoc do
                 </div>
                 <br/>
                 <div id="P" class="Section3">
-                   <h1 class="Annex">
-                      <b>Annex A</b>
-                      <br/>
-                      <span class="obligation">(normative)</span>
-                      <br/>
-                      <br/>
-                      <b>Annex</b>
-                   </h1>
+                   <h1 class="Annex"><b>Annex A</b><br/><span class="obligation">(normative)</span><br/><br/><b>Annex</b></h1>
                    <p style="display:none;" class="variant-title-toc">Annex A  Annex</p>
                    <div id="Q">
                       <h2>A.1  Annex A.1</h2>
@@ -678,13 +671,7 @@ RSpec.describe IsoDoc do
                    <br clear="all" style="mso-special-character:line-break;page-break-before:always"/>
                 </p>
                 <div id="P" class="Section3">
-                   <h1 class="Annex">
-                      <br/>
-                      <span style="font-weight:normal;">(normative)</span>
-                      <br/>
-                      <br/>
-                      <b>Annex</b>
-                   </h1>
+                   <h1 class="Annex"><br/><span style="font-weight:normal;">(normative)</span><br/><br/><b>Annex</b></h1>
             <p style="display:none;" class="variant-title-toc">Annex A<span style="mso-tab-count:1">  </span>Annex</p>
                    <div id="Q">
                       <h2>A.1<span style="mso-tab-count:1">  </span>Annex A.1</h2>
@@ -727,7 +714,7 @@ RSpec.describe IsoDoc do
 
   it "defaults to English" do
     output = IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
-      .convert("test", <<~"INPUT", true)
+      .convert("test", <<~INPUT, true)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
           <bibdata>
               <status>
@@ -814,7 +801,7 @@ RSpec.describe IsoDoc do
       INPUT
     expect(strip_guid(Nokogiri::XML(output)
       .at("//xmlns:preface").to_xml))
-      .to be_xml_equivalent_to <<~"OUTPUT"
+      .to be_xml_equivalent_to <<~OUTPUT
         <preface>
            <clause type="toc" id="_" displayorder="1">
               <fmt-title id="_" depth="1">Table of contents</fmt-title>
@@ -1333,7 +1320,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     html = <<~OUTPUT
-      #{HTML_HDR.gsub(/"en"/, '"fr"').sub(/Contents/, 'Sommaire')}
+      #{HTML_HDR.gsub('"en"', '"fr"').sub('Contents', 'Sommaire')}
       <br/>
              <div id="_">
                <h1 class="ForewordTitle">Foreword</h1>
@@ -1400,14 +1387,7 @@ RSpec.describe IsoDoc do
                 </div>
                 <br/>
                 <div id="P" class="Section3">
-                   <h1 class="Annex">
-                      <b>Annexe A</b>
-                      <br/>
-                      <span class="obligation">(normative)</span>
-                      <br/>
-                      <br/>
-                      <b>Annex</b>
-                   </h1>
+                   <h1 class="Annex"><b>Annexe A</b><br/><span class="obligation">(normative)</span><br/><br/><b>Annex</b></h1>
                    <p style="display:none;" class="variant-title-toc">Annexe A  Annex</p>
                    <div id="Q">
                       <h2>A.1  Annex A.1</h2>
@@ -1918,7 +1898,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     html = <<~OUTPUT
-      #{HTML_HDR.gsub(/"en"/, '"ru"').sub(/Contents/, 'Содержание')}
+      #{HTML_HDR.gsub('"en"', '"ru"').sub('Contents', 'Содержание')}
        <br/>
              <div id="_">
                <h1 class="ForewordTitle">Foreword</h1>
@@ -1985,14 +1965,7 @@ RSpec.describe IsoDoc do
              </div>
              <br/>
              <div id="P" class="Section3">
-               <h1 class="Annex">
-                 <b>Дополнение A</b>
-                 <br/>
-                 <span class="obligation">(нормативное)</span>
-                 <br/>
-                 <br/>
-                 <b>Annex</b>
-               </h1>
+               <h1 class="Annex"><b>Дополнение A</b><br/><span class="obligation">(нормативное)</span><br/><br/><b>Annex</b></h1>
                 <p style="display:none;" class="variant-title-toc">Дополнение A  Annex</p>
                <div id="Q">
                  <h2>A.1  Annex A.1</h2>
@@ -2544,7 +2517,7 @@ RSpec.describe IsoDoc do
     OUTPUT
 
     html = <<~OUTPUT
-      #{HTML_HDR.gsub(/"en"/, '"zh"').sub(/Contents/, '目　次')}
+      #{HTML_HDR.gsub('"en"', '"zh"').sub('Contents', '目　次')}
                    <br/>
                <div id="_">
                    <h1 class="ForewordTitle">Foreword</h1>
@@ -2562,9 +2535,7 @@ RSpec.describe IsoDoc do
                    <h1>1　Scope</h1>
                    <p id="E">
                       <a href="#ISO712">
-                         <span class="stdpublisher">ISO </span>
-                         <span class="stddocNumber">712</span>
-                         ，
+                         <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>，
                          <span class="citetbl">表1〜1</span>
                       </a>
                    </p>
@@ -2572,11 +2543,8 @@ RSpec.describe IsoDoc do
                 <div>
                    <h1>2　Normative References</h1>
                    <p id="ISO712" class="NormRef">
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">712</span>
-                       ，
-                      <i>Cereals and cereal products</i>
-                      .
+                      <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>，
+                      <i>Cereals and cereal products</i>.
                    </p>
                 </div>
                 <div id="D0">
@@ -2625,14 +2593,7 @@ RSpec.describe IsoDoc do
                 </div>
                 <br/>
                 <div id="P" class="Section3">
-                   <h1 class="Annex">
-                      <b>附件A</b>
-                      <br/>
-                      <span class="obligation">（规范性附录）</span>
-                      <br/>
-                      <br/>
-                      <b>Annex</b>
-                   </h1>
+                   <h1 class="Annex"><b>附件A</b><br/><span class="obligation">（规范性附录）</span><br/><br/><b>Annex</b></h1>
                    <p style="display:none;" class="variant-title-toc">附件A　Annex</p>
                    <div id="Q">
                       <h2>A.1　Annex A.1</h2>
@@ -2667,7 +2628,7 @@ RSpec.describe IsoDoc do
   end
 
   it "internationalises locality" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
       <language>fr</language>

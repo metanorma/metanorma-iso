@@ -42,7 +42,7 @@ RSpec.describe IsoDoc do
                 <span style="font-variant:small-caps;">G</span>
                 <br/>
                 <hr/>
-                <a id="H"/>
+                <a id="H"></a>
                 <br/>
               </p>
             </div>
@@ -1484,9 +1484,7 @@ RSpec.describe IsoDoc do
                    <h1>1  Normative References</h1>
                    <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                    <p id="ISO712" class="NormRef">
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">712</span>
-                      ,
+                      <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>,
                       <i>
                          <span class="stddocTitle">
                             Cereals and cereal products
@@ -1547,9 +1545,9 @@ RSpec.describe IsoDoc do
                 <p class="ForewordText">
                    B.
                    <span class="MsoFootnoteReference">
-                      <span style="mso-element:field-begin"/>
+                      <span style="mso-element:field-begin"></span>
                       NOTEREF _Ref \\f \\h
-                      <span style="mso-element:field-separator"/>1<span style="mso-element:field-end"/>)</span>
+                      <span style="mso-element:field-separator"></span>1<span style="mso-element:field-end"></span>)</span>
                 </p>
                 <p class="ForewordText">
                    C.
@@ -1566,17 +1564,15 @@ RSpec.describe IsoDoc do
              <p>
                 B.
                 <span class="MsoFootnoteReference">
-                   <span style="mso-element:field-begin"/>
+                   <span style="mso-element:field-begin"></span>
                    NOTEREF _Ref \\f \\h
-                   <span style="mso-element:field-separator"/>1<span style="mso-element:field-end"/>)</span>
+                   <span style="mso-element:field-separator"></span>1<span style="mso-element:field-end"></span>)</span>
              </p>
              <div>
                 <h1>1<span style="mso-tab-count:1">  </span>Normative References</h1>
                 <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                 <p id="ISO712" class="NormRef">
-                   <span class="stdpublisher">ISO </span>
-                   <span class="stddocNumber">712</span>
-                   ,
+                   <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>,
                    <i>
                       <span class="stddocTitle">
                          Cereals and cereal products
@@ -1617,7 +1613,7 @@ RSpec.describe IsoDoc do
       .to be_html5_equivalent_to strip_guid(html)
     expect(strip_guid(Nokogiri::HTML5(IsoDoc::Iso::WordConvert.new({})
       .convert("test", pres_output, true))
-      .at("//body").to_xml))
+      .at("//body").to_xhtml))
       .to be_html4_equivalent_to strip_guid(doc)
   end
 end
