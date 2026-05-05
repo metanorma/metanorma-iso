@@ -491,9 +491,7 @@ RSpec.describe IsoDoc do
                    <h1>1  Normative References</h1>
                    <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                    <p id="ISO712" class="NormRef">
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">712</span>
-                      ,
+                      <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>,
                       <i>
                          <span class="stddocTitle">Cereals and cereal products</span>
                       </i>
@@ -533,8 +531,7 @@ RSpec.describe IsoDoc do
                                <i>term</i>
                                (
                                <a href="#ISO712">
-                                  <span class="stdpublisher">ISO </span>
-                                  <span class="stddocNumber">712</span>
+                                  <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>
                                </a>
                                )
                             </li>
@@ -548,11 +545,8 @@ RSpec.describe IsoDoc do
                                <i>word</i>
                                (
                                <a href="#ISO712">
-                                  <span class="stdpublisher">ISO </span>
-                                  <span class="stddocNumber">712</span>
-                                  ,
-                                  <span class="citesec">3.1</span>
-                                  ,
+                                  <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>,
+                                  <span class="citesec">3.1</span>,
                                   <span class="citefig">Figure a</span>
                                </a>
                                )
@@ -561,9 +555,7 @@ RSpec.describe IsoDoc do
                                <i>word</i>
                                (
                                <a href="#ISO712">
-                                  <span class="stdpublisher">ISO </span>
-                                  <span class="stddocNumber">712</span>
-                                  ,
+                                  <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>,
                                   <span class="citesec">3.1</span>
                                   and
                                   <span class="citefig">Figure b</span>
@@ -589,8 +581,7 @@ RSpec.describe IsoDoc do
                                (The IEV database)
                             </li>
                             <li id="_">
-                               <i>word</i>
-                               <b>error!</b>
+                               <i>word</i><b>error!</b>
                             </li>
                          </ul>
                       </div>

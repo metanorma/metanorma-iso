@@ -202,7 +202,7 @@ RSpec.describe IsoDoc do
     output = IsoDoc::Iso::HtmlConvert.new({}).convert("test", input, true)
     expect(output).to be_html5_equivalent_to html
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", input, true)
-    expect(Nokogiri::HTML(output).at("//body").to_xml)
+    expect(Nokogiri::HTML5(output).at("//body").to_xhtml)
       .to be_html4_equivalent_to word
   end
 
@@ -1025,7 +1025,7 @@ RSpec.describe IsoDoc do
       .convert("test", pres_output, true)))
       .to be_html5_equivalent_to html
     output = IsoDoc::Iso::WordConvert.new({}).convert("test", pres_output, true)
-    expect(strip_guid(Nokogiri::HTML(output).at("//body").to_xml))
+    expect(strip_guid(Nokogiri::HTML(output).at("//body").to_xhtml))
       .to be_html4_equivalent_to word
   end
 
