@@ -15,9 +15,9 @@ module IsoDoc
       end
 
       def fmt_origin_cite_full?(elem)
-        sem_xml_descendant?(elem) and return
-        id = elem["bibitemid"] or return
-        b = @bibitem_lookup[id] or return
+        sem_xml_descendant?(elem) and return false
+        id = elem["bibitemid"] or return false
+        b = @bibitem_lookup[id] or return false
         b["type"] != "standard" ||
           !b.at(ns("./docidentifier[not(@type = 'metanorma' or @type = 'metanorma-ordinal' or @type='author-date')]"))
       end
@@ -74,7 +74,7 @@ module IsoDoc
 
       def bracket_erefstack_style_prep(elem)
         semx = elem.xpath(ns(".//semx[@element = 'eref']"))
-          .map { |e| bracket_eref_original(e) }.compact
+          .filter_map { |e| bracket_eref_original(e) }
         erefstack_orig = elem.document.at("//*[@id = '#{elem['source']}']")
         [semx, erefstack_orig]
       end
@@ -111,7 +111,7 @@ module IsoDoc
       def remove_preceding_space(elem)
         # Find the preceding text node that has actual content
         prec = elem.at("./preceding-sibling::text()" \
-          "[normalize-space(.) != ''][1]") or return
+                       "[normalize-space(.) != ''][1]") or return
         prec.content.end_with?(" ") and prec.content = prec.content.rstrip
       end
     end

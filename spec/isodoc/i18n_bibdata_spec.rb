@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe IsoDoc do
   it "changes i18n of reference_number based on document scheme" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
       <language>fr</language>
@@ -57,7 +57,7 @@ RSpec.describe IsoDoc do
   end
 
   it "changes i18n of contributor role description" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
            <contributor>
@@ -166,7 +166,7 @@ RSpec.describe IsoDoc do
   end
 
   it "add edition replacement text" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
       <language>fr</language>
@@ -228,11 +228,10 @@ RSpec.describe IsoDoc do
       .sub("<edition>2</edition>", "<edition>2.1</edition>"), true))
     expect(xml.at("//xmlns:edn-replacement"))
       .to be_nil
-
   end
 
   it "add printing number text" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
       <language>en</language>
@@ -286,7 +285,7 @@ RSpec.describe IsoDoc do
   end
 
   it "add draft stage name variants" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
       <language>en</language>

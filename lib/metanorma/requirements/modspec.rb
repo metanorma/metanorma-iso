@@ -8,13 +8,14 @@ module Metanorma
           end
           table["type"] == "recommendclass" or return super # table
           ins = table.at(ns("./tbody/tr[td/*/fmt-provision/table]")) or return table
-          ins.replace(requirement_table_cleanup_nested_replacement(node, out, table))
+          ins.replace(requirement_table_cleanup_nested_replacement(node, out,
+                                                                   table))
           table.xpath(ns("./tbody/tr[td/*/fmt-provision/table]")).each(&:remove)
           out.xpath(ns("./*/fmt-provision")).each(&:remove)
           table
         end
 
-        def requirement_table_cleanup_nested_replacement(node, out, table)
+        def requirement_table_cleanup_nested_replacement(node, _out, table)
           label = "provision"
           node["type"] == "conformanceclass" and label = "conformancetest"
           n = nested_tables_names(table)
@@ -28,7 +29,7 @@ module Metanorma
             .each_with_object([]) do |t, m|
               id = t["original-id"] || t["id"]
               id and b = "<bookmark id='#{id}'/>"
-              m << b + to_xml(t.at(ns(".//fmt-name")).children).strip
+              m << (b + to_xml(t.at(ns(".//fmt-name")).children).strip)
             end
         end
 
@@ -41,8 +42,9 @@ module Metanorma
             anchor[:modspec] =
               l10n("#{anchor[:modspec]}<span class='fmt-caption-delim'>: </span><semx element='title' source='#{block['id']}'>#{l.children.to_xml.strip}</semx>")
           end
-          /<xref/.match?(anchor[:modspec]) or
-            anchor[:modspec] = "<xref target='#{block['id']}'>#{anchor[:modspec]}</xref>"
+          anchor[:modspec].include?("<xref") or
+            anchor[:modspec] =
+              "<xref target='#{block['id']}'>#{anchor[:modspec]}</xref>"
           anchor
         end
       end

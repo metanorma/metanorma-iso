@@ -31,8 +31,9 @@ module IsoDoc
           # Dropping the parent figure label is specific to ISO
           p = elem.at("./ancestor::xmlns:figure")
           @anchors[elem["id"]][:label] = sublabel
-          @anchors[elem["id"]][:xref] = @anchors[p["id"]][:xref] +
-            " " + semx(elem, sublabel) + delim_wrap(subfigure_delim)
+          @anchors[elem["id"]][:xref] =
+            "#{@anchors[p['id']][:xref]} #{semx(elem,
+                                                sublabel)}#{delim_wrap(subfigure_delim)}"
           x = @anchors[p["id"]][:container] and
             @anchors[elem["id"]][:container] = x
         end

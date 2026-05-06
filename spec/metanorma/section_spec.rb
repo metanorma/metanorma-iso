@@ -263,7 +263,7 @@ RSpec.describe Metanorma::Iso do
       * [[[iso5678,B]]]
     INPUT
     output = <<~OUTPUT
-       #{BLANK_HDR_2.sub(/<boilerplate>/, '<termdocsource bibitemid="iso1234"/><termdocsource bibitemid="iso5678"/><boilerplate>')}
+       #{BLANK_HDR_2.sub('<boilerplate>', '<termdocsource bibitemid="iso1234"/><termdocsource bibitemid="iso5678"/><boilerplate>')}
        <preface>
          <foreword id="_" obligation="informative">
            <title id="_">Foreword</title>
@@ -391,7 +391,7 @@ RSpec.describe Metanorma::Iso do
       * [[[iso5678,B]]]
     INPUT
     output = <<~OUTPUT
-      #{BLANK_HDR_2.sub(/<boilerplate>/, '<termdocsource bibitemid="iso1234"/><termdocsource bibitemid="iso5678"/><boilerplate>')}
+      #{BLANK_HDR_2.sub('<boilerplate>', '<termdocsource bibitemid="iso1234"/><termdocsource bibitemid="iso5678"/><boilerplate>')}
         <preface>
           <foreword id="_" obligation="informative">
             <title id="_">Foreword</title>
@@ -500,7 +500,7 @@ RSpec.describe Metanorma::Iso do
 
   it "permits multiple terms & definitions in vocabulary documents" do
     input = <<~INPUT
-      #{ASCIIDOC_BLANK_HDR.sub(/:nodoc:/, ":nodoc:\n:docsubtype: vocabulary")}
+      #{ASCIIDOC_BLANK_HDR.sub(':nodoc:', ":nodoc:\n:docsubtype: vocabulary")}
 
       == Terms and Definitions
 
@@ -512,7 +512,7 @@ RSpec.describe Metanorma::Iso do
     INPUT
     output = <<~OUTPUT
       #{BLANK_HDR_2.sub(%r{<doctype>standard</doctype>},
-                      '<doctype>standard</doctype><subdoctype>vocabulary</subdoctype>')}
+                        '<doctype>standard</doctype><subdoctype>vocabulary</subdoctype>')}
                <sections>
            <terms id='_' obligation='normative'>
              <title id="_">Terms and Definitions</title>

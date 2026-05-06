@@ -8,228 +8,229 @@ RSpec.describe IsoDoc::Iso::Metadata do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
     INPUT
     input = <<~INPUT
-      <iso-standard xmlns="http://riboseinc.com/isoxml">
-        <bibdata type="standard">
-          <title format="text/plain" language="en" type="title-intro">Cereals and pulses H<sup>2</sup></title>
-          <title format="text/plain" language="en" type="title-main">Specifications and test methods H<sup>2</sup></title>
-          <title format="text/plain" language="en" type="title-part">Rice H<sup>2</sup></title>
-          <title format="text/plain" language="en" type="title-complementary">Complement</title>
-          <title language="en" type="title-part-prefix">Part 1</title>
-          <title format="text/plain" language="fr" type="title-intro">Céréales et légumineuses H<sup>2</sup></title>
-          <title format="text/plain" language="fr" type="title-main">Spécification et méthodes d'essai H<sup>2</sup></title>
-          <title format="text/plain" language="fr" type="title-part">Riz H<sup>2</sup></title>
-          <title format="text/plain" language="fr" type="title-complementary">Complément</title>
-          <title language="fr" type="title-part-prefix">Partie 1</title>
-          <docidentifier type="ISO">ISO/PreCD3 17301-1</docidentifier>
-          <docidentifier type="iso-with-lang">ISO/PreCD3 17301-1 (E)</docidentifier>
-          <docidentifier type="iso-reference">ISO/PreCD3 17301-1:2000 (E)</docidentifier>
-          <docidentifier type="iso-tc">17301</docidentifier>
-          <docidentifier type="iso-tc">17302</docidentifier>
-          <docnumber>1730</docnumber>
-          <date type="published">
-            <on>2011</on>
-          </date>
-          <date type="accessed">
-            <on>2012</on>
-          </date>
-          <date type="created">
-            <from>2010</from>
-            <to>2011</to>
-          </date>
-          <date type="activated">
-            <on>2013</on>
-          </date>
-          <date type="obsoleted">
-            <on>2014</on>
-          </date>
-          <date type="updated">
-            <on>2016-05-01</on>
-          </date>
-          <edition>2</edition>
-          <version>0.4</version>
-          <contributor>
-             <role type="author"/>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="author">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>International Electrotechnical Commission</name>
-                <subdivision type="Technical committee" subtype="TC">
-                   <name>Electrical equipment in medical practice</name>
-                   <identifier>TC 62</identifier>
-                   <identifier type="full">IEC TC 62</identifier>
-                </subdivision>
-                <abbreviation>IEC</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="author">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee" subtype="TC">
-                   <name>Quality management and corresponding general aspects for medical devices</name>
-                   <identifier>TC 210</identifier>
-                   <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee" subtype="SC">
-                   <name>Common aspects of electrical equipment used in medical practice</name>
-                   <identifier>SC 62A</identifier>
-                </subdivision>
-                <subdivision type="Workgroup" subtype="WG">
-                   <name>Working group on defibulators</name>
-                   <identifier>WG 62A1</identifier>
-                </subdivision>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="author">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>Institute of Electrical and Electronic Engineers</name>
-                <subdivision type="Technical committee" subtype="TC">
-                   <name>The committee</name>
-                </subdivision>
-                <abbreviation>IEEE</abbreviation>
-             </organization>
-          </contributor>
+         <iso-standard xmlns="http://riboseinc.com/isoxml">
+           <bibdata type="standard">
+             <title format="text/plain" language="en" type="title-intro">Cereals and pulses H<sup>2</sup></title>
+             <title format="text/plain" language="en" type="title-main">Specifications and test methods H<sup>2</sup></title>
+             <title format="text/plain" language="en" type="title-part">Rice H<sup>2</sup></title>
+             <title format="text/plain" language="en" type="title-complementary">Complement</title>
+             <title language="en" type="title-part-prefix">Part 1</title>
+             <title format="text/plain" language="fr" type="title-intro">Céréales et légumineuses H<sup>2</sup></title>
+             <title format="text/plain" language="fr" type="title-main">Spécification et méthodes d'essai H<sup>2</sup></title>
+             <title format="text/plain" language="fr" type="title-part">Riz H<sup>2</sup></title>
+             <title format="text/plain" language="fr" type="title-complementary">Complément</title>
+             <title language="fr" type="title-part-prefix">Partie 1</title>
+             <docidentifier type="ISO">ISO/PreCD3 17301-1</docidentifier>
+             <docidentifier type="iso-with-lang">ISO/PreCD3 17301-1 (E)</docidentifier>
+             <docidentifier type="iso-reference">ISO/PreCD3 17301-1:2000 (E)</docidentifier>
+             <docidentifier type="iso-tc">17301</docidentifier>
+             <docidentifier type="iso-tc">17302</docidentifier>
+             <docnumber>1730</docnumber>
+             <date type="published">
+               <on>2011</on>
+             </date>
+             <date type="accessed">
+               <on>2012</on>
+             </date>
+             <date type="created">
+               <from>2010</from>
+               <to>2011</to>
+             </date>
+             <date type="activated">
+               <on>2013</on>
+             </date>
+             <date type="obsoleted">
+               <on>2014</on>
+             </date>
+             <edition>2</edition>
+             <version>
+               <revision-date>2016-05-01</revision-date>
+               <draft>0.4</draft>
+             </version>
              <contributor>
-      <role type="author">
-         <description>secretariat</description>
-      </role>
-      <organization>
-         <name>International Organization for Standardization</name>
-         <subdivision type="Secretariat">
-            <name>GB</name>
-         </subdivision>
-         <abbreviation>ISO</abbreviation>
-      </organization>
-   </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>Agency</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="publisher"/>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>International Electrotechnical Commission</name>
-                <subdivision type="Technical committee" subtype="TC">
-                   <name>Electrical equipment in medical practice</name>
-                   <identifier>TC 62</identifier>
-                   <identifier type="full">Approval IEC TC 62</identifier>
-                </subdivision>
-                <abbreviation>IEC</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee" subtype="TC">
-                   <name>Quality management and corresponding general aspects for medical devices</name>
-                   <identifier>TC 210</identifier>
-                   <identifier type="full">Approval TC 210/SC 62A/WG 62A1</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee" subtype="SC">
-                   <name>Common aspects of electrical equipment used in medical practice</name>
-                   <identifier>SC 62A</identifier>
-                </subdivision>
-                <subdivision type="Workgroup" subtype="WG">
-                   <name>Working group on defibulators</name>
-                   <identifier>WG 62A1</identifier>
-                </subdivision>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>Institute of Electrical and Electronic Engineers</name>
-                <subdivision type="Technical committee" subtype="TC">
-                   <name>The committee</name>
-                </subdivision>
-                <abbreviation>IEEE</abbreviation>
-             </organization>
-          </contributor>
-          <language>en</language>
-          <script>Latn</script>
-          <status>
-            <stage abbreviation="CD">30</stage>
-            <substage>92</substage>
-            <iteration>3</iteration>
-          </status>
-          <copyright>
-            <from>2016</from>
-            <owner>
-              <organization>
-                <abbreviation>ISO</abbreviation>
-              </organization>
-            </owner>
-          </copyright>
-          <keyword>kw2</keyword>
-          <keyword>kw1</keyword>
-          <ext>
-            <doctype>international-standard</doctype>
-            <horizontal>true</horizontal>
-            <editorialgroup identifier="DEF">
-              <technical-committee number="34">Food products</technical-committee>
-              <subcommittee number="4">Cereals and pulses</subcommittee>
-              <workgroup number="3">Rice Group</workgroup>
-              <secretariat>GB</secretariat>
-            </editorialgroup>
-            <approvalgroup identifier="ABC">
-              <technical-committee number="34a">Food products A</technical-committee>
-              <subcommittee number="4a">Cereals and pulses A</subcommittee>
-              <workgroup number="3a">Rice Group A</workgroup>
-            </approvalgroup>
-            <structuredidentifier>
-              <project-number part="1">ISO/PreCD3 17301</project-number>
-            </structuredidentifier>
-            <stagename>Committee draft</stagename>
-            <fast-track>true</fast-track>
-          </ext>
-        </bibdata>
-        <metanorma-extension>
-        <semantic-metadata>
-        <stage-published>false</stage-published>
-        </semantic-metadata>
-        <presentation-metadata><document-scheme>1951</document-scheme></presentation-metadata>
-        </metanorma-extension>
-      </iso-standard>
+                <role type="author"/>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="author">
+                   <description>committee</description>
+                </role>
+                <organization>
+                   <name>International Electrotechnical Commission</name>
+                   <subdivision type="Technical committee" subtype="TC">
+                      <name>Electrical equipment in medical practice</name>
+                      <identifier>TC 62</identifier>
+                      <identifier type="full">IEC TC 62</identifier>
+                   </subdivision>
+                   <abbreviation>IEC</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="author">
+                   <description>committee</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision type="Technical committee" subtype="TC">
+                      <name>Quality management and corresponding general aspects for medical devices</name>
+                      <identifier>TC 210</identifier>
+                      <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
+                   </subdivision>
+                   <subdivision type="Subcommittee" subtype="SC">
+                      <name>Common aspects of electrical equipment used in medical practice</name>
+                      <identifier>SC 62A</identifier>
+                   </subdivision>
+                   <subdivision type="Workgroup" subtype="WG">
+                      <name>Working group on defibulators</name>
+                      <identifier>WG 62A1</identifier>
+                   </subdivision>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="author">
+                   <description>committee</description>
+                </role>
+                <organization>
+                   <name>Institute of Electrical and Electronic Engineers</name>
+                   <subdivision type="Technical committee" subtype="TC">
+                      <name>The committee</name>
+                   </subdivision>
+                   <abbreviation>IEEE</abbreviation>
+                </organization>
+             </contributor>
+                <contributor>
+         <role type="author">
+            <description>secretariat</description>
+         </role>
+         <organization>
+            <name>International Organization for Standardization</name>
+            <subdivision type="Secretariat">
+               <name>GB</name>
+            </subdivision>
+            <abbreviation>ISO</abbreviation>
+         </organization>
+      </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>Agency</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="publisher"/>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>committee</description>
+                </role>
+                <organization>
+                   <name>International Electrotechnical Commission</name>
+                   <subdivision type="Technical committee" subtype="TC">
+                      <name>Electrical equipment in medical practice</name>
+                      <identifier>TC 62</identifier>
+                      <identifier type="full">Approval IEC TC 62</identifier>
+                   </subdivision>
+                   <abbreviation>IEC</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>committee</description>
+                </role>
+                <organization>
+                   <name>International Organization for Standardization</name>
+                   <subdivision type="Technical committee" subtype="TC">
+                      <name>Quality management and corresponding general aspects for medical devices</name>
+                      <identifier>TC 210</identifier>
+                      <identifier type="full">Approval TC 210/SC 62A/WG 62A1</identifier>
+                   </subdivision>
+                   <subdivision type="Subcommittee" subtype="SC">
+                      <name>Common aspects of electrical equipment used in medical practice</name>
+                      <identifier>SC 62A</identifier>
+                   </subdivision>
+                   <subdivision type="Workgroup" subtype="WG">
+                      <name>Working group on defibulators</name>
+                      <identifier>WG 62A1</identifier>
+                   </subdivision>
+                   <abbreviation>ISO</abbreviation>
+                </organization>
+             </contributor>
+             <contributor>
+                <role type="authorizer">
+                   <description>committee</description>
+                </role>
+                <organization>
+                   <name>Institute of Electrical and Electronic Engineers</name>
+                   <subdivision type="Technical committee" subtype="TC">
+                      <name>The committee</name>
+                   </subdivision>
+                   <abbreviation>IEEE</abbreviation>
+                </organization>
+             </contributor>
+             <language>en</language>
+             <script>Latn</script>
+             <status>
+               <stage abbreviation="CD">30</stage>
+               <substage>92</substage>
+               <iteration>3</iteration>
+             </status>
+             <copyright>
+               <from>2016</from>
+               <owner>
+                 <organization>
+                   <abbreviation>ISO</abbreviation>
+                 </organization>
+               </owner>
+             </copyright>
+             <keyword>kw2</keyword>
+             <keyword>kw1</keyword>
+             <ext>
+               <doctype>international-standard</doctype>
+               <horizontal>true</horizontal>
+               <editorialgroup identifier="DEF">
+                 <technical-committee number="34">Food products</technical-committee>
+                 <subcommittee number="4">Cereals and pulses</subcommittee>
+                 <workgroup number="3">Rice Group</workgroup>
+                 <secretariat>GB</secretariat>
+               </editorialgroup>
+               <approvalgroup identifier="ABC">
+                 <technical-committee number="34a">Food products A</technical-committee>
+                 <subcommittee number="4a">Cereals and pulses A</subcommittee>
+                 <workgroup number="3a">Rice Group A</workgroup>
+               </approvalgroup>
+               <structuredidentifier>
+                 <project-number part="1">ISO/PreCD3 17301</project-number>
+               </structuredidentifier>
+               <stagename>Committee draft</stagename>
+               <fast-track>true</fast-track>
+             </ext>
+           </bibdata>
+           <metanorma-extension>
+           <semantic-metadata>
+           <stage-published>false</stage-published>
+           </semantic-metadata>
+           <presentation-metadata><document-scheme>1951</document-scheme></presentation-metadata>
+           </metanorma-extension>
+         </iso-standard>
     INPUT
     output =
       { accesseddate: "2012",
         activateddate: "2013",
         agency: "ISO",
         approvalgroup: "Approval IEC TC 62 and Approval TC 210/SC 62A/WG 62A1",
-        authorizer: ["International Organization for Standardization", "International Electrotechnical Commission", "International Organization for Standardization", "Institute of Electrical and Electronic Engineers"],
+        authorizer: ["International Organization for Standardization",
+                     "International Electrotechnical Commission", "International Organization for Standardization", "Institute of Electrical and Electronic Engineers"],
         createddate: "2010&#x2013;2011",
         docnumber: "ISO/PreCD3 17301-1",
         docnumber_lang: "ISO/PreCD3 17301-1 (E)",
@@ -276,7 +277,6 @@ RSpec.describe IsoDoc::Iso::Metadata do
         tc: "TC 62",
         tc_docnumber: ["17301", "17302"],
         unpublished: true,
-        updateddate: "2016-05-01",
         wg: "WG 62A1" }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
@@ -383,8 +383,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         statusabbr: "IS",
         substage_int: "92",
         tc_docnumber: ["17301"],
-        unpublished: false,
-        }
+        unpublished: false }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -502,8 +501,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         statusabbr: "IS",
         substage_int: "92",
         tc_docnumber: ["17301"],
-        unpublished: false,
-        }
+        unpublished: false }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
   end
@@ -697,7 +695,8 @@ RSpec.describe IsoDoc::Iso::Metadata do
     output =
       { agency: "ISO",
         approvalgroup: "Approval IEC TC 62/SC 62A/WG 62A1 и Approval TC 210",
-        authorizer: ["International Organization for Standardization", "International Electrotechnical Commission", "International Organization for Standardization", "Institute of Electrical and Electronic Engineers"],
+        authorizer: ["International Organization for Standardization",
+                     "International Electrotechnical Commission", "International Organization for Standardization", "Institute of Electrical and Electronic Engineers"],
         docnumber: "ISO/IEC/CD 17301-1-3",
         docnumber_lang: "ISO/IEC/CD 17301-1-3 (E)",
         docnumber_reference: "ISO/IEC/CD 17301-1-3 (E)",
@@ -1046,43 +1045,43 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-          <bibdata type="standard">
-             <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
-             <status>
-                <stage abbreviation="CD" language="">30</stage>
-                <stage abbreviation="CD" language="en">Committee draft</stage>
-             </status>
-             <date type="published">2000</date>
-              <contributor><role><description>secretariat</description></role></contributor>
-          </bibdata>
-          <preface>
-             <clause type="toc" id="_" displayorder="1">
-                <fmt-title id="_" depth="1">Contents</fmt-title>
-             </clause>
-          </preface>
-          <sections>
-             <p class="zzSTDTitle1" displayorder="2">
-                <span class="boldtitle">Specifications and test methods</span>
-             </p>
-             <clause id="_" displayorder="3">
-                <title id="_">Clause 1</title>
-                <fmt-title id="_" depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="autonum" source="_">1</semx>
-                   </span>
-                   <span class="fmt-caption-delim">
-                      <tab/>
-                   </span>
-                   <semx element="title" source="_">Clause 1</semx>
-                </fmt-title>
-                <fmt-xref-label>
-                   <span class="fmt-element-name">Clause</span>
-                   <semx element="autonum" source="_">1</semx>
-                </fmt-xref-label>
-             </clause>
-          </sections>
-       </iso-standard>
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <bibdata type="standard">
+            <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+            <status>
+               <stage abbreviation="CD" language="">30</stage>
+               <stage abbreviation="CD" language="en">Committee draft</stage>
+            </status>
+            <date type="published">2000</date>
+             <contributor><role><description>secretariat</description></role></contributor>
+         </bibdata>
+         <preface>
+            <clause type="toc" id="_" displayorder="1">
+               <fmt-title id="_" depth="1">Contents</fmt-title>
+            </clause>
+         </preface>
+         <sections>
+            <p class="zzSTDTitle1" displayorder="2">
+               <span class="boldtitle">Specifications and test methods</span>
+            </p>
+            <clause id="_" displayorder="3">
+               <title id="_">Clause 1</title>
+               <fmt-title id="_" depth="1">
+                  <span class="fmt-caption-label">
+                     <semx element="autonum" source="_">1</semx>
+                  </span>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Clause 1</semx>
+               </fmt-title>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Clause</span>
+                  <semx element="autonum" source="_">1</semx>
+               </fmt-xref-label>
+            </clause>
+         </sections>
+      </iso-standard>
     OUTPUT
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))
@@ -1107,42 +1106,42 @@ RSpec.describe IsoDoc::Iso::Metadata do
       </iso-standard>
     INPUT
     output = <<~OUTPUT
-       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
-          <bibdata type="standard">
-             <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
-             <status>
-                <stage abbreviation="CD" language="">90</stage>
-                <stage abbreviation="CD" language="en">Review</stage>
-             </status>
-              <contributor><role><description>secretariat</description></role></contributor>
-          </bibdata>
-          <preface>
-             <clause type="toc" id="_" displayorder="1">
-                <fmt-title id="_" depth="1">Contents</fmt-title>
-             </clause>
-          </preface>
-          <sections>
-             <p class="zzSTDTitle1" displayorder="2">
-                <span class="boldtitle">Specifications and test methods</span>
-             </p>
-             <clause id="_" displayorder="3">
-                <title id="_">Clause 1</title>
-                <fmt-title id="_" depth="1">
-                   <span class="fmt-caption-label">
-                      <semx element="autonum" source="_">1</semx>
-                   </span>
-                   <span class="fmt-caption-delim">
-                      <tab/>
-                   </span>
-                   <semx element="title" source="_">Clause 1</semx>
-                </fmt-title>
-                <fmt-xref-label>
-                   <span class="fmt-element-name">Clause</span>
-                   <semx element="autonum" source="_">1</semx>
-                </fmt-xref-label>
-             </clause>
-          </sections>
-       </iso-standard>
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <bibdata type="standard">
+            <title type="title-main" language="en" format="text/plain">Specifications and test methods</title>
+            <status>
+               <stage abbreviation="CD" language="">90</stage>
+               <stage abbreviation="CD" language="en">Review</stage>
+            </status>
+             <contributor><role><description>secretariat</description></role></contributor>
+         </bibdata>
+         <preface>
+            <clause type="toc" id="_" displayorder="1">
+               <fmt-title id="_" depth="1">Contents</fmt-title>
+            </clause>
+         </preface>
+         <sections>
+            <p class="zzSTDTitle1" displayorder="2">
+               <span class="boldtitle">Specifications and test methods</span>
+            </p>
+            <clause id="_" displayorder="3">
+               <title id="_">Clause 1</title>
+               <fmt-title id="_" depth="1">
+                  <span class="fmt-caption-label">
+                     <semx element="autonum" source="_">1</semx>
+                  </span>
+                  <span class="fmt-caption-delim">
+                     <tab/>
+                  </span>
+                  <semx element="title" source="_">Clause 1</semx>
+               </fmt-title>
+               <fmt-xref-label>
+                  <span class="fmt-element-name">Clause</span>
+                  <semx element="autonum" source="_">1</semx>
+               </fmt-xref-label>
+            </clause>
+         </sections>
+      </iso-standard>
     OUTPUT
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert.new(presxml_options)
       .convert("test", input, true))

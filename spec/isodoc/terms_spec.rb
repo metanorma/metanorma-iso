@@ -498,10 +498,17 @@ RSpec.describe IsoDoc do
                <div id="terms_and_definitions">
                    <h1>1  Terms and Definitions</h1>
                    <p class="TermNum" id="paddy1">1.1</p>
-                   <p class="Terms" style="text-align:left;"><b><dfn>paddy</dfn></b></p>
+                   <p class="Terms" style="text-align:left;">
+                      <b>
+                         <dfn>paddy</dfn>
+                      </b>
+                   </p>
                    <p id="_">&lt;rice&gt;  rice retaining its husk after threshing</p>
                    <div id="_" class="example">
-                      <p><span class="example_label">EXAMPLE 1</span>  Foreign seeds, husks, bran, sand, dust.</p>
+                      <p>
+                         <span class="example_label">EXAMPLE 1</span>
+                           Foreign seeds, husks, bran, sand, dust.
+                      </p>
                       <div class="ul_wrap">
                          <ul>
                             <li id="_">A</li>
@@ -509,23 +516,48 @@ RSpec.describe IsoDoc do
                       </div>
                    </div>
                    <div id="_" class="example">
-                      <p><span class="example_label">EXAMPLE 2</span>  </p>
+                      <p>
+                         <span class="example_label">EXAMPLE 2</span>
+      #{'                    '}
+                      </p>
                       <div class="ul_wrap">
                          <ul>
                             <li id="_">A</li>
                          </ul>
                       </div>
                    </div>
-                   <p>[SOURCE: <span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>,
-                      <span class="citesec">3.1</span>, modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]</p>
+                   <p>
+                      [SOURCE:
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">7301</span>
+                      :
+                      <span class="stdyear">2011</span>
+                      ,
+                      <span class="citesec">3.1</span>
+                      , modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]
+                   </p>
                    <p class="TermNum" id="paddy">1.2</p>
-                   <p class="Terms" style="text-align:left;"><b><dfn>paddy</dfn></b></p>
-                   <p class="AltTerms" style="text-align:left;"><dfn>paddy rice</dfn></p>
-                   <p class="AltTerms" style="text-align:left;"><dfn>rough rice</dfn></p>
-                   <p class="DeprecatedTerms" style="text-align:left;">DEPRECATED:<dfn>cargo rice</dfn></p>
+                   <p class="Terms" style="text-align:left;">
+                      <b>
+                         <dfn>paddy</dfn>
+                      </b>
+                   </p>
+                   <p class="AltTerms" style="text-align:left;">
+                      <dfn>paddy rice</dfn>
+                   </p>
+                   <p class="AltTerms" style="text-align:left;">
+                      <dfn>rough rice</dfn>
+                   </p>
+                   <p class="DeprecatedTerms" style="text-align:left;">
+                      DEPRECATED:
+                      <dfn>cargo rice</dfn>
+                   </p>
                    <p id="_">rice retaining its husk after threshing</p>
                    <div id="_" class="example">
-                      <p><span class="example_label">EXAMPLE</span> </p>
+                      <p>
+                         <span class="example_label">EXAMPLE</span>
+      #{'                    '}
+                      </p>
                       <div class="ul_wrap">
                          <ul>
                             <li id="_">A</li>
@@ -533,10 +565,15 @@ RSpec.describe IsoDoc do
                       </div>
                    </div>
                    <div id="_" class="Note">
-                      <p><span class="termnote_label">Note 1 to entry: </span>The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking. </p>
+                      <p>
+                         <span class="termnote_label">Note 1 to entry: </span>
+                         The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.
+                      </p>
                    </div>
                    <div id="_" class="Note">
-                      <p><span class="termnote_label">Note 2 to entry: </span></p>
+                      <p>
+                         <span class="termnote_label">Note 2 to entry: </span>
+                      </p>
                       <div class="ul_wrap">
                          <ul>
                             <li id="_">A</li>
@@ -544,11 +581,30 @@ RSpec.describe IsoDoc do
                       </div>
                       <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
                    </div>
-                   <p>[SOURCE:<span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>,<span class="citesec">3.1</span>]</p>
+                   <p>
+                      [SOURCE:
+                      <span class="stdpublisher">ISO </span>
+                      <span class="stddocNumber">7301</span>
+                      :
+                      <span class="stdyear">2011</span>
+                      ,
+                      <span class="citesec">3.1</span>
+                      ]
+                   </p>
                    <p class="TermNum" id="A">1.3</p>
-                   <p class="Terms" style="text-align:left;"><b><dfn>term1</dfn></b></p>term1 definition
+                   <p class="Terms" style="text-align:left;">
+                      <b>
+                         <dfn>term1</dfn>
+                      </b>
+                   </p>
+                   term1 definition
                    <p class="TermNum" id="B">1.3.1</p>
-                   <p class="Terms" style="text-align:left;"><b><dfn>term2</dfn></b></p>term2 definition
+                   <p class="Terms" style="text-align:left;">
+                      <b>
+                         <dfn>term2</dfn>
+                      </b>
+                   </p>
+                   term2 definition
                 </div>
              </div>
           </body>
@@ -557,12 +613,22 @@ RSpec.describe IsoDoc do
 
     word = <<~OUTPUT
       <div id="terms_and_definitions">
-         <h1>1<span style="mso-tab-count:1">  </span>Terms and Definitions</h1>
+         <h1>
+            1
+            <span style="mso-tab-count:1">  </span>
+            Terms and Definitions
+         </h1>
          <p class="TermNum" id="paddy1">1.1</p>
-         <p class="Terms" style="text-align:left;"><b>paddy</b></p>
+         <p class="Terms" style="text-align:left;">
+            <b>paddy</b>
+         </p>
          <p class="Definition" id="_">&lt;rice&gt;  rice retaining its husk after threshing</p>
          <div id="_" class="example">
-            <p><span class="example_label">EXAMPLE 1</span><span style="mso-tab-count:1">  </span>Foreign seeds, husks, bran, sand, dust. </p>
+            <p>
+               <span class="example_label">EXAMPLE 1</span>
+               <span style="mso-tab-count:1">  </span>
+               Foreign seeds, husks, bran, sand, dust.
+            </p>
             <div class="ul_wrap">
                <ul>
                   <li id="_">A</li>
@@ -570,23 +636,39 @@ RSpec.describe IsoDoc do
             </div>
          </div>
          <div id="_" class="example">
-            <p><span class="example_label">EXAMPLE 2</span><span style="mso-tab-count:1">  </span></p>
+            <p>
+               <span class="example_label">EXAMPLE 2</span>
+               <span style="mso-tab-count:1">  </span>
+            </p>
             <div class="ul_wrap">
                <ul>
                   <li id="_">A</li>
                </ul>
             </div>
          </div>
-         <p class="Source">[SOURCE:<span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>,
-            <span class="citesec">3.1</span>, modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]</p>
+         <p class="Source">
+            [SOURCE:
+            <span class="stdpublisher">ISO </span>
+            <span class="stddocNumber">7301</span>
+            :
+            <span class="stdyear">2011</span>
+            ,
+            <span class="citesec">3.1</span>
+            , modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]
+         </p>
          <p class="TermNum" id="paddy">1.2</p>
-         <p class="Terms" style="text-align:left;"><b>paddy</b></p>
+         <p class="Terms" style="text-align:left;">
+            <b>paddy</b>
+         </p>
          <p class="AltTerms" style="text-align:left;">paddy rice</p>
          <p class="AltTerms" style="text-align:left;">rough rice</p>
          <p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p>
          <p class="Definition" id="_">rice retaining its husk after threshing</p>
          <div id="_" class="example">
-            <p><span class="example_label">EXAMPLE</span><span style="mso-tab-count:1">  </span></p>
+            <p>
+               <span class="example_label">EXAMPLE</span>
+               <span style="mso-tab-count:1">  </span>
+            </p>
             <div class="ul_wrap">
                <ul>
                   <li id="_">A</li>
@@ -594,10 +676,15 @@ RSpec.describe IsoDoc do
             </div>
          </div>
          <div id="_" class="Note">
-            <p class="Note"><span class="termnote_label">Note 1 to entry: </span>The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking. </p>
+            <p class="Note">
+               <span class="termnote_label">Note 1 to entry: </span>
+               The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.
+            </p>
          </div>
          <div id="_" class="Note">
-            <p class="Note"><span class="termnote_label">Note 2 to entry: </span></p>
+            <p class="Note">
+               <span class="termnote_label">Note 2 to entry: </span>
+            </p>
             <div class="ul_wrap">
                <ul>
                   <li id="_">A</li>
@@ -605,12 +692,26 @@ RSpec.describe IsoDoc do
             </div>
             <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
          </div>
-         <p class="Source">[SOURCE:<span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>,
-            <span class="citesec">3.1</span>]</p>
+         <p class="Source">
+            [SOURCE:
+            <span class="stdpublisher">ISO </span>
+            <span class="stddocNumber">7301</span>
+            :
+            <span class="stdyear">2011</span>
+            ,
+            <span class="citesec">3.1</span>
+            ]
+         </p>
          <p class="TermNum" id="A">1.3</p>
-         <p class="Terms" style="text-align:left;"><b>term1</b></p>term1 definition
+         <p class="Terms" style="text-align:left;">
+            <b>term1</b>
+         </p>
+         term1 definition
          <p class="TermNum" id="B">1.3.1</p>
-         <p class="Terms" style="text-align:left;"><b>term2</b></p>term2 definition
+         <p class="Terms" style="text-align:left;">
+            <b>term2</b>
+         </p>
+         term2 definition
       </div>
     OUTPUT
     pres_output = IsoDoc::Iso::PresentationXMLConvert
@@ -837,177 +938,177 @@ RSpec.describe IsoDoc do
       </term>
     INPUT
     output = <<~OUTPUT
-       <terms id="terms_and_definitions" obligation="normative" displayorder="2">
-           <title id="_">Terms and Definitions</title>
-           <fmt-title depth="1" id="_">
-              <span class="fmt-caption-label">
-                 <semx element="autonum" source="terms_and_definitions">1</semx>
-              </span>
-              <span class="fmt-caption-delim">
-                 <tab/>
-              </span>
-              <semx element="title" source="_">Terms and Definitions</semx>
-           </fmt-title>
-           <fmt-xref-label>
-              <span class="fmt-element-name">Clause</span>
-              <semx element="autonum" source="terms_and_definitions">1</semx>
-           </fmt-xref-label>
-           <p>For the purposes of this document, the following terms and definitions apply.</p>
-           <term id="paddy1">
-              <fmt-name id="_">
-                 <span class="fmt-caption-label">
-                    <semx element="autonum" source="terms_and_definitions">1</semx>
-                    <span class="fmt-autonum-delim">.</span>
-                    <semx element="autonum" source="paddy1">1</semx>
-                 </span>
-              </fmt-name>
-              <fmt-xref-label>
-                 <semx element="autonum" source="terms_and_definitions">1</semx>
-                 <span class="fmt-autonum-delim">.</span>
-                 <semx element="autonum" source="paddy1">1</semx>
-              </fmt-xref-label>
-              <preferred id="_">
-                 <expression>
-                    <name id="_">paddy</name>
-                 </expression>
-              </preferred>
-              <fmt-preferred>
-                 <p>
-                    <semx element="preferred" source="_">
-                       <strong>
-                          <semx element="expression/name" source="_">paddy</semx>
-                       </strong>
-                    </semx>
-                 </p>
-              </fmt-preferred>
-              <definition id="_">
-                 <verbal-definition>
-                    <p original-id="_">rice retaining its husk after threshing</p>
-                 </verbal-definition>
-              </definition>
-              <fmt-definition id="_">
-                 <semx element="definition" source="_">
-                    <p id="_">rice retaining its husk after threshing</p>
-                 </semx>
-              </fmt-definition>
-              <source status="identical" id="_">
-                 <origin citeas="">
-                    <termref base="IEV" target="xyz">t1</termref>
-                 </origin>
-                 <modification id="_">
-                    <p id="_">with adjustments</p>
-                 </modification>
-              </source>
-              <source status="adapted" id="_">
-                 <origin citeas="">
-                    <termref base="IEV" target="xyz"/>
-                 </origin>
-                 <modification id="_">
-                    <p original-id="_">with adjustments</p>
-                 </modification>
-              </source>
-              <source status="modified" id="_">
-                 <origin citeas="">
-                    <termref base="IEV" target="xyz"/>
-                 </origin>
-                 <modification id="_">
-                    <p original-id="_">with adjustments</p>
-                 </modification>
-              </source>
-              <source status="identical" id="_">
-                 <origin citeas="">
-                    <termref base="IEV" target="xyz">t1</termref>
-                 </origin>
-              </source>
-              <source status="adapted" id="_">
-                 <origin citeas="">
-                    <termref base="IEV" target="xyz"/>
-                 </origin>
-              </source>
-              <source status="modified" id="_">
-                 <origin citeas="">
-                    <termref base="IEV" target="xyz"/>
-                 </origin>
-              </source>
-              <fmt-termsource status="identical">
-                 [SOURCE:
-                 <semx element="source" source="_">
-                    <origin citeas="" id="_">
-                       <termref base="IEV" target="xyz">t1</termref>
-                    </origin>
-                    <semx element="origin" source="_">
-                       <fmt-origin citeas="">
-                          <termref base="IEV" target="xyz">t1</termref>
-                       </fmt-origin>
-                    </semx>
-                    —
-                    <semx element="modification" source="_">with adjustments</semx>
-                 </semx>
-                 ;
-                 <semx element="source" source="_">
-                    <origin citeas="" id="_">
-                       <termref base="IEV" target="xyz"/>
-                    </origin>
-                    <semx element="origin" source="_">
-                       <fmt-origin citeas="">
-                          <termref base="IEV" target="xyz"/>
-                       </fmt-origin>
-                    </semx>
-                    , modified —
-                    <semx element="modification" source="_">with adjustments</semx>
-                 </semx>
-                 ;
-                 <semx element="source" source="_">
-                    <origin citeas="" id="_">
-                       <termref base="IEV" target="xyz"/>
-                    </origin>
-                    <semx element="origin" source="_">
-                       <fmt-origin citeas="">
-                          <termref base="IEV" target="xyz"/>
-                       </fmt-origin>
-                    </semx>
-                    , modified —
-                    <semx element="modification" source="_">with adjustments</semx>
-                 </semx>
-                 ;
-                 <semx element="source" source="_">
-                    <origin citeas="" id="_">
-                       <termref base="IEV" target="xyz">t1</termref>
-                    </origin>
-                    <semx element="origin" source="_">
-                       <fmt-origin citeas="">
-                          <termref base="IEV" target="xyz">t1</termref>
-                       </fmt-origin>
-                    </semx>
-                 </semx>
-                 ;
-                 <semx element="source" source="_">
-                    <origin citeas="" id="_">
-                       <termref base="IEV" target="xyz"/>
-                    </origin>
-                    <semx element="origin" source="_">
-                       <fmt-origin citeas="">
-                          <termref base="IEV" target="xyz"/>
-                       </fmt-origin>
-                    </semx>
-                    , modified
-                 </semx>
-                 ;
-                 <semx element="source" source="_">
-                    <origin citeas="" id="_">
-                       <termref base="IEV" target="xyz"/>
-                    </origin>
-                    <semx element="origin" source="_">
-                       <fmt-origin citeas="">
-                          <termref base="IEV" target="xyz"/>
-                       </fmt-origin>
-                    </semx>
-                    , modified
-                 </semx>
-                 ]
-              </fmt-termsource>
-           </term>
-        </terms>
+      <terms id="terms_and_definitions" obligation="normative" displayorder="2">
+          <title id="_">Terms and Definitions</title>
+          <fmt-title depth="1" id="_">
+             <span class="fmt-caption-label">
+                <semx element="autonum" source="terms_and_definitions">1</semx>
+             </span>
+             <span class="fmt-caption-delim">
+                <tab/>
+             </span>
+             <semx element="title" source="_">Terms and Definitions</semx>
+          </fmt-title>
+          <fmt-xref-label>
+             <span class="fmt-element-name">Clause</span>
+             <semx element="autonum" source="terms_and_definitions">1</semx>
+          </fmt-xref-label>
+          <p>For the purposes of this document, the following terms and definitions apply.</p>
+          <term id="paddy1">
+             <fmt-name id="_">
+                <span class="fmt-caption-label">
+                   <semx element="autonum" source="terms_and_definitions">1</semx>
+                   <span class="fmt-autonum-delim">.</span>
+                   <semx element="autonum" source="paddy1">1</semx>
+                </span>
+             </fmt-name>
+             <fmt-xref-label>
+                <semx element="autonum" source="terms_and_definitions">1</semx>
+                <span class="fmt-autonum-delim">.</span>
+                <semx element="autonum" source="paddy1">1</semx>
+             </fmt-xref-label>
+             <preferred id="_">
+                <expression>
+                   <name id="_">paddy</name>
+                </expression>
+             </preferred>
+             <fmt-preferred>
+                <p>
+                   <semx element="preferred" source="_">
+                      <strong>
+                         <semx element="expression/name" source="_">paddy</semx>
+                      </strong>
+                   </semx>
+                </p>
+             </fmt-preferred>
+             <definition id="_">
+                <verbal-definition>
+                   <p original-id="_">rice retaining its husk after threshing</p>
+                </verbal-definition>
+             </definition>
+             <fmt-definition id="_">
+                <semx element="definition" source="_">
+                   <p id="_">rice retaining its husk after threshing</p>
+                </semx>
+             </fmt-definition>
+             <source status="identical" id="_">
+                <origin citeas="">
+                   <termref base="IEV" target="xyz">t1</termref>
+                </origin>
+                <modification id="_">
+                   <p id="_">with adjustments</p>
+                </modification>
+             </source>
+             <source status="adapted" id="_">
+                <origin citeas="">
+                   <termref base="IEV" target="xyz"/>
+                </origin>
+                <modification id="_">
+                   <p original-id="_">with adjustments</p>
+                </modification>
+             </source>
+             <source status="modified" id="_">
+                <origin citeas="">
+                   <termref base="IEV" target="xyz"/>
+                </origin>
+                <modification id="_">
+                   <p original-id="_">with adjustments</p>
+                </modification>
+             </source>
+             <source status="identical" id="_">
+                <origin citeas="">
+                   <termref base="IEV" target="xyz">t1</termref>
+                </origin>
+             </source>
+             <source status="adapted" id="_">
+                <origin citeas="">
+                   <termref base="IEV" target="xyz"/>
+                </origin>
+             </source>
+             <source status="modified" id="_">
+                <origin citeas="">
+                   <termref base="IEV" target="xyz"/>
+                </origin>
+             </source>
+             <fmt-termsource status="identical">
+                [SOURCE:
+                <semx element="source" source="_">
+                   <origin citeas="" id="_">
+                      <termref base="IEV" target="xyz">t1</termref>
+                   </origin>
+                   <semx element="origin" source="_">
+                      <fmt-origin citeas="">
+                         <termref base="IEV" target="xyz">t1</termref>
+                      </fmt-origin>
+                   </semx>
+                   —
+                   <semx element="modification" source="_">with adjustments</semx>
+                </semx>
+                ;
+                <semx element="source" source="_">
+                   <origin citeas="" id="_">
+                      <termref base="IEV" target="xyz"/>
+                   </origin>
+                   <semx element="origin" source="_">
+                      <fmt-origin citeas="">
+                         <termref base="IEV" target="xyz"/>
+                      </fmt-origin>
+                   </semx>
+                   , modified —
+                   <semx element="modification" source="_">with adjustments</semx>
+                </semx>
+                ;
+                <semx element="source" source="_">
+                   <origin citeas="" id="_">
+                      <termref base="IEV" target="xyz"/>
+                   </origin>
+                   <semx element="origin" source="_">
+                      <fmt-origin citeas="">
+                         <termref base="IEV" target="xyz"/>
+                      </fmt-origin>
+                   </semx>
+                   , modified —
+                   <semx element="modification" source="_">with adjustments</semx>
+                </semx>
+                ;
+                <semx element="source" source="_">
+                   <origin citeas="" id="_">
+                      <termref base="IEV" target="xyz">t1</termref>
+                   </origin>
+                   <semx element="origin" source="_">
+                      <fmt-origin citeas="">
+                         <termref base="IEV" target="xyz">t1</termref>
+                      </fmt-origin>
+                   </semx>
+                </semx>
+                ;
+                <semx element="source" source="_">
+                   <origin citeas="" id="_">
+                      <termref base="IEV" target="xyz"/>
+                   </origin>
+                   <semx element="origin" source="_">
+                      <fmt-origin citeas="">
+                         <termref base="IEV" target="xyz"/>
+                      </fmt-origin>
+                   </semx>
+                   , modified
+                </semx>
+                ;
+                <semx element="source" source="_">
+                   <origin citeas="" id="_">
+                      <termref base="IEV" target="xyz"/>
+                   </origin>
+                   <semx element="origin" source="_">
+                      <fmt-origin citeas="">
+                         <termref base="IEV" target="xyz"/>
+                      </fmt-origin>
+                   </semx>
+                   , modified
+                </semx>
+                ]
+             </fmt-termsource>
+          </term>
+       </terms>
     OUTPUT
     expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
           .new(presxml_options)
@@ -1075,9 +1176,6 @@ RSpec.describe IsoDoc do
         <date type="published">
           <from>2010-04-01</from>
         </date>
-        <date type="updated">
-          <from>2010-04-01</from>
-        </date>
         <contributor>
           <role type="publisher"/>
           <organization>
@@ -1088,7 +1186,9 @@ RSpec.describe IsoDoc do
           </organization>
         </contributor>
         <edition>2.0.0</edition>
-        <version>2010-04-01</version>
+        <version>
+          <revision-date>2010-04-01</revision-date>
+        </version>
         <language>en</language>
         <language>fr</language>
         <script>Latn</script>
@@ -1243,358 +1343,358 @@ RSpec.describe IsoDoc do
       </metanorma>
     INPUT
     output = <<~OUTPUT
-        <terms id="_" obligation="normative" displayorder="3">
-           <title id="_">Terms and definitions</title>
-           <fmt-title depth="1" id="_">
-              <span class="fmt-caption-label">
-                 <semx element="autonum" source="_">2</semx>
-              </span>
-              <span class="fmt-caption-delim">
-                 <tab/>
-              </span>
-              <semx element="title" source="_">Terms and definitions</semx>
-           </fmt-title>
-           <fmt-xref-label>
-              <span class="fmt-element-name">Clause</span>
-              <semx element="autonum" source="_">2</semx>
-           </fmt-xref-label>
-           <p id="_">For the purposes of this document, the following terms and definitions apply.</p>
-           <p id="_">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
-           <ul id="_">
-              <li id="_">
-                 <fmt-name id="_">
-                    <semx element="autonum" source="_">—</semx>
-                 </fmt-name>
-                 <p id="_">
-                    ISO Online browsing platform: available at
-                    <link target="https://www.iso.org/obp" id="_"/>
-                    <semx element="link" source="_">
-                       <fmt-link target="https://www.iso.org/obp"/>
-                    </semx>
-                 </p>
-              </li>
-              <li id="_">
-                 <fmt-name id="_">
-                    <semx element="autonum" source="_">—</semx>
-                 </fmt-name>
-                 <p id="_">
-                    IEC Electropedia: available at
-                    <link target="https://www.electropedia.org" id="_"/>
-                    <semx element="link" source="_">
-                       <fmt-link target="https://www.electropedia.org"/>
-                    </semx>
-                 </p>
-              </li>
-           </ul>
-           <term id="term-Term-1" anchor="term-Term-1">
-              <fmt-name id="_">
-                 <span class="fmt-caption-label">
-                    <semx element="autonum" source="_">2</semx>
-                    <span class="fmt-autonum-delim">.</span>
-                    <semx element="autonum" source="term-Term-1">1</semx>
-                 </span>
-              </fmt-name>
-              <fmt-xref-label>
-                 <semx element="autonum" source="_">2</semx>
-                 <span class="fmt-autonum-delim">.</span>
-                 <semx element="autonum" source="term-Term-1">1</semx>
-              </fmt-xref-label>
-              <preferred id="_">
-                 <expression>
-                    <name id="_">Term 1</name>
-                 </expression>
-              </preferred>
-              <fmt-preferred>
-                 <p>
-                    <semx element="preferred" source="_">
-                       <strong>
-                          <semx element="expression/name" source="_">Term 1</semx>
-                       </strong>
-                    </semx>
-                 </p>
-              </fmt-preferred>
-              <definition id="_">
-                 <verbal-definition id="_">
-                    <p original-id="_">Definition</p>
-                 </verbal-definition>
-              </definition>
-              <fmt-definition id="_">
-                 <semx element="definition" source="_">
-                    <p id="_">Definition</p>
-                 </semx>
-              </fmt-definition>
-              <source status="identical" type="authoritative" id="_">
-                 <origin bibitemid="internet_standards" type="inline" citeas="[3]">
-                    <localityStack>
-                       <locality type="clause">
-                          <referenceFrom>3</referenceFrom>
-                       </locality>
-                    </localityStack>
-                 </origin>
-              </source>
-              <fmt-termsource status="identical" type="authoritative">
-                 [SOURCE:
-                 <semx element="source" source="_">
-                    <origin bibitemid="internet_standards" type="inline" citeas="[3]" id="_">
-                       <localityStack>
-                          <locality type="clause">
-                             <referenceFrom>3</referenceFrom>
-                          </locality>
-                       </localityStack>
-                    </origin>
-                    <semx element="origin" source="_">
-                       <fmt-origin bibitemid="internet_standards" type="inline" citeas="[3]" style="short">
-                          <fmt-xref target="internet_standards">INTERNET ENGINEERING TASK FORCE</fmt-xref>
-                          .
-                          <em>
-                             <span class="stddocTitle">Internet Standards</span>
-                          </em>
-                          [website]. 2024,
-                          <span class="citesec">Clause 3</span>
-                       </fmt-origin>
-                       <fmt-xref target="internet_standards">
-                          <sup>[3]</sup>
-                       </fmt-xref>
-                    </semx>
-                 </semx>
-                 ]
-              </fmt-termsource>
-           </term>
-           <term id="term-Term-2" anchor="term-Term-2">
-              <fmt-name id="_">
-                 <span class="fmt-caption-label">
-                    <semx element="autonum" source="_">2</semx>
-                    <span class="fmt-autonum-delim">.</span>
-                    <semx element="autonum" source="term-Term-2">2</semx>
-                 </span>
-              </fmt-name>
-              <fmt-xref-label>
-                 <semx element="autonum" source="_">2</semx>
-                 <span class="fmt-autonum-delim">.</span>
-                 <semx element="autonum" source="term-Term-2">2</semx>
-              </fmt-xref-label>
-              <preferred id="_">
-                 <expression>
-                    <name id="_">Term 2</name>
-                 </expression>
-              </preferred>
-              <fmt-preferred>
-                 <p>
-                    <semx element="preferred" source="_">
-                       <strong>
-                          <semx element="expression/name" source="_">Term 2</semx>
-                       </strong>
-                    </semx>
-                 </p>
-              </fmt-preferred>
-              <definition id="_">
-                 <verbal-definition id="_">
-                    <p original-id="_">Definition</p>
-                 </verbal-definition>
-              </definition>
-              <fmt-definition id="_">
-                 <semx element="definition" source="_">
-                    <p id="_">Definition</p>
-                 </semx>
-              </fmt-definition>
-              <source status="identical" type="authoritative" id="_">
-                 <origin bibitemid="internet_standards" type="inline" citeas="[3]">
-                    <localityStack>
-                       <locality type="clause">
-                          <referenceFrom>3</referenceFrom>
-                       </locality>
-                    </localityStack>
-                 </origin>
-              </source>
-              <source status="identical" type="authoritative" id="_">
-                 <origin bibitemid="graphql" type="inline" citeas="[4]">
-                    <localityStack>
-                       <locality type="clause">
-                          <referenceFrom>3</referenceFrom>
-                       </locality>
-                    </localityStack>
-                 </origin>
-              </source>
-              <source status="identical" type="authoritative" id="_">
-                 <origin bibitemid="iso643" type="inline" citeas="ISO 643">
-                    <localityStack>
-                       <locality type="clause">
-                          <referenceFrom>3</referenceFrom>
-                       </locality>
-                    </localityStack>
-                 </origin>
-              </source>
-              <source status="identical" type="authoritative" id="_">
-                 <origin bibitemid="ietf643" type="inline" citeas="IETF RFC 643">
-                    <localityStack>
-                       <locality type="clause">
-                          <referenceFrom>3</referenceFrom>
-                       </locality>
-                    </localityStack>
-                 </origin>
-              </source>
-              <fmt-termsource status="identical" type="authoritative">
-                 [SOURCE:
-                 <semx element="source" source="_">
-                    <origin bibitemid="internet_standards" type="inline" citeas="[3]" id="_">
-                       <localityStack>
-                          <locality type="clause">
-                             <referenceFrom>3</referenceFrom>
-                          </locality>
-                       </localityStack>
-                    </origin>
-                    <semx element="origin" source="_">
-                       <fmt-origin bibitemid="internet_standards" type="inline" citeas="[3]" style="short">
-                          <fmt-xref target="internet_standards">INTERNET ENGINEERING TASK FORCE</fmt-xref>
-                          .
-                          <em>
-                             <span class="stddocTitle">Internet Standards</span>
-                          </em>
-                          [website]. 2024,
-                          <span class="citesec">Clause 3</span>
-                       </fmt-origin>
-                       <fmt-xref target="internet_standards">
-                          <sup>[3]</sup>
-                       </fmt-xref>
-                    </semx>
-                 </semx>
-                 ;
-                 <semx element="source" source="_">
-                    <origin bibitemid="graphql" type="inline" citeas="[4]" id="_">
-                       <localityStack>
-                          <locality type="clause">
-                             <referenceFrom>3</referenceFrom>
-                          </locality>
-                       </localityStack>
-                    </origin>
-                    <semx element="origin" source="_">
-                       <fmt-origin bibitemid="graphql" type="inline" citeas="[4]" style="short">
-                          <fmt-xref target="graphql">JOINT DEVELOPMENT FOUNDATION PROJECTS, LLC</fmt-xref>
-                          .
-                          <em>
-                             <span class="stddocTitle">The GraphQL Specification Project</span>
-                          </em>
-                          ,
-                          <span class="citesec">Clause 3</span>
-                       </fmt-origin>
-                       <fmt-xref target="graphql">
-                          <sup>[4]</sup>
-                       </fmt-xref>
-                    </semx>
-                 </semx>
-                 ;
-                 <semx element="source" source="_">
-                    <origin bibitemid="iso643" type="inline" citeas="ISO 643" id="_">
-                       <localityStack>
-                          <locality type="clause">
-                             <referenceFrom>3</referenceFrom>
-                          </locality>
-                       </localityStack>
-                    </origin>
-                    <semx element="origin" source="_">
-                       <fmt-xref type="inline" target="iso643">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">643</span>
-                          ,
-                          <span class="citesec">Clause 3</span>
-                       </fmt-xref>
-                    </semx>
-                 </semx>
-                 ;
-                 <semx element="source" source="_">
-                    <origin bibitemid="ietf643" type="inline" citeas="IETF RFC 643" id="_">
-                       <localityStack>
-                          <locality type="clause">
-                             <referenceFrom>3</referenceFrom>
-                          </locality>
-                       </localityStack>
-                    </origin>
-                    <semx element="origin" source="_">
-                       <fmt-xref type="inline" target="ietf643">
-                          <span class="stdpublisher">IETF </span>
-                          <span class="stdpublisher">RFC </span>
-                          <span class="stddocNumber">643</span>
-                          ,
-                          <span class="citesec">Clause 3</span>
-                       </fmt-xref>
-                       <fmt-xref target="ietf643">
-                          <sup>[2]</sup>
-                       </fmt-xref>
-                    </semx>
-                 </semx>
-                 ]
-              </fmt-termsource>
-           </term>
-           <term id="term-Term-3" anchor="term-Term-3">
-              <fmt-name id="_">
-                 <span class="fmt-caption-label">
-                    <semx element="autonum" source="_">2</semx>
-                    <span class="fmt-autonum-delim">.</span>
-                    <semx element="autonum" source="term-Term-3">3</semx>
-                 </span>
-              </fmt-name>
-              <fmt-xref-label>
-                 <semx element="autonum" source="_">2</semx>
-                 <span class="fmt-autonum-delim">.</span>
-                 <semx element="autonum" source="term-Term-3">3</semx>
-              </fmt-xref-label>
-              <preferred id="_">
-                 <expression>
-                    <name id="_">Term 3</name>
-                 </expression>
-              </preferred>
-              <fmt-preferred>
-                 <p>
-                    <semx element="preferred" source="_">
-                       <strong>
-                          <semx element="expression/name" source="_">Term 3</semx>
-                       </strong>
-                    </semx>
-                 </p>
-              </fmt-preferred>
-              <definition id="_">
-                 <verbal-definition id="_">
-                    <p original-id="_">Definition</p>
-                 </verbal-definition>
-              </definition>
-              <fmt-definition id="_">
-                 <semx element="definition" source="_">
-                    <p id="_">Definition</p>
-                 </semx>
-              </fmt-definition>
-              <source status="identical" type="authoritative" id="_">
-                 <origin bibitemid="ihos49" type="inline" citeas="IHO S-49">
-                    <localityStack>
-                       <locality type="clause">
-                          <referenceFrom>3</referenceFrom>
-                       </locality>
-                    </localityStack>
-                 </origin>
-              </source>
-              <fmt-termsource status="identical" type="authoritative">
-                 [SOURCE:
-                 <semx element="source" source="_">
-                    <origin bibitemid="ihos49" type="inline" citeas="IHO S-49" id="_">
-                       <localityStack>
-                          <locality type="clause">
-                             <referenceFrom>3</referenceFrom>
-                          </locality>
-                       </localityStack>
-                    </origin>
-                    <semx element="origin" source="_">
-                       <fmt-xref type="inline" target="ihos49">
-                          <span class="stdpublisher">IHO</span>
-                           S-
-                          <span class="stddocNumber">49</span>
-                          ,
-                          <span class="citesec">Clause 3</span>
-                       </fmt-xref>
-                    </semx>
-                 </semx>
-                 ]
-              </fmt-termsource>
-           </term>
-        </terms>
+      <terms id="_" obligation="normative" displayorder="3">
+         <title id="_">Terms and definitions</title>
+         <fmt-title depth="1" id="_">
+            <span class="fmt-caption-label">
+               <semx element="autonum" source="_">2</semx>
+            </span>
+            <span class="fmt-caption-delim">
+               <tab/>
+            </span>
+            <semx element="title" source="_">Terms and definitions</semx>
+         </fmt-title>
+         <fmt-xref-label>
+            <span class="fmt-element-name">Clause</span>
+            <semx element="autonum" source="_">2</semx>
+         </fmt-xref-label>
+         <p id="_">For the purposes of this document, the following terms and definitions apply.</p>
+         <p id="_">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
+         <ul id="_">
+            <li id="_">
+               <fmt-name id="_">
+                  <semx element="autonum" source="_">—</semx>
+               </fmt-name>
+               <p id="_">
+                  ISO Online browsing platform: available at
+                  <link target="https://www.iso.org/obp" id="_"/>
+                  <semx element="link" source="_">
+                     <fmt-link target="https://www.iso.org/obp"/>
+                  </semx>
+               </p>
+            </li>
+            <li id="_">
+               <fmt-name id="_">
+                  <semx element="autonum" source="_">—</semx>
+               </fmt-name>
+               <p id="_">
+                  IEC Electropedia: available at
+                  <link target="https://www.electropedia.org" id="_"/>
+                  <semx element="link" source="_">
+                     <fmt-link target="https://www.electropedia.org"/>
+                  </semx>
+               </p>
+            </li>
+         </ul>
+         <term id="term-Term-1" anchor="term-Term-1">
+            <fmt-name id="_">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="_">2</semx>
+                  <span class="fmt-autonum-delim">.</span>
+                  <semx element="autonum" source="term-Term-1">1</semx>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <semx element="autonum" source="_">2</semx>
+               <span class="fmt-autonum-delim">.</span>
+               <semx element="autonum" source="term-Term-1">1</semx>
+            </fmt-xref-label>
+            <preferred id="_">
+               <expression>
+                  <name id="_">Term 1</name>
+               </expression>
+            </preferred>
+            <fmt-preferred>
+               <p>
+                  <semx element="preferred" source="_">
+                     <strong>
+                        <semx element="expression/name" source="_">Term 1</semx>
+                     </strong>
+                  </semx>
+               </p>
+            </fmt-preferred>
+            <definition id="_">
+               <verbal-definition id="_">
+                  <p original-id="_">Definition</p>
+               </verbal-definition>
+            </definition>
+            <fmt-definition id="_">
+               <semx element="definition" source="_">
+                  <p id="_">Definition</p>
+               </semx>
+            </fmt-definition>
+            <source status="identical" type="authoritative" id="_">
+               <origin bibitemid="internet_standards" type="inline" citeas="[3]">
+                  <localityStack>
+                     <locality type="clause">
+                        <referenceFrom>3</referenceFrom>
+                     </locality>
+                  </localityStack>
+               </origin>
+            </source>
+            <fmt-termsource status="identical" type="authoritative">
+               [SOURCE:
+               <semx element="source" source="_">
+                  <origin bibitemid="internet_standards" type="inline" citeas="[3]" id="_">
+                     <localityStack>
+                        <locality type="clause">
+                           <referenceFrom>3</referenceFrom>
+                        </locality>
+                     </localityStack>
+                  </origin>
+                  <semx element="origin" source="_">
+                     <fmt-origin bibitemid="internet_standards" type="inline" citeas="[3]" style="short">
+                        <fmt-xref target="internet_standards">INTERNET ENGINEERING TASK FORCE</fmt-xref>
+                        .
+                        <em>
+                           <span class="stddocTitle">Internet Standards</span>
+                        </em>
+                        [website]. 2024,
+                        <span class="citesec">Clause 3</span>
+                     </fmt-origin>
+                     <fmt-xref target="internet_standards">
+                        <sup>[3]</sup>
+                     </fmt-xref>
+                  </semx>
+               </semx>
+               ]
+            </fmt-termsource>
+         </term>
+         <term id="term-Term-2" anchor="term-Term-2">
+            <fmt-name id="_">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="_">2</semx>
+                  <span class="fmt-autonum-delim">.</span>
+                  <semx element="autonum" source="term-Term-2">2</semx>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <semx element="autonum" source="_">2</semx>
+               <span class="fmt-autonum-delim">.</span>
+               <semx element="autonum" source="term-Term-2">2</semx>
+            </fmt-xref-label>
+            <preferred id="_">
+               <expression>
+                  <name id="_">Term 2</name>
+               </expression>
+            </preferred>
+            <fmt-preferred>
+               <p>
+                  <semx element="preferred" source="_">
+                     <strong>
+                        <semx element="expression/name" source="_">Term 2</semx>
+                     </strong>
+                  </semx>
+               </p>
+            </fmt-preferred>
+            <definition id="_">
+               <verbal-definition id="_">
+                  <p original-id="_">Definition</p>
+               </verbal-definition>
+            </definition>
+            <fmt-definition id="_">
+               <semx element="definition" source="_">
+                  <p id="_">Definition</p>
+               </semx>
+            </fmt-definition>
+            <source status="identical" type="authoritative" id="_">
+               <origin bibitemid="internet_standards" type="inline" citeas="[3]">
+                  <localityStack>
+                     <locality type="clause">
+                        <referenceFrom>3</referenceFrom>
+                     </locality>
+                  </localityStack>
+               </origin>
+            </source>
+            <source status="identical" type="authoritative" id="_">
+               <origin bibitemid="graphql" type="inline" citeas="[4]">
+                  <localityStack>
+                     <locality type="clause">
+                        <referenceFrom>3</referenceFrom>
+                     </locality>
+                  </localityStack>
+               </origin>
+            </source>
+            <source status="identical" type="authoritative" id="_">
+               <origin bibitemid="iso643" type="inline" citeas="ISO 643">
+                  <localityStack>
+                     <locality type="clause">
+                        <referenceFrom>3</referenceFrom>
+                     </locality>
+                  </localityStack>
+               </origin>
+            </source>
+            <source status="identical" type="authoritative" id="_">
+               <origin bibitemid="ietf643" type="inline" citeas="IETF RFC 643">
+                  <localityStack>
+                     <locality type="clause">
+                        <referenceFrom>3</referenceFrom>
+                     </locality>
+                  </localityStack>
+               </origin>
+            </source>
+            <fmt-termsource status="identical" type="authoritative">
+               [SOURCE:
+               <semx element="source" source="_">
+                  <origin bibitemid="internet_standards" type="inline" citeas="[3]" id="_">
+                     <localityStack>
+                        <locality type="clause">
+                           <referenceFrom>3</referenceFrom>
+                        </locality>
+                     </localityStack>
+                  </origin>
+                  <semx element="origin" source="_">
+                     <fmt-origin bibitemid="internet_standards" type="inline" citeas="[3]" style="short">
+                        <fmt-xref target="internet_standards">INTERNET ENGINEERING TASK FORCE</fmt-xref>
+                        .
+                        <em>
+                           <span class="stddocTitle">Internet Standards</span>
+                        </em>
+                        [website]. 2024,
+                        <span class="citesec">Clause 3</span>
+                     </fmt-origin>
+                     <fmt-xref target="internet_standards">
+                        <sup>[3]</sup>
+                     </fmt-xref>
+                  </semx>
+               </semx>
+               ;
+               <semx element="source" source="_">
+                  <origin bibitemid="graphql" type="inline" citeas="[4]" id="_">
+                     <localityStack>
+                        <locality type="clause">
+                           <referenceFrom>3</referenceFrom>
+                        </locality>
+                     </localityStack>
+                  </origin>
+                  <semx element="origin" source="_">
+                     <fmt-origin bibitemid="graphql" type="inline" citeas="[4]" style="short">
+                        <fmt-xref target="graphql">JOINT DEVELOPMENT FOUNDATION PROJECTS, LLC</fmt-xref>
+                        .
+                        <em>
+                           <span class="stddocTitle">The GraphQL Specification Project</span>
+                        </em>
+                        ,
+                        <span class="citesec">Clause 3</span>
+                     </fmt-origin>
+                     <fmt-xref target="graphql">
+                        <sup>[4]</sup>
+                     </fmt-xref>
+                  </semx>
+               </semx>
+               ;
+               <semx element="source" source="_">
+                  <origin bibitemid="iso643" type="inline" citeas="ISO 643" id="_">
+                     <localityStack>
+                        <locality type="clause">
+                           <referenceFrom>3</referenceFrom>
+                        </locality>
+                     </localityStack>
+                  </origin>
+                  <semx element="origin" source="_">
+                     <fmt-xref type="inline" target="iso643">
+                        <span class="stdpublisher">ISO </span>
+                        <span class="stddocNumber">643</span>
+                        ,
+                        <span class="citesec">Clause 3</span>
+                     </fmt-xref>
+                  </semx>
+               </semx>
+               ;
+               <semx element="source" source="_">
+                  <origin bibitemid="ietf643" type="inline" citeas="IETF RFC 643" id="_">
+                     <localityStack>
+                        <locality type="clause">
+                           <referenceFrom>3</referenceFrom>
+                        </locality>
+                     </localityStack>
+                  </origin>
+                  <semx element="origin" source="_">
+                     <fmt-xref type="inline" target="ietf643">
+                        <span class="stdpublisher">IETF </span>
+                        <span class="stdpublisher">RFC </span>
+                        <span class="stddocNumber">643</span>
+                        ,
+                        <span class="citesec">Clause 3</span>
+                     </fmt-xref>
+                     <fmt-xref target="ietf643">
+                        <sup>[2]</sup>
+                     </fmt-xref>
+                  </semx>
+               </semx>
+               ]
+            </fmt-termsource>
+         </term>
+         <term id="term-Term-3" anchor="term-Term-3">
+            <fmt-name id="_">
+               <span class="fmt-caption-label">
+                  <semx element="autonum" source="_">2</semx>
+                  <span class="fmt-autonum-delim">.</span>
+                  <semx element="autonum" source="term-Term-3">3</semx>
+               </span>
+            </fmt-name>
+            <fmt-xref-label>
+               <semx element="autonum" source="_">2</semx>
+               <span class="fmt-autonum-delim">.</span>
+               <semx element="autonum" source="term-Term-3">3</semx>
+            </fmt-xref-label>
+            <preferred id="_">
+               <expression>
+                  <name id="_">Term 3</name>
+               </expression>
+            </preferred>
+            <fmt-preferred>
+               <p>
+                  <semx element="preferred" source="_">
+                     <strong>
+                        <semx element="expression/name" source="_">Term 3</semx>
+                     </strong>
+                  </semx>
+               </p>
+            </fmt-preferred>
+            <definition id="_">
+               <verbal-definition id="_">
+                  <p original-id="_">Definition</p>
+               </verbal-definition>
+            </definition>
+            <fmt-definition id="_">
+               <semx element="definition" source="_">
+                  <p id="_">Definition</p>
+               </semx>
+            </fmt-definition>
+            <source status="identical" type="authoritative" id="_">
+               <origin bibitemid="ihos49" type="inline" citeas="IHO S-49">
+                  <localityStack>
+                     <locality type="clause">
+                        <referenceFrom>3</referenceFrom>
+                     </locality>
+                  </localityStack>
+               </origin>
+            </source>
+            <fmt-termsource status="identical" type="authoritative">
+               [SOURCE:
+               <semx element="source" source="_">
+                  <origin bibitemid="ihos49" type="inline" citeas="IHO S-49" id="_">
+                     <localityStack>
+                        <locality type="clause">
+                           <referenceFrom>3</referenceFrom>
+                        </locality>
+                     </localityStack>
+                  </origin>
+                  <semx element="origin" source="_">
+                     <fmt-xref type="inline" target="ihos49">
+                        <span class="stdpublisher">IHO</span>
+                         S-
+                        <span class="stddocNumber">49</span>
+                        ,
+                        <span class="citesec">Clause 3</span>
+                     </fmt-xref>
+                  </semx>
+               </semx>
+               ]
+            </fmt-termsource>
+         </term>
+      </terms>
     OUTPUT
     expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
           .new(presxml_options)

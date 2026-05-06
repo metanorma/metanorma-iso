@@ -38,7 +38,7 @@ class Html2Doc
       prev = first_p.xpath("./preceding-sibling::* | " \
                            "./preceding-sibling::text()[normalize-space()]")
       # bullet, tab, paragraph: ignore bullet, tab
-      if prev.empty? then para.replace(para.children)
+      if prev.empty? para.replace(para.children)
       elsif prev.size == 2 && prev[-1].name == "span" &&
           prev[-1]["style"] == "mso-tab-count:1"
         first_p.replace(first_p.children)

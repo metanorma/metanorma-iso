@@ -440,7 +440,7 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "processes full publisher names" do
-    xml = Nokogiri::XML(Asciidoctor.convert(<<~"INPUT", *OPTIONS))
+    xml = Nokogiri::XML(Asciidoctor.convert(<<~INPUT, *OPTIONS))
       = Document title
       Author
       :docfile: test.adoc
@@ -560,154 +560,154 @@ RSpec.describe Metanorma::Iso do
 
     INPUT
     output = <<~OUTPUT
-       <bibdata type="standard">
-          <docidentifier type="ISO" primary="true">EXP 1000:#{Date.today.year}</docidentifier>
-          <docidentifier type="iso-reference">EXP 1000:#{Date.today.year}(E)</docidentifier>
-          <docidentifier type="URN">urn:iso:std:exp:1000:stage-60.60:en</docidentifier>
-          <docidentifier type="iso-undated">EXP 1000</docidentifier>
-          <docidentifier type="iso-with-lang">EXP 1000:#{Date.today.year}(en)</docidentifier>
-          <docnumber>1000</docnumber>
-          <contributor>
-             <role type="author"/>
-             <organization>
-                <name>EXPRESS Foundation</name>
-                <abbreviation>EXP</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="author">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>International Electrotechnical Commission</name>
-                <subdivision type="Technical committee" subtype="TC">
-                   <name>Electrical equipment in medical practice</name>
-                   <identifier>TC 62</identifier>
-                   <identifier type="full">IEC TC 62</identifier>
-                </subdivision>
-                <abbreviation>IEC</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="author">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>EXPRESS Foundation</name>
-                <subdivision type="Technical committee" subtype="TC">
-                   <name>Quality management and corresponding general aspects for medical devices</name>
-                   <identifier>TC 210</identifier>
-                   <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee" subtype="SC">
-                   <name>Common aspects of electrical equipment used in medical practice</name>
-                   <identifier>SC 62A</identifier>
-                </subdivision>
-                <subdivision type="Workgroup" subtype="WG">
-                   <name>Working group on defibulators</name>
-                   <identifier>WG 62A1</identifier>
-                </subdivision>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="author">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>Institute of Electrical and Electronic Engineers</name>
-                <subdivision type="Technical committee" subtype="TC">
-                   <name>The committee</name>
-                </subdivision>
-                <abbreviation>IEEE</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>Agency</description>
-             </role>
-             <organization>
-                <name>EXPRESS Foundation</name>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="publisher"/>
-             <organization>
-                <name>EXPRESS Foundation</name>
-                <abbreviation>EXP</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>International Electrotechnical Commission</name>
-                <subdivision type="Technical committee" subtype="TC">
-                   <name>Electrical equipment in medical practice</name>
-                   <identifier>TC 62</identifier>
-                   <identifier type="full">IEC TC 62</identifier>
-                </subdivision>
-                <abbreviation>IEC</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee" subtype="TC">
-                   <name>Quality management and corresponding general aspects for medical devices</name>
-                   <identifier>TC 210</identifier>
-                   <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee" subtype="SC">
-                   <name>Common aspects of electrical equipment used in medical practice</name>
-                   <identifier>SC 62A</identifier>
-                </subdivision>
-                <subdivision type="Workgroup" subtype="WG">
-                   <name>Working group on defibulators</name>
-                   <identifier>WG 62A1</identifier>
-                </subdivision>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>Institute of Electrical and Electronic Engineers</name>
-                <subdivision type="Technical committee" subtype="TC">
-                   <name>The committee</name>
-                </subdivision>
-                <abbreviation>IEEE</abbreviation>
-             </organization>
-          </contributor>
-          <language>en</language>
-          <script>Latn</script>
-          <status>
-             <stage abbreviation="IS">60</stage>
-             <substage>60</substage>
-          </status>
-          <copyright>
-             <from>#{Date.today.year}</from>
-             <owner>
-                <organization>
-                   <name>EXPRESS Foundation</name>
-                   <abbreviation>EXP</abbreviation>
-                </organization>
-             </owner>
-          </copyright>
-          <ext>
-             <doctype>standard</doctype>
-             <flavor>iso</flavor>
-             <structuredidentifier>
-                <project-number>EXP 1000</project-number>
-             </structuredidentifier>
-             <stagename abbreviation="IS">International Standard</stagename>
-          </ext>
-       </bibdata>
+      <bibdata type="standard">
+         <docidentifier type="ISO" primary="true">EXP 1000:#{Date.today.year}</docidentifier>
+         <docidentifier type="iso-reference">EXP 1000:#{Date.today.year}(E)</docidentifier>
+         <docidentifier type="URN">urn:iso:std:exp:1000:stage-60.60:en</docidentifier>
+         <docidentifier type="iso-undated">EXP 1000</docidentifier>
+         <docidentifier type="iso-with-lang">EXP 1000:#{Date.today.year}(en)</docidentifier>
+         <docnumber>1000</docnumber>
+         <contributor>
+            <role type="author"/>
+            <organization>
+               <name>EXPRESS Foundation</name>
+               <abbreviation>EXP</abbreviation>
+            </organization>
+         </contributor>
+         <contributor>
+            <role type="author">
+               <description>committee</description>
+            </role>
+            <organization>
+               <name>International Electrotechnical Commission</name>
+               <subdivision type="Technical committee" subtype="TC">
+                  <name>Electrical equipment in medical practice</name>
+                  <identifier>TC 62</identifier>
+                  <identifier type="full">IEC TC 62</identifier>
+               </subdivision>
+               <abbreviation>IEC</abbreviation>
+            </organization>
+         </contributor>
+         <contributor>
+            <role type="author">
+               <description>committee</description>
+            </role>
+            <organization>
+               <name>EXPRESS Foundation</name>
+               <subdivision type="Technical committee" subtype="TC">
+                  <name>Quality management and corresponding general aspects for medical devices</name>
+                  <identifier>TC 210</identifier>
+                  <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
+               </subdivision>
+               <subdivision type="Subcommittee" subtype="SC">
+                  <name>Common aspects of electrical equipment used in medical practice</name>
+                  <identifier>SC 62A</identifier>
+               </subdivision>
+               <subdivision type="Workgroup" subtype="WG">
+                  <name>Working group on defibulators</name>
+                  <identifier>WG 62A1</identifier>
+               </subdivision>
+            </organization>
+         </contributor>
+         <contributor>
+            <role type="author">
+               <description>committee</description>
+            </role>
+            <organization>
+               <name>Institute of Electrical and Electronic Engineers</name>
+               <subdivision type="Technical committee" subtype="TC">
+                  <name>The committee</name>
+               </subdivision>
+               <abbreviation>IEEE</abbreviation>
+            </organization>
+         </contributor>
+         <contributor>
+            <role type="authorizer">
+               <description>Agency</description>
+            </role>
+            <organization>
+               <name>EXPRESS Foundation</name>
+            </organization>
+         </contributor>
+         <contributor>
+            <role type="publisher"/>
+            <organization>
+               <name>EXPRESS Foundation</name>
+               <abbreviation>EXP</abbreviation>
+            </organization>
+         </contributor>
+         <contributor>
+            <role type="authorizer">
+               <description>committee</description>
+            </role>
+            <organization>
+               <name>International Electrotechnical Commission</name>
+               <subdivision type="Technical committee" subtype="TC">
+                  <name>Electrical equipment in medical practice</name>
+                  <identifier>TC 62</identifier>
+                  <identifier type="full">IEC TC 62</identifier>
+               </subdivision>
+               <abbreviation>IEC</abbreviation>
+            </organization>
+         </contributor>
+         <contributor>
+            <role type="authorizer">
+               <description>committee</description>
+            </role>
+            <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision type="Technical committee" subtype="TC">
+                  <name>Quality management and corresponding general aspects for medical devices</name>
+                  <identifier>TC 210</identifier>
+                  <identifier type="full">TC 210/SC 62A/WG 62A1</identifier>
+               </subdivision>
+               <subdivision type="Subcommittee" subtype="SC">
+                  <name>Common aspects of electrical equipment used in medical practice</name>
+                  <identifier>SC 62A</identifier>
+               </subdivision>
+               <subdivision type="Workgroup" subtype="WG">
+                  <name>Working group on defibulators</name>
+                  <identifier>WG 62A1</identifier>
+               </subdivision>
+               <abbreviation>ISO</abbreviation>
+            </organization>
+         </contributor>
+         <contributor>
+            <role type="authorizer">
+               <description>committee</description>
+            </role>
+            <organization>
+               <name>Institute of Electrical and Electronic Engineers</name>
+               <subdivision type="Technical committee" subtype="TC">
+                  <name>The committee</name>
+               </subdivision>
+               <abbreviation>IEEE</abbreviation>
+            </organization>
+         </contributor>
+         <language>en</language>
+         <script>Latn</script>
+         <status>
+            <stage abbreviation="IS">60</stage>
+            <substage>60</substage>
+         </status>
+         <copyright>
+            <from>#{Date.today.year}</from>
+            <owner>
+               <organization>
+                  <name>EXPRESS Foundation</name>
+                  <abbreviation>EXP</abbreviation>
+               </organization>
+            </owner>
+         </copyright>
+         <ext>
+            <doctype>standard</doctype>
+            <flavor>iso</flavor>
+            <structuredidentifier>
+               <project-number>EXP 1000</project-number>
+            </structuredidentifier>
+            <stagename abbreviation="IS">International Standard</stagename>
+         </ext>
+      </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
     expect(strip_guid(xml.to_xml))
@@ -743,104 +743,104 @@ RSpec.describe Metanorma::Iso do
       :approval-workgroup-type: Other
     INPUT
     output = <<~OUTPUT
-            <bibdata type="standard">
-        <docidentifier type="ISO" primary="true">ISO 1000:#{Date.today.year}</docidentifier>
-        <docidentifier type="iso-reference">ISO 1000:#{Date.today.year}(E)</docidentifier>
-        <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
-        <docidentifier type="iso-undated">ISO 1000</docidentifier>
-        <docidentifier type="iso-with-lang">ISO 1000:#{Date.today.year}(en)</docidentifier>
-        <docnumber>1000</docnumber>
-          <contributor>
-             <role type="author"/>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="author">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee" subtype="Other">
-                   <name>Techcomm</name>
-                   <identifier>1</identifier>
-                   <identifier type="full">1/2/3</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee" subtype="Other">
-                   <name>Subcommitt</name>
-                   <identifier>2</identifier>
-                </subdivision>
-                <subdivision type="Workgroup" subtype="Other">
-                   <name>Workg</name>
-                   <identifier>3</identifier>
-                </subdivision>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>Agency</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="publisher"/>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <contributor>
-             <role type="authorizer">
-                <description>committee</description>
-             </role>
-             <organization>
-                <name>International Organization for Standardization</name>
-                <subdivision type="Technical committee" subtype="Other">
-                   <name>ApprovTechcom</name>
-                   <identifier>1</identifier>
-                   <identifier type="full">1/2/3</identifier>
-                </subdivision>
-                <subdivision type="Subcommittee" subtype="Other">
-                   <name>ApprovSubcom</name>
-                   <identifier>2</identifier>
-                </subdivision>
-                <subdivision type="Workgroup" subtype="Other">
-                   <name>ApprovWorkg</name>
-                   <identifier>3</identifier>
-                </subdivision>
-                <abbreviation>ISO</abbreviation>
-             </organization>
-          </contributor>
-          <language>en</language>
-          <script>Latn</script>
-          <status>
-             <stage abbreviation="IS">60</stage>
-             <substage>60</substage>
-          </status>
-          <copyright>
-             <from>#{Date.today.year}</from>
-             <owner>
-                <organization>
-                   <name>International Organization for Standardization</name>
-                   <abbreviation>ISO</abbreviation>
-                </organization>
-             </owner>
-          </copyright>
-          <ext>
-             <doctype>standard</doctype>
-             <flavor>iso</flavor>
-             <structuredidentifier>
-                <project-number>ISO 1000</project-number>
-             </structuredidentifier>
-             <stagename abbreviation="IS">International Standard</stagename>
-          </ext>
-       </bibdata>
+           <bibdata type="standard">
+       <docidentifier type="ISO" primary="true">ISO 1000:#{Date.today.year}</docidentifier>
+       <docidentifier type="iso-reference">ISO 1000:#{Date.today.year}(E)</docidentifier>
+       <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
+       <docidentifier type="iso-undated">ISO 1000</docidentifier>
+       <docidentifier type="iso-with-lang">ISO 1000:#{Date.today.year}(en)</docidentifier>
+       <docnumber>1000</docnumber>
+         <contributor>
+            <role type="author"/>
+            <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+            </organization>
+         </contributor>
+         <contributor>
+            <role type="author">
+               <description>committee</description>
+            </role>
+            <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision type="Technical committee" subtype="Other">
+                  <name>Techcomm</name>
+                  <identifier>1</identifier>
+                  <identifier type="full">1/2/3</identifier>
+               </subdivision>
+               <subdivision type="Subcommittee" subtype="Other">
+                  <name>Subcommitt</name>
+                  <identifier>2</identifier>
+               </subdivision>
+               <subdivision type="Workgroup" subtype="Other">
+                  <name>Workg</name>
+                  <identifier>3</identifier>
+               </subdivision>
+               <abbreviation>ISO</abbreviation>
+            </organization>
+         </contributor>
+         <contributor>
+            <role type="authorizer">
+               <description>Agency</description>
+            </role>
+            <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+            </organization>
+         </contributor>
+         <contributor>
+            <role type="publisher"/>
+            <organization>
+               <name>International Organization for Standardization</name>
+               <abbreviation>ISO</abbreviation>
+            </organization>
+         </contributor>
+         <contributor>
+            <role type="authorizer">
+               <description>committee</description>
+            </role>
+            <organization>
+               <name>International Organization for Standardization</name>
+               <subdivision type="Technical committee" subtype="Other">
+                  <name>ApprovTechcom</name>
+                  <identifier>1</identifier>
+                  <identifier type="full">1/2/3</identifier>
+               </subdivision>
+               <subdivision type="Subcommittee" subtype="Other">
+                  <name>ApprovSubcom</name>
+                  <identifier>2</identifier>
+               </subdivision>
+               <subdivision type="Workgroup" subtype="Other">
+                  <name>ApprovWorkg</name>
+                  <identifier>3</identifier>
+               </subdivision>
+               <abbreviation>ISO</abbreviation>
+            </organization>
+         </contributor>
+         <language>en</language>
+         <script>Latn</script>
+         <status>
+            <stage abbreviation="IS">60</stage>
+            <substage>60</substage>
+         </status>
+         <copyright>
+            <from>#{Date.today.year}</from>
+            <owner>
+               <organization>
+                  <name>International Organization for Standardization</name>
+                  <abbreviation>ISO</abbreviation>
+               </organization>
+            </owner>
+         </copyright>
+         <ext>
+            <doctype>standard</doctype>
+            <flavor>iso</flavor>
+            <structuredidentifier>
+               <project-number>ISO 1000</project-number>
+            </structuredidentifier>
+            <stagename abbreviation="IS">International Standard</stagename>
+         </ext>
+      </bibdata>
     OUTPUT
     xml = xml.at("//xmlns:bibdata")
     expect(strip_guid(xml.to_xml))
@@ -2041,18 +2041,18 @@ RSpec.describe Metanorma::Iso do
       :document-scheme: DOCUMENT-SCHEME
     INPUT
     output = <<~OUTPUT
-      <metanorma-extension>
-        <semantic-metadata>
-            <stage-published>true</stage-published>
-        </semantic-metadata>
-         <presentation-metadata>
-           <document-scheme>DOCUMENT-SCHEME</document-scheme>
-      <toc-heading-levels>2</toc-heading-levels>
-      <html-toc-heading-levels>2</html-toc-heading-levels>
-      <doc-toc-heading-levels>3</doc-toc-heading-levels>
-      <pdf-toc-heading-levels>3</pdf-toc-heading-levels>
-    </presentation-metadata>
-       </metanorma-extension>
+        <metanorma-extension>
+          <semantic-metadata>
+              <stage-published>true</stage-published>
+          </semantic-metadata>
+           <presentation-metadata>
+             <document-scheme>DOCUMENT-SCHEME</document-scheme>
+        <toc-heading-levels>2</toc-heading-levels>
+        <html-toc-heading-levels>2</html-toc-heading-levels>
+        <doc-toc-heading-levels>3</doc-toc-heading-levels>
+        <pdf-toc-heading-levels>3</pdf-toc-heading-levels>
+      </presentation-metadata>
+         </metanorma-extension>
     OUTPUT
     expect(strip_guid(Nokogiri::XML(Asciidoctor
       .convert(input, *OPTIONS))
