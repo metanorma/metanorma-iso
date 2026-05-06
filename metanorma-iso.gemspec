@@ -36,7 +36,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "mnconvert", "~> 1.14"
   spec.add_dependency "pubid"
   spec.add_dependency "tokenizer", "~> 0.3.0"
-  spec.add_dependency "lutaml-model", "~> 0.7.0"
 
   spec.add_development_dependency "benchmark"
   spec.add_development_dependency "canon" #, "= 0.2.3"
