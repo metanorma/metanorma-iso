@@ -1,5 +1,6 @@
 gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
 gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "main"
+gem "metanorma-core", git: "https://github.com/metanorma/metanorma-core", branch: "main"
 gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
 gem "html2doc", git: "https://github.com/metanorma/html2doc", branch: "main"
 
