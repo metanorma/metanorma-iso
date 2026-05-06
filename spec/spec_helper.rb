@@ -16,6 +16,8 @@ require "relaton/iso"
 
 Canon::Config.instance.profile = :metanorma
 
+require "isodoc/spec_helpers/canon_html_input_guard"
+
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"

@@ -498,17 +498,10 @@ RSpec.describe IsoDoc do
                <div id="terms_and_definitions">
                    <h1>1  Terms and Definitions</h1>
                    <p class="TermNum" id="paddy1">1.1</p>
-                   <p class="Terms" style="text-align:left;">
-                      <b>
-                         <dfn>paddy</dfn>
-                      </b>
-                   </p>
+                   <p class="Terms" style="text-align:left;"><b><dfn>paddy</dfn></b></p>
                    <p id="_">&lt;rice&gt;  rice retaining its husk after threshing</p>
                    <div id="_" class="example">
-                      <p>
-                         <span class="example_label">EXAMPLE 1</span>
-                           Foreign seeds, husks, bran, sand, dust.
-                      </p>
+                      <p><span class="example_label">EXAMPLE 1</span>  Foreign seeds, husks, bran, sand, dust.</p>
                       <div class="ul_wrap">
                          <ul>
                             <li id="_">A</li>
@@ -516,48 +509,23 @@ RSpec.describe IsoDoc do
                       </div>
                    </div>
                    <div id="_" class="example">
-                      <p>
-                         <span class="example_label">EXAMPLE 2</span>
-                          
-                      </p>
+                      <p><span class="example_label">EXAMPLE 2</span>  </p>
                       <div class="ul_wrap">
                          <ul>
                             <li id="_">A</li>
                          </ul>
                       </div>
                    </div>
-                   <p>
-                      [SOURCE:
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">7301</span>
-                      :
-                      <span class="stdyear">2011</span>
-                      ,
-                      <span class="citesec">3.1</span>
-                      , modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]
-                   </p>
+                   <p>[SOURCE: <span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>,
+                      <span class="citesec">3.1</span>, modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]</p>
                    <p class="TermNum" id="paddy">1.2</p>
-                   <p class="Terms" style="text-align:left;">
-                      <b>
-                         <dfn>paddy</dfn>
-                      </b>
-                   </p>
-                   <p class="AltTerms" style="text-align:left;">
-                      <dfn>paddy rice</dfn>
-                   </p>
-                   <p class="AltTerms" style="text-align:left;">
-                      <dfn>rough rice</dfn>
-                   </p>
-                   <p class="DeprecatedTerms" style="text-align:left;">
-                      DEPRECATED:
-                      <dfn>cargo rice</dfn>
-                   </p>
+                   <p class="Terms" style="text-align:left;"><b><dfn>paddy</dfn></b></p>
+                   <p class="AltTerms" style="text-align:left;"><dfn>paddy rice</dfn></p>
+                   <p class="AltTerms" style="text-align:left;"><dfn>rough rice</dfn></p>
+                   <p class="DeprecatedTerms" style="text-align:left;">DEPRECATED:<dfn>cargo rice</dfn></p>
                    <p id="_">rice retaining its husk after threshing</p>
                    <div id="_" class="example">
-                      <p>
-                         <span class="example_label">EXAMPLE</span>
-                          
-                      </p>
+                      <p><span class="example_label">EXAMPLE</span> </p>
                       <div class="ul_wrap">
                          <ul>
                             <li id="_">A</li>
@@ -565,15 +533,10 @@ RSpec.describe IsoDoc do
                       </div>
                    </div>
                    <div id="_" class="Note">
-                      <p>
-                         <span class="termnote_label">Note 1 to entry: </span>
-                         The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.
-                      </p>
+                      <p><span class="termnote_label">Note 1 to entry: </span>The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking. </p>
                    </div>
                    <div id="_" class="Note">
-                      <p>
-                         <span class="termnote_label">Note 2 to entry: </span>
-                      </p>
+                      <p><span class="termnote_label">Note 2 to entry: </span></p>
                       <div class="ul_wrap">
                          <ul>
                             <li id="_">A</li>
@@ -581,30 +544,11 @@ RSpec.describe IsoDoc do
                       </div>
                       <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
                    </div>
-                   <p>
-                      [SOURCE:
-                      <span class="stdpublisher">ISO </span>
-                      <span class="stddocNumber">7301</span>
-                      :
-                      <span class="stdyear">2011</span>
-                      ,
-                      <span class="citesec">3.1</span>
-                      ]
-                   </p>
+                   <p>[SOURCE:<span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>,<span class="citesec">3.1</span>]</p>
                    <p class="TermNum" id="A">1.3</p>
-                   <p class="Terms" style="text-align:left;">
-                      <b>
-                         <dfn>term1</dfn>
-                      </b>
-                   </p>
-                   term1 definition
+                   <p class="Terms" style="text-align:left;"><b><dfn>term1</dfn></b></p>term1 definition
                    <p class="TermNum" id="B">1.3.1</p>
-                   <p class="Terms" style="text-align:left;">
-                      <b>
-                         <dfn>term2</dfn>
-                      </b>
-                   </p>
-                   term2 definition
+                   <p class="Terms" style="text-align:left;"><b><dfn>term2</dfn></b></p>term2 definition
                 </div>
              </div>
           </body>
@@ -613,22 +557,12 @@ RSpec.describe IsoDoc do
 
     word = <<~OUTPUT
       <div id="terms_and_definitions">
-         <h1>
-            1
-            <span style="mso-tab-count:1">  </span>
-            Terms and Definitions
-         </h1>
+         <h1>1<span style="mso-tab-count:1">  </span>Terms and Definitions</h1>
          <p class="TermNum" id="paddy1">1.1</p>
-         <p class="Terms" style="text-align:left;">
-            <b>paddy</b>
-         </p>
+         <p class="Terms" style="text-align:left;"><b>paddy</b></p>
          <p class="Definition" id="_">&lt;rice&gt;  rice retaining its husk after threshing</p>
          <div id="_" class="example">
-            <p>
-               <span class="example_label">EXAMPLE 1</span>
-               <span style="mso-tab-count:1">  </span>
-               Foreign seeds, husks, bran, sand, dust.
-            </p>
+            <p><span class="example_label">EXAMPLE 1</span><span style="mso-tab-count:1">  </span>Foreign seeds, husks, bran, sand, dust. </p>
             <div class="ul_wrap">
                <ul>
                   <li id="_">A</li>
@@ -636,39 +570,23 @@ RSpec.describe IsoDoc do
             </div>
          </div>
          <div id="_" class="example">
-            <p>
-               <span class="example_label">EXAMPLE 2</span>
-               <span style="mso-tab-count:1">  </span>
-            </p>
+            <p><span class="example_label">EXAMPLE 2</span><span style="mso-tab-count:1">  </span></p>
             <div class="ul_wrap">
                <ul>
                   <li id="_">A</li>
                </ul>
             </div>
          </div>
-         <p class="Source">
-            [SOURCE:
-            <span class="stdpublisher">ISO </span>
-            <span class="stddocNumber">7301</span>
-            :
-            <span class="stdyear">2011</span>
-            ,
-            <span class="citesec">3.1</span>
-            , modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]
-         </p>
+         <p class="Source">[SOURCE:<span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>,
+            <span class="citesec">3.1</span>, modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]</p>
          <p class="TermNum" id="paddy">1.2</p>
-         <p class="Terms" style="text-align:left;">
-            <b>paddy</b>
-         </p>
+         <p class="Terms" style="text-align:left;"><b>paddy</b></p>
          <p class="AltTerms" style="text-align:left;">paddy rice</p>
          <p class="AltTerms" style="text-align:left;">rough rice</p>
          <p class="DeprecatedTerms" style="text-align:left;">DEPRECATED: cargo rice</p>
          <p class="Definition" id="_">rice retaining its husk after threshing</p>
          <div id="_" class="example">
-            <p>
-               <span class="example_label">EXAMPLE</span>
-               <span style="mso-tab-count:1">  </span>
-            </p>
+            <p><span class="example_label">EXAMPLE</span><span style="mso-tab-count:1">  </span></p>
             <div class="ul_wrap">
                <ul>
                   <li id="_">A</li>
@@ -676,15 +594,10 @@ RSpec.describe IsoDoc do
             </div>
          </div>
          <div id="_" class="Note">
-            <p class="Note">
-               <span class="termnote_label">Note 1 to entry: </span>
-               The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.
-            </p>
+            <p class="Note"><span class="termnote_label">Note 1 to entry: </span>The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking. </p>
          </div>
          <div id="_" class="Note">
-            <p class="Note">
-               <span class="termnote_label">Note 2 to entry: </span>
-            </p>
+            <p class="Note"><span class="termnote_label">Note 2 to entry: </span></p>
             <div class="ul_wrap">
                <ul>
                   <li id="_">A</li>
@@ -692,26 +605,12 @@ RSpec.describe IsoDoc do
             </div>
             <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
          </div>
-         <p class="Source">
-            [SOURCE:
-            <span class="stdpublisher">ISO </span>
-            <span class="stddocNumber">7301</span>
-            :
-            <span class="stdyear">2011</span>
-            ,
-            <span class="citesec">3.1</span>
-            ]
-         </p>
+         <p class="Source">[SOURCE:<span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>,
+            <span class="citesec">3.1</span>]</p>
          <p class="TermNum" id="A">1.3</p>
-         <p class="Terms" style="text-align:left;">
-            <b>term1</b>
-         </p>
-         term1 definition
+         <p class="Terms" style="text-align:left;"><b>term1</b></p>term1 definition
          <p class="TermNum" id="B">1.3.1</p>
-         <p class="Terms" style="text-align:left;">
-            <b>term2</b>
-         </p>
-         term2 definition
+         <p class="Terms" style="text-align:left;"><b>term2</b></p>term2 definition
       </div>
     OUTPUT
     pres_output = IsoDoc::Iso::PresentationXMLConvert
