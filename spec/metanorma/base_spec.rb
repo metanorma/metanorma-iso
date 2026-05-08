@@ -89,6 +89,9 @@ RSpec.describe Metanorma::Iso do
         <docidentifier type='iso-undated'>ISO/WD 1000-1.3</docidentifier>
         <docidentifier type="iso-with-lang">ISO/WD 1000-1.3:2000(en)</docidentifier>
         <docnumber>1000</docnumber>
+        <date type="updated">
+          <on>2000-01-01</on>
+        </date>
           <contributor>
             <role type="author" />
             <organization>
@@ -213,10 +216,7 @@ RSpec.describe Metanorma::Iso do
             </organization>
           </contributor>
           <edition>2</edition>
-          <version>
-             <revision-date>2000-01-01</revision-date>
-             <draft>0.3.4</draft>
-          </version>
+          <version>0.3.4</version>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -1140,7 +1140,6 @@ RSpec.describe Metanorma::Iso do
       :docnumber: 1000
       :partnumber: 1
       :edition: 2
-      :revdate: 2000-01-01
       :draft: 0.3.4
       :language: ru
       :title-intro-en: Introduction
@@ -1209,10 +1208,7 @@ RSpec.describe Metanorma::Iso do
           </organization>
         </contributor>
         <edition>2</edition>
-        <version>
-          <revision-date>2000-01-01</revision-date>
-          <draft>0.3.4</draft>
-        </version>
+        <version>0.3.4</version>
         <language>ru</language>
         <script>Cyrl</script>
         <status>
@@ -1277,6 +1273,9 @@ RSpec.describe Metanorma::Iso do
          <date type="published">
            <on>1000-01</on>
          </date>
+         <date type="updated">
+           <on>2000-01</on>
+         </date>
          <contributor>
            <role type="author"/>
            <organization>
@@ -1326,9 +1325,7 @@ RSpec.describe Metanorma::Iso do
              <uri>http://www.example.com</uri>
            </organization>
          </contributor>
-         <version>
-           <revision-date>2000-01</revision-date>
-         </version>
+         <version>2000-01</version>
          <language>el</language>
          <script>Grek</script>
          <status>

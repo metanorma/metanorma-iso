@@ -42,11 +42,11 @@ RSpec.describe IsoDoc::Iso::Metadata do
           <date type="obsoleted">
             <on>2014</on>
           </date>
+          <date type="updated">
+            <on>2016-05-01</on>
+          </date>
           <edition>2</edition>
-          <version>
-            <revision-date>2016-05-01</revision-date>
-            <draft>0.4</draft>
-          </version>
+          <version>0.4</version>
           <contributor>
              <role type="author"/>
              <organization>
@@ -276,6 +276,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         tc: "TC 62",
         tc_docnumber: ["17301", "17302"],
         unpublished: true,
+        updateddate: "2016-05-01",
         wg: "WG 62A1" }
     expect(metadata(c.info(Nokogiri::XML(input),
                            nil))).to be_equivalent_to output
