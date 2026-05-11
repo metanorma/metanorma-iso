@@ -1199,7 +1199,7 @@ RSpec.describe IsoDoc do
         lang: "fr",
         publisher: "International Organization for Standardization",
         revdate: "2000-01-01",
-        revdate_monthyear: "Janvier 2000",
+        revdate_monthyear: "janvier 2000",
         script: "Latn",
         stage: "10",
         stage_int: 10,
