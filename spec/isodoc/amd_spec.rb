@@ -873,6 +873,9 @@ RSpec.describe IsoDoc do
              <date type="created">
                <on>2016-05-01</on>
              </date>
+             <date type="updated">
+               <on>2000-01-01</on>
+             </date>
              <contributor>
                <role type="author"/>
                <organization>
@@ -948,10 +951,7 @@ RSpec.describe IsoDoc do
                </organization>
              </contributor>
              <edition>2</edition>
-             <version>
-               <revision-date>2000-01-01</revision-date>
-               <draft>0.3.4</draft>
-             </version>
+             <version>0.3.4</version>
              <language>en</language>
              <script>Latn</script>
              <status>
@@ -1047,7 +1047,8 @@ RSpec.describe IsoDoc do
         statusabbr: "PreNWIP3",
         substage_int: "20",
         tc: "TC 62",
-        unpublished: true,
+        unpublished: true, 
+        updateddate: "2000-01-01",
         wg: "WG 62A1" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
       .to be_equivalent_to output
@@ -1094,6 +1095,9 @@ RSpec.describe IsoDoc do
           <date type="created">
             <on>2016-05-01</on>
           </date>
+                      <date type="updated">
+               <on>2000-01-01</on>
+             </date>
           <contributor>
             <role type="author"/>
             <organization>
@@ -1109,10 +1113,7 @@ RSpec.describe IsoDoc do
             </organization>
           </contributor>
           <edition>2</edition>
-          <version>
-            <revision-date>2000-01-01</revision-date>
-            <draft>0.3.4</draft>
-          </version>
+          <version>0.3.4</version>
           <language>fr</language>
           <script>Latn</script>
           <status>
@@ -1205,7 +1206,8 @@ RSpec.describe IsoDoc do
         stageabbr: "NWIP",
         statusabbr: "PreNWIP3",
         substage_int: "20",
-        unpublished: true }
+        unpublished: true, 
+        updateddate: "2000-01-01" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
       .to be_equivalent_to output
   end
@@ -1247,6 +1249,9 @@ RSpec.describe IsoDoc do
           <date type="created">
             <on>2016-05-01</on>
           </date>
+                      <date type="updated">
+               <on>2000-01-01</on>
+             </date>
           <contributor>
             <role type="author"/>
             <organization>
@@ -1262,10 +1267,7 @@ RSpec.describe IsoDoc do
             </organization>
           </contributor>
           <edition>2</edition>
-          <version>
-            <revision-date>2000-01-01</revision-date>
-            <draft>0.3.4</draft>
-          </version>
+          <version>0.3.4</version>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -1357,7 +1359,8 @@ RSpec.describe IsoDoc do
         stageabbr: "NWIP",
         statusabbr: "PreNWIP3",
         substage_int: "20",
-        unpublished: true }
+        unpublished: true,
+        updateddate: "2000-01-01" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
       .to be_equivalent_to output
   end

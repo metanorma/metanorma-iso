@@ -5,7 +5,7 @@ module IsoDoc
     class Metadata < IsoDoc::Metadata
       def initialize(lang, script, locale, i18n)
         super
-        DATETYPES.each { |w| @metadata["#{w.gsub(/-/, '_')}date".to_sym] = nil }
+        DATETYPES.each { |w| @metadata[:"#{w.gsub('-', '_')}date"] = nil }
         set(:obsoletes, nil)
         set(:obsoletes_part, nil)
       end
@@ -24,11 +24,12 @@ module IsoDoc
       def docstatus(isoxml, _out)
         docstatus = isoxml.at(ns("//bibdata/status/stage"))
         published = published_default(isoxml)
-        revdate = isoxml.at(ns("//bibdata/version/revision-date"))
+        revdate = isoxml.at(ns("//bibdata/date[@type='updated']"))
         set(:revdate, revdate&.text)
         docstatus and docstatus1(isoxml, docstatus, published)
         docscheme = get[:"presentation_metadata_document-scheme"]
-        docscheme && !docscheme.empty? and set(:document_scheme, docscheme.first)
+        docscheme && !docscheme.empty? and set(:document_scheme,
+                                               docscheme.first)
       end
 
       def docstatus1(isoxml, docstatus, published)
@@ -39,7 +40,7 @@ module IsoDoc
             status_abbrev(docstatus["abbreviation"] || "??",
                           isoxml.at(ns("//bibdata/status/substage"))&.text,
                           isoxml.at(ns("//bibdata/status/iteration"))&.text,
-                          isoxml.at(ns("//bibdata/version/draft"))&.text,
+                          isoxml.at(ns("//bibdata/version"))&.text,
                           isoxml.at(ns("//bibdata/ext/doctype"))&.text))
         !published and set(:stageabbr, docstatus["abbreviation"])
       end
@@ -67,8 +68,8 @@ module IsoDoc
       end
 
       def title_part_prefix(xml, part, lang)
-        t = xml.at(ns("//bibdata/title[@language='#{lang}']"\
-          "[@type='title-#{part}-prefix']")) or return
+        t = xml.at(ns("//bibdata/title[@language='#{lang}']" \
+                      "[@type='title-#{part}-prefix']")) or return
         to_xml(t.children)
       end
 
@@ -97,7 +98,7 @@ module IsoDoc
       def title_parts(isoxml, lang)
         %w(intro main complementary part amd add).each_with_object({}) do |w, m|
           m[w.to_sym] = isoxml.at(ns("//bibdata/title[@type='title-#{w}' and " \
-                              "@language='#{lang}']"))
+                                     "@language='#{lang}']"))
         end
       end
 
@@ -164,7 +165,7 @@ module IsoDoc
       end
 
       COMMITTEE = "//bibdata/contributor[role/@type = 'author'] " \
-        "[role/description = 'committee']/organization".freeze
+                  "[role/description = 'committee']/organization".freeze
 
       def tc_base(xml, _grouptype)
         s = xml.at(ns("#{COMMITTEE}/subdivision[@type = 'Technical committee']"))
@@ -208,8 +209,8 @@ module IsoDoc
 
       def secretariat(xml)
         sec = xml.at(ns("//bibdata/contributor[role/@type = 'author']" \
-          "[role/description = 'secretariat']/organization/subdivision" \
-          "[@type = 'Secretariat']/name"))
+                        "[role/description = 'secretariat']/organization/subdivision" \
+                        "[@type = 'Secretariat']/name"))
         set(:secretariat, sec.text) if sec
       end
 

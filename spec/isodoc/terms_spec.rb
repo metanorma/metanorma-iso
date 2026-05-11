@@ -1075,6 +1075,9 @@ RSpec.describe IsoDoc do
         <date type="published">
           <from>2010-04-01</from>
         </date>
+        <date type="updated">
+          <from>2010-04-01</from>
+        </date>
         <contributor>
           <role type="publisher"/>
           <organization>
@@ -1085,9 +1088,7 @@ RSpec.describe IsoDoc do
           </organization>
         </contributor>
         <edition>2.0.0</edition>
-        <version>
-          <revision-date>2010-04-01</revision-date>
-        </version>
+        <version>2010-04-01</version>
         <language>en</language>
         <language>fr</language>
         <script>Latn</script>
