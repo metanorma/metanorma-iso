@@ -99,20 +99,8 @@ module IsoDoc
         end
       end
 
-      def table_parse(node, out)
-        @in_table = true
-        out.table(**table_attrs(node)) do |t|
-          table_title_parse(node, t)
-          table_parse_core(node, t)
-          table_parse_tail(node, t)
-        end
-        @in_table = false
-      end
-
       def table_title_parse(node, out)
-        name = node.at(ns("./fmt-name"))
-        summ = node["summary"]
-        meas = node.at(ns("./note[@type = 'units']"))
+        name, summ, meas = table_title_parse_prep(node)
         name || summ || meas or return
         out.caption do |p|
           children_parse(name, p)
@@ -123,14 +111,16 @@ module IsoDoc
         end
       end
 
-      def table_parse_tail(node, out)
-        (key = node.at(ns("./key"))) && parse(key, out)
-        node.xpath(ns("./fmt-source")).each { |n| parse(n, out) }
-        node.xpath(ns("./note[not(@type = 'units')]")).each do |n|
-          parse(n, out)
-        end
-        node.xpath(ns("./fmt-footnote-container/fmt-fn-body"))
-          .each { |n| parse(n, out) }
+      def table_title_parse_prep(node)
+        name = node.at(ns("./fmt-name"))
+        summ = node["summary"]
+        meas = node.at(ns("./note[@type = 'units']"))
+        [name, summ, meas]
+      end
+
+      def table_parse_tail_elems
+        ["./key", "./fmt-source", "./note[not(@type = 'units')]",
+         "./fmt-footnote-container/fmt-fn-body"]
       end
 
       def figure_parse1(node, out)

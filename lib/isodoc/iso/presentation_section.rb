@@ -20,8 +20,7 @@ module IsoDoc
         docxml.at(ns("//bibdata//contributor/role[description = 'committee']")) or
           ret += "<p>Editorial groups are missing.</p>"
         docxml.at(ns("//bibdata/date[@type = 'published' or @type = 'issued' " \
-                     "or @type = 'created']")) ||
-          docxml.at(ns("//bibdata/version/revision-date")) or
+                     "or @type = 'created' or @type = 'updated']")) or
           ret += "<p>Document date is missing.</p>"
         ret
       end

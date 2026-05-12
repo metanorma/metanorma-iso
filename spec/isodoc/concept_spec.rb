@@ -487,120 +487,48 @@ RSpec.describe IsoDoc do
     OUTPUT
     output = <<~OUTPUT
       #{HTML_HDR}
-                <div>
-                   <h1>1  Normative References</h1>
-                   <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-                   <p id="ISO712" class="NormRef">
-                      <span class="stdpublisher">ISO</span> 
-                      <span class="stddocNumber">712</span>
-                      ,
-                      <i>
-                         <span class="stddocTitle">Cereals and cereal products</span>
-                      </i>
-                   </p>
-                </div>
-                <div id="Terms">
-                   <h1>2</h1>
-                   <p class="TermNum" id="B">2.1</p>
-                   <p class="Terms" style="text-align:left;">
-                      <b><dfn>B</dfn></b>
-                   </p>
-                   <p>
-                      <div class="ul_wrap">
-                         <ul>
-                            <li id="_">
-                               (
-                               <a href="#clause1">
-                                  <span class="citesec">Clause 3</span>
-                               </a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>term</i>
-                               (
-                               <a href="#clause1">
-                                  <span class="citesec">Clause 3</span>
-                               </a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>w[o]rd</i>
-                               (
-                               <a href="#clause1">Clause #1</a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>term</i>
-                               (
-                               <a href="#ISO712">
-                                  <span class="stdpublisher">ISO</span>  
-                                  <span class="stddocNumber">712</span>
-                               </a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>word</i>
-                               (
-                               <a href="#ISO712">The Aforementioned Citation</a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>word</i>
-                               (
-                               <a href="#ISO712">
-                                  <span class="stdpublisher">ISO</span>  
-                                  <span class="stddocNumber">712</span>
-                                  ,
-                                  <span class="citesec">3.1</span>
-                                  ,
-                                  <span class="citefig">Figure a</span>
-                               </a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>word</i>
-                               (
-                               <a href="#ISO712">
-                                  <span class="stdpublisher">ISO</span> 
-                                  <span class="stddocNumber">712</span>
-                                  ,
-                                  <span class="citesec">3.1</span>
-                                  and
-                                  <span class="citefig">Figure b</span>
-                               </a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>word</i>
-                               (
-                               <a href="#ISO712">
+             <div>
+               <h1>1&#xA0; Normative References</h1>
+               <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+               <p id="ISO712" class="NormRef"><span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span>, <i><span class="stddocTitle">Cereals and cereal products</span></i></p>
+             </div>
+             <div id="Terms">
+               <h1>2</h1>
+               <p class="TermNum" id="B">2.1</p>
+               <p class="Terms" style="text-align:left;">
+                 <b>
+                   <dfn>B</dfn>
+                 </b>
+               </p>
+               <p></p>
+               <div class="ul_wrap">
+                 <ul>
+                   <li id="_">(<a href="#clause1"><span class="citesec">Clause 3</span></a>)</li>
+                   <li id="_"><i>term</i> (<a href="#clause1"><span class="citesec">Clause 3</span></a>)</li>
+                   <li id="_"><i>w[o]rd</i> (<a href="#clause1">Clause #1</a>)</li>
+                   <li id="_"><i>term</i> (<a href="#ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span></a>)</li>
+                   <li id="_"><i>word</i> (<a href="#ISO712">The Aforementioned Citation</a>)</li>
+                   <li id="_"><i>word</i> (<a href="#ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>,  <span class="citesec">3.1</span>,  <span class="citefig">Figure a</span></a>)</li>
+                   <li id="_"><i>word</i> (<a href="#ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>,  <span class="citesec">3.1</span> and  <span class="citefig">Figure b</span></a>)</li>
+                   <li id="_"><i>word</i> (<a href="#ISO712">
      
      
                The Aforementioned Citation
-               </a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>word</i>
-                               (Termbase IEV, term ID 135-13-13)
-                            </li>
-                            <li id="_">
-                               <i>word</i>
-                               (The IEV database)
-                            </li>
-                            <li id="_">
-                               <i>word</i>
-                               <b>error!</b>
-                            </li>
-                         </ul>
-                      </div>
-                   </p>
-                </div>
-                <div id="clause1">
-                   <h1>3  Clause 1</h1>
-                </div>
+               </a>)</li>
+                   <li id="_"><i>word</i> (Termbase IEV, term ID 135-13-13)</li>
+                   <li id="_"><i>word</i> (The IEV database)</li>
+                   <li id="_">
+                     <i>word</i><b>error!</b>
+                   </li>
+                 </ul>
+               </div>
+               <p></p>
              </div>
-          </body>
+             <div id="clause1">
+               <h1>3&#xA0; Clause 1</h1>
+             </div>
+           </div>
+         </body>
        </html>
       OUTPUT
     pres_output = IsoDoc::Iso::PresentationXMLConvert

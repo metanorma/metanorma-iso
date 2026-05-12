@@ -209,6 +209,9 @@ RSpec.describe Metanorma::Iso do
              <date type="created">
                 <on>2016-05-01</on>
              </date>
+             <date type="updated">
+                <on>2000-01-01</on>
+             </date>
              <contributor>
                 <role type="author"/>
                 <organization>
@@ -333,10 +336,7 @@ RSpec.describe Metanorma::Iso do
                 </organization>
              </contributor>
              <edition>2</edition>
-             <version>
-                <revision-date>2000-01-01</revision-date>
-                <draft>0.3.4</draft>
-             </version>
+             <version>0.3.4</version>
              <language>en</language>
              <script>Latn</script>
              <status>

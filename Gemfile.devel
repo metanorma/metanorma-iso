@@ -1,6 +1,5 @@
 gem "isodoc", git: "https://github.com/metanorma/isodoc", branch: "main"
 gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "main"
-gem "metanorma-core", git: "https://github.com/metanorma/metanorma-core", branch: "main"
-gem "canon", git: "https://github.com/lutaml/canon", branch: "main", branch: "fix/whitespace-type-plumbing-and-parse-coupling"
+gem "metanorma-plugin-lutaml", git: "https://github.com/metanorma/metanorma-plugin-lutaml", branch: "fix/ruby-4.0"
 
 

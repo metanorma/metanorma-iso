@@ -719,118 +719,111 @@ RSpec.describe IsoDoc do
        </iso-standard>
     OUTPUT
     html = <<~OUTPUT
-      <html lang="en">
-        <head/>
-        <body lang="en">
-          <div class="title-section">
-            <p> </p>
-          </div>
-          <br/>
-          <div class="prefatory-section">
-            <p> </p>
-          </div>
-          <br/>
-          <div class="main-section">
-            <div class="authority">
-              <div class="boilerplate-copyright">
-                <div id="_">
-                  <h1>Copyright</h1>
-                </div>
-              </div>
-              <div class="boilerplate-license">
-                <div id="_">
-                  <h1>License</h1>
-                </div>
-              </div>
-              <div class="boilerplate-legal">
-                <div id="_">
-                  <h1>Legal</h1>
-                </div>
-              </div>
-              <div class="boilerplate-feedback">
-                <div id="_">
-                  <h1>Feedback</h1>
-                </div>
-              </div>
-            </div>
-            <br/>
-            <div id="_">
-              <h1 class="AbstractTitle">Abstract</h1>
-            </div>
-            <br/>
-            <div id="_">
-              <h1 class="ForewordTitle">Foreword</h1>
-              <p id="A">This is a preamble</p>
-            </div>
-            <br/>
-            <div class="Section3" id="B">
-              <h1 class="IntroTitle">Introduction</h1>
-              <div id="C">
-                <h2>Introduction Subsection</h2>
-              </div>
-            </div>
-            <br/>
-            <div class="Section3" id="B1">
-              <h1 class="IntroTitle">Dedication</h1>
-            </div>
-            <br/>
-            <div class="Section3" id="B2">
-              <h1 class="IntroTitle">Note to reader</h1>
-            </div>
-            <br/>
-            <div class="Section3" id="_">
-              <h1 class="IntroTitle">Acknowledgements</h1>
-            </div>
-            <div id="M">
-              <h1>Clause 4</h1>
-              <div id="N">
-                <h2>Introduction</h2>
-              </div>
-              <div id="O">
-                <h2>Clause 4.2</h2>
-              </div>
-              <div id="O1"></div>
-            </div>
-            <div id="D">
-              <h1>Scope</h1>
-              <p id="E">Text</p>
-            </div>
-            <br/>
-            <div class="Section3" id="P">
-              <h1 class="Annex">
-                <b>Annex A</b>
-                <br/><span class="obligation">(normative)</span>
-                <br/>
-                <br/>
-                <b>Annex</b></h1>
-                <p style="display:none;" class="variant-title-toc">Annex A  Annex</p>
-              <div id="Q">
-                <h2>A.1&#160; Annex A.1</h2>
-                <div id="Q1">
-                  <h3>A.1.1&#160; Annex A.1a</h3>
-                </div>
-              </div>
-            </div>
-            <br/>
-            <div class="Section3" id="P1">
-            <p style="display:none;" class="variant-title-toc">Annex B</p>
-              <h1 class="Annex">
-                <b>Annex B</b>
-                <br/><span class="obligation">(normative)</span></h1>
-            </div>
-            <div>
-              <h1>Normative References</h1>
-            </div>
-            <br/>
-            <div>
-              <h1 class="Section3">Bibliography</h1>
-              <div>
-                <h2 class="Section3">Bibliography Subsection</h2>
-              </div>
-            </div>
-          </div>
-        </body>
-      </html>
+       <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+         <head></head>
+         <body lang="en" xml:lang="en">
+           <div class="title-section">
+             <p>&#xA0;</p>
+           </div>
+           <br />
+           <div class="prefatory-section">
+             <p>&#xA0;</p>
+           </div>
+           <br />
+           <div class="main-section">
+             <div class="authority">
+               <div class="boilerplate-copyright">
+                 <div id="_">
+                   <h1>Copyright</h1>
+                 </div>
+               </div>
+               <div class="boilerplate-license">
+                 <div id="_">
+                   <h1>License</h1>
+                 </div>
+               </div>
+               <div class="boilerplate-legal">
+                 <div id="_">
+                   <h1>Legal</h1>
+                 </div>
+               </div>
+               <div class="boilerplate-feedback">
+                 <div id="_">
+                   <h1>Feedback</h1>
+                 </div>
+               </div>
+             </div>
+             <br />
+             <div id="_">
+               <h1 class="AbstractTitle">Abstract</h1>
+             </div>
+             <br />
+             <div id="_">
+               <h1 class="ForewordTitle">Foreword</h1>
+               <p id="A">This is a preamble</p>
+             </div>
+             <br />
+             <div class="Section3" id="B">
+               <h1 class="IntroTitle">Introduction</h1>
+               <div id="C">
+                 <h2>Introduction Subsection</h2>
+               </div>
+             </div>
+             <br />
+             <div id="B1" class="Section3">
+               <h1 class="IntroTitle">Dedication</h1>
+             </div>
+             <br />
+             <div id="B2" class="Section3">
+               <h1 class="IntroTitle">Note to reader</h1>
+             </div>
+             <br />
+             <div class="Section3" id="_">
+               <h1 class="IntroTitle">Acknowledgements</h1>
+             </div>
+             <div id="M">
+               <h1>Clause 4</h1>
+               <div id="N">
+                 <h2>Introduction</h2>
+               </div>
+               <div id="O">
+                 <h2>Clause 4.2</h2>
+               </div>
+               <div id="O1"></div>
+             </div>
+             <div id="D">
+               <h1>Scope</h1>
+               <p id="E">Text</p>
+             </div>
+             <br />
+             <div id="P" class="Section3">
+               <h1 class="Annex"><b>Annex A</b><br /><span class="obligation">(normative)</span><br /><br /><b>Annex</b></h1>
+               <p style="display:none;" class="variant-title-toc">Annex A&#xA0; Annex</p>
+               <div id="Q">
+                 <h2>A.1&#xA0; Annex A.1</h2>
+                 <div id="Q1">
+                   <h3>A.1.1&#xA0; Annex A.1a</h3>
+                 </div>
+               </div>
+             </div>
+             <br />
+             <div id="P1" class="Section3">
+               <p style="display:none;" class="variant-title-toc">Annex B</p>
+               <h1 class="Annex"><b>Annex B</b><br /><span class="obligation">(normative)</span></h1>
+             </div>
+             <div>
+               <h1>Normative References</h1>
+             </div>
+             <br />
+             <div>
+               <h1 class="Section3">Bibliography</h1>
+               <div>
+                 <h2 class="Section3">Bibliography Subsection</h2>
+               </div>
+             </div>
+           </div>
+         </body>
+       </html>
     OUTPUT
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
@@ -879,6 +872,9 @@ RSpec.describe IsoDoc do
              <docnumber>17301</docnumber>
              <date type="created">
                <on>2016-05-01</on>
+             </date>
+             <date type="updated">
+               <on>2000-01-01</on>
              </date>
              <contributor>
                <role type="author"/>
@@ -955,10 +951,7 @@ RSpec.describe IsoDoc do
                </organization>
              </contributor>
              <edition>2</edition>
-             <version>
-               <revision-date>2000-01-01</revision-date>
-               <draft>0.3.4</draft>
-             </version>
+             <version>0.3.4</version>
              <language>en</language>
              <script>Latn</script>
              <status>
@@ -1054,7 +1047,8 @@ RSpec.describe IsoDoc do
         statusabbr: "PreNWIP3",
         substage_int: "20",
         tc: "TC 62",
-        unpublished: true,
+        unpublished: true, 
+        updateddate: "2000-01-01",
         wg: "WG 62A1" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
       .to be_equivalent_to output
@@ -1101,6 +1095,9 @@ RSpec.describe IsoDoc do
           <date type="created">
             <on>2016-05-01</on>
           </date>
+                      <date type="updated">
+               <on>2000-01-01</on>
+             </date>
           <contributor>
             <role type="author"/>
             <organization>
@@ -1116,10 +1113,7 @@ RSpec.describe IsoDoc do
             </organization>
           </contributor>
           <edition>2</edition>
-          <version>
-            <revision-date>2000-01-01</revision-date>
-            <draft>0.3.4</draft>
-          </version>
+          <version>0.3.4</version>
           <language>fr</language>
           <script>Latn</script>
           <status>
@@ -1205,14 +1199,15 @@ RSpec.describe IsoDoc do
         lang: "fr",
         publisher: "International Organization for Standardization",
         revdate: "2000-01-01",
-        revdate_monthyear: "Janvier 2000",
+        revdate_monthyear: "janvier 2000",
         script: "Latn",
         stage: "10",
         stage_int: 10,
         stageabbr: "NWIP",
         statusabbr: "PreNWIP3",
         substage_int: "20",
-        unpublished: true }
+        unpublished: true, 
+        updateddate: "2000-01-01" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
       .to be_equivalent_to output
   end
@@ -1254,6 +1249,9 @@ RSpec.describe IsoDoc do
           <date type="created">
             <on>2016-05-01</on>
           </date>
+                      <date type="updated">
+               <on>2000-01-01</on>
+             </date>
           <contributor>
             <role type="author"/>
             <organization>
@@ -1269,10 +1267,7 @@ RSpec.describe IsoDoc do
             </organization>
           </contributor>
           <edition>2</edition>
-          <version>
-            <revision-date>2000-01-01</revision-date>
-            <draft>0.3.4</draft>
-          </version>
+          <version>0.3.4</version>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -1364,7 +1359,8 @@ RSpec.describe IsoDoc do
         stageabbr: "NWIP",
         statusabbr: "PreNWIP3",
         substage_int: "20",
-        unpublished: true }
+        unpublished: true,
+        updateddate: "2000-01-01" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
       .to be_equivalent_to output
   end
@@ -1446,10 +1442,7 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR}
                    <p class="zzSTDTitle1">
-               <span class="boldtitle">Introduction — Main Title — Title — </span>
-               <span class="nonboldtitle">Part 1:</span>
-               <span class="boldtitle">Title Part</span>
-             </p>
+               <span class="boldtitle">Introduction — Main Title — Title — </span><span class="nonboldtitle">Part 1:</span><span class="boldtitle">Title Part</span></p>
              <p class="zzSTDTitle2">AMENDMENT 1: Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</p>
              <p class="zzSTDTitle2">TECHNICAL CORRIGENDUM 2</p>
              <div id="_">
@@ -1916,10 +1909,10 @@ RSpec.describe IsoDoc do
       .sub(%r{<localized-strings>.*</localized-strings>}m, "")
     expect(strip_guid(pres_output))
       .to be_xml_equivalent_to presxml
-    expect(strip_guid(Nokogiri::XML(IsoDoc::Iso::HtmlConvert.new({})
+    expect(strip_guid(Nokogiri::HTML5(IsoDoc::Iso::HtmlConvert.new({})
       .convert("test", pres_output, true))
-      .at("//div[@id ='A']").to_xml))
-      .to be_xml_equivalent_to html
+      .at("//div[@id ='A']").to_xhtml))
+      .to be_html5_equivalent_to html
 
     presxml = <<~OUTPUT
       <semx element="amend" source="_">

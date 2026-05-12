@@ -7,8 +7,10 @@ module Metanorma
       def create(type)
         case type
         when :modspec, :ogc
-          ::Metanorma::Requirements::Modspec::Iso.new(parent: self)
-        else ::Metanorma::Requirements::Default.new(parent: self)
+          ::Metanorma::Requirements::Modspec::Iso.new(parent: self,
+                                                      isodoc: @isodoc)
+        else ::Metanorma::Requirements::Default.new(parent: self,
+                                                    isodoc: @isodoc)
         end
       end
     end
