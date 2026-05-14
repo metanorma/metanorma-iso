@@ -121,6 +121,7 @@ module IsoDoc
             root.custom_properties = nil
             root.custom_xml_items = nil
             clear_custom_xml_references(root)
+            clear_stale_template_content(root)
             Uniword::Builder::DocumentBuilder.new(root)
           else
             Uniword::Builder::DocumentBuilder.new
@@ -157,6 +158,35 @@ module IsoDoc
               r.type.to_s.include?("custom-properties")
             end
           end
+        end
+
+        # Strip stale content inherited from template DOCX.
+        # We build documents from YAML configs — template body content
+        # (images, hyperlinks, OLE objects) must not leak into output.
+        INFRASTRUCTURE_REL_TYPES = %w[
+          styles settings fontTable webSettings numbering
+          theme footnotes endnotes
+        ].freeze
+
+        def clear_stale_template_content(root)
+          if root.document_rels&.relationships
+            root.document_rels.relationships.reject! do |r|
+              type_str = r.type.to_s
+              next false unless type_str.include?("/relationships/")
+
+              INFRASTRUCTURE_REL_TYPES.none? { |t| type_str.end_with?("/#{t}") }
+            end
+          end
+
+          if root.content_types&.overrides
+            root.content_types.overrides.reject! do |o|
+              pn = o.part_name.to_s
+              pn.include?("embeddings/") || pn.include?("media/")
+            end
+          end
+
+          root.image_parts = nil
+          root.embeddings = nil
         end
 
         # ── Root-level visitors ────────────────────────────────────────
