@@ -16,9 +16,12 @@ This gem processes https://www.metanorma.com[Metanorma documents] following a te
 International Standards. The following outputs are generated.
 
 * The XML representation of the document, intended as a document model for ISO
-International Standards. 
-* Microsoft Word output (`.doc`), following the style conventions of the 
-https://www.iso.org/iso-templates.html[ISO Standard Microsoft Word template]. 
+International Standards.
+* Microsoft Word output (`.doc`), following the style conventions of the
+https://www.iso.org/iso-templates.html[ISO Standard Microsoft Word template],
+via the html2doc MHT pipeline.
+* Microsoft Word output (`.docx`), a native OOXML format produced directly from
+the XML model via the Uniword builder, with no HTML intermediate.
 * HTML. For ISO, two HTML files are generated: the `.html` file follows ISO
 conventions in rendering, which looks very similar to the Word output, while
 the `-alt.html` file has richer styling.
@@ -36,11 +39,30 @@ The preferred way to invoke this gem is via the `metanorma` script:
 
 [source,console]
 ----
-$ metanorma --type iso a.adoc                   # output HTML and DOC
-$ metanorma --type csd --extensions html a.adoc # output just HTML
-$ metanorma --type csd --extensions doc a.adoc  # output just DOC
-$ metanorma --type csd --extensions xml a.adoc  # output CSD XML
+$ metanorma --type iso a.adoc                    # output HTML and DOC
+$ metanorma --type iso --extensions docx a.adoc  # output DOCX (native OOXML)
+$ metanorma --type iso --extensions html a.adoc  # output just HTML
+$ metanorma --type iso --extensions doc a.adoc   # output just DOC (MHT)
+$ metanorma --type iso --extensions xml a.adoc   # output ISO XML
 ----
+
+To specify output formats in an AsciiDoc document, use the `:mn-output-extensions:` attribute:
+
+[source,asciidoc]
+----
+:mn-output-extensions: xml,html,docx,pdf
+----
+
+==== DOCX template selection
+
+The DOCX output supports two ISO Word templates, controlled by the `:iso-word-template:` attribute:
+
+[horizontal]
+DIS:: `:iso-word-template: dis` — DIS/FDIS template (461 styles, for stages 40–60 and 90)
+Simple:: `:iso-word-template: simple` — Simple template (72 styles, for stages 00–30)
+
+If not set, the template is auto-detected from the document stage.
+Both templates are bundled in `data/iso-dis/` and `data/iso-simple/`.
 
 The gem translates the document into ISO XML format, and then
 validates its output against the ISO XML document model; errors are
@@ -48,7 +70,7 @@ reported to console against the XML, and are intended for users to
 check that they have provided all necessary components of the
 document.
 
-The gem then converts the XML into HTML and DOC.
+The gem then converts the XML into HTML, DOC, and DOCX.
 
 === Installation
 
