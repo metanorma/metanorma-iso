@@ -1,0 +1,91 @@
+# ISO Simple DOCX style mapping
+# Maps isodoc semantic elements to DOCX styleIds in the ISO Simple template.
+#
+# Template: data/iso-simple/template.dotx (72 styles, based on Normal)
+# Used for: WD/CD stage documents (stages 00-30)
+# Triggered by: :iso-word-template => "simple"
+#
+# The Simple template has far fewer styles than DIS (72 vs 461).
+# Many DIS-specific styles (continuation, indentation variants, code chars)
+# have no equivalent and fall back to common base styles.
+
+paragraph_styles:
+  # Document structure
+  title: zzSTDTitle
+  heading1: Heading1
+  heading2: Heading2
+  heading3: Heading3
+  heading4: Heading4
+  heading5: Heading5
+  heading6: Heading6
+
+  # Annex headings
+  annex: ANNEX
+  annex_heading2: a2
+  annex_heading3: a3
+  annex_heading4: a4
+  annex_heading5: a5
+  annex_heading6: a6
+
+  # Preface sections
+  foreword: ForewordTitle
+  introduction: IntroTitle
+  bibliography: BiblioTitle
+
+  # Content blocks
+  note: Note
+  example: Example
+  sourcecode: Code
+  formula: Formula
+  figure_title: FigureTitle
+  figure_title_annex: AnnexFigureTitle
+  table_title: Tabletitle
+  table_title_annex: AnnexTableTitle
+  admonition: Note
+  admonition_title: Note
+  quote: BodyText
+  definition: Definition
+
+  # Table styles
+  table_header: Tablebody
+  table_body: Tablebody
+
+  # Footnotes — Simple has no FootnoteText style, use BodyText
+  footnote_text: BodyText
+
+  # TOC
+  toc1: TOC1
+  toc2: TOC2
+  toc3: TOC3
+
+  # Terms
+  term_num: TermNum
+  terms: Terms
+  alt_terms: Terms
+
+  # Source and key
+  source: Source
+
+  # Colophon
+  colophon: zzCopyright
+  std_title: zzSTDTitle
+
+  # Body text
+  body_text: BodyText
+
+  # Bibliography entries — Simple has no BiblioEntry, use BodyText
+  biblio_entry: BodyText
+
+character_styles:
+  hyperlink: Hyperlink
+
+numbering:
+  # Simple template numbering.xml numId values
+  # Body decimal (abstractNumId=15): 1. 1.1 1.1.1 ...
+  decimal_list: 1
+  # Annex clause (abstractNumId=10): A.1 A.2 ...
+  annex_clause: 7
+  # Dash bullet list (abstractNumId=11/12/17): —
+  dash_list: 18
+  # Standard bullets (abstractNumId=5-9): ·
+  bullet_list: 21
