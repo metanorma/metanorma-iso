@@ -7,7 +7,7 @@ require "pubid-iec"
 module Metanorma
   module Iso
     class Converter < Standoc::Converter
-      def metadata_id_primary_type(node)
+      def metadata_id_primary_type(_node)
         "ISO"
       end
 
@@ -18,10 +18,10 @@ module Metanorma
       end
 
       DOCTYPE2HASHID =
-        { directive: :dir, "technical-report": :tr, "guide": :guide,
+        { directive: :dir, "technical-report": :tr, guide: :guide,
           "technical-specification": :ts,
           "publicly-available-specification": :pas,
-          "committee-document": :tc, "recommendation": :r }.freeze
+          "committee-document": :tc, recommendation: :r }.freeze
 
       # @param type [nil, :tr, :ts, :amd, :cor, :guide, :dir, :tc, Type]
       # document's type, eg. :tr, :ts, :amd, :cor, Type.new(:tr)
@@ -33,7 +33,7 @@ module Metanorma
       end
 
       def metadata_id_primary(node, xml)
-        (!@amd && node.attr("docnumber") || node.attr("adopted-from")) ||
+        ((!@amd && node.attr("docnumber")) || node.attr("adopted-from")) ||
           (@amd && node.attr("updates")) or return
         params = iso_id_params(node)
         iso_id_out(xml, params, true)

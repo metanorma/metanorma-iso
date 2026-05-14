@@ -1,0 +1,10 @@
+---
+run_properties:
+  fonts:
+    ascii: Cambria
+    hAnsi: Cambria
+    cs: Times New Roman
+    eastAsia: SimSun
+  lang_val: en-HK
+  lang_eastasia: zh-CN
+  lang_bidi: ar-SA

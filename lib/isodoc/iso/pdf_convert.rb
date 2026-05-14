@@ -3,7 +3,6 @@ require "isodoc"
 
 module IsoDoc
   module Iso
-
     # A {Converter} implementation that generates HTML output, and a document
     # schema encapsulation of the document for validation
     #
@@ -13,7 +12,7 @@ module IsoDoc
         super
       end
 
-      def pdf_stylesheet(docxml)
+      def pdf_stylesheet(_docxml)
         case @doctype
         when "amendment", "technical-corrigendum" then "iso.amendment.xsl"
         else
@@ -23,4 +22,3 @@ module IsoDoc
     end
   end
 end
-

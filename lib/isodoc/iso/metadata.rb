@@ -24,7 +24,7 @@ module IsoDoc
       def docstatus(isoxml, _out)
         docstatus = isoxml.at(ns("//bibdata/status/stage"))
         published = published_default(isoxml)
-        revdate = isoxml.at(ns("//bibdata/date[@type='updated']"))
+        revdate = isoxml.at(ns("//bibdata/version/revision-date"))
         set(:revdate, revdate&.text)
         docstatus and docstatus1(isoxml, docstatus, published)
         docscheme = get[:"presentation_metadata_document-scheme"]
@@ -40,7 +40,7 @@ module IsoDoc
             status_abbrev(docstatus["abbreviation"] || "??",
                           isoxml.at(ns("//bibdata/status/substage"))&.text,
                           isoxml.at(ns("//bibdata/status/iteration"))&.text,
-                          isoxml.at(ns("//bibdata/version"))&.text,
+                          isoxml.at(ns("//bibdata/version/draft"))&.text,
                           isoxml.at(ns("//bibdata/ext/doctype"))&.text))
         !published and set(:stageabbr, docstatus["abbreviation"])
       end
@@ -96,9 +96,9 @@ module IsoDoc
       end
 
       def title_parts(isoxml, lang)
-        %w(intro main complementary part amd add).each_with_object({}) do |w, m|
-          m[w.to_sym] = isoxml.at(ns("//bibdata/title[@type='title-#{w}' and " \
-                                     "@language='#{lang}']"))
+        %w(intro main complementary part amd add).to_h do |w|
+          [w.to_sym, isoxml.at(ns("//bibdata/title[@type='title-#{w}' and " \
+                                  "@language='#{lang}']"))]
         end
       end
 

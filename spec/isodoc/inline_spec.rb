@@ -104,9 +104,9 @@ RSpec.describe IsoDoc do
       </iso-standard>
     INPUT
     expect(output
-      .sub(/<html/, "<html xmlns:m='https://m'"))
+      .sub("<html", "<html xmlns:m='https://m'"))
       .to be_html5_equivalent_to <<~"OUTPUT"
-        #{HTML_HDR.sub(/<html/, "<html xmlns:m='https://m'")}
+        #{HTML_HDR.sub('<html', "<html xmlns:m='https://m'")}
               <br/>
               <div id="_">
                 <h1 class="ForewordTitle">Foreword</h1>

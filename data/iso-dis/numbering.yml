@@ -1,0 +1,737 @@
+---
+definitions:
+- abstract_num_id: '0'
+  type: singleLevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: decimal
+    text: "%1."
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '2.63'
+      indent:
+        left: '2.63'
+        hanging: '0.63'
+- abstract_num_id: '1'
+  type: singleLevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: decimal
+    text: "%1."
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '2.13'
+      indent:
+        left: '2.13'
+        hanging: '0.63'
+- abstract_num_id: '2'
+  type: singleLevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: decimal
+    text: "%1."
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '1.63'
+      indent:
+        left: '1.63'
+        hanging: '0.63'
+- abstract_num_id: '3'
+  type: singleLevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: decimal
+    text: "%1."
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '1.13'
+      indent:
+        left: '1.13'
+        hanging: '0.63'
+- abstract_num_id: '4'
+  type: singleLevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: bullet
+    text: ""
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '2.63'
+      indent:
+        left: '2.63'
+        hanging: '0.63'
+    run_properties:
+      fonts:
+        ascii: Symbol
+        hAnsi: Symbol
+- abstract_num_id: '5'
+  type: singleLevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: bullet
+    text: ""
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '2.13'
+      indent:
+        left: '2.13'
+        hanging: '0.63'
+    run_properties:
+      fonts:
+        ascii: Symbol
+        hAnsi: Symbol
+- abstract_num_id: '6'
+  type: singleLevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: bullet
+    text: ""
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '1.63'
+      indent:
+        left: '1.63'
+        hanging: '0.63'
+    run_properties:
+      fonts:
+        ascii: Symbol
+        hAnsi: Symbol
+- abstract_num_id: '7'
+  type: singleLevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: bullet
+    text: ""
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '1.13'
+      indent:
+        left: '1.13'
+        hanging: '0.63'
+    run_properties:
+      fonts:
+        ascii: Symbol
+        hAnsi: Symbol
+- abstract_num_id: '8'
+  type: singleLevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: decimal
+    text: "%1."
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '0.63'
+      indent:
+        left: '0.63'
+        hanging: '0.63'
+- abstract_num_id: '9'
+  type: singleLevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: bullet
+    text: ""
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '0.63'
+      indent:
+        left: '0.63'
+        hanging: '0.63'
+    run_properties:
+      fonts:
+        ascii: Symbol
+        hAnsi: Symbol
+- abstract_num_id: '10'
+  type: multilevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: upperLetter
+    text: Annex %1
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      fonts:
+        ascii: Cambria
+        hAnsi: Cambria
+        cs: Times New Roman
+      bold: true
+      italic: false
+      font_size: '14.0'
+      font_size_cs: '14.0'
+  - ilvl: '1'
+    start: '1'
+    format: decimal
+    text: "%1.%2"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '0.63'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      fonts:
+        cs: Times New Roman
+      bold: true
+      italic: false
+  - ilvl: '2'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '1.27'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      fonts:
+        cs: Times New Roman
+      bold: true
+      italic: false
+  - ilvl: '3'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '1.9'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      fonts:
+        cs: Times New Roman
+      bold: true
+      italic: false
+  - ilvl: '4'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '1.9'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      fonts:
+        cs: Times New Roman
+      bold: true
+      italic: false
+  - ilvl: '5'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5.%6"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '2.54'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      fonts:
+        cs: Times New Roman
+      bold: true
+      italic: false
+  - ilvl: '6'
+    start: '1'
+    format: decimal
+    text: Figure %1.%7 —
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      fonts:
+        cs: Times New Roman
+  - ilvl: '7'
+    start: '1'
+    format: decimal
+    text: Table %1.%8 —
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      fonts:
+        cs: Times New Roman
+  - ilvl: '8'
+    start: '1'
+    format: lowerRoman
+    text: "(%9)"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '10.79'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      fonts:
+        cs: Times New Roman
+- abstract_num_id: '11'
+  type: multilevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: lowerLetter
+    text: "%1)"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0.63'
+        hanging: '0.63'
+  - ilvl: '1'
+    start: '1'
+    format: decimal
+    text: "%2)"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1.27'
+        hanging: '0.63'
+  - ilvl: '2'
+    start: '1'
+    format: lowerRoman
+    text: "%3)"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1.9'
+        hanging: '0.63'
+  - ilvl: '3'
+    start: '1'
+    format: upperLetter
+    text: "%4)"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '2.54'
+        hanging: '0.63'
+  - ilvl: '4'
+    start: '1'
+    format: upperRoman
+    text: "%5)"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '3.17'
+        hanging: '0.63'
+  - ilvl: '5'
+    start: '1'
+    format: lowerLetter
+    text: "%6)"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '3.81'
+        hanging: '0.63'
+  - ilvl: '6'
+    start: '1'
+    format: decimal
+    text: "%7)"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '4.44'
+        hanging: '0.63'
+  - ilvl: '7'
+    start: '1'
+    format: lowerRoman
+    text: "%8)"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '5.08'
+        hanging: '0.63'
+  - ilvl: '8'
+    start: '1'
+    format: upperLetter
+    text: "%9)"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '5.71'
+        hanging: '0.63'
+- abstract_num_id: '12'
+  type: multilevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: decimal
+    text: "%1"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '0.76'
+      indent:
+        left: '0.76'
+        hanging: '0.76'
+    run_properties:
+      bold: true
+      italic: false
+  - ilvl: '1'
+    start: '1'
+    format: decimal
+    text: "%1.%2"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '0.63'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      bold: true
+      italic: false
+  - ilvl: '2'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '1.27'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      bold: true
+      italic: false
+  - ilvl: '3'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '1.9'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      bold: true
+      italic: false
+  - ilvl: '4'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '1.9'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      bold: true
+      italic: false
+  - ilvl: '5'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5.%6"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '2.54'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+    run_properties:
+      bold: true
+      italic: false
+  - ilvl: '6'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5.%6.%7"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '2.54'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+  - ilvl: '7'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5.%6.%7.%8"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '3.17'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+  - ilvl: '8'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5.%6.%7.%8.%9"
+    alignment: left
+    paragraph_properties:
+      tabs:
+      - type: num
+        position: '3.17'
+      indent:
+        left: '0.0'
+        firstLine: '0.0'
+- abstract_num_id: '13'
+  type: hybridMultilevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: bullet
+    text: "—"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0.63'
+        hanging: '0.63'
+  - ilvl: '1'
+    start: '1'
+    format: bullet
+    text: "—"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1.27'
+        hanging: '0.63'
+  - ilvl: '2'
+    start: '1'
+    format: bullet
+    text: "—"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1.9'
+        hanging: '0.63'
+  - ilvl: '3'
+    start: '1'
+    format: bullet
+    text: "—"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '2.54'
+        hanging: '0.63'
+  - ilvl: '4'
+    start: '1'
+    format: bullet
+    text: "—"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '3.17'
+        hanging: '0.63'
+  - ilvl: '5'
+    start: '1'
+    format: bullet
+    text: "—"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '3.81'
+        hanging: '0.63'
+  - ilvl: '6'
+    start: '1'
+    format: bullet
+    text: "—"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '4.44'
+        hanging: '0.63'
+  - ilvl: '7'
+    start: '1'
+    format: bullet
+    text: "—"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '5.08'
+        hanging: '0.63'
+  - ilvl: '8'
+    start: '1'
+    format: bullet
+    text: "—"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '5.71'
+        hanging: '0.63'
+- abstract_num_id: '14'
+  type: hybridMultilevel
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: decimal
+    text: "[%1]"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1.27'
+        hanging: '0.63'
+  - ilvl: '1'
+    start: '1'
+    format: lowerLetter
+    text: "%2."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '2.54'
+        hanging: '0.63'
+  - ilvl: '2'
+    start: '1'
+    format: lowerRoman
+    text: "%3."
+    alignment: right
+    paragraph_properties:
+      indent:
+        left: '3.81'
+        hanging: '0.32'
+  - ilvl: '3'
+    start: '1'
+    format: decimal
+    text: "%4."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '5.08'
+        hanging: '0.63'
+  - ilvl: '4'
+    start: '1'
+    format: lowerLetter
+    text: "%5."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '6.35'
+        hanging: '0.63'
+  - ilvl: '5'
+    start: '1'
+    format: lowerRoman
+    text: "%6."
+    alignment: right
+    paragraph_properties:
+      indent:
+        left: '7.62'
+        hanging: '0.32'
+  - ilvl: '6'
+    start: '1'
+    format: decimal
+    text: "%7."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '8.89'
+        hanging: '0.63'
+  - ilvl: '7'
+    start: '1'
+    format: lowerLetter
+    text: "%8."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '10.16'
+        hanging: '0.63'
+  - ilvl: '8'
+    start: '1'
+    format: lowerRoman
+    text: "%9."
+    alignment: right
+    paragraph_properties:
+      indent:
+        left: '11.43'
+        hanging: '0.32'
+instances:
+- num_id: '1'
+  abstract_num_id: '10'
+- num_id: '2'
+  abstract_num_id: '10'
+- num_id: '3'
+  abstract_num_id: '11'
+- num_id: '4'
+  abstract_num_id: '11'
+- num_id: '5'
+  abstract_num_id: '13'
+- num_id: '6'
+  abstract_num_id: '13'
+- num_id: '7'
+  abstract_num_id: '13'
+- num_id: '8'
+  abstract_num_id: '9'
+- num_id: '9'
+  abstract_num_id: '7'
+- num_id: '10'
+  abstract_num_id: '6'
+- num_id: '11'
+  abstract_num_id: '5'
+- num_id: '12'
+  abstract_num_id: '4'
+- num_id: '13'
+  abstract_num_id: '8'
+- num_id: '14'
+  abstract_num_id: '3'
+- num_id: '15'
+  abstract_num_id: '2'
+- num_id: '16'
+  abstract_num_id: '1'
+- num_id: '17'
+  abstract_num_id: '0'
+- num_id: '18'
+  abstract_num_id: '14'
+- num_id: '19'
+  abstract_num_id: '12'

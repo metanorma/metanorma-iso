@@ -152,13 +152,13 @@ module IsoDoc
       end
 
       def code_style(doc)
-        span_style((doc.xpath("//tt//b") - doc.xpath("//tt//i//b")),
+        span_style(doc.xpath("//tt//b") - doc.xpath("//tt//i//b"),
                    "ISOCodebold")
-        span_style((doc.xpath("//tt//i") - doc.xpath("//tt//b//i")),
+        span_style(doc.xpath("//tt//i") - doc.xpath("//tt//b//i"),
                    "ISOCodeitalic")
-        span_style((doc.xpath("//b//tt") - doc.xpath("//b//i//tt")),
+        span_style(doc.xpath("//b//tt") - doc.xpath("//b//i//tt"),
                    "ISOCodebold")
-        span_style((doc.xpath("//i//tt") - doc.xpath("//i//b//tt")),
+        span_style(doc.xpath("//i//tt") - doc.xpath("//i//b//tt"),
                    "ISOCodeitalic")
         span_style(doc.xpath("//tt"), "ISOCode")
       end

@@ -1,0 +1,200 @@
+# ISO DIS DOCX style mapping
+# Maps isodoc semantic elements to DOCX styleIds in the ISO DIS template.
+#
+# Template: data/iso-dis/template.docx (312+ styles, based on BaseText/BaseHeading)
+# Used for: DIS/FDIS stage documents (stages 40-60, 90)
+# Triggered by: :iso-word-template => "dis" (or default for stages 40+)
+#
+# Paragraph styles map to w:pStyle values.
+# Character styles map to w:rStyle values.
+# Numbering maps to w:numId values.
+
+paragraph_styles:
+  # Document structure
+  title: zzSTDTitle
+  heading1: Heading1
+  heading2: Heading2
+  heading3: Heading3
+  heading4: Heading4
+  heading5: Heading5
+  heading6: Heading6
+
+  # Annex headings
+  annex: ANNEX
+  annex_heading2: a2
+  annex_heading3: a3
+  annex_heading4: a4
+  annex_heading5: a5
+  annex_heading6: a6
+
+  # Preface sections
+  foreword: ForewordTitle
+  introduction: IntroTitle
+  bibliography: BiblioTitle
+  index: IndexHead
+
+  # Content blocks
+  note: Note0
+  example: Example0
+  sourcecode: Code
+  formula: Formula
+  figure_title: Figuretitle0
+  figure_title_annex: Figuretitle0
+  table_title: Tabletitle0
+  table_title_annex: Tabletitle0
+  admonition: Notice
+  admonition_title: Notice
+  quote: BlockText
+  definition: Definition
+
+  # Table styles
+  table_header: Tableheader
+  table_body: Tablebody
+  table_footer: Tablefooter
+
+  # Footnotes
+  footnote_text: FootnoteText
+
+  # TOC
+  toc1: TOC1
+  toc2: TOC2
+  toc3: TOC3
+
+  # Terms
+  term_num: TermNum
+  terms: Terms
+  admitted_term: AdmittedTerm
+  deprecated_term: DeprecatedTerms
+  alt_terms: AltTerms
+
+  # Source and key
+  source: Source
+  key_title: KeyTitle
+
+  # Colophon and cover
+  colophon: zzCopyright
+  std_title: zzSTDTitle
+
+  # Body text
+  body_text: BodyText
+  body_text_indent: BodyTextindent1
+
+  # Bibliography entries
+  biblio_entry: BiblioEntry
+  biblio_text: BiblioText
+  biblio_description: BiblioDescription
+  ref_norm: RefNorm
+
+  # Lists
+  list_number1: ListNumber1
+  list_continue1: ListContinue1
+
+  # Examples
+  example_continued: Examplecontinued
+
+  # Foreword
+  foreword_text: ForewordText
+
+  # Cover page
+  cover_title: CoverTitleA1
+  cover_doc_identity: CoverTitleA1
+
+character_styles:
+  hyperlink: Hyperlink
+  footnote_reference: FootnoteReference
+  table_footnote_ref: tablefootnoteref
+
+  # Bibliography semantic markup (bib* styles)
+  bib_number: bibnumber
+  bib_fname: bibfname
+  bib_surname: bibsurname
+  bib_suffix: bibsuffix
+  bib_alt_year: bibalt-year
+  bib_et_al: bibetal
+  bib_ed_etal: bibed-etal
+  bib_ed_fname: bibed-fname
+  bib_ed_surname: bibed-surname
+  bib_ed_suffix: bibed-suffix
+  bib_ed_organization: bibed-organization
+  bib_organization: biborganization
+  bib_article: bibarticle
+  bib_journal: bibjournal
+  bib_volume: bibvolume
+  bib_issue: bibissue
+  bib_fpage: bibfpage
+  bib_lpage: biblpage
+  bib_page_count: bibpagecount
+  bib_year: bibyear
+  bib_book: bibbook
+  bib_chapter_no: bibchapterno
+  bib_chapter_title: bibchaptertitle
+  bib_publisher: bibpublisher
+  bib_institution: bibinstitution
+  bib_school: bibschool
+  bib_location: biblocation
+  bib_doi: bibdoi
+  bib_url: biburl
+  bib_ext_link: bibextlink
+  bib_isbn: bibisbn
+  bib_unpubl: bibunpubl
+  bib_patent: bibpatent
+  bib_report_num: bibreportnum
+  bib_series: bibseries
+  bib_series_no: bibseriesno
+  bib_edition_no: bibeditionno
+  bib_trans: bibtrans
+  bib_medline: bibmedline
+  bib_comment: bibcomment
+  bib_base: bibbase
+  bib_deg: bibdeg
+  bib_suppl: bibsuppl
+
+  # Standard reference markup (std* styles)
+  std_publisher: stdpublisher
+  std_doc_number: stddocNumber
+  std_doc_part_number: stddocPartNumber
+  std_doc_title: stddocTitle
+  std_year: stdyear
+  std_section: stdsection
+  std_footnote: stdfootnote
+  std_base: stdbase
+  std_document_type: stddocumentType
+  std_suppl: stdsuppl
+
+  # Author/editor markup (au* styles)
+  au_fname: aufname
+  au_surname: ausurname
+  au_prefix: auprefix
+  au_suffix: ausuffix
+  au_collab: aucollab
+  au_deg: audeg
+  au_role: aurole
+  au_member: aumember
+  au_base: aubase
+
+  # Citation reference styles (cite* styles)
+  cite_bib: citebib
+  cite_fig: citefig
+  cite_tbl: citetbl
+  cite_eq: citeeq
+  cite_section: citesection
+  cite_sec: citesec
+  cite_en: citeen
+  cite_fn: citefn
+  cite_tfn: citetfn
+  cite_box: citebox
+  cite_app: citeapp
+  cite_base: citebase
+
+numbering:
+  # DIS template numbering.xml numId values
+  # Body decimal (abstractNumId=14/15): 1. 1.1 1.1.1 ...
+  decimal_list: 1
+  # Annex clause (abstractNumId=11): A.1 A.2 ...
+  annex_clause: 4
+  # Alpha list (abstractNumId=18): a) b) c) ...
+  alpha_list: 6
+  # Bibliography (abstractNumId=10): [1] [2] ...
+  bibliography: 7
+  # Dash bullet list (abstractNumId=13)
+  dash_list: 10
