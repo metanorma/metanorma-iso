@@ -12,10 +12,12 @@ require_relative "../docx_style_mapping"
 module IsoDoc
   module Iso
     module Docx
-      # Converts a Metanorma::IsoDocument::Root model to DOCX via Uniword.
+      # Converts a Metanorma::IsoDocument::Root model to DOCX or MHTML via Uniword.
       #
       # Architecture:
-      #   metanorma-document model → DocxAdapter → Uniword builders → DOCX
+      #   metanorma-document model → Adapter → Uniword builders → DOCX/MHTML
+      #
+      # Output format is determined by file extension (.docx or .doc).
       #
       # Uses case/when dispatch on model class (no send/respond_to?).
       # Each element type maps to exactly one visitor method (MECE).
@@ -39,7 +41,7 @@ module IsoDoc
           @inline_renderer = nil
         end
 
-        # Convert an XML string or file path to DOCX.
+        # Convert an XML string or file path to DOCX (.docx) or MHTML (.doc).
         def convert(xml_input, output_path)
           doc_model = parse_xml(xml_input)
           doc = create_document

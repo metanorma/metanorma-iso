@@ -38,7 +38,7 @@ module Metanorma
       end
 
       def use_presentation_xml(ext)
-        return true if %i[html_alt sts isosts docx].include?(ext)
+        return true if %i[html_alt sts isosts docx doc].include?(ext)
 
         super
       end
@@ -53,11 +53,13 @@ module Metanorma
           IsoDoc::Iso::HtmlConvert.new(options.merge(alt: true))
             .convert(inname, isodoc_node, nil, outname)
         when :doc
-          IsoDoc::Iso::WordConvert.new(options)
-            .convert(inname, isodoc_node, nil, outname)
+          # MHTML (.doc) via Uniword — same adapter as DOCX, different output format.
+          xml_input = isodoc_node ? isodoc_node.to_xml : inname
+          template = resolve_docx_template(xml_input, options)
+          IsoDoc::Iso::Docx::Adapter.new(template: template)
+            .convert(xml_input, outname)
         when :docx
           # DOCX via Uniword (OOXML builders, no HTML intermediate).
-          # The :doc format uses html2doc MHT path via WordConvert.
           # When use_presentation_xml returns true, isodoc_node is nil
           # and inname is the presentation XML file path.
           xml_input = isodoc_node ? isodoc_node.to_xml : inname
