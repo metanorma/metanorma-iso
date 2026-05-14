@@ -38,7 +38,7 @@ module Metanorma
       end
 
       def use_presentation_xml(ext)
-        return true if %i[html_alt sts isosts docx doc].include?(ext)
+        return true if %i[html_alt sts isosts doc docx].include?(ext)
 
         super
       end

@@ -32,6 +32,7 @@ module IsoDoc
         # @param template_path [String, nil] explicit template DOCX path
         # @param style_mapping_config [String, nil] explicit YAML config path
         def initialize(template: :dis, template_path: nil, style_mapping_config: nil)
+          @template = template
           @template_path = template_path || IsoDoc::Iso::DocxTemplates.template_path(template)
           @style_mapping = DocxStyleMapping.new(
             template: template, config_path: style_mapping_config,
@@ -39,6 +40,7 @@ module IsoDoc
           @context = Context.new
           @resolver = StyleResolver.new(@style_mapping, @context)
           @inline_renderer = nil
+          @mhtml_css = nil
         end
 
         # Convert an XML string or file path to DOCX (.docx) or MHTML (.doc).
@@ -65,7 +67,32 @@ module IsoDoc
         private
 
         def save_document(model, output_path)
+          if output_path.end_with?(".doc")
+            css = mhtml_css
+            Uniword::Transformation::MhtmlStyleBuilder.custom_style_block = css
+          end
           Uniword::DocumentWriter.new(model).save(output_path)
+        ensure
+          Uniword::Transformation::MhtmlStyleBuilder.custom_style_block = nil
+        end
+
+        # Generate CSS from YAML configs for MHTML output.
+        def mhtml_css
+          return @mhtml_css if @mhtml_css
+
+          config_dir = IsoDoc::Iso::DocxTemplates.config_dir(@template)
+          styles_yml = YAML.safe_load(File.read(File.join(config_dir, "styles.yml")))
+          defaults_yml = YAML.safe_load(File.read(File.join(config_dir, "doc_defaults.yml")))
+          numbering_yml = begin
+                            YAML.safe_load(File.read(File.join(config_dir, "numbering.yml")))
+                          rescue StandardError
+                            nil
+                          end
+
+          generator = Uniword::Transformation::YamlCssGenerator.new(
+            styles: styles_yml, doc_defaults: defaults_yml, numbering: numbering_yml
+          )
+          @mhtml_css = "<style>\n<!--\n#{generator.generate}\n-->\n</style>"
         end
 
         def parse_xml(source)

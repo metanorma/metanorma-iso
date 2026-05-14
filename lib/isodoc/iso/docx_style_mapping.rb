@@ -29,6 +29,11 @@ module IsoDoc
         File.join(data_dir, spec[:dir], "style_mapping.yml")
       end
 
+      def self.config_dir(template_type)
+        spec = TEMPLATES[template_type] || TEMPLATES[:dis]
+        File.join(data_dir, spec[:dir])
+      end
+
       def self.template_types
         TEMPLATES.keys
       end
