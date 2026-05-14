@@ -1227,10 +1227,10 @@ RSpec.describe Metanorma::Iso do
         <ext>
           <doctype>standard</doctype>
                 <flavor>iso</flavor>
-          <horizontal>true</horizontal>
           <structuredidentifier>
             <project-number part='1'>ISO 1000</project-number>
           </structuredidentifier>
+          <horizontal>true</horizontal>
           <stagename abbreviation="IS">International Standard</stagename>
         </ext>
       </bibdata>

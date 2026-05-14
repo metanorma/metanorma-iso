@@ -38,10 +38,13 @@ class Html2Doc
       prev = first_p.xpath("./preceding-sibling::* | " \
                            "./preceding-sibling::text()[normalize-space()]")
       # bullet, tab, paragraph: ignore bullet, tab
-      if prev.empty? para.replace(para.children)
+      if prev.empty?
+        para.add_next_sibling(para.children)
+        para.remove
       elsif prev.size == 2 && prev[-1].name == "span" &&
           prev[-1]["style"] == "mso-tab-count:1"
-        first_p.replace(first_p.children)
+        first_p.add_next_sibling(first_p.children)
+        first_p.remove
       end
     end
 
@@ -69,7 +72,8 @@ class Html2Doc
                               p.at("./*[name() = 'ul' or name() = 'ol'][last()]"))
       end
       docxml.xpath("//ol | //ul").each do |u|
-        u.replace(u.children)
+        u.add_next_sibling(u.children)
+        u.remove
       end
       unnest_list_paras(docxml)
       indent_lists(docxml)
