@@ -49,20 +49,24 @@ module IsoDoc
           @resolver = StyleResolver.new(@style_mapping, @context)
           @inline_renderer = InlineRenderer.new(@context, @resolver, doc)
           visit_root(doc_model, doc)
-          doc.save(output_path)
+          save_document(doc.model, output_path)
         end
 
-        # Convert an already-parsed model to DOCX.
+        # Convert an already-parsed model to DOCX or MHTML.
         def convert_model(model, output_path)
           doc = create_document
           @context = Context.new
           @resolver = StyleResolver.new(@style_mapping, @context)
           @inline_renderer = InlineRenderer.new(@context, @resolver, doc)
           visit_root(model, doc)
-          doc.save(output_path)
+          save_document(doc.model, output_path)
         end
 
         private
+
+        def save_document(model, output_path)
+          Uniword::DocumentWriter.new(model).save(output_path)
+        end
 
         def parse_xml(source)
           xml = case source
