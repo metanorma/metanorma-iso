@@ -14,6 +14,6 @@ gem "rubocop-performance"
 gem "simplecov"
 gem "timecop"
 gem "webmock"
-gem "uniword", path: "../uniword"
+gem "uniword", path: "../uniword" if File.exist?(File.expand_path("../uniword/Gemfile", __dir__))
 
 eval_gemfile("Gemfile.devel") rescue nil
