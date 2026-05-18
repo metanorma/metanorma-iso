@@ -153,46 +153,8 @@ module IsoDoc
                            @xrefs.anchor(node["target"], :type))
       end
 
-      # KILL
-      def std_docid_semantic1(id)
-        id1 = id.sub(%r{\p{Zs}\(all\p{Zs}parts\)}, "###ALLPARTS###")
-        ids = id1.split(/(\p{Zs})/)
-        agency?(ids[0].sub(%r{^([^/]+)/.*$}, "\\1")) or return id
-        ids.map! do |i|
-          if %w(GUIDE TR TS DIR).include?(i)
-            "<span class='stddocNumber'>#{i}</span>"
-          elsif /\p{Zs}/.match?(i) then i
-          else std_docid_semantic_full(i)
-          end
-        end.join.gsub(%r{</span>(\p{Zs}+)<}, "\\1</span><")
-          .sub("###ALLPARTS###", " (all parts)")
-      end
-
-      def std_docid_semantic_full(ident)
-        ident
-          .sub(/^([^0-9]+)(\p{Zs}|$)/, "<span class='stdpublisher'>\\1</span>\\2")
-          .sub(/([0-9]+)/, "<span class='stddocNumber'>\\1</span>")
-          .sub(/-([0-9]+)/, "-<span class='stddocPartNumber'>\\1</span>")
-          .sub(/:([0-9]{4})(?!\d)/, ":<span class='stdyear'>\\1</span>")
-      end
-
-      def std_docid_semantic(id)
-        id.nil? || id.empty? || id == "IEV" || /^\[?\d+\]?$/.match?(id) and
-          return id
-        nbsp = id.include?("\u00a0")
-        bracket = id.match?(/\A\[.+\]\Z/m)
-        id = id.gsub("\u00a0", " ").sub(/\A\[(.+)\]\Z/m, "\\1")
-        ret = std_docid_span_classes(std_docid_semantic_parse(id))
-        std_docid_semantic_restore_format(ret, nbsp, bracket)
-      end
-
-      def std_docid_semantic_restore_format(id, nbsp, bracket)
-        nbsp and Nokogiri::XML(id).traverse do |n|
-          n.text? or next
-          n.replace(n.text.gsub(" ", "\u00a0"))
-        end
-        bracket and id = "[#{id}]"
-        id
+      def annotate_docid?(_id)
+        true
       end
 
       def std_docid_span_classes(id)
@@ -200,12 +162,6 @@ module IsoDoc
           .gsub('class="docnumber"', 'class="stddocNumber"')
           .gsub('class="part"', 'class="stddocPartNumber"')
           .gsub('class="year"', 'class="stdyear"')
-      end
-
-      def std_docid_semantic_parse(id)
-        Pubid::Registry.parse(id).to_s(annotated: true)
-      rescue Pubid::Core::Errors::ParseError
-        std_docid_semantic_full(id)
       end
     end
   end
