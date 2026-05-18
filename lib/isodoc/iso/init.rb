@@ -50,38 +50,6 @@ module IsoDoc
       def requirements_processor
         ::Metanorma::Requirements::Iso
       end
-
-      def std_docid_semantic(id)
-        id.nil? and return nil
-        ret = Nokogiri::XML.fragment(id)
-        ret.traverse do |x|
-          x.text? or next
-          x.replace(std_docid_semantic1(x.text))
-        end
-        to_xml(ret)
-      end
-
-      def std_docid_semantic1(id)
-        id1 = id.sub(%r{\p{Zs}\(all\p{Zs}parts\)}, "###ALLPARTS###")
-        ids = id1.split(/(\p{Zs})/)
-        agency?(ids[0].sub(%r{^([^/]+)/.*$}, "\\1")) or return id
-        ids.map! do |i|
-          if %w(GUIDE TR TS DIR).include?(i)
-            "<span class='stddocNumber'>#{i}</span>"
-          elsif /\p{Zs}/.match?(i) then i
-          else std_docid_semantic_full(i)
-          end
-        end.join.gsub(%r{</span>(\p{Zs}+)<}, "\\1</span><")
-          .sub("###ALLPARTS###", " (all parts)")
-      end
-
-      def std_docid_semantic_full(ident)
-        ident
-          .sub(/^([^0-9]+)(\p{Zs}|$)/, "<span class='stdpublisher'>\\1</span>\\2")
-          .sub(/([0-9]+)/, "<span class='stddocNumber'>\\1</span>")
-          .sub(/-([0-9]+)/, "-<span class='stddocPartNumber'>\\1</span>")
-          .sub(/:([0-9]{4})(?!\d)/, ":<span class='stdyear'>\\1</span>")
-      end
     end
   end
 end

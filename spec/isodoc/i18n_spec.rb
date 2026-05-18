@@ -2159,10 +2159,7 @@ RSpec.describe IsoDoc do
                       <span class="fmt-element-name">条</span>
                       <semx element="autonum" source="D0">3</semx>
                    </span>
-                   <span class="fmt-caption-delim">
-                      ：
-                      <tab/>
-                   </span>
+                   <span class="fmt-caption-delim">：<tab/></span>
                    <semx element="title" source="_">一般的</semx>
                 </fmt-title>
                 <fmt-xref-label>
@@ -2193,12 +2190,7 @@ RSpec.describe IsoDoc do
                       </locality>
                    </eref>
                    <semx element="eref" source="_">
-                      <fmt-xref type="inline" target="ISO712">
-                         <span class="stdpublisher">ISO </span>
-                         <span class="stddocNumber">712</span>
-                         ，
-                         <span class="citetbl">表1〜1</span>
-                      </fmt-xref>
+                      <fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>， <span class="citetbl">表1〜1</span></fmt-xref>
                    </semx>
                 </p>
              </clause>
@@ -2383,7 +2375,7 @@ RSpec.describe IsoDoc do
                 </fmt-xref-label>
                 <bibitem id="ISO712" type="standard">
                    <biblio-tag>
-                      <span class="stdpublisher">ISO </span>
+                      <span class="stdpublisher">ISO</span>#{' '}
                       <span class="stddocNumber">712</span>
                       ，
                    </biblio-tag>
@@ -2519,101 +2511,97 @@ RSpec.describe IsoDoc do
     html = <<~OUTPUT
       #{HTML_HDR.gsub('"en"', '"zh"').sub('Contents', '目　次')}
                    <br/>
-               <div id="_">
-                   <h1 class="ForewordTitle">Foreword</h1>
-                   <p id="A">This is a preamble</p>
-                </div>
-                <br/>
-                <div class="Section3" id="B">
-                   <h1 class="IntroTitle">Introduction</h1>
-                   <div id="C">
-                      <h2>0.1　Introduction Subsection</h2>
-                   </div>
-                   <p>This is patent boilerplate</p>
-                </div>
-                <div id="D">
-                   <h1>1　Scope</h1>
-                   <p id="E">
-                      <a href="#ISO712">
-                         <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>，
-                         <span class="citetbl">表1〜1</span>
-                      </a>
-                   </p>
-                </div>
-                <div>
-                   <h1>2　Normative References</h1>
-                   <p id="ISO712" class="NormRef">
-                      <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>，
-                      <i>Cereals and cereal products</i>.
-                   </p>
-                </div>
-                <div id="D0">
-                   <h1>条3：　一般的</h1>
-                </div>
-                <div id="H">
-                   <h1>4　Terms, definitions, symbols and abbreviated terms</h1>
-                   <div id="I">
-                      <h2>4.1　Normal Terms</h2>
-                      <p class="TermNum" id="J">4.1.1</p>
-                      <p class="Terms" style="text-align:left;">
-                         <b><dfn>Term2</dfn></b>
-                      </p>
-                   </div>
-                   <div id="K">
-                      <h2>4.2　符号</h2>
-                      <div class="figdl">
-                         <dl>
-                            <dt>
-                               <p>Symbol</p>
-                            </dt>
-                            <dd>Definition</dd>
-                         </dl>
-                      </div>
-                   </div>
-                </div>
-                <div id="L" class="Symbols">
-                   <h1>5　符　号</h1>
-                   <div class="figdl">
-                      <dl>
-                         <dt>
-                            <p>Symbol</p>
-                         </dt>
-                         <dd>Definition</dd>
-                      </dl>
-                   </div>
-                </div>
-                <div id="M">
-                   <h1>6　Clause 4</h1>
-                   <div id="N">
-                      <h2>6.1　Introduction</h2>
-                   </div>
-                   <div id="O">
-                      <h2>6.2　Clause 4.2</h2>
-                   </div>
-                </div>
-                <br/>
-                <div id="P" class="Section3">
-                   <h1 class="Annex"><b>附件A</b><br/><span class="obligation">（规范性附录）</span><br/><br/><b>Annex</b></h1>
-                   <p style="display:none;" class="variant-title-toc">附件A　Annex</p>
-                   <div id="Q">
-                      <h2>A.1　Annex A.1</h2>
-                      <div id="Q1">
-                         <h3>A.1.1　Annex A.1a</h3>
-                      </div>
-                   </div>
-                   <div id="Q2">
-                      <h2>附录1　An Appendix</h2>
-                   </div>
-                </div>
-                <br/>
-                <div>
-                   <h1 class="Section3">Bibliography</h1>
-                   <div>
-                      <h2 class="Section3">Bibliography Subsection</h2>
-                   </div>
-                </div>
+             <div id="_">
+               <h1 class="ForewordTitle">Foreword</h1>
+               <p id="A">This is a preamble</p>
              </div>
-          </body>
+             <br />
+             <div class="Section3" id="B">
+               <h1 class="IntroTitle">Introduction</h1>
+               <div id="C">
+                 <h2>0.1　Introduction Subsection</h2>
+               </div>
+               <p>This is patent boilerplate</p>
+             </div>
+             <div id="D">
+               <h1>1　Scope</h1>
+               <p id="E">
+                 <a href="#ISO712"><span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span>，  <span class="citetbl">表1〜1</span></a>
+               </p>
+             </div>
+             <div>
+               <h1>2　Normative References</h1>
+               <p id="ISO712" class="NormRef"><span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span>， <i>Cereals and cereal products</i>.</p>
+             </div>
+             <div id="D0">
+               <h1>条3：　一般的</h1>
+             </div>
+             <div id="H">
+               <h1>4　Terms, definitions, symbols and abbreviated terms</h1>
+               <div id="I">
+                 <h2>4.1　Normal Terms</h2>
+                 <p class="TermNum" id="J">4.1.1</p>
+                 <p class="Terms" style="text-align:left;">
+                   <b>
+                     <dfn>Term2</dfn>
+                   </b>
+                 </p>
+               </div>
+               <div id="K">
+                 <h2>4.2　符号</h2>
+                 <div class="figdl">
+                   <dl>
+                     <dt>
+                       <p>Symbol</p>
+                     </dt>
+                     <dd>Definition</dd>
+                   </dl>
+                 </div>
+               </div>
+             </div>
+             <div id="L" class="Symbols">
+               <h1>5　符　号</h1>
+               <div class="figdl">
+                 <dl>
+                   <dt>
+                     <p>Symbol</p>
+                   </dt>
+                   <dd>Definition</dd>
+                 </dl>
+               </div>
+             </div>
+             <div id="M">
+               <h1>6　Clause 4</h1>
+               <div id="N">
+                 <h2>6.1　Introduction</h2>
+               </div>
+               <div id="O">
+                 <h2>6.2　Clause 4.2</h2>
+               </div>
+             </div>
+             <br />
+             <div id="P" class="Section3">
+               <h1 class="Annex"><b>附件A</b><br /><span class="obligation">（规范性附录）</span><br /><br /><b>Annex</b></h1>
+               <p style="display:none;" class="variant-title-toc">附件A　Annex</p>
+               <div id="Q">
+                 <h2>A.1　Annex A.1</h2>
+                 <div id="Q1">
+                   <h3>A.1.1　Annex A.1a</h3>
+                 </div>
+               </div>
+               <div id="Q2">
+                 <h2>附录1　An Appendix</h2>
+               </div>
+             </div>
+             <br />
+             <div>
+               <h1 class="Section3">Bibliography</h1>
+               <div>
+                 <h2 class="Section3">Bibliography Subsection</h2>
+               </div>
+             </div>
+           </div>
+         </body>
        </html>
     OUTPUT
     pres_output = IsoDoc::Iso::PresentationXMLConvert
@@ -2677,11 +2665,7 @@ RSpec.describe IsoDoc do
                </locality>
             </eref>
             <semx element="eref" source="_">
-               <fmt-xref type="inline" target="ISO712">
-                  <span class="stdpublisher">ISO </span>
-                  <span class="stddocNumber">712</span>
-                  , Appendice 7
-               </fmt-xref>
+               <fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>, Appendice 7</fmt-xref>
             </semx>
          </p>
          <p id="B">
@@ -2691,12 +2675,7 @@ RSpec.describe IsoDoc do
                </locality>
             </eref>
             <semx element="eref" source="_">
-               <fmt-xref type="inline" target="ISO712">
-                  <span class="stdpublisher">ISO </span>
-                  <span class="stddocNumber">712</span>
-                  ,
-                  <span class="citeapp">Annexe 7</span>
-               </fmt-xref>
+               <fmt-xref type="inline" target="ISO712"><span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">712</span>,<span class="citeapp">Annexe 7</span></fmt-xref>
             </semx>
          </p>
       </foreword>
@@ -2705,5 +2684,22 @@ RSpec.describe IsoDoc do
       .new({}).convert("test", input, true))
       .at("//xmlns:foreword").to_xml))
       .to be_xml_equivalent_to presxml
+  end
+
+  it "test test test" do
+    input = <<~INPUT
+          <fmt-title depth="1" id="_">
+             <span class="fmt-caption-delim">
+                :
+                <tab/>
+             </span>
+             <semx element="title" source="_">General</semx>
+          </fmt-title>
+    INPUT
+    output = <<~OUTPUT
+      <fmt-title depth="1" id="_"><span class="fmt-caption-delim">:<tab/></span><semx element="title" source="_">General</semx></fmt-title>
+    OUTPUT
+    expect(input)
+      .to be_xml_equivalent_to output
   end
 end

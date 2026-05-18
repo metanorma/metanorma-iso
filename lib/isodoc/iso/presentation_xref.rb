@@ -1,3 +1,5 @@
+require "pubid"
+
 module IsoDoc
   module Iso
     class PresentationXMLConvert < IsoDoc::PresentationXMLConvert
@@ -151,9 +153,15 @@ module IsoDoc
                            @xrefs.anchor(node["target"], :type))
       end
 
-      def anchor_xref(node, target, container: false)
-        # require "debug"; binding.b
-        super
+      def annotate_docid?(_id)
+        true
+      end
+
+      def std_docid_span_classes(id)
+        id.gsub('class="publisher"', 'class="stdpublisher"')
+          .gsub('class="docnumber"', 'class="stddocNumber"')
+          .gsub('class="part"', 'class="stddocPartNumber"')
+          .gsub('class="year"', 'class="stdyear"')
       end
     end
   end

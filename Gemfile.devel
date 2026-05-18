@@ -1,0 +1,1 @@
+gem "isodoc", github: "metanorma/isodoc", branch: "feature/hoist-docid-semantic-annotation"

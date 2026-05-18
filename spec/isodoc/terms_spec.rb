@@ -213,8 +213,7 @@ RSpec.describe IsoDoc do
                                <locality type="clause">
                                   <referenceFrom>3.1</referenceFrom>
                                </locality>
-                               <span class="stdpublisher">ISO </span>
-                               <span class="stddocNumber">7301</span>
+                               <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">7301</span>
                                :
                                <span class="stdyear">2011</span>
                                ,
@@ -404,8 +403,7 @@ RSpec.describe IsoDoc do
                                <locality type="clause">
                                   <referenceFrom>3.1</referenceFrom>
                                </locality>
-                               <span class="stdpublisher">ISO </span>
-                               <span class="stddocNumber">7301</span>
+                               <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">7301</span>
                                :
                                <span class="stdyear">2011</span>
                                ,
@@ -516,8 +514,15 @@ RSpec.describe IsoDoc do
                          </ul>
                       </div>
                    </div>
-                   <p>[SOURCE: <span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>,
-                      <span class="citesec">3.1</span>, modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]</p>
+                   <p>
+                      [SOURCE:
+                      <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">7301</span>
+                      :
+                      <span class="stdyear">2011</span>
+                      ,
+                      <span class="citesec">3.1</span>
+                      , modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]
+                   </p>
                    <p class="TermNum" id="paddy">1.2</p>
                    <p class="Terms" style="text-align:left;"><b><dfn>paddy</dfn></b></p>
                    <p class="AltTerms" style="text-align:left;"><dfn>paddy rice</dfn></p>
@@ -544,7 +549,15 @@ RSpec.describe IsoDoc do
                       </div>
                       <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
                    </div>
-                   <p>[SOURCE:<span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>,<span class="citesec">3.1</span>]</p>
+                   <p>
+                      [SOURCE:
+                      <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">7301</span>
+                      :
+                      <span class="stdyear">2011</span>
+                      ,
+                      <span class="citesec">3.1</span>
+                      ]
+                   </p>
                    <p class="TermNum" id="A">1.3</p>
                    <p class="Terms" style="text-align:left;"><b><dfn>term1</dfn></b></p>term1 definition
                    <p class="TermNum" id="B">1.3.1</p>
@@ -577,8 +590,15 @@ RSpec.describe IsoDoc do
                </ul>
             </div>
          </div>
-         <p class="Source">[SOURCE:<span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>,
-            <span class="citesec">3.1</span>, modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]</p>
+         <p class="Source">
+            [SOURCE:
+            <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">7301</span>
+            :
+            <span class="stdyear">2011</span>
+            ,
+            <span class="citesec">3.1</span>
+            , modified — The term "cargo rice" is shown as deprecated, and Note 1 to entry is not included here]
+         </p>
          <p class="TermNum" id="paddy">1.2</p>
          <p class="Terms" style="text-align:left;"><b>paddy</b></p>
          <p class="AltTerms" style="text-align:left;">paddy rice</p>
@@ -605,8 +625,15 @@ RSpec.describe IsoDoc do
             </div>
             <p id="_">The starch of waxy rice consists almost entirely of amylopectin. The kernels have a tendency to stick together after cooking.</p>
          </div>
-         <p class="Source">[SOURCE:<span class="stdpublisher">ISO </span><span class="stddocNumber">7301</span>:<span class="stdyear">2011</span>,
-            <span class="citesec">3.1</span>]</p>
+         <p class="Source">
+            [SOURCE:
+            <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">7301</span>
+            :
+            <span class="stdyear">2011</span>
+            ,
+            <span class="citesec">3.1</span>
+            ]
+         </p>
          <p class="TermNum" id="A">1.3</p>
          <p class="Terms" style="text-align:left;"><b>term1</b></p>term1 definition
          <p class="TermNum" id="B">1.3.1</p>
@@ -1493,8 +1520,7 @@ RSpec.describe IsoDoc do
                     </origin>
                     <semx element="origin" source="_">
                        <fmt-xref type="inline" target="iso643">
-                          <span class="stdpublisher">ISO </span>
-                          <span class="stddocNumber">643</span>
+                          <span class="stdpublisher">ISO</span>&#xa0;<span class="stddocNumber">643</span>
                           ,
                           <span class="citesec">Clause 3</span>
                        </fmt-xref>
@@ -1511,9 +1537,7 @@ RSpec.describe IsoDoc do
                     </origin>
                     <semx element="origin" source="_">
                        <fmt-xref type="inline" target="ietf643">
-                          <span class="stdpublisher">IETF </span>
-                          <span class="stdpublisher">RFC </span>
-                          <span class="stddocNumber">643</span>
+                          <span class="stdpublisher">IETF&#xa0;RFC</span>&#xa0;<span class="stddocNumber">643</span>
                           ,
                           <span class="citesec">Clause 3</span>
                        </fmt-xref>
