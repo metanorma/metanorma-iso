@@ -1,0 +1,1 @@
+gem "isodoc", github: "metanorma/isodoc", branch: "fix/biblio-tag-footnote-position"
