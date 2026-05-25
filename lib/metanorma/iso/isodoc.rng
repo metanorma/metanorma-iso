@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-<!-- VERSION v2.1.5 -->
+<!-- VERSION v2.1.6 -->
 
   <!--
     ALERT: cannot have root comments, because of https://github.com/metanorma/metanorma/issues/437
@@ -163,6 +163,9 @@ Sources are currently only rendered in metanorma-plateau</a:documentation>
             <value>alphabet_upper</value>
           </choice>
         </attribute>
+      </optional>
+      <optional>
+        <ref name="DisplayDirective"/>
       </optional>
     </define>
     <define name="DlAttributes">
@@ -814,6 +817,9 @@ titlecase, or lowercase</a:documentation>
   </define>
   <define name="UlAttributes" combine="interleave">
     <ref name="BlockAttributes"/>
+    <optional>
+      <ref name="DisplayDirective"/>
+    </optional>
   </define>
   <define name="TableAttributes" combine="interleave">
     <optional>
@@ -1968,7 +1974,7 @@ used in document amendments</a:documentation>
           <a:documentation>Zero or more examples of how the term is to be used</a:documentation>
         </ref>
       </zeroOrMore>
-      <ref name="TermSource">
+      <ref name="TermSources">
         <a:documentation>Bibliographic references for the managed term</a:documentation>
       </ref>
     </element>
@@ -2077,7 +2083,7 @@ used in document amendments</a:documentation>
         <a:documentation>Information about how the designation is to be used</a:documentation>
       </ref>
     </optional>
-    <ref name="TermSource">
+    <ref name="TermSources">
       <a:documentation>Bibliographic references for this designation of the managed term</a:documentation>
     </ref>
   </define>
@@ -2348,7 +2354,7 @@ used in document amendments</a:documentation>
           <ref name="formula"/>
         </choice>
       </oneOrMore>
-      <ref name="TermSource">
+      <ref name="TermSources">
         <a:documentation>Bibliographic references for this designation of the managed term</a:documentation>
       </ref>
     </element>
@@ -2365,7 +2371,7 @@ used in document amendments</a:documentation>
           <ref name="formula"/>
         </choice>
       </oneOrMore>
-      <ref name="TermSource">
+      <ref name="TermSources">
         <a:documentation>Bibliographic references for this designation of the managed term</a:documentation>
       </ref>
     </element>
@@ -2788,6 +2794,26 @@ to span across both columns</a:documentation>
       </attribute>
     </optional>
   </define>
+  <define name="DisplayDirective">
+    <a:documentation>Directive on how to render a block in Presentation XML </a:documentation>
+    <optional>
+      <attribute name="display">
+        <a:documentation>Display style for block.
+If the block is `ol` or `ul` and dispay is `table`, 
+the list is to be rendered as a table, with a column for each nested level, and a row for each terminal sublist</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="display-directives">
+        <a:documentation>display-directives is a key-value set of attributes, guiding how the rendering of the block should happen. 
+The key-value set is comma-delimited, and encoded as `key1='value1',key2='value'`, 
+as with stem//mn/@data-metanorma-numberformat
+*  If the block is `ol` or `ul` and dispay is `table`,  display-directives can have the value `colgroup='col1,col2,...coln'`, 
+where each col value is a percentage width of the column in the output table (with no % suffix). 
+e.g. `colgroup='50,33.3,16.7'`  </a:documentation>
+      </attribute>
+    </optional>
+  </define>
   <define name="ReferencesAttributes">
     <optional>
       <attribute name="obligation">
@@ -2800,7 +2826,7 @@ Normative References contents contain normative references, but as a clause in t
       <data type="boolean"/>
     </attribute>
   </define>
-  <define name="TermSource">
+  <define name="TermSources">
     <zeroOrMore>
       <ref name="termsource"/>
     </zeroOrMore>

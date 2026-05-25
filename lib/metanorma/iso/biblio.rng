@@ -1142,11 +1142,11 @@ NOTE: This should preferably be encoded as  a URI or short identifier, rather th
         <a:documentation>Information about how long the current description of the bibliographic item is valid for</a:documentation>
       </ref>
     </optional>
-    <optional>
+    <zeroOrMore>
       <ref name="depiction">
         <a:documentation>Depiction of the bibliographic item, typically an image</a:documentation>
       </ref>
-    </optional>
+    </zeroOrMore>
   </define>
   <define name="ReducedBibliographicItem">
     <a:documentation>Reduced description of a bibliographic resource, without mandatory title and docidentifier, used for document relations
@@ -2015,15 +2015,11 @@ provided that it is not the entire bibliographic item that is so related</a:docu
     <a:documentation>A version of the bibliographic item (within an edition). Can be used for drafts</a:documentation>
     <element name="version">
       <optional>
-        <ref name="revision-date">
-          <a:documentation>The date at which the current version of the bibliographic item was produced</a:documentation>
-        </ref>
+        <attribute name="type">
+          <a:documentation>Versioning scheme, in case of multiple versioning schemes</a:documentation>
+        </attribute>
       </optional>
-      <optional>
-        <ref name="draft">
-          <a:documentation>The identifier for the current draft of the bibliographic item</a:documentation>
-        </ref>
-      </optional>
+      <text/>
     </element>
   </define>
   <define name="vedition">
@@ -2063,13 +2059,13 @@ provided that it is not the entire bibliographic item that is so related</a:docu
           <ref name="LocalizedString"/>
         </element>
       </optional>
-      <oneOrMore>
+      <zeroOrMore>
         <element name="taxon">
           <a:documentation>The keywords as a hierarchical taxonomy. For example, the sequence of `taxon` elements
 `pump`, `centrifugal pump`, `line shaft pump` represents a taxonomic classification</a:documentation>
           <ref name="LocalizedString"/>
         </element>
-      </oneOrMore>
+      </zeroOrMore>
       <zeroOrMore>
         <ref name="vocabid">
           <a:documentation>Identifiers for the keyword as a controlled vocabulary</a:documentation>

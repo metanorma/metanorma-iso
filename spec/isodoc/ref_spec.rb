@@ -170,10 +170,7 @@ RSpec.describe IsoDoc do
              <p id="_">
                <eref bibitemid="ISO712" id="_"/>
                <semx element="eref" source="_">
-                 <fmt-xref target="ISO712">
-                   <span class="stdpublisher">ISO </span>
-                   <span class="stddocNumber">712</span>
-                 </fmt-xref>
+                 <fmt-xref target="ISO712"><span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span></fmt-xref>
                </semx>
                <eref bibitemid="ISBN" id="_"/>
                <semx element="eref" source="_">
@@ -185,11 +182,11 @@ RSpec.describe IsoDoc do
                </semx>
                <eref bibitemid="ISO16634" id="_"/>
                <semx element="eref" source="_">
-                 <fmt-xref target="ISO16634"><span class="stdpublisher">ISO </span><span class="stddocNumber">16634</span>:--</fmt-xref>
+                 <fmt-xref target="ISO16634"><span class="stdpublisher">ISO</span> <span class="stddocNumber">16634</span>:--</fmt-xref>
                </semx>
                <eref bibitemid="ref1" id="_"/>
                <semx element="eref" source="_">
-                 <fmt-xref target="ref1">ICC 167</fmt-xref>
+                 <fmt-xref target="ref1"><span class="stdpublisher">ICC</span> <span class="stddocNumber">167</span></fmt-xref>
                </semx>
                <eref bibitemid="ref10" id="_"/>
                <semx element="eref" source="_">
@@ -220,7 +217,7 @@ RSpec.describe IsoDoc do
              </fmt-xref-label>
              <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
              <bibitem id="ISO712" type="standard">
-               <biblio-tag><span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>, </biblio-tag>
+               <biblio-tag><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span>, </biblio-tag>
                <formattedref>
                  <em>
                    <span class="stddocTitle">Cereals and cereal products</span>
@@ -238,10 +235,7 @@ RSpec.describe IsoDoc do
                </contributor>
              </bibitem>
              <bibitem id="ISO16634" type="standard">
-               <biblio-tag><span class="stdpublisher">ISO </span>
-                  <span class="stddocNumber">16634</span>:-- (all parts)<fn id="_" reference="1" original-reference="1" target="_">
-                    <p>Under preparation. (Stage at the time of publication ISO/DIS 16634)</p>
-                    <fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>
+               <biblio-tag><span class="stdpublisher">ISO</span><span class="stddocNumber">16634</span>:-- (all parts)<fn id="_" reference="1" original-reference="1" target="_"><p>Under preparation. (Stage at the time of publication ISO/DIS 16634)</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>
        , </biblio-tag>
                <formattedref>
                  <em>
@@ -267,7 +261,7 @@ RSpec.describe IsoDoc do
                </extent>
              </bibitem>
              <bibitem id="ISO20483" type="standard">
-               <biblio-tag><span class="stdpublisher">ISO </span><span class="stddocNumber">20483</span>:<span class="stdyear">2013</span>-<span class="stddocPartNumber">2014</span>, </biblio-tag>
+               <biblio-tag><span class="stdpublisher">ISO</span><span class="stddocNumber">20483</span>:<span class="stdyear">2013</span>-<span class="stddocPartNumber">2014</span>, </biblio-tag>
                <formattedref>
                  <em>
                    <span class="stddocTitle">Cereals and pulses</span>
@@ -288,20 +282,14 @@ RSpec.describe IsoDoc do
                </contributor>
              </bibitem>
              <bibitem id="ref1">
-               <biblio-tag>ICC 167, </biblio-tag>
+               <biblio-tag><span class="stdpublisher">ICC</span><span class="stddocNumber">167</span>, </biblio-tag>
                <formattedref format="application/x-isodoc+xml"><smallcap>Standard No I.C.C 167</smallcap> .
      
                  <em>Determination of the protein content in cereal and cereal products for food and animal feeding stuffs according to the Dumas combustion method</em>
                  (see
      
                  <link target="http://www.icc.or.at" id="_"/><semx element="link" source="_"><fmt-link target="http://www.icc.or.at"/></semx>
-                 )<note type="display" id="_" autonum=""><fmt-name id="_">
-                    <span class="fmt-caption-label"><span class="fmt-element-name">NOTE</span></span>
-                    <span class="fmt-label-delim"><tab/></span></fmt-name>
-                  <fmt-xref-label><span class="fmt-element-name">Note</span></fmt-xref-label>
-                  <fmt-xref-label container="ref1"><span class="fmt-xref-container"><span class="fmt-xref-container"><span class="fmt-element-name">Clause</span>
-                  <semx element="autonum" source="_">1</semx></span><span class="fmt-comma">,</span> ICC 167</span><span class="fmt-comma">,</span><span class="fmt-element-name">Note</span></fmt-xref-label>
-                  <semx element="note" source="_"><p>This is an annotation of ISO 20483:2013-2014</p></semx></note>
+                 )<note type="display" id="_" autonum=""><fmt-name id="_"><span class="fmt-caption-label"><span class="fmt-element-name">NOTE</span></span><span class="fmt-label-delim"><tab/></span></fmt-name><fmt-xref-label><span class="fmt-element-name">Note</span></fmt-xref-label><fmt-xref-label container="ref1"><span class="fmt-xref-container"><span class="fmt-xref-container"><span class="fmt-element-name">Clause</span><semx element="autonum" source="_">1</semx></span><span class="fmt-comma">,</span><span class="stdpublisher">ICC</span> <span class="stddocNumber">167</span></span><span class="fmt-comma">,</span><span class="fmt-element-name">Note</span></fmt-xref-label><semx element="note" source="_"><p>This is an annotation of ISO 20483:2013-2014</p></semx></note>
        </formattedref>
                <docidentifier type="ICC">ICC 167</docidentifier>
                <docidentifier scope="biblio-tag">ICC 167</docidentifier>
@@ -332,15 +320,7 @@ RSpec.describe IsoDoc do
              </bibitem>
              <bibitem id="ISSN" type="journal">
                <biblio-tag>[2]<tab/></biblio-tag>
-               <formattedref><em>Instruments for analytical laboratory use</em>. n.d.<note type="display" id="_" autonum="1">
-                  <fmt-name id="_"><span class="fmt-caption-label"><span class="fmt-element-name">NOTE</span><semx element="autonum" source="_">1</semx></span><span class="fmt-label-delim"><tab/></span></fmt-name>
-                  <fmt-xref-label><span class="fmt-element-name">Note</span><semx element="autonum" source="_">1</semx></fmt-xref-label>
-                  <fmt-xref-label container="ISSN"><span class="fmt-xref-container"><span class="fmt-xref-container"><semx element="references" source="_">Bibliography</semx></span><span class="fmt-comma">,</span> [2]</span><span class="fmt-comma">,</span><span class="fmt-element-name">Note</span><semx element="autonum" source="_">1</semx></fmt-xref-label>
-                  <semx element="note" source="_"><p>This is an annotation of document ISSN.</p></semx></note>
-                  <note type="display" id="_" autonum="2"><fmt-name id="_"><span class="fmt-caption-label"><span class="fmt-element-name">NOTE</span><semx element="autonum" source="_">2</semx></span><span class="fmt-label-delim"><tab/></span></fmt-name>
-                <fmt-xref-label><span class="fmt-element-name">Note</span><semx element="autonum" source="_">2</semx></fmt-xref-label>
-                <fmt-xref-label container="ISSN"><span class="fmt-xref-container"><span class="fmt-xref-container"><semx element="references" source="_">Bibliography</semx></span><span class="fmt-comma">,</span> [2]</span><span class="fmt-comma">,</span><span class="fmt-element-name">Note</span><semx element="autonum" source="_">2</semx></fmt-xref-label>
-                <semx element="note" source="_"><p>This is another annotation of document ISSN.</p></semx></note></formattedref>
+               <formattedref><em>Instruments for analytical laboratory use</em>. n.d.<note type="display" id="_" autonum="1"><fmt-name id="_"><span class="fmt-caption-label"><span class="fmt-element-name">NOTE</span><semx element="autonum" source="_">1</semx></span><span class="fmt-label-delim"><tab/></span></fmt-name><fmt-xref-label><span class="fmt-element-name">Note</span><semx element="autonum" source="_">1</semx></fmt-xref-label><fmt-xref-label container="ISSN"><span class="fmt-xref-container"><span class="fmt-xref-container"><semx element="references" source="_">Bibliography</semx></span><span class="fmt-comma">,</span> [2]</span><span class="fmt-comma">,</span><span class="fmt-element-name">Note</span><semx element="autonum" source="_">1</semx></fmt-xref-label><semx element="note" source="_"><p>This is an annotation of document ISSN.</p></semx></note><note type="display" id="_" autonum="2"><fmt-name id="_"><span class="fmt-caption-label"><span class="fmt-element-name">NOTE</span><semx element="autonum" source="_">2</semx></span><span class="fmt-label-delim"><tab/></span></fmt-name><fmt-xref-label><span class="fmt-element-name">Note</span><semx element="autonum" source="_">2</semx></fmt-xref-label><fmt-xref-label container="ISSN"><span class="fmt-xref-container"><span class="fmt-xref-container"><semx element="references" source="_">Bibliography</semx></span><span class="fmt-comma">,</span> [2]</span><span class="fmt-comma">,</span><span class="fmt-element-name">Note</span><semx element="autonum" source="_">2</semx></fmt-xref-label><semx element="note" source="_"><p>This is another annotation of document ISSN.</p></semx></note></formattedref>
                <title format="text/plain">Instruments for analytical laboratory use</title>
                <docidentifier type="metanorma-ordinal">[2]</docidentifier>
                <docidentifier type="ISSN">ISSN</docidentifier>
@@ -358,7 +338,7 @@ RSpec.describe IsoDoc do
                </note>
              </bibitem>
              <bibitem id="ISO3696" type="standard">
-               <biblio-tag>[3]<tab/><span class="stdpublisher">ISO </span><span class="stddocNumber">3696</span>, </biblio-tag>
+               <biblio-tag>[3]<tab/><span class="stdpublisher">ISO</span> <span class="stddocNumber">3696</span>, </biblio-tag>
                <formattedref>
                  <em>
                    <span class="stddocTitle">Water for analytical laboratory use</span>
@@ -387,7 +367,7 @@ RSpec.describe IsoDoc do
                <docidentifier type="metanorma-ordinal">[4]</docidentifier>
              </bibitem>
              <bibitem id="ref11">
-               <biblio-tag>[5]<tab/><span class="stdpublisher">IETF </span><span class="stdpublisher">RFC </span><span class="stddocNumber">10</span>, </biblio-tag>
+               <biblio-tag>[5]<tab/><span class="stdpublisher">IETF RFC</span> <span class="stddocNumber">10</span>, </biblio-tag>
                <formattedref>
                  <em>
                    <span class="stddocTitle">Internet Calendaring and Scheduling Core Object Specification (iCalendar)</span>
@@ -399,7 +379,7 @@ RSpec.describe IsoDoc do
                <docidentifier scope="biblio-tag">IETF RFC 10</docidentifier>
              </bibitem>
              <bibitem id="ref12">
-               <biblio-tag>[Citn]<tab/><span class="stdpublisher">IETF </span><span class="stdpublisher">RFC </span><span class="stddocNumber">20</span>, </biblio-tag>
+               <biblio-tag>[Citn]<tab/><span class="stdpublisher">IETF RFC</span> <span class="stddocNumber">20</span>, </biblio-tag>
                <formattedref format="application/x-isodoc+xml">CitationWorks. 2019.
                  <em>How to cite a reference</em>
                  </formattedref>
@@ -433,7 +413,7 @@ RSpec.describe IsoDoc do
              </semx>
            </fmt-fn-body>
          </fmt-footnote-container>
-       </iso-standard>
+       </iso-standard>   
     OUTPUT
 
     html = <<~OUTPUT
@@ -560,10 +540,23 @@ RSpec.describe IsoDoc do
                       , CitationWorks. 2019.
                       <i>How to cite a reference</i>
                    </p>
+                            <p class="Biblio" id="ref13">
+           [6]
+           <a class="FootnoteRef" href="#fn:1">
+             <sup>1</sup>
+           </a>
+            
+           <i>
+             <span class="stddocTitle">Forthcoming standard with no display docidentifier</span>
+           </i>
+         </p>
                 </div>
                 <aside id="fn:1" class="footnote">
                    <p>Under preparation. (Stage at the time of publication ISO/DIS 16634)</p>
                 </aside>
+                       <aside class="footnote" id="fn:1">
+         <p>Under preparation.</p>
+       </aside>
              </div>
           </body>
        </html>
@@ -667,112 +660,69 @@ RSpec.describe IsoDoc do
              <references normative="false" id="_" displayorder="2">
                 <fmt-title id="_" depth="1">Bibliography</fmt-title>
                 <bibitem id="b" type="standard" anchor="b">
-                   <biblio-tag>
-                      [1]
-                      <tab/>
-                      <span class="stdpublisher">IETF&#xa0;RFC</span>&#xa0;<span class="stddocNumber">3394</span>
-                      <fn id="_" reference="1" original-reference="_0f4bda71-60d4-4132-ba62-e3eefc638f93" target="_">
-                         <p>
-                            Available at
-                            <span class="biburl">
-                               <fmt-link target="https://www.rfc-editor.org/info/rfc3394">https://www.rfc-editor.org/info/rfc3394</fmt-link>
-                            </span>
-                         </p>
-                         <fmt-fn-label>
-                            <span class="fmt-caption-label">
-                               <sup>
-                                  <semx element="autonum" source="_">1</semx>
-                                  <span class="fmt-label-delim">)</span>
-                               </sup>
-                            </span>
-                         </fmt-fn-label>
-                      </fn>
-
-                      <tab/>
-                      <span class="stdpublisher">IETF </span>
-                      <span class="stdpublisher">RFC </span>
-                      <span class="stddocNumber">3394</span>,
-                   </biblio-tag>
-                   <formattedref>
-                      J. SCHAAD and R. HOUSLEY.
-                      <em>
-                         <span class="stddocTitle">Advanced Encryption Standard (AES) Key Wrap Algorithm</span>
-                      </em>
-                      . RFC Series
-                   </formattedref>
-                   <fetched/>
-                   <title type="main" format="text/plain">Advanced Encryption Standard (AES) Key Wrap Algorithm</title>
-                   <uri type="src">https://www.rfc-editor.org/info/rfc3394</uri>
-                   <docidentifier type="metanorma-ordinal">[1]</docidentifier>
-                   <docidentifier type="IETF" primary="true">IETF RFC 3394</docidentifier>
-                   <docidentifier type="DOI">DOI 10.17487/RFC3394</docidentifier>
-                   <docidentifier scope="biblio-tag">IETF RFC 3394</docidentifier>
-                   <docnumber>RFC3394</docnumber>
-                   <date type="published">
-                      <on>2002-09</on>
-                   </date>
-                   <contributor>
-                      <role type="author"/>
-                      <person>
-                         <name>
-                            <completename language="en" script="Latn">J. Schaad</completename>
-                         </name>
-                      </person>
-                   </contributor>
-                   <contributor>
-                      <role type="author"/>
-                      <person>
-                         <name>
-                            <completename language="en" script="Latn">R. Housley</completename>
-                         </name>
-                      </person>
-                   </contributor>
-                   <contributor>
-                      <role type="publisher"/>
-                      <organization>
-                         <name>RFC Publisher</name>
-                      </organization>
-                   </contributor>
-                   <contributor>
-                      <role type="authorizer"/>
-                      <organization>
-                         <name>RFC Series</name>
-                      </organization>
-                   </contributor>
-                   <language>en</language>
-                   <script>Latn</script>
-                   <series>
-                      <title format="text/plain">RFC</title>
-                      <number>3394</number>
-                   </series>
-                   <series type="stream">
-                      <title format="text/plain">IETF</title>
-                   </series>
-                </bibitem>
-             </references>
-          </bibliography>
-          <fmt-footnote-container>
-             <fmt-fn-body id="_" target="_" reference="1">
-                <semx element="fn" source="_">
-                   <p>
-                      <fmt-fn-label>
-                         <span class="fmt-caption-label">
-                            <sup>
-                               <semx element="autonum" source="_">1</semx>
-                            </sup>
-                         </span>
-                         <span class="fmt-caption-delim">
-                            <tab/>
-                         </span>
-                      </fmt-fn-label>
-                      Available at
-                      <span class="biburl">
-                         <fmt-link target="https://www.rfc-editor.org/info/rfc3394">https://www.rfc-editor.org/info/rfc3394</fmt-link>
-                      </span>
-                   </p>
-                </semx>
-             </fmt-fn-body>
-          </fmt-footnote-container>
+                <biblio-tag>[1]<fn id="_" reference="1" original-reference="_" target="_">
+                  <p>Available at <span class="biburl"><fmt-link target="https://www.rfc-editor.org/info/rfc3394">https://www.rfc-editor.org/info/rfc3394</fmt-link></span></p>
+                  <fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>
+       <tab/><span class="stdpublisher">IETF RFC</span> <span class="stddocNumber">3394</span>, </biblio-tag>
+               <formattedref>J. SCHAAD and R. HOUSLEY. <em><span class="stddocTitle">Advanced Encryption Standard (AES) Key Wrap Algorithm</span></em>. RFC Series</formattedref>
+               <fetched/>
+               <title type="main" format="text/plain">Advanced Encryption Standard (AES) Key Wrap Algorithm</title>
+               <uri type="src">https://www.rfc-editor.org/info/rfc3394</uri>
+               <docidentifier type="metanorma-ordinal">[1]</docidentifier>
+               <docidentifier type="IETF" primary="true">IETF RFC 3394</docidentifier>
+               <docidentifier type="DOI">DOI 10.17487/RFC3394</docidentifier>
+               <docidentifier scope="biblio-tag">IETF RFC 3394</docidentifier>
+               <docnumber>RFC3394</docnumber>
+               <date type="published">
+                 <on>2002-09</on>
+               </date>
+               <contributor>
+                 <role type="author"/>
+                 <person>
+                   <name>
+                     <completename language="en" script="Latn">J. Schaad</completename>
+                   </name>
+                 </person>
+               </contributor>
+               <contributor>
+                 <role type="author"/>
+                 <person>
+                   <name>
+                     <completename language="en" script="Latn">R. Housley</completename>
+                   </name>
+                 </person>
+               </contributor>
+               <contributor>
+                 <role type="publisher"/>
+                 <organization>
+                   <name>RFC Publisher</name>
+                 </organization>
+               </contributor>
+               <contributor>
+                 <role type="authorizer"/>
+                 <organization>
+                   <name>RFC Series</name>
+                 </organization>
+               </contributor>
+               <language>en</language>
+               <script>Latn</script>
+               <series>
+                 <title format="text/plain">RFC</title>
+                 <number>3394</number>
+               </series>
+               <series type="stream">
+                 <title format="text/plain">IETF</title>
+               </series>
+             </bibitem>
+           </references>
+         </bibliography>
+         <fmt-footnote-container>
+           <fmt-fn-body id="_" target="_" reference="1">
+             <semx element="fn" source="_">
+               <p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx></sup></span><span class="fmt-caption-delim"><tab/></span></fmt-fn-label>Available at <span class="biburl"><fmt-link target="https://www.rfc-editor.org/info/rfc3394">https://www.rfc-editor.org/info/rfc3394</fmt-link></span></p>
+             </semx>
+           </fmt-fn-body>
+         </fmt-footnote-container>
        </iso-standard>
     OUTPUT
     expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert

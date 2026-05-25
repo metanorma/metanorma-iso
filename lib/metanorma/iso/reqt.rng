@@ -47,7 +47,15 @@ the tag name of the top level containers</a:documentation>
     </optional>
     <optional>
       <attribute name="model">
-        <a:documentation>Model of requirements realised by this requirement, e.g. "ogc" for Modspec</a:documentation>
+        <a:documentation>Model of requirements realised by this requirement, e.g. "ogc" for Modspec.
+Current legal values: ogc, default</a:documentation>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="render">
+        <a:documentation>Rendering of requirements realised by this requirement. Current legal values:
+default:: default, inline
+ogc:: default</a:documentation>
       </attribute>
     </optional>
     <optional>
