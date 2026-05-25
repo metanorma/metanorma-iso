@@ -2101,8 +2101,7 @@ RSpec.describe IsoDoc do
                         <semx element="autonum" source="_">1</semx>
                      </span>
                      <span class="fmt-comma">,</span>
-                     <span class="stdpublisher">ISO </span>
-                     <span class="stddocNumber">712</span>
+                     <span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>
                   </span>
                   <span class="fmt-comma">,</span>
                   <span class="fmt-element-name">Note</span>
@@ -2118,8 +2117,7 @@ RSpec.describe IsoDoc do
                         <semx element="autonum" source="_">1</semx>
                      </span>
                      <span class="fmt-comma">,</span>
-                     <span class="stdpublisher">ISO </span>
-                     <span class="stddocNumber">712</span>
+                     <span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>
                   </span>
                   <span class="fmt-comma">,</span>
                   <span class="fmt-element-name">Note</span>
@@ -2134,9 +2132,7 @@ RSpec.describe IsoDoc do
                         <semx element="references" source="_">Bibliography</semx>
                      </span>
                      <span class="fmt-comma">,</span>
-                     <span class="stdpublisher">ISO </span>
-                     <span class="stddocNumber">713</span>
-                  </span>
+                     <span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">713</span></span>
                   <span class="fmt-comma">,</span>
                   <span class="fmt-element-name">Note</span>
                </fmt-xref>

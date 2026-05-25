@@ -234,7 +234,7 @@ RSpec.describe IsoDoc do
                                   <semx element="eref" source="_">
                                      (
                                      <fmt-xref type="inline" target="ISO712">
-                                        <span class="stdpublisher">ISO </span>
+                                        <span class="stdpublisher">ISO</span>&#xa0;
                                         <span class="stddocNumber">712</span>
                                      </fmt-xref>
                                      )
@@ -284,7 +284,7 @@ RSpec.describe IsoDoc do
                                   <semx element="eref" source="_">
                                      (
                                      <fmt-xref type="inline" target="ISO712">
-                                        <span class="stdpublisher">ISO </span>
+                                        <span class="stdpublisher">ISO</span>&#xa0;
                                         <span class="stddocNumber">712</span>
                                         ,
                                         <span class="citesec">3.1</span>
@@ -322,7 +322,7 @@ RSpec.describe IsoDoc do
                                   <semx element="eref" source="_">
                                      (
                                      <fmt-xref type="inline" target="ISO712">
-                                        <span class="stdpublisher">ISO </span>
+                                        <span class="stdpublisher">ISO</span>&#xa0;
                                         <span class="stddocNumber">712</span>
                                         ,
                                         <span class="citesec">3.1</span>
@@ -460,7 +460,7 @@ RSpec.describe IsoDoc do
                 <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
                 <bibitem id="ISO712" type="standard">
                    <biblio-tag>
-                      <span class="stdpublisher">ISO </span>
+                      <span class="stdpublisher">ISO</span> 
                       <span class="stddocNumber">712</span>
                       ,
                    </biblio-tag>
@@ -487,111 +487,48 @@ RSpec.describe IsoDoc do
     OUTPUT
     output = <<~OUTPUT
       #{HTML_HDR}
-                <div>
-                   <h1>1  Normative References</h1>
-                   <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-                   <p id="ISO712" class="NormRef">
-                      <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>,
-                      <i>
-                         <span class="stddocTitle">Cereals and cereal products</span>
-                      </i>
-                   </p>
-                </div>
-                <div id="Terms">
-                   <h1>2</h1>
-                   <p class="TermNum" id="B">2.1</p>
-                   <p class="Terms" style="text-align:left;">
-                      <b><dfn>B</dfn></b>
-                   </p>
-                   <p>
-                      <div class="ul_wrap">
-                         <ul>
-                            <li id="_">
-                               (
-                               <a href="#clause1">
-                                  <span class="citesec">Clause 3</span>
-                               </a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>term</i>
-                               (
-                               <a href="#clause1">
-                                  <span class="citesec">Clause 3</span>
-                               </a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>w[o]rd</i>
-                               (
-                               <a href="#clause1">Clause #1</a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>term</i>
-                               (
-                               <a href="#ISO712">
-                                  <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>
-                               </a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>word</i>
-                               (
-                               <a href="#ISO712">The Aforementioned Citation</a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>word</i>
-                               (
-                               <a href="#ISO712">
-                                  <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>,
-                                  <span class="citesec">3.1</span>,
-                                  <span class="citefig">Figure a</span>
-                               </a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>word</i>
-                               (
-                               <a href="#ISO712">
-                                  <span class="stdpublisher">ISO </span><span class="stddocNumber">712</span>,
-                                  <span class="citesec">3.1</span>
-                                  and
-                                  <span class="citefig">Figure b</span>
-                               </a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>word</i>
-                               (
-                               <a href="#ISO712">
+             <div>
+               <h1>1&#xA0; Normative References</h1>
+               <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+               <p id="ISO712" class="NormRef"><span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span>, <i><span class="stddocTitle">Cereals and cereal products</span></i></p>
+             </div>
+             <div id="Terms">
+               <h1>2</h1>
+               <p class="TermNum" id="B">2.1</p>
+               <p class="Terms" style="text-align:left;">
+                 <b>
+                   <dfn>B</dfn>
+                 </b>
+               </p>
+               <p></p>
+               <div class="ul_wrap">
+                 <ul>
+                   <li id="_">(<a href="#clause1"><span class="citesec">Clause 3</span></a>)</li>
+                   <li id="_"><i>term</i> (<a href="#clause1"><span class="citesec">Clause 3</span></a>)</li>
+                   <li id="_"><i>w[o]rd</i> (<a href="#clause1">Clause #1</a>)</li>
+                   <li id="_"><i>term</i> (<a href="#ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span></a>)</li>
+                   <li id="_"><i>word</i> (<a href="#ISO712">The Aforementioned Citation</a>)</li>
+                   <li id="_"><i>word</i> (<a href="#ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>,  <span class="citesec">3.1</span>,  <span class="citefig">Figure a</span></a>)</li>
+                   <li id="_"><i>word</i> (<a href="#ISO712"><span class="stdpublisher">ISO</span>&#xA0;<span class="stddocNumber">712</span>,  <span class="citesec">3.1</span> and  <span class="citefig">Figure b</span></a>)</li>
+                   <li id="_"><i>word</i> (<a href="#ISO712">
      
      
                The Aforementioned Citation
-               </a>
-                               )
-                            </li>
-                            <li id="_">
-                               <i>word</i>
-                               (Termbase IEV, term ID 135-13-13)
-                            </li>
-                            <li id="_">
-                               <i>word</i>
-                               (The IEV database)
-                            </li>
-                            <li id="_">
-                               <i>word</i><b>error!</b>
-                            </li>
-                         </ul>
-                      </div>
-                   </p>
-                </div>
-                <div id="clause1">
-                   <h1>3  Clause 1</h1>
-                </div>
+               </a>)</li>
+                   <li id="_"><i>word</i> (Termbase IEV, term ID 135-13-13)</li>
+                   <li id="_"><i>word</i> (The IEV database)</li>
+                   <li id="_">
+                     <i>word</i><b>error!</b>
+                   </li>
+                 </ul>
+               </div>
+               <p></p>
              </div>
-          </body>
+             <div id="clause1">
+               <h1>3&#xA0; Clause 1</h1>
+             </div>
+           </div>
+         </body>
        </html>
       OUTPUT
     pres_output = IsoDoc::Iso::PresentationXMLConvert
@@ -788,9 +725,7 @@ RSpec.describe IsoDoc do
                                   (
                                   <fmt-xref target="clause1">
                                      <span class="citesec">
-                                        <semx element="autonum" source="Terms">1</semx>
-                                        <span class="fmt-autonum-delim">.</span>
-                                        <semx element="autonum" source="clause1">2</semx>
+                                        <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause1">2</semx>
                                      </span>
                                   </fmt-xref>
                                   )
@@ -816,9 +751,7 @@ RSpec.describe IsoDoc do
                 <term id="clause2">
                    <fmt-name id="_">
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="Terms">1</semx>
-                         <span class="fmt-autonum-delim">.</span>
-                         <semx element="autonum" source="clause2">3</semx>
+                         <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause2">3</semx>
                       </span>
                    </fmt-name>
                    <fmt-xref-label>
@@ -843,9 +776,7 @@ RSpec.describe IsoDoc do
                                   (
                                   <fmt-xref target="clause1">
                                      <span class="citesec">
-                                        <semx element="autonum" source="Terms">1</semx>
-                                        <span class="fmt-autonum-delim">.</span>
-                                        <semx element="autonum" source="clause1">2</semx>
+                                        <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause1">2</semx>
                                      </span>
                                   </fmt-xref>
                                   )
@@ -871,15 +802,11 @@ RSpec.describe IsoDoc do
                 <term id="clause3">
                    <fmt-name id="_">
                       <span class="fmt-caption-label">
-                         <semx element="autonum" source="Terms">1</semx>
-                         <span class="fmt-autonum-delim">.</span>
-                         <semx element="autonum" source="clause3">4</semx>
+                         <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause3">4</semx>
                       </span>
                    </fmt-name>
                    <fmt-xref-label>
-                      <semx element="autonum" source="Terms">1</semx>
-                      <span class="fmt-autonum-delim">.</span>
-                      <semx element="autonum" source="clause3">4</semx>
+                      <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause3">4</semx>
                    </fmt-xref-label>
                    <ul>
                       <li id="_">
@@ -898,9 +825,7 @@ RSpec.describe IsoDoc do
                                   (
                                   <fmt-xref target="clause1">
                                      <span class="citesec">
-                                        <semx element="autonum" source="Terms">1</semx>
-                                        <span class="fmt-autonum-delim">.</span>
-                                        <semx element="autonum" source="clause1">2</semx>
+                                        <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause1">2</semx>
                                      </span>
                                   </fmt-xref>
                                   )
@@ -925,19 +850,11 @@ RSpec.describe IsoDoc do
                    <term id="clause4">
                       <fmt-name id="_">
                          <span class="fmt-caption-label">
-                            <semx element="autonum" source="Terms">1</semx>
-                            <span class="fmt-autonum-delim">.</span>
-                            <semx element="autonum" source="clause3">4</semx>
-                            <span class="fmt-autonum-delim">.</span>
-                            <semx element="autonum" source="clause4">1</semx>
+                            <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause3">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause4">1</semx>
                          </span>
                       </fmt-name>
                       <fmt-xref-label>
-                         <semx element="autonum" source="Terms">1</semx>
-                         <span class="fmt-autonum-delim">.</span>
-                         <semx element="autonum" source="clause3">4</semx>
-                         <span class="fmt-autonum-delim">.</span>
-                         <semx element="autonum" source="clause4">1</semx>
+                         <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause3">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause4">1</semx>
                       </fmt-xref-label>
                       <ul>
                          <li id="_">
@@ -956,9 +873,7 @@ RSpec.describe IsoDoc do
                                      (
                                      <fmt-xref target="clause1">
                                         <span class="citesec">
-                                           <semx element="autonum" source="Terms">1</semx>
-                                           <span class="fmt-autonum-delim">.</span>
-                                           <semx element="autonum" source="clause1">2</semx>
+                                           <semx element="autonum" source="Terms">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="clause1">2</semx>
                                         </span>
                                      </fmt-xref>
                                      )

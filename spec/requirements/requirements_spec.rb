@@ -526,14 +526,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                       <number>2616</number>
                    </series>
                    <place>Fremont, CA</place>
-                   <biblio-tag>
-                      [1]
-                      <tab/>
-                      <span class="stdpublisher">IETF </span>
-                      <span class="stdpublisher">RFC </span>
-                      <span class="stddocNumber">2616</span>
-                      ,
-                   </biblio-tag>
+                   <biblio-tag>[1]<tab/><span class="stdpublisher">IETF RFC </span> <span class="stddocNumber">2616</span>,</biblio-tag>
                 </bibitem>
              </references>
           </bibliography>
@@ -686,14 +679,9 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <h1 class="Section3">Bibliography</h1>
                 <p id="rfc2616" class="Biblio">
                    [1] 
-                   <span class="stdpublisher">IETF </span>
-                   <span class="stdpublisher">RFC </span>
-                   <span class="stddocNumber">2616</span>
-                   ,
-                   R. FIELDING, J. GETTYS, J. MOGUL, H. FRYSTYK, L. MASINTER, P. LEACH and T. BERNERS-LEE.
-                   <i>
-                      <span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span>
-                   </i>
+                   <span class="stdpublisher">IETF RFC </span>
+                   <span class="stddocNumber">2616</span>, R. FIELDING, J. GETTYS, J. MOGUL, H. FRYSTYK, L. MASINTER, P. LEACH and T. BERNERS-LEE.
+                   <i><span class="stddocTitle">Hypertext Transfer Protocol — HTTP/1.1</span></i>
                 </p>
              </div>
           </div>
@@ -859,8 +847,7 @@ RSpec.describe Metanorma::Requirements::Iso::Modspec do
                 <p id="rfc2616" class="Biblio">
                    [1]
                    <span style="mso-tab-count:1">  </span>
-                   <span class="stdpublisher">IETF </span>
-                   <span class="stdpublisher">RFC </span>
+                   <span class="stdpublisher">IETF RFC </span>
                    <span class="stddocNumber">2616</span>
                    ,
                    R. FIELDING, J. GETTYS, J. MOGUL, H. FRYSTYK, L. MASINTER, P. LEACH and T. BERNERS-LEE.
