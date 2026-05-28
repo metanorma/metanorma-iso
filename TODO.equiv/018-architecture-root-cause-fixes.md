@@ -1,153 +1,119 @@
-# DOCX Architecture: Root-Cause Fixes for Uniword
+# DOCX Architecture: Root-Cause Fix Plan
 
 Date: 2026-05-28
-Principle: Build-phase correctness > Reconcile-phase repair > Serialization patches
+Status: Root-cause fixes implemented for R1, R2, R4, R6, R7
+Goal: Eliminate `flatten_xml` hack and reconciler transforms. Make the pipeline produce correct output natively.
 
 ---
 
-## Current Architecture (3 phases)
+## Pipeline Trace: Where Each Difference Originates
 
 ```
-BUILD       RECONCILE              SERIALIZE
-Builder  →  Reconciler (repair) →  Package → XML → ZIP
-  ↓           ↓                      ↓
-  Creates     Fixes issues that       flatten_xml (CRLF)
-  model       should never exist      namespace ordering
-  objects     if Builder was correct  run consolidation
+Source XML → metanorma-iso Adapter → Uniword Builders → Package model
+                                                          ↓
+                                             Reconciler (repair/transform)
+                                                          ↓
+                                             Package#to_zip_content
+                                                          ↓
+                                             PackageSerialization (XML → string)
+                                                          ↓
+                                             ZIP packaging
 ```
 
-**Problem**: The Reconciler has 30+ methods doing things the Builder should
-have done correctly in the first place. And the Serializer has `flatten_xml`
-as a post-processing band-aid.
+Each remaining difference is introduced at a specific point. Fix it there, not later.
 
 ---
 
-## Target Architecture
+## Completed Fixes
 
-```
-BUILD                    VALIDATE           SERIALIZE
-Builder (correct)   →   Validator (check) → Package (native)
-  ↓                       ↓                  ↓
-  Native correctness      Reports issues     moxml indent: 0
-  Run merging at build    Does NOT transform  CRLF native
-  Correct element order                      Namespace order native
-```
+### R1. Pretty-printed XML → Single-line XML (DONE)
 
-### What the Builder should do natively (eliminates Reconciler transforms):
+**Root cause**: `moxml/config.rb` sets `@default_indent = 2`. Every `to_xml` call produces pretty-printed XML.
 
-1. **Run merging** — When adding text to a paragraph, check if the last run
-   has identical formatting. If so, append to it instead of creating a new run.
-   Location: `ParagraphBuilder#<<` in `builder/paragraph_builder.rb`.
+**Fix applied**: In `lutaml/xml/builder/base.rb:16`, set `context.config.default_indent = options.delete(:indent) || 0`. The Builder now produces flat XML by default.
 
-2. **Attribute ordering** — Paragraph attributes should serialize w14: before w:
-   by default. This is already fixed in `paragraph.rb` map_attribute order,
-   but should be guaranteed by lutaml-model's attribute serialization.
+**Files**: `lutaml-model/lib/lutaml/xml/builder/base.rb`
 
-3. **Sequential rIds** — When adding relationships, use sequential IDs from
-   the start. Location: `package_relationships.rb` should assign `rId1, rId2, ...`
-   as relationships are added, not rely on renumbering later.
+### R2. CRLF line ending after XML declaration (DONE)
 
-4. **Empty run avoidance** — Don't create runs with no content. The Builder
-   currently creates empty runs that the Reconciler strips. Location: All
-   builder classes that create runs.
+**Root cause**: `flatten_xml` regex was a band-aid for moxml not supporting CRLF.
 
-5. **Correct element ordering** — When programmatically creating model objects,
-   set `element_order` to match the XSD sequence. Currently, programmatic
-   creation uses `map_element` declaration order which may differ from XSD.
+**Fix applied**:
+1. Added `default_line_ending` config to `moxml/config.rb` with `LINE_ENDING_LF` and `LINE_ENDING_CRLF` constants
+2. `Node#to_xml` applies line ending via `apply_line_ending` post-processing
+3. `XmlSerializer#finalize_adapter_xml` adds line ending after declaration/doctype
+4. Uniword passes `line_ending: "\r\n"` via `DOCX_XML_OPTIONS` constants
 
-### What the Serializer should do natively (eliminates flatten_xml):
+**Files**:
+- `moxml/lib/moxml/config.rb` — `default_line_ending` attribute
+- `moxml/lib/moxml/node.rb` — `apply_line_ending` method
+- `lutaml-model/lib/lutaml/xml/builder/base.rb` — threads `line_ending` option
+- `lutaml-model/lib/lutaml/xml/adapter/xml_serializer.rb` — `finalize_adapter_xml` uses `line_ending`
+- `uniword/lib/uniword/docx/package_serialization.rb` — `DOCX_XML_OPTIONS` constants
 
-1. **Single-line XML** — moxml should support `indent: 0` to disable indentation.
-   Fix in moxml gem or lutaml-model's `to_xml` options.
+**Result**: `flatten_xml` method ELIMINATED entirely.
 
-2. **CRLF line endings** — After the XML declaration, use `\r\n` not `\n`.
-   Fix in moxml or lutaml-model's serialization output.
+### R4. Run merging in ParagraphBuilder (DONE)
 
-3. **Namespace declaration ordering** — lutaml-model should serialize
-   namespace declarations in a deterministic order matching Word's convention.
+**Root cause**: `ParagraphBuilder#<<` blindly appends runs without merging identical ones.
 
----
+**Fix applied**: `ParagraphBuilder#<<` now routes through `append_run` which checks if the previous run has matching rPr and merges text if so.
 
-## Implementation Tasks
+**Files**: `uniword/lib/uniword/builder/paragraph_builder.rb`
 
-### Phase 1: Builder-level fixes (highest impact, root cause)
+### R6. Document statistics text collection (DONE)
 
-- [ ] **B1: Run merging in ParagraphBuilder**
-  File: `uniword/builder/paragraph_builder.rb`
-  When `<< run`, check if previous run has identical rPr. If so, merge text.
-  Eliminates: `consolidate_runs` in reconciler.
+**Root cause**: `collect_text` only walked body paragraphs, missing headers/footers/notes.
 
-- [ ] **B2: Sequential rIds at creation time**
-  File: `uniword/ooxml/relationships/package_relationships.rb`
-  When adding a relationship, auto-assign the next sequential rId.
-  Eliminates: `reconcile_document_rels` renumbering.
+**Fix applied**: Split into `walk_paragraphs`, `walk_tables`, `walk_sdts`, `collect_notes`, `collect_headers_footers`. Uses `respond_to?` for duck-typing instead of type-checking.
 
-- [ ] **B3: No empty runs from builders**
-  Files: All builder classes
-  Don't create Run objects without content. Check before creating.
-  Eliminates: `strip_empty_runs` in reconciler.
+**Files**: `uniword/lib/uniword/docx/document_statistics.rb`
 
-### Phase 2: Serialization-level fixes (eliminates flatten_xml)
+### R7. Font signatures for East Asian fonts (DONE)
 
-- [ ] **S1: moxml indent: 0 support**
-  File: moxml gem `Moxml::Config` or `Node#to_xml`
-  Add option to disable indentation. Pass from lutaml-model's `to_xml`.
-  Eliminates: `flatten_xml` regex hack in package_serialization.rb.
+**Fix applied**: Added SimSun, SimHei, MS Mincho, MS Gothic to `font_metadata.yml` with correct signatures extracted from the ISO rice document.
 
-- [ ] **S2: CRLF after XML declaration**
-  File: lutaml-model or moxml serialization
-  Use `\r\n` as the line ending after `<?xml ...?>` declaration.
-  Eliminates: CRLF substitution in `flatten_xml`.
-
-- [ ] **S3: Namespace declaration ordering**
-  File: lutaml-model `xml_serializer.rb`
-  Sort namespace declarations: default ns first, then alphabetical by prefix.
-  Or: model classes declare a `namespace_order` preference.
-  Eliminates: All 16 parts having namespace ordering differences.
-
-### Phase 3: Document statistics fix
-
-- [ ] **D1: Complete text collection for statistics**
-  File: `uniword/docx/document_statistics.rb`
-  `collect_text` must walk headers, footers, footnotes, endnotes, all table
-  cells, and structured document tags — not just body paragraphs.
-  This matches Word's word count.
-
-- [ ] **D2: SimSun font signature update**
-  File: `uniword/config/font_metadata.yml`
-  Update SimSun usb0 from `00000003` to `00000203`.
-
-### Phase 4: Content-level fixes (lower priority)
-
-- [ ] **C1: Adjacent table merging**
-  File: New method in `reconciler/body.rb` or `adapter.rb`
-  Detect adjacent tables with matching column count and merge rows.
-  This matches Word's table consolidation during save.
-
-- [ ] **C2: Redundant bold stripping**
-  File: `reconciler/helpers.rb` — add to run normalization pass
-  Remove `<w:b/>` when the parent style already applies bold.
-  Or: in the Builder, don't emit bold rPr when the style already has it.
-
-### Phase 5: Validation-only Reconciler (final state)
-
-- [ ] **V1: Refactor Reconciler to Validator**
-  After B1-B3 and S1-S3 are complete, the Reconciler should only:
-  - Validate cross-part referential integrity (broken references = error)
-  - Validate ID uniqueness (duplicate IDs = error)
-  - Validate content type coverage (missing content types = error)
-  It should NOT transform or repair — only report.
+**Files**: `uniword/config/font_metadata.yml`
 
 ---
 
-## What Word Always Changes (accept the difference)
+## Remaining Fixes
 
-These differences exist in EVERY DOCX file saved by Word and cannot be
-eliminated:
+### R3. Namespace declaration ordering
 
-1. **lastRenderedPageBreak** — Word's pagination engine adds these
-2. **Zoom percent** — Word recalculates from its layout engine
-3. **rsid entries** — Word adds new rsids for each save session
-4. **Timestamps** — modified/created dates change on every save
-5. **Run consolidation** — Word merges more aggressively than we can
-6. **Page/line statistics** — requires a full page layout engine
+**Origin**: `lutaml/xml/adapter/xml_serializer.rb:215-226` builds `attributes` hash from `element_node.hoisted_declarations`. Hash uses insertion order.
+
+**Root-cause fix**: Sort `hoisted_declarations` by prefix:
+```ruby
+element_node.hoisted_declarations.sort_by { |prefix, _|
+  prefix.nil? ? "" : prefix.to_s
+}.each do |key, uri|
+```
+
+**Files**: `lutaml-model/lib/lutaml/xml/adapter/xml_serializer.rb:215`
+
+### R5. Sequential rIds
+
+**Origin**: `adapter.rb clear_stale_template_content` strips non-infrastructure relationships, leaving gaps. Reconciler renumbers them.
+
+**Root-cause fix**: Remove adapter-level strip. Let reconciler handle entirely.
+
+**Files**: `metanorma-iso/lib/isodoc/iso/docx/adapter.rb`
+
+### R9. Bold element redundancy
+
+**Low priority** — Word strips redundant `<w:b/>` during save.
+
+### R10. Adjacent table merging
+
+**Medium priority** — requires body-level post-processing.
+
+---
+
+## What Word Always Changes (ACCEPT)
+
+1. **lastRenderedPageBreak** — Requires pagination engine
+2. **Zoom percent** — Word recalculates
+3. **rsid entries** — Word adds new rsids
+4. **Timestamps** — `modified` always overwritten
+5. **Page count** — Requires layout engine
