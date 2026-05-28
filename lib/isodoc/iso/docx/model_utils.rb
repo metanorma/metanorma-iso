@@ -36,11 +36,16 @@ module IsoDoc
 
             val = node.public_send(attr)
             case val
-            when Array then texts.concat(val)
+            when Array then texts.concat(val.grep(String))
             when String then texts << val
             end
           end
-          texts.compact
+          texts.compact.reject { |t| mathml_content?(t) }
+        end
+
+        def mathml_content?(text)
+          text.include?("<mstyle") || text.include?("<m:math") ||
+            text.include?("<math ") || text.include?("<math>")
         end
 
         # Build the element-name → attribute-name mapping from a node's
@@ -85,8 +90,6 @@ module IsoDoc
               text = el.text_content
               yield(:text, text) if text
             elsif el.element?
-              next if el.name == "semx"
-
               attr_name = element_to_attr[el.name]
               next unless attr_name
               next if allow_filter && !allow_filter.include?(attr_name)

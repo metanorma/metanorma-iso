@@ -19,7 +19,7 @@ module IsoDoc
       #
       # Output format is determined by file extension (.docx or .doc).
       #
-      # Uses case/when dispatch on model class (no send/respond_to?).
+      # Uses case/when dispatch on model class (type-driven, no reflection).
       # Each element type maps to exactly one visitor method (MECE).
       # New element types are added by extending the case statement
       # and adding a new visitor method (open/closed principle).
@@ -67,32 +67,10 @@ module IsoDoc
         private
 
         def save_document(model, output_path)
-          if output_path.end_with?(".doc")
-            css = mhtml_css
-            Uniword::Transformation::MhtmlStyleBuilder.custom_style_block = css
-          end
           Uniword::DocumentWriter.new(model).save(output_path)
-        ensure
-          Uniword::Transformation::MhtmlStyleBuilder.custom_style_block = nil
-        end
-
-        # Generate CSS from YAML configs for MHTML output.
-        def mhtml_css
-          return @mhtml_css if @mhtml_css
-
-          config_dir = IsoDoc::Iso::DocxTemplates.config_dir(@template)
-          styles_yml = YAML.safe_load(File.read(File.join(config_dir, "styles.yml")))
-          defaults_yml = YAML.safe_load(File.read(File.join(config_dir, "doc_defaults.yml")))
-          numbering_yml = begin
-                            YAML.safe_load(File.read(File.join(config_dir, "numbering.yml")))
-                          rescue StandardError
-                            nil
-                          end
-
-          generator = Uniword::Transformation::YamlCssGenerator.new(
-            styles: styles_yml, doc_defaults: defaults_yml, numbering: numbering_yml
-          )
-          @mhtml_css = "<style>\n<!--\n#{generator.generate}\n-->\n</style>"
+        rescue StandardError => e
+          warn "[metanorma-iso] DOCX save failed: #{e.message}"
+          raise
         end
 
         def parse_xml(source)
@@ -186,7 +164,6 @@ module IsoDoc
           end
 
           root.image_parts = nil
-          root.embeddings = nil
         end
 
         # ── Root-level visitors ────────────────────────────────────────
@@ -300,7 +277,6 @@ module IsoDoc
 
           is_normative = refs_sect.normative == "true"
           @context.with_normative(is_normative) do
-            refs_sect.references&.each { |r| visit_bibliographic_item(r, doc) }
             walk_mixed_content(refs_sect, doc)
           end
         end
@@ -497,14 +473,49 @@ module IsoDoc
           end
 
           tbl = Uniword::Builder::TableBuilder.new
-          tbl.width(parse_twips(table.width)) if table.width
 
           @context.with_table do
             render_table_section(table.thead, tbl, :header)
             render_table_section(table.tbody, tbl, :body)
             render_table_section(table.tfoot, tbl, :body)
           end
+
+          ensure_table_structure(tbl.model, table.width)
           doc << tbl
+        end
+
+        def ensure_table_structure(table_model, width)
+          unless table_model.properties
+            table_model.properties = Uniword::Wordprocessingml::TableProperties.new
+          end
+          unless table_model.properties.table_width
+            table_model.properties.table_width =
+              Uniword::Properties::TableWidth.new(
+                w: parse_twips(width) || 0, type: "dxa",
+              )
+          end
+          unless table_model.properties.table_look
+            table_model.properties.table_look =
+              Uniword::Properties::TableLook.new(
+                val: "04A0",
+                first_row: 1,
+                last_row: 0,
+                first_column: 1,
+                last_column: 0,
+                no_h_band: 0,
+                no_v_band: 1,
+              )
+          end
+
+          return if table_model.grid
+
+          cols = table_model.rows.map { |r| (r.cells&.count || 0) }.max || 0
+          total_width = parse_twips(width) || 9000
+          col_width = cols > 0 ? (total_width / cols) : 0
+          grid_cols = Array.new(cols) do
+            Uniword::Wordprocessingml::GridCol.new(width: col_width)
+          end
+          table_model.grid = Uniword::Wordprocessingml::TableGrid.new(columns: grid_cols)
         end
 
         def visit_figure(figure, doc)
@@ -705,10 +716,10 @@ module IsoDoc
                 next unless cell
                 col_span = cell.colspan
                 row.cell do |c|
+                  c.column_span(col_span.to_i) if col_span
                   cell_para = Uniword::Builder::ParagraphBuilder.new
                   @inline_renderer.render(cell, cell_para)
                   c << cell_para
-                  c.column_span(col_span.to_i) if col_span
                 end
               end
             end
@@ -799,19 +810,11 @@ module IsoDoc
 
         def apply_header_footer(doc)
           doc.header do |h|
-            para = h.paragraph
-            para.align = :right
-            run = Uniword::Builder::RunBuilder.new
-            run.font("Arial").size(9)
-            para << run.build
+            h.paragraph.align = :right
           end
 
           doc.footer do |f|
-            para = f.paragraph
-            para.align = :center
-            run = Uniword::Builder::RunBuilder.new
-            run.font("Arial").size(9)
-            para << run.build
+            f.paragraph.align = :center
           end
         end
       end

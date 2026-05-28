@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "uniword"
+require "metanorma/document"
 require_relative "model_utils"
 
 module IsoDoc
@@ -85,9 +86,13 @@ module IsoDoc
                Metanorma::Document::Components::Inline::SmallCapElement
             render_smallcap(element, para)
           when Metanorma::Document::Components::Inline::BrElement
-            para << "\n"
+            br_run = Uniword::Wordprocessingml::Run.new
+            br_run.break = Uniword::Wordprocessingml::Break.new
+            para << br_run
           when Metanorma::Document::Components::Inline::TabElement
-            para << "\t"
+            tab_run = Uniword::Wordprocessingml::Run.new
+            tab_run.tab = Uniword::Wordprocessingml::Tab.new
+            para << tab_run
           when Metanorma::Document::Components::EmptyElements::PageBreakElement
             para << Uniword::Builder.page_break
           when Metanorma::Document::Components::Inline::LinkElement
@@ -102,6 +107,11 @@ module IsoDoc
                Metanorma::Document::Components::Inline::StemInlineElement,
                Metanorma::Document::Components::TextElements::StemElement
             render_stem(element, para)
+          when Metanorma::Document::Components::Inline::MathElement
+            # Skip — math is handled by render_stem on the parent stem element
+          when Metanorma::Document::Components::Inline::AsciimathElement
+            text = element.text if element.class.attributes.key?(:text)
+            para << text if text.is_a?(String) && !text.empty?
           when Metanorma::Document::Components::IdElements::Image
             render_inline_image(element, para)
           when Metanorma::Document::Components::IdElements::Bookmark
@@ -110,14 +120,20 @@ module IsoDoc
             render_bold(collect_text(element), para)
           when Metanorma::Document::Components::Inline::SpanElement
             render_span(element, para)
+          when Metanorma::Document::Components::Inline::SemxElement
+            render_mixed_inline_fallback(element, para)
+          when Metanorma::Document::Components::Paragraphs::ParagraphBlock
+            render_mixed_inline_fallback(element, para)
+          when Metanorma::IsoDocument::RawParagraph
+            render_raw_paragraph(element, para)
+          when Metanorma::Document::Components::Inline::FmtXrefElement
+            render_fmt_xref(element, para)
           when Metanorma::Document::Components::Inline::FmtFootnoteContainerElement,
                Metanorma::Document::Components::Inline::FmtFnLabelElement,
                Metanorma::Document::Components::Inline::FmtAnnotationStartElement,
                Metanorma::Document::Components::Inline::FmtAnnotationEndElement,
                Metanorma::Document::Components::Inline::FmtTitleElement,
-               Metanorma::Document::Components::Inline::FmtXrefLabelElement,
-               Metanorma::Document::Components::Inline::SemxElement,
-               Metanorma::Document::Components::Inline::FmtXrefElement
+               Metanorma::Document::Components::Inline::FmtXrefLabelElement
             render_mixed_inline_fallback(element, para)
           else
             text = collect_text(element)
@@ -139,15 +155,18 @@ module IsoDoc
           end
         end
 
-        # Render mixed-content children with a character style applied to text runs.
         def render_with_char_style(element, para, style)
           if ordered?(element)
             element.each_mixed_content do |child|
               case child
               when String
-                run = Uniword::Builder::RunBuilder.new
-                run.text(child).character_style(style)
-                para << run.build
+                next if child.nil? || child.empty?
+
+                run = Uniword::Wordprocessingml::Run.new(text: child)
+                run.properties = Uniword::Wordprocessingml::RunProperties.new(
+                  style: Uniword::Properties::RunStyleReference.new(value: style),
+                )
+                para << run
               else
                 render_inline_element(child, para)
               end
@@ -155,70 +174,100 @@ module IsoDoc
           else
             text = collect_text(element)
             if text && !text.empty?
-              run = Uniword::Builder::RunBuilder.new
-              run.text(text).character_style(style)
-              para << run.build
+              run = Uniword::Wordprocessingml::Run.new(text: text)
+              run.properties = Uniword::Wordprocessingml::RunProperties.new(
+                style: Uniword::Properties::RunStyleReference.new(value: style),
+              )
+              para << run
             end
           end
         end
 
         def render_italic(element, para)
+          text = collect_text(element)
+          return if text.nil? || text.empty?
+
           run = Uniword::Builder::RunBuilder.new
-          run.text(collect_text(element)).italic
+          run.text(text).italic
           para << run.build
         end
 
         def render_bold(element, para)
           text = element.is_a?(String) ? element : collect_text(element)
+          return if text.nil? || text.empty?
+
           run = Uniword::Builder::RunBuilder.new
           run.text(text).bold
           para << run.build
         end
 
         def render_subscript(element, para)
+          text = collect_text(element)
+          return if text.nil? || text.empty?
+
           run = Uniword::Builder::RunBuilder.new
-          run.text(collect_text(element)).subscript
+          run.text(text).subscript
           para << run.build
         end
 
         def render_superscript(element, para)
+          text = collect_text(element)
+          return if text.nil? || text.empty?
+
           run = Uniword::Builder::RunBuilder.new
-          run.text(collect_text(element)).superscript
+          run.text(text).superscript
           para << run.build
         end
 
         def render_monospace(element, para)
+          text = collect_text(element)
+          return if text.nil? || text.empty?
+
           run = Uniword::Builder::RunBuilder.new
-          run.text(collect_text(element)).font("Courier New")
+          run.text(text).font("Courier New")
           para << run.build
         end
 
         def render_strikethrough(element, para)
+          text = collect_text(element)
+          return if text.nil? || text.empty?
+
           run = Uniword::Builder::RunBuilder.new
-          run.text(collect_text(element)).strike
+          run.text(text).strike
           para << run.build
         end
 
         def render_underline(element, para)
+          text = collect_text(element)
+          return if text.nil? || text.empty?
+
           run = Uniword::Builder::RunBuilder.new
-          run.text(collect_text(element)).underline
+          run.text(text).underline
           para << run.build
         end
 
         def render_keyword(element, para)
+          text = collect_text(element)
+          return if text.nil? || text.empty?
+
           run = Uniword::Builder::RunBuilder.new
-          run.text(collect_text(element)).bold.small_caps
+          run.text(text).bold.small_caps
           para << run.build
         end
 
         def render_smallcap(element, para)
+          text = collect_text(element)
+          return if text.nil? || text.empty?
+
           run = Uniword::Builder::RunBuilder.new
-          run.text(collect_text(element)).small_caps
+          run.text(text).small_caps
           para << run.build
         end
 
         def render_link(element, para)
           text = collect_text(element)
+          return if text.nil? || text.empty?
+
           target = element.target
           if target
             link = Uniword::Hyperlink.new(url: target, text: text)
@@ -232,6 +281,8 @@ module IsoDoc
 
         def render_xref(element, para)
           text = collect_text(element)
+          return if text.nil? || text.empty?
+
           target = element.target
           if target
             link = Uniword::Hyperlink.new(anchor: target, text: text)
@@ -245,12 +296,38 @@ module IsoDoc
 
         def render_eref(element, para)
           text = collect_text(element)
+          return if text.nil? || text.empty?
+
           cite = element.citeas || element.bibitemid
           if cite && !cite.empty?
             link = Uniword::Hyperlink.new(url: "##{cite}", text: text)
             para << link.to_model
           else
             para << text
+          end
+        end
+
+        def render_fmt_xref(element, para)
+          target = element.target
+          if target
+            link_model = Uniword::Wordprocessingml::Hyperlink.new
+            link_model.anchor = target
+
+            temp = Uniword::Builder::ParagraphBuilder.new
+            render_mixed_inline_fallback(element, temp)
+            temp.model.runs.each { |r| link_model.runs << r }
+
+            if link_model.runs.empty?
+              text = collect_text(element)
+              if text && !text.empty?
+                run = Uniword::Wordprocessingml::Run.new(text: text)
+                link_model.runs << run
+              end
+            end
+
+            para << link_model unless link_model.runs.empty?
+          else
+            render_mixed_inline_fallback(element, para)
           end
         end
 
@@ -270,17 +347,19 @@ module IsoDoc
         end
 
         def render_stem(element, para)
-          mathml = extract_mathml(element)
-          if mathml && defined?(Plurimath)
-            omml = Plurimath::Math.parse(mathml, "mathml").to_ooml
-            para << omml
-          else
-            text = collect_text(element)
-            para << text if text && !text.empty?
-          end
-        rescue StandardError
-          text = collect_text(element)
+          text = stem_fallback_text(element)
           para << text if text && !text.empty?
+        rescue StandardError
+          text = stem_fallback_text(element)
+          para << text if text && !text.empty?
+        end
+
+        def stem_fallback_text(element)
+          if element.class.attributes.key?(:asciimath)
+            am = element.asciimath
+            return am if am.is_a?(String) && !am.empty?
+          end
+          collect_text(element)
         end
 
         def render_inline_image(element, para)
@@ -315,6 +394,16 @@ module IsoDoc
           para << Uniword::Wordprocessingml::BookmarkEnd.new(id: id)
         end
 
+        def render_raw_paragraph(element, para)
+          return unless element.content
+
+          wrapped = "<p>#{element.content}</p>"
+          parsed = Metanorma::Document::Components::Paragraphs::ParagraphBlock.from_xml(wrapped)
+          render_mixed_inline_fallback(parsed, para)
+        rescue StandardError
+          para << element.content
+        end
+
         def render_mixed_inline_fallback(element, para)
           if ordered?(element)
             element.each_mixed_content do |child|
@@ -346,6 +435,17 @@ module IsoDoc
         end
 
         def extract_mathml(element)
+          # MathElement objects store inner MathML in :content (no <math> wrapper)
+          if element.class.attributes.key?(:math)
+            math_els = element.math
+            if math_els.is_a?(Array) && !math_els.empty?
+              math_el = math_els.first
+              if math_el.class.attributes.key?(:content) && math_el.content.is_a?(String)
+                return "<math>#{math_el.content}</math>"
+              end
+            end
+          end
+
           content = element.content if element.class.attributes.key?(:content)
           if content.is_a?(String)
             math = extract_math_tag(content)
