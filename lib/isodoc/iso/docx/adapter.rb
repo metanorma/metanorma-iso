@@ -91,7 +91,7 @@ module IsoDoc
               root.body.paragraphs.clear
               root.body.tables.clear
               root.body.structured_document_tags.clear
-              root.body.element_order.clear if root.body.element_order
+              root.body.element_order = [] if root.body.element_order
               root.body.section_properties = nil
             end
             clear_user_footnotes(root)
@@ -112,7 +112,7 @@ module IsoDoc
           root.footnotes.footnote_entries.reject! do |e|
             e.type != "separator" && e.type != "continuationSeparator"
           end
-          root.footnotes.element_order&.clear if root.footnotes.element_order
+          root.footnotes.element_order = [] if root.footnotes.element_order
         end
 
         def clear_user_endnotes(root)
@@ -121,7 +121,7 @@ module IsoDoc
           root.endnotes.endnote_entries.reject! do |e|
             e.type != "separator" && e.type != "continuationSeparator"
           end
-          root.endnotes.element_order&.clear if root.endnotes.element_order
+          root.endnotes.element_order = [] if root.endnotes.element_order
         end
 
         def clear_custom_xml_references(root)
