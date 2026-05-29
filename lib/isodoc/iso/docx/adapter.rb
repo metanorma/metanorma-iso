@@ -138,31 +138,9 @@ module IsoDoc
           end
         end
 
-        # Strip stale content inherited from template DOCX.
-        # We build documents from YAML configs — template body content
-        # (images, hyperlinks, OLE objects) must not leak into output.
-        INFRASTRUCTURE_REL_TYPES = %w[
-          styles settings fontTable webSettings numbering
-          theme footnotes endnotes
-        ].freeze
-
         def clear_stale_template_content(root)
-          if root.document_rels&.relationships
-            root.document_rels.relationships.reject! do |r|
-              type_str = r.type.to_s
-              next false unless type_str.include?("/relationships/")
-
-              INFRASTRUCTURE_REL_TYPES.none? { |t| type_str.end_with?("/#{t}") }
-            end
-          end
-
-          if root.content_types&.overrides
-            root.content_types.overrides.reject! do |o|
-              pn = o.part_name.to_s
-              pn.include?("embeddings/") || pn.include?("media/")
-            end
-          end
-
+          # Reconciler rebuilds relationships and content types from scratch,
+          # so only clear runtime-only state here.
           root.image_parts = nil
         end
 
