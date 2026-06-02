@@ -7,41 +7,41 @@ see: 参照
 see_also: 第参照
 subclause: ""
 stage_dict:
-  "00": Preliminary work item
-  "10": New work item proposal
-  "20": Working draft
-  "30": Committee draft
-  "40": 
-    international-standard: Draft International Standard
-    technical-specification: Draft Technical Specification
-    technical-report: Draft Technical Report
-    publicly-available-specification: Draft Publicly Available Specification
-    international-workshop-agreement: Draft International Workshop Agreement
-    guide: Draft Guide
-    amendment: Draft Amendment
-    technical-corrigendum: Draft Technical Corrigendum
-    directive: Draft Directive
-  "50": 
-    international-standard: Final Draft International Standard
-    technical-specification: Final Draft Technical Specification
-    technical-report: Final Draft Technical Report
-    publicly-available-specification: Final Draft Publicly Available Specification
-    international-workshop-agreement: Final Draft International Workshop Agreement
-    guide: Final Draft Guide
-    amendment: Final Draft Amendment
-    technical-corrigendum: Final Draft Technical Corrigendum
-    directive: Final Draft Directive
-  "60": 
-    international-standard: International Standard
-    technical-specification: Technical Specification
-    technical-report: Technical Report
-    publicly-available-specification: Publicly Available Specification
-    international-workshop-agreement: International Workshop Agreement
-    guide: Guide
-    amendment: Amendment
-    technical-corrigendum: Technical Corrigendum
-    directive: Directive
-  "90": Review
-  "95": Withdrawal
+  "00": 予備業務項目
+  "10": 新業務項目提案
+  "20": 作業原案
+  "30": 委員会原案
+  "40":
+    international-standard: 国際規格原案
+    technical-specification: 標準仕様書原案
+    technical-report: 標準報告書原案
+    publicly-available-specification: 公開仕様書原案
+    international-workshop-agreement: 国際ワークショップ協定原案
+    guide: 指針原案
+    amendment: 追補原案
+    technical-corrigendum: 技術正誤票原案
+    directive: 指令原案
+  "50":
+    international-standard: 最終国際規格原案
+    technical-specification: 最終標準仕様書原案
+    technical-report: 最終標準報告書原案
+    publicly-available-specification: 最終公開仕様書原案
+    international-workshop-agreement: 最終国際ワークショップ協定原案
+    guide: 最終指針原案
+    amendment: 最終追補原案
+    technical-corrigendum: 最終技術正誤票原案
+    directive: 最終指令原案
+  "60":
+    international-standard: 国際規格
+    technical-specification: 標準仕様書
+    technical-report: 標準報告書
+    publicly-available-specification: 公開仕様書
+    international-workshop-agreement: 国際ワークショップ協定
+    guide: 指針
+    amendment: 追補
+    technical-corrigendum: 技術正誤票
+    directive: 指令
+  "90": 見直し
+  "95": 廃止
 punct:
   biblio-terminator: ""
