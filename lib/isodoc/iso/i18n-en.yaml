@@ -40,10 +40,10 @@ draft_comment_2: In addition to their evaluation as being acceptable for industr
 draft_comment_3: Recipients of this draft are invited to submit, with their comments, notification of any relevant patent rights of which they are aware and to provide supporting documentation.
 subclause: ""
 title_prefixes:
-  part: Part
-  amendment: AMENDMENT
-  corrigendum: TECHNICAL CORRIGENDUM
-  addendum: ADDENDUM
+  part: "Part {{ var1 }}"
+  amendment: "AMENDMENT {{ var1 }}"
+  corrigendum: "TECHNICAL CORRIGENDUM {{ var1 }}"
+  addendum: "ADDENDUM {{ var1 }}"
 doctype_dict:
   international-standard: International Standard
   technical-specification: Technical Specification
