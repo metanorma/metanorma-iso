@@ -38,10 +38,10 @@ draft_comment_3: Les destinataires du présent projet sont invités à présente
 website: site web
 subclause: ""
 title_prefixes:
-  part: Partie
-  amendment: AMENDEMENT
-  corrigendum: RECTIFICATIF TECHNIQUE
-  addendum: ADDITIF
+  part: "Partie {{ var1 }}"
+  amendment: "AMENDEMENT {{ var1 }}"
+  corrigendum: "RECTIFICATIF TECHNIQUE {{ var1 }}"
+  addendum: "ADDITIF {{ var1 }}"
 doctype_dict:
   international-standard: Norme internationale
   technical-specification: Spécification technique
