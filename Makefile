@@ -72,12 +72,21 @@ $(XSD_FILE_DEST): $(TRANG_JAR)
 	mkdir -p $(dir $@); \
 	java -jar $< $(RNG_FILE_SRC) $@
 
-xsd_doc:  $(XSD_FILE_DEST) $(XSDVIPATH) $(XSLT_FILE) $(XSLT_FILE_MERGE)
-	mkdir -p $@/diagrams; \
-	cd $@; \
-	java -jar $(XSDVIPATH) $< -rootNodeName all -oneNodeOnly -outputPath diagrams; \
-	xsltproc --nonet --stringparam rootxsd iso-standard --output $@.tmp $(XSLT_FILE_MERGE) $<;\
-	xsltproc --nonet --param title "'Metanorma XML Schema Documentation, ISO Standard'" \
-		--output index.html $(XSLT_FILE) $@.tmp;\
-	rm $@.tmp
+# xsdvi / xs3p documentation pipeline disabled 2026-06-09 pending decision
+# at https://github.com/metanorma/metanorma-iso/issues/1559. xsdvi has been
+# hanging mid-run in CI for 40+ minutes and blocking every release, and the
+# `deploy-gh-pages` job downstream of it has never had an actual gh-pages
+# site to publish to. Currently `make xsd_doc` only compiles the RNG to XSD
+# via trang, which is what release validation actually needs.
+.PHONY: xsd_doc
+xsd_doc: $(XSD_FILE_DEST)
+
+#xsd_doc:  $(XSD_FILE_DEST) $(XSDVIPATH) $(XSLT_FILE) $(XSLT_FILE_MERGE)
+#	mkdir -p $@/diagrams; \
+#	cd $@; \
+#	java -jar $(XSDVIPATH) $< -rootNodeName all -oneNodeOnly -outputPath diagrams; \
+#	xsltproc --nonet --stringparam rootxsd iso-standard --output $@.tmp $(XSLT_FILE_MERGE) $<;\
+#	xsltproc --nonet --param title "'Metanorma XML Schema Documentation, ISO Standard'" \
+#		--output index.html $(XSLT_FILE) $@.tmp;\
+#	rm $@.tmp
 
