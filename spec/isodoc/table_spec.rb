@@ -420,7 +420,7 @@ RSpec.describe IsoDoc do
                         <div class="BlockSource">
                            <p>[SOURCE: , Section 1 — with adjustments]</p>
                         </div>
-                        <div class="Note">
+                        <div class="requirement Note">
                      <p>This is a requirement about rice</p>
                   </div>
                         <div class="Note">
@@ -533,7 +533,7 @@ RSpec.describe IsoDoc do
                      <div class="BlockSource">
                         <p class="MsoNormal">[SOURCE: , Section 1 — with adjustments]</p>
                      </div>
-                     <div class="Note">
+                     <div class="requirement Note">
                   <p class="Note">This is a requirement about rice</p>
                </div>
                      <div class="Note">

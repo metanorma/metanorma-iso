@@ -1044,7 +1044,7 @@ RSpec.describe IsoDoc do
          </preface>
          <sections>
            <clause id="A" displayorder="5"><fmt-title depth="1" id="_"><span class="fmt-caption-label"><semx element="autonum" source="A">2</semx></span></fmt-title><fmt-xref-label><span class="fmt-element-name">Clause</span><semx element="autonum" source="A">2</semx></fmt-xref-label>
-           A.<fn reference="3" id="_" original-reference="42" target="_"><p original-id="_">Third footnote.</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">3</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn></clause>
+           A.<fn reference="4" id="_" original-reference="42" target="_"><p original-id="_">Third footnote.</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">4</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn></clause>
            <p displayorder="3">B.<fn reference="1" id="_" original-reference="2" target="_"><p id="_">Formerly denoted as 15 % (m/m).</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn></p>
            <references id="_" obligation="informative" normative="true" displayorder="4">
              <title id="_">Normative References</title>
@@ -1066,7 +1066,7 @@ RSpec.describe IsoDoc do
                <biblio-tag><span class="stdpublisher">ISO</span><span class="stddocNumber">712</span>, </biblio-tag>
                <formattedref>
                  <em>
-                   <span class="stddocTitle">Cereals and cereal products ISO is a standards organisation.</span>
+                   <span class="stddocTitle">Cereals and cereal products<fn reference="3" id="_" original-reference="7" target="_"><p original-id="_">ISO is a standards organisation.</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">3</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn></span>
                  </em>
                </formattedref>
                <title format="text/plain">Cereals or cereal products</title>
@@ -1097,7 +1097,12 @@ RSpec.describe IsoDoc do
            </fmt-fn-body>
            <fmt-fn-body id="_" target="_" reference="3">
              <semx element="fn" source="_">
-               <p id="_"><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">3</semx></sup></span><span class="fmt-caption-delim"><tab/></span></fmt-fn-label>Third footnote.</p>
+               <p id="_"><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">3</semx></sup></span><span class="fmt-caption-delim"><tab/></span></fmt-fn-label>ISO is a standards organisation.</p>
+             </semx>
+           </fmt-fn-body>
+           <fmt-fn-body id="_" target="_" reference="4">
+             <semx element="fn" source="_">
+               <p id="_"><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">4</semx></sup></span><span class="fmt-caption-delim"><tab/></span></fmt-fn-label>Third footnote.</p>
              </semx>
            </fmt-fn-body>
          </fmt-footnote-container>
@@ -1116,12 +1121,12 @@ RSpec.describe IsoDoc do
              <div>
                <h1>1&#xA0; Normative References</h1>
                <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-               <p id="ISO712" class="NormRef"><span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span>, <i><span class="stddocTitle">Cereals and cereal products ISO is a standards organisation.</span></i></p>
+               <p id="ISO712" class="NormRef"><span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span>, <i><span class="stddocTitle">Cereals and cereal products<a class="FootnoteRef" href="#fn:_"><sup>3)</sup></a></span></i></p>
              </div>
              <div id="A">
                <h1>2</h1>
                <a class="FootnoteRef" href="#fn:_">
-                 <sup>3)</sup>
+                 <sup>4)</sup>
                </a>
              </div>
              <aside id="fn:_" class="footnote">
@@ -1131,6 +1136,9 @@ RSpec.describe IsoDoc do
                <p id="_">Hello! denoted as 15 % (m/m).</p>
              </aside>
              <aside id="fn:_" class="footnote">
+               <p id="_">ISO is a standards organisation.</p>
+             </aside>
+             <aside id="fn:_" class="footnote">
                <p id="_">Third footnote.</p>
              </aside>
            </div>
@@ -1138,7 +1146,7 @@ RSpec.describe IsoDoc do
        </html>
     OUTPUT
     doc = <<~OUTPUT
-             <body lang="EN-US" link="blue" vlink="#954F72" xml:lang="EN-US" xml:lang="EN-US">
+         <body lang="EN-US" link="blue" vlink="#954F72" xml:lang="EN-US" xml:lang="EN-US">
            <div class="WordSection1">
              <p>&#xA0;</p>
            </div>
@@ -1171,17 +1179,20 @@ RSpec.describe IsoDoc do
              <div>
                <h1>1<span style="mso-tab-count:1">&#xA0; </span>Normative References</h1>
                <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-               <p id="ISO712" class="NormRef"><span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span>, <i><span class="stddocTitle">Cereals and cereal products ISO is a standards organisation.</span></i></p>
+               <p id="ISO712" class="NormRef"><span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span>, <i><span class="stddocTitle">Cereals and cereal products<span style="mso-bookmark:_Ref" class="MsoFootnoteReference"><a class="FootnoteRef" epub:type="footnote" href="#fn:_">3</a>)</span></span></i></p>
              </div>
              <div id="A">
                <h1>2</h1>
-               <span style="mso-bookmark:_Ref" class="MsoFootnoteReference"><a class="FootnoteRef" epub:type="footnote" href="#fn:_">3</a>)</span>
+               <span style="mso-bookmark:_Ref" class="MsoFootnoteReference"><a class="FootnoteRef" epub:type="footnote" href="#fn:_">4</a>)</span>
              </div>
              <aside id="fn:_">
                <p id="_">Formerly denoted as 15 % (m/m).</p>
              </aside>
              <aside id="fn:_">
                <p id="_">Hello! denoted as 15 % (m/m).</p>
+             </aside>
+             <aside id="fn:_">
+               <p id="_">ISO is a standards organisation.</p>
              </aside>
              <aside id="fn:_">
                <p id="_">Third footnote.</p>
