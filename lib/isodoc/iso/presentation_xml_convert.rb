@@ -183,6 +183,17 @@ module IsoDoc
         ret
       end
 
+      # ISO mandates sequential bibliography numbering. A `.metanorma`
+      # docidentifier (e.g. `[ГОСТ 3295-73]`) must not suppress the
+      # autonumber the way it does for other flavours.
+      # https://github.com/metanorma/metanorma-iso/issues/1530
+      def bibliography_bibitem_number_skip(bibitem)
+        implicit_reference(bibitem) ||
+          bibitem.at(ns(".//docidentifier[@type = 'metanorma-ordinal']")) ||
+          bibitem["suppress_identifier"] == "true" ||
+          bibitem["hidden"] == "true" || bibitem.parent["hidden"] == "true"
+      end
+
       def admonition_delim(elem)
         if elem.at("./*[not(self::xmlns:name)]")&.name == "p"
           " &#x2014; "
