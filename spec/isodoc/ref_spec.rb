@@ -379,16 +379,17 @@ RSpec.describe IsoDoc do
                <docidentifier scope="biblio-tag">IETF RFC 10</docidentifier>
              </bibitem>
              <bibitem id="ref12">
-               <biblio-tag>[Citn]<tab/><span class="stdpublisher">IETF RFC</span> <span class="stddocNumber">20</span>, </biblio-tag>
+               <biblio-tag>[6]<tab/><span class="stdpublisher">IETF RFC</span> <span class="stddocNumber">20</span>, </biblio-tag>
                <formattedref format="application/x-isodoc+xml">CitationWorks. 2019.
                  <em>How to cite a reference</em>
                  </formattedref>
+               <docidentifier type="metanorma-ordinal">[6]</docidentifier>
                <docidentifier type="metanorma">[Citn]</docidentifier>
                <docidentifier type="IETF">IETF RFC 20</docidentifier>
                <docidentifier scope="biblio-tag">IETF RFC 20</docidentifier>
              </bibitem>
              <bibitem id="ref13" type="standard">
-               <biblio-tag>[6]<fn id="_" reference="1" original-reference="1" target="_"><p>Under preparation.</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">2</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>
+               <biblio-tag>[7]<fn id="_" reference="1" original-reference="1" target="_"><p>Under preparation.</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">2</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>
        <tab/></biblio-tag>
                <formattedref>
                  <em>
@@ -396,7 +397,7 @@ RSpec.describe IsoDoc do
                  </em>
                </formattedref>
                <title format="text/plain">Forthcoming standard with no display docidentifier</title>
-               <docidentifier type="metanorma-ordinal">[6]</docidentifier>
+               <docidentifier type="metanorma-ordinal">[7]</docidentifier>
                <note format="text/plain" type="Unpublished-Status" reference="1">Under preparation.</note>
              </bibitem>
            </references>
@@ -535,13 +536,13 @@ RSpec.describe IsoDoc do
                       </i>
                    </p>
                    <p id="ref12" class="Biblio">
-                      [Citn] 
+                      [6] 
                       <span class="stdpublisher">IETF RFC</span> <span class="stddocNumber">20</span>
                       , CitationWorks. 2019.
                       <i>How to cite a reference</i>
                    </p>
                             <p class="Biblio" id="ref13">
-           [6]
+           [7]
            <a class="FootnoteRef" href="#fn:1">
              <sup>1</sup>
            </a>
@@ -1018,5 +1019,40 @@ RSpec.describe IsoDoc do
     xml = xml.at("//xmlns:sections")
     expect(strip_guid(xml.to_xml))
       .to be_xml_equivalent_to output
+  end
+
+  # https://github.com/metanorma/metanorma-iso/issues/1530
+  # In ISO, non-numeric docidentifier[@type='metanorma'] (e.g. GOST docids)
+  # must not suppress autonumbering — bibliography labels are mandatory and
+  # sequential per ISO/IEC DIR 2.
+  it "ignores docidentifier[@type='metanorma'] when autonumbering ISO bibliography (#1530)" do
+    input = <<~INPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+        <bibdata><language>en</language></bibdata>
+        <bibliography>
+          <references id="_" normative="false" obligation="informative">
+            <title id="_">Bibliography</title>
+            <bibitem anchor="gost_hypsometrical2" id="gost_hypsometrical2" type="techreport">
+              <formattedref><em>Hypsometrical tables</em>. Moskva: 1973</formattedref>
+              <docidentifier type="metanorma">[&#x413;&#x41E;&#x421;&#x422; 3295-73]</docidentifier>
+            </bibitem>
+          </references>
+        </bibliography>
+      </iso-standard>
+    INPUT
+    xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
+      .new(presxml_options)
+      .convert("test", input, true))
+    bib = xml.at("//xmlns:bibitem[@id='gost_hypsometrical2']")
+    # Autonumbered ordinal docidentifier inserted alongside the .metanorma one
+    expect(bib.xpath("./xmlns:docidentifier[@type='metanorma-ordinal']").text)
+      .to eq "[1]"
+    # The .metanorma docid is preserved (other code paths may use it)
+    expect(bib.xpath("./xmlns:docidentifier[@type='metanorma']").text)
+      .to match(/3295-73/)
+    # The biblio-tag label is the autonumber, NOT the long GOST string
+    biblio_tag = bib.at("./xmlns:biblio-tag").to_xml
+    expect(biblio_tag).to include "[1]"
+    expect(biblio_tag).not_to match(/3295-73/)
   end
 end
