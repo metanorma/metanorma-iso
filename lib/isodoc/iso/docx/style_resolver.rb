@@ -15,7 +15,6 @@ module IsoDoc
           @context = context
         end
 
-        # Context-independent paragraph style lookup
         def paragraph_style(key)
           @mapping.paragraph_style(key)
         end
@@ -24,7 +23,27 @@ module IsoDoc
           @mapping.character_style(key)
         end
 
-        # Context-dependent heading: annex headings differ from body headings
+        def class_style(class_attr)
+          key = normalize_class_key(class_attr)
+          @mapping.paragraph_style(key)
+        end
+
+        def context_body_style
+          if @context.in_note
+            paragraph_style(:note)
+          elsif @context.in_example
+            paragraph_style(:example)
+          elsif @context.in_foreword
+            paragraph_style(:foreword_text)
+          elsif @context.in_normative
+            paragraph_style(:normref) || paragraph_style(:body_text)
+          elsif @context.in_bibliography
+            paragraph_style(:biblio_text)
+          else
+            nil
+          end
+        end
+
         def heading_style(level)
           if @context.in_annex
             @mapping.annex_heading_style(level)
@@ -33,33 +52,73 @@ module IsoDoc
           end
         end
 
-        # Figure title differs in annex vs body
         def figure_title_style
-          key = @context.in_annex ? :figure_title_annex : :figure_title
-          @mapping.paragraph_style(key)
+          if @context.in_annex
+            paragraph_style(:figure_title_annex) || paragraph_style(:figure_title)
+          else
+            paragraph_style(:figure_title)
+          end
         end
 
-        # Table title differs in annex vs body
         def table_title_style
-          key = @context.in_annex ? :table_title_annex : :table_title
-          @mapping.paragraph_style(key)
+          if @context.in_annex
+            paragraph_style(:table_title_annex) || paragraph_style(:table_title)
+          else
+            paragraph_style(:table_title)
+          end
         end
 
-        # Numbering definition ID for a semantic key
         def numbering_id(key)
           @mapping.numbering_id(key)
         end
 
-        # Map a presentation XML span class attribute to a DOCX character styleId.
-        # Returns nil if the class has no corresponding character style.
+        # Depth-aware term number style: TermNum2..TermNum6 based on
+        # section_depth. Terms under Heading2 get TermNum3, etc.
+        def term_number_style
+          paragraph_style(:term_num)
+        end
+
+        SPAN_CLASS_TO_STYLE = {
+          "stdpublisher" => "stdpublisher0",
+          "stddocNumber" => "stddocnumber",
+          "stdyear" => "stdyear",
+          "stddocTitle" => "stddoctitle",
+          "stddocPartNumber" => "stddocpartnumber",
+          "std_publisher" => "stdpublisher",
+          "citesec" => "citesec",
+          "citeapp" => "citeapp",
+          "citefig" => "citefig",
+          "citetbl" => "citetbl",
+          "notelabel" => "notelabel",
+          "termnotelabel" => "termnotelabel",
+          "examplelabel" => "examplelabel",
+          "stem" => "stem",
+          "boldtitle" => "boldtitle",
+          "nonboldtitle" => "nonboldtitle",
+        }.freeze
+
         def span_class_style(class_attr)
           return nil unless class_attr
 
-          @span_class_cache ||= build_span_class_cache
-          @span_class_cache[class_attr]
+          SPAN_CLASS_TO_STYLE[class_attr] || build_span_class_cache[class_attr]
         end
 
         private
+
+        CLASS_ALIASES = {
+          "zzSTDTitle1" => :title,
+          "zzwarning" => :warning,
+          "zzCopyright" => :colophon,
+        }.freeze
+
+        def normalize_class_key(class_attr)
+          str = class_attr.to_s
+          if CLASS_ALIASES.key?(str)
+            CLASS_ALIASES[str]
+          else
+            str.to_sym
+          end
+        end
 
         def build_span_class_cache
           @mapping.character_styles.each_with_object({}) do |(_key, style_id), cache|

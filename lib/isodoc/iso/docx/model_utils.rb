@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "base64"
+require "tempfile"
+
 module IsoDoc
   module Iso
     module Docx
@@ -107,10 +110,28 @@ module IsoDoc
           end
         end
 
+        # Convert a data:image/...;base64,... URI to a Tempfile path.
+        def extract_data_uri_to_tempfile(data_uri)
+          match = data_uri.match(%r{^data:image/(\w+);base64,(.+)$}m)
+          unless match
+            raise ArgumentError, "Unsupported data URI format"
+          end
+
+          ext = match[1] == "jpeg" ? "jpg" : match[1]
+          data = Base64.decode64(match[2])
+
+          tmp = Tempfile.new(["img", ".#{ext}"])
+          tmp.binmode
+          tmp.write(data)
+          tmp.close
+          tmp.path
+        end
+
         # Convert a CSS-style dimension string to EMU (for images) or
         # twips (for tables, depending on suffix).
         def parse_dimension(value)
           return nil unless value
+          return nil if value == "auto"
 
           if value.end_with?("pt")
             (value.to_f * 20).to_i

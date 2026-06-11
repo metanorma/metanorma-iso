@@ -2,7 +2,6 @@
 
 require "uniword"
 require "metanorma/document"
-require_relative "model_utils"
 
 module IsoDoc
   module Iso
@@ -15,10 +14,14 @@ module IsoDoc
       class InlineRenderer
         include ModelUtils
 
+        attr_accessor :preserve_whitespace
+
         def initialize(context, resolver, doc_builder)
           @context = context
           @resolver = resolver
           @doc = doc_builder
+          @footnote_cache = {}
+          @preserve_whitespace = false
         end
 
         # Render all inline content from a node into a ParagraphBuilder.
@@ -35,15 +38,14 @@ module IsoDoc
           each_ordered_element(node) do |type, obj|
             walked = true
             case type
-            when :text then para << obj
+            when :text then add_text(para, obj)
             when :element then render_inline_element(obj, para)
             end
           end
           return if walked
 
           node.each_mixed_content do |child|
-            case child
-            when String then para << child
+            case child when String then add_text(para, child)
             else render_inline_element(child, para)
             end
           end
@@ -53,7 +55,7 @@ module IsoDoc
         # information is available.
         def render_collection_inline(node, para)
           texts = extract_texts(node)
-          texts.each { |t| para << t unless t.nil? || t.strip.empty? }
+          texts.each { |t| add_text(para, t) unless t.nil? || t.strip.empty? }
 
           render_inline_elements(node, para)
         end
@@ -121,19 +123,27 @@ module IsoDoc
           when Metanorma::Document::Components::Inline::SpanElement
             render_span(element, para)
           when Metanorma::Document::Components::Inline::SemxElement
-            render_mixed_inline_fallback(element, para)
+            render_semx(element, para)
           when Metanorma::Document::Components::Paragraphs::ParagraphBlock
             render_mixed_inline_fallback(element, para)
           when Metanorma::IsoDocument::RawParagraph
             render_raw_paragraph(element, para)
           when Metanorma::Document::Components::Inline::FmtXrefElement
             render_fmt_xref(element, para)
+          when Metanorma::Document::Components::Inline::FmtXrefLabelElement
+            nil
           when Metanorma::Document::Components::Inline::FmtFootnoteContainerElement,
                Metanorma::Document::Components::Inline::FmtFnLabelElement,
                Metanorma::Document::Components::Inline::FmtAnnotationStartElement,
                Metanorma::Document::Components::Inline::FmtAnnotationEndElement,
                Metanorma::Document::Components::Inline::FmtTitleElement,
-               Metanorma::Document::Components::Inline::FmtXrefLabelElement
+               Metanorma::Document::Components::Inline::FmtNameElement
+            render_mixed_inline_fallback(element, para)
+          when Metanorma::IsoDocument::Terms::TermExpression
+            Array(element.name).each { |n| render(n, para) }
+          when Metanorma::IsoDocument::Terms::TermNameElement
+            render(element, para)
+          when Metanorma::Document::Components::Inline::VariantTitleElement
             render_mixed_inline_fallback(element, para)
           else
             text = collect_text(element)
@@ -141,7 +151,40 @@ module IsoDoc
           end
         end
 
+        # Render inline content for headings, skipping fmt-caption-delim spans
+        # that contain tab separators between section numbers and title text.
+        def render_heading(node, para)
+          if ordered?(node)
+            render_heading_ordered(node, para)
+          else
+            render(node, para)
+          end
+        end
+
         private
+
+        def render_heading_ordered(node, para)
+          walked = false
+          each_ordered_element(node) do |type, obj|
+            walked = true
+            case type
+            when :text then para << obj
+            when :element
+              next if caption_delim_span?(obj)
+              render_inline_element(obj, para)
+            end
+          end
+          return if walked
+
+          render(node, para)
+        end
+
+        def caption_delim_span?(element)
+          return false unless element.is_a?(Metanorma::Document::Components::Inline::SpanElement)
+
+          cls = element.class_attr
+          cls == "fmt-caption-delim"
+        end
 
         # SpanElement with a class attribute maps to a DOCX character style.
         # Presentation XML uses spans like <span class="stdpublisher">ISO</span>
@@ -184,21 +227,49 @@ module IsoDoc
         end
 
         def render_italic(element, para)
-          text = collect_text(element)
-          return if text.nil? || text.empty?
+          if ordered?(element) && has_rich_children?(element)
+            render_with_run_format(element, para) { |run| run.properties.italic = Uniword::Properties::Italic.new }
+          else
+            text = collect_text(element)
+            return if text.nil? || text.empty?
 
-          run = Uniword::Builder::RunBuilder.new
-          run.text(text).italic
-          para << run.build
+            run = Uniword::Builder::RunBuilder.new
+            run.text(text).italic
+            para << run.build
+          end
         end
 
         def render_bold(element, para)
-          text = element.is_a?(String) ? element : collect_text(element)
+          if element.is_a?(String)
+            text = element
+          elsif ordered?(element) && has_rich_children?(element)
+            render_with_run_format(element, para) { |run| run.properties.bold = Uniword::Properties::Bold.new }
+            return
+          else
+            text = collect_text(element)
+          end
           return if text.nil? || text.empty?
 
           run = Uniword::Builder::RunBuilder.new
           run.text(text).bold
           para << run.build
+        end
+
+        def render_with_run_format(element, para, &formatter)
+          temp = Uniword::Builder::ParagraphBuilder.new
+          render_mixed_inline_fallback(element, temp)
+          temp.model.runs.each do |run|
+            run.properties ||= Uniword::Wordprocessingml::RunProperties.new
+            formatter.call(run)
+            para << run
+          end
+        end
+
+        def has_rich_children?(element)
+          eo = element.element_order
+          return false unless eo.is_a?(Array) && !eo.empty?
+
+          eo.any? { |e| e.element? && e.name != "text" }
         end
 
         def render_subscript(element, para)
@@ -266,12 +337,19 @@ module IsoDoc
 
         def render_link(element, para)
           text = collect_text(element)
+          target = element.target
+
+          if text.nil? || text.empty?
+            text = target
+            text = text.sub(/\Amailto:/, "") if text&.start_with?("mailto:")
+          end
           return if text.nil? || text.empty?
 
-          target = element.target
           if target
             link = Uniword::Hyperlink.new(url: target, text: text)
-            para << link.to_model
+            model = link.to_model(allocator: @doc.allocator)
+            apply_hyperlink_style(model)
+            para << model
           else
             run = Uniword::Builder::RunBuilder.new
             run.text(text).underline.color("0000FF")
@@ -301,7 +379,7 @@ module IsoDoc
           cite = element.citeas || element.bibitemid
           if cite && !cite.empty?
             link = Uniword::Hyperlink.new(url: "##{cite}", text: text)
-            para << link.to_model
+            para << link.to_model(allocator: @doc.allocator)
           else
             para << text
           end
@@ -333,7 +411,19 @@ module IsoDoc
 
         def render_footnote(element, para)
           text = extract_footnote_text(element)
+          return if text.nil? || text.empty?
+
+          if @footnote_cache.key?(text)
+            id = @footnote_cache[text]
+            para << Uniword::Wordprocessingml::Run.new(
+              footnote_reference: Uniword::Wordprocessingml::FootnoteReference.new(id: id.to_s),
+            )
+            return
+          end
+
           fn_run = @doc.footnote(text)
+          fn_id = fn_run.footnote_reference&.id
+          @footnote_cache[text] = fn_id if fn_id
           para << fn_run
         end
 
@@ -370,19 +460,37 @@ module IsoDoc
           height = parse_dimension(element.height)
           alt = element.alt
 
-          unless File.exist?(src)
-            para << (alt || "[Image: #{src}]")
-            return
-          end
+          begin
+            if src.start_with?("data:")
+              path = extract_data_uri_to_tempfile(src)
+            elsif File.exist?(src)
+              path = src
+            else
+              para << (alt || "[Image]")
+              return
+            end
 
-          run = Uniword::Builder::ImageBuilder.create_run(
-            @doc, src,
-            width: width, height: height,
-            alt_text: alt
-          )
-          para << run
-        rescue StandardError
-          para << (alt || "[Image]")
+            run = Uniword::Builder::ImageBuilder.create_run(
+              @doc, path,
+              width: width, height: height,
+              alt_text: alt
+            )
+            para << run
+          rescue StandardError
+            para << (alt || "[Image]")
+          end
+        end
+
+        def apply_hyperlink_style(hyperlink_model)
+          style = @resolver.character_style(:hyperlink)
+          return unless style
+
+          hyperlink_model.runs.each do |run|
+            run.properties ||= Uniword::Wordprocessingml::RunProperties.new
+            run.properties.style = Uniword::Properties::RunStyleReference.new(
+              value: style,
+            )
+          end
         end
 
         def render_bookmark(element, para)
@@ -404,17 +512,26 @@ module IsoDoc
           para << element.content
         end
 
+        def render_semx(element, para)
+          case element.element_attr
+          when "link"
+            nil
+          else
+            render_mixed_inline_fallback(element, para)
+          end
+        end
+
         def render_mixed_inline_fallback(element, para)
           if ordered?(element)
             element.each_mixed_content do |child|
               case child
-              when String then para << child
+              when String then add_text(para, child)
               else render_inline_element(child, para)
               end
             end
           else
             text = collect_text(element)
-            para << text if text && !text.empty?
+            add_text(para, text) if text && !text.empty?
           end
         end
 
@@ -431,6 +548,16 @@ module IsoDoc
             next if val.nil?
 
             Array(val).each { |el| render_inline_element(el, para) }
+          end
+        end
+
+        def add_text(para, text)
+          return if text.nil?
+          if @preserve_whitespace
+            para << text
+          else
+            normalized = text.gsub(/[ \t]+/, " ")
+            para << normalized unless normalized.empty?
           end
         end
 
