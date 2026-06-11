@@ -15,5 +15,7 @@ gem "simplecov"
 gem "timecop"
 gem "webmock"
 gem "uniword", path: "../uniword" if File.exist?(File.expand_path("../uniword/Gemfile", __dir__))
+gem "lutaml-model", path: "../../lutaml/lutaml-model" if File.exist?(File.expand_path("../../lutaml/lutaml-model/Gemfile", __dir__))
+gem "moxml", "~> 0.1.23"
 
 eval_gemfile("Gemfile.devel") rescue nil
