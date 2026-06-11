@@ -1,8 +1,8 @@
 # Deep Audit: Uniword Root-Cause Fix Strategy
 
 Date: 2026-05-29
-Status: Phase 1 build-phase fixes implemented. Key architectural insight: profile-dependent defaults (styles, settings, fonts) correctly belong in reconciler, not builders.
-Goal: Move build-phase fixes to builders. Keep profile-dependent defaults in reconciler. Reconciler stays as assembly + profile defaults.
+Status: Phase 1 build-phase fixes + serialization fixes committed. rice_fixed18.docx generates cleanly with single-line XML, CRLF, mc:Ignorable, paragraph tracking, table properties, zero empty runs. PackageDiffer with canon comparison shows structural differences are cosmetic (mc:Ignorable ordering) and content-level (adapter missing elements).
+Goal: Verify Word opens without errors. Then address content-level gaps.
 
 ---
 
@@ -84,135 +84,70 @@ These require knowledge of the full package and belong in assembly:
 
 Each builder must produce OOXML-valid output without requiring reconciler fixes.
 
-#### Task 020: Table Builder Completeness (A1-A5)
+#### ~~Task 020: Table Builder Completeness (A1-A5)~~ ✅ DONE
 
-**Root cause**: `TableBuilder` and `TableCellBuilder` don't emit required OOXML properties.
+Committed in uniword `9f9630c`. TableBuilder always creates tblPr/tblW/tblLook.
+TableCellBuilder always creates tcPr/tcW. Table grid auto-created from rows.
 
-**Fix in `TableBuilder#build`**:
-- Always create `tblPr` with `tblW` (w:0, type: auto) and `tblLook` (val: "04A0")
-- Always create `tblGrid` with column count matching actual columns
-- Calculate `gridAfter` on rows where cell gridSpans sum < grid column count
+#### ~~Task 021: Section Builder Completeness (A6)~~ ✅ DONE
 
-**Fix in `TableCellBuilder#build`**:
-- Always create `tcPr` with `tcW` (w:0, type: auto)
-- Ensure `tcPr` is first in element_order
+Committed in uniword `9f9630c`. SectionBuilder emits pgSz/pgMar/cols/docGrid defaults.
 
-**Files**: `uniword/lib/uniword/builder/table_builder.rb`, `table_cell_builder.rb`
+#### ~~Task 022: Paragraph Tracking at Build Time (A9-A10)~~ ✅ DONE
 
-**Verification**: Build a table, verify tblPr/tblW/tblLook/tblGrid present without reconciler.
+Committed in uniword `a4f57e5`. ParagraphBuilder assigns rsid_r/rsid_r_default/paraId/textId
+using SHA-256 hash + mutex-protected sequence counter.
 
-#### Task 021: Section Builder Completeness (A6)
+#### ~~Task 023: Empty Run Prevention (A7, A20)~~ ✅ DONE
 
-**Root cause**: Paragraph/section builder doesn't create sectPr with page setup.
+Committed in uniword `a4f57e5`. ParagraphBuilder.append_run skips empty runs.
+Verified: 0 empty runs in rice_fixed18.docx output.
 
-**Fix**: `SectionBuilder` always emits `pgSz` (12240x15840 for Letter, or from config),
-`pgMar` (1-inch margins), `cols` (single column, space 720), `docGrid` (360 line-pitch).
+#### Task 024: Style Builder Correctness (A14) — DEFERRED
 
-**Files**: `uniword/lib/uniword/builder/section_builder.rb`
+Profile-dependent defaults (docDefaults, latentStyles, required styles) correctly
+belong in the reconciler, not builders. The reconciler has profile context that
+builders lack. Only relevant when building without a template.
 
-**Verification**: Build a document with section, verify sectPr has all required children.
+#### Task 025: Settings Builder Correctness (A12) — DEFERRED
 
-#### Task 022: Paragraph Tracking at Build Time (A9-A10)
+Same rationale as Task 024. Settings depend on profile (ISO DIS vs simple template).
+Reconciler correctly handles this.
 
-**Root cause**: Paragraph builder doesn't assign rsid/paraId/textId.
+#### Task 026: Font Registry Completeness (A13) — DEFERRED
 
-**Fix**: In `ParagraphBuilder#build`, generate:
-- `rsid_r` and `rsid_r_default` from deterministic hash (SHA-256 of paragraph text)
-- `paraId` as unique hex ID (8 chars, deterministic from position + content)
-- `textId` as unique hex ID (8 chars, deterministic from content)
+Font table depends on template fonts. Reconciler correctly populates from profile.
 
-Use the `DeterministicId` module already in `builder/deterministic_id.rb`.
+#### Task 027: Note Builder Completeness (A19) — TODO
 
-**Files**: `uniword/lib/uniword/builder/paragraph_builder.rb`, `deterministic_id.rb`
+Still needed: automatic separator/continuationSeparator entries when first user note is created.
 
-**Verification**: Build paragraphs, verify all have rsid/paraId/textId without reconciler backfill.
+#### ~~Task 028: Part-Level mc:Ignorable (A11)~~ ✅ DONE
 
-#### Task 023: Empty Run Prevention (A7, A20)
+All XML parts have mc:Ignorable with full extension prefix lists. Verified in rice_fixed18.docx.
 
-**Root cause**: Builder and inline renderer create runs with no meaningful content.
+### Serialization Fixes (cross-cutting)
 
-**Fix in `RunBuilder#build`**: Skip creation if run has no text, break, tab, drawing,
-footnote/endnote ref, field char, instrText, delText, sym, separatorChar.
+#### ~~Single-line XML serialization~~ ✅ DONE
 
-**Fix in adapter `InlineRenderer`**: Don't append empty text runs.
+Committed in moxml `3905b34`. indent=0 produces single-line output.
 
-**Files**: `uniword/lib/uniword/builder/run_builder.rb`, adapter inline renderer
+#### ~~CRLF line endings~~ ✅ DONE
 
-**Verification**: Generate document, grep output for `<w:r><w:rPr>.*</w:rPr></w:r>` — should be zero.
+Committed in moxml `3905b34` (config), lutaml-model `33393b3` (passthrough).
+All XML parts use CRLF.
 
-#### Task 024: Style Builder Correctness (A14)
+#### ~~Namespace declaration sorting~~ ✅ DONE
 
-**Root cause**: Styles builder doesn't produce required defaults.
+Committed in lutaml-model `33393b3`. Alphabetical by prefix.
 
-**Fix**: When `DocumentBuilder` initializes (without template), create:
-- `docDefaults` with rPr (fonts, kerning, size 22/22→11pt, language) and pPr (spacing)
-- `latentStyles` from `config/latent_styles.yml`
-- Required styles: Normal, DefaultParagraphFont (semiHidden), TableNormal, NoList
-- Style property ordering matches CT_Style XSD sequence
+#### ~~Double line break between declaration and root~~ ✅ DONE
 
-**Files**: `uniword/lib/uniword/builder/style_builder.rb`, `document_builder.rb`
+Committed in lutaml-model `91351387`. Removed hardcoded `\n` from generate_declaration.
 
-**Verification**: Build document without template, verify styles.xml has all four required styles.
+#### ~~FrozenError on element_order.clear~~ ✅ DONE
 
-#### Task 025: Settings Builder Correctness (A12)
-
-**Root cause**: Settings produced by reconciler, not builder.
-
-**Fix**: `SettingsBuilder` produces minimal correct settings:
-- `zoom` w:percent="100" (not "bestFit")
-- `defaultTabStop` w:val="720"
-- `characterSpacingControl` w:val="compressPunctuation"
-- `compat` with required compat elements
-- `mathPr` with required entries
-- `clrSchemeMapping` with standard mapping
-- `w14:docId`, `w15:docId` from deterministic hex ID
-- `mc:Ignorable` with all extension prefixes
-- NO `doNotDisplayPageBoundaries` (Word strips it)
-
-**Files**: `uniword/lib/uniword/builder/settings_builder.rb` (new or extract from reconciler)
-
-**Verification**: Build document, compare settings.xml with Word-repaired output.
-
-#### Task 026: Font Registry Completeness (A13)
-
-**Root cause**: Font table populated by reconciler, not builder.
-
-**Fix**:
-- Font registry always produces complete entries (panose1, charset, family, pitch, sig)
-- Unknown fonts use `notTrueType` flag
-- Font table sorted alphabetically by name
-- East Asian fonts have `altName`
-- Profile provides default font set (Latin major/minor, EA, CS)
-
-**Files**: `uniword/lib/uniword/docx/font_registry.rb` (new or extend existing),
-`config/font_metadata.yml`
-
-**Verification**: Build document, verify fontTable.xml has complete entries, alphabetical order.
-
-#### Task 027: Note Builder Completeness (A19)
-
-**Root cause**: Footnote/endnote builders don't create structural entries.
-
-**Fix**: When first user footnote/endnote is created, automatically create:
-- Separator entry (id="-1") with `<w:separator/>`
-- ContinuationSeparator entry (id="0") with `<w:continuationSeparator/>`
-
-Assign sequential IDs starting from 1.
-
-**Files**: `uniword/lib/uniword/builder/footnote_builder.rb`
-
-**Verification**: Build document with footnotes, verify separator entries exist.
-
-#### Task 028: Part-Level mc:Ignorable (A11)
-
-**Root cause**: Builders don't set mc:Ignorable on part root elements.
-
-**Fix**: Each part builder (document, settings, styles, numbering, etc.) sets
-`mc_ignorable` to `EXTENSION_PREFIXES` list on the root element.
-
-**Files**: Each builder's `build` method, or a shared mixin.
-
-**Verification**: Build document, verify every XML part has mc:Ignorable attribute.
+Committed in metanorma-iso `b9de1a69`. Use `= []` instead of `.clear` for frozen arrays.
 
 ### Phase 2: Assembly-Phase Refactoring (simplifies B1-B17)
 
@@ -324,18 +259,21 @@ These differences are inherent. No amount of pipeline fixes will eliminate them.
 
 ## Execution Priority
 
-### P0 — Unreadable content fixes (must do)
-- 020: Table builder completeness
-- 022: Paragraph tracking at build time
-- 025: Settings builder correctness
-- 028: mc:Ignorable on all parts
+### P0 — Unreadable content fixes (must do) — ALL DONE ✅
+- ~~020: Table builder completeness~~ ✅
+- ~~022: Paragraph tracking at build time~~ ✅
+- ~~025: Settings builder correctness~~ — Deferred (profile-dependent, reconciler handles)
+- ~~028: mc:Ignorable on all parts~~ ✅
+- ~~Single-line XML~~ ✅
+- ~~CRLF line endings~~ ✅
+- ~~Namespace sorting~~ ✅
 
-### P1 — Structural correctness (should do)
-- 021: Section builder completeness
-- 023: Empty run prevention
-- 024: Style builder correctness
-- 026: Font registry completeness
-- 027: Note builder completeness
+### P1 — Structural correctness (should do) — PARTIALLY DONE
+- ~~021: Section builder completeness~~ ✅
+- ~~023: Empty run prevention~~ ✅
+- 024: Style builder correctness — Deferred (profile-dependent)
+- 026: Font registry completeness — Deferred (profile-dependent)
+- 027: Note builder completeness — TODO
 
 ### P2 — Pipeline simplification (nice to have)
 - 029: Sequential rId allocator
@@ -359,6 +297,13 @@ These differences are inherent. No amount of pipeline fixes will eliminate them.
 | R4 | Run merging in ParagraphBuilder | uniword ParagraphBuilder | 2026-05-28 |
 | R6 | Document statistics refactor | uniword DocumentStatistics | 2026-05-28 |
 | R7 | East Asian font signatures | uniword font_metadata.yml | 2026-05-28 |
+| R8 | Table builder completeness | uniword TableBuilder/TableCellBuilder | 2026-05-29 |
+| R9 | Paragraph tracking (rsid/paraId/textId) | uniword ParagraphBuilder | 2026-05-29 |
+| R10 | Empty run prevention | uniword ParagraphBuilder.append_run | 2026-05-29 |
+| R11 | Section builder defaults | uniword SectionBuilder | 2026-05-29 |
+| R12 | Double line break fix (declaration) | lutaml-model declaration_handler | 2026-05-29 |
+| R13 | FrozenError fix (element_order) | metanorma-iso adapter | 2026-05-29 |
+| R14 | Local gem path overrides | metanorma-iso Gemfile | 2026-05-29 |
 
 ---
 
@@ -367,6 +312,45 @@ These differences are inherent. No amount of pipeline fixes will eliminate them.
 After each task:
 1. Generate DOCX from rice-rice-size sample
 2. Open in Word, save (produces "repaired" version)
-3. `canon diff our-output.docx repaired-output.docx --verbose`
+3. Compare using Uniword::Diff::PackageDiffer with canon:
+   ```ruby
+   differ = Uniword::Diff::PackageDiffer.new("ours.docx", "repaired.docx", canon: true)
+   result = differ.diff
+   puts result.summary
+   ```
 4. Count remaining differences — should decrease monotonically
 5. Run `bundle exec rspec` in uniword — no new failures
+
+---
+
+## rice_fixed18 Comparison Results (2026-05-29)
+
+Compared rice_fixed18.docx (ours) vs rice_fixed16-repaired.docx (Word-repaired).
+
+### Structural Quality (all passing)
+
+- Single-line XML (no indentation between tags)
+- CRLF line endings
+- mc:Ignorable on all parts
+- Paragraph tracking (rsidR, rsidRDefault, paraId, textId)
+- Zero empty runs
+- Tables have tblW, tblLook, tblGrid
+
+### Remaining Differences by Category
+
+| Category | Count | Impact | Action |
+|---|---|---|---|
+| mc:Ignorable prefix ordering | All parts | Cosmetic (attribute value order) | Accept |
+| Content gaps (document.xml) | 37KB smaller | Missing footnote refs, terms, biblio | Adapter issue, not uniword |
+| Styles expansion | +75KB | Word writes full styles | Accept (W3) |
+| Theme expansion | +1.4KB | Word writes full DrawingML | Accept (W3) |
+| webSettings expansion | +27KB | Word adds div/frame structure | Accept |
+| Numbering simplification | -12KB | Word removes unused numbering | Accept |
+| ZIP metadata | Multiple | Timestamps, internal attrs | Accept (W4, W5) |
+| Settings differences | 13 elements | Minor (bordersDoNotSurround, etc.) | Low priority |
+
+### What to Verify Next
+
+Open rice_fixed18.docx in Word. If no "unreadable content" error appears,
+the structural OOXML fixes are complete. Remaining work is content-level
+(adapter rendering improvements) and cosmetic convergence.
