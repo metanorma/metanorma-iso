@@ -10,12 +10,7 @@ require "metanorma/document"
 require "metanorma/iso_document"
 require "uniword"
 
-require "isodoc/iso/docx_style_mapping"
-require "isodoc/iso/docx/style_resolver"
-require "isodoc/iso/docx/model_utils"
-require "isodoc/iso/docx/context"
-require "isodoc/iso/docx/inline"
-require "isodoc/iso/docx/adapter"
+require "isodoc/iso/docx"
 
 RSpec.configure do |config|
   config.expect_with :rspec do |c|

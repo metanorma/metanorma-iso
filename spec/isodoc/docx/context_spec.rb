@@ -111,6 +111,71 @@ RSpec.describe IsoDoc::Iso::Docx::Context do
     end
   end
 
+  describe "#with_foreword" do
+    it "sets in_foreword during block, restores after" do
+      expect(context.in_foreword).to be(false)
+      context.with_foreword do
+        expect(context.in_foreword).to be(true)
+      end
+      expect(context.in_foreword).to be(false)
+    end
+  end
+
+  describe "#with_introduction" do
+    it "sets in_introduction during block, restores after" do
+      expect(context.in_introduction).to be(false)
+      context.with_introduction do
+        expect(context.in_introduction).to be(true)
+      end
+      expect(context.in_introduction).to be(false)
+    end
+  end
+
+  describe "#with_bibliography" do
+    it "sets in_bibliography during block, restores after" do
+      expect(context.in_bibliography).to be(false)
+      context.with_bibliography do
+        expect(context.in_bibliography).to be(true)
+      end
+      expect(context.in_bibliography).to be(false)
+    end
+  end
+
+  describe "section numbering" do
+    it "generates ascending section numbers" do
+      expect(context.next_section_number).to eq(1)
+      expect(context.next_section_number).to eq(2)
+      expect(context.current_section_number).to eq(2)
+    end
+  end
+
+  describe "term numbering" do
+    it "generates section.term terms within a terms section" do
+      context.next_section_number  # 1
+      context.next_section_number  # 2
+      context.next_section_number  # 3
+
+      context.with_terms_section(3) do
+        expect(context.next_term_number).to eq("3.1")
+        expect(context.next_term_number).to eq("3.2")
+        expect(context.next_term_number).to eq("3.3")
+      end
+    end
+
+    it "restores term counter after with_terms_section" do
+      context.next_section_number  # 1
+      context.next_section_number  # 2
+
+      context.with_terms_section(2) do
+        expect(context.next_term_number).to eq("2.1")
+      end
+
+      context.with_terms_section(2) do
+        expect(context.next_term_number).to eq("2.1")
+      end
+    end
+  end
+
   describe "section_depth" do
     it "tracks nesting depth" do
       context.section_depth = 1

@@ -465,9 +465,9 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
   describe "numbering" do
     it "resolves numIds from template numbering definitions" do
       mapping = adapter.resolver
-      expect(mapping.numbering_id(:dash_list)).to eq(10)
-      expect(mapping.numbering_id(:alpha_list)).to eq(6)
+      expect(mapping.numbering_id(:dash_list)).to eq(3)
       expect(mapping.numbering_id(:decimal_list)).to eq(1)
+      expect(mapping.numbering_id(:body_clause)).to eq(4)
     end
   end
 
@@ -499,7 +499,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
       end
     end
 
-    it "renders biblio-tag spans with character styles" do
+    it "renders biblio-tag spans as plain text runs" do
       xml = minimal_iso_xml(<<~INNER)
         <sections>
           <clause id="s1">
@@ -522,16 +522,8 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
         adapter.convert(xml, path)
 
         extract_docx(path) do |doc, ns|
-          ref_paras = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='RefNorm']]", ns)
+          ref_paras = doc.xpath("//w:p", ns).select { |p| p.xpath(".//w:t", ns).text.include?("ISO 712") }
           expect(ref_paras.length).to be >= 1
-
-          styled_runs = doc.xpath("//w:r[w:rPr/w:rStyle[@w:val='stdpublisher' or @w:val='stddocNumber' or @w:val='stdyear']]", ns)
-          expect(styled_runs.length).to be >= 3
-
-          publisher_runs = doc.xpath("//w:r[w:rPr/w:rStyle[@w:val='stdpublisher']]", ns)
-          expect(publisher_runs.length).to be >= 1
-          publisher_text = publisher_runs.first.xpath("w:t", ns).text
-          expect(publisher_text).to include("ISO")
         end
       end
     end
@@ -565,7 +557,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
       end
     end
 
-    it "renders biblio-tag with part number" do
+    it "renders biblio-tag with part number as text" do
       xml = minimal_iso_xml(<<~INNER)
         <sections>
           <clause id="s1">
@@ -588,10 +580,282 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
         adapter.convert(xml, path)
 
         extract_docx(path) do |doc, ns|
-          part_runs = doc.xpath("//w:r[w:rPr/w:rStyle[@w:val='stddocPartNumber']]", ns)
-          expect(part_runs.length).to be >= 1
+          full_text = doc.xpath("//w:t", ns).map(&:text).join
+          expect(full_text).to include("ISO 8351-1:1994")
         end
       end
+    end
+  end
+
+  describe "semantic XML term rendering" do
+    def extract_docx(path)
+      require "zip"
+      Zip::File.open(path) do |zip|
+        doc = Nokogiri::XML(zip.find_entry("word/document.xml").get_input_stream.read)
+        ns = { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" }
+        yield doc, ns
+      end
+    end
+
+    it "renders terms with synthesized term numbers" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1" type="scope">
+            <title>Scope</title>
+            <p>Scope text.</p>
+          </clause>
+          <terms id="terms">
+            <title>Terms and definitions</title>
+            <term id="t1" anchor="paddy">
+              <preferred><expression><name>paddy</name></expression></preferred>
+              <definition><verbal-definition><p>Rice with husk.</p></verbal-definition></definition>
+            </term>
+            <term id="t2" anchor="husked_rice">
+              <preferred><expression><name>husked rice</name></expression></preferred>
+              <definition><verbal-definition><p>Rice without husk.</p></verbal-definition></definition>
+            </term>
+          </terms>
+        </sections>
+        <bibliography>
+          <references id="bib-norm" normative="true">
+            <title>Normative references</title>
+            <p>The following documents are referred to.</p>
+          </references>
+        </bibliography>
+      INNER
+
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "terms.docx")
+        adapter.convert(xml, path)
+
+        extract_docx(path) do |doc, ns|
+          term_nums = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='TermNum']]", ns)
+          expect(term_nums.length).to be >= 2
+          expect(term_nums[0].xpath("w:r/w:t", ns).text).to eq("3.1")
+          expect(term_nums[1].xpath("w:r/w:t", ns).text).to eq("3.2")
+
+          terms = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='Terms']]", ns)
+          expect(terms.length).to be >= 2
+          expect(terms[0].xpath("w:r/w:t", ns).text).to include("paddy")
+          expect(terms[1].xpath("w:r/w:t", ns).text).to include("husked rice")
+        end
+      end
+    end
+
+    it "renders term with admitted and deprecated names" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <terms id="terms">
+            <title>Terms and definitions</title>
+            <term id="t1" anchor="doc">
+              <preferred><expression><name>document</name></expression></preferred>
+              <admitted><expression><name>record</name></expression></admitted>
+              <deprecates><expression><name>file</name></expression></deprecates>
+              <definition><verbal-definition><p>Information and its medium.</p></verbal-definition></definition>
+            </term>
+          </terms>
+        </sections>
+      INNER
+
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "terms.docx")
+        adapter.convert(xml, path)
+
+        extract_docx(path) do |doc, ns|
+          alt_terms = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='AltTerms']]", ns)
+          expect(alt_terms.length).to be >= 1
+          expect(alt_terms.first.xpath("w:r/w:t", ns).text).to include("record")
+
+          dep_terms = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='DeprecatedTerms']]", ns)
+          expect(dep_terms.length).to be >= 1
+        end
+      end
+    end
+
+    it "renders term source with origin and localities" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <terms id="terms">
+            <title>Terms and definitions</title>
+            <term id="t1" anchor="paddy">
+              <preferred><expression><name>paddy</name></expression></preferred>
+              <definition><verbal-definition><p>Rice with husk.</p></verbal-definition></definition>
+              <source type="authoritative" status="identical">
+                <origin bibitemid="ISO7301" type="inline" citeas="ISO 7301:2011">
+                  <localityStack>
+                    <locality type="clause">
+                      <referenceFrom>3.1</referenceFrom>
+                    </locality>
+                  </localityStack>
+                </origin>
+              </source>
+            </term>
+          </terms>
+        </sections>
+      INNER
+
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "terms.docx")
+        adapter.convert(xml, path)
+
+        extract_docx(path) do |doc, ns|
+          source_paras = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='Source']]", ns)
+          expect(source_paras.length).to be >= 1
+          source_text = source_paras.first.xpath("w:r/w:t", ns).text
+          expect(source_text).to include("[SOURCE:")
+          expect(source_text).to include("ISO 7301:2011")
+          expect(source_text).to include("3.1")
+        end
+      end
+    end
+  end
+
+  # ── Front matter ──────────────────────────────────────────────────
+
+  describe "front matter" do
+    it "renders cover page from bibdata" do
+      xml = minimal_iso_xml(<<~INNER)
+        <bibdata type="standard">
+          <title language="en" type="title-intro">Cereals</title>
+          <title language="en" type="title-main">Specifications</title>
+          <title language="en" type="title-part">Rice</title>
+          <title language="en" type="title-part-prefix">Part 1</title>
+          <docidentifier type="ISO" primary="true">ISO/CD 17301-1:2016</docidentifier>
+          <date type="updated"><on>2016-05-01</on></date>
+          <contributor><role type="author"/><organization>
+            <name>ISO</name><abbreviation>ISO</abbreviation>
+          </organization></contributor>
+          <copyright><from>2016</from><owner><organization>
+            <name>ISO</name><abbreviation>ISO</abbreviation>
+          </organization></owner></copyright>
+        </bibdata>
+        <preface>
+          <foreword id="fw">
+            <fmt-title>Foreword</fmt-title>
+            <p>Test foreword.</p>
+          </foreword>
+        </preface>
+        <sections/>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        pkg = Uniword::Docx::Package.from_file(path)
+        paras = pkg.document.body.paragraphs
+
+        # First paragraph: doc identifier
+        cover_para = paras.find { |p| p.runs.any? { |r| (r.text || "").include?("ISO/CD 17301") } }
+        expect(cover_para).not_to be_nil
+
+        # Title paragraph
+        title_para = paras.find { |p| p.runs.any? { |r| (r.text || "").include?("Specifications") } }
+        expect(title_para).not_to be_nil
+      end
+    end
+
+    it "renders warning from boilerplate" do
+      xml = minimal_iso_xml(<<~INNER)
+        <boilerplate>
+          <license-statement>
+            <clause>
+              <title>Warning for WDs and CDs</title>
+              <p>This document is not an ISO International Standard.</p>
+            </clause>
+          </license-statement>
+        </boilerplate>
+        <preface>
+          <foreword id="fw">
+            <fmt-title>Foreword</fmt-title>
+            <p>Test foreword.</p>
+          </foreword>
+        </preface>
+        <sections/>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        pkg = Uniword::Docx::Package.from_file(path)
+        paras = pkg.document.body.paragraphs
+        texts = paras.map { |p| p.runs.map { |r| r.text || "" }.join }.compact
+
+        expect(texts).to include("Warning for WDs and CDs")
+        expect(texts).to include("This document is not an ISO International Standard.")
+      end
+    end
+
+    it "renders copyright from boilerplate" do
+      xml = minimal_iso_xml(<<~INNER)
+        <boilerplate>
+          <copyright-statement>
+            <clause>
+              <p>© ISO 2016</p>
+              <p>All rights reserved.</p>
+            </clause>
+          </copyright-statement>
+        </boilerplate>
+        <preface>
+          <foreword id="fw">
+            <fmt-title>Foreword</fmt-title>
+            <p>Test foreword.</p>
+          </foreword>
+        </preface>
+        <sections/>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        pkg = Uniword::Docx::Package.from_file(path)
+        paras = pkg.document.body.paragraphs
+        texts = paras.map { |p| p.runs.map { |r| r.text || "" }.join }.compact
+
+        expect(texts).to include("© ISO 2016")
+        expect(texts).to include("All rights reserved.")
+      end
+    end
+
+    it "renders TOC from preface clause with type=toc" do
+      xml = minimal_iso_xml(<<~INNER)
+        <preface>
+          <clause type="toc" id="toc1">
+            <fmt-title depth="1">Contents</fmt-title>
+          </clause>
+          <foreword id="fw">
+            <fmt-title>Foreword</fmt-title>
+            <p>Test foreword.</p>
+          </foreword>
+        </preface>
+        <sections/>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        pkg = Uniword::Docx::Package.from_file(path)
+        paras = pkg.document.body.paragraphs
+
+        # Contents heading
+        contents_para = paras.find { |p| p.runs.any? { |r| (r.text || "") == "Contents" } }
+        expect(contents_para).not_to be_nil
+
+        # TOC field
+        toc_para = paras.find { |p| p.simple_fields.any? { |f| f.instr&.include?("TOC") } }
+        expect(toc_para).not_to be_nil
+
+        # TOC clause should not be rendered again as regular clause
+        contents_count = paras.count { |p| p.runs.any? { |r| (r.text || "") == "Contents" } }
+        expect(contents_count).to eq(1)
+      end
+    end
+
+    it "handles document without bibdata gracefully" do
+      expect_valid_docx(<<~INNER)
+        <preface>
+          <foreword id="fw">
+            <fmt-title>Foreword</fmt-title>
+            <p>Test foreword.</p>
+          </foreword>
+        </preface>
+        <sections/>
+      INNER
     end
   end
 end

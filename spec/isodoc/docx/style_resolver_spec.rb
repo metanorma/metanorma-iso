@@ -9,7 +9,7 @@ RSpec.describe IsoDoc::Iso::Docx::StyleResolver do
 
   describe "#paragraph_style" do
     it "delegates to style mapping" do
-      expect(resolver.paragraph_style(:note)).to eq("Note0")
+      expect(resolver.paragraph_style(:note)).to eq("Note")
     end
 
     it "returns nil for unknown styles" do
@@ -44,40 +44,62 @@ RSpec.describe IsoDoc::Iso::Docx::StyleResolver do
   end
 
   describe "#figure_title_style" do
-    it "returns body figure title outside annex" do
-      expect(resolver.figure_title_style).to eq("Figuretitle0")
+    it "returns Figuretitle style" do
+      expect(resolver.figure_title_style).to eq("Figuretitle")
     end
 
-    it "returns annex figure title inside annex" do
+    it "returns same style inside annex" do
       context.with_annex do
-        expect(resolver.figure_title_style).to eq("Figuretitle0")
+        expect(resolver.figure_title_style).to eq("Figuretitle")
       end
     end
   end
 
   describe "#table_title_style" do
-    it "returns body table title outside annex" do
-      expect(resolver.table_title_style).to eq("Tabletitle0")
+    it "returns Tabletitle style" do
+      expect(resolver.table_title_style).to eq("Tabletitle")
     end
 
-    it "returns annex table title inside annex" do
+    it "returns same style inside annex" do
       context.with_annex do
-        expect(resolver.table_title_style).to eq("Tabletitle0")
+        expect(resolver.table_title_style).to eq("Tabletitle")
       end
+    end
+  end
+
+  describe "#term_number_style" do
+    it "returns TermNum at section_depth 2" do
+      context.section_depth = 2
+      expect(resolver.term_number_style).to eq("TermNum")
+    end
+
+    it "returns TermNum at section_depth 3" do
+      context.section_depth = 3
+      expect(resolver.term_number_style).to eq("TermNum")
+    end
+
+    it "returns TermNum at section_depth 1" do
+      context.section_depth = 1
+      expect(resolver.term_number_style).to eq("TermNum")
+    end
+
+    it "returns TermNum at high depths" do
+      context.section_depth = 10
+      expect(resolver.term_number_style).to eq("TermNum")
     end
   end
 
   describe "#numbering_id" do
     it "returns numId for dash bullet lists" do
-      expect(resolver.numbering_id(:dash_list)).to eq(10)
-    end
-
-    it "returns numId for alpha lists" do
-      expect(resolver.numbering_id(:alpha_list)).to eq(6)
+      expect(resolver.numbering_id(:dash_list)).to eq(3)
     end
 
     it "returns numId for decimal lists" do
       expect(resolver.numbering_id(:decimal_list)).to eq(1)
+    end
+
+    it "returns numId for body clause numbering" do
+      expect(resolver.numbering_id(:body_clause)).to eq(4)
     end
 
     it "returns nil for unknown numbering keys" do
@@ -86,28 +108,8 @@ RSpec.describe IsoDoc::Iso::Docx::StyleResolver do
   end
 
   describe "#span_class_style" do
-    it "maps stdpublisher span class to character style" do
-      expect(resolver.span_class_style("stdpublisher")).to eq("stdpublisher")
-    end
-
-    it "maps stddocNumber span class to character style" do
-      expect(resolver.span_class_style("stddocNumber")).to eq("stddocNumber")
-    end
-
-    it "maps stddocPartNumber span class to character style" do
-      expect(resolver.span_class_style("stddocPartNumber")).to eq("stddocPartNumber")
-    end
-
-    it "maps stddocTitle span class to character style" do
-      expect(resolver.span_class_style("stddocTitle")).to eq("stddocTitle")
-    end
-
-    it "maps stdyear span class to character style" do
-      expect(resolver.span_class_style("stdyear")).to eq("stdyear")
-    end
-
-    it "maps citeapp span class to character style" do
-      expect(resolver.span_class_style("citeapp")).to eq("citeapp")
+    it "maps hyperlink span class to character style" do
+      expect(resolver.span_class_style("Hyperlink")).to eq("Hyperlink")
     end
 
     it "returns nil for unknown span class" do

@@ -17,27 +17,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderer do
     built = para.build
     return "" unless built
 
-    runs = built.instance_variable_get(:@runs) || []
-    parts = []
-    runs.each do |run|
-      case run
-      when String
-        parts << run
-      when Uniword::Wordprocessingml::Run
-        text_obj = run.instance_variable_get(:@text)
-        case text_obj
-        when Uniword::Wordprocessingml::Text then parts << text_obj.content
-        when String then parts << text_obj
-        end
-      else
-        text_obj = run.instance_variable_get(:@text)
-        case text_obj
-        when Uniword::Wordprocessingml::Text then parts << text_obj.content
-        when String then parts << text_obj
-        end
-      end
-    end
-    parts.join
+    built.text
   end
 
   describe "#render (text-only paragraph)" do
@@ -334,7 +314,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderer do
   end
 
   describe "SpanElement rendering" do
-    it "renders spans with character styles from class attribute" do
+    it "renders spans as plain text without character styles" do
       xml = minimal_iso_xml(<<~INNER)
         <bibliography>
           <references id="bib" normative="true">
@@ -350,6 +330,9 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderer do
 
       para = build_para
       expect { renderer.render(tag, para) }.not_to raise_error
+      text = extract_text_from_para(para)
+      expect(text).to include("ISO")
+      expect(text).to include("712")
     end
   end
 end

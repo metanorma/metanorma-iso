@@ -20,8 +20,8 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping do
   describe "#paragraph_style" do
     it "returns style for known keys" do
       expect(mapping.paragraph_style(:foreword)).to eq("ForewordTitle")
-      expect(mapping.paragraph_style(:note)).to eq("Note0")
-      expect(mapping.paragraph_style(:example)).to eq("Example0")
+      expect(mapping.paragraph_style(:note)).to eq("Note")
+      expect(mapping.paragraph_style(:example)).to eq("Example")
     end
 
     it "returns nil for unknown keys" do
@@ -30,6 +30,15 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping do
 
     it "accepts string keys" do
       expect(mapping.paragraph_style("foreword")).to eq("ForewordTitle")
+    end
+
+    it "returns new template style IDs" do
+      expect(mapping.paragraph_style(:figure_title)).to eq("Figuretitle")
+      expect(mapping.paragraph_style(:table_title)).to eq("Tabletitle")
+      expect(mapping.paragraph_style(:terms)).to eq("Terms0")
+      expect(mapping.paragraph_style(:admitted_term)).to eq("TermsAdmitted")
+      expect(mapping.paragraph_style(:cover_large)).to eq("zzCoverlarge")
+      expect(mapping.paragraph_style(:contents_title)).to eq("zzContents")
     end
   end
 
@@ -69,9 +78,11 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping do
 
   describe "#numbering_id" do
     it "returns numId for DIS numbering keys" do
-      expect(mapping.numbering_id(:dash_list)).to eq(10)
-      expect(mapping.numbering_id(:alpha_list)).to eq(6)
+      expect(mapping.numbering_id(:dash_list)).to eq(3)
       expect(mapping.numbering_id(:decimal_list)).to eq(1)
+      expect(mapping.numbering_id(:body_clause)).to eq(4)
+      expect(mapping.numbering_id(:annex_clause)).to eq(7)
+      expect(mapping.numbering_id(:intro_clause)).to eq(8)
     end
 
     it "returns nil for unknown numbering keys" do
