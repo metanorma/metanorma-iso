@@ -35,8 +35,8 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping do
     it "returns new template style IDs" do
       expect(mapping.paragraph_style(:figure_title)).to eq("Figuretitle")
       expect(mapping.paragraph_style(:table_title)).to eq("Tabletitle")
-      expect(mapping.paragraph_style(:terms)).to eq("Terms0")
-      expect(mapping.paragraph_style(:admitted_term)).to eq("TermsAdmitted")
+      expect(mapping.paragraph_style(:terms)).to eq("Terms")
+      expect(mapping.paragraph_style(:admitted_term)).to eq("AltTerms")
       expect(mapping.paragraph_style(:cover_large)).to eq("zzCoverlarge")
       expect(mapping.paragraph_style(:contents_title)).to eq("zzContents")
     end

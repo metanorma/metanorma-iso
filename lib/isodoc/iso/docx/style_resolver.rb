@@ -9,6 +9,13 @@ module IsoDoc
       # that account for document position (annex vs body, table vs flow).
       # The adapter should only use this class — never access
       # DocxStyleMapping directly.
+      #
+      # Context-aware dispatch rules:
+      #   - Annex context → annex heading styles, annex figure/table titles
+      #   - Foreword context → ForewordText body style
+      #   - Normative context → normref body style
+      #   - Bibliography context → biblio body style
+      #   - Note/Example context → note/example body style
       class StyleResolver
         def initialize(style_mapping, context)
           @mapping = style_mapping
@@ -28,6 +35,8 @@ module IsoDoc
           @mapping.paragraph_style(key)
         end
 
+        # Return a context-appropriate body text style, or nil if no
+        # contextual override applies.
         def context_body_style
           if @context.in_note
             paragraph_style(:note)

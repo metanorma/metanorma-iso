@@ -48,9 +48,9 @@ RSpec.describe IsoDoc::Iso::Docx::StyleResolver do
       expect(resolver.figure_title_style).to eq("Figuretitle")
     end
 
-    it "returns same style inside annex" do
+    it "returns AnnexFigureTitle style inside annex" do
       context.with_annex do
-        expect(resolver.figure_title_style).to eq("Figuretitle")
+        expect(resolver.figure_title_style).to eq("AnnexFigureTitle")
       end
     end
   end
@@ -60,9 +60,9 @@ RSpec.describe IsoDoc::Iso::Docx::StyleResolver do
       expect(resolver.table_title_style).to eq("Tabletitle")
     end
 
-    it "returns same style inside annex" do
+    it "returns AnnexTableTitle style inside annex" do
       context.with_annex do
-        expect(resolver.table_title_style).to eq("Tabletitle")
+        expect(resolver.table_title_style).to eq("AnnexTableTitle")
       end
     end
   end

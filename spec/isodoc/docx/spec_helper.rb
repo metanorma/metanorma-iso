@@ -44,3 +44,21 @@ def build_adapter(**opts)
   ADAPTER_CACHE[key] = adapter
   adapter
 end
+
+def extract_docx(path)
+  require "zip"
+  Zip::File.open(path) do |zip|
+    doc = Nokogiri::XML(zip.find_entry("word/document.xml").get_input_stream.read)
+    ns = { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" }
+    yield doc, ns
+  end
+end
+
+def convert_and_extract(adapter, xml)
+  Dir.mktmpdir do |dir|
+    path = File.join(dir, "output.docx")
+    adapter.convert(xml, path)
+    pkg = Uniword::Docx::Package.from_file(path)
+    yield pkg
+  end
+end

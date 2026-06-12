@@ -36,8 +36,9 @@ paragraph_styles:
   sourcecode: Code
   formula: Formula
   figure_title: Figuretitle
-  figure_title_annex: Figuretitle
+  figure_title_annex: AnnexFigureTitle
   table_title: Tabletitle
+  table_title_annex: AnnexTableTitle
   admonition: Warningtext
   admonition_title: Warningtitle
   quote: Disp-quotep
@@ -70,6 +71,7 @@ paragraph_styles:
 
   # ── Normative references ──
   normref: normref
+  ref_norm: normref
 
   # ── Cover page ──
   cover_large: zzCoverlarge
@@ -80,8 +82,10 @@ paragraph_styles:
   # ── Copyright and colophon ──
   colophon: zzCopyright
   copyright: zzCopyright
-  warning_header: Warningtitle
-  warning: Warningtext
+  copyright_hdr: zzCopyright
+  copyright_address: zzCopyrightaddress
+  warning_header: zzwarninghdr
+  warning: zzwarning
 
   # ── Middle title (repeated before body) ──
   main_title1: MainTitle1
@@ -89,9 +93,6 @@ paragraph_styles:
 
   # ── Variant titles ──
   variant_title_toc: variant-title-toc
-
-  # ── Address block ──
-  copyright_address: zzCopyrightaddress
 
   # ── Body text ──
   body_text: BodyText
@@ -125,6 +126,9 @@ paragraph_styles:
 character_styles:
   hyperlink: Hyperlink
   footnote_reference: FootnoteReference
+  stem: stem
+  inline_code: InlineCode
+  endnote_reference: EndnoteReference
 
 numbering:
   # From reference DOCX numbering.xml

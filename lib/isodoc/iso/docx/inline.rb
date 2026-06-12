@@ -11,6 +11,11 @@ module IsoDoc
       # Handles mixed-content inline elements (text, em, strong, sub, sup,
       # links, footnotes, math, images) preserving document order via
       # element_order or each_mixed_content.
+      #
+      # Character styles (rStyles) are applied contextually:
+      #   - Hyperlink rStyle on all hyperlink runs
+      #   - FootnoteReference rStyle on footnote reference runs
+      #   - Span class → character style mapping via StyleResolver
       class InlineRenderer
         include ModelUtils
 
@@ -61,6 +66,9 @@ module IsoDoc
         end
 
         # Central inline dispatch — MECE by design.
+        #
+        # Subclass types MUST appear before their superclass in the
+        # case/when to avoid the superclass branch matching first.
         def render_inline_element(element, para)
           case element
           when Metanorma::Document::Components::Inline::EmRawElement,
@@ -113,7 +121,7 @@ module IsoDoc
             # Skip — math is handled by render_stem on the parent stem element
           when Metanorma::Document::Components::Inline::AsciimathElement
             text = element.text if element.class.attributes.key?(:text)
-            para << text if text.is_a?(String) && !text.empty?
+            add_text_with_char_style(para, text, :stem) if text.is_a?(String) && !text.empty?
           when Metanorma::Document::Components::IdElements::Image
             render_inline_image(element, para)
           when Metanorma::Document::Components::IdElements::Bookmark
@@ -147,7 +155,7 @@ module IsoDoc
             render_mixed_inline_fallback(element, para)
           else
             text = collect_text(element)
-            para << text if text && !text.empty?
+            add_text(para, text) if text && !text.empty?
           end
         end
 
@@ -205,11 +213,7 @@ module IsoDoc
               when String
                 next if child.nil? || child.empty?
 
-                run = Uniword::Wordprocessingml::Run.new(text: child)
-                run.properties = Uniword::Wordprocessingml::RunProperties.new(
-                  style: Uniword::Properties::RunStyleReference.new(value: style),
-                )
-                para << run
+                add_text_with_char_style(para, child, style)
               else
                 render_inline_element(child, para)
               end
@@ -217,26 +221,25 @@ module IsoDoc
           else
             text = collect_text(element)
             if text && !text.empty?
-              run = Uniword::Wordprocessingml::Run.new(text: text)
-              run.properties = Uniword::Wordprocessingml::RunProperties.new(
-                style: Uniword::Properties::RunStyleReference.new(value: style),
-              )
-              para << run
+              add_text_with_char_style(para, text, style)
             end
           end
         end
 
         def render_italic(element, para)
-          if ordered?(element) && has_rich_children?(element)
+          if element.is_a?(String)
+            text = element
+          elsif ordered?(element) && has_rich_children?(element)
             render_with_run_format(element, para) { |run| run.properties.italic = Uniword::Properties::Italic.new }
+            return
           else
             text = collect_text(element)
-            return if text.nil? || text.empty?
-
-            run = Uniword::Builder::RunBuilder.new
-            run.text(text).italic
-            para << run.build
           end
+          return if text.nil? || text.to_s.empty?
+
+          run = Uniword::Builder::RunBuilder.new
+          run.text(text.to_s).italic
+          para << run.build
         end
 
         def render_bold(element, para)
@@ -248,10 +251,10 @@ module IsoDoc
           else
             text = collect_text(element)
           end
-          return if text.nil? || text.empty?
+          return if text.nil? || text.to_s.empty?
 
           run = Uniword::Builder::RunBuilder.new
-          run.text(text).bold
+          run.text(text.to_s).bold
           para << run.build
         end
 
@@ -294,9 +297,15 @@ module IsoDoc
           text = collect_text(element)
           return if text.nil? || text.empty?
 
-          run = Uniword::Builder::RunBuilder.new
-          run.text(text).font("Courier New")
-          para << run.build
+          # Apply character style for inline code if available
+          style = @resolver.character_style(:inline_code)
+          if style
+            add_text_with_char_style(para, text, style)
+          else
+            run = Uniword::Builder::RunBuilder.new
+            run.text(text).font("Courier New")
+            para << run.build
+          end
         end
 
         def render_strikethrough(element, para)
@@ -364,7 +373,9 @@ module IsoDoc
           target = element.target
           if target
             link = Uniword::Hyperlink.new(anchor: target, text: text)
-            para << link.to_model
+            link_model = link.to_model(allocator: @doc.allocator)
+            apply_hyperlink_style(link_model)
+            para << link_model
           else
             run = Uniword::Builder::RunBuilder.new
             run.text(text).underline.color("0000FF")
@@ -379,7 +390,9 @@ module IsoDoc
           cite = element.citeas || element.bibitemid
           if cite && !cite.empty?
             link = Uniword::Hyperlink.new(url: "##{cite}", text: text)
-            para << link.to_model(allocator: @doc.allocator)
+            link_model = link.to_model(allocator: @doc.allocator)
+            apply_hyperlink_style(link_model)
+            para << link_model
           else
             para << text
           end
@@ -403,6 +416,7 @@ module IsoDoc
               end
             end
 
+            apply_hyperlink_style(link_model) unless link_model.runs.empty?
             para << link_model unless link_model.runs.empty?
           else
             render_mixed_inline_fallback(element, para)
@@ -415,15 +429,18 @@ module IsoDoc
 
           if @footnote_cache.key?(text)
             id = @footnote_cache[text]
-            para << Uniword::Wordprocessingml::Run.new(
+            fn_run = Uniword::Wordprocessingml::Run.new(
               footnote_reference: Uniword::Wordprocessingml::FootnoteReference.new(id: id.to_s),
             )
+            apply_run_char_style(fn_run, :footnote_reference)
+            para << fn_run
             return
           end
 
           fn_run = @doc.footnote(text)
           fn_id = fn_run.footnote_reference&.id
           @footnote_cache[text] = fn_id if fn_id
+          apply_run_char_style(fn_run, :footnote_reference)
           para << fn_run
         end
 
@@ -438,10 +455,10 @@ module IsoDoc
 
         def render_stem(element, para)
           text = stem_fallback_text(element)
-          para << text if text && !text.empty?
+          add_text_with_char_style(para, text, :stem) if text && !text.empty?
         rescue StandardError
           text = stem_fallback_text(element)
-          para << text if text && !text.empty?
+          add_text_with_char_style(para, text, :stem) if text && !text.empty?
         end
 
         def stem_fallback_text(element)
@@ -490,6 +507,32 @@ module IsoDoc
             run.properties.style = Uniword::Properties::RunStyleReference.new(
               value: style,
             )
+          end
+        end
+
+        # Apply a character style from the resolver by key name.
+        def apply_run_char_style(run, style_key)
+          style = @resolver.character_style(style_key)
+          return unless style
+
+          run.properties ||= Uniword::Wordprocessingml::RunProperties.new
+          run.properties.style = Uniword::Properties::RunStyleReference.new(
+            value: style,
+          )
+        end
+
+        # Add text with a character style (rStyle) applied.
+        def add_text_with_char_style(para, text, style_key)
+          style = style_key.is_a?(String) ? style_key : @resolver.character_style(style_key)
+
+          if style
+            run = Uniword::Wordprocessingml::Run.new(text: text.to_s)
+            run.properties = Uniword::Wordprocessingml::RunProperties.new(
+              style: Uniword::Properties::RunStyleReference.new(value: style),
+            )
+            para << run
+          else
+            add_text(para, text)
           end
         end
 
@@ -553,46 +596,30 @@ module IsoDoc
 
         def add_text(para, text)
           return if text.nil?
+
           if @preserve_whitespace
-            para << text
+            add_preserved_text(para, text.to_s)
           else
-            normalized = text.gsub(/[ \t]+/, " ")
+            normalized = text.to_s.gsub(/[ \t]+/, " ")
             para << normalized unless normalized.empty?
           end
         end
 
-        def extract_mathml(element)
-          # MathElement objects store inner MathML in :content (no <math> wrapper)
-          if element.class.attributes.key?(:math)
-            math_els = element.math
-            if math_els.is_a?(Array) && !math_els.empty?
-              math_el = math_els.first
-              if math_el.class.attributes.key?(:content) && math_el.content.is_a?(String)
-                return "<math>#{math_el.content}</math>"
-              end
+        # Split text on newlines and insert <w:br/> runs between lines.
+        # This is essential for sourcecode blocks where newlines must be
+        # preserved as line breaks in the DOCX output.
+        def add_preserved_text(para, text)
+          return if text.empty?
+
+          lines = text.split("\n", -1)
+          lines.each_with_index do |line, i|
+            unless i.zero?
+              br_run = Uniword::Wordprocessingml::Run.new
+              br_run.break = Uniword::Wordprocessingml::Break.new
+              para << br_run
             end
+            para << line unless line.empty?
           end
-
-          content = element.content if element.class.attributes.key?(:content)
-          if content.is_a?(String)
-            math = extract_math_tag(content)
-            return math if math
-          end
-
-          inner_html = element.inner_html if element.class.attributes.key?(:inner_html)
-          if inner_html.is_a?(String)
-            math = extract_math_tag(inner_html)
-            return math if math
-          end
-
-          nil
-        end
-
-        # Extract <math ...>...</math> from a string using regex.
-        # No XML parsing needed — we just need the raw MathML markup.
-        def extract_math_tag(text)
-          match = text.match(/<(?:m:)?math[^>]*>.*<\/(?:m:)?math>/m)
-          match && match[0]
         end
       end
     end

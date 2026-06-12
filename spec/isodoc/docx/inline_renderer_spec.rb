@@ -335,4 +335,61 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderer do
       expect(text).to include("712")
     end
   end
+
+  describe "preserve_whitespace mode" do
+    it "converts newlines to line breaks" do
+      para = build_para
+      renderer.preserve_whitespace = true
+      renderer.send(:add_text, para, "line1\nline2\nline3")
+
+      built = para.build
+      runs = built.runs
+
+      # Should have: "line1" + br + "line2" + br + "line3"
+      text_runs = runs.select { |r| r.text && r.text.to_s.length > 0 }
+      br_runs = runs.select { |r| r.break }
+
+      expect(text_runs.map { |r| r.text.to_s }).to eq(["line1", "line2", "line3"])
+      expect(br_runs.length).to eq(2)
+
+      renderer.preserve_whitespace = false
+    end
+
+    it "handles leading and trailing newlines" do
+      para = build_para
+      renderer.preserve_whitespace = true
+      renderer.send(:add_text, para, "\nfirst\n")
+
+      built = para.build
+      runs = built.runs
+      br_runs = runs.select { |r| r.break }
+
+      expect(br_runs.length).to be >= 1
+
+      renderer.preserve_whitespace = false
+    end
+
+    it "handles empty string gracefully" do
+      para = build_para
+      renderer.preserve_whitespace = true
+      expect { renderer.send(:add_text, para, "") }.not_to raise_error
+
+      renderer.preserve_whitespace = false
+    end
+
+    it "handles single line without newlines" do
+      para = build_para
+      renderer.preserve_whitespace = true
+      renderer.send(:add_text, para, "single line")
+
+      built = para.build
+      text_runs = built.runs.select { |r| r.text && r.text.to_s.length > 0 }
+      br_runs = built.runs.select { |r| r.break }
+
+      expect(text_runs.map { |r| r.text.to_s }).to eq(["single line"])
+      expect(br_runs.length).to eq(0)
+
+      renderer.preserve_whitespace = false
+    end
+  end
 end
