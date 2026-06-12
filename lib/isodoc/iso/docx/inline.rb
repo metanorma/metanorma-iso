@@ -21,12 +21,17 @@ module IsoDoc
 
         attr_accessor :preserve_whitespace
 
+        # Callable that maps annotation target IDs to DOCX comment IDs.
+        # Set by the adapter after creating the CommentRenderer.
+        attr_writer :comment_id_lookup
+
         def initialize(context, resolver, doc_builder)
           @context = context
           @resolver = resolver
           @doc = doc_builder
           @footnote_cache = {}
           @preserve_whitespace = false
+          @comment_id_lookup = nil
         end
 
         # Render all inline content from a node into a ParagraphBuilder.
@@ -142,9 +147,11 @@ module IsoDoc
             nil
           when Metanorma::Document::Components::Inline::FmtFootnoteContainerElement,
                Metanorma::Document::Components::Inline::FmtFnLabelElement,
-               Metanorma::Document::Components::Inline::FmtAnnotationStartElement,
-               Metanorma::Document::Components::Inline::FmtAnnotationEndElement,
-               Metanorma::Document::Components::Inline::FmtTitleElement,
+               Metanorma::Document::Components::Inline::FmtAnnotationStartElement
+            render_annotation_start(element, para)
+          when Metanorma::Document::Components::Inline::FmtAnnotationEndElement
+            render_annotation_end(element, para)
+          when Metanorma::Document::Components::Inline::FmtTitleElement,
                Metanorma::Document::Components::Inline::FmtNameElement
             render_mixed_inline_fallback(element, para)
           when Metanorma::IsoDocument::Terms::TermExpression
@@ -620,6 +627,56 @@ module IsoDoc
             end
             para << line unless line.empty?
           end
+        end
+
+        # Render a comment range start marker for the given annotation element.
+        # The FmtAnnotationStartElement has a `target` attribute that maps to
+        # the fmt-annotation-body ID, which CommentRenderer maps to a DOCX
+        # comment ID.
+        #
+        # Note: CommentRangeStart/End markers are added to the paragraph's
+        # element_order directly if the builder doesn't accept them via <<.
+        def render_annotation_start(element, para)
+          target_id = element.target if element.class.attributes.key?(:target)
+          return unless target_id
+
+          comment_id = lookup_comment_id(target_id)
+          return unless comment_id
+
+          marker = Uniword::Wordprocessingml::CommentRangeStart.new(id: comment_id)
+          para << marker
+        rescue ArgumentError
+          # ParagraphBuilder doesn't accept this type — skip silently.
+          # Comment definitions are still created in comments.xml.
+          nil
+        end
+
+        # Render a comment range end marker and comment reference.
+        def render_annotation_end(element, para)
+          target_id = element.target if element.class.attributes.key?(:target)
+          return unless target_id
+
+          comment_id = lookup_comment_id(target_id)
+          return unless comment_id
+
+          end_marker = Uniword::Wordprocessingml::CommentRangeEnd.new(id: comment_id)
+          para << end_marker
+
+          ref_run = Uniword::Wordprocessingml::Run.new(
+            comment_reference: Uniword::Wordprocessingml::CommentReference.new(
+              id: comment_id,
+            ),
+          )
+          apply_run_char_style(ref_run, :comment_reference)
+          para << ref_run
+        rescue ArgumentError
+          nil
+        end
+
+        def lookup_comment_id(annotation_target_id)
+          return nil unless @comment_id_lookup
+
+          @comment_id_lookup.call(annotation_target_id)
         end
       end
     end

@@ -22,10 +22,12 @@ module IsoDoc
     module Docx
       autoload :Adapter, "isodoc/iso/docx/adapter"
       autoload :BoilerplateRenderer, "isodoc/iso/docx/boilerplate_renderer"
+      autoload :CommentRenderer, "isodoc/iso/docx/comment_renderer"
       autoload :Context, "isodoc/iso/docx/context"
       autoload :Counter, "isodoc/iso/docx/context"
       autoload :CoverRenderer, "isodoc/iso/docx/cover_renderer"
       autoload :DocumentProperties, "isodoc/iso/docx/document_properties"
+      autoload :FormulaRenderer, "isodoc/iso/docx/formula_renderer"
       autoload :InlineRenderer, "isodoc/iso/docx/inline"
       autoload :ModelUtils, "isodoc/iso/docx/model_utils"
       autoload :SectionManager, "isodoc/iso/docx/section_manager"

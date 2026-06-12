@@ -77,6 +77,15 @@ module IsoDoc
           @boilerplate_renderer = BoilerplateRenderer.new(@resolver, @inline_renderer)
           @section_manager = SectionManager.new(@resolver)
           @toc_builder = TocBuilder.new(@resolver, @inline_renderer, @context)
+          @comment_renderer = CommentRenderer.new(@resolver, @inline_renderer)
+          @formula_renderer = FormulaRenderer.new(@resolver, @inline_renderer)
+
+          # Wire comment ID lookup from CommentRenderer into InlineRenderer
+          @inline_renderer.comment_id_lookup = method(:lookup_comment_id)
+        end
+
+        def lookup_comment_id(annotation_target_id)
+          @comment_renderer.lookup_comment_id(annotation_target_id)
         end
 
         def save_document(model, output_path)
@@ -188,6 +197,9 @@ module IsoDoc
         #   [SECTPR — body section, arabic page numbers]
 
         def visit_root(model, doc)
+          # ── Render annotations (comments) before body traversal ──
+          @comment_renderer.render(model.annotation_container, doc) if model.annotation_container
+
           # ── Section 1: Cover page ──
           @cover_renderer.render(model.bibdata, doc)
           @boilerplate_renderer.render_license(model.boilerplate, doc)
@@ -740,23 +752,7 @@ module IsoDoc
         end
 
         def visit_formula(formula, doc)
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = @resolver.paragraph_style(:formula)
-
-          stem = formula.fmt_stem || formula.stem
-          if stem
-            @inline_renderer.render(stem, para)
-          else
-            @inline_renderer.render(formula, para)
-          end
-
-          # Render formula name/label if present (e.g., "(1)")
-          name = formula.fmt_name
-          if name
-            @inline_renderer.render(name, para)
-          end
-
-          doc << para
+          @formula_renderer.render(formula, doc)
         end
 
         def visit_quote(quote, doc)

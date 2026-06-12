@@ -126,6 +126,7 @@ paragraph_styles:
 character_styles:
   hyperlink: Hyperlink
   footnote_reference: FootnoteReference
+  comment_reference: CommentReference
   stem: stem
   inline_code: InlineCode
   endnote_reference: EndnoteReference

@@ -1034,6 +1034,69 @@ line3</sourcecode>
       end
     end
   end
+
+  # ── Comments support ───────────────────────────────────────────────
+
+  describe "comments support" do
+    it "renders annotations as DOCX comments" do
+      xml = minimal_iso_xml(<<~INNER)
+        <annotation-container>
+          <annotation date="2026-01-01" reviewer="ISO" id="ann1" from="s1" to="s1">
+            <p>Test comment.</p>
+          </annotation>
+          <fmt-annotation-body date="2026-01-01" reviewer="ISO" id="fab1" from="s1" to="s1">
+            <p>Test comment.</p>
+          </fmt-annotation-body>
+        </annotation-container>
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <p>Scope with <fmt-annotation-start id="fas1" target="fab1" reviewer="ISO" date="2026-01-01"/>comment<fmt-annotation-end id="fae1" target="fab1"/> marker.</p>
+          </clause>
+        </sections>
+      INNER
+
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        expect(File.exist?(path)).to be(true)
+      end
+    end
+  end
+
+  # ── Formula rendering ─────────────────────────────────────────────
+
+  describe "formula rendering" do
+    it "renders formulas with MathML via OMML" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <formula id="f1">
+              <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>E</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></math></stem>
+              <fmt-name>(1)</fmt-name>
+            </formula>
+          </clause>
+        </sections>
+      INNER
+
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+
+        extract_docx(path) do |doc, ns|
+          # Should have a Formula-styled paragraph
+          formula_paras = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='Formula']]", ns)
+          expect(formula_paras.length).to be >= 1
+
+          # Should have OMML math content (m namespace)
+          m_ns = { "m" => "http://schemas.openxmlformats.org/officeDocument/2006/math" }
+          omath = doc.xpath("//m:oMathPara", m_ns)
+          expect(omath.length).to be >= 1
+        end
+      end
+    end
+  end
 end
 
 RSpec.describe IsoDoc::Iso::Docx::Adapter, "Simple template" do
