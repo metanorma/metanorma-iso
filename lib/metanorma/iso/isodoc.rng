@@ -213,6 +213,12 @@ Sources are currently only rendered in metanorma-plateau</a:documentation>
     <define name="ExampleAttributes">
       <ref name="NumberingAttributes"/>
       <ref name="BlockAttributes"/>
+      <optional>
+        <attribute name="collapsible">
+          <a:documentation>Render the example as collapsible (HTML5 details/summary)</a:documentation>
+          <data type="boolean"/>
+        </attribute>
+      </optional>
     </define>
     <define name="ExampleBody">
       <optional>
