@@ -44,6 +44,7 @@ title_prefixes:
   amendment: "AMENDMENT {{ var1 }}"
   corrigendum: "TECHNICAL CORRIGENDUM {{ var1 }}"
   addendum: "ADDENDUM {{ var1 }}"
+  supplement: "SUPPLEMENT {{ var1 }}"
 doctype_dict:
   international-standard: International Standard
   technical-specification: Technical Specification
@@ -53,6 +54,7 @@ doctype_dict:
   guide: Guide
   amendment: Amendment
   addendum: Addendum
+  supplement: Supplement
   technical-corrigendum: Technical Corrigendum
   directive: Directive
   committee-document: Committee Document

@@ -44,6 +44,7 @@
         <value>directive</value>
         <value>committee-document</value>
         <value>addendum</value>
+        <value>supplement</value>
       </choice>
     </define>
     <define name="DocumentSubtype">

@@ -79,11 +79,12 @@ module Metanorma
       end
 
       def title_full(node, xml, lang)
-        title, intro, part, amd, add = title_full_prep(node, lang)
+        title, intro, part, amd, add, sup = title_full_prep(node, lang)
         title = "#{intro} -- #{title}" if intro
         title = "#{title} -- #{part}" if part
         title = "#{title} -- #{amd}" if amd
         title = "#{title} -- #{add}" if add
+        title = "#{title} -- #{sup}" if sup
         add_title_xml(xml, title, lang, "main")
       end
 
@@ -95,7 +96,9 @@ module Metanorma
         @amd and amd = node.attr("title-amendment-#{lang}")
         node.attr("addendum-number") and
           add = node.attr("title-addendum-#{lang}")
-        [title, intro, part, amd, add].map { |x| x&.empty? ? nil : x }
+        node.attr("supplement-number") and
+          sup = node.attr("title-supplement-#{lang}")
+        [title, intro, part, amd, add, sup].map { |x| x&.empty? ? nil : x }
       end
 
       def title(node, xml)
@@ -115,6 +118,9 @@ module Metanorma
         node.attr("addendum-number") and
           title_component(node, xml, lang,
                           { name: "addendum", abbr: "add" })
+        node.attr("supplement-number") and
+          title_component(node, xml, lang,
+                          { name: "supplement", abbr: "sup" })
         title_nums(node, xml, lang)
       end
 
