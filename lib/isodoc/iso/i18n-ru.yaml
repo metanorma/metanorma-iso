@@ -42,6 +42,7 @@ title_prefixes:
   amendment: "ПОПРАВКА {{ var1 }}"
   corrigendum: "ТЕХНИЧЕСКОЕ ИСПРАВЛЕНИЕ {{ var1 }}"
   addendum: "ДОПОЛНЕНИЕ {{ var1 }}"
+  supplement: "ПРИБАВЛЕНИЕ {{ var1 }}"
 doctype_dict:
   international-standard: Международный Стандарт
   technical-specification: Техническая Спецификация
@@ -51,6 +52,7 @@ doctype_dict:
   guide: Руководство
   amendment: Поправка
   addendum: Дополнение
+  supplement: Прибавление
   technical-corrigendum: Техническое Исправление
   directive: Директива
   committee-document: Документ комитета

@@ -18,7 +18,8 @@ module Metanorma
       # ISO as a prefix goes first
       def docidentifier_cleanup(xml)
         prefix = get_id_prefix(xml)
-        amd = @amd || xml.at("//bibdata/ext/doctype")&.text == "addendum"
+        amd = @amd ||
+          %w(addendum supplement).include?(xml.at("//bibdata/ext/doctype")&.text)
         id = xml.at("//bibdata/ext/structuredidentifier/project-number") and
           id.content =
             id_prefix(prefix, id, amd:)
