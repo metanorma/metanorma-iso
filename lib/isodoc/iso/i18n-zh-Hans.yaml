@@ -34,6 +34,7 @@ doctype_dict:
   amendment: 修正
   addendum: 附录
   supplement: 补充
+  extract: 摘录
   technical-corrigendum: 技术勘误
   directive: 指令
   committee-document: 委员会文件

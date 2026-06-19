@@ -93,11 +93,12 @@ module IsoDoc
           amd: isoxml.at(ns("#{prefix}/@amendment")),
           add: isoxml.at(ns("#{prefix}/@addendum")),
           sup: isoxml.at(ns("#{prefix}/@supplement")),
+          ext: isoxml.at(ns("#{prefix}/@extract")),
           corr: isoxml.at(ns("#{prefix}/@corrigendum")) }
       end
 
       def title_parts(isoxml, lang)
-        %w(intro main complementary part amd add sup).each_with_object({}) do |w, m|
+        %w(intro main complementary part amd add sup ext).each_with_object({}) do |w, m|
           m[w.to_sym] = isoxml.at(ns("//bibdata/title[@type='title-#{w}' and " \
                                      "@language='#{lang}']"))
         end
@@ -127,6 +128,9 @@ module IsoDoc
         tn[:sup] and set(:doctitlesuplabel,
                          title_part_prefix(isoxml, "supplement", lang))
         tp[:sup] and set(:doctitlesup, to_xml(tp[:sup].children))
+        tn[:ext] and set(:doctitleextlabel,
+                         title_part_prefix(isoxml, "extract", lang))
+        tp[:ext] and set(:doctitleext, to_xml(tp[:ext].children))
         main = compose_title(tp, tn, lang)
         set(:doctitle, main)
       end
@@ -151,6 +155,9 @@ module IsoDoc
         tn[:sup] and set(:docsubtitlesuplabel,
                          title_part_prefix(isoxml, "supplement", lang))
         tp[:sup] and set(:docsubtitlesup, to_xml(tp[:sup].children))
+        tn[:ext] and set(:docsubtitleextlabel,
+                         title_part_prefix(isoxml, "extract", lang))
+        tp[:ext] and set(:docsubtitleext, to_xml(tp[:ext].children))
         tn[:corr] and set(:docsubtitlecorrlabel,
                           title_part_prefix(isoxml, "corrigendum", lang))
         main = compose_title(tp, tn, lang)

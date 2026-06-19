@@ -53,7 +53,7 @@ module Metanorma
         %w(international-standard technical-specification technical-report
            publicly-available-specification international-workshop-agreement
            guide amendment technical-corrigendum committee-document addendum
-           supplement recommendation)
+           supplement extract recommendation)
           .include? @doctype or
           @log.add("ISO_5", nil, params: [@doctype])
       end

@@ -38,6 +38,10 @@
 <p class="zzCover"><b>{{ doctitlesuplabel }}</b></p>
 {% endif %}
 
+{% if doctitleextlabel %}
+<p class="zzCover"><b>{{ doctitleextlabel }}</b></p>
+{% endif %}
+
 {% if doctitlecorrlabel %}
 <p class="zzCover"><b>{{ doctitlecorrlabel }}</b></p>
 {% endif %}
@@ -58,6 +62,9 @@
 {% endif %}
 {% if doctitlesuplabel %}
 <p class="zzCover"><b>{{ doctitlesuplabel }}{% if doctitlesup %}: {{ doctitlesup }}{% endif %}</b></p>
+{% endif %}
+{% if doctitleextlabel %}
+<p class="zzCover"><b>{{ doctitleextlabel }}{% if doctitleext %}: {{ doctitleext }}{% endif %}</b></p>
 {% endif %}
 {% if doctitlecorrlabel %}
 <p class="zzCover"><b>{{ doctitlecorrlabel }}</b></p>

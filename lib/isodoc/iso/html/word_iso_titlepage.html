@@ -26,6 +26,10 @@ style='mso-bidi-font-weight:normal'><span lang="EN-GB" style='font-size:14.0pt'>
 <p class="MsoNormal" align="right" style='text-align:right'><b>{{ doctitlesuplabel }}</b></p>
 {% endif %}
 
+{% if doctitleextlabel %}
+<p class="MsoNormal" align="right" style='text-align:right'><b>{{ doctitleextlabel }}</b></p>
+{% endif %}
+
 {% if doctitlecorrlabel %}
 <p class="MsoNormal" align="right" style='text-align:right'><b>{{ doctitlecorrlabel }}</b></p>
 {% endif %}
@@ -67,6 +71,9 @@ style='mso-no-proof:yes'>{{ editorialgroup }}</span></p>
 {% endif %}
 {% if doctitlesuplabel %}
 <p class="MsoNormal" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt;margin-top:6.0pt;font-size:16.0pt'>{{ doctitlesuplabel }}{% if doctitlesup %}: {{ doctitlesup }}{% endif %}</p>
+{% endif %}
+{% if doctitleextlabel %}
+<p class="MsoNormal" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt;margin-top:6.0pt;font-size:16.0pt'>{{ doctitleextlabel }}{% if doctitleext %}: {{ doctitleext }}{% endif %}</p>
 {% endif %}
 {% if doctitlecorrlabel %}
 <p class="MsoNormal" style='text-align:left;line-height:18.0pt;margin-bottom:0.0pt;margin-top:6.0pt;font-size:16.0pt'>{{ doctitlecorrlabel }}</p>
