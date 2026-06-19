@@ -49,6 +49,7 @@ doctype_dict:
   amendment: Änderung
   addendum: Nachtrag
   supplement: Beiblatt
+  extract: Auszug
   technical-corrigendum: Technische Berichtigung
   directive: Richtlinie
   committee-document: Ausschussdokument

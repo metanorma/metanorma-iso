@@ -1,6 +1,6 @@
 gem "metanorma-cli"
 
-# metanorma-iso#1562 Supplement doctype depends on the standoc title_nums_prep
+# metanorma-iso#1562 Extract doctype depends on the standoc title_nums_prep
 # change; track the PR branch until it is released.
 gem "metanorma-standoc", github: "metanorma/metanorma-standoc",
-                         branch: "feature/supplement-doctype"
+                         branch: "feature/extract-doctype"

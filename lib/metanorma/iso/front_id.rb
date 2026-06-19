@@ -29,6 +29,7 @@ module Metanorma
         node.attr("amendment-number") and return :amd
         node.attr("addendum-number") and return :add
         node.attr("supplement-number") and return :sup
+        node.attr("extract-number") and return :ext
         node.attr("corrigendum-number") and return :cor
         DOCTYPE2HASHID[doctype(node).to_sym]
       end
@@ -105,7 +106,8 @@ module Metanorma
         ret = { number: node.attr("amendment-number") ||
           node.attr("corrigendum-number") ||
           node.attr("addendum-number") ||
-          node.attr("supplement-number"),
+          node.attr("supplement-number") ||
+          node.attr("extract-number"),
                 year: iso_id_year(node),
                 iteration: node.attr("iteration") }
         iso_id_stage_populate(ret, node, stage)
@@ -147,7 +149,8 @@ module Metanorma
         if orig_id && (node.attr("amendment-number") ||
             node.attr("corrigendum-number") ||
                       node.attr("addendum-number") ||
-                      node.attr("supplement-number"))
+                      node.attr("supplement-number") ||
+                      node.attr("extract-number"))
           %i(unpublished part).each { |x| params.delete(x) }
           params2[:base] = orig_id
         elsif orig_id &&

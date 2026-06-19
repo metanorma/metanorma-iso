@@ -1518,6 +1518,159 @@ RSpec.describe IsoDoc do
       .to be_equivalent_to output
   end
 
+  it "processes IsoXML metadata for extract" do
+    c = IsoDoc::Iso::HtmlConvert.new({})
+    _ = c.convert_init(<<~INPUT, "test", false)
+      <iso-standard xmlns="http://riboseinc.com/isoxml">
+    INPUT
+    input = <<~INPUT
+      <iso-standard xmlns="https://www.metanorma.org/ns/standoc">
+        <bibdata type="standard">
+          <title format="text/plain" language="en" type="main">Introduction — Main Title — Title — Title Part  — Mass fraction of
+                   extraneous matter, milled rice (nonglutinous), sample dividers and
+                   recommendations relating to storage and transport conditions</title>
+          <title format="text/plain" language="en" type="title-intro">Introduction</title>
+          <title format="text/plain" language="en" type="title-main">Main Title — Title</title>
+          <title format="text/plain" language="en" type="title-part">Title Part</title>
+          <title format="text/plain" language="en" type="title-part-prefix">Part&#xa0;1</title>
+          <title format="text/plain" language="en" type="title-extract-prefix">EXTRACT&#xa0;1</title>
+          <title format="text/plain" language="en" type="title-corrigendum-prefix">TECHNICAL CORRIGENDUM&#xa0;2</title>
+          <title format="text/plain" language="en" type="title-ext">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+          <title format="text/plain" language="fr" type="main">Introduction Française — Titre Principal — Part du Titre — Fraction
+              massique de matière étrangère, riz usiné (non gluant), diviseurs
+              d’échantillon et recommandations relatives aux conditions d’entreposage et
+              de transport
+            </title>
+          <title format="text/plain" language="fr" type="title-intro">Introduction Française</title>
+          <title format="text/plain" language="fr" type="title-main">Titre Principal</title>
+          <title format="text/plain" language="fr" type="title-part">Part du Titre</title>
+          <title format="text/plain" language="fr" type="title-part-prefix">Partie&#xa0;1</title>
+          <title format="text/plain" language="fr" type="title-extract-prefix">EXTRAIT&#xa0;1</title>
+          <title format="text/plain" language="fr" type="title-corrigendum-prefix">RECTIFICATIF TECHNIQUE&#xa0;2</title>
+          <title format="text/plain" language="fr" type="title-ext">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+          <docidentifier type="ISO">ISO/PreNWIP3 17301-1:2016/Ext.1</docidentifier>
+          <docidentifier type="iso-with-lang">ISO/PreNWIP3 17301-1:2016/Ext.1(E)</docidentifier>
+          <docidentifier type="iso-reference">ISO/PreNWIP3 17301-1:2016/Ext.1:2017(E)</docidentifier>
+          <docnumber>17301</docnumber>
+          <date type="created">
+            <on>2016-05-01</on>
+          </date>
+                      <date type="updated">
+               <on>2000-01-01</on>
+             </date>
+          <contributor>
+            <role type="author"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
+            <role type="publisher"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <edition>2</edition>
+          <version>0.3.4</version>
+          <language>en</language>
+          <script>Latn</script>
+          <status>
+            <stage abbreviation="NWIP">10</stage>
+            <substage>20</substage>
+            <iteration>3</iteration>
+          </status>
+          <copyright>
+            <from>2017</from>
+            <owner>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </owner>
+          </copyright>
+          <ext>
+            <doctype>extract</doctype>
+            <editorialgroup>
+              <technical-committee number="1" type="A">TC</technical-committee>
+              <technical-committee number="11" type="A1">TC1</technical-committee>
+              <subcommittee number="2" type="B">SC</subcommittee>
+              <subcommittee number="21" type="B1">SC1</subcommittee>
+              <workgroup number="3" type="C">WG</workgroup>
+              <workgroup number="31" type="C1">WG1</workgroup>
+              <secretariat>SECRETARIAT</secretariat>
+            </editorialgroup>
+            <ics>
+              <code>1</code>
+            </ics>
+            <ics>
+              <code>2</code>
+            </ics>
+            <ics>
+              <code>3</code>
+            </ics>
+            <structuredidentifier>
+              <project-number extract="1" corrigendum="2" origyr="2016-05-01" part="1">17301</project-number>
+            </structuredidentifier>
+            <stagename>New work item proposal</stagename>
+            <updates-document-type>international-standard</updates-document-type>
+          </ext>
+        </bibdata>
+        <metanorma-extension>
+        <semantic-metadata>
+        <stage-published>false</stage-published>
+        </semantic-metadata>
+        </metanorma-extension>
+        <sections/>
+      </iso-standard>
+    INPUT
+    output =
+      { agency: "ISO",
+        createddate: "2016-05-01",
+        docnumber: "ISO/PreNWIP3 17301-1:2016/Ext.1",
+        docnumber_lang: "ISO/PreNWIP3 17301-1:2016/Ext.1(E)",
+        docnumber_reference: "ISO/PreNWIP3 17301-1:2016/Ext.1:2017(E)",
+        docnumeric: "17301",
+       docsubtitle: "Introduction Française&#xa0;&#x2014; Titre Principal&#xa0;&#x2014; Partie 1 : Part du Titre",
+        docsubtitlecorrlabel: "RECTIFICATIF TECHNIQUE 2",
+        docsubtitleext: "Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport",
+        docsubtitleextlabel: "EXTRAIT 1",
+        docsubtitleintro: "Introduction Française",
+        docsubtitlemain: "Titre Principal",
+        docsubtitlepart: "Part du Titre",
+        docsubtitlepartlabel: "Partie 1",
+       doctitle: "Introduction&#xa0;&#x2014; Main Title — Title&#xa0;&#x2014; Part 1: Title Part",
+        doctitlecorrlabel: "TECHNICAL CORRIGENDUM 2",
+        doctitleext: "Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions",
+        doctitleextlabel: "EXTRACT 1",
+        doctitleintro: "Introduction",
+       doctitlemain: "Main Title — Title",
+        doctitlepart: "Title Part",
+        doctitlepartlabel: "Part 1",
+        doctype: "Extract",
+        doctype_display: "Extract",
+        docyear: "2017",
+        draft: "0.3.4",
+        draftinfo: " (draft 0.3.4, 2000-01-01)",
+        edition: "2",
+        ics: "1, 2, 3",
+        lang: "en",
+        publisher: "International Organization for Standardization",
+        revdate: "2000-01-01",
+        revdate_monthyear: "January 2000",
+        script: "Latn",
+        stage: "10",
+        stage_int: 10,
+        stageabbr: "NWIP",
+        statusabbr: "PreNWIP3",
+        substage_int: "20",
+        unpublished: true,
+        updateddate: "2000-01-01" }
+    expect(metadata(c.info(Nokogiri::XML(input), nil)))
+      .to be_equivalent_to output
+  end
+
   it "processes middle title" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">

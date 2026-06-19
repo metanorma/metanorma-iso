@@ -1037,4 +1037,97 @@ RSpec.describe Metanorma::Iso do
     expect(strip_guid(xml.to_xml))
       .to be_xml_equivalent_to output
   end
+
+  it "processes metadata, extract" do
+    input = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      = Document title
+      Author
+      :docfile: test.adoc
+      :nodoc:
+      :novalid:
+      :no-isobib:
+      :docnumber: 17301
+      :partnumber: 1
+      :doctype: extract
+      :updates: ISO 17301-1:2030
+      :extract-number: 3
+      :title-main-en: Rice
+      :title-extract-en: Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions
+      :title-main-fr: Riz
+      :title-extract-fr: Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport
+      :updates-document-type: international-standard
+    INPUT
+    output = <<~OUTPUT
+      <metanorma type="semantic" version="#{Metanorma::Iso::VERSION}" xmlns="https://www.metanorma.org/ns/standoc" flavor="iso">
+        <bibdata type="standard">
+             <title language="en" type="main">Rice — Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+             <title language="en" type="title-main">Rice</title>
+             <title language="en" type="title-ext">Mass fraction of extraneous matter, milled rice (nonglutinous), sample dividers and recommendations relating to storage and transport conditions</title>
+             <title language="en" type="title-part-prefix">Part 1</title>
+      <title language="en" type="title-extract-prefix">EXTRACT 3</title>
+             <title language="fr" type="main">Riz — Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+             <title language="fr" type="title-main">Riz</title>
+             <title language="fr" type="title-ext">Fraction massique de matière étrangère, riz usiné (non gluant), diviseurs d’échantillon et recommandations relatives aux conditions d’entreposage et de transport</title>
+                   <title language="fr" type="title-part-prefix">Partie 1</title>
+      <title language="fr" type="title-extract-prefix">EXTRAIT 3</title>
+          <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Ext 3:#{Date.today.year}</docidentifier>
+          <docidentifier type="iso-reference">ISO 17301-1:2030/Ext 3:#{Date.today.year}(E)</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-60.60:ext:#{Date.today.year}:v3</docidentifier>
+          <docidentifier type="iso-undated">ISO 17301-1:2030/Ext 3</docidentifier>
+          <docidentifier type="iso-with-lang">ISO 17301-1:2030/Ext 3:#{Date.today.year}(en)</docidentifier>
+          <docnumber>17301</docnumber>
+          <contributor>
+            <role type="author"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
+            <role type="authorizer"><description>Agency</description></role>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <contributor>
+            <role type="publisher"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <language>en</language>
+          <script>Latn</script>
+          <status>
+            <stage abbreviation="IS">60</stage>
+            <substage>60</substage>
+          </status>
+          <copyright>
+            <from>#{Time.now.year}</from>
+            <owner>
+              <organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization>
+            </owner>
+          </copyright>
+          <ext>
+            <doctype>extract</doctype>
+            <flavor>iso</flavor>
+            <structuredidentifier>
+              <project-number extract="3" part="1">17301</project-number>
+            </structuredidentifier>
+            <stagename abbreviation="EXT">Extract</stagename>
+          </ext>
+        </bibdata>
+        <sections/>
+      </metanorma>
+    OUTPUT
+    xml = Nokogiri::XML(input)
+    xml.at("//xmlns:metanorma-extension")&.remove
+    xml.at("//xmlns:boilerplate")&.remove
+    expect(strip_guid(xml.to_xml))
+      .to be_xml_equivalent_to output
+  end
 end

@@ -19,7 +19,7 @@ module Metanorma
       def docidentifier_cleanup(xml)
         prefix = get_id_prefix(xml)
         amd = @amd ||
-          %w(addendum supplement).include?(xml.at("//bibdata/ext/doctype")&.text)
+          %w(addendum supplement extract).include?(xml.at("//bibdata/ext/doctype")&.text)
         id = xml.at("//bibdata/ext/structuredidentifier/project-number") and
           id.content =
             id_prefix(prefix, id, amd:)

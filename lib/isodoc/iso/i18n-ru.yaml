@@ -43,6 +43,7 @@ title_prefixes:
   corrigendum: "ТЕХНИЧЕСКОЕ ИСПРАВЛЕНИЕ {{ var1 }}"
   addendum: "ДОПОЛНЕНИЕ {{ var1 }}"
   supplement: "ПРИБАВЛЕНИЕ {{ var1 }}"
+  extract: "ИЗВЛЕЧЕНИЕ {{ var1 }}"
 doctype_dict:
   international-standard: Международный Стандарт
   technical-specification: Техническая Спецификация
@@ -53,6 +54,7 @@ doctype_dict:
   amendment: Поправка
   addendum: Дополнение
   supplement: Прибавление
+  extract: Извлечение
   technical-corrigendum: Техническое Исправление
   directive: Директива
   committee-document: Документ комитета

@@ -45,6 +45,7 @@
         <value>committee-document</value>
         <value>addendum</value>
         <value>supplement</value>
+        <value>extract</value>
       </choice>
     </define>
     <define name="DocumentSubtype">
