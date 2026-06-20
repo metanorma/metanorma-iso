@@ -20,6 +20,13 @@ module IsoDoc
         autoload :ParagraphRenderer,    "isodoc/iso/docx/renderers/paragraph_renderer"
         autoload :ListRenderer,         "isodoc/iso/docx/renderers/list_renderer"
         autoload :TableRenderer,        "isodoc/iso/docx/renderers/table_renderer"
+        autoload :ImageRenderer,        "isodoc/iso/docx/renderers/image_renderer"
+        autoload :SectionRenderer,      "isodoc/iso/docx/renderers/section_renderer"
+        autoload :ClauseRenderer,       "isodoc/iso/docx/renderers/clause_renderer"
+        autoload :AnnexRenderer,        "isodoc/iso/docx/renderers/annex_renderer"
+        autoload :TermsSectionRenderer, "isodoc/iso/docx/renderers/terms_section_renderer"
+        autoload :TermRenderer,         "isodoc/iso/docx/renderers/term_renderer"
+        autoload :BibliographyRenderer, "isodoc/iso/docx/renderers/bibliography_renderer"
       end
     end
   end
