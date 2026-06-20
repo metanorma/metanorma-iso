@@ -45,8 +45,11 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ExampleRenderer do
     convert_and_extract(adapter, xml) do |pkg|
       styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
       example_count = styles.count("Exampleindent")
-      expect(example_count).to eq(2),
-        "both paragraphs should pick up Exampleindent via zone, got: #{styles.inspect}"
+      continued_count = styles.count("Exampleindentcontinued")
+      expect(example_count).to eq(1),
+        "first paragraph should use Exampleindent, got: #{styles.inspect}"
+      expect(continued_count).to eq(1),
+        "second paragraph should use Exampleindentcontinued, got: #{styles.inspect}"
     end
   end
 end

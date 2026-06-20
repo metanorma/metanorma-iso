@@ -72,8 +72,22 @@ module IsoDoc
 
         # Context-aware body text style. Returns nil in the default zone.
         # Single dispatch via Context#zone — no boolean chain.
+        #
+        # For zones that publish a "continued" variant (note, example),
+        # the 2nd+ paragraphs pick up the continued style key instead of
+        # the initial one. The counter is bumped by ParagraphRenderer
+        # after each render via Context#mark_zone_paragraph.
         def context_body_style
-          ZONE_BODY_STYLE.fetch(@context.zone, nil)&.then { |k| @mapping.paragraph_style(k) }
+          zone = @context.zone
+          return nil unless zone
+
+          if continued_zone?(zone)
+            continued_key = ZONE_BODY_CONTINUED_STYLE.fetch(zone)
+            @mapping.paragraph_style(continued_key)
+          else
+            key = ZONE_BODY_STYLE.fetch(zone, nil)
+            key && @mapping.paragraph_style(key)
+          end
         end
 
         def heading_style(level)
@@ -157,6 +171,16 @@ module IsoDoc
           normative: :normref,
         }.freeze
 
+        # Continuation styles for zones that split multi-paragraph bodies
+        # into "initial" + "continued" variants. Only note and example
+        # publish continued styleIds in Era C; other zones use the same
+        # style for every paragraph.
+        ZONE_BODY_CONTINUED_STYLE = {
+          note: :note_indent_continued,
+          example: :example_indent_continued,
+        }.freeze
+        private_constant :ZONE_BODY_CONTINUED_STYLE
+
         CLASS_ALIASES = {
           "zzSTDTitle1" => :title,
           "zzwarning" => :warning,
@@ -166,6 +190,14 @@ module IsoDoc
         def normalize_class_key(class_attr)
           str = class_attr.to_s
           CLASS_ALIASES.key?(str) ? CLASS_ALIASES[str] : str.to_sym
+        end
+
+        # True when the current paragraph is the 2nd+ in a zone that
+        # publishes a continued body-style variant. The first paragraph
+        # in the zone returns false and uses the base style.
+        def continued_zone?(zone)
+          ZONE_BODY_CONTINUED_STYLE.key?(zone) &&
+            @context.zone_paragraph_count(zone) > 0
         end
 
         def build_span_class_cache

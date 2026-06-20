@@ -52,4 +52,30 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
         "Noteindent paragraph should appear before Box-end"
     end
   end
+
+  it "uses Noteindent for the first paragraph and Noteindentcontinued for the rest" do
+    xml = minimal_iso_xml(<<~INNER)
+      <sections>
+        <clause id="c1">
+          <title>Scope</title>
+          <note id="n1">
+            <p>First note paragraph.</p>
+            <p>Second note paragraph.</p>
+            <p>Third note paragraph.</p>
+          </note>
+        </clause>
+      </sections>
+    INNER
+
+    convert_and_extract(adapter, xml) do |pkg|
+      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      initial_count = styles.count("Noteindent")
+      continued_count = styles.count("Noteindentcontinued")
+
+      expect(initial_count).to eq(1),
+        "first paragraph should use Noteindent, got: #{styles.inspect}"
+      expect(continued_count).to eq(2),
+        "2nd+ paragraphs should use Noteindentcontinued, got: #{styles.inspect}"
+    end
+  end
 end

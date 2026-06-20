@@ -27,6 +27,7 @@ module IsoDoc
             apply_style(para, paragraph)
             apply_alignment(para, paragraph)
             @inline_renderer.render(paragraph, para)
+            @context.mark_zone_paragraph
             doc << para
           end
 

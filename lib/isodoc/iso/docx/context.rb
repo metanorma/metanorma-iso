@@ -15,7 +15,6 @@ module IsoDoc
                       :in_bibliography, :in_definition_dd, :in_formula,
                       :section_depth,
                       :term_counter, :section_counter, :body_width
-
         def initialize
           @footnote_counter = Counter.new
           @bookmark_counter = Counter.new
@@ -33,6 +32,7 @@ module IsoDoc
           @section_depth = 0
           @section_counter = Counter.new(0)
           @term_counter = Counter.new(0)
+          @zone_paragraph_counts = Hash.new(0)
         end
 
         def next_footnote_id
@@ -86,18 +86,24 @@ module IsoDoc
 
         def with_note
           old = @in_note
+          old_count = @zone_paragraph_counts[:note]
           @in_note = true
+          @zone_paragraph_counts[:note] = 0
           yield
         ensure
           @in_note = old
+          @zone_paragraph_counts[:note] = old_count
         end
 
         def with_example
           old = @in_example
+          old_count = @zone_paragraph_counts[:example]
           @in_example = true
+          @zone_paragraph_counts[:example] = 0
           yield
         ensure
           @in_example = old
+          @zone_paragraph_counts[:example] = old_count
         end
 
         def with_definition_dd
@@ -164,6 +170,21 @@ module IsoDoc
           return :normative    if @in_normative
           return :bibliography if @in_bibliography
           :body
+        end
+
+        # How many paragraphs have been rendered in the given zone during
+        # the current with_* block. Used by StyleResolver to pick the
+        # "continued" body-style variant for note/example zones where the
+        # 2nd+ paragraphs use Noteindentcontinued / Exampleindentcontinued.
+        def zone_paragraph_count(zone)
+          @zone_paragraph_counts[zone] || 0
+        end
+
+        # Increment the current zone's paragraph counter. Called by
+        # ParagraphRenderer after applying the zone's body style.
+        def mark_zone_paragraph
+          current = zone
+          @zone_paragraph_counts[current] = @zone_paragraph_counts[current] + 1
         end
       end
 
