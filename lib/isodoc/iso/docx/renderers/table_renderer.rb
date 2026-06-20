@@ -29,7 +29,7 @@ module IsoDoc
             @context.with_table do
               render_table_section(table.thead, tbl, :header)
               render_table_section(table.tbody, tbl, :body)
-              render_table_section(table.tfoot, tbl, :body)
+              render_table_section(table.tfoot, tbl, :footer)
             end
 
             ensure_table_structure(tbl.model, table.width)
@@ -74,6 +74,7 @@ module IsoDoc
           def table_cell_style_key(row_type)
             case row_type
             when :header then :table_header
+            when :footer then :table_footer
             else :table_body
             end
           end

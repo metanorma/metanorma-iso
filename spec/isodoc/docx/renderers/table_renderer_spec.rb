@@ -110,6 +110,27 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
     end
   end
 
+  it "applies Tablefooter style to footer cell paragraphs" do
+    xml = minimal_iso_xml(<<~INNER)
+      <sections>
+        <clause id="c1">
+          <title>Scope</title>
+          <table id="t1">
+            <thead><tr><th>H1</th></tr></thead>
+            <tbody><tr><td>Body cell</td></tr></tbody>
+            <tfoot><tr><td>Footer cell</td></tr></tfoot>
+          </table>
+        </clause>
+      </sections>
+    INNER
+
+    convert_and_extract(adapter, xml) do |pkg|
+      styles = table_paragraphs(pkg).map { |p| p.properties&.style&.value }
+      expect(styles).to include("Tablefooter"),
+        "footer cell paragraph should use Tablefooter, got: #{styles.inspect}"
+    end
+  end
+
   it "renders notes inside table cells with Note style" do
     xml = minimal_iso_xml(<<~INNER)
       <sections>
