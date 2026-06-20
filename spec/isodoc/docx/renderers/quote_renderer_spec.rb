@@ -53,4 +53,55 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::QuoteRenderer do
         "Box-end should not wrap quotes"
     end
   end
+
+  it "renders quote attribution with Disp-quoteattrib style" do
+    xml = minimal_iso_xml(<<~INNER)
+      <sections>
+        <clause id="c1">
+          <title>Scope</title>
+          <quote id="q1">
+            <p>To be or not to be.</p>
+            <attribution><p>— Shakespeare, Hamlet</p></attribution>
+          </quote>
+        </clause>
+      </sections>
+    INNER
+
+    convert_and_extract(adapter, xml) do |pkg|
+      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+
+      expect(styles).to include("Disp-quotep"),
+        "quote body should use Disp-quotep, got: #{styles.inspect}"
+      expect(styles).to include("Disp-quoteattrib"),
+        "attribution should use Disp-quoteattrib, got: #{styles.inspect}"
+
+      attrib_index = styles.index("Disp-quoteattrib")
+      body_index = styles.index("Disp-quotep")
+      expect(attrib_index).to be > body_index,
+        "attribution should follow body, got body=#{body_index} attrib=#{attrib_index}"
+    end
+  end
+
+  it "renders each paragraph of a multi-paragraph quote as its own paragraph" do
+    xml = minimal_iso_xml(<<~INNER)
+      <sections>
+        <clause id="c1">
+          <title>Scope</title>
+          <quote id="q1">
+            <p>First quoted paragraph.</p>
+            <p>Second quoted paragraph.</p>
+          </quote>
+        </clause>
+      </sections>
+    INNER
+
+    convert_and_extract(adapter, xml) do |pkg|
+      quote_paras = pkg.document.body.paragraphs.select do |p|
+        p.properties&.style&.value == "Disp-quotep"
+      end
+
+      expect(quote_paras.length).to eq(2),
+        "expected 2 Disp-quotep paragraphs, got: #{quote_paras.length}"
+    end
+  end
 end
