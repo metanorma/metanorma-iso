@@ -13,14 +13,29 @@ module IsoDoc
       #
       # Uses Plurimath for MathML→OMML conversion, falling back to text
       # rendering when conversion fails.
+      #
+      # The renderer wraps its body in +Context#with_formula+ so that
+      # DefinitionListRenderer can detect formula context and switch to
+      # KeyTitle/KeyText styling for the formula's symbol key list.
       class FormulaRenderer
-        def initialize(resolver, inline_renderer)
+        def initialize(resolver, inline_renderer, context: nil)
           @resolver = resolver
           @inline = inline_renderer
+          @context = context
         end
 
         # Render a formula block into the document.
         def render(formula, doc)
+          if @context
+            @context.with_formula { render_body(formula, doc) }
+          else
+            render_body(formula, doc)
+          end
+        end
+
+        private
+
+        def render_body(formula, doc)
           mathml = extract_mathml(formula)
 
           if mathml && !mathml.empty?
@@ -39,7 +54,7 @@ module IsoDoc
           # Primary path: stem.math is an Mml::V3::Math object with to_xml
           if stem.class.attributes.key?(:math)
             math_obj = stem.math
-            if math_obj && math_obj.respond_to?(:to_xml)
+            if math_obj && !math_obj.nil?
               mathml = math_obj.to_xml
               return mathml if mathml && !mathml.strip.empty?
             end
@@ -129,7 +144,7 @@ module IsoDoc
           tab_run.tab = Uniword::Wordprocessingml::Tab.new
           para << tab_run
 
-          if @inline.respond_to?(:add_text_with_char_style)
+          if @inline.is_a?(InlineRenderer)
             @inline.add_text_with_char_style(para, name_text, :stem)
           else
             para << name_text

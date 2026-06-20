@@ -55,6 +55,7 @@ module IsoDoc
           reset_state(doc)
           visit_root(doc_model, doc)
           apply_custom_properties(doc_model, doc)
+          apply_core_properties(doc_model, doc)
           save_document(doc.model, output_path)
         end
 
@@ -64,6 +65,7 @@ module IsoDoc
           reset_state(doc)
           visit_root(model, doc)
           apply_custom_properties(model, doc)
+          apply_core_properties(model, doc)
           save_document(doc.model, output_path)
         end
 
@@ -78,10 +80,84 @@ module IsoDoc
           @section_manager = SectionManager.new(@resolver)
           @toc_builder = TocBuilder.new(@resolver, @inline_renderer, @context)
           @comment_renderer = CommentRenderer.new(@resolver, @inline_renderer)
-          @formula_renderer = FormulaRenderer.new(@resolver, @inline_renderer)
+          @formula_renderer = FormulaRenderer.new(@resolver, @inline_renderer, context: @context)
+          @sourcecode_renderer = SourcecodeRenderer.new(@resolver, @inline_renderer)
+          @definition_list_renderer = Renderers::DefinitionListRenderer.new(
+            resolver: @resolver, context: @context,
+            inline_renderer: @inline_renderer, walker: nil,
+          )
+
+          build_dispatcher
 
           # Wire comment ID lookup from CommentRenderer into InlineRenderer
           @inline_renderer.comment_id_lookup = method(:lookup_comment_id)
+        end
+
+        # Build the dispatcher: a Walker paired with a Registry of
+        # per-content-type renderers. Simple renderers (Note, Example,
+        # Admonition, Quote, DefinitionList, Figure) are instantiated
+        # from Renderers::*; complex types still dispatch to adapter
+        # via the +#adapter_dispatch+ fallback.
+        def build_dispatcher
+          dispatch_fn = ->(node, doc) { dispatch(node, doc) }
+          @walker = Renderers::Walker.new(dispatch_fn)
+          @simple_renderers = {
+            Metanorma::Document::Components::MultiParagraph::AdmonitionBlock =>
+              Renderers::AdmonitionRenderer.new(
+                resolver: @resolver, context: @context,
+                inline_renderer: @inline_renderer, walker: @walker,
+              ),
+            Metanorma::Document::Components::MultiParagraph::QuoteBlock =>
+              Renderers::QuoteRenderer.new(
+                resolver: @resolver, context: @context,
+                inline_renderer: @inline_renderer, walker: @walker,
+              ),
+            Metanorma::Document::Components::AncillaryBlocks::ExampleBlock =>
+              Renderers::ExampleRenderer.new(
+                resolver: @resolver, context: @context,
+                inline_renderer: @inline_renderer, walker: @walker,
+              ),
+            Metanorma::Document::Components::Lists::DefinitionList =>
+              @definition_list_renderer,
+            Metanorma::Document::Components::AncillaryBlocks::FigureBlock =>
+              Renderers::FigureRenderer.new(
+                resolver: @resolver, context: @context,
+                inline_renderer: @inline_renderer, walker: @walker,
+                image_renderer: method(:render_image_via_adapter),
+              ),
+            Metanorma::Document::Components::Blocks::NoteBlock =>
+              Renderers::NoteRenderer.new(
+                resolver: @resolver, context: @context,
+                inline_renderer: @inline_renderer, walker: @walker,
+              ),
+            Metanorma::Document::Components::Paragraphs::ParagraphBlock =>
+              Renderers::ParagraphRenderer.new(
+                resolver: @resolver, context: @context,
+                inline_renderer: @inline_renderer, walker: @walker,
+              ),
+            Metanorma::Document::Components::Lists::OrderedList =>
+              Renderers::ListRenderer.new(
+                resolver: @resolver, context: @context,
+                inline_renderer: @inline_renderer, walker: @walker,
+              ),
+            Metanorma::Document::Components::Lists::UnorderedList =>
+              Renderers::ListRenderer.new(
+                resolver: @resolver, context: @context,
+                inline_renderer: @inline_renderer, walker: @walker,
+              ),
+            Metanorma::Document::Components::Tables::TableBlock =>
+              Renderers::TableRenderer.new(
+                resolver: @resolver, context: @context,
+                inline_renderer: @inline_renderer, walker: @walker,
+              ),
+          }
+        end
+
+        # Adapter-side image rendering, exposed as a callable so that
+        # FigureRenderer can stay decoupled from file-system concerns
+        # (data URIs, Dimension style selection, fallbacks).
+        def render_image_via_adapter(image, doc)
+          visit_image_element(image, doc)
         end
 
         def lookup_comment_id(annotation_target_id)
@@ -109,10 +185,13 @@ module IsoDoc
           if @template_path && File.exist?(@template_path)
             @template_root ||= Uniword.load(@template_path)
             root = @template_root
+            setup_allocator(root)
             if root.body
               root.body.paragraphs.clear
               root.body.tables.clear
               root.body.structured_document_tags.clear
+              root.body.bookmark_starts.clear
+              root.body.bookmark_ends.clear
               root.body.element_order = [] if root.body.element_order
               root.body.section_properties = nil
             end
@@ -122,10 +201,24 @@ module IsoDoc
             root.custom_xml_items = nil
             clear_custom_xml_references(root)
             clear_stale_template_content(root)
-            Uniword::Builder::DocumentBuilder.new(root)
+            Uniword::Builder::DocumentBuilder.new(root, allocator: root.allocator)
           else
             Uniword::Builder::DocumentBuilder.new
           end
+        end
+
+        # Create and seed an IdAllocator on the root so that hyperlink,
+        # image, and other relationship-bearing elements get proper rId
+        # references instead of raw URLs. The allocator is seeded from the
+        # template's existing relationships to avoid rId collisions.
+        def setup_allocator(root)
+          return if root.allocator
+
+          allocator = Uniword::Docx::IdAllocator.new
+          if root.document_rels&.relationships
+            allocator.seed_from_rels(root.document_rels.relationships)
+          end
+          root.allocator = allocator
         end
 
         def clear_user_footnotes(root)
@@ -167,6 +260,10 @@ module IsoDoc
         def apply_custom_properties(model, doc)
           props = DocumentProperties.new(model).build
           doc.model.custom_properties = props if props
+        end
+
+        def apply_core_properties(model, doc)
+          doc.model.core_properties = CorePropertiesBuilder.new(model).build
         end
 
         # ── Root-level visitors ────────────────────────────────────────
@@ -222,6 +319,11 @@ module IsoDoc
           )
 
           # ── Section 3: Body (arabic page numbers) ──
+          # The reference DOCX layout places the document title on a
+          # separate page between front matter and body, using the
+          # zzSTDTitle paragraph style. The cover page (CoverTitleA1)
+          # also shows the title, but they are different physical pages
+          # with different styles.
           render_middle_title(model, doc)
           visit_sections(model.sections, doc) if model.sections
           model.annex&.each { |a| visit_annex(a, doc) }
@@ -285,7 +387,8 @@ module IsoDoc
         #
         # The reference DOCX renders the full document title on a
         # separate page between front matter and body, using zzSTDTitle.
-
+        # This is distinct from the cover page title (CoverTitleA1):
+        # both pages exist in the standard ISO layout.
         def render_middle_title(model, doc)
           bib = model.bibdata
           return unless bib
@@ -333,10 +436,13 @@ module IsoDoc
 
         def visit_annex(annex, doc)
           doc.page_break
+          @context.section_depth += 1
           @context.with_annex do
             render_annex_title(annex, doc)
             walk_mixed_content(annex, doc)
           end
+        ensure
+          @context.section_depth -= 1
         end
 
         def visit_terms_section(terms_sect, doc)
@@ -344,7 +450,7 @@ module IsoDoc
           if title
             para = Uniword::Builder::ParagraphBuilder.new
             para.style = @resolver.heading_style(1)
-            @inline_renderer.render(title, para)
+            @inline_renderer.render_heading(title, para)
             doc << para
           end
           walk_mixed_content(terms_sect, doc)
@@ -355,7 +461,7 @@ module IsoDoc
           if title
             para = Uniword::Builder::ParagraphBuilder.new
             para.style = @resolver.heading_style(1)
-            @inline_renderer.render(title, para)
+            @inline_renderer.render_heading(title, para)
             doc << para
           end
           walk_mixed_content(definitions, doc)
@@ -365,8 +471,8 @@ module IsoDoc
           title = refs_sect.fmt_title || refs_sect.title
           if title
             para = Uniword::Builder::ParagraphBuilder.new
-            para.style = @resolver.heading_style(2)
-            @inline_renderer.render(title, para)
+            para.style = @resolver.paragraph_style(:bibliography)
+            @inline_renderer.render_heading(title, para)
             doc << para
           end
 
@@ -381,28 +487,33 @@ module IsoDoc
         def visit_bibliographic_item(bibitem, doc)
           para = Uniword::Builder::ParagraphBuilder.new
           para.style = bib_item_style
-          insert_bibitem_bookmark(bibitem, para)
-          render_bib_item_content(bibitem, para)
+          with_bibitem_bookmark(bibitem, para) do
+            render_bib_item_content(bibitem, para)
+          end
           doc << para
         end
 
         def bib_item_style
-          if @context.in_normative
-            @resolver.paragraph_style(:ref_norm) ||
-              @resolver.paragraph_style(:normref)
-          else
-            @resolver.paragraph_style(:biblio_entry) ||
-              @resolver.paragraph_style(:list_paragraph)
-          end
+          key = @context.in_normative ? :ref_norm : :biblio_entry
+          @resolver.paragraph_style(key)
         end
 
-        def insert_bibitem_bookmark(bibitem, para)
-          id = bibitem.anchor || bibitem.id
-          return unless id
+        def with_bibitem_bookmark(bibitem, para)
+          name = bibitem_bookmark_name(bibitem)
+          return yield unless name
 
           bm_id = @context.next_bookmark_id.to_s
-          para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, name: id)
+          para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, name: name)
+          yield
           para << Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id)
+        end
+
+        def bibitem_bookmark_name(bibitem)
+          if bibitem.class.attributes.key?(:anchor) && bibitem.anchor
+            return bibitem.anchor
+          end
+          return bibitem.id if bibitem.class.attributes.key?(:id) && bibitem.id
+          nil
         end
 
         def render_bib_item_content(bibitem, para)
@@ -413,6 +524,16 @@ module IsoDoc
             text = collect_text(bibitem)
             para << text if text && !text.empty?
           end
+          render_formatted_ref(bibitem, para)
+        end
+
+        def render_formatted_ref(bibitem, para)
+          return unless bibitem.class.attributes.key?(:formatted_ref)
+
+          ref = bibitem.formatted_ref
+          return unless ref
+
+          @inline_renderer.render(ref, para)
         end
 
         # ── Term visitors ─────────────────────────────────────────────
@@ -422,8 +543,9 @@ module IsoDoc
           if fmt_name
             name_para = Uniword::Builder::ParagraphBuilder.new
             name_para.style = @resolver.paragraph_style(:term_num)
-            insert_bookmark(term, name_para)
-            @inline_renderer.render(fmt_name, name_para)
+            with_bookmark(term, name_para) do
+              @inline_renderer.render_heading(fmt_name, name_para)
+            end
             doc << name_para
           end
 
@@ -431,26 +553,69 @@ module IsoDoc
           Array(preferred).each do |pref|
             style = fmt_name ? @resolver.paragraph_style(:terms) :
               @resolver.paragraph_style(:term_num)
-            render_term_name(pref, doc, style)
+            render_term_designation_list(pref, doc, style)
           end
 
           admitted = term.fmt_admitted || term.admitted
           Array(admitted).each do |adm|
-            render_term_name(adm, doc, @resolver.paragraph_style(:alt_terms))
+            render_term_designation_list(adm, doc,
+                                         @resolver.paragraph_style(:alt_terms))
           end
 
           deprecates = term.fmt_deprecates || term.deprecates
           Array(deprecates).each do |dep|
-            render_term_name_with_prefix(dep, doc,
+            render_term_designation_list(dep, doc,
                                          @resolver.paragraph_style(:deprecated_term),
-                                         "DEPRECATED: ")
+                                         prefix: deprecated_prefix(dep))
           end
 
           render_term_definitions(term, doc)
           render_term_notes(term, doc)
           render_term_examples(term, doc)
+        end
 
-          walk_mixed_content(term, doc)
+        def render_term_designation_list(designation, doc, style, prefix: nil)
+          return unless designation
+
+          paragraphs = designation_paragraphs(designation)
+          if paragraphs.empty?
+            render_term_name_with_prefix(designation, doc, style, prefix)
+            return
+          end
+
+          paragraphs.each do |p|
+            para = Uniword::Builder::ParagraphBuilder.new
+            para.style = style
+            if prefix
+              run = Uniword::Builder::RunBuilder.new
+              run.text(prefix)
+              para << run.build
+            end
+            @inline_renderer.render(p, para)
+            doc << para
+          end
+        end
+
+        # Extract the inner <p> children from a fmt-* designation element.
+        # Returns [] for elements that are themselves paragraph-like (used
+        # by the fallback path).
+        def designation_paragraphs(designation)
+          return [] unless designation.class.attributes.key?(:p)
+
+          Array(designation.p)
+        end
+
+        # The "DEPRECATED: " prefix is added only when the source content
+        # doesn't already include it (presentation XML sometimes embeds
+        # the label inside <fmt-deprecates><p>DEPRECATED: ...</p></fmt-deprecates>).
+        DEPRECATED_PREFIX = "DEPRECATED: "
+        private_constant :DEPRECATED_PREFIX
+
+        def deprecated_prefix(designation)
+          text = collect_all_text(designation)
+          return nil if text&.start_with?(DEPRECATED_PREFIX) || text&.include?(DEPRECATED_PREFIX)
+
+          DEPRECATED_PREFIX
         end
 
         def render_term_name(designation, doc, style)
@@ -463,15 +628,23 @@ module IsoDoc
         def render_term_name_with_prefix(designation, doc, style, prefix)
           para = Uniword::Builder::ParagraphBuilder.new
           para.style = style
-          run = Uniword::Builder::RunBuilder.new
-          run.text(prefix)
-          para << run.build
+          if prefix
+            run = Uniword::Builder::RunBuilder.new
+            run.text(prefix)
+            para << run.build
+          end
           @inline_renderer.render(designation, para)
           doc << para
         end
 
         def render_term_definitions(term, doc)
-          Array(term.definition).each { |defn| walk_mixed_content(defn, doc) }
+          definitions = if term.class.attributes.key?(:fmt_definition) &&
+                            term.fmt_definition
+                          Array(term.fmt_definition)
+                        else
+                          Array(term.definition)
+                        end
+          definitions.each { |defn| walk_mixed_content(defn, doc) }
         end
 
         def render_term_notes(term, doc)
@@ -502,53 +675,58 @@ module IsoDoc
 
         # ── Block visitors (central dispatch) ──────────────────────────
         #
-        # MECE by design: each element type maps to exactly one handler.
-        # Subclass types must appear BEFORE their superclass in the
-        # case/when to avoid the superclass branch matching first.
+        # Class-keyed dispatch via the Renderers::Registry. Simple content
+        # types (Note, Example, Admonition, Quote, DefinitionList, Figure)
+        # are dispatched to their own Renderer classes. Complex types
+        # fall through to adapter-side +visit_*+ methods.
+        #
+        # Inheritance: the Registry walks the ancestor chain, so an
+        # IsoClauseSection (a ParagraphBlock subclass) dispatches to
+        # +visit_clause+ via its explicit entry; subclasses with their
+        # own entries always win (exact-class match first).
 
-        def visit_block(block, doc)
-          case block
+        # Dispatch entry point used by Renderers::Walker and visit_block.
+        # Looks up by node class, then walks the ancestor chain so that
+        # subclasses (e.g., ParagraphWithFootnote < ParagraphBlock) hit
+        # the registered renderer without each subclass needing its own
+        # entry.
+        def dispatch(node, doc)
+          renderer = lookup_simple_renderer(node.class)
+          return renderer.render(node, doc) if renderer
+
+          adapter_dispatch(node, doc)
+        end
+
+        def lookup_simple_renderer(klass)
+          return @simple_renderers[klass] if @simple_renderers[klass]
+
+          klass.ancestors.each do |ancestor|
+            return @simple_renderers[ancestor] if @simple_renderers[ancestor]
+          end
+          nil
+        end
+
+        # Adapter-side dispatch for complex content types that still
+        # have their +visit_*+ methods defined here.
+        def adapter_dispatch(node, doc)
+          case node
           # ── Subclasses MUST appear before their superclass ──
-          # AdmonitionBlock < ParagraphsBlock < ParagraphWithFootnote < ParagraphBlock
-          when Metanorma::Document::Components::MultiParagraph::AdmonitionBlock
-            visit_admonition(block, doc)
-          when Metanorma::Document::Components::MultiParagraph::QuoteBlock
-            visit_quote(block, doc)
-          # ExampleBlock < ParagraphsBlock < ParagraphWithFootnote < ParagraphBlock
-          when Metanorma::Document::Components::AncillaryBlocks::ExampleBlock
-            visit_example(block, doc)
-          # IsoClauseSection < ParagraphBlock (via complex chain)
           when Metanorma::IsoDocument::Sections::IsoAnnexSection
-            visit_annex(block, doc)
+            visit_annex(node, doc)
           when Metanorma::IsoDocument::Sections::IsoTermsSection
-            visit_terms_section(block, doc)
+            visit_terms_section(node, doc)
           when Metanorma::IsoDocument::Sections::IsoClauseSection
-            visit_clause(block, doc)
+            visit_clause(node, doc)
           # IsoTerm < ParagraphBlock
           when Metanorma::IsoDocument::Terms::IsoTerm
-            visit_term(block, doc)
-          # Base paragraph — must come AFTER all paragraph subclasses
-          when Metanorma::Document::Components::Paragraphs::ParagraphBlock
-            visit_paragraph(block, doc)
+            visit_term(node, doc)
           # ── Non-paragraph types ──
-          when Metanorma::Document::Components::Tables::TableBlock
-            visit_table(block, doc)
-          when Metanorma::Document::Components::Lists::UnorderedList
-            visit_unordered_list(block, doc)
-          when Metanorma::Document::Components::Lists::OrderedList
-            visit_ordered_list(block, doc)
-          when Metanorma::Document::Components::Lists::DefinitionList
-            visit_definition_list(block, doc)
-          when Metanorma::Document::Components::AncillaryBlocks::FigureBlock
-            visit_figure(block, doc)
           when Metanorma::Document::Components::AncillaryBlocks::FormulaBlock
-            visit_formula(block, doc)
-          when Metanorma::Document::Components::Blocks::NoteBlock
-            visit_note(block, doc)
+            visit_formula(node, doc)
           when Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock
-            visit_sourcecode(block, doc)
+            visit_sourcecode(node, doc)
           when Metanorma::Document::Components::BibData::BibliographicItem
-            visit_bibliographic_item(block, doc)
+            visit_bibliographic_item(node, doc)
           when Metanorma::Document::Components::EmptyElements::PageBreakElement
             doc.page_break
           when Metanorma::Document::Components::EmptyElements::HorizontalRuleElement
@@ -556,248 +734,116 @@ module IsoDoc
           when Metanorma::Document::Components::IdElements::Bookmark
             nil
           else
-            walk_mixed_content(block, doc)
+            walk_mixed_content(node, doc)
           end
+        end
+
+        def visit_block(block, doc)
+          dispatch(block, doc)
         end
 
         # ── Block visitor implementations ──────────────────────────────
 
-        def visit_paragraph(p, doc)
-          para = Uniword::Builder::ParagraphBuilder.new
-          style = resolve_paragraph_style(p)
-          para.style = style if style
-          para.align = p.alignment if p.alignment
-
-          # Check for class_attr that maps to a specific style
-          context_style = @resolver.context_body_style
-          para.style = context_style if context_style && !style
-
-          @inline_renderer.render(p, para)
-          doc << para
-        end
-
-        def visit_table(table, doc)
-          name = table.fmt_name || table.name
-          if name
-            title_para = Uniword::Builder::ParagraphBuilder.new
-            title_para.style = @resolver.table_title_style
-            @inline_renderer.render(name, title_para)
-            doc << title_para
-          end
-
-          tbl = Uniword::Builder::TableBuilder.new
-
-          @context.with_table do
-            render_table_section(table.thead, tbl, :header)
-            render_table_section(table.tbody, tbl, :body)
-            render_table_section(table.tfoot, tbl, :body)
-          end
-
-          ensure_table_structure(tbl.model, table.width)
-          doc << tbl
-        end
-
-        def ensure_table_structure(table_model, width)
-          unless table_model.properties
-            table_model.properties = Uniword::Wordprocessingml::TableProperties.new
-          end
-          unless table_model.properties.table_width
-            table_model.properties.table_width =
-              Uniword::Properties::TableWidth.new(
-                w: parse_twips(width) || 0, type: "dxa",
-              )
-          end
-          unless table_model.properties.table_look
-            table_model.properties.table_look =
-              Uniword::Properties::TableLook.new(
-                val: "04A0",
-                first_row: 1,
-                last_row: 0,
-                first_column: 1,
-                last_column: 0,
-                no_h_band: 0,
-                no_v_band: 1,
-              )
-          end
-
-          return if table_model.grid
-
-          cols = table_model.rows.map { |r| (r.cells&.count || 0) }.max || 0
-          total_width = parse_twips(width) || 9000
-          col_width = cols > 0 ? (total_width / cols) : 0
-          grid_cols = Array.new(cols) do
-            Uniword::Wordprocessingml::GridCol.new(width: col_width)
-          end
-          table_model.grid = Uniword::Wordprocessingml::TableGrid.new(columns: grid_cols)
-        end
-
-        def visit_figure(figure, doc)
-          # Render the figure's image (or subfigures)
-          if figure.image
-            visit_image_element(figure.image, doc)
-          end
-
-          # Check for nested subfigures
-          if figure.class.attributes.key?(:figure)
-            Array(figure.figure).each do |subfig|
-              visit_figure(subfig, doc)
-            end
-          end
-
-          name = figure.fmt_name || figure.name
-          return unless name
-
-          title_para = Uniword::Builder::ParagraphBuilder.new
-          title_para.style = @resolver.figure_title_style
-          @inline_renderer.render(name, title_para)
-          doc << title_para
-        end
-
         def visit_image_element(image, doc)
-          path = image.source
-          return unless path
+          src = image.source
+          return unless src
 
           width = parse_dimension(image.width)
           height = parse_dimension(image.height)
           alt = image.alt
 
+          path = resolve_image_source(src)
+          unless path
+            render_image_fallback(doc, alt, src)
+            return
+          end
+
           begin
-            doc.image(path, width: width, height: height, alt_text: alt)
+            run = Uniword::Builder::ImageBuilder.create_run(
+              doc, path,
+              width: width, height: height,
+              alt_text: alt
+            )
+            para = Uniword::Builder::ParagraphBuilder.new
+            para.style = dimension_style_for(width)
+            para << run
+            doc << para
           rescue StandardError
-            para = Uniword::Builder::ParagraphBuilder.new
-            para << (alt || "[Image: #{File.basename(path)}]")
-            doc << para
+            render_image_fallback(doc, alt, src)
           end
         end
 
-        def visit_note(note, doc)
-          @context.with_note do
-            para = Uniword::Builder::ParagraphBuilder.new
-            para.style = @resolver.paragraph_style(:note)
-            @inline_renderer.render(note, para)
-            doc << para
-          end
+        # Era C: pick Dimension50/75/100 based on image width relative
+        # to the page body width. Images without explicit width default
+        # to Dimension100 (full width).
+        def dimension_style_for(width)
+          pct = width_percentage(width)
+          key = if pct.nil? || pct >= 90 then :dimension_100
+                elsif pct >= 60         then :dimension_75
+                else                          :dimension_50
+                end
+          @resolver.paragraph_style(key)
         end
 
-        def visit_example(example, doc)
-          @context.with_example do
-            name = example.fmt_name || example.name
-            if name
-              name_para = Uniword::Builder::ParagraphBuilder.new
-              name_para.style = @resolver.paragraph_style(:example)
-              @inline_renderer.render(name, name_para)
-              doc << name_para
-            end
-            walk_mixed_content(example, doc)
-          end
+        def width_percentage(width)
+          return nil unless width && width.is_a?(Numeric) && width.positive?
+          body_width = @context.body_width
+          return nil unless body_width && body_width.positive?
+          (width.to_f / body_width * 100).round
         end
 
-        def visit_admonition(admonition, doc)
-          # Use context-aware style: warning vs admonition
-          style = resolve_admonition_style(admonition)
+        # Resolve an image source (data URI or file path) to a readable
+        # local file path. Returns nil if the source cannot be resolved.
+        def resolve_image_source(src)
+          return extract_data_uri_to_tempfile(src) if src.to_s.start_with?("data:")
+          return src if File.exist?(src)
 
-          # Render title if present (some admonitions have formatted names)
-          if admonition.class.attributes.key?(:fmt_name)
-            name = admonition.fmt_name
-            if name
-              title_para = Uniword::Builder::ParagraphBuilder.new
-              title_para.style = @resolver.paragraph_style(:warning_header) ||
-                @resolver.paragraph_style(:admonition_title)
-              @inline_renderer.render(name, title_para)
-              doc << title_para
-            end
-          end
+          nil
+        end
 
-          # Render body
+        def render_image_fallback(doc, alt, src)
           para = Uniword::Builder::ParagraphBuilder.new
-          para.style = style
-          @inline_renderer.render(admonition, para)
+          text = alt || "[Image: #{File.basename(src.to_s)}]"
+          para << text
           doc << para
-        end
-
-        def visit_unordered_list(list, doc)
-          num_id = @resolver.numbering_id(:dash_list)
-          Array(list.listitem).each do |item|
-            render_numbered_item(item, doc, num_id, 0)
-          end
-        end
-
-        def visit_ordered_list(list, doc)
-          num_id = numbering_for_type(list.type)
-          Array(list.listitem).each do |item|
-            render_numbered_item(item, doc, num_id, 0)
-          end
-        end
-
-        def visit_definition_list(dl, doc)
-          dt_items = dl.dt
-          dd_items = dl.dd
-          Array(dt_items).each_with_index do |dt, i|
-            term_para = Uniword::Builder::ParagraphBuilder.new
-            @inline_renderer.render(dt, term_para)
-            doc << term_para
-
-            dd = dd_items.is_a?(Array) ? dd_items[i] : dd_items
-            walk_mixed_content(dd, doc) if dd
-          end
         end
 
         def visit_sourcecode(sourcecode, doc)
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = @resolver.paragraph_style(:sourcecode)
-          @inline_renderer.preserve_whitespace = true
-          @inline_renderer.render(sourcecode, para)
-          @inline_renderer.preserve_whitespace = false
-          doc << para
+          @sourcecode_renderer.render(sourcecode, doc)
         end
 
         def visit_formula(formula, doc)
-          @formula_renderer.render(formula, doc)
+          @context.with_formula do
+            @formula_renderer.render(formula, doc)
+            dispatch_formula_extras(formula, doc)
+          end
         end
 
-        def visit_quote(quote, doc)
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = @resolver.paragraph_style(:quote)
-          para.indent(left: 720, right: 720)
-          @inline_renderer.render(quote, para)
-          doc << para
+        # Dispatch formula children that the FormulaRenderer does not
+        # handle itself (everything except +stem+/+fmt_stem+ and
+        # +name+/+fmt_name+). Wrapping happens in +#visit_formula+ so
+        # these children see +zone == :formula+ via Context.
+        def dispatch_formula_extras(formula, doc)
+          walk_collection(formula, :dl, doc)
+          walk_collection(formula, :p, doc)
+        end
+
+        def walk_collection(parent, attr, doc)
+          return unless parent.class.attributes.key?(attr)
+          value = parent.public_send(attr)
+          return unless value
+          Array(value).each { |child| dispatch(child, doc) }
         end
 
         # ── Tree walking ───────────────────────────────────────────────
+        #
+        # Delegates to Renderers::Walker so traversal logic lives in one
+        # place. Adapter methods (visit_foreword, visit_introduction,
+        # visit_clause, etc.) call this to recurse into children; the
+        # walker dispatches each child back through +#dispatch+.
 
         def walk_mixed_content(node, doc)
-          return unless node
-
-          walked = false
-          each_ordered_element(node) do |type, obj|
-            walked = true
-            next if type == :text
-
-            visit_block(obj, doc)
-          end
-          return if walked
-
-          fallback_walk(node, doc)
-        end
-
-        def fallback_walk(node, doc)
-          return unless node.is_a?(Lutaml::Model::Serializable)
-
-          block_attrs = %i[
-            paragraphs tables figures formulas examples notes
-            admonitions sourcecode_blocks quote_blocks
-            definition_lists unordered_lists ordered_lists
-            clause terms definitions references term
-            p annex
-          ]
-          block_attrs.each do |attr|
-            next unless node.class.attributes.key?(attr)
-
-            val = node.public_send(attr)
-            next if val.nil?
-
-            Array(val).each { |b| visit_block(b, doc) }
-          end
+          @walker.walk(node, doc)
         end
 
         # ── Title rendering ────────────────────────────────────────────
@@ -805,189 +851,57 @@ module IsoDoc
         def render_section_title(clause, doc)
           title = clause.fmt_title || clause.title
           return unless title
+          return if heading_body_empty?(title)
 
           depth = @context.section_depth
           para = Uniword::Builder::ParagraphBuilder.new
           para.style = @resolver.heading_style([depth, 6].min)
-          insert_bookmark(clause, para)
-          @inline_renderer.render_heading(title, para)
+          with_bookmark(clause, para) do
+            @inline_renderer.render_heading(title, para)
+          end
           doc << para
         end
 
         def render_annex_title(annex, doc)
           title = annex.fmt_title || annex.title
           return unless title
+          return if heading_body_empty?(title)
 
           para = Uniword::Builder::ParagraphBuilder.new
           para.style = @resolver.paragraph_style(:annex)
-          insert_bookmark(annex, para)
-          @inline_renderer.render(title, para)
+          with_bookmark(annex, para) do
+            @inline_renderer.render_heading(title, para)
+          end
           doc << para
         end
 
-        def insert_bookmark(node, para)
-          id = node.id
-          return unless id
+        # Whether a heading has no body text after autonum carriers are
+        # stripped. Untitled sub-clauses (whose <fmt-title> contains only
+        # the section number + delimiter) should not emit a heading
+        # paragraph at all — the body paragraph follows directly.
+        def heading_body_empty?(title)
+          @inline_renderer.heading_body_empty?(title)
+        end
+
+        # Wrap a paragraph's content with a bookmark range so Word can
+        # scroll hyperlink targets to the right position.
+        def with_bookmark(node, para)
+          name = bookmark_name(node)
+          return yield unless name
 
           bm_id = @context.next_bookmark_id.to_s
-          para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, name: id)
+          para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, name: name)
+          yield
           para << Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id)
         end
 
-        # ── Table helpers ──────────────────────────────────────────────
-
-        def render_table_section(section, tbl, _row_type)
-          return unless section
-
-          rows = section.tr
-          return unless rows
-
-          Array(rows).each do |tr|
-            tbl.row do |row|
-              cells = Array(tr.th) + Array(tr.td)
-              cells.each do |cell|
-                next unless cell
-                col_span = cell.colspan
-                row.cell do |c|
-                  c.column_span(col_span.to_i) if col_span
-                  render_cell_content(cell, c)
-                end
-              end
-            end
-          end
-        end
-
-        # Render a table cell's content, handling both simple inline content
-        # and block-level content (paragraphs, notes, examples).
-        def render_cell_content(cell, cell_builder)
-          if cell_has_block_content?(cell)
-            render_cell_block_content(cell, cell_builder)
-          else
-            cell_para = Uniword::Builder::ParagraphBuilder.new
-            @inline_renderer.render(cell, cell_para)
-            cell_builder << cell_para
-          end
-        end
-
-        # Check if a cell has block-level elements (notes, examples,
-        # multiple paragraphs, lists) that require multi-paragraph rendering.
-        def cell_has_block_content?(cell)
-          return false unless ordered?(cell)
-
-          cell.element_order.any? do |el|
-            next false unless el.element?
-
-            name = el.name
-            %w[note example p ol ul dl sourcecode quote].include?(name)
-          end
-        end
-
-        # Render a cell with block-level content, creating multiple paragraphs.
-        def render_cell_block_content(cell, cell_builder)
-          each_ordered_element(cell) do |type, obj|
-            case type
-            when :text
-              next if obj.nil? || obj.strip.empty?
-              cell_para = Uniword::Builder::ParagraphBuilder.new
-              cell_para << obj
-              cell_builder << cell_para
-            when :element
-              render_cell_element(obj, cell_builder)
-            end
-          end
-        end
-
-        # Render a block element inside a table cell.
-        def render_cell_element(element, cell_builder)
-          case element
-          when Metanorma::Document::Components::Paragraphs::ParagraphBlock
-            cell_para = Uniword::Builder::ParagraphBuilder.new
-            @inline_renderer.render(element, cell_para)
-            cell_builder << cell_para
-          when Metanorma::Document::Components::Blocks::NoteBlock
-            cell_para = Uniword::Builder::ParagraphBuilder.new
-            cell_para.style = @resolver.paragraph_style(:note)
-            @inline_renderer.render(element, cell_para)
-            cell_builder << cell_para
-          when Metanorma::Document::Components::Lists::UnorderedList
-            num_id = @resolver.numbering_id(:dash_list)
-            Array(element.listitem).each do |item|
-              render_cell_list_item(item, cell_builder, num_id)
-            end
-          when Metanorma::Document::Components::Lists::OrderedList
-            num_id = @resolver.numbering_id(:decimal_list)
-            Array(element.listitem).each do |item|
-              render_cell_list_item(item, cell_builder, num_id)
-            end
-          else
-            cell_para = Uniword::Builder::ParagraphBuilder.new
-            @inline_renderer.render(element, cell_para)
-            cell_builder << cell_para
-          end
-        end
-
-        def render_cell_list_item(item, cell_builder, num_id)
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.numbering(num_id, 0) if num_id
-          paragraphs = item.paragraphs
-          if paragraphs && !paragraphs.empty?
-            paragraphs.each { |p| @inline_renderer.render(p, para) }
-          else
-            @inline_renderer.render(item, para)
-          end
-          cell_builder << para
-        end
-
-        # ── List helpers ───────────────────────────────────────────────
-
-        def render_numbered_item(item, doc, num_id, level)
-          paragraphs = item.paragraphs
-          if paragraphs && !paragraphs.empty?
-            para = Uniword::Builder::ParagraphBuilder.new
-            para.numbering(num_id, level) if num_id
-            paragraphs.each { |p| @inline_renderer.render(p, para) }
-            doc << para
-          else
-            para = Uniword::Builder::ParagraphBuilder.new
-            para.numbering(num_id, level) if num_id
-            @inline_renderer.render(item, para)
-            doc << para
-          end
-        end
-
-        def numbering_for_type(type_attr)
-          case type_attr
-          when "arabic", "decimal" then @resolver.numbering_id(:decimal_list)
-          when "alpha", "loweralpha" then @resolver.numbering_id(:alpha_list)
-          when "roman", "lowerroman" then @resolver.numbering_id(:decimal_list)
-          else @resolver.numbering_id(:decimal_list)
-          end
+        def bookmark_name(node)
+          return nil unless node.class.attributes.key?(:id)
+          node.id
         end
 
         # ── Style resolution ───────────────────────────────────────────
 
-        def resolve_paragraph_style(node)
-          cls = node.class_attr
-          return @resolver.paragraph_style(cls.to_sym) if cls
-
-          type = node.type if node.class.attributes.key?(:type)
-          if type == "floating-title"
-            depth = (node.depth || 1).to_i
-            return @resolver.heading_style(depth)
-          end
-
-          nil
-        end
-
-        def resolve_admonition_style(admonition)
-          type = admonition.type if admonition.class.attributes.key?(:type)
-          if type == "warning"
-            @resolver.paragraph_style(:warning) ||
-              @resolver.paragraph_style(:admonition)
-          else
-            @resolver.paragraph_style(:admonition)
-          end
-        end
 
         # ── Header/footer text helpers ─────────────────────────────────
 
@@ -1021,13 +935,23 @@ module IsoDoc
         def build_full_title(bib)
           return nil unless bib&.class&.attributes&.key?(:titles)
 
-          localized = if bib.titles.respond_to?(:for_language)
-                        bib.titles.for_language("en")
-                      end
-          localized ||= bib.titles.per_language&.first if bib.titles.respond_to?(:per_language)
+          titles = bib.titles
+          localized = titles_for_language(titles, "en")
 
           title_text = localized&.to_s
           (title_text.nil? || title_text.empty?) ? nil : title_text
+        end
+
+        # Pick the English title from a TitleCollection. TitleCollection
+        # is the canonical type from metanorma-iso-document; we use is_a?
+        # rather than respond_to? to avoid duck-typing.
+        def titles_for_language(titles, lang)
+          return nil unless titles
+          return titles.for_language(lang) if titles.is_a?(Metanorma::IsoDocument::Metadata::TitleCollection)
+
+          nil
+        rescue StandardError
+          nil
         end
 
         def extract_copyright_year(bib)

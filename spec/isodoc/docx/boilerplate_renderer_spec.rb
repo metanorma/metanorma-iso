@@ -88,7 +88,7 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer do
       expect(copyright_paras.length).to be >= 1
     end
 
-    it "renders license with zzwarninghdr and zzwarning styles" do
+    it "renders license with Notice style (Era C: zzwarning deprecated)" do
       xml = minimal_iso_xml(<<~INNER)
         <boilerplate>
           <license-statement>
@@ -105,10 +105,10 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer do
       renderer.render_license(model.boilerplate, doc)
 
       title_paras = doc.model.body.paragraphs.select do |p|
-        p.properties&.style&.value == "zzwarninghdr"
+        p.properties&.style&.value == "Notice"
       end
       body_paras = doc.model.body.paragraphs.select do |p|
-        p.properties&.style&.value == "zzwarning"
+        p.properties&.style&.value == "Notice"
       end
 
       expect(title_paras.length).to be >= 1

@@ -69,8 +69,8 @@ module IsoDoc
         def insert_front_matter_section(doc, header_text:, copyright_text:)
           write_header_part(doc, FRONT_HEADER_EVEN, header_text, align: :right)
           write_header_part(doc, FRONT_HEADER_DEFAULT, header_text, align: :right)
-          write_footer_text_part(doc, FRONT_FOOTER_EVEN, copyright_text)
-          write_footer_page_part(doc, FRONT_FOOTER_DEFAULT, roman: true)
+          write_footer_part(doc, FRONT_FOOTER_EVEN, copyright_text, roman: true)
+          write_footer_part(doc, FRONT_FOOTER_DEFAULT, copyright_text, roman: true)
 
           sec = build_section(
             margins: BODY_MARGINS,
@@ -90,8 +90,8 @@ module IsoDoc
         def apply_body_section(doc, header_text:, copyright_text:)
           write_header_part(doc, BODY_HEADER_EVEN, header_text, align: :right)
           write_header_part(doc, BODY_HEADER_DEFAULT, header_text, align: :right)
-          write_footer_text_part(doc, BODY_FOOTER_EVEN, copyright_text)
-          write_footer_page_part(doc, BODY_FOOTER_DEFAULT, roman: false)
+          write_footer_part(doc, BODY_FOOTER_EVEN, copyright_text, roman: false)
+          write_footer_part(doc, BODY_FOOTER_DEFAULT, copyright_text, roman: false)
 
           sec = build_section(
             margins: BODY_MARGINS,
@@ -170,24 +170,11 @@ module IsoDoc
           content.paragraphs << para.build
         end
 
-        # Rewrite a footer part's content with copyright text.
-        def write_footer_text_part(doc, r_id, text)
-          part = find_part(doc, r_id)
-          return unless part
-
-          content = part[:content]
-          content.paragraphs.clear
-
-          style = @resolver.paragraph_style(:footer_centered)
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = style
-          para.align = :center
-          para << text.to_s
-          content.paragraphs << para.build
-        end
-
-        # Rewrite a footer part's content with a page number field.
-        def write_footer_page_part(doc, r_id, roman:)
+        # Rewrite a footer part's content with copyright text and a page
+        # number field. Every footer carries both: the copyright statement
+        # on the left and the page number on the right (matching the
+        # reference DOCX layout).
+        def write_footer_part(doc, r_id, copyright_text, roman:)
           part = find_part(doc, r_id)
           return unless part
 
@@ -196,10 +183,15 @@ module IsoDoc
 
           style = roman ? @resolver.paragraph_style(:footer_roman) :
             @resolver.paragraph_style(:footer_page_number)
-          page_para = Uniword::Builder.page_number_field
-          page_para.properties ||= Uniword::Wordprocessingml::ParagraphProperties.new
-          page_para.properties.style = Uniword::Properties::StyleReference.new(value: style) if style
-          content.paragraphs << page_para
+          para = Uniword::Builder::ParagraphBuilder.new
+          para.style = style if style
+          para.align = :center
+          para << copyright_text.to_s
+          tab_run = Uniword::Wordprocessingml::Run.new
+          tab_run.tab = Uniword::Wordprocessingml::Tab.new
+          para << tab_run
+          Uniword::Builder.page_number_field.runs.each { |run| para << run }
+          content.paragraphs << para.build
         end
 
         # Create a paragraph with section properties attached.

@@ -24,6 +24,8 @@ module IsoDoc
       #     <w:r><w:fldChar w:fldCharType="end"/></w:r>
       #   </w:p>
       class TocBuilder
+        include ModelUtils
+
         def initialize(resolver, inline_renderer, context)
           @resolver = resolver
           @inline = inline_renderer
@@ -60,34 +62,18 @@ module IsoDoc
         # Insert a { TOC \o "1-3" } field that Word uses to populate TOC.
         def render_toc_field(doc)
           para = Uniword::Wordprocessingml::Paragraph.new
-          # begin fldChar
-          para.runs << Uniword::Wordprocessingml::Run.new(
-            field_char: Uniword::Wordprocessingml::FieldChar.new(
-              field_char_type: "begin",
-            ),
-          )
-          # instrText
-          para.runs << Uniword::Wordprocessingml::Run.new(
-            instr_text: Uniword::Wordprocessingml::InstrText.new(
-              text: ' TOC \\o "1-3" \\h \\z \\u ',
-            ),
-          )
-          # separate fldChar
-          para.runs << Uniword::Wordprocessingml::Run.new(
-            field_char: Uniword::Wordprocessingml::FieldChar.new(
-              field_char_type: "separate",
-            ),
-          )
-          # end fldChar
-          para.runs << Uniword::Wordprocessingml::Run.new(
-            field_char: Uniword::Wordprocessingml::FieldChar.new(
-              field_char_type: "end",
-            ),
-          )
+          para.runs << field_char_run("begin")
+          para.runs << instr_text_run(' TOC \\o "1-3" \\h \\z \\u ')
+          para.runs << field_char_run("separate")
+          para.runs << field_char_run("end")
           doc << para
         end
 
-        TocEntry = Struct.new(:title_text, :level, :bookmark_name, keyword_init: true)
+        # A TOC entry holds a reference to the source clause/section node
+        # so that the heading's full fmt-title (autonum + delimiter + title)
+        # can be rendered inline by the InlineRenderer — preserving the
+        # structural separation between section number, tab, and title text.
+        TocEntry = Struct.new(:source, :level, :bookmark_name, keyword_init: true)
 
         def collect_entries(model)
           entries = []
@@ -187,23 +173,12 @@ module IsoDoc
         end
 
         def build_entry(node, level)
-          title = extract_title(node)
           id = node.id if node.class.attributes.key?(:id)
           TocEntry.new(
-            title_text: title,
+            source: node,
             level: level,
             bookmark_name: id || "_Toc#{object_id}_#{level}",
           )
-        end
-
-        def extract_title(node)
-          fmt_title = node.fmt_title if node.class.attributes.key?(:fmt_title)
-          return collect_text(fmt_title) if fmt_title
-
-          title = node.title if node.class.attributes.key?(:title)
-          return collect_text(title) if title
-
-          ""
         end
 
         def has_title?(node)
@@ -219,64 +194,59 @@ module IsoDoc
           type == "toc"
         end
 
+        # Render the TOC entry: heading text (with autonum + tab + title
+        # as separate runs), then a tab, then the PAGEREF field.
         def render_toc_entry(entry, doc)
-          style = toc_style(entry.level)
           para = Uniword::Builder::ParagraphBuilder.new
-          para.style = style
+          para.style = toc_style(entry.level)
 
-          # Title text
-          para << entry.title_text
+          render_toc_heading_text(entry.source, para)
+          append_tab(para)
 
-          # Tab separator
-          tab_run = Uniword::Wordprocessingml::Run.new
-          tab_run.tab = Uniword::Wordprocessingml::Tab.new
-          para << tab_run
-
-          # PAGEREF field
-          para << Uniword::Wordprocessingml::Run.new(
-            field_char: Uniword::Wordprocessingml::FieldChar.new(
-              field_char_type: "begin",
-            ),
-          )
-          para << Uniword::Wordprocessingml::Run.new(
-            instr_text: Uniword::Wordprocessingml::InstrText.new(
-              text: " PAGEREF #{entry.bookmark_name} \\h ",
-            ),
-          )
-          para << Uniword::Wordprocessingml::Run.new(
-            field_char: Uniword::Wordprocessingml::FieldChar.new(
-              field_char_type: "separate",
-            ),
-          )
+          para << field_char_run("begin")
+          para << instr_text_run(" PAGEREF #{entry.bookmark_name} \\h ")
+          para << field_char_run("separate")
           para << Uniword::Wordprocessingml::Run.new(text: "")
-          para << Uniword::Wordprocessingml::Run.new(
-            field_char: Uniword::Wordprocessingml::FieldChar.new(
-              field_char_type: "end",
-            ),
-          )
+          para << field_char_run("end")
 
           doc << para
         end
 
-        def toc_style(level)
-          key = :"toc#{level}"
-          @resolver.paragraph_style(key) || "TOC#{level}"
+        # Render the source node's title content inline. The fmt-title
+        # model carries autonum carriers, delimiter tabs, and the title
+        # text as distinct children — delegating to InlineRenderer keeps
+        # that structure intact instead of collapsing it to a string.
+        def render_toc_heading_text(node, para)
+          if node.class.attributes.key?(:fmt_title) && node.fmt_title
+            @inline.render(node.fmt_title, para)
+          elsif node.class.attributes.key?(:title) && node.title
+            @inline.render(node.title, para)
+          end
         end
 
-        def collect_text(node)
-          return node.to_s if node.is_a?(String)
-          return "" unless node
+        def append_tab(para)
+          tab_run = Uniword::Wordprocessingml::Run.new
+          tab_run.tab = Uniword::Wordprocessingml::Tab.new
+          para << tab_run
+        end
 
-          texts = []
-          [:text, :content, :content_text].each do |attr|
-            next unless node.class.attributes.key?(attr)
-            val = node.public_send(attr)
-            case val
-            when Array then texts.concat(val.grep(String))
-            when String then texts << val
-            end
-          end
-          texts.compact.join
+        def field_char_run(type)
+          Uniword::Wordprocessingml::Run.new(
+            field_char: Uniword::Wordprocessingml::FieldChar.new(
+              fldCharType: type,
+            ),
+          )
+        end
+
+        def instr_text_run(text)
+          Uniword::Wordprocessingml::Run.new(
+            instr_text: Uniword::Wordprocessingml::InstrText.new(text: text),
+          )
+        end
+
+        def toc_style(level)
+          key = :"toc#{level}"
+          @resolver.paragraph_style(key)
         end
       end
     end

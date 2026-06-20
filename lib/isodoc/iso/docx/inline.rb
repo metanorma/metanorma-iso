@@ -32,6 +32,7 @@ module IsoDoc
           @footnote_cache = {}
           @preserve_whitespace = false
           @comment_id_lookup = nil
+          @strip_autonum = false
         end
 
         # Render all inline content from a node into a ParagraphBuilder.
@@ -65,7 +66,7 @@ module IsoDoc
         # information is available.
         def render_collection_inline(node, para)
           texts = extract_texts(node)
-          texts.each { |t| add_text(para, t) unless t.nil? || t.strip.empty? }
+          texts.each { |t| add_text(para, t) unless t.nil? || t.empty? }
 
           render_inline_elements(node, para)
         end
@@ -118,6 +119,8 @@ module IsoDoc
             render_eref(element, para)
           when Metanorma::Document::Components::Inline::FnElement
             render_footnote(element, para)
+          when Metanorma::Document::Components::ReferenceElements::Callout
+            render_callout(element, para)
           when Metanorma::Document::Components::Inline::FmtStemElement,
                Metanorma::Document::Components::Inline::StemInlineElement,
                Metanorma::Document::Components::TextElements::StemElement
@@ -139,8 +142,6 @@ module IsoDoc
             render_semx(element, para)
           when Metanorma::Document::Components::Paragraphs::ParagraphBlock
             render_mixed_inline_fallback(element, para)
-          when Metanorma::IsoDocument::RawParagraph
-            render_raw_paragraph(element, para)
           when Metanorma::Document::Components::Inline::FmtXrefElement
             render_fmt_xref(element, para)
           when Metanorma::Document::Components::Inline::FmtXrefLabelElement
@@ -166,13 +167,66 @@ module IsoDoc
           end
         end
 
-        # Render inline content for headings, skipping fmt-caption-delim spans
-        # that contain tab separators between section numbers and title text.
+        # Render inline content for headings, skipping auto-number carriers
+        # so the style's numPr produces the section number alone — but
+        # ONLY when the paragraph's style actually has numPr. Styles that
+        # emit the number as visible text (e.g. TermNum) keep autonum.
+        #
+        # Skipped when stripping is active:
+        #   - <span class="fmt-caption-delim"> (the tab between number and title)
+        #   - <span class="fmt-caption-label"> (wraps the autonum text)
+        #   - <semx element="autonum">         (carries the autonum text)
+        #
+        # Stripping applies recursively — autonum carriers wrapped inside
+        # other inline elements (e.g. <strong>) are also skipped.
         def render_heading(node, para)
-          if ordered?(node)
-            render_heading_ordered(node, para)
-          else
+          unless strip_autonum_for?(para)
             render(node, para)
+            return
+          end
+
+          was_stripping = @strip_autonum
+          @strip_autonum = true
+          begin
+            if ordered?(node)
+              render_heading_ordered(node, para)
+            else
+              render(node, para)
+            end
+          ensure
+            @strip_autonum = was_stripping
+          end
+        end
+
+        # Whether autonum carriers should be stripped for this paragraph.
+        # True only when the paragraph's style is in the template's
+        # auto-numbered set (Heading1-6, ANNEX, a2-a6, ...).
+        def strip_autonum_for?(para)
+          style = para.style
+          return false unless style
+
+          @resolver.auto_numbered_style?(style.value)
+        end
+
+        # Whether a heading's body is empty after autonum carriers are
+        # stripped. Untitled sub-clauses have <fmt-title> with only the
+        # section number + delimiter — they should skip the heading
+        # paragraph entirely so the body paragraph follows directly.
+        def heading_body_empty?(node)
+          text = collect_heading_body_text(node)
+          text.nil? || text.strip.empty?
+        end
+
+        # Add a text run to the paragraph, normalizing whitespace unless
+        # `preserve_whitespace` is set (used by SourcecodeRenderer).
+        def add_text(para, text)
+          return if text.nil?
+
+          if @preserve_whitespace
+            add_preserved_text(para, text.to_s)
+          else
+            normalized = text.to_s.gsub(/[ \t]+/, " ")
+            para << normalized unless normalized.empty?
           end
         end
 
@@ -185,7 +239,7 @@ module IsoDoc
             case type
             when :text then para << obj
             when :element
-              next if caption_delim_span?(obj)
+              next if autonum_carrier?(obj)
               render_inline_element(obj, para)
             end
           end
@@ -194,17 +248,59 @@ module IsoDoc
           render(node, para)
         end
 
-        def caption_delim_span?(element)
+        # Collect body text from a heading, skipping autonum carriers.
+        # Returns "" if the heading has no body text (only autonum + delim).
+        def collect_heading_body_text(node)
+          return node.to_s unless node.is_a?(Lutaml::Model::Serializable)
+          return collect_text(node) unless ordered?(node)
+
+          segments = []
+          each_ordered_element(node) do |type, obj|
+            case type
+            when :text then segments << obj.to_s
+            when :element
+              next if autonum_carrier?(obj)
+              segments << collect_text(obj).to_s
+            end
+          end
+          segments.join
+        end
+
+        # Whether an element carries auto-number content that the heading
+        # style's numPr will render on its own. Such elements must be
+        # skipped to avoid the number appearing twice.
+        #
+        # Recognized carriers (at any nesting depth in heading mode):
+        #   - <span class="fmt-caption-delim">
+        #   - <span class="fmt-caption-label">
+        #   - <span class="fmt-element-name">  (e.g. "Annex", "Clause")
+        #   - <semx element="autonum">         (carries the autonum text)
+        def autonum_carrier?(element)
+          return false unless element.is_a?(Lutaml::Model::Serializable)
+
+          if element.is_a?(Metanorma::Document::Components::Inline::SemxElement)
+            return element.element_attr.to_s == "autonum"
+          end
+
           return false unless element.is_a?(Metanorma::Document::Components::Inline::SpanElement)
 
           cls = element.class_attr
-          cls == "fmt-caption-delim"
+          return true if cls == "fmt-caption-delim"
+          return true if cls == "fmt-caption-label"
+          return true if cls == "fmt-element-name"
+
+          false
         end
 
         # SpanElement with a class attribute maps to a DOCX character style.
         # Presentation XML uses spans like <span class="stdpublisher">ISO</span>
         # where the class value IS the DOCX character styleId.
+        #
+        # When stripping autonum (heading mode), skip spans whose class
+        # marks them as autonum carriers — at any nesting depth.
         def render_span(element, para)
+          return if @strip_autonum && autonum_carrier?(element)
+
           style = @resolver.span_class_style(element.class_attr)
           if style
             render_with_char_style(element, para, style)
@@ -273,6 +369,13 @@ module IsoDoc
             formatter.call(run)
             para << run
           end
+          temp.model.hyperlinks.each do |link|
+            link.runs.each do |run|
+              run.properties ||= Uniword::Wordprocessingml::RunProperties.new
+              formatter.call(run)
+            end
+            para << link
+          end
         end
 
         def has_rich_children?(element)
@@ -283,6 +386,13 @@ module IsoDoc
         end
 
         def render_subscript(element, para)
+          if ordered?(element) && has_rich_children?(element)
+            render_with_run_format(element, para) do |run|
+              run.properties.vertical_align = Uniword::Properties::VerticalAlign.new(value: "subscript")
+            end
+            return
+          end
+
           text = collect_text(element)
           return if text.nil? || text.empty?
 
@@ -292,6 +402,13 @@ module IsoDoc
         end
 
         def render_superscript(element, para)
+          if ordered?(element) && has_rich_children?(element)
+            render_with_run_format(element, para) do |run|
+              run.properties.vertical_align = Uniword::Properties::VerticalAlign.new(value: "superscript")
+            end
+            return
+          end
+
           text = collect_text(element)
           return if text.nil? || text.empty?
 
@@ -304,7 +421,7 @@ module IsoDoc
           text = collect_text(element)
           return if text.nil? || text.empty?
 
-          # Apply character style for inline code if available
+          # Era C: InlineCode character style for <tt>, <code>, etc.
           style = @resolver.character_style(:inline_code)
           if style
             add_text_with_char_style(para, text, style)
@@ -431,11 +548,9 @@ module IsoDoc
         end
 
         def render_footnote(element, para)
-          text = extract_footnote_text(element)
-          return if text.nil? || text.empty?
-
-          if @footnote_cache.key?(text)
-            id = @footnote_cache[text]
+          cache_key = footnote_cache_key(element)
+          if cache_key && @footnote_cache.key?(cache_key)
+            id = @footnote_cache[cache_key]
             fn_run = Uniword::Wordprocessingml::Run.new(
               footnote_reference: Uniword::Wordprocessingml::FootnoteReference.new(id: id.to_s),
             )
@@ -444,11 +559,23 @@ module IsoDoc
             return
           end
 
+          text = extract_footnote_text(element)
+          return if text.nil? || text.empty?
+
           fn_run = @doc.footnote(text)
           fn_id = fn_run.footnote_reference&.id
-          @footnote_cache[text] = fn_id if fn_id
+          @footnote_cache[cache_key] = fn_id if cache_key && fn_id
           apply_run_char_style(fn_run, :footnote_reference)
           para << fn_run
+        end
+
+        # Cache key is the source footnote identity (target → id → reference),
+        # NOT the text. Two footnotes with the same text but different source
+        # identities are distinct footnotes in OOXML.
+        def footnote_cache_key(element)
+          return element.target if element.class.attributes.key?(:target) && element.target
+          return element.id if element.class.attributes.key?(:id) && element.id
+          nil
         end
 
         def extract_footnote_text(element)
@@ -458,6 +585,26 @@ module IsoDoc
           end
 
           collect_text(element)
+        end
+
+        # Render a sourcecode callout as a superscript "(N)" run.
+        # The callout's bare text (e.g., "1") is collected from its
+        # element_order since Callout has no map_content on its class.
+        def render_callout(element, para)
+          text = collect_callout_text(element)
+          return if text.nil? || text.empty?
+
+          run = Uniword::Builder::RunBuilder.new
+          run.text("(#{text})").superscript
+          para << run.build
+        end
+
+        def collect_callout_text(callout)
+          segments = []
+          each_ordered_element(callout) do |type, obj|
+            segments << obj.to_s if type == :text
+          end
+          segments.join
         end
 
         def render_stem(element, para)
@@ -552,17 +699,9 @@ module IsoDoc
           para << Uniword::Wordprocessingml::BookmarkEnd.new(id: id)
         end
 
-        def render_raw_paragraph(element, para)
-          return unless element.content
-
-          wrapped = "<p>#{element.content}</p>"
-          parsed = Metanorma::Document::Components::Paragraphs::ParagraphBlock.from_xml(wrapped)
-          render_mixed_inline_fallback(parsed, para)
-        rescue StandardError
-          para << element.content
-        end
-
         def render_semx(element, para)
+          return if @strip_autonum && element.element_attr.to_s == "autonum"
+
           case element.element_attr
           when "link"
             nil
@@ -598,17 +737,6 @@ module IsoDoc
             next if val.nil?
 
             Array(val).each { |el| render_inline_element(el, para) }
-          end
-        end
-
-        def add_text(para, text)
-          return if text.nil?
-
-          if @preserve_whitespace
-            add_preserved_text(para, text.to_s)
-          else
-            normalized = text.to_s.gsub(/[ \t]+/, " ")
-            para << normalized unless normalized.empty?
           end
         end
 

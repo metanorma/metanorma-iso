@@ -12,8 +12,9 @@ module IsoDoc
         attr_reader :footnote_counter, :bookmark_counter, :comment_counter
         attr_accessor :in_note, :in_example, :in_table, :in_annex,
                       :in_normative, :in_foreword, :in_introduction,
-                      :in_bibliography, :in_definition_dd, :section_depth,
-                      :term_counter, :section_counter
+                      :in_bibliography, :in_definition_dd, :in_formula,
+                      :section_depth,
+                      :term_counter, :section_counter, :body_width
 
         def initialize
           @footnote_counter = Counter.new
@@ -28,6 +29,7 @@ module IsoDoc
           @in_introduction = false
           @in_bibliography = false
           @in_definition_dd = false
+          @in_formula = false
           @section_depth = 0
           @section_counter = Counter.new(0)
           @term_counter = Counter.new(0)
@@ -136,6 +138,32 @@ module IsoDoc
           yield
         ensure
           @in_bibliography = old
+        end
+
+        def with_formula
+          old = @in_formula
+          @in_formula = true
+          yield
+        ensure
+          @in_formula = old
+        end
+
+        # Single enum view of the current rendering zone, derived from
+        # the boolean flags. StyleResolver uses this for context-aware
+        # dispatch (single source of truth).
+        #
+        # Priority order matters: most-specific zone first.
+        def zone
+          return :note         if @in_note
+          return :example      if @in_example
+          return :table        if @in_table
+          return :formula      if @in_formula
+          return :annex        if @in_annex
+          return :foreword     if @in_foreword
+          return :introduction if @in_introduction
+          return :normative    if @in_normative
+          return :bibliography if @in_bibliography
+          :body
         end
       end
 

@@ -187,9 +187,11 @@ module IsoDoc
 
         def find_en_title(bib)
           return nil unless bib.class.attributes.key?(:titles)
-          return nil unless bib.titles.respond_to?(:for_language)
 
-          localized = bib.titles.for_language("en")
+          titles = bib.titles
+          return nil unless titles.is_a?(Metanorma::IsoDocument::Metadata::TitleCollection)
+
+          localized = titles.for_language("en")
           return localized unless localized.nil? || localized.to_s.empty?
 
           # Fallback: try any language

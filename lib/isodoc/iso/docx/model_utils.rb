@@ -28,6 +28,25 @@ module IsoDoc
           extract_texts(node).compact.join
         end
 
+        # Collect all text from a model node, walking element_order when
+        # available so that mixed-content elements (titles, formattedref,
+        # etc.) yield their full text content in document order. Falls
+        # back to collect_text when element_order is not present.
+        def collect_all_text(node)
+          return node.to_s if node.is_a?(String)
+          return "" unless node
+          return collect_text(node) unless ordered?(node)
+
+          segments = []
+          each_ordered_element(node) do |type, obj|
+            case type
+            when :text then segments << obj.to_s
+            when :element then segments << collect_all_text(obj)
+            end
+          end
+          segments.join
+        end
+
         # Extract text arrays from a model node's :text, :content, and
         # :content_text attributes.
         def extract_texts(node)

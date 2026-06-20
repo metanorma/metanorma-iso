@@ -344,7 +344,209 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
       INNER
     end
 
+    # BUG 016: Term definitions rendered via fmt-definition, in correct order
+    # (right after preferred, before notes), with no duplicate preferred text.
+    it "renders fmt-definition in order without duplicating preferred" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <terms id="terms">
+            <fmt-title>Terms and definitions</fmt-title>
+            <term id="t1">
+              <fmt-name>3.1</fmt-name>
+              <fmt-preferred><p>waxy rice</p></fmt-preferred>
+              <fmt-definition><semx element="definition"><p>variety of rice whose kernels have a white and opaque appearance</p></semx></fmt-definition>
+              <termnote id="tn1"><p>The starch of waxy rice consists almost entirely of amylopectin.</p></termnote>
+            </term>
+        </terms>
+        </sections>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        doc_xml = nil
+        extract_docx(path) { |doc, _| doc_xml = doc.to_xml }
+        text = doc_xml.gsub(/<[^>]+>/, " ").gsub(/\s+/, " ").strip
+        pref_idx = text.index("waxy rice")
+        defn_idx = text.index("variety of rice whose kernels")
+        note_idx = text.index("starch of waxy rice consists")
+        expect(pref_idx).to be < defn_idx
+        expect(defn_idx).to be < note_idx
+        expect(text.scan(/variety of rice whose kernels/).length).to eq(1)
+      end
+    end
+
+    # BUG 003: Subfigures inside a parent figure must each render their own drawing
+    it "renders each subfigure image as a separate drawing" do
+      tiny_png = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAA9JREFUCNdj+M+ABf3HCwEACJ8FL0AAAAAASUVORK5CYII="
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <figure id="fig1">
+              <fmt-name>Figure 1</fmt-name>
+              <image src="#{tiny_png}" width="100" height="100"/>
+            </figure>
+            <figure id="fig2">
+              <fmt-name>Figure 2 — Composite</fmt-name>
+              <figure id="fig2a">
+                <fmt-name>Figure 2 a)</fmt-name>
+                <image src="#{tiny_png}" width="100" height="100"/>
+              </figure>
+              <figure id="fig2b">
+                <fmt-name>Figure 2 b)</fmt-name>
+                <image src="#{tiny_png}" width="100" height="100"/>
+              </figure>
+              <figure id="fig2c">
+                <fmt-name>Figure 2 c)</fmt-name>
+                <image src="#{tiny_png}" width="100" height="100"/>
+              </figure>
+            </figure>
+          </clause>
+        </sections>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        doc_xml = nil
+        extract_docx(path) { |doc, _| doc_xml = doc.to_xml }
+        drawing_count = doc_xml.scan(/<w:drawing[ >]/).length
+        expect(drawing_count).to eq(4)
+      end
+    end
+
+    # BUG 003: Subfigures inside an annex figure (rice figureC-2 pattern)
+    it "renders subfigures in an annex figure with name before subfigures" do
+      tiny_png = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAA9JREFUCNdj+M+ABf3HCwEACJ8FL0AAAAAASUVORK5CYII="
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+          </clause>
+        </sections>
+        <annex id="annexc">
+          <fmt-name>Annex C</fmt-name>
+          <clause id="c1">
+            <fmt-name>C.1 Gelatinization</fmt-name>
+            <figure id="figureC-1">
+              <name>Typical gelatinization curve</name>
+              <fmt-name>Figure C.1 — Typical gelatinization curve</fmt-name>
+              <image src="#{tiny_png}" width="100" height="100"/>
+            </figure>
+            <figure id="figureC-2">
+              <name>Stages of gelatinization</name>
+              <fmt-name>Figure C.2 — Stages of gelatinization</fmt-name>
+              <figure id="fig-c2a" autonum="C.2 a">
+                <name>Initial stages</name>
+                <fmt-name>Figure C.2 a) Initial stages</fmt-name>
+                <image src="#{tiny_png}" width="100" height="100"/>
+              </figure>
+              <figure id="fig-c2b" autonum="C.2 b">
+                <name>Intermediate stages</name>
+                <fmt-name>Figure C.2 b) Intermediate stages</fmt-name>
+                <image src="#{tiny_png}" width="100" height="100"/>
+              </figure>
+              <figure id="fig-c2c" autonum="C.2 c">
+                <name>Final stages</name>
+                <fmt-name>Figure C.2 c) Final stages</fmt-name>
+                <image src="#{tiny_png}" width="100" height="100"/>
+              </figure>
+            </figure>
+          </clause>
+        </annex>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        doc_xml = nil
+        extract_docx(path) { |doc, _| doc_xml = doc.to_xml }
+        drawing_count = doc_xml.scan(/<w:drawing[ >]/).length
+        # Figure C.1 (1) + 3 subfigures of C.2 = 4 drawings
+        expect(drawing_count).to eq(4)
+      end
+    end
+
+    # BUG 003: Reproduces exact rice figureC-2 structure — figure has fmt-xref-label
+    # before subfigures, mirroring the production XML layout.
+    it "renders subfigures after fmt-xref-label in parent figure" do
+      tiny_png = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAAA1BMVEUAAACnej3aAAAAAXRSTlMAQObYZgAAAA9JREFUCNdj+M+ABf3HCwEACJ8FL0AAAAAASUVORK5CYII="
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+          </clause>
+        </sections>
+        <annex id="annexc">
+          <fmt-name>Annex C</fmt-name>
+          <clause id="c1">
+            <fmt-name>C.1 Gelatinization</fmt-name>
+            <figure id="figureC-2">
+              <name>Stages of gelatinization</name>
+              <fmt-name><span>Figure C.2</span></fmt-name>
+              <fmt-xref-label><span>Figure C.2</span></fmt-xref-label>
+              <figure id="fig-c2a" autonum="C.2 a">
+                <name>Initial stages</name>
+                <fmt-name><span>C.2 a)</span></fmt-name>
+                <fmt-xref-label><span>C.2 a)</span></fmt-xref-label>
+                <image src="#{tiny_png}" width="100" height="100"/>
+              </figure>
+              <figure id="fig-c2b" autonum="C.2 b">
+                <name>Intermediate stages</name>
+                <fmt-name><span>C.2 b)</span></fmt-name>
+                <fmt-xref-label><span>C.2 b)</span></fmt-xref-label>
+                <image src="#{tiny_png}" width="100" height="100"/>
+              </figure>
+              <figure id="fig-c2c" autonum="C.2 c">
+                <name>Final stages</name>
+                <fmt-name><span>C.2 c)</span></fmt-name>
+                <fmt-xref-label><span>C.2 c)</span></fmt-xref-label>
+                <image src="#{tiny_png}" width="100" height="100"/>
+              </figure>
+            </figure>
+          </clause>
+        </annex>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        doc_xml = nil
+        extract_docx(path) { |doc, _| doc_xml = doc.to_xml }
+        drawing_count = doc_xml.scan(/<w:drawing[ >]/).length
+        expect(drawing_count).to eq(3)
+      end
+    end
+
     # ── Bibliography ──────────────────────────────────────────────────
+
+    # BUG 010: Bibliography entries must include formattedref content
+    # (the human-readable title) in addition to the biblio-tag.
+    it "renders bibitem formattedref (title) alongside biblio-tag" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+          </clause>
+        </sections>
+        <bibliography id="bib">
+          <references id="bib-refs" normative="false">
+            <fmt-title>Bibliography</fmt-title>
+            <bibitem id="b1" anchor="ISO9001" type="standard">
+              <biblio-tag>[1]<tab/>ISO 9001, </biblio-tag>
+              <formattedref><em>Quality management systems — Requirements</em></formattedref>
+            </bibitem>
+          </references>
+        </bibliography>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        extract_docx(path) do |doc, ns|
+          full_text = doc.xpath("//w:t", ns).map(&:text).join
+          expect(full_text).to include("[1]")
+          expect(full_text).to include("ISO 9001")
+          expect(full_text).to include("Quality management systems")
+        end
+      end
+    end
 
     it "converts bibliography with title and paragraphs" do
       expect_valid_docx(<<~INNER)
@@ -587,9 +789,178 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
     end
   end
 
+  # ── Table of contents ────────────────────────────────────────────
+
+  describe "table of contents" do
+    # BUG 002: Every <w:fldChar> in a TOC field (TOC instruction and
+    # each PAGEREF entry) must carry an explicit w:fldCharType of
+    # begin, separate, or end. Without it, Word renders the field
+    # instructions as visible text.
+    it "emits fldCharType on every fldChar element" do
+      xml = minimal_iso_xml(<<~INNER)
+        <preface>
+          <foreword id="fw">
+            <fmt-title>Foreword</fmt-title>
+            <p>Foreword text.</p>
+          </foreword>
+        </preface>
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <p>Scope content.</p>
+          </clause>
+        </sections>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        extract_docx(path) do |doc, ns|
+          bare_fldchars = doc.xpath("//w:fldChar[not(@w:fldCharType)]", ns)
+          expect(bare_fldchars).to be_empty
+
+          types = doc.xpath("//w:fldChar/@w:fldCharType", ns).map(&:value)
+          expect(types).to include("begin")
+          expect(types).to include("separate")
+          expect(types).to include("end")
+          expect(types).to all(satisfy { |t| %w[begin separate end].include?(t) })
+        end
+      end
+    end
+
+    # BUG 014: Each TOC entry must render the section number, a tab, and
+    # the title text as separate visible runs — not as a single run with
+    # concatenated text like "1Scope". This is achieved by rendering the
+    # source clause's fmt-title via the InlineRenderer so that the
+    # delimiter tab inside the fmt-title becomes a real <w:tab/> run.
+    it "renders TOC entries with separate runs for number, tab, and title" do
+      xml = minimal_iso_xml(<<~INNER)
+        <preface>
+          <foreword id="fw">
+            <fmt-title>Foreword</fmt-title>
+            <p>Foreword text.</p>
+          </foreword>
+        </preface>
+        <sections>
+          <clause id="s1">
+            <fmt-title depth="1"><span class="fmt-caption-label"><semx element="autonum" source="s1">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="s1t">Scope</semx></fmt-title>
+            <p>Scope content.</p>
+          </clause>
+        </sections>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        extract_docx(path) do |doc, ns|
+          toc_paras = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='TOC1']]", ns)
+          expect(toc_paras.length).to be >= 2
+
+          clause_toc = toc_paras.find do |p|
+            p.xpath(".//w:instrText", ns).text.include?("s1")
+          end
+          expect(clause_toc).not_to be_nil
+
+          text_runs = clause_toc.xpath(".//w:t", ns).map(&:text).reject(&:empty?)
+          expect(text_runs).to include("1")
+          expect(text_runs).to include("Scope")
+          # No single run should carry the concatenated number+title.
+          expect(text_runs).to all(satisfy { |t| !t.include?("1Scope") })
+
+          # Should have a tab run between the autonum and the title
+          tab_runs = clause_toc.xpath(".//w:tab", ns)
+          expect(tab_runs.length).to be >= 2
+
+          # And the PAGEREF field machinery is present
+          expect(clause_toc.xpath(".//w:instrText", ns).text).to include("PAGEREF s1")
+        end
+      end
+    end
+
+    # BUG 014: Untitled inline-header sub-clauses (whose fmt-title carries
+    # only autonum carriers and no title text) must still appear in the TOC
+    # with just their autonum — preserving what the source actually says.
+    it "renders TOC entries for inline-header sub-clauses with autonum only" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <p>Scope content.</p>
+            <clause id="s1-1" inline-header="true">
+              <fmt-title depth="2"><span class="fmt-caption-label"><semx element="autonum" source="s1">1</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="s1-1">1</semx></span></fmt-title>
+              <p>Subclause content.</p>
+            </clause>
+          </clause>
+        </sections>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        extract_docx(path) do |doc, ns|
+          toc_paras = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='TOC2']]", ns)
+          expect(toc_paras.length).to be >= 1
+          text_runs = toc_paras.first.xpath(".//w:t", ns).map(&:text).join
+          expect(text_runs).to include("1.1")
+        end
+      end
+    end
+  end
+
   # ── Front matter ──────────────────────────────────────────────────
 
   describe "front matter" do
+    # BUG 001: The sectPr in word/document.xml references header/footer
+    # parts by rId. If the corresponding Relationship entries are missing
+    # from word/_rels/document.xml.rels, Word reports "unreadable
+    # content" and discards every header/footer after repair. Every
+    # headerReference / footerReference must resolve to a defined
+    # Relationship of the correct type.
+    it "emits a Relationship for every header/footer reference" do
+      xml = minimal_iso_xml(<<~INNER)
+        <preface>
+          <foreword id="fw">
+            <fmt-title>Foreword</fmt-title>
+            <p>Foreword text.</p>
+          </foreword>
+        </preface>
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <p>Scope content.</p>
+          </clause>
+        </sections>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        Zip::File.open(path) do |zip|
+          rels_xml = zip.find_entry("word/_rels/document.xml.rels").get_input_stream.read
+          rels = Nokogiri::XML(rels_xml)
+          rels_ns = { "r" => "http://schemas.openxmlformats.org/package/2006/relationships" }
+
+          doc_xml = zip.find_entry("word/document.xml").get_input_stream.read
+          doc = Nokogiri::XML(doc_xml)
+          w_ns = { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" }
+
+          ref_ids = doc.xpath("//w:headerReference/@r:id | //w:footerReference/@r:id",
+                              w_ns.merge("r" => "http://schemas.openxmlformats.org/officeDocument/2006/relationships")).map(&:value)
+          expect(ref_ids).not_to be_empty
+
+          rel_ids = rels.xpath("//r:Relationship/@Id", rels_ns).map(&:value)
+          ref_ids.each do |rid|
+            expect(rel_ids).to include(rid), "header/footer reference #{rid} has no Relationship"
+          end
+
+          # Each referenced Relationship must point to a header or footer target
+          types_by_id = rels.xpath("//r:Relationship", rels_ns).each_with_object({}) do |rel, h|
+            h[rel["Id"]] = rel["Type"]
+          end
+          ref_ids.each do |rid|
+            type = types_by_id[rid]
+            expect(type).to match(/(header|footer)$/)
+          end
+        end
+      end
+    end
+
     it "renders cover page from bibdata" do
       xml = minimal_iso_xml(<<~INNER)
         <bibdata type="standard">
@@ -803,6 +1174,219 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
   # ── Section layout ────────────────────────────────────────────────
 
   describe "section layout" do
+    # BUG 004/005/006/007: Heading styles in the DIS template carry
+    # <w:numPr> so the style produces the section number on its own.
+    # The adapter must strip <semx element="autonum"> carriers (and
+    # their fmt-caption-label/fmt-caption-delim/fmt-element-name
+    # wrappers) from the heading text — otherwise the number shows up
+    # twice (e.g. "1 1Scope", "Annex AAnnex A", "A.1 A.1Principle").
+    #
+    # The stripping applies recursively — autonum nested inside
+    # <strong>, <span class="fmt-caption-label">, etc. must also be
+    # stripped so annex titles render cleanly.
+    it "strips autonum carriers from auto-numbered headings" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title depth="1"><span class="fmt-caption-label"><semx element="autonum" source="s1">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="s1t">Scope</semx></fmt-title>
+            <p>Scope content.</p>
+          </clause>
+          <terms id="terms_sect" obligation="normative">
+            <title>Terms and definitions</title>
+            <fmt-title depth="1"><span class="fmt-caption-label"><semx element="autonum" source="terms_sect">3</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="terms_title">Terms and definitions</semx></fmt-title>
+          </terms>
+        </sections>
+        <annex id="annexA" obligation="normative">
+          <title>Determination of defects</title>
+          <fmt-title>
+            <strong>
+              <span class="fmt-caption-label"><span class="fmt-element-name">Annex</span> <semx element="autonum" source="annexA">A</semx></span>
+            </strong>
+            <br/>
+            <span class="fmt-obligation">(normative)</span>
+            <span class="fmt-caption-delim"><br/><br/></span>
+            <semx element="title" source="ann_title"><strong>Determination of defects</strong></semx>
+          </fmt-title>
+          <clause id="a1" inline-header="false" obligation="normative">
+            <title>Principle</title>
+            <fmt-title depth="2"><span class="fmt-caption-label"><semx element="autonum" source="annexA">A</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="a1">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="a1t">Principle</semx></fmt-title>
+            <p>Content.</p>
+          </clause>
+        </annex>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        extract_docx(path) do |doc, ns|
+          # Body clauses with Heading1 — number "1" must NOT appear in text
+          scope = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Heading1']][.//w:t[contains(.,'Scope')]]", ns)
+          expect(scope).not_to be_nil
+          scope_text = scope.xpath(".//w:t", ns).map(&:text).join
+          expect(scope_text).to include("Scope")
+          expect(scope_text).not_to match(/\A\s*1/)
+
+          # Terms section also uses Heading1 (via visit_terms_section)
+          terms = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Heading1']][.//w:t[contains(.,'Terms and definitions')]]", ns)
+          expect(terms).not_to be_nil
+          terms_text = terms.xpath(".//w:t", ns).map(&:text).join
+          expect(terms_text).not_to match(/\A\s*3.*Terms/),
+                                 "Terms heading leaked auto-number text: |#{terms_text}|"
+
+          # ANNEX style — neither "Annex" word nor "A" letter should leak
+          annex = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='ANNEX']]", ns)
+          expect(annex).not_to be_nil
+          annex_text = annex.xpath(".//w:t", ns).map(&:text).join
+          expect(annex_text).to include("Determination of defects")
+          expect(annex_text).not_to match(/Annex\s*A/i),
+                                 "Annex heading leaked prefix: |#{annex_text}|"
+
+          # a2 style for annex sub-clause — number "A.1" must NOT appear
+          a2 = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='a2']][.//w:t[contains(.,'Principle')]]", ns)
+          expect(a2).not_to be_nil
+          a2_text = a2.xpath(".//w:t", ns).map(&:text).join
+          expect(a2_text).to include("Principle")
+          expect(a2_text).not_to match(/A\.?1/i),
+                                "Annex sub-clause leaked number: |#{a2_text}|"
+        end
+      end
+    end
+
+    # BUG 015: The presentation XML may inject <p class="zzSTDTitle1">
+    # into the body. The adapter must suppress these duplicates because
+    # it emits its own canonical middle-title paragraph from bibdata
+    # (via render_middle_title). The cover page also shows the title
+    # (CoverTitleA1) — both cover and middle-title are part of the
+    # standard ISO DIS layout.
+    it "suppresses XML-injected zzSTDTitle1 paragraphs in the body" do
+      xml = minimal_iso_xml(<<~INNER)
+        <bibdata type="standard">
+          <title language="en" type="title-main">My Test Document</title>
+          <docidentifier type="ISO">ISO 1234</docidentifier>
+          <copyright><from>2024</from><owner><organization>
+            <name>ISO</name>
+          </organization></owner></copyright>
+        </bibdata>
+        <sections>
+          <p class="zzSTDTitle1" displayorder="4">
+            <span class="boldtitle">My Test Document</span>
+          </p>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <p>Body content.</p>
+          </clause>
+        </sections>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        extract_docx(path) do |doc, ns|
+          # The XML-injected zzSTDTitle1 paragraph must NOT appear with
+          # the zzSTDTitle1 style — it would collide with the adapter's
+          # own middle-title emission.
+          injected = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='zzSTDTitle1']]", ns)
+          expect(injected).to be_empty,
+            "XML-injected zzSTDTitle1 paragraph was not suppressed"
+
+          # The adapter emits exactly one middle-title paragraph from
+          # bibdata (style zzSTDTitle).
+          middle = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='zzSTDTitle']]", ns)
+          expect(middle.length).to eq(1),
+            "Expected 1 adapter-emitted middle-title paragraph, got #{middle.length}"
+        end
+      end
+    end
+
+    # BUG 020: Untitled sub-clauses (whose <fmt-title> contains only the
+    # autonum + delim) must not emit an empty heading paragraph that runs
+    # into the next body paragraph.
+    it "skips empty headings whose title has only autonum carriers" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="parent">
+            <fmt-title>Parent Clause</fmt-title>
+            <p>Parent intro.</p>
+            <clause id="untitled" inline-header="true">
+              <fmt-title depth="2"><span class="fmt-caption-label"><semx element="autonum">5</semx><span class="fmt-autonum-delim">.</span><semx element="autonum">1</semx></span><span class="fmt-caption-delim"><tab/></span></fmt-title>
+              <p>Untitled sub-clause body text.</p>
+            </clause>
+          </clause>
+        </sections>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        extract_docx(path) do |doc, ns|
+          # The body paragraph follows directly — no empty heading paragraph
+          empty_headings = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='Heading2']]", ns).select do |p|
+            text = p.xpath(".//w:t", ns).map(&:text).join.strip
+            text.empty?
+          end
+          expect(empty_headings).to be_empty,
+            "Untitled sub-clause produced an empty Heading2 paragraph"
+        end
+      end
+    end
+
+    # BUG 017: Bookmark pairs must WRAP the heading text (or other content)
+    # so hyperlinks and PAGEREF fields resolve to a non-empty range. Empty
+    # adjacent pairs (bookmarkStart immediately followed by bookmarkEnd)
+    # collapse to zero width and produce broken jump targets.
+    it "wraps heading text with bookmark start/end pairs" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="scope-id">
+            <fmt-title>Scope</fmt-title>
+            <p>Body.</p>
+          </clause>
+        </sections>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        extract_docx(path) do |doc, ns|
+          bm_starts = doc.xpath("//w:bookmarkStart", ns)
+          expect(bm_starts).not_to be_empty
+
+          adjacent = bm_starts.select do |bs|
+            sibling = bs.next_element
+            sibling&.name == "bookmarkEnd" && sibling["w:id"] == bs["w:id"]
+          end
+          expect(adjacent).to be_empty,
+            "Found #{adjacent.size} empty bookmark pairs with no content between them"
+        end
+      end
+    end
+
+    # BUG 018: When inline content is split into multiple runs, the
+    # leading/trailing whitespace on each run must be preserved via
+    # xml:space="preserve" on <w:t>. Without it, whitespace at run
+    # boundaries is silently dropped (e.g. "Part 1:Rice" instead of
+    # "Part 1: Rice").
+    it "preserves whitespace at run boundaries with xml:space=preserve" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <p>Part 1: <em>Rice</em> specifications.</p>
+          </clause>
+        </sections>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        extract_docx(path) do |doc, ns|
+          # Find all w:t elements whose text has leading or trailing whitespace
+          ws_runs = doc.xpath("//w:t[normalize-space() != '']", ns).select do |t|
+            text = t.text
+            text != text.strip
+          end
+          unpreserved = ws_runs.reject { |t| t["xml:space"] == "preserve" }
+          expect(unpreserved).to be_empty,
+            "Found #{unpreserved.size} runs with whitespace lacking xml:space=preserve"
+        end
+      end
+    end
+
     it "creates three sections: cover, front matter, body" do
       xml = minimal_iso_xml(<<~INNER)
         <bibdata type="standard">
@@ -928,6 +1512,33 @@ line3</sourcecode>
           # Should have line breaks between the sourcecode lines
           breaks = code_paras.first.xpath(".//w:br", ns)
           expect(breaks.length).to be >= 2
+        end
+      end
+    end
+
+    # BUG 012: Callouts inside sourcecode must be rendered as styled
+    # superscript markers, not as raw escaped XML text.
+    it "renders sourcecode callouts as superscript markers" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <sourcecode id="sc1"><fmt-sourcecode>puts "hello" <callout target="_c1">1</callout></fmt-sourcecode></sourcecode>
+          </clause>
+        </sections>
+      INNER
+
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+
+        extract_docx(path) do |doc, ns|
+          full_text = doc.xpath("//w:t", ns).map(&:text).join
+          expect(full_text).to include("puts")
+          expect(full_text).to include("(1)")
+          # No escaped XML should leak through
+          expect(full_text).not_to include("&lt;callout")
+          expect(full_text).not_to include("<callout")
         end
       end
     end
@@ -1093,6 +1704,105 @@ line3</sourcecode>
           m_ns = { "m" => "http://schemas.openxmlformats.org/officeDocument/2006/math" }
           omath = doc.xpath("//m:oMathPara", m_ns)
           expect(omath.length).to be >= 1
+        end
+      end
+    end
+  end
+
+  # ── Footnote deduplication ───────────────────────────────────────
+
+  describe "footnote deduplication" do
+    # BUG 019: When the source marks multiple <fn> references with the
+    # same `target` (pointing to one shared definition), they must all
+    # map to a single OOXML footnote id — not allocate a fresh id for
+    # every reference. The source footnote identity is the target, not
+    # the text or per-instance id.
+    it "reuses a single OOXML footnote id for references sharing a target" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <p>First reference <fn id="fn-a" reference="1" target="fn-shared"><p>Withdrawn.</p></fn> in scope.</p>
+            <p>Second reference <fn id="fn-b" reference="2" target="fn-shared"><p>Withdrawn.</p></fn> elsewhere.</p>
+            <p>Third reference <fn id="fn-c" reference="3" target="fn-shared"><p>Withdrawn.</p></fn> again.</p>
+          </clause>
+        </sections>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        extract_docx(path) do |doc, ns|
+          fn_refs = doc.xpath("//w:footnoteReference", ns).map { |r| r["w:id"] }
+          expect(fn_refs.length).to eq(3)
+          expect(fn_refs.uniq.length).to eq(1), "expected all refs to share one id, got #{fn_refs.inspect}"
+        end
+      end
+    end
+
+    # BUG 019: Conversely, distinct source footnote definitions (different
+    # target values) must produce distinct OOXML footnote ids — even when
+    # the rendered text is identical.
+    it "allocates distinct OOXML footnote ids for distinct source targets" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <p>Withdrawn-A <fn id="fn-a" reference="1" target="fn-def-a"><p>Withdrawn A.</p></fn>.</p>
+            <p>Withdrawn-B <fn id="fn-b" reference="2" target="fn-def-b"><p>Withdrawn B.</p></fn>.</p>
+            <p>Withdrawn-C <fn id="fn-c" reference="3" target="fn-def-c"><p>Withdrawn C.</p></fn>.</p>
+          </clause>
+        </sections>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        extract_docx(path) do |doc, ns|
+          fn_refs = doc.xpath("//w:footnoteReference", ns).map { |r| r["w:id"] }
+          expect(fn_refs.length).to eq(3)
+          expect(fn_refs.uniq.length).to eq(3), "expected 3 distinct ids, got #{fn_refs.inspect}"
+        end
+      end
+    end
+  end
+
+  # ── Mixed-content rendering ──────────────────────────────────────
+
+  describe "mixed-content rendering" do
+    # BUG 008/009/011/013: The walk_mixed_content path used to re-walk
+    # semantic elements after the explicit fmt-* visitors had already
+    # rendered them — producing duplicate preferred terms, duplicated
+    # CAUTION/WARNING labels, and duplicated "Reference" prefixes on
+    # cross-references. The tests below use the same dual semantic+fmt
+    # structure that triggered the original bug and confirm each
+    # designation renders exactly once.
+
+    it "renders each term designation once (no semantic+fmt duplication)" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <terms id="terms">
+            <fmt-title>Terms</fmt-title>
+            <term id="t1">
+              <fmt-name><span>3.1</span></fmt-name>
+              <preferred id="p1"><expression><name>paddy</name></expression></preferred>
+              <fmt-preferred><p><semx element="preferred" source="p1"><strong><semx element="expression/name" source="p1">paddy</semx></strong></semx></p></fmt-preferred>
+              <admitted id="a1"><expression><name>paddy rice</name></expression></admitted>
+              <fmt-admitted><p><semx element="admitted" source="a1"><semx element="expression/name" source="a1">paddy rice</semx></semx></p></fmt-admitted>
+            </term>
+          </terms>
+        </sections>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        extract_docx(path) do |doc, ns|
+          # Each term-name paragraph should be unique. Count paragraphs whose
+          # text is exactly "paddy" or "paddy rice" — these should each
+          # appear in exactly one paragraph.
+          para_texts = doc.xpath("//w:p", ns).map do |p|
+            p.xpath(".//w:t", ns).map(&:text).join
+          end
+          expect(para_texts.count("paddy")).to eq(1)
+          expect(para_texts.count("paddy rice")).to eq(1)
         end
       end
     end

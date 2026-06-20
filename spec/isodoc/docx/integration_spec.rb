@@ -509,7 +509,7 @@ RSpec.describe "DOCX integration", type: :integration do
       expect(intro_title).not_to be_nil
     end
 
-    it "note uses Note style" do
+    it "note uses Era C Box wrappers with Noteindent body" do
       path = generate_docx(<<~INNER)
         <sections>
           <clause id="s1">
@@ -520,11 +520,15 @@ RSpec.describe "DOCX integration", type: :integration do
       INNER
 
       doc = extract_docx_xml(path, "word/document.xml")
-      note_para = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Note']]", ns)
-      expect(note_para).not_to be_nil
+      box_begin = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Box-begin']]", ns)
+      noteindent = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Noteindent']]", ns)
+      box_end = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Box-end']]", ns)
+      expect(box_begin).not_to be_nil
+      expect(noteindent).not_to be_nil
+      expect(box_end).not_to be_nil
     end
 
-    it "example uses Example style" do
+    it "example uses Era C Box wrappers with Exampleindent body" do
       path = generate_docx(<<~INNER)
         <sections>
           <clause id="s1">
@@ -535,8 +539,12 @@ RSpec.describe "DOCX integration", type: :integration do
       INNER
 
       doc = extract_docx_xml(path, "word/document.xml")
-      example_para = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Example']]", ns)
-      expect(example_para).not_to be_nil
+      box_begin = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Box-begin']]", ns)
+      exampleindent = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Exampleindent']]", ns)
+      box_end = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Box-end']]", ns)
+      expect(box_begin).not_to be_nil
+      expect(exampleindent).not_to be_nil
+      expect(box_end).not_to be_nil
     end
 
     it "body paragraphs use Normal style (no explicit pStyle)" do
