@@ -43,14 +43,22 @@ module IsoDoc
         def render_footer(part_content, copyright_text, scheme:)
           part_content.paragraphs.clear
           style = footer_style_for(scheme)
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = style if style
-          para.align = :center
-          para << copyright_text.to_s
-          para << Uniword::Builder.tab
-          model = para.build
-          append_page_number_field(model)
-          part_content.paragraphs << model
+          paragraph = Uniword::Wordprocessingml::Paragraph.new
+          paragraph.properties = Uniword::Wordprocessingml::ParagraphProperties.new
+          if style
+            paragraph.properties.style =
+              Uniword::Properties::StyleReference.new(value: style)
+          end
+          paragraph.properties.alignment =
+            Uniword::Properties::Alignment.new(value: "center")
+
+          paragraph.runs << Uniword::Wordprocessingml::Run.new(text: copyright_text.to_s)
+          tab_run = Uniword::Wordprocessingml::Run.new
+          tab_run.tab = Uniword::Wordprocessingml::Tab.new
+          paragraph.runs << tab_run
+
+          append_page_number_field(paragraph)
+          part_content.paragraphs << paragraph
         end
 
         private
