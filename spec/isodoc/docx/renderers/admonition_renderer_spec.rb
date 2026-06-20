@@ -28,4 +28,27 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::AdmonitionRenderer do
         "Box-end should close admonition, got: #{styles.inspect}"
     end
   end
+
+  it "renders admonition caption with Warningtitle style" do
+    xml = minimal_iso_xml(<<~INNER)
+      <sections>
+        <clause id="c1">
+          <title>Scope</title>
+          <admonition id="w1" type="warning">
+            <fmt-name>WARNING</fmt-name>
+            <p>Do not operate without guard.</p>
+          </admonition>
+        </clause>
+      </sections>
+    INNER
+
+    convert_and_extract(adapter, xml) do |pkg|
+      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+
+      expect(styles).to include("Warningtitle"),
+        "admonition caption should use Warningtitle, got: #{styles.inspect}"
+      expect(styles).to include("Warningtext"),
+        "admonition body should use Warningtext, got: #{styles.inspect}"
+    end
+  end
 end
