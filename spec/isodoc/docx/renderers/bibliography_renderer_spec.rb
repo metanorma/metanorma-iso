@@ -72,4 +72,32 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::BibliographyRenderer do
       end
     end
   end
+
+  it "renders bibitem notes as BiblioDescription paragraphs" do
+    xml = minimal_iso_xml(<<~INNER)
+      <bibliography>
+        <references id="bib">
+          <title>Bibliography</title>
+          <bibitem id="b1">
+            <formattedref>Sample Reference.</formattedref>
+            <docidentifier>REF1</docidentifier>
+            <note>Only available in English.</note>
+          </bibitem>
+        </references>
+      </bibliography>
+    INNER
+
+    convert_and_extract(adapter, xml) do |pkg|
+      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+
+      expect(styles).to include("BiblioEntry"),
+        "main entry should use BiblioEntry, got: #{styles.inspect}"
+      expect(styles).to include("BiblioDescription"),
+        "note should use BiblioDescription, got: #{styles.inspect}"
+      entry_idx = styles.index("BiblioEntry")
+      desc_idx = styles.index("BiblioDescription")
+      expect(entry_idx).to be < desc_idx,
+        "BiblioDescription should follow BiblioEntry"
+    end
+  end
 end

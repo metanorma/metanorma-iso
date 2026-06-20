@@ -4,27 +4,65 @@ module IsoDoc
   module Iso
     module Docx
       module Renderers
-        # Renders a BibliographicItem as a single bibliography-entry paragraph
-        # with a bookmark and the BiblioEntry/RefNorm style (selected by
-        # whether the surrounding bibliography is normative or informative).
+        # Renders a BibliographicItem as a bibliography-entry paragraph
+        # (BiblioEntry for informative, RefNorm for normative) followed
+        # by zero or more annotation paragraphs (BiblioDescription) for
+        # any <note> or <abstract> children of the bibitem.
         #
-        # The bookmark anchor (when present) lets hyperlinks scroll to the
-        # entry; the content is the biblio tag (auto-numbered citation)
-        # followed by the formatted reference text.
+        # The bookmark anchor (when present) lets hyperlinks scroll to
+        # the entry; the entry content is the biblio tag (auto-numbered
+        # citation) followed by the formatted reference text.
         class BibliographyRenderer
           include Base
           include ModelUtils
 
           def render(bibitem, doc)
+            render_entry(bibitem, doc)
+            render_annotations(bibitem, doc)
+          end
+
+          private
+
+          def render_entry(bibitem, doc)
             para = build_unstyled_paragraph
             para.style = bib_item_style
             with_bibitem_bookmark(bibitem, para) do
-              render_bib_item_content(bibitem, para)
+              render_bib_entry_content(bibitem, para)
             end
             doc << para
           end
 
-          private
+          def render_annotations(bibitem, doc)
+            annotation_nodes(bibitem).each do |node|
+              para = build_paragraph(:biblio_description)
+              render_annotation_text(node, para)
+              doc << para
+            end
+          end
+
+          def annotation_nodes(bibitem)
+            notes = attribute_collection(bibitem, :note)
+            abstracts = attribute_collection(bibitem, :abstract)
+            notes + abstracts
+          end
+
+          def render_annotation_text(node, para)
+            paragraphs = annotation_paragraphs(node)
+            if paragraphs.empty?
+              text = collect_all_text(node)
+              para << text if text && !text.empty?
+              return
+            end
+
+            paragraphs.each do |p|
+              @inline_renderer.render(p, para)
+            end
+          end
+
+          def annotation_paragraphs(node)
+            p_attr = node.class.attributes.key?(:p) ? node.p : nil
+            Array(p_attr)
+          end
 
           def bib_item_style
             key = @context.in_normative ? :ref_norm : :biblio_entry
@@ -50,7 +88,7 @@ module IsoDoc
             nil
           end
 
-          def render_bib_item_content(bibitem, para)
+          def render_bib_entry_content(bibitem, para)
             tag = attribute_value(bibitem, :biblio_tag)
             if tag
               @inline_renderer.render(tag, para)
@@ -72,6 +110,12 @@ module IsoDoc
             return nil unless node.class.attributes.key?(attr)
 
             node.public_send(attr)
+          end
+
+          def attribute_collection(node, attr)
+            return [] unless node.class.attributes.key?(attr)
+
+            Array(node.public_send(attr))
           end
         end
       end
