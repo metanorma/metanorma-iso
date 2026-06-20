@@ -63,6 +63,42 @@ RSpec.describe IsoDoc::Iso::Docx::CoverRenderer do
       expect(title_text).to include("Quality Management")
     end
 
+    it "renders cover subtitle with CoverTitleA2 style when part title present" do
+      xml = minimal_iso_xml(<<~INNER)
+        <bibdata type="standard">
+          <title language="en" type="title-intro">Cereals</title>
+          <title language="en" type="title-main">Specifications</title>
+          <title language="en" type="title-part">Rice</title>
+          <docidentifier type="ISO" primary="true">ISO/CD 17301-1:2016</docidentifier>
+          <copyright><from>2024</from><owner><organization>
+            <name>ISO</name>
+          </organization></owner></copyright>
+        </bibdata>
+        <sections/>
+      INNER
+
+      model = parse_iso_document(xml)
+      doc = adapter.send(:create_document)
+
+      renderer.render(model.bibdata, doc)
+
+      subtitle_paras = doc.model.body.paragraphs.select do |p|
+        p.properties&.style&.value == "CoverTitleA2"
+      end
+      expect(subtitle_paras.length).to eq(1),
+        "expected one CoverTitleA2 paragraph for the part subtitle"
+      subtitle_text = subtitle_paras.first.runs.map { |r| r.text || "" }.join
+      expect(subtitle_text).to include("Rice")
+
+      main_paras = doc.model.body.paragraphs.select do |p|
+        p.properties&.style&.value == "CoverTitleA1"
+      end
+      main_text = main_paras.first.runs.map { |r| r.text || "" }.join
+      expect(main_text).to include("Cereals").and include("Specifications")
+      expect(main_text).not_to include("Rice"),
+        "part title should not appear in main title once it has a subtitle"
+    end
+
     it "renders edition text with ordinal suffix" do
       xml = minimal_iso_xml(<<~INNER)
         <bibdata type="standard">

@@ -39,6 +39,7 @@ module IsoDoc
           render_cover_line(doc, "")
           render_cover_line(doc, date_text(bibdata))
           render_cover_title(doc, main_title(bibdata))
+          render_cover_subtitle(doc, subtitle(bibdata))
           render_cover_line(doc, "")
           render_cover_line(doc, stage_label(bibdata))
         end
@@ -58,6 +59,15 @@ module IsoDoc
           para = Uniword::Builder::ParagraphBuilder.new
           para.style = @resolver.paragraph_style(:cover_title)
           para << title_text
+          doc << para
+        end
+
+        def render_cover_subtitle(doc, subtitle_text)
+          return if subtitle_text.nil? || subtitle_text.empty?
+
+          para = Uniword::Builder::ParagraphBuilder.new
+          para.style = @resolver.paragraph_style(:cover_subtitle)
+          para << subtitle_text
           doc << para
         end
 
@@ -173,7 +183,27 @@ module IsoDoc
           localized = find_en_title(bib)
           return nil unless localized
 
-          localized.to_s
+          parts = []
+          parts << localized.title_intro.value if localized.title_intro
+          parts << localized.title_main.value if localized.title_main
+          parts << localized.title_full.value if localized.title_full && !localized.title_main
+          parts.empty? ? nil : parts.join(" — ")
+        end
+
+        def subtitle(bib)
+          localized = find_en_title(bib)
+          return nil unless localized&.title_part
+
+          prefix = localized.title_part_prefix&.value.to_s.strip
+          part_val = localized.title_part.value
+          return nil if part_val.nil? || part_val.to_s.empty?
+
+          if !prefix.empty?
+            sep = prefix.end_with?(":") ? " " : ": "
+            "#{prefix}#{sep}#{part_val}"
+          else
+            part_val.to_s
+          end
         end
 
         def stage_label(bib)
