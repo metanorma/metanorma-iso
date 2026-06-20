@@ -17,7 +17,8 @@ module IsoDoc
       # Header/footer parts are reused from the loaded DOCX template.
       # The DIS template provides 8 pre-allocated parts (4 headers, 4 footers)
       # with valid rIds in the package relationships. The SectionManager
-      # rewrites their content for each section's needs.
+      # rewrites their content for each section's needs via the
+      # HeaderFooterRenderer.
       #
       # Layout:
       #   Front matter: rId16 (header even), rId17 (header default),
@@ -53,8 +54,21 @@ module IsoDoc
         BODY_FOOTER_EVEN = "rId27"
         BODY_FOOTER_DEFAULT = "rId28"
 
-        def initialize(resolver)
+        def initialize(resolver, header_footer_renderer)
           @resolver = resolver
+          @hf_renderer = header_footer_renderer
+        end
+
+        # The PageScheme for the front matter section.
+        # Front matter always uses roman numerals with a page-number field.
+        def front_matter_scheme
+          PageScheme.roman
+        end
+
+        # The PageScheme for the body section.
+        # Body always uses arabic numerals with a page-number field.
+        def body_scheme
+          PageScheme.arabic
         end
 
         # Insert a section break ending the cover page.
@@ -67,14 +81,15 @@ module IsoDoc
         # Insert a section break ending the front matter.
         # Front matter: roman numeral page numbers, even/odd headers.
         def insert_front_matter_section(doc, header_text:, copyright_text:)
-          write_header_part(doc, FRONT_HEADER_EVEN, header_text, align: :right)
-          write_header_part(doc, FRONT_HEADER_DEFAULT, header_text, align: :right)
-          write_footer_part(doc, FRONT_FOOTER_EVEN, copyright_text, roman: true)
-          write_footer_part(doc, FRONT_FOOTER_DEFAULT, copyright_text, roman: true)
+          scheme = front_matter_scheme
+          write_header_part(doc, FRONT_HEADER_EVEN, header_text)
+          write_header_part(doc, FRONT_HEADER_DEFAULT, header_text)
+          write_footer_part(doc, FRONT_FOOTER_EVEN, copyright_text, scheme)
+          write_footer_part(doc, FRONT_FOOTER_DEFAULT, copyright_text, scheme)
 
           sec = build_section(
             margins: BODY_MARGINS,
-            page_numbering: { format: "lowerRoman" },
+            page_numbering: { format: scheme.format },
           )
           add_header_footer_refs(sec,
             header_even: FRONT_HEADER_EVEN,
@@ -88,10 +103,11 @@ module IsoDoc
         # Apply the final body section properties.
         # Body: arabic page numbers starting at 1.
         def apply_body_section(doc, header_text:, copyright_text:)
-          write_header_part(doc, BODY_HEADER_EVEN, header_text, align: :right)
-          write_header_part(doc, BODY_HEADER_DEFAULT, header_text, align: :right)
-          write_footer_part(doc, BODY_FOOTER_EVEN, copyright_text, roman: false)
-          write_footer_part(doc, BODY_FOOTER_DEFAULT, copyright_text, roman: false)
+          scheme = body_scheme
+          write_header_part(doc, BODY_HEADER_EVEN, header_text)
+          write_header_part(doc, BODY_HEADER_DEFAULT, header_text)
+          write_footer_part(doc, BODY_FOOTER_EVEN, copyright_text, scheme)
+          write_footer_part(doc, BODY_FOOTER_DEFAULT, copyright_text, scheme)
 
           sec = build_section(
             margins: BODY_MARGINS,
@@ -152,46 +168,18 @@ module IsoDoc
           parts.find { |p| p[:r_id] == r_id }
         end
 
-        # Rewrite a header part's content with styled text.
-        def write_header_part(doc, r_id, text, align: :right)
+        def write_header_part(doc, r_id, text)
           part = find_part(doc, r_id)
           return unless part
 
-          content = part[:content]
-          content.paragraphs.clear
-
-          style = @resolver.paragraph_style(:header_centered)
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = style
-          para.align = align
-          run = Uniword::Builder::RunBuilder.new
-          run.text(text.to_s).bold
-          para << run.build
-          content.paragraphs << para.build
+          @hf_renderer.render_header(part[:content], text, align: :right)
         end
 
-        # Rewrite a footer part's content with copyright text and a page
-        # number field. Every footer carries both: the copyright statement
-        # on the left and the page number on the right (matching the
-        # reference DOCX layout).
-        def write_footer_part(doc, r_id, copyright_text, roman:)
+        def write_footer_part(doc, r_id, copyright_text, scheme)
           part = find_part(doc, r_id)
           return unless part
 
-          content = part[:content]
-          content.paragraphs.clear
-
-          style = roman ? @resolver.paragraph_style(:footer_roman) :
-            @resolver.paragraph_style(:footer_page_number)
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = style if style
-          para.align = :center
-          para << copyright_text.to_s
-          tab_run = Uniword::Wordprocessingml::Run.new
-          tab_run.tab = Uniword::Wordprocessingml::Tab.new
-          para << tab_run
-          Uniword::Builder.page_number_field.runs.each { |run| para << run }
-          content.paragraphs << para.build
+          @hf_renderer.render_footer(part[:content], copyright_text, scheme: scheme)
         end
 
         # Create a paragraph with section properties attached.

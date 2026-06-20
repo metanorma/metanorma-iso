@@ -5,7 +5,8 @@ require_relative "spec_helper"
 RSpec.describe IsoDoc::Iso::Docx::SectionManager do
   let(:adapter) { build_adapter }
   let(:resolver) { adapter.resolver }
-  let(:section_mgr) { described_class.new(resolver) }
+  let(:hf_renderer) { IsoDoc::Iso::Docx::HeaderFooterRenderer.new(resolver) }
+  let(:section_mgr) { described_class.new(resolver, hf_renderer) }
 
   describe "#insert_cover_section" do
     it "inserts a section break paragraph after cover page" do
@@ -127,6 +128,77 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
       sec = doc.model.body.section_properties
       expect(sec.page_size.width).to eq(11_906)
       expect(sec.page_size.height).to eq(16_838)
+    end
+  end
+
+  describe "page numbering schemes" do
+    it "exposes a roman scheme for the front matter section" do
+      scheme = section_mgr.front_matter_scheme
+      expect(scheme).to be_roman
+      expect(scheme).to be_page_number
+    end
+
+    it "exposes an arabic scheme for the body section" do
+      scheme = section_mgr.body_scheme
+      expect(scheme).to be_arabic
+      expect(scheme).to be_page_number
+    end
+
+    it "front matter section uses the scheme's format in its sectPr" do
+      doc = adapter.send(:create_document)
+      section_mgr.insert_front_matter_section(
+        doc, header_text: "ISO/CD 17301-1:2016(en)", copyright_text: "© ISO 2016"
+      )
+
+      sec = doc.model.body.paragraphs.last.properties.section_properties
+      expect(sec.page_numbering.format).to eq(section_mgr.front_matter_scheme.format)
+    end
+  end
+
+  describe "footer content via HeaderFooterRenderer" do
+    it "writes a roman footer with FooterPageRomanNumber style" do
+      doc = adapter.send(:create_document)
+      section_mgr.insert_front_matter_section(
+        doc, header_text: "ISO/CD 17301-1:2016(en)", copyright_text: "© ISO 2016"
+      )
+
+      footer_part = doc.model.header_footer_parts
+        .find { |p| p[:r_id] == IsoDoc::Iso::Docx::SectionManager::FRONT_FOOTER_DEFAULT }
+      expect(footer_part).not_to be_nil
+
+      para = footer_part[:content].paragraphs.first
+      style_value = para.properties&.style&.value
+      expect(style_value).to eq("FooterPageRomanNumber"),
+        "front matter footer should use FooterPageRomanNumber, got: #{style_value.inspect}"
+    end
+
+    it "writes an arabic footer with FooterPageNumber style" do
+      doc = adapter.send(:create_document)
+      section_mgr.apply_body_section(
+        doc, header_text: "ISO/CD 17301-1:2016(en)", copyright_text: "© ISO 2024"
+      )
+
+      footer_part = doc.model.header_footer_parts
+        .find { |p| p[:r_id] == IsoDoc::Iso::Docx::SectionManager::BODY_FOOTER_DEFAULT }
+      expect(footer_part).not_to be_nil
+
+      para = footer_part[:content].paragraphs.first
+      style_value = para.properties&.style&.value
+      expect(style_value).to eq("FooterPageNumber"),
+        "body footer should use FooterPageNumber, got: #{style_value.inspect}"
+    end
+
+    it "embeds a complete PAGE field in every footer" do
+      doc = adapter.send(:create_document)
+      section_mgr.insert_front_matter_section(
+        doc, header_text: "ISO/CD 17301-1:2016(en)", copyright_text: "© ISO 2016"
+      )
+
+      footer_part = doc.model.header_footer_parts
+        .find { |p| p[:r_id] == IsoDoc::Iso::Docx::SectionManager::FRONT_FOOTER_DEFAULT }
+      para = footer_part[:content].paragraphs.first
+      expect(para.field_chars.map(&:fldCharType)).to eq(%w[begin separate end])
+      expect(para.instr_text.map(&:text).join).to include("PAGE")
     end
   end
 end
