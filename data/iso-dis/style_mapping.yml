@@ -1,9 +1,12 @@
-# ISO DIS DOCX style mapping — new template from ISO Typefi pipeline
+# ISO DIS DOCX style mapping — Era C (late Typefi)
 #
-# Template: data/iso-dis/template.docx (250 styles, ISO DIS reference)
-# Reference: spec/fixtures/20250530-ISO_DIS_15926-100.docx
-# Used for: DIS/FDIS stage documents (stages 40-60, 90)
-# Triggered by: :iso-word-template => "dis" (or default for stages 40+)
+# Single source of truth for semantic-key → DOCX-styleId mapping.
+# All values are verified against styles.yml by StyleMappingValidator.
+#
+# Template era:    late_typefi
+# Reference DOCX:  spec/fixtures/20250530-ISO_DIS_15926-100.docx
+# Style library:   data/iso-dis/styles.yml (250 styles)
+# Numbering:       data/iso-dis/numbering.yml (7 abstractNums)
 
 paragraph_styles:
   # ── Document structure ──
@@ -30,21 +33,42 @@ paragraph_styles:
   bibliography: BiblioTitle
   index: IndexHead
 
-  # ── Content blocks ──
+  # ── Box wrapping (notes/examples/admonitions) ──
+  box_begin: Box-begin
+  box_end: Box-end
+  box_title: Box-title
+
+  # ── Content blocks (Box-wrapped) ──
   note: Note
+  note_indent: Noteindent
+  note_indent_continued: Noteindentcontinued
   example: Example
+  example_indent: Exampleindent
+  example_indent_continued: Exampleindentcontinued
   sourcecode: Code
   formula: Formula
-  figure_title: Figuretitle
-  figure_title_annex: AnnexFigureTitle
-  table_title: Tabletitle
-  table_title_annex: AnnexTableTitle
+  formula_description: Formuladescription
+
+  # ── Admonition / warning ──
   admonition: Warningtext
   admonition_title: Warningtitle
-  quote: Disp-quotep
-  definition: Definition
 
-  # ── Table styles ──
+  # ── Figures ──
+  figure_title: Figuretitle
+  figure_title_annex: Figuretitle
+  figure_description: Figuredescription
+  figure_note: Figurenote
+  figure_subtitle: Figuresubtitle
+  figure_graphic: FigureGraphic
+  figure_image: FigureImage
+  dimension_50: Dimension50
+  dimension_75: Dimension75
+  dimension_100: Dimension100
+
+  # ── Tables ──
+  table_title: Tabletitle
+  table_title_annex: Tabletitle
+  table_description: Tabledescription
   table_header: Tableheader
   table_body: Tablebody
   table_footer: Tablefooter
@@ -56,22 +80,32 @@ paragraph_styles:
   toc1: TOC1
   toc2: TOC2
   toc3: TOC3
+  toc4: TOC4
+  toc5: TOC5
+  toc6: TOC6
+  toc7: TOC7
+  toc8: TOC8
+  toc9: TOC9
   contents_title: zzContents
+  toc_heading: TOCHeading
 
   # ── Terms ──
   term_num: TermNum
   terms: Terms
-  admitted_term: AltTerms
-  deprecated_term: DeprecatedTerms
-  alt_terms: AltTerms
+  # DIS template defines TermsAdmitted for "Term(s) Admitted" — used for
+  # both admitted and deprecated (no separate DeprecatedTerms styleId).
+  admitted_term: TermsAdmitted
+  deprecated_term: TermsAdmitted
+  alt_terms: TermsAdmitted
 
   # ── Source and key ──
   source: Source
   key_title: KeyTitle
+  key_text: KeyText
 
   # ── Normative references ──
-  normref: normref
-  ref_norm: normref
+  normref: RefNorm
+  ref_norm: RefNorm
 
   # ── Cover page ──
   cover_large: zzCoverlarge
@@ -84,15 +118,14 @@ paragraph_styles:
   copyright: zzCopyright
   copyright_hdr: zzCopyright
   copyright_address: zzCopyrightaddress
-  warning_header: zzwarninghdr
-  warning: zzwarning
+  # License/warning on cover page — Era C uses Notice (no separate
+  # zzwarning/zzwarninghdr styles in DIS 15926).
+  warning_header: Notice
+  warning: Notice
 
   # ── Middle title (repeated before body) ──
   main_title1: MainTitle1
   main_title2: MainTitle2
-
-  # ── Variant titles ──
-  variant_title_toc: variant-title-toc
 
   # ── Body text ──
   body_text: BodyText
@@ -105,17 +138,22 @@ paragraph_styles:
 
   # ── Lists ──
   list_continue1: ListContinue1
-  list_paragraph: ListParagraph
+  list_paragraph: BodyText
 
   # ── Section breaks ──
   page_break: PAGEBREAK
 
-  # ── Figure ──
-  figure_graphic: FigureGraphic
+  # ── Quotes ──
+  quote: Disp-quotep
+  quote_attributor: Disp-quoteattrib
+
+  # ── Definition lists / glossary ──
+  definition: Definition
 
   # ── Header/footer styles ──
   header_centered: HeaderCentered
   footer_centered: FooterCentered
+  footer_centered_continued: FooterCenteredContinued
   footer_page_number: FooterPageNumber
   footer_roman: FooterPageRomanNumber
 
@@ -126,24 +164,81 @@ paragraph_styles:
 character_styles:
   hyperlink: Hyperlink
   footnote_reference: FootnoteReference
-  comment_reference: CommentReference
-  stem: stem
   inline_code: InlineCode
-  endnote_reference: EndnoteReference
+  inline_code_bold: InlineCodeBold
+  inline_code_italic: InlineCodeItalic
+
+# Paragraph styles whose <w:pPr><w:numPr> in template styles.xml produces
+# the section/term number automatically. When rendering headings that use
+# one of these styles, the adapter MUST strip <semx element="autonum">
+# carriers from the title text — otherwise the number appears twice.
+#
+# Styles NOT in this list (e.g. TermNum, ForewordTitle) emit the number
+# as visible text because the template style lacks numPr.
+auto_numbered_styles:
+  - Heading1
+  - Heading2
+  - Heading3
+  - Heading4
+  - Heading5
+  - Heading6
+  - ANNEX
+  - a2
+  - a3
+  - a4
+  - a5
+  - a6
 
 numbering:
-  # From reference DOCX numbering.xml
-  # abstractNumId=0: IntroHeading1..9 multilevel
-  intro_clause: 8
-  # abstractNumId=1: ListContinue1 dash bullets (hybridMultilevel)
-  dash_list: 3
-  # abstractNumId=3: Heading1..9 multilevel
-  body_clause: 4
-  # abstractNumId=4: decimal ordered list (1. 2. 3.)
-  decimal_list: 1
-  # abstractNumId=6: ANNEX + a2..a6 + Figure/Table numbering
-  annex_clause: 7
-  # abstractNumId=2: plain dash bullets (no style)
-  plain_dash_list: 5
-  # abstractNumId=5: plain dash bullets (variant)
-  dash_list_variant: 6
+  # Canonical Era C 7-abstractNum scheme:
+  #   abstractNum 0 (IntroHeading1..9 multilevel) → numId 8
+  #   abstractNum 1 (ListContinue1 dash bullets)  → numId 3
+  #   abstractNum 2 (plain dash bullets)          → numId 5
+  #   abstractNum 3 (Heading1..9 multilevel)      → numId 4
+  #   abstractNum 4 (decimal list 1. 2. 3.)       → numId 1, numId 2
+  #   abstractNum 5 (dash variant)                → numId 6
+  #   abstractNum 6 (ANNEX + a2..a6)              → numId 7
+  intro_clause: 8              # IntroHeading1..9 multilevel (numId=8)
+  list_continue_dash: 3        # ListContinue1 — bullet (numId=3)
+  body_clause: 4               # Heading1..9 multilevel (numId=4)
+  decimal_ordered_list: 1      # 1. 2. 3. single-level (numId=1)
+  decimal_ordered_list_alt: 2  # same abstractNum 4, alt numId=2
+  plain_dash_list: 5           # plain dash bullets, no style (numId=5)
+  dash_list_variant: 6         # dash bullets variant (numId=6)
+  annex_clause: 7              # ANNEX + a2..a6 multilevel (numId=7)
+  # Aliases for backward compatibility with adapter code
+  dash_list: 3                 # = list_continue_dash
+  decimal_list: 1              # = decimal_ordered_list
+
+# Styles excluded from output — known pollution from older ISO
+# templates, Word built-ins, locale variants, and collaboration tools.
+# StyleMappingValidator flags any mapping value that matches.
+excluded_styles:
+  globs:
+    # 8601-era pollution (lower-case + CamelCase variants)
+    - "STDTitle*"
+    - "stddoc*"
+    - "stdpublisher*"
+    - "stdyear*"
+    - "citesec"
+    - "citeapp"
+    - "citefig"
+    - "citetbl"
+    - "notelabel"
+    - "termnotelabel"
+    - "examplelabel"
+    - "boldtitle"
+    - "nonboldtitle"
+    # Word builtin table styles
+    - "Table*Default*"
+    - "Table*Grid*"
+    - "Table*Light*"
+    - "Table*Medium*"
+    # Locale-pollution (German, Chinese, Dutch, etc.)
+    - "*de-DE*"
+    - "*zh-CN*"
+    - "*nl-NL*"
+    - "*fr-FR*"
+    # Collaboration / track-changes
+    - "*TrackChanges*"
+    - "*Comment*"

@@ -36,7 +36,9 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping do
       expect(mapping.paragraph_style(:figure_title)).to eq("Figuretitle")
       expect(mapping.paragraph_style(:table_title)).to eq("Tabletitle")
       expect(mapping.paragraph_style(:terms)).to eq("Terms")
-      expect(mapping.paragraph_style(:admitted_term)).to eq("AltTerms")
+      # Era C: TermsAdmitted is used for admitted/alt/deprecated (no
+      # separate DeprecatedTerms styleId in DIS 15926).
+      expect(mapping.paragraph_style(:admitted_term)).to eq("TermsAdmitted")
       expect(mapping.paragraph_style(:cover_large)).to eq("zzCoverlarge")
       expect(mapping.paragraph_style(:contents_title)).to eq("zzContents")
     end
@@ -59,8 +61,8 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping do
       expect(mapping.heading_style(6)).to eq("Heading6")
     end
 
-    it "returns default for levels beyond 6" do
-      expect(mapping.heading_style(7)).to eq("Heading7")
+    it "returns nil for unmapped levels (strict — no fallback)" do
+      expect(mapping.heading_style(7)).to be_nil
     end
   end
 
@@ -71,8 +73,9 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping do
       expect(mapping.annex_heading_style(4)).to eq("a4")
     end
 
-    it "falls back to heading style for level 1" do
-      expect(mapping.annex_heading_style(1)).to eq("Heading1")
+    it "returns nil for level 1 (no fallback — use :annex key)" do
+      expect(mapping.annex_heading_style(1)).to be_nil
+      expect(mapping.paragraph_style(:annex)).to eq("ANNEX")
     end
   end
 

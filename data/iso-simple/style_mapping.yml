@@ -79,6 +79,15 @@ paragraph_styles:
 character_styles:
   hyperlink: Hyperlink
 
+# Styles whose numPr auto-numbers; strip autonum carriers from titles.
+auto_numbered_styles:
+  - Heading1
+  - Heading2
+  - Heading3
+  - Heading4
+  - Heading5
+  - Heading6
+
 numbering:
   # Simple template numbering.xml numId values
   # Body decimal (abstractNumId=15): 1. 1.1 1.1.1 ...

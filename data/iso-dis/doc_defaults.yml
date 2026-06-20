@@ -1,10 +1,18 @@
 ---
-run_properties:
+:run_properties:
   fonts:
-    ascii: Cambria
-    hAnsi: Cambria
+    ascii: Calibri
+    hAnsi: Calibri
     cs: Times New Roman
-    eastAsia: SimSun
-  lang_val: en-HK
-  lang_eastasia: zh-CN
+    eastAsia: Calibri
+  bold: false
+  italic: false
+  small_caps: false
+  all_caps: false
+  lang_val: nl-NL
+  lang_eastasia: nl-NL
   lang_bidi: ar-SA
+template_era: late_typefi
+reference_doc: 20250530-ISO_DIS_15926-100.docx
+reference_doc_sha256: 3d500eabc9564a8872edce573a2c1daee39de5e70282d4e061b5d9a53e64954c
+extracted_at: '2026-06-18T14:43:56Z'
