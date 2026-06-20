@@ -126,6 +126,31 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderer do
     end
   end
 
+  describe "InlineCode character styles" do
+    it "renders <tt> as a run with InlineCode rStyle" do
+      xml = minimal_iso_xml(<<~INNER)
+        <preface>
+          <foreword id="fw">
+            <fmt-title>Foreword</fmt-title>
+            <p>Use <tt>console.log()</tt> here.</p>
+          </foreword>
+        </preface>
+      INNER
+      root = parse_iso_document(xml)
+      para_node = root.preface.foreword.paragraphs.first
+
+      para = build_para
+      renderer.render(para_node, para)
+      built = para.build
+
+      code_run = built.runs.find { |r| r.text.to_s.include?("console.log") }
+      expect(code_run).not_to be_nil
+      style_value = code_run.properties&.style&.value
+      expect(style_value).to eq("InlineCode"),
+        "<tt> should carry InlineCode rStyle, got: #{style_value.inspect}"
+    end
+  end
+
   describe "#render_inline_element" do
     it "renders a br element as newline" do
       xml = minimal_iso_xml(<<~INNER)

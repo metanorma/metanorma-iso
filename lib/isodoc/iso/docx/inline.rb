@@ -349,7 +349,7 @@ module IsoDoc
           if element.is_a?(String)
             text = element
           elsif ordered?(element) && has_rich_children?(element)
-            render_with_run_format(element, para) { |run| run.properties.bold = Uniword::Properties::Bold.new }
+            render_with_run_format(element, para) { |run| apply_bold_to_run(run) }
             return
           else
             text = collect_text(element)
@@ -359,6 +359,24 @@ module IsoDoc
           run = Uniword::Builder::RunBuilder.new
           run.text(text.to_s).bold
           para << run.build
+        end
+
+        # When bolding a run that already carries the InlineCode character
+        # style, promote it to InlineCodeBold (Era C's dedicated style for
+        # bold inline code). For every other run, apply a direct bold run
+        # property as before.
+        def apply_bold_to_run(run)
+          code_style = @resolver.character_style(:inline_code)
+          bold_code_style = @resolver.character_style(:inline_code_bold)
+          current_style = run.properties&.style&.value
+
+          if code_style && current_style == code_style && bold_code_style
+            run.properties.style = Uniword::Properties::RunStyleReference.new(
+              value: bold_code_style,
+            )
+          else
+            run.properties.bold = Uniword::Properties::Bold.new
+          end
         end
 
         def render_with_run_format(element, para, &formatter)
