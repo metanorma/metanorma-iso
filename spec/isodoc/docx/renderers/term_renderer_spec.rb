@@ -139,4 +139,30 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermRenderer do
         "term example name should use Example style"
     end
   end
+
+  it "renders term sources with Source style" do
+    xml = minimal_iso_xml(<<~INNER)
+      <sections>
+        <terms id="terms">
+          <title>Terms</title>
+          <term id="t1">
+            <fmt-name>3.1</fmt-name>
+            <fmt-preferred><expression><name>alpha</name></expression></fmt-preferred>
+            <fmt-termsource status="identical" type="authoritative">[SOURCE: <semx element="source"><origin citeas="ISO 1234:2024"><localityStack><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack></origin></semx>]</fmt-termsource>
+          </term>
+        </terms>
+      </sections>
+    INNER
+
+    convert_and_extract(adapter, xml) do |pkg|
+      source_paras = pkg.document.body.paragraphs.select do |p|
+        p.properties&.style&.value == "Source"
+      end
+      expect(source_paras.length).to eq(1),
+        "term source should use Source style"
+      text = source_paras.first.runs.map { |r| r.text || "" }.join
+      expect(text).to include("SOURCE"),
+        "term source paragraph should preserve [SOURCE: ...] text, got: #{text.inspect}"
+    end
+  end
 end

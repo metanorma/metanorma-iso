@@ -25,6 +25,7 @@ module IsoDoc
             render_term_definitions(term, doc)
             render_term_notes(term, doc)
             render_term_examples(term, doc)
+            render_term_sources(term, doc)
           end
 
           private
@@ -156,6 +157,27 @@ module IsoDoc
                 @walker&.walk(te, doc)
               end
             end
+          end
+
+          def render_term_sources(term, doc)
+            term_sources(term).each do |src|
+              para = build_paragraph(:source)
+              @inline_renderer.render(src, para)
+              doc << para
+            end
+          end
+
+          # Prefer the presentation-XML fmt_termsource (which already contains
+          # the rendered "[SOURCE: ...]" text), then fall back to raw
+          # termsource / source elements.
+          def term_sources(term)
+            fmt = Array(attribute_value(term, :fmt_termsource))
+            return fmt if fmt.any?
+
+              raw = Array(attribute_value(term, :termsource))
+            return raw if raw.any?
+
+            Array(attribute_value(term, :source))
           end
 
           def render_example_name(example, doc)
