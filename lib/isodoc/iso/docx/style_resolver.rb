@@ -20,6 +20,7 @@ module IsoDoc
       #   - :foreword    → ForewordText body style
       #   - :note        → Noteindent body style
       #   - :example     → Exampleindent body style
+      #   - :formula     → Formuladescription body style (e.g. "where:" text)
       #   - :bibliography → BiblioText body style
       #   - :normative   → normref body style
       #   - :body        → default (nil)
@@ -150,6 +151,7 @@ module IsoDoc
         ZONE_BODY_STYLE = {
           note: :note_indent,
           example: :example_indent,
+          formula: :formula_description,
           foreword: :foreword_text,
           bibliography: :biblio_text,
           normative: :normref,

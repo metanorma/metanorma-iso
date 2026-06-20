@@ -630,6 +630,25 @@ RSpec.describe "DOCX integration", type: :integration do
       term_num_para = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='TermNum']]", ns)
       expect(term_num_para).not_to be_nil
     end
+
+    it "formula description paragraphs use Formuladescription style" do
+      path = generate_docx(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <formula id="f1">
+              <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>E</mi><mo>=</mo><mi>m</mi><msup><mi>c</mi><mn>2</mn></msup></math></stem>
+              <p>where E is energy, m is mass, and c is the speed of light.</p>
+            </formula>
+          </clause>
+        </sections>
+      INNER
+
+      doc = extract_docx_xml(path, "word/document.xml")
+      desc_para = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Formuladescription']]", ns)
+      expect(desc_para).not_to be_nil,
+        "paragraph inside <formula> should use Formuladescription style"
+    end
   end
 
   # ── Context-aware style resolution ──────────────────────────────
