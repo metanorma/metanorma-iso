@@ -414,21 +414,62 @@ module IsoDoc
 
         # ── Middle title page ────────────────────────────────────────
         #
-        # The reference DOCX renders the full document title on a
-        # separate page between front matter and body, using zzSTDTitle.
-        # This is distinct from the cover page title (CoverTitleA1):
-        # both pages exist in the standard ISO layout.
+        # The reference DOCX renders the document title on a separate
+        # page between front matter and body. Era C uses MainTitle1 for
+        # the intro+main combination and MainTitle2 for the part title.
         def render_middle_title(model, doc)
           bib = model.bibdata
           return unless bib
 
-          title_text = build_full_title(bib)
-          return unless title_text && !title_text.empty?
+          render_middle_title_main(bib, doc)
+          render_middle_title_part(bib, doc)
+        end
+
+        def render_middle_title_main(bib, doc)
+          text = title_intro_and_main(bib)
+          return unless text && !text.empty?
 
           para = Uniword::Builder::ParagraphBuilder.new
-          para.style = @resolver.paragraph_style(:title)
-          para << title_text
+          para.style = @resolver.paragraph_style(:main_title1)
+          para << text
           doc << para
+        end
+
+        def render_middle_title_part(bib, doc)
+          text = title_part_text(bib)
+          return unless text && !text.empty?
+
+          para = Uniword::Builder::ParagraphBuilder.new
+          para.style = @resolver.paragraph_style(:main_title2)
+          para << text
+          doc << para
+        end
+
+        def title_intro_and_main(bib)
+          localized = titles_for_language(bib.titles, "en") if bib.class.attributes.key?(:titles)
+          return nil unless localized
+
+          parts = []
+          parts << localized.title_intro.value if localized.title_intro
+          parts << localized.title_main.value if localized.title_main
+          parts << localized.title_full.value if localized.title_full && !localized.title_main
+          parts.empty? ? nil : parts.join(" — ")
+        end
+
+        def title_part_text(bib)
+          localized = titles_for_language(bib.titles, "en") if bib.class.attributes.key?(:titles)
+          return nil unless localized&.title_part
+
+          prefix = localized.title_part_prefix&.value.to_s.strip
+          part_val = localized.title_part.value
+          return nil if part_val.nil? || part_val.to_s.empty?
+
+          if !prefix.empty?
+            sep = prefix.end_with?(":") ? " " : ": "
+            "#{prefix}#{sep}#{part_val}"
+          else
+            part_val.to_s
+          end
         end
 
         # ── Section visitors ───────────────────────────────────────────
@@ -597,16 +638,6 @@ module IsoDoc
           year = extract_copyright_year(bib) || "2026"
           holder = extract_copyright_holder(bib) || "ISO"
           "© #{holder} #{year} – All rights reserved"
-        end
-
-        def build_full_title(bib)
-          return nil unless bib&.class&.attributes&.key?(:titles)
-
-          titles = bib.titles
-          localized = titles_for_language(titles, "en")
-
-          title_text = localized&.to_s
-          (title_text.nil? || title_text.empty?) ? nil : title_text
         end
 
         # Pick the English title from a TitleCollection. TitleCollection

@@ -1133,13 +1133,44 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
         pkg = Uniword::Docx::Package.from_file(path)
         paras = pkg.document.body.paragraphs
 
-        # Find the middle title paragraph with zzSTDTitle style
+        # Era C reference DOCX renders the middle title with MainTitle1
         title_paras = paras.select do |p|
-          p.properties&.style&.value == "zzSTDTitle"
+          p.properties&.style&.value == "MainTitle1"
         end
         expect(title_paras.length).to be >= 1
         title_text = title_paras.first.runs.map { |r| r.text || "" }.join
         expect(title_text).to include("Quality Management")
+      end
+    end
+
+    it "renders part title on the middle title page with MainTitle2" do
+      xml = minimal_iso_xml(<<~INNER)
+        <bibdata type="standard">
+          <title language="en" type="title-intro">Cereals</title>
+          <title language="en" type="title-main">Specifications</title>
+          <title language="en" type="title-part">Rice</title>
+          <docidentifier type="ISO">ISO/CD 17301-1:2016</docidentifier>
+          <copyright><from>2024</from><owner><organization>
+            <name>ISO</name>
+          </organization></owner></copyright>
+        </bibdata>
+        <sections/>
+      INNER
+
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        pkg = Uniword::Docx::Package.from_file(path)
+        paras = pkg.document.body.paragraphs
+
+        main_paras = paras.select { |p| p.properties&.style&.value == "MainTitle1" }
+        part_paras = paras.select { |p| p.properties&.style&.value == "MainTitle2" }
+
+        main_text = main_paras.first.runs.map { |r| r.text || "" }.join
+        expect(main_text).to include("Cereals").and include("Specifications")
+
+        part_text = part_paras.first.runs.map { |r| r.text || "" }.join
+        expect(part_text).to include("Rice")
       end
     end
 
