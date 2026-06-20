@@ -724,6 +724,25 @@ RSpec.describe "DOCX integration", type: :integration do
       expect(all_text).to include("712")
       expect(all_text).to include("2009")
     end
+
+    it "footnote body paragraph uses FootnoteText style" do
+      path = generate_docx(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <p>Body text<fn id="fn1">Footnote body.</fn>.</p>
+          </clause>
+        </sections>
+      INNER
+
+      Zip::File.open(path) do |zip|
+        footnotes_xml = zip.find_entry("word/footnotes.xml").get_input_stream.read
+        doc = Nokogiri::XML(footnotes_xml)
+        footnote_body = doc.at_xpath("//w:footnote[w:p/w:pPr/w:pStyle[@w:val='FootnoteText']]", ns)
+        expect(footnote_body).not_to be_nil,
+          "footnote body paragraph should use FootnoteText style"
+      end
+    end
   end
 
   # ── Heading levels ──────────────────────────────────────────────

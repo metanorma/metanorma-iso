@@ -580,11 +580,23 @@ module IsoDoc
           text = extract_footnote_text(element)
           return if text.nil? || text.empty?
 
-          fn_run = @doc.footnote(text)
+          fn_run = build_footnote_with_style(text)
           fn_id = fn_run.footnote_reference&.id
           @footnote_cache[cache_key] = fn_id if cache_key && fn_id
           apply_run_char_style(fn_run, :footnote_reference)
           para << fn_run
+        end
+
+        # Create a footnote whose body paragraph carries the
+        # FootnoteText style, so the body text matches the Era C
+        # template's footnote typography rather than the document
+        # default.
+        def build_footnote_with_style(text)
+          style = @resolver.paragraph_style(:footnote_text)
+          @doc.footnote do |p|
+            p.style = style if style
+            p << text
+          end
         end
 
         # Cache key is the source footnote identity (target → id → reference),
@@ -602,7 +614,7 @@ module IsoDoc
             return p_children.map { |p| collect_text(p) }.join(" ")
           end
 
-          collect_text(element)
+          collect_all_text(element)
         end
 
         # Render a sourcecode callout as a superscript "(N)" run.
