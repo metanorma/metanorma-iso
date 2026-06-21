@@ -3852,6 +3852,7 @@
 		<xsl:param name="num"/>
 		<xsl:variable name="i18n_locality_page" select="$variables/mnx:doc[@num = $num]/i18n_locality_page"/>
 		<fo:block xsl:use-attribute-sets="toc-title-style">
+			<xsl:call-template name="refine_toc-title-style"/>
 			<xsl:if test="$layoutVersion = '2024'">
 				<xsl:attribute name="margin-top">0</xsl:attribute>
 			</xsl:if>
