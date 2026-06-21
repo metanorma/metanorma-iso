@@ -1838,6 +1838,32 @@ line3</sourcecode>
       end
     end
   end
+
+  describe "index section rendering" do
+    it "renders indexsect title with IndexHead style" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="c1"><fmt-title>Scope</fmt-title><p>Body.</p></clause>
+        </sections>
+        <indexsect>
+          <title>Index</title>
+          <index id="ix1">
+            <primary>Alpha</primary>
+          </index>
+        </indexsect>
+      INNER
+
+      convert_and_extract(adapter, xml) do |pkg|
+        index_paras = pkg.document.body.paragraphs.select do |p|
+          p.properties&.style&.value == "IndexHead"
+        end
+        expect(index_paras.length).to eq(1),
+          "expected one IndexHead paragraph for indexsect title"
+        text = index_paras.first.runs.map { |r| r.text || "" }.join
+        expect(text).to include("Index")
+      end
+    end
+  end
 end
 
 RSpec.describe IsoDoc::Iso::Docx::Adapter, "Simple template" do

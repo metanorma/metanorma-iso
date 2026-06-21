@@ -401,7 +401,20 @@ module IsoDoc
         end
 
         def visit_indexsect(section, doc)
+          render_indexsect_title(section, doc)
           walk_mixed_content(section, doc)
+        end
+
+        def render_indexsect_title(section, doc)
+          return unless section.class.attributes.key?(:title)
+
+          titles = Array(section.title)
+          return if titles.empty?
+
+          para = Uniword::Builder::ParagraphBuilder.new
+          para.style = @resolver.paragraph_style(:index)
+          @inline_renderer.render_heading(titles.first, para)
+          doc << para
         end
 
         def visit_colophon(colophon, doc)
