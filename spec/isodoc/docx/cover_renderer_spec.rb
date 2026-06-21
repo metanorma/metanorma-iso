@@ -34,7 +34,6 @@ RSpec.describe IsoDoc::Iso::Docx::CoverRenderer do
       texts = paragraphs.map { |p| p.runs.map { |r| r.text || "" }.join }
 
       expect(texts).to include("17301")
-      expect(texts).to include("ISO/CD 17301-1:2016 (draft 2016-05-01)")
       expect(texts).to include("CD stage")
     end
 
@@ -147,6 +146,34 @@ RSpec.describe IsoDoc::Iso::Docx::CoverRenderer do
 
       texts = doc.model.body.paragraphs.map { |p| p.runs.map { |r| r.text || "" }.join }
       expect(texts).to include("TC 34/SC 4/WG 3")
+    end
+
+    it "renders identifier+language as the first cover paragraph with zzCoverlarge" do
+      xml = minimal_iso_xml(<<~INNER)
+        <bibdata type="standard">
+          <title language="en" type="title-main">Test</title>
+          <docidentifier type="ISO" primary="true">ISO/DIS 15926-100</docidentifier>
+          <language>en</language>
+          <copyright><from>2024</from><owner><organization>
+            <name>ISO</name>
+          </organization></owner></copyright>
+        </bibdata>
+        <sections/>
+      INNER
+
+      model = parse_iso_document(xml)
+      doc = adapter.send(:create_document)
+
+      renderer.render(model.bibdata, doc)
+
+      first_styled = doc.model.body.paragraphs.find do |p|
+        p.properties&.style&.value == "zzCoverlarge"
+      end
+      expect(first_styled).not_to be_nil,
+        "expected a zzCoverlarge paragraph on the cover"
+      text = first_styled.runs.map { |r| r.text || "" }.join
+      expect(text).to eq("ISO/DIS 15926-100(en)"),
+        "cover-large line should be identifier with language tag in parens"
     end
 
     it "handles nil bibdata gracefully" do

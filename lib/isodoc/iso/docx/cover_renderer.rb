@@ -32,8 +32,8 @@ module IsoDoc
         def render(bibdata, doc)
           return unless bibdata
 
+          render_cover_large(doc, identifier_with_language(bibdata))
           render_cover_line(doc, doc_number(bibdata))
-          render_cover_line(doc, doc_identifier(bibdata))
           render_cover_line(doc, committee_reference(bibdata))
           render_cover_line(doc, edition_text(bibdata))
           render_cover_line(doc, "")
@@ -50,6 +50,15 @@ module IsoDoc
           para = Uniword::Builder::ParagraphBuilder.new
           para.style = @resolver.paragraph_style(:cover_meta)
           para << text.to_s
+          doc << para
+        end
+
+        def render_cover_large(doc, text)
+          return if text.nil? || text.empty?
+
+          para = Uniword::Builder::ParagraphBuilder.new
+          para.style = @resolver.paragraph_style(:cover_large)
+          para << text
           doc << para
         end
 
@@ -102,6 +111,33 @@ module IsoDoc
 
           draft_date = extract_draft_date(bib)
           id_text + (draft_date ? " (draft #{draft_date})" : "")
+        end
+
+        # Cover-large line: primary identifier with language tag, e.g.
+        # "ISO/DIS 15926-100(en)". Matches the DIS 15926 reference DOCX
+        # zzCoverlarge paragraph.
+        def identifier_with_language(bib)
+          identifiers = if bib.class.attributes.key?(:doc_identifier)
+                          Array(bib.doc_identifier)
+                        end
+          primary = identifiers&.find { |d| d.primary == "true" } || identifiers&.first
+          return nil unless primary
+
+          id_text = primary.value
+          return nil if id_text.nil? || id_text.empty?
+
+          lang = language_code(bib)
+          lang ? "#{id_text}(#{lang})" : id_text
+        end
+
+        def language_code(bib)
+          langs = if bib.class.attributes.key?(:language)
+                    Array(bib.language)
+                  end
+          lang = langs&.first
+          return lang if lang.is_a?(String)
+
+          extract_value(lang) if lang.is_a?(Lutaml::Model::Serializable)
         end
 
         def committee_reference(bib)
