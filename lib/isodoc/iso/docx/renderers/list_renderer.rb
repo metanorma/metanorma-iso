@@ -7,6 +7,12 @@ module IsoDoc
         # Renders UnorderedList and OrderedList as a sequence of
         # numbering-applied paragraphs.
         #
+        # Era C template provides:
+        #   - ListContinue1 paragraph style for unordered-list items
+        #     (the style itself carries numId=3, the dash bullet
+        #     numbering definition)
+        #   - decimal_list numId for ordered-list items
+        #
         # OrderedList is a subclass of UnorderedList; both are registered
         # in the adapter's simple_renderers table. OrderedList must be
         # checked first (exact-class match wins) so it picks up the
@@ -15,19 +21,27 @@ module IsoDoc
           include Base
 
           def render(list, doc)
-            num_id = numbering_id_for(list)
-            Array(list.listitem).each do |item|
-              render_numbered_item(item, doc, num_id, 0)
+            if list.is_a?(Metanorma::Document::Components::Lists::OrderedList)
+              render_ordered(list, doc)
+            else
+              render_unordered(list, doc)
             end
           end
 
           private
 
-          def numbering_id_for(list)
-            if list.is_a?(Metanorma::Document::Components::Lists::OrderedList)
-              numbering_id_for_type(list.type)
-            else
-              @resolver.numbering_id(:dash_list)
+          def render_unordered(list, doc)
+            num_id = @resolver.numbering_id(:dash_list)
+            style = @resolver.paragraph_style(:list_continue1)
+            Array(list.listitem).each do |item|
+              render_item(item, doc, num_id, 0, style)
+            end
+          end
+
+          def render_ordered(list, doc)
+            num_id = numbering_id_for_type(list.type)
+            Array(list.listitem).each do |item|
+              render_item(item, doc, num_id, 0, nil)
             end
           end
 
@@ -40,8 +54,9 @@ module IsoDoc
             end
           end
 
-          def render_numbered_item(item, doc, num_id, level)
+          def render_item(item, doc, num_id, level, style_id)
             para = Uniword::Builder::ParagraphBuilder.new
+            para.style = style_id if style_id
             para.numbering(num_id, level) if num_id
             paragraphs = item.paragraphs
             if paragraphs && !paragraphs.empty?

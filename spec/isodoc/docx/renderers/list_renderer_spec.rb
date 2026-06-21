@@ -33,6 +33,27 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ListRenderer do
     end
   end
 
+  it "applies ListContinue1 style to unordered list items" do
+    xml = minimal_iso_xml(<<~INNER)
+      <sections>
+        <clause id="c1">
+          <title>Scope</title>
+          <ul id="ul1">
+            <li><p>First item.</p></li>
+            <li><p>Second item.</p></li>
+          </ul>
+        </clause>
+      </sections>
+    INNER
+
+    convert_and_extract(adapter, xml) do |pkg|
+      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      list_continue_count = styles.count("ListContinue1")
+      expect(list_continue_count).to eq(2),
+        "expected 2 ListContinue1 paragraphs, got #{list_continue_count}"
+    end
+  end
+
   it "renders ordered list items with decimal_list numId" do
     xml = minimal_iso_xml(<<~INNER)
       <sections>
