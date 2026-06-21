@@ -141,6 +141,18 @@ RSpec.describe IsoDoc::Iso::Docx::Context do
     end
   end
 
+  describe "#with_figure" do
+    it "sets in_figure during block, restores after" do
+      expect(context.in_figure).to be(false)
+      context.with_figure do
+        expect(context.in_figure).to be(true)
+        expect(context.zone).to be(:figure)
+      end
+      expect(context.in_figure).to be(false)
+      expect(context.zone).to be(:body)
+    end
+  end
+
   describe "section numbering" do
     it "generates ascending section numbers" do
       expect(context.next_section_number).to eq(1)

@@ -13,6 +13,7 @@ module IsoDoc
         attr_accessor :in_note, :in_example, :in_table, :in_annex,
                       :in_normative, :in_foreword, :in_introduction,
                       :in_bibliography, :in_definition_dd, :in_formula,
+                      :in_figure,
                       :section_depth,
                       :term_counter, :section_counter, :body_width
         def initialize
@@ -29,6 +30,7 @@ module IsoDoc
           @in_bibliography = false
           @in_definition_dd = false
           @in_formula = false
+          @in_figure = false
           @section_depth = 0
           @section_counter = Counter.new(0)
           @term_counter = Counter.new(0)
@@ -154,6 +156,14 @@ module IsoDoc
           @in_formula = old
         end
 
+        def with_figure
+          old = @in_figure
+          @in_figure = true
+          yield
+        ensure
+          @in_figure = old
+        end
+
         # Single enum view of the current rendering zone, derived from
         # the boolean flags. StyleResolver uses this for context-aware
         # dispatch (single source of truth).
@@ -164,6 +174,7 @@ module IsoDoc
           return :example      if @in_example
           return :table        if @in_table
           return :formula      if @in_formula
+          return :figure       if @in_figure
           return :annex        if @in_annex
           return :foreword     if @in_foreword
           return :introduction if @in_introduction

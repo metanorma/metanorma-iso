@@ -29,10 +29,12 @@ module IsoDoc
           end
 
           def render(figure, doc)
-            render_image(figure, doc)
-            render_subfigures(figure, doc)
-            render_name(figure, doc)
-            render_notes(figure, doc)
+            @context.with_figure do
+              render_image(figure, doc)
+              render_subfigures(figure, doc)
+              render_name(figure, doc)
+              render_notes(figure, doc)
+            end
           end
 
           private

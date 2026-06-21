@@ -55,6 +55,51 @@ RSpec.describe IsoDoc::Iso::Docx::StyleResolver do
     end
   end
 
+  describe ".dimension_key_for" do
+    it "returns :dimension_100 when pct is nil" do
+      expect(described_class.dimension_key_for(nil)).to eq(:dimension_100)
+    end
+
+    it "returns :dimension_100 at or above 90%" do
+      expect(described_class.dimension_key_for(90)).to eq(:dimension_100)
+      expect(described_class.dimension_key_for(95)).to eq(:dimension_100)
+      expect(described_class.dimension_key_for(100)).to eq(:dimension_100)
+    end
+
+    it "returns :dimension_75 between 60% and 89%" do
+      expect(described_class.dimension_key_for(60)).to eq(:dimension_75)
+      expect(described_class.dimension_key_for(70)).to eq(:dimension_75)
+      expect(described_class.dimension_key_for(89)).to eq(:dimension_75)
+    end
+
+    it "returns :dimension_50 below 60%" do
+      expect(described_class.dimension_key_for(10)).to eq(:dimension_50)
+      expect(described_class.dimension_key_for(40)).to eq(:dimension_50)
+      expect(described_class.dimension_key_for(59)).to eq(:dimension_50)
+    end
+  end
+
+  describe "#image_paragraph_style" do
+    it "returns FigureGraphic inside a figure zone regardless of width" do
+      context.with_figure do
+        expect(resolver.image_paragraph_style(nil)).to eq("FigureGraphic")
+        expect(resolver.image_paragraph_style(50)).to eq("FigureGraphic")
+      end
+    end
+
+    it "returns Dimension100 outside figure when width is nil" do
+      expect(resolver.image_paragraph_style(nil)).to eq("Dimension100")
+    end
+
+    it "returns Dimension75 for medium-width standalone images" do
+      expect(resolver.image_paragraph_style(70)).to eq("Dimension75")
+    end
+
+    it "returns Dimension50 for narrow standalone images" do
+      expect(resolver.image_paragraph_style(40)).to eq("Dimension50")
+    end
+  end
+
   describe "#table_title_style" do
     it "returns Tabletitle style" do
       expect(resolver.table_title_style).to eq("Tabletitle")

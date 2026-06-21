@@ -111,6 +111,31 @@ module IsoDoc
           @mapping.paragraph_style(key)
         end
 
+        # Paragraph style for an image. Inside a figure zone, the
+        # reference DOCX uses FigureGraphic for the image paragraph
+        # regardless of width. Outside figures (e.g. standalone
+        # <image> in body), Era C's Dimension50/75/100 styles scale
+        # the image cell to body width.
+        def image_paragraph_style(width_pct)
+          return @mapping.paragraph_style(:figure_graphic) if @context.zone == :figure
+
+          key = self.class.dimension_key_for(width_pct)
+          @mapping.paragraph_style(key)
+        end
+
+        # Width breakpoints as a pure-function class method so tests
+        # can verify dimension selection without conversion context.
+        FULL_WIDTH_THRESHOLD  = 90
+        MEDIUM_WIDTH_THRESHOLD = 60
+
+        def self.dimension_key_for(pct)
+          return :dimension_100 if pct.nil?
+          return :dimension_100 if pct >= FULL_WIDTH_THRESHOLD
+          return :dimension_75 if pct >= MEDIUM_WIDTH_THRESHOLD
+
+          :dimension_50
+        end
+
         def table_title_style
           key = @context.in_annex ? :table_title_annex : :table_title
           @mapping.paragraph_style(key)
