@@ -186,6 +186,11 @@ module IsoDoc
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
+            Metanorma::StandardDocument::Blocks::AmendBlock =>
+              Renderers::AmendRenderer.new(
+                resolver: @resolver, context: @context,
+                inline_renderer: @inline_renderer, walker: @walker,
+              ),
           }
         end
 

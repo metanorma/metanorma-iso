@@ -194,6 +194,8 @@ module IsoDoc
           foreword: :foreword_text,
           bibliography: :biblio_text,
           normative: :normref,
+          amend_description: :body_text,
+          amend_newcontent: :amend_newcontent,
         }.freeze
 
         # Continuation styles for zones that split multi-paragraph bodies

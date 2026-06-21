@@ -15,7 +15,8 @@ module IsoDoc
                       :in_bibliography, :in_definition_dd, :in_formula,
                       :in_figure,
                       :section_depth,
-                      :term_counter, :section_counter, :body_width
+                      :term_counter, :section_counter, :body_width,
+                      :amend_zone
         def initialize
           @footnote_counter = Counter.new
           @bookmark_counter = Counter.new
@@ -35,6 +36,7 @@ module IsoDoc
           @section_counter = Counter.new(0)
           @term_counter = Counter.new(0)
           @zone_paragraph_counts = Hash.new(0)
+          @amend_zone = nil
         end
 
         def next_footnote_id
@@ -164,17 +166,36 @@ module IsoDoc
           @in_figure = old
         end
 
+        # Enter an amend zone (:description or :newcontent). While inside,
+        # Context#zone returns the amend sub-zone so StyleResolver can
+        # apply BodyText for description and a3 (amend_newcontent) for
+        # newcontent paragraphs.
+        def with_amend(zone)
+          old = @amend_zone
+          old_count = @zone_paragraph_counts[zone]
+          @amend_zone = zone
+          @zone_paragraph_counts[zone] = 0
+          yield
+        ensure
+          @amend_zone = old
+          @zone_paragraph_counts[zone] = old_count
+        end
+
         # Single enum view of the current rendering zone, derived from
         # the boolean flags. StyleResolver uses this for context-aware
         # dispatch (single source of truth).
         #
-        # Priority order matters: most-specific zone first.
+        # Priority order matters: most-specific zone first. Nested zones
+        # (e.g., a note inside amend newcontent) win over their parent
+        # zone so the inner content picks up the inner style.
         def zone
           return :note         if @in_note
           return :example      if @in_example
           return :table        if @in_table
           return :formula      if @in_formula
           return :figure       if @in_figure
+          return :amend_description if @amend_zone == :description
+          return :amend_newcontent if @amend_zone == :newcontent
           return :annex        if @in_annex
           return :foreword     if @in_foreword
           return :introduction if @in_introduction

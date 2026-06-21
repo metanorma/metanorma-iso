@@ -153,6 +153,39 @@ RSpec.describe IsoDoc::Iso::Docx::Context do
     end
   end
 
+  describe "#with_amend" do
+    it "sets amend_zone during block, restores after" do
+      expect(context.amend_zone).to be_nil
+      context.with_amend(:newcontent) do
+        expect(context.amend_zone).to be(:newcontent)
+        expect(context.zone).to be(:amend_newcontent)
+      end
+      expect(context.amend_zone).to be_nil
+      expect(context.zone).to be(:body)
+    end
+
+    it "supports nested amend zones (description → newcontent)" do
+      context.with_amend(:description) do
+        expect(context.zone).to be(:amend_description)
+        context.with_amend(:newcontent) do
+          expect(context.zone).to be(:amend_newcontent)
+        end
+        expect(context.zone).to be(:amend_description)
+      end
+    end
+
+    it "yields inner zone (note) over amend zone for nested content" do
+      context.with_amend(:newcontent) do
+        expect(context.zone).to be(:amend_newcontent)
+        context.with_note do
+          expect(context.zone).to be(:note),
+            "nested note inside amend should win over amend zone"
+        end
+        expect(context.zone).to be(:amend_newcontent)
+      end
+    end
+  end
+
   describe "section numbering" do
     it "generates ascending section numbers" do
       expect(context.next_section_number).to eq(1)

@@ -27,6 +27,7 @@ module IsoDoc
         autoload :TermsSectionRenderer, "isodoc/iso/docx/renderers/terms_section_renderer"
         autoload :TermRenderer,         "isodoc/iso/docx/renderers/term_renderer"
         autoload :BibliographyRenderer, "isodoc/iso/docx/renderers/bibliography_renderer"
+        autoload :AmendRenderer,        "isodoc/iso/docx/renderers/amend_renderer"
       end
     end
   end
