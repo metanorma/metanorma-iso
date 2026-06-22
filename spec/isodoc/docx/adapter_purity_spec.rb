@@ -12,6 +12,8 @@ require_relative "spec_helper"
 # 5. No `respond_to?` for type checks.
 # 6. No `require_relative` for library code.
 # 7. No `instance_variable_set` / `instance_variable_get`.
+# 8. Adapter dispatch must flow through Renderers::Registry (no parallel
+#    @simple_renderers hash duplicating Registry's lookup logic).
 RSpec.describe "Adapter purity" do
   SOURCE_DIR = Pathname.new("lib/isodoc/iso/docx").expand_path(__dir__ + "/../../..")
 
@@ -131,5 +133,13 @@ RSpec.describe "Adapter purity" do
       end
     end
     expect(offenders).to be_empty
+  end
+
+  it "does not reintroduce a parallel @simple_renderers hash in Adapter" do
+    adapter_src = File.read(SOURCE_DIR + "adapter.rb")
+    expect(adapter_src).not_to match(/@simple_renderers/),
+      "Adapter must dispatch through Renderers::Registry, not a parallel hash"
+    expect(adapter_src).not_to match(/def lookup_simple_renderer/),
+      "lookup_simple_renderer duplicates Registry#lookup — remove it"
   end
 end

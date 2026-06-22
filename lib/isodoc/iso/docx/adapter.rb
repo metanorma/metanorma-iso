@@ -19,12 +19,12 @@ module IsoDoc
       #   - TocBuilder         — table of contents entries
       #   - InlineRenderer     — inline element rendering
       #
-      # Output format is determined by file extension (.docx or .doc).
+      # Dispatch is class-keyed via Renderers::Registry (single source of
+      # truth). Each content type maps to exactly one Renderer (MECE).
+      # Adding a new type = adding one +#register+ call in
+      # +#build_dispatcher+ — no edit to existing dispatch logic (OCP).
       #
-      # Uses case/when dispatch on model class (type-driven, no reflection).
-      # Each element type maps to exactly one visitor method (MECE).
-      # New element types are added by extending the case statement
-      # and adding a new visitor method (open/closed principle).
+      # Output format is determined by file extension (.docx or .doc).
       class Adapter
         include ModelUtils
 
@@ -112,98 +112,136 @@ module IsoDoc
         end
         # Build the dispatcher: a Walker paired with a Registry of
         # per-content-type renderers. Simple renderers (Note, Example,
-        # Admonition, Quote, DefinitionList, Figure) are instantiated
-        # from Renderers::*; complex types still dispatch to adapter
-        # via the +#adapter_dispatch+ fallback.
+        # Admonition, Quote, DefinitionList, Figure, Sourcecode) are
+        # instantiated from Renderers::* and registered in the Registry;
+        # complex types still dispatch to adapter via the
+        # +#adapter_dispatch+ fallback.
         def build_dispatcher
           dispatch_fn = ->(node, doc) { dispatch(node, doc) }
           @walker = Renderers::Walker.new(dispatch_fn)
-          @simple_renderers = {
-            Metanorma::Document::Components::MultiParagraph::AdmonitionBlock =>
+          @registry = Renderers::Registry.new do |r|
+            r.register(
+              Metanorma::Document::Components::MultiParagraph::AdmonitionBlock,
               Renderers::AdmonitionRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
-            Metanorma::Document::Components::MultiParagraph::QuoteBlock =>
+            )
+            r.register(
+              Metanorma::Document::Components::MultiParagraph::QuoteBlock,
               Renderers::QuoteRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
-            Metanorma::Document::Components::AncillaryBlocks::ExampleBlock =>
+            )
+            r.register(
+              Metanorma::Document::Components::AncillaryBlocks::ExampleBlock,
               Renderers::ExampleRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
-            Metanorma::Document::Components::Lists::DefinitionList =>
+            )
+            r.register(
+              Metanorma::Document::Components::Lists::DefinitionList,
               @definition_list_renderer,
-            Metanorma::Document::Components::AncillaryBlocks::FigureBlock =>
+            )
+            r.register(
+              Metanorma::Document::Components::AncillaryBlocks::FigureBlock,
               Renderers::FigureRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
                 image_renderer: @image_renderer.method(:call),
               ),
-            Metanorma::Document::Components::IdElements::Image =>
+            )
+            r.register(
+              Metanorma::Document::Components::IdElements::Image,
               @image_renderer,
-            Metanorma::Document::Components::Blocks::NoteBlock =>
+            )
+            r.register(
+              Metanorma::Document::Components::Blocks::NoteBlock,
               Renderers::NoteRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
-            Metanorma::Document::Components::Paragraphs::ParagraphBlock =>
+            )
+            r.register(
+              Metanorma::Document::Components::Paragraphs::ParagraphBlock,
               Renderers::ParagraphRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
-            Metanorma::Document::Components::Lists::OrderedList =>
+            )
+            r.register(
+              Metanorma::Document::Components::Lists::OrderedList,
               Renderers::ListRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
-            Metanorma::Document::Components::Lists::UnorderedList =>
+            )
+            r.register(
+              Metanorma::Document::Components::Lists::UnorderedList,
               Renderers::ListRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
-            Metanorma::Document::Components::Tables::TableBlock =>
+            )
+            r.register(
+              Metanorma::Document::Components::Tables::TableBlock,
               Renderers::TableRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
+            )
+            r.register(
+              Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock,
+              @sourcecode_renderer,
+            )
             # ── Section renderers (MECE: one per IsoDocument section class) ──
-            # Order matters in @simple_renderers? No — lookup_simple_renderer
-            # checks exact-class first. Subclasses (IsoAnnexSection etc.) are
-            # registered explicitly so they win over the ParagraphBlock entry.
-            Metanorma::IsoDocument::Sections::IsoAnnexSection =>
+            # Subclasses (IsoAnnexSection etc.) are registered explicitly so
+            # they win over the ParagraphBlock entry via exact-class match.
+            r.register(
+              Metanorma::IsoDocument::Sections::IsoAnnexSection,
               Renderers::AnnexRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
-            Metanorma::IsoDocument::Sections::IsoTermsSection =>
+            )
+            r.register(
+              Metanorma::IsoDocument::Sections::IsoTermsSection,
               Renderers::TermsSectionRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
-            Metanorma::IsoDocument::Sections::IsoClauseSection =>
+            )
+            r.register(
+              Metanorma::IsoDocument::Sections::IsoClauseSection,
               Renderers::ClauseRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
-            Metanorma::IsoDocument::Terms::IsoTerm =>
+            )
+            r.register(
+              Metanorma::IsoDocument::Terms::IsoTerm,
               Renderers::TermRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
-            Metanorma::Document::Components::BibData::BibliographicItem =>
+            )
+            r.register(
+              Metanorma::Document::Components::BibData::BibliographicItem,
               Renderers::BibliographyRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
-            Metanorma::StandardDocument::Blocks::AmendBlock =>
+            )
+            r.register(
+              Metanorma::StandardDocument::Blocks::AmendBlock,
               Renderers::AmendRenderer.new(
                 resolver: @resolver, context: @context,
                 inline_renderer: @inline_renderer, walker: @walker,
               ),
-          }
+            )
+          end
         end
 
         def lookup_comment_id(annotation_target_id)
@@ -420,46 +458,38 @@ module IsoDoc
 
         # ── Block visitors (central dispatch) ──────────────────────────
         #
-        # Class-keyed dispatch via the Renderers::Registry. Simple content
-        # types (Note, Example, Admonition, Quote, DefinitionList, Figure)
-        # are dispatched to their own Renderer classes. Complex types
-        # fall through to adapter-side +visit_*+ methods.
+        # Class-keyed dispatch via the Renderers::Registry. Each content
+        # type maps to exactly one Renderer instance (MECE). Complex types
+        # that need adapter-side state (formula) or are trivial one-liners
+        # (page break, horizontal rule, bookmark no-op) fall through to
+        # +#adapter_dispatch+.
         #
         # Inheritance: the Registry walks the ancestor chain, so an
-        # IsoClauseSection (a ParagraphBlock subclass) dispatches to
-        # +visit_clause+ via its explicit entry; subclasses with their
-        # own entries always win (exact-class match first).
+        # IsoClauseSection (a ParagraphBlock subclass) dispatches to its
+        # own ClauseRenderer via its explicit entry; subclasses with
+        # their own entries always win (exact-class match first).
 
-        # Dispatch entry point used by Renderers::Walker and visit_block.
-        # Looks up by node class, then walks the ancestor chain so that
-        # subclasses (e.g., ParagraphWithFootnote < ParagraphBlock) hit
-        # the registered renderer without each subclass needing its own
-        # entry.
+        # Dispatch entry point used by Renderers::Walker.
+        # Looks up by node class in the Registry, then walks the ancestor
+        # chain so that subclasses (e.g., ParagraphWithFootnote <
+        # ParagraphBlock) hit the registered renderer without each
+        # subclass needing its own entry. Falls back to +#adapter_dispatch+
+        # for complex types that still need adapter-side coordination.
         def dispatch(node, doc)
-          renderer = lookup_simple_renderer(node.class)
+          renderer = @registry.lookup(node.class)
           return renderer.render(node, doc) if renderer
 
           adapter_dispatch(node, doc)
         end
 
-        def lookup_simple_renderer(klass)
-          return @simple_renderers[klass] if @simple_renderers[klass]
-
-          klass.ancestors.each do |ancestor|
-            return @simple_renderers[ancestor] if @simple_renderers[ancestor]
-          end
-          nil
-        end
-
-        # Adapter-side dispatch for complex content types that still
-        # have their +visit_*+ methods defined here.
+        # Adapter-side dispatch for content types that need adapter state
+        # (formula wraps Context#with_formula and walks dl/p children via
+        # the dispatch function) or are trivial one-liners (page break,
+        # horizontal rule, bookmark no-op).
         def adapter_dispatch(node, doc)
           case node
-          # ── Non-paragraph types ──
           when Metanorma::Document::Components::AncillaryBlocks::FormulaBlock
             visit_formula(node, doc)
-          when Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock
-            visit_sourcecode(node, doc)
           when Metanorma::Document::Components::EmptyElements::PageBreakElement
             doc.page_break
           when Metanorma::Document::Components::EmptyElements::HorizontalRuleElement
@@ -471,15 +501,7 @@ module IsoDoc
           end
         end
 
-        def visit_block(block, doc)
-          dispatch(block, doc)
-        end
-
         # ── Block visitor implementations ──────────────────────────────
-
-        def visit_sourcecode(sourcecode, doc)
-          @sourcecode_renderer.render(sourcecode, doc)
-        end
 
         def visit_formula(formula, doc)
           @context.with_formula do
