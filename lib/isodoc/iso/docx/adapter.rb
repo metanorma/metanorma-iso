@@ -94,10 +94,22 @@ module IsoDoc
 
           build_dispatcher
 
+          @middle_title_renderer = MiddleTitleRenderer.new(
+            resolver: @resolver, inline_renderer: @inline_renderer,
+          )
+          @preface_renderer = PrefaceRenderer.new(
+            resolver: @resolver, context: @context,
+            inline_renderer: @inline_renderer, walker: @walker,
+          )
+          @indexsect_renderer = IndexsectRenderer.new(
+            resolver: @resolver, inline_renderer: @inline_renderer,
+            walker: @walker,
+          )
+          @colophon_renderer = ColophonRenderer.new(walker: @walker)
+
           # Wire comment ID lookup from CommentRenderer into InlineRenderer
           @inline_renderer.comment_id_lookup = method(:lookup_comment_id)
         end
-
         # Build the dispatcher: a Walker paired with a Registry of
         # per-content-type renderers. Simple renderers (Note, Example,
         # Admonition, Quote, DefinitionList, Figure) are instantiated
@@ -344,10 +356,11 @@ module IsoDoc
           @toc_builder.render(model, doc)
           doc.page_break
 
-          visit_preface(model.preface, doc) if model.preface
+          @preface_renderer.render(model.preface, doc) if model.preface
 
-          header_text = build_header_text(model)
-          copyright_text = build_copyright_text(model)
+          bib_text = BibDataText.new(model)
+          header_text = bib_text.header
+          copyright_text = bib_text.copyright
           @section_manager.insert_front_matter_section(
             doc, header_text: header_text, copyright_text: copyright_text,
           )
@@ -358,40 +371,16 @@ module IsoDoc
           # zzSTDTitle paragraph style. The cover page (CoverTitleA1)
           # also shows the title, but they are different physical pages
           # with different styles.
-          render_middle_title(model, doc)
+          @middle_title_renderer.render(model, doc)
           visit_sections(model.sections, doc) if model.sections
           model.annex&.each { |a| dispatch(a, doc) }
           visit_bibliography(model.bibliography, doc) if model.bibliography
-          visit_colophon(model.colophon, doc) if model.colophon
-          visit_indexsect(model.indexsect, doc) if model.indexsect
+          @colophon_renderer.render(model.colophon, doc) if model.colophon
+          @indexsect_renderer.render(model.indexsect, doc) if model.indexsect
 
           @section_manager.apply_body_section(
             doc, header_text: header_text, copyright_text: copyright_text,
           )
-        end
-
-        def visit_preface(preface, doc)
-          if preface.foreword
-            @context.with_foreword do
-              visit_foreword(preface.foreword, doc)
-              doc.page_break if preface.introduction || preface.clause&.any?
-            end
-          end
-
-          if preface.introduction
-            @context.with_introduction do
-              visit_introduction(preface.introduction, doc)
-            end
-          end
-
-          preface.clause&.each do |c|
-            type = c.type if c.class.attributes.key?(:type)
-            if type == "toc"
-              # Already handled by TocBuilder
-            else
-              dispatch(c, doc)
-            end
-          end
         end
 
         def visit_sections(sections, doc)
@@ -405,114 +394,14 @@ module IsoDoc
           end
         end
 
-        def visit_indexsect(section, doc)
-          render_indexsect_title(section, doc)
-          walk_mixed_content(section, doc)
-        end
-
-        def render_indexsect_title(section, doc)
-          return unless section.class.attributes.key?(:title)
-
-          titles = Array(section.title)
-          return if titles.empty?
-
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = @resolver.paragraph_style(:index)
-          @inline_renderer.render_heading(titles.first, para)
-          doc << para
-        end
-
-        def visit_colophon(colophon, doc)
-          return unless colophon
-
-          Array(colophon.clause).each do |clause|
-            walk_mixed_content(clause, doc)
-          end
-        end
-
         # ── Middle title page ────────────────────────────────────────
         #
         # The reference DOCX renders the document title on a separate
         # page between front matter and body. Era C uses MainTitle1 for
         # the intro+main combination and MainTitle2 for the part title.
-        def render_middle_title(model, doc)
-          bib = model.bibdata
-          return unless bib
-
-          render_middle_title_main(bib, doc)
-          render_middle_title_part(bib, doc)
-        end
-
-        def render_middle_title_main(bib, doc)
-          text = title_intro_and_main(bib)
-          return unless text && !text.empty?
-
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = @resolver.paragraph_style(:main_title1)
-          para << text
-          doc << para
-        end
-
-        def render_middle_title_part(bib, doc)
-          text = title_part_text(bib)
-          return unless text && !text.empty?
-
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = @resolver.paragraph_style(:main_title2)
-          para << text
-          doc << para
-        end
-
-        def title_intro_and_main(bib)
-          localized = titles_for_language(bib.titles, "en") if bib.class.attributes.key?(:titles)
-          return nil unless localized
-
-          parts = []
-          parts << localized.title_intro.value if localized.title_intro
-          parts << localized.title_main.value if localized.title_main
-          parts << localized.title_full.value if localized.title_full && !localized.title_main
-          parts.empty? ? nil : parts.join(" — ")
-        end
-
-        def title_part_text(bib)
-          localized = titles_for_language(bib.titles, "en") if bib.class.attributes.key?(:titles)
-          return nil unless localized&.title_part
-
-          prefix = localized.title_part_prefix&.value.to_s.strip
-          part_val = localized.title_part.value
-          return nil if part_val.nil? || part_val.to_s.empty?
-
-          if !prefix.empty?
-            sep = prefix.end_with?(":") ? " " : ": "
-            "#{prefix}#{sep}#{part_val}"
-          else
-            part_val.to_s
-          end
-        end
+        # Delegated to MiddleTitleRenderer.
 
         # ── Section visitors ───────────────────────────────────────────
-
-        def visit_foreword(foreword, doc)
-          title = foreword.fmt_title || foreword.title
-          if title
-            para = Uniword::Builder::ParagraphBuilder.new
-            para.style = @resolver.paragraph_style(:foreword)
-            @inline_renderer.render(title, para)
-            doc << para
-          end
-          walk_mixed_content(foreword, doc)
-        end
-
-        def visit_introduction(intro, doc)
-          title = intro.fmt_title || intro.title
-          if title
-            para = Uniword::Builder::ParagraphBuilder.new
-            para.style = @resolver.paragraph_style(:introduction)
-            @inline_renderer.render(title, para)
-            doc << para
-          end
-          walk_mixed_content(intro, doc)
-        end
 
         def visit_references_section(refs_sect, doc)
           title = refs_sect.fmt_title || refs_sect.title
@@ -618,107 +507,12 @@ module IsoDoc
         # ── Tree walking ───────────────────────────────────────────────
         #
         # Delegates to Renderers::Walker so traversal logic lives in one
-        # place. Adapter methods (visit_foreword, visit_introduction,
-        # visit_clause, etc.) call this to recurse into children; the
-        # walker dispatches each child back through +#dispatch+.
+        # place. Adapter methods (visit_bibliography, visit_references_section,
+        # etc.) call this to recurse into children; the walker dispatches
+        # each child back through +#dispatch+.
 
         def walk_mixed_content(node, doc)
           @walker.walk(node, doc)
-        end
-
-        # ── Style resolution ───────────────────────────────────────────
-
-
-        # ── Header/footer text helpers ─────────────────────────────────
-
-        def build_header_text(model)
-          bib = model.bibdata
-          return "" unless bib
-
-          identifiers = Array(bib.doc_identifier) if bib.class.attributes.key?(:doc_identifier)
-          primary = identifiers&.find { |d| extract_prop(d, :primary) == "true" } ||
-            identifiers&.first
-          return "" unless primary
-
-          id = extract_prop(primary, :value)
-          return "" unless id
-
-          # Extract year from copyright
-          year = extract_copyright_year(bib)
-          id_with_year = year ? "#{id}:#{year}" : id
-          "#{id_with_year}(#{content_language(bib)})"
-        end
-
-        def build_copyright_text(model)
-          bib = model.bibdata
-          return "© ISO 2026 – All rights reserved" unless bib
-
-          year = extract_copyright_year(bib) || "2026"
-          holder = extract_copyright_holder(bib) || "ISO"
-          "© #{holder} #{year} – All rights reserved"
-        end
-
-        # Pick the English title from a TitleCollection. TitleCollection
-        # is the canonical type from metanorma-iso-document; we use is_a?
-        # rather than respond_to? to avoid duck-typing.
-        def titles_for_language(titles, lang)
-          return nil unless titles
-          return titles.for_language(lang) if titles.is_a?(Metanorma::IsoDocument::Metadata::TitleCollection)
-
-          nil
-        rescue StandardError
-          nil
-        end
-
-        def extract_copyright_year(bib)
-          copyrights = Array(bib.copyright) if bib.class.attributes.key?(:copyright)
-          return nil unless copyrights&.first
-
-          from = copyrights.first.from if copyrights.first.class.attributes.key?(:from)
-          return nil unless from
-
-          extract_prop(from)
-        end
-
-        def extract_copyright_holder(bib)
-          copyrights = Array(bib.copyright) if bib.class.attributes.key?(:copyright)
-          return nil unless copyrights&.first
-
-          owner = copyrights.first.owner if copyrights.first.class.attributes.key?(:owner)
-          org = Array(owner).first
-          return nil unless org
-
-          names = org.name if org.class.attributes.key?(:name)
-          Array(names).first&.content || "ISO"
-        end
-
-        def content_language(bib)
-          langs = Array(bib.language) if bib.class.attributes.key?(:language)
-          lang = langs&.first
-          if lang.is_a?(String)
-            lang
-          elsif lang.is_a?(Lutaml::Model::Serializable)
-            extract_prop(lang)
-          else
-            "en"
-          end
-        end
-
-        def extract_prop(node, attr = nil)
-          return nil unless node
-          return node.public_send(attr) if attr && node.class.attributes.key?(attr)
-
-          if node.is_a?(String)
-            node
-          elsif node.is_a?(Lutaml::Model::Serializable)
-            [:content, :value, :text].each do |a|
-              next unless node.class.attributes.key?(a)
-              val = node.public_send(a)
-              return val.to_s if val.is_a?(String)
-              return Array(val).first.to_s if val.is_a?(Array) && !val.empty?
-            end
-            node.to_s
-          end
         end
       end
     end

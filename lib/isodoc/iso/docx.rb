@@ -20,8 +20,10 @@ module IsoDoc
     # New styles are added to style_mapping.yml (OCP).
     module Docx
       autoload :Adapter, "isodoc/iso/docx/adapter"
+      autoload :BibDataText, "isodoc/iso/docx/bibdata_text"
       autoload :BoilerplateRenderer, "isodoc/iso/docx/boilerplate_renderer"
       autoload :BoxWrapper, "isodoc/iso/docx/box_wrapper"
+      autoload :ColophonRenderer, "isodoc/iso/docx/colophon_renderer"
       autoload :CommentRenderer, "isodoc/iso/docx/comment_renderer"
       autoload :Context, "isodoc/iso/docx/context"
       autoload :Counter, "isodoc/iso/docx/context"
@@ -30,9 +32,12 @@ module IsoDoc
       autoload :DocumentProperties, "isodoc/iso/docx/document_properties"
       autoload :FormulaRenderer, "isodoc/iso/docx/formula_renderer"
       autoload :HeaderFooterRenderer, "isodoc/iso/docx/header_footer_renderer"
+      autoload :IndexsectRenderer, "isodoc/iso/docx/indexsect_renderer"
       autoload :InlineRenderer, "isodoc/iso/docx/inline"
+      autoload :MiddleTitleRenderer, "isodoc/iso/docx/middle_title_renderer"
       autoload :ModelUtils, "isodoc/iso/docx/model_utils"
       autoload :PageScheme, "isodoc/iso/docx/page_scheme"
+      autoload :PrefaceRenderer, "isodoc/iso/docx/preface_renderer"
       autoload :Renderers, "isodoc/iso/docx/renderers"
       autoload :SectionManager, "isodoc/iso/docx/section_manager"
       autoload :SourcecodeRenderer, "isodoc/iso/docx/sourcecode_renderer"
