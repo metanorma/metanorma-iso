@@ -8,15 +8,6 @@ SHELL := /bin/bash
 # Ensure the xml2rfc cache directory exists locally
 IGNORE := $(shell mkdir -p $(HOME)/.cache/xml2rfc)
 
-TRANG_RELEASE := https://github.com/relaxng/jing-trang/releases/download/V20181222/trang-20181222.zip
-TOOLS_DIR := ${CURDIR}/tools
-TRANG_JAR := $(TOOLS_DIR)/trang.jar
-XSDVIPATH := $(TOOLS_DIR)/xsdvi.jar
-XSLT_FILE := $(TOOLS_DIR)/xs3pxsl
-XSLT_FILE_MERGE := $(TOOLS_DIR)/xsdmerge.xsl
-RNG_FILE_SRC := lib/metanorma/iso/isostandard-compile.rng
-XSD_FILE_DEST := ${CURDIR}/xsd_doc/isostandard.xsd
-
 all: $(TXT) $(HTML) $(XML) $(NITS)
 
 clean:
@@ -45,48 +36,3 @@ clean:
 
 open:
 	open *.txt
-
-
-$(XSDVIPATH):
-	mkdir -p $(dir $@); \
-	curl -sSL https://sourceforge.net/projects/xsdvi/files/latest/download > $(dir $@)/xsdvi.zip; \
-	unzip -p $(dir $@)/xsdvi.zip dist/lib/xercesImpl.jar > $(dir $@)/xercesImpl.jar; \
-	curl -sSL https://github.com/metanorma/xsdvi/releases/download/v1.0/xsdvi-1.0.jar > $@
-
-$(XSLT_FILE):
-	mkdir -p $(dir $@)
-	curl -sSL https://raw.githubusercontent.com/metanorma/xs3p/main/xsl/xs3p.xsl > $@
-
-$(XSLT_FILE_MERGE):
-	mkdir -p $(dir $@)
-	curl -sSL https://raw.githubusercontent.com/metanorma/xs3p/main/xsl/xsdmerge.xsl > $@
-
-$(TRANG_JAR):
-	mkdir -p $(dir $@); \
-	cd $(dir $@); \
-	curl -sSL $(TRANG_RELEASE) > trang.zip; \
- 	unzip -p trang.zip trang-20181222/trang.jar > $@
-
-
-$(XSD_FILE_DEST): $(TRANG_JAR)
-	mkdir -p $(dir $@); \
-	java -jar $< $(RNG_FILE_SRC) $@
-
-# xsdvi / xs3p documentation pipeline disabled 2026-06-09 pending decision
-# at https://github.com/metanorma/metanorma-iso/issues/1559. xsdvi has been
-# hanging mid-run in CI for 40+ minutes and blocking every release, and the
-# `deploy-gh-pages` job downstream of it has never had an actual gh-pages
-# site to publish to. Currently `make xsd_doc` only compiles the RNG to XSD
-# via trang, which is what release validation actually needs.
-.PHONY: xsd_doc
-xsd_doc: $(XSD_FILE_DEST)
-
-#xsd_doc:  $(XSD_FILE_DEST) $(XSDVIPATH) $(XSLT_FILE) $(XSLT_FILE_MERGE)
-#	mkdir -p $@/diagrams; \
-#	cd $@; \
-#	java -jar $(XSDVIPATH) $< -rootNodeName all -oneNodeOnly -outputPath diagrams; \
-#	xsltproc --nonet --stringparam rootxsd iso-standard --output $@.tmp $(XSLT_FILE_MERGE) $<;\
-#	xsltproc --nonet --param title "'Metanorma XML Schema Documentation, ISO Standard'" \
-#		--output index.html $(XSLT_FILE) $@.tmp;\
-#	rm $@.tmp
-
