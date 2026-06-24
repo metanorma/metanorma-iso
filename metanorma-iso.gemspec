@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
     || f.match(%r{Rakefile|bin/rspec})
   end
   spec.test_files = `git ls-files -- {spec}/*`.split("\n")
-  spec.required_ruby_version = Gem::Requirement.new(">= 3.1.0")
+  spec.required_ruby_version = Gem::Requirement.new(">= 3.3.0")
 
   spec.add_dependency "metanorma-standoc", "~> 3.4.2"
   spec.add_dependency "mnconvert", "~> 1.14"
