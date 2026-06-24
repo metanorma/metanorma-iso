@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Metanorma wrapper around the vendored W3C MathML 3.0 RelaxNG grammar.
+    Includes the unmodified W3C grammar (start = math) and augments it with
+    metanorma's owned extension attributes. Referenced from basicdoc.rnc via:
+      mathml = external "mathml/metanorma-mathml.rnc"
+    Authoritative param list for data-metanorma-numberformat lives in plurimath
+    (Formatter::Standard::DEFAULT_OPTIONS); see metanorma/basicdoc-models#35.
+  -->
+  <include href="mathml3.rng"/>
+  <!--
+    metanorma number-formatting hint on <mn>; opaque comma-separated option
+    string parsed at presentation time (no-namespace data- attribute, which
+    the W3C CommonAtt/NonMathMLAtt does not otherwise permit).
+  -->
+  <define name="mn.attributes" combine="interleave">
+    <optional>
+      <attribute name="data-metanorma-numberformat"/>
+    </optional>
+  </define>
+</grammar>
