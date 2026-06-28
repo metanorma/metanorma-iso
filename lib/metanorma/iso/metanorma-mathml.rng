@@ -8,24 +8,7 @@
     Authoritative param list for data-metanorma-numberformat lives in plurimath
     (Formatter::Standard::DEFAULT_OPTIONS); see metanorma/basicdoc-models#35.
   -->
-  <include href="mathml3.rng">
-    <!--
-      Foreign annotation-xml considered harmful: the metanorma lutaml-model
-      serialiser emits no foreign markup, so the W3C annotation-xml escape hatch
-      (and its anyElement wildcard) is forbidden in the MathML we process. This
-      also removes the untyped `id` attribute the wildcard permits, which clashes
-      with xsd:ID under RELAX NG ID-type consistency (the callout-annotation
-      error). metanorma only emits presentation MathML; pre-empting the escape
-      hatch before semantic MathML is ever wired. Text-only <annotation> is
-      retained. See metanorma/basicdoc-models#35
-    -->
-    <define name="annotation-xml">
-      <notAllowed/>
-    </define>
-    <define name="anyElement">
-      <notAllowed/>
-    </define>
-  </include>
+  <include href="mathml3.rng"/>
   <!--
     metanorma number-formatting hint on <mn>; opaque comma-separated option
     string parsed at presentation time (no-namespace data- attribute, which
@@ -35,5 +18,28 @@
     <optional>
       <attribute name="data-metanorma-numberformat"/>
     </optional>
+  </define>
+  <!--
+    Foreign annotation-xml considered harmful: the metanorma lutaml-model
+    serialiser emits no foreign markup, so the W3C annotation-xml escape hatch
+    (and its anyElement wildcard) is forbidden in the MathML we process. This
+    also removes the untyped `id` attribute the wildcard permits, which clashes
+    with xsd:ID under RELAX NG ID-type consistency (the callout-annotation error).
+    metanorma only emits presentation MathML; pre-empting the escape hatch before
+    semantic MathML is ever wired. Text-only <annotation> is retained.
+    
+    Expressed via `combine` (interleave with notAllowed) rather than an
+    include-override: annotation-xml/anyElement are defined in the transitively
+    included mathml3-common, and libxml2's RelaxNG (used by Nokogiri for fragment
+    / passthrough validation) cannot override a define from a nested include - -
+    it demands the combine attribute and otherwise fails to compile the whole
+    grammar (every passthrough then wrongly reports "Invalid passthrough
+    content"). jing accepts both forms; combine satisfies both. basicdoc-models#35
+  -->
+  <define name="annotation-xml" combine="interleave">
+    <notAllowed/>
+  </define>
+  <define name="anyElement" combine="interleave">
+    <notAllowed/>
   </define>
 </grammar>
