@@ -852,7 +852,7 @@ titlecase, or lowercase</a:documentation>
         <a:documentation>Width of the figure block in rendering</a:documentation>
       </attribute>
     </optional>
-    <ref name="BlockAttributes"/>
+    <ref name="BlockAttributesCore"/>
   </define>
   <define name="SourceAttributes" combine="interleave">
     <ref name="BlockAttributes"/>
@@ -1283,7 +1283,11 @@ That concept may be defined as a term within the current document, or it may be 
           <a:documentation>Class of input form</a:documentation>
         </attribute>
       </optional>
-      <ref name="BlockAttributes"/>
+      <ref name="BlockAttributesCore">
+        <a:documentation>form declares its own class above, so it uses BlockAttributesCore to
+avoid duplicating the custom-class slot in BlockAttributes. Treated like
+figure. See metanorma/metanorma-standoc#1197</a:documentation>
+      </ref>
       <zeroOrMore>
         <!-- Input form contents -->
         <choice>
@@ -2768,7 +2772,11 @@ links within an SVG file, so that the SVG file can hyperlink to anchors within t
       </oneOrMore>
     </element>
   </define>
-  <define name="BlockAttributes">
+  <define name="BlockAttributesCore">
+    <a:documentation>Block attributes excluding the custom CSS class. Blocks that already carry
+their own `class` attribute (e.g. figure, via basicdoc FigureAttributes)
+include this directly, to avoid a duplicate-attribute collision with the
+`class` added in BlockAttributes. See metanorma/metanorma-standoc#1197</a:documentation>
     <optional>
       <attribute name="keep-with-next">
         <a:documentation>Keep this block on the same page as the following block in paged media</a:documentation>
@@ -2797,6 +2805,17 @@ links within an SVG file, so that the SVG file can hyperlink to anchors within t
         <a:documentation>Set the columns display of the current block, overriding the display inherited from the document.
 For example, if the document is set to two-column, this attribute would be used to set the block
 to span across both columns</a:documentation>
+      </attribute>
+    </optional>
+  </define>
+  <define name="BlockAttributes">
+    <a:documentation>Universal block attributes, including a custom CSS class (space-separated,
+appended additively to the block's built-in HTML class, HTML output only).
+See metanorma/metanorma-standoc#1197</a:documentation>
+    <ref name="BlockAttributesCore"/>
+    <optional>
+      <attribute name="class">
+        <a:documentation>Custom CSS class(es) for the block in HTML output</a:documentation>
       </attribute>
     </optional>
   </define>
