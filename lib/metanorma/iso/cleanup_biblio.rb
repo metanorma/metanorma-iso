@@ -90,6 +90,11 @@ module Metanorma
 
       def bibitem_cleanup(xmldoc)
         super
+        # ISO/IEC bibliographic stage footnotes are ISO-house behaviour: only
+        # emit them when the *document itself* is published by ISO or IEC, so
+        # other flavours (JIS, BSI, …) and tastes (OIML, PDFA) do not inherit
+        # them. metanorma/metanorma-oiml#13.
+        PublisherIdentity.iso_iec_publisher?(xmldoc.at("//bibdata")) or return
         unpublished_note(xmldoc)
         withdrawn_note(xmldoc)
       end
@@ -139,7 +144,7 @@ module Metanorma
       end
 
       def unpublished_ref?(bibitem)
-        pub_class(bibitem) > 2 and return true
+        PublisherIdentity.iso_iec_publisher?(bibitem) or return true
         ((s = bibitem.at("./status/stage")) && s.text.match?(/\d/) &&
          (s.text.to_i < 60)) or return true
         false
@@ -158,7 +163,7 @@ module Metanorma
       end
 
       def withdrawn_ref?(bibitem)
-        pub_class(bibitem) > 2 and return false
+        PublisherIdentity.iso_iec_publisher?(bibitem) or return false
         (s = bibitem.at("./status/stage")) && (s.text.to_i == 95) &&
           (t = bibitem.at("./status/substage")) && (t.text.to_i == 99)
       end
