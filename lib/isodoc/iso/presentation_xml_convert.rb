@@ -16,7 +16,11 @@ module IsoDoc
       end
 
       def convert1(docxml, filename, dir)
-        @iso_class = instance_of?(IsoDoc::Iso::PresentationXMLConvert)
+        # ISO-only (not inheriting flavours, and -- unlike instance_of? --
+        # not tastes that reuse this class): gate on the document publisher.
+        # metanorma/metanorma-oiml#13.
+        @iso_class = Metanorma::Iso::PublisherIdentity
+          .iso_publisher?(docxml.at(ns("//bibdata")), ns: method(:ns))
         if amd?(docxml)
           @oldsuppressheadingnumbers = @suppressheadingnumbers
           @suppressheadingnumbers = true
