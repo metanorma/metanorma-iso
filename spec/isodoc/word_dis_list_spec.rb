@@ -7,6 +7,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
           <status><stage>50</stage></status>
+          <contributor><role type="publisher"/><organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization></contributor>
         </bibdata>
         <sections>
         <clause id="A"><p>
@@ -198,6 +199,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
           <status><stage>50</stage></status>
+          <contributor><role type="publisher"/><organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization></contributor>
         </bibdata>
         <sections>
         <clause id="A"><p>
@@ -297,6 +299,7 @@ RSpec.describe IsoDoc do
         <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
         <status><stage>50</stage></status>
+        <contributor><role type="publisher"/><organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization></contributor>
       </bibdata>
       <sections>
       <clause id="A">
@@ -362,6 +365,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
           <status><stage>50</stage></status>
+          <contributor><role type="publisher"/><organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization></contributor>
         </bibdata>
         <sections>
         <clause id="A"><p>
@@ -475,6 +479,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
           <status><stage>50</stage></status>
+          <contributor><role type="publisher"/><organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization></contributor>
         </bibdata>
         <sections>
         <clause id="A">
@@ -592,6 +597,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
           <status><stage>50</stage></status>
+          <contributor><role type="publisher"/><organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization></contributor>
         </bibdata>
         <sections>
         <clause id="A">
@@ -709,6 +715,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
           <status><stage>50</stage></status>
+          <contributor><role type="publisher"/><organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization></contributor>
         </bibdata>
         <sections>
         <clause id="A">
@@ -783,6 +790,7 @@ RSpec.describe IsoDoc do
       <iso-standard xmlns="http://riboseinc.com/isoxml">
         <bibdata>
           <status><stage>50</stage></status>
+          <contributor><role type="publisher"/><organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization></contributor>
         </bibdata>
         <sections>
         <clause id="A" displayorder="1">

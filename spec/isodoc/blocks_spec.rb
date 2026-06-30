@@ -1327,6 +1327,7 @@ RSpec.describe IsoDoc do
   it "ignores intervening ul in numbering ol" do
     input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
+      <bibdata><contributor><role type="publisher"/><organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization></contributor></bibdata>
       <preface><foreword id="A">
       <ul>
       <li>A</li>
@@ -1341,6 +1342,7 @@ RSpec.describe IsoDoc do
     INPUT
     presxml = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+         <bibdata><contributor><role type="publisher"/><organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization></contributor></bibdata>
          <preface>
             <clause type="toc" id="_" displayorder="1">
                <fmt-title depth="1" id="_">Contents</fmt-title>
@@ -1378,7 +1380,8 @@ RSpec.describe IsoDoc do
     INPUT
     expect(strip_guid(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
-      .convert("test", input, true)))
+      .convert("test", input, true)
+      .sub(%r{<localized-strings>.*</localized-strings>}m, "")))
       .to be_xml_equivalent_to presxml
   end
 
