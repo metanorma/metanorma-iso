@@ -177,14 +177,10 @@ module Metanorma
       NORM_BIBITEMS =
         "//references[@normative = 'true']/bibitem".freeze
 
-      ISO_PUBLISHER_XPATH = <<~XPATH.freeze
-        ./contributor[role/@type = 'publisher']/organization[abbreviation = 'ISO' or abbreviation = 'IEC' or name = 'International Organization for Standardization' or name = 'International Electrotechnical Commission']
-      XPATH
-
       # ISO/IEC DIR 2, 10.2
       def norm_bibitem_style(root)
         root.xpath(NORM_BIBITEMS).each do |b|
-          if b.at(ISO_PUBLISHER_XPATH).nil?
+          unless PublisherIdentity.iso_iec_publisher?(b)
             @log.add("ISO_42", b, params: [b.text])
           end
         end
