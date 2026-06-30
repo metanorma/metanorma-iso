@@ -1902,14 +1902,39 @@ or as the string "auto"</a:documentation>
     <a:documentation>Mathematically formatted text</a:documentation>
     <element name="stem">
       <ref name="StemAttributes"/>
-      <oneOrMore>
-        <choice>
+      <optional>
+        <text>
           <a:documentation>The content of the mathematically formatted text</a:documentation>
-          <text/>
-          <ref name="AnyElement"/>
-        </choice>
-      </oneOrMore>
+        </text>
+      </optional>
+      <optional>
+        <ref name="mathml"/>
+      </optional>
+      <optional>
+        <ref name="asciimath"/>
+      </optional>
+      <optional>
+        <ref name="latexmath"/>
+      </optional>
     </element>
+  </define>
+  <define name="latexmath">
+    <a:documentation>Encoding of LatexMath</a:documentation>
+    <element name="latexmath">
+      <text/>
+    </element>
+  </define>
+  <define name="asciimath">
+    <a:documentation>Encoding of AsciiMath</a:documentation>
+    <element name="asciimath">
+      <text/>
+    </element>
+  </define>
+  <define name="mathml">
+    <a:documentation>Encoding of MathML: the official W3C MathML 3.0 grammar (namespace
+http://www.w3.org/1998/Math/MathML), via the metanorma wrapper in
+grammars/mathml/. See grammars/mathml/README.adoc and basicdoc-models#35.</a:documentation>
+    <externalRef href="metanorma-mathml.rng"/>
   </define>
   <define name="StemAttributes">
     <attribute name="type">
