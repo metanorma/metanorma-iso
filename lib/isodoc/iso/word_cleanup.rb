@@ -181,8 +181,7 @@ module IsoDoc
       # do not use in IEC, BSI, where Word does not use list to generate
       # "Annex A"
       def annex_toc(annexid)
-        instance_of?(IsoDoc::Iso::WordConvert) ||
-          instance_of?(WordDISConvert) or return ""
+        @iso_publisher or return ""
         annexid += 1
         x = "#{@i18n.annex} #{('@'.ord + annexid).chr} "
         [x, annexid]

@@ -305,6 +305,7 @@ RSpec.describe IsoDoc do
       .new(WORD_HTML_CSS_WORDINTRO.dup)
       .convert("test", <<~INPUT, false)
         <iso-standard xmlns="http://riboseinc.com/isoxml">
+          <bibdata><contributor><role type="publisher"/><organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization></contributor></bibdata>
           <metanorma-extension>
             <presentation-metadata>
               <toc-heading-levels>3</toc-heading-levels>
