@@ -90,8 +90,34 @@ module Metanorma
 
       def bibitem_cleanup(xmldoc)
         super
-        unpublished_note(xmldoc)
-        withdrawn_note(xmldoc)
+        cutoff = biblio_cutoff_date(xmldoc)
+        unpublished_note(xmldoc, cutoff)
+        withdrawn_note(xmldoc, cutoff)
+      end
+
+      # The citing document's publication date: reference status annotations
+      # (withdrawn/replaced, under-preparation) are rewound to this date, so a
+      # reference is not shown with a status change that only happened *after*
+      # the citing document was published. metanorma/metanorma-standoc#941.
+      def biblio_cutoff_date(xmldoc)
+        bd = xmldoc.at("//bibdata") or return nil
+        dates = bd.xpath("./date[@type = 'published' or @type = 'issued' or " \
+                         "@type = 'circulated']/on").map { |d| iso_date(d.text) }
+        if (y = bd.at("./copyright/from")&.text)&.match?(/^\d{4}$/)
+          dates << Date.new(y.to_i, 12, 31)
+        end
+        dates.compact.max
+      end
+
+      # Complete a partial ISO date to the end of its period, so a status change
+      # anywhere within the citing document's publication year still counts as
+      # having occurred by publication.
+      def iso_date(str)
+        case str.to_s.strip
+        when /^(\d{4})$/ then Date.new($1.to_i, 12, 31)
+        when /^(\d{4})-(\d{2})/ then Date.new($1.to_i, $2.to_i, -1)
+        else Date.parse(str) rescue nil
+        end
       end
 
       def bibitem_note_types(bib)
@@ -100,21 +126,21 @@ module Metanorma
         end.flatten
       end
 
-      def unpublished_note(xmldoc)
+      def unpublished_note(xmldoc, cutoff = nil)
         xmldoc.xpath("//bibitem[not(./ancestor::bibitem)]").each do |b|
           n = bibitem_note_types(b)
-          n.include?("Unpublished-Status") or unpublished_note1(b)
+          n.include?("Unpublished-Status") or unpublished_note1(b, cutoff)
         end
       end
 
-      def unpublished_note1(bibitem)
+      def unpublished_note1(bibitem, cutoff = nil)
         unpublished_ref?(bibitem) and return
         docid = bibitem.at("./docidentifier[@primary = 'true']") ||
           bibitem.at("./docidentifier[@type = 'ISO' or @type = 'IEC']") ||
           bibitem.at("./docidentifier")
         base_pubid, orig = parse_draft_docid(docid, bibitem)
         insert_unpub_note(bibitem, @i18n.under_preparation
-          .sub("%", dated_draft_id(orig, base_pubid)))
+          .sub("%", dated_draft_id(orig, base_pubid, cutoff)))
         draft_biblio_docid(orig, base_pubid, docid)
       end
 
@@ -132,9 +158,9 @@ module Metanorma
         docid.children = new
       end
 
-      def dated_draft_id(orig, base_pubid)
+      def dated_draft_id(orig, base_pubid, cutoff = nil)
         ret = orig.dup
-        ret[:year] = Date.today.year
+        ret[:year] = cutoff&.year || Date.today.year
         base_pubid.create(**ret).to_s
       end
 
@@ -145,11 +171,11 @@ module Metanorma
         false
       end
 
-      def withdrawn_note(xmldoc)
+      def withdrawn_note(xmldoc, cutoff = nil)
         xmldoc.xpath("//bibitem").each do |b|
           n = bibitem_note_types(b)
           n.include?("Unpublished-Status") and next
-          withdrawn_ref?(b) or next
+          withdrawn_ref?(b, cutoff) or next
           if id = replacement_standard(b)
             insert_unpub_note(b, @i18n.cancelled_and_replaced.sub("%", id))
           else insert_unpub_note(b, @i18n.withdrawn)
@@ -157,10 +183,23 @@ module Metanorma
         end
       end
 
-      def withdrawn_ref?(bibitem)
+      def withdrawn_ref?(bibitem, cutoff = nil)
         pub_class(bibitem) > 2 and return false
         (s = bibitem.at("./status/stage")) && (s.text.to_i == 95) &&
-          (t = bibitem.at("./status/substage")) && (t.text.to_i == 99)
+          (t = bibitem.at("./status/substage")) && (t.text.to_i == 99) or
+          return false
+        # As-of-date: a withdrawal that only happened after the citing document
+        # was published did not apply then. metanorma/metanorma-standoc#941.
+        wd = withdrawal_date(bibitem)
+        !(cutoff && wd && wd > cutoff)
+      end
+
+      # Date the reference was superseded/withdrawn: the earliest published date
+      # of an obsoletedBy/updates successor.
+      def withdrawal_date(bibitem)
+        bibitem.xpath("./relation[@type = 'obsoletedBy' or @type = 'updates']" \
+                      "/bibitem/date[@type = 'published' or @type = 'circulated']" \
+                      "/on").map { |d| iso_date(d.text) }.compact.min
       end
 
       def replacement_standard(biblio)
