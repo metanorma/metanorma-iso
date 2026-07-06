@@ -6282,34 +6282,42 @@
 			<xsl:call-template name="getVariable"><xsl:with-param name="variable">isAuthorOrganizationAbbreviationISO</xsl:with-param></xsl:call-template>
 		</xsl:variable>
 
-		<xsl:if test="$layoutVersion = '1951'">
-			<xsl:attribute name="font-size">10pt</xsl:attribute>
-			<xsl:if test="$revision_date_num &gt;= 19680101">
-				<xsl:attribute name="font-size">9pt</xsl:attribute>
-			</xsl:if>
-		</xsl:if>
+		<xsl:variable name="style">
+			<root-style>
+				<xsl:if test="$layoutVersion = '1951'">
+					<xsl:attribute name="font-size">10pt</xsl:attribute>
+					<xsl:if test="$revision_date_num &gt;= 19680101">
+						<xsl:attribute name="font-size">9pt</xsl:attribute>
+					</xsl:if>
+				</xsl:if>
 
-		<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1979'">
-			<xsl:attribute name="font-family">Univers, Times New Roman, Cambria Math, <xsl:value-of select="$font_noto_sans"/></xsl:attribute>
-			<xsl:attribute name="font-family-generic">Sans</xsl:attribute>
-			<xsl:attribute name="font-size">10pt</xsl:attribute>
-			<xsl:if test="$layout_columns = 2">
-				<xsl:attribute name="font-size">9pt</xsl:attribute>
-			</xsl:if>
-		</xsl:if>
-		<xsl:if test="$layoutVersion = '1987' or $layoutVersion = '1989'">
-			<xsl:attribute name="font-family">Arial, Times New Roman, Cambria Math, <xsl:value-of select="$font_noto_sans"/></xsl:attribute>
-			<xsl:attribute name="font-family-generic">Sans</xsl:attribute>
-			<xsl:attribute name="font-size">10pt</xsl:attribute>
-		</xsl:if>
+				<xsl:if test="$layoutVersion = '1972' or $layoutVersion = '1979'">
+					<xsl:attribute name="font-family">Univers, Times New Roman, Cambria Math, <xsl:value-of select="$font_noto_sans"/></xsl:attribute>
+					<xsl:attribute name="font-family-generic">Sans</xsl:attribute>
+					<xsl:attribute name="font-size">10pt</xsl:attribute>
+					<xsl:if test="$layout_columns = 2">
+						<xsl:attribute name="font-size">9pt</xsl:attribute>
+					</xsl:if>
+				</xsl:if>
+				<xsl:if test="$layoutVersion = '1987' or $layoutVersion = '1989'">
+					<xsl:attribute name="font-family">Arial, Times New Roman, Cambria Math, <xsl:value-of select="$font_noto_sans"/></xsl:attribute>
+					<xsl:attribute name="font-family-generic">Sans</xsl:attribute>
+					<xsl:attribute name="font-size">10pt</xsl:attribute>
+				</xsl:if>
 
-		<xsl:if test="(($layoutVersion = '1987' and $doctype = 'technical-report') or ($layoutVersion = '1979' and $doctype = 'addendum'))">
-			<xsl:attribute name="font-size">8.5pt</xsl:attribute>
-		</xsl:if>
+				<xsl:if test="(($layoutVersion = '1987' and $doctype = 'technical-report') or ($layoutVersion = '1979' and $doctype = 'addendum'))">
+					<xsl:attribute name="font-size">8.5pt</xsl:attribute>
+				</xsl:if>
 
-		<xsl:if test="$layoutVersion = '2024' and $isAuthorOrganizationAbbreviationISO = 'true'">
-			<xsl:attribute name="color">rgb(35,31,32)</xsl:attribute>
-		</xsl:if>
+				<xsl:if test="$layoutVersion = '2024' and $isAuthorOrganizationAbbreviationISO = 'true'">
+					<xsl:attribute name="color">rgb(35,31,32)</xsl:attribute>
+				</xsl:if>
+			</root-style>
+		</xsl:variable>
+
+		<xsl:call-template name="insertRootStyle">
+			<xsl:with-param name="root-style" select="$style"/>
+		</xsl:call-template>
 
 	</xsl:template>
 
