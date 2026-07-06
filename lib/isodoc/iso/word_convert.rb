@@ -58,6 +58,17 @@ module IsoDoc
         end
       end
 
+      # word_cleanup (make_WordToC / annex_toc) runs on the generated Word
+      # HTML, which no longer carries <bibdata>; capture the document's
+      # ISO-publisher identity here, off the source presentation XML, and
+      # propagate it via @iso_publisher. ISO-only (not IEC/BSI, and --
+      # unlike instance_of? -- not tastes reusing this class). oiml#13.
+      def convert1(docxml, filename, dir)
+        @iso_publisher = Metanorma::Iso::PublisherIdentity
+          .iso_publisher?(docxml.at(ns("//bibdata")), ns: method(:ns))
+        super
+      end
+
       def make_body(xml, docxml)
         body_attr = { lang: "EN-US", link: "blue", vlink: "#954F72" }
         xml.body(**body_attr) do |body|

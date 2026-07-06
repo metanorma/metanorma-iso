@@ -165,7 +165,7 @@ module Metanorma
       end
 
       def unpublished_ref?(bibitem)
-        pub_class(bibitem) > 2 and return true
+        PublisherIdentity.iso_iec_publisher?(bibitem) or return true
         ((s = bibitem.at("./status/stage")) && s.text.match?(/\d/) &&
          (s.text.to_i < 60)) or return true
         false
@@ -183,8 +183,8 @@ module Metanorma
         end
       end
 
-      def withdrawn_ref?(bibitem, cutoff = nil)
-        pub_class(bibitem) > 2 and return false
+      def withdrawn_ref?(bibitem)
+        PublisherIdentity.iso_iec_publisher?(bibitem) or return false
         (s = bibitem.at("./status/stage")) && (s.text.to_i == 95) &&
           (t = bibitem.at("./status/substage")) && (t.text.to_i == 99) or
           return false

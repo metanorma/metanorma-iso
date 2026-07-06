@@ -39,7 +39,11 @@ the tag name of the top level containers</a:documentation>
       <data type="ID"/>
     </attribute>
     <ref name="NumberingAttributes"/>
-    <ref name="BlockAttributes"/>
+    <ref name="BlockAttributesCore">
+      <a:documentation>requirement carries its own semantic `class` (provision class, below), so
+it uses BlockAttributesCore to avoid duplicating the custom-class slot now
+in BlockAttributes. See metanorma/metanorma-standoc#1197</a:documentation>
+    </ref>
     <optional>
       <attribute name="filename">
         <a:documentation>File name of the requirement model when exported</a:documentation>
@@ -225,7 +229,11 @@ machine-readable, and is not to be rendered as document output</a:documentation>
         <data type="boolean"/>
       </attribute>
     </optional>
-    <ref name="BlockAttributes"/>
+    <ref name="BlockAttributesCore">
+      <a:documentation>component (a RequirementSubpart) carries its own semantic `class`, so this
+uses BlockAttributesCore to avoid duplicating the custom-class slot in
+BlockAttributes. See metanorma/metanorma-standoc#1197</a:documentation>
+    </ref>
     <oneOrMore>
       <choice>
         <a:documentation>Content of subpart: blocks, rather than provisions</a:documentation>

@@ -84,15 +84,11 @@ module IsoDoc
         insert_biblio_callout(elem)
       end
 
-      # TODO share with metanorma dir
-      ISO_PUBLISHER_XPATH = <<~XPATH.freeze
-        ./contributor[role/@type = 'publisher']/organization[abbreviation = 'ISO' or abbreviation = 'IEC' or name = 'International Organization for Standardization' or name = 'International Electrotechnical Commission']
-      XPATH
-
       def insert_biblio_callout(elem)
         semx = elem.document.at("//*[@id = '#{elem['source']}']") or return
         if ref = @bibitem_lookup[semx["bibitemid"]]
-          ref.at(ns(ISO_PUBLISHER_XPATH)) and return
+          Metanorma::Iso::PublisherIdentity
+            .iso_iec_publisher?(ref, ns: method(:ns)) and return
           # is this reference cited with a [n],
           # even if it has its own SDO identifier?
           citeas = ref.at(ns("./docidentifier[@type = 'metanorma-ordinal']")) ||
