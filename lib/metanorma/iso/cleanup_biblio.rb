@@ -183,7 +183,7 @@ module Metanorma
         end
       end
 
-      def withdrawn_ref?(bibitem)
+      def withdrawn_ref?(bibitem, cutoff = nil)
         PublisherIdentity.iso_iec_publisher?(bibitem) or return false
         (s = bibitem.at("./status/stage")) && (s.text.to_i == 95) &&
           (t = bibitem.at("./status/substage")) && (t.text.to_i == 99) or

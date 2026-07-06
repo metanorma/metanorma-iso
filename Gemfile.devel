@@ -1,6 +1,0 @@
-# frozen_string_literal: true
-
-# Bridge: until metanorma-standoc is released with the MathML grammar fix
-# (id_check: false for the jing ID-type conflict; basicdoc-models#35), pin to
-# standoc main. Remove this and bump the released standoc version on release.
-gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc", branch: "main"
