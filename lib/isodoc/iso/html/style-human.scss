@@ -301,8 +301,6 @@ nav {
 
 #toggle {
     @include sidebarNavToggle(white, black);
-    margin-left: -4em;
-    margin-top: -2em;
 }
 
 @media screen and (min-width: 768px) {
