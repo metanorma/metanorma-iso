@@ -626,6 +626,39 @@ RSpec.describe Metanorma::Iso do
       .to be_xml_equivalent_to output
   end
 
+  # metanorma/metanorma-standoc#941: ISO 31-0 was withdrawn on 2009-11-17
+  # (obsoletedBy ISO 80000-1:2009). A document published in 2005 must not show
+  # it as withdrawn; a document published in 2015 must.
+  it "suppresses a withdrawn-reference note when the withdrawal postdates publication" do
+    input = <<~INPUT
+      #{LOCAL_CACHED_ISOBIB_BLANK_HDR.sub(':nodoc:', ":nodoc:\n:copyright-year: 2005")}
+
+      [bibliography]
+      == Bibliography
+
+      * [[[iso2,ISO 31-0]]]
+    INPUT
+    xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+    xml.remove_namespaces!
+    note = xml.at("//bibitem[@anchor='iso2']/note[@type='Unpublished-Status']")
+    expect(note).to be_nil
+  end
+
+  it "keeps a withdrawn-reference note when the withdrawal predates publication" do
+    input = <<~INPUT
+      #{LOCAL_CACHED_ISOBIB_BLANK_HDR.sub(':nodoc:', ":nodoc:\n:copyright-year: 2015")}
+
+      [bibliography]
+      == Bibliography
+
+      * [[[iso2,ISO 31-0]]]
+    INPUT
+    xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+    xml.remove_namespaces!
+    note = xml.at("//bibitem[@anchor='iso2']/note[@type='Unpublished-Status']")
+    expect(note&.text).to include("Withdrawn")
+  end
+
   private
 
   def mock_fdis_iso
