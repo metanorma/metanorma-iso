@@ -18577,22 +18577,22 @@
 
 	<xsl:template name="processExamples_Contents">
 		<mnx:examples>
-			<xsl:for-each select="//mn:example[@id and mn:fmt-name and not(@unnumbered = 'true') and normalize-space(@id) != '']">
-				<xsl:choose>
-					<xsl:when test="mn:fmt-name">
-						<xsl:variable name="fmt_name">
-							<xsl:apply-templates select="mn:fmt-name" mode="update_xml_step1"/>
-						</xsl:variable>
-						<mnx:example id="{@id}" alt-text="{normalize-space($fmt_name)}">
-							<xsl:copy-of select="$fmt_name"/>
-						</mnx:example>
-					</xsl:when>
-					<xsl:otherwise>
-						<mnx:example id="{@id}" alt-text="{mn:name}">
-							<xsl:copy-of select="mn:name"/>
-						</mnx:example>
-					</xsl:otherwise>
-				</xsl:choose>
+			<xsl:for-each select="//mn:example[@id and mn:fmt-name and normalize-space(@id) != '']">
+				<!-- https://github.com/metanorma/metanorma-pdfa/issues/32#issuecomment-4929133938:
+				//example/fmt-xref-label[@container] + //example/fmt-name/span[@class = 'fmt-caption-delim'] + //example/name, 
+				with the last two elements dropped if //example/name does not exist. -->
+				<xsl:variable name="example_name">
+					<xsl:apply-templates select="mn:name/node()" mode="update_xml_step1"/>
+				</xsl:variable>
+				<mnx:example id="{@id}" alt-text="{normalize-space($example_name)}">
+					<xsl:element name="fmt-name" namespace="{$namespace_full}">
+						<xsl:value-of select="mn:fmt-xref-label[@container]"/>
+						<xsl:if test="normalize-space($example_name) != ''">
+							<xsl:value-of select="mn:fmt-name/mn:span[@class = 'fmt-caption-delim']"/>
+							<xsl:copy-of select="$example_name"/>
+						</xsl:if>
+					</xsl:element>
+				</mnx:example>
 			</xsl:for-each>
 		</mnx:examples>
 	</xsl:template>
