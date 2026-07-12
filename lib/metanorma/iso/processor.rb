@@ -36,7 +36,30 @@ module Metanorma
         }
       end
 
+      # Register the native metanorma-document ISO-STS transformer for the
+      # +:isosts+ leg. This declaration is inert while the QA gate
+      # (+Metanorma::Iso::Sts.enabled?+) is off: {#output} intercepts
+      # +:isosts+ with mnconvert and never reaches the base-class driver.
+      # NISO +:sts+ is deliberately absent — it has no metanorma-document
+      # transformer and stays on mnconvert.
+      def document_transformers
+        {
+          isosts: {
+            reader: Metanorma::IsoDocument::Root,
+            transformer: Metanorma::Iso::Sts::Transformer::Standard,
+            strip_default_namespace: true,
+            post_process: lambda do |xml, _transformer, _options|
+              Metanorma::Iso::Sts::Transformer::NbspProcessor.apply_to_text(xml)
+            end,
+          },
+        }
+      end
+
       def use_presentation_xml(ext)
+        # When the native ISO-STS transformer is enabled it consumes semantic
+        # XML (matching mnconvert's input_format: MN); while gated off, keep
+        # the historical presentation-XML routing so mnconvert is unchanged.
+        return false if ext == :isosts && Metanorma::Iso::Sts.enabled?
         return true if %i[html_alt sts isosts].include?(ext)
 
         super
@@ -61,8 +84,15 @@ module Metanorma
           IsoDoc::Iso::StsConvert.new(options)
             .convert(inname, isodoc_node, nil, outname)
         when :isosts
-          IsoDoc::Iso::IsoStsConvert.new(options)
-            .convert(inname, isodoc_node, nil, outname)
+          if Metanorma::Iso::Sts.enabled?
+            # native metanorma-document transformer via the base-class
+            # document_transformers driver (QA gate ON)
+            super
+          else
+            # default: mnconvert (QA gate OFF)
+            IsoDoc::Iso::IsoStsConvert.new(options)
+              .convert(inname, isodoc_node, nil, outname)
+          end
         when :presentation
           IsoDoc::Iso::PresentationXMLConvert.new(options)
             .convert(inname, isodoc_node, nil, outname)
