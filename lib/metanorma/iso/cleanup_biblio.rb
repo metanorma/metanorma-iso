@@ -34,29 +34,28 @@ module Metanorma
       ISO_NAME = "International Organization for Standardization".freeze
       IEC_NAME = "International Electrotechnical Commission".freeze
 
+      # Default publisher sort order for ISO documents: ISO first, IEC second,
+      # then other standards, then everything else. A metanorma-taste config or
+      # a per-document :sort-biblio-<abbrev>: attribute overrides this via the
+      # shared Standoc::Ref helpers (e.g. OIML ranks OIML ahead of ISO/IEC).
+      DEFAULT_PUBLISHER_SORT = [
+        { abbrev: "ISO", name: ISO_NAME, rank: 1 },
+        { abbrev: "IEC", name: IEC_NAME, rank: 2 },
+      ].freeze
+
       def pub_class(bib)
-        bib.at("#{PUBLISHER}[abbreviation = 'ISO']") ||
-          bib.at("#{PUBLISHER}[name = '#{ISO_NAME}']") and return 1
-        bib.at("#{PUBLISHER}[abbreviation = 'IEC']") ||
-          bib.at("#{PUBLISHER}[name = '#{IEC_NAME}']") and return 2
-        bib.at("./docidentifier[@type]" \
-               "[not(#{@conv.skip_docid} or @type = 'metanorma')]") ||
-          bib.at("./docidentifier[not(@type)]") and return 3
-        4
+        publisher_sort_rank(bib, DEFAULT_PUBLISHER_SORT)
       end
 
-      def second_pub_class(bib, first_pub)
-        case first_pub
-        when 1
-          n = bib.at("#{PUBLISHER}[not(abbreviation = 'ISO')]" \
-                     "[not(name = '#{ISO_NAME}')]")
-          n&.at("./abbreviation") || n&.at("./name") || ""
-        when 2
-          n = bib.at("#{PUBLISHER}[not(abbreviation = 'IEC')]" \
-                     "[not(name = '#{IEC_NAME}')]")
-          n&.at("./abbreviation") || n&.at("./name") || ""
-        else ""
-        end
+      def second_pub_class(bib, _first_pub = nil)
+        publisher_sort_second(bib, DEFAULT_PUBLISHER_SORT)
+      end
+
+      # ISO also ranks a reference with only an untyped docidentifier as a
+      # standards reference (historical pub_class behaviour), widening the base
+      # typed-only definition.
+      def biblio_standards_ref?(bib)
+        super || !!bib.at("./docidentifier[not(@type)]")
       end
 
       def sort_biblio(bib)
@@ -145,8 +144,13 @@ module Metanorma
       end
 
       def parse_draft_docid(docid, bibitem)
-        publisher = pub_class(bibitem)
-        base_pubid = publisher == 1 ? Pubid::Iso::Identifier : Pubid::Iec::Identifier
+        # Semantic ISO-vs-IEC identity, NOT the sort rank: pub_class is now
+        # configurable (a taste may rerank ISO below OIML), so draft docid
+        # parsing must use the publisher identity predicate directly.
+        base_pubid = if PublisherIdentity.iso_publisher?(bibitem)
+                       Pubid::Iso::Identifier
+                     else Pubid::Iec::Identifier
+                     end
         [base_pubid, base_pubid.parse(docid.text).to_h]
       end
 

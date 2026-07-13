@@ -296,6 +296,30 @@ RSpec.describe Metanorma::Iso do
                             "ISO 8000-110", "ISO/IEC 646", "ISO/IEEE 32675"]
   end
 
+  # metanorma/metanorma-oiml#12: the publisher sort order is configurable via
+  # :sort-biblio-<abbrev>: <rank>: <name> document attributes (set directly or
+  # injected by a metanorma-taste config). The default ISO-before-IEC ordering
+  # flips when IEC is ranked ahead of ISO.
+  it "overrides the publisher sort order via :sort-biblio- attributes" do
+    hdr = ASCIIDOC_BLANK_HDR.sub(
+      ":no-isobib:\n",
+      ":no-isobib:\n" \
+      ":sort-biblio-IEC: 1: International Electrotechnical Commission\n" \
+      ":sort-biblio-ISO: 2: International Organization for Standardization\n",
+    )
+    input = <<~INPUT
+      #{hdr}
+      [bibliography]
+      == Bibliography
+
+      * [[[iso1,ISO 9]]]
+      * [[[iec1,IEC 60050]]]
+    INPUT
+    xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
+    expect(xml.xpath("//xmlns:bibliography//xmlns:docidentifier").map(&:text))
+      .to be_equivalent_to ["IEC 60050", "ISO 9"]
+  end
+
   it "renders withdrawn and cancelled ISO references" do
     input = <<~INPUT
       #{LOCAL_CACHED_ISOBIB_BLANK_HDR}
