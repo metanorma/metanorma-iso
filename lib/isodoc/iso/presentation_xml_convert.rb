@@ -257,6 +257,22 @@ module IsoDoc
         XML
       end
 
+      # ISO House Style: a status footnote (withdrawn/replaced, "available
+      # from", etc.) on a bibliography reference belongs on the document
+      # designation, not on the [n] ordinal. Place the footnote(s) after the
+      # SDO identifier rather than after the ordinal; non-standard references
+      # (no designation) are left as the base renders them.
+      # https://github.com/metanorma/iso-10303/issues/717
+      def biblio_ref_entry_code(ordinal, ids, _standard, datefn, _bib)
+        ret = esc(ids[:ordinal]) || esc(ids[:content]) || esc(ids[:metanorma]) ||
+          "[#{esc ordinal.to_s}]"
+        if ids[:sdo] && !ids[:sdo].empty?
+          "#{prefix_bracketed_ref(ret)}#{esc ids[:sdo]}#{datefn}, "
+        else
+          prefix_bracketed_ref("#{ret}#{datefn}")
+        end
+      end
+
       include Init
     end
   end

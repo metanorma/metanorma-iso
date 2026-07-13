@@ -661,10 +661,9 @@ RSpec.describe IsoDoc do
              <references normative="false" id="_" displayorder="2">
                 <fmt-title id="_" depth="1">Bibliography</fmt-title>
                 <bibitem id="b" type="standard" anchor="b">
-                <biblio-tag>[1]<fn id="_" reference="1" original-reference="_" target="_">
+                <biblio-tag>[1]<tab/><span class="stdpublisher">IETF RFC</span> <span class="stddocNumber">3394</span><fn id="_" reference="1" original-reference="_" target="_">
                   <p>Available at <span class="biburl"><fmt-link target="https://www.rfc-editor.org/info/rfc3394">https://www.rfc-editor.org/info/rfc3394</fmt-link></span></p>
-                  <fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>
-       <tab/><span class="stdpublisher">IETF RFC</span> <span class="stddocNumber">3394</span>, </biblio-tag>
+                  <fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_">1</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>, </biblio-tag>
                <formattedref>J. SCHAAD and R. HOUSLEY. <em><span class="stddocTitle">Advanced Encryption Standard (AES) Key Wrap Algorithm</span></em>. RFC Series</formattedref>
                <fetched/>
                <title type="main" format="text/plain">Advanced Encryption Standard (AES) Key Wrap Algorithm</title>
