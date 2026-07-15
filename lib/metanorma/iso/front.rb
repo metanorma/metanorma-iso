@@ -21,7 +21,7 @@ module Metanorma
         @amd and
           add_noko_elem(xml, "updates_document_type",
                         node.attr("updates-document-type"))
-        a = node.attr("fast-track") and xml.send "fast-track", a != "false"
+        a = node.attr("fast-track") and xml.send :"fast-track", a != "false"
         add_noko_elem(xml, "price_code", node.attr("price-code"))
         node.attr("iso-cen-parallel") and xml.iso_cen_parallel true
       end

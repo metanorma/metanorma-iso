@@ -1764,7 +1764,7 @@ RSpec.describe IsoDoc do
       </html>
     OUTPUT
     doc = <<~DOC
-        <html><head></head><body><div class="index">
+        <div class="index">
               <div class="ul_wrap">
                 <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpFirst"><a name="_" id="_"></a><i>Dasein</i>, see <i>Eman</i>cipation, être</p>
                 <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpMiddle"><a name="_" id="_"></a>élongé,  <a href="#_">Clause 1</a></p>
@@ -1779,7 +1779,7 @@ RSpec.describe IsoDoc do
                 <div class="ul_wrap"><p style="margin-bottom:0px;;mso-list:l3 level3 lfo1;" class="MsoListParagraphCxSpFirst"><a name="_" id="_"></a>en allemand,  <a href="#_">Clause 1</a></p></div></div>
                 <p style="margin-bottom:0px;;mso-list:l3 level1 lfo1;" class="MsoListParagraphCxSpLast"><a name="_" id="_"></a>zebra,  <a href="#_">1.1</a></p>
               </div>
-            </div></body></html>
+            </div>
   DOC
     pres_output = IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)

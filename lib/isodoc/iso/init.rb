@@ -20,7 +20,7 @@ module IsoDoc
                                        i18nyaml: i18nyaml || @i18nyaml)
       end
 
-      def update_i18n(docxml)
+      def update_i18n(_docxml)
         @docscheme ||= "2024"
         %w(1951 1972).include?(@docscheme) and
           i18n_conditional_set("reference_number", "reference_number_abbrev")

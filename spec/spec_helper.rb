@@ -402,8 +402,6 @@ def mock_sts
   end
 end
 
-private
-
 def get_xml(search, code, opts)
   c = code.gsub(%r{[/\s:-]}, "_").sub(%r{_+$}, "").downcase
   o = opts.keys.join "_"
