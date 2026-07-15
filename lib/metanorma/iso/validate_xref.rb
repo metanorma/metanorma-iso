@@ -8,8 +8,8 @@ module Metanorma
         anchors = extract_anchor_norm(root)
         root.xpath("//xref").each do |t|
           preceding = t.at("./preceding-sibling::text()[last()]")
-          !preceding.nil? &&
-            /\b(see| refer to)\p{Zs}*\Z/mi.match(preceding) or next
+          (!preceding.nil? &&
+            /\b(see| refer to)\p{Zs}*\Z/mi.match(preceding)) or next
           anchors[t["target"]] and
             @log.add("ISO_46", t, params: [t["target"]])
         end
@@ -17,7 +17,7 @@ module Metanorma
 
       def extract_anchor_norm(root)
         nodes = root.xpath("//annex[@obligation = 'normative'] | " \
-          "//references[@obligation = 'normative']")
+                           "//references[@obligation = 'normative']")
         ret = nodes.each_with_object({}) do |n, m|
           n["anchor"] and m[n["anchor"]] = true
         end
@@ -33,7 +33,7 @@ module Metanorma
         bibitemids = extract_bibitem_anchors(root)
         root.xpath("//eref").each do |t|
           prec = t.at("./preceding-sibling::text()[last()]")
-          !prec.nil? && /\b(see|refer to)\p{Zs}*\Z/mi.match(prec) or next
+          (!prec.nil? && /\b(see|refer to)\p{Zs}*\Z/mi.match(prec)) or next
           unless target = bibitemids[t["bibitemid"]]
             # unless target = root.at("//bibitem[@anchor = '#{t['bibitemid']}']")
             @log.add("ISO_47", t, params: [t])
@@ -46,8 +46,8 @@ module Metanorma
 
       def extract_bibitem_anchors(root)
         ret = root.xpath("//references[@normative = 'true']//bibitem")
-          .each_with_object({}) do |b, m|
-          m[b["anchor"]] = { bib: b, norm: true }
+          .to_h do |b|
+          [b["anchor"], { bib: b, norm: true }]
         end
         root.xpath("//references[not(@normative = 'true')]//bibitem")
           .each do |b|

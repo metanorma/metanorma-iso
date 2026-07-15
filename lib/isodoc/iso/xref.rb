@@ -154,10 +154,10 @@ container: false)
       def localise_anchors(type = nil)
         @anchors.each do |id, v|
           type && v[:type] != type and next
-          #v[:has_table_prefix] and next
+          # v[:has_table_prefix] and next
           # has already been l10n'd, is copied from prev iteration
           %i(label value xref xref_bare modspec).each do |t|
-            v[t] && !v[t].empty? or next
+            (v[t] && !v[t].empty?) or next
             # Skip if value unchanged from previous iteration
             @anchors_previous&.dig(id, t) == v[t] and next
             v[t] = @i18n.l10n(v[t])

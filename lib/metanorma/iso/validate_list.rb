@@ -137,7 +137,7 @@ module Metanorma
       private
 
       # Breadth-first traversal of Nokogiri nodes (counterpart to depth-first traverse)
-      def traverse_breadth_first(elem, &block)
+      def traverse_breadth_first(elem, &)
         queue = [elem]
 
         while !queue.empty?

@@ -1,4 +1,4 @@
-require_relative "./iso/processor"
+require_relative "iso/processor"
 
 module Metanorma
   module Iso
