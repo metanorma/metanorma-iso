@@ -1,0 +1,119 @@
+# ISO DOCX style mapping
+# Maps isodoc semantic elements to DOCX styleIds in the ISO templates.
+#
+# Paragraph styles map to w:pStyle values.
+# Character styles map to w:rStyle values.
+# Numbering maps to w:numId + w:ilvl values.
+#
+# Source: DIS template (ISO 6709 ed.3) and Simple template (ISO dotx)
+# DIS template has 461 styles; Simple template has 72 styles.
+#
+# Format: semantic_key: DIS_styleId
+# See data/style_mapping_guide.md for full DIS vs Simple comparison.
+
+paragraph_styles:
+  # Titles and headings
+  title: zzSTDTitle
+  heading1: Heading1
+  heading2: Heading2
+  heading3: Heading3
+  heading4: Heading4
+  heading5: Heading5
+  heading6: Heading6
+
+  # Annex headings
+  annex: ANNEX
+  annex_heading2: a2
+  annex_heading3: a3
+  annex_heading4: a4
+  annex_heading5: a5
+  annex_heading6: a6
+
+  # Section types
+  foreword: ForewordTitle
+  introduction: IntroTitle
+  bibliography: BiblioTitle
+  index: IndexHead
+
+  # Content blocks
+  note: Note
+  example: Example
+  sourcecode: Code
+  formula: Formula
+  figure_title: Figuretitle
+  figure_title_annex: Figuretitle
+  table_title: Tabletitle
+  table_title_annex: Tabletitle
+  admonition: Notice
+  admonition_title: Notice
+  quote: BlockText
+  definition: Definition
+
+  # Table styles
+  table_header: Tableheader
+  table_body: Tablebody
+  table_footer: Tablefooter
+
+  # Footnotes
+  footnote_text: FootnoteText
+
+  # TOC
+  toc1: TOC1
+  toc2: TOC2
+  toc3: TOC3
+
+  # Term styles
+  term_num: TermNum
+  terms: Terms
+  admitted_term: AdmittedTerm
+  deprecated_term: DeprecatedTerms
+  alt_terms: AltTerms
+
+  # Source and key
+  source: Source
+  key_title: KeyTitle
+
+  # Colophon and cover
+  colophon: zzCopyright
+  std_title: zzSTDTitle
+  std_title2: zzSTDTitle
+
+  # Body text variants
+  body_text: BodyText
+  body_text_indent: BodyTextindent1
+
+  # Bibliography entries
+  biblio_entry: BiblioEntry
+  biblio_text: BiblioText
+
+  # Cover page
+  cover_title: CoverTitleA1
+  cover_doc_identity: CoverTitleA1
+
+character_styles:
+  hyperlink: Hyperlink
+  footnote_reference: FootnoteReference
+  table_footnote_ref: TableFootNoteXref
+  code: ISOCode
+  code_bold: ISOCodebold
+  code_italic: ISOCodeitalic
+
+numbering:
+  # numId values from the DIS template's numbering.xml.
+  # Each abstractNum defines format, level text, and indentation.
+  #
+  # Annex numbering (abstractNumId=11)
+  annex_clause: 4
+  #
+  # Alpha lists (abstractNumId=18): a) b) c) ...
+  alpha_list: 6
+  #
+  # Dash bullet lists — not directly available in DIS.
+  # Bullet lists (abstractNumId=4–9): · · · ...
+  dash_list: 10
+  #
+  # Hierarchical decimal (abstractNumId=14/15): 1. 1.1 1.1.1 ...
+  decimal_list: 1
+  #
+  # Bibliography (abstractNumId=10): [1] [2] ...
+  bibliography: 7

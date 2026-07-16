@@ -1,0 +1,1106 @@
+---
+style_library:
+  name: ISO Simple Template
+  version: '1.0'
+  description: ISO Simple template styles
+  paragraph_styles:
+    Normal:
+      id: Normal
+      type: paragraph
+      name: Normal
+      semi_hidden: true
+      quick_format: true
+      paragraph_properties:
+        tabs:
+        - type: left
+          position: '0.71'
+        spacing:
+          after: '6.0'
+          line: '12.0'
+          line_rule: atLeast
+        alignment: both
+      run_properties:
+        font_size: '11.0'
+        font_size_cs: '11.0'
+        lang_val: en-GB
+    Heading1:
+      id: Heading1
+      type: paragraph
+      name: heading 1
+      based_on: Normal
+      next_style: Normal
+      linked_style: Heading1Char
+      ui_priority: '1'
+      quick_format: true
+      paragraph_properties:
+        keep_next: true
+        numbering:
+          num_id: '6'
+        tabs:
+        - type: clear
+          position: '0.71'
+        - type: left
+          position: '0.71'
+        - type: left
+          position: '0.99'
+        spacing:
+          before: '13.5'
+          line: '13.5'
+          line_rule: atLeast
+        indent:
+          left: '0.0'
+          firstLine: '0.0'
+        alignment: left
+        outline_level: '0'
+      run_properties:
+        fonts:
+          eastAsia: MS Mincho
+        bold: true
+        font_size: '13.0'
+        lang_eastasia: ja-JP
+    Heading2:
+      id: Heading2
+      type: paragraph
+      name: heading 2
+      based_on: Heading1
+      next_style: Normal
+      linked_style: Heading2Char
+      ui_priority: '2'
+      quick_format: true
+      paragraph_properties:
+        numbering:
+          ilvl: '1'
+        tabs:
+        - type: clear
+          position: '0.63'
+        - type: clear
+          position: '0.71'
+        - type: clear
+          position: '0.99'
+        - type: left
+          position: '0.95'
+        - type: left
+          position: '1.23'
+        spacing:
+          before: '3.0'
+          line: '12.5'
+          line_rule: atLeast
+        outline_level: '1'
+      run_properties:
+        font_size: '12.0'
+    Heading3:
+      id: Heading3
+      type: paragraph
+      name: heading 3
+      based_on: Heading1
+      next_style: Normal
+      linked_style: Heading3Char
+      ui_priority: '3'
+      quick_format: true
+      paragraph_properties:
+        numbering:
+          ilvl: '2'
+        tabs:
+        - type: clear
+          position: '0.71'
+        - type: clear
+          position: '0.99'
+        - type: left
+          position: '1.55'
+        spacing:
+          before: '3.0'
+          line: '12.0'
+          line_rule: atLeast
+        outline_level: '2'
+      run_properties:
+        font_size: '11.0'
+    Heading4:
+      id: Heading4
+      type: paragraph
+      name: heading 4
+      based_on: Heading3
+      next_style: Normal
+      linked_style: Heading4Char
+      ui_priority: '4'
+      quick_format: true
+      paragraph_properties:
+        numbering:
+          ilvl: '3'
+        tabs:
+        - type: clear
+          position: '1.55'
+        - type: clear
+          position: '1.9'
+        - type: left
+          position: '1.8'
+        - type: left
+          position: '2.01'
+        - type: left
+          position: '2.4'
+        outline_level: '3'
+    Heading5:
+      id: Heading5
+      type: paragraph
+      name: heading 5
+      based_on: Heading4
+      next_style: Normal
+      linked_style: Heading5Char
+      ui_priority: '5'
+      quick_format: true
+      paragraph_properties:
+        numbering:
+          ilvl: '4'
+        tabs:
+        - type: clear
+          position: '2.01'
+        - type: clear
+          position: '2.4'
+        outline_level: '4'
+    Heading6:
+      id: Heading6
+      type: paragraph
+      name: heading 6
+      based_on: Heading5
+      next_style: Normal
+      linked_style: Heading6Char
+      ui_priority: '6'
+      quick_format: true
+      paragraph_properties:
+        numbering:
+          ilvl: '5'
+        outline_level: '5'
+    a2:
+      id: a2
+      type: paragraph
+      name: a2
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '11'
+      paragraph_properties:
+        keep_next: true
+        numbering:
+          num_id: '12'
+          ilvl: '1'
+        tabs:
+        - type: clear
+          position: '0.63'
+        - type: clear
+          position: '0.71'
+        - type: left
+          position: '1.0'
+        - type: left
+          position: '1.27'
+        spacing:
+          before: '13.5'
+          line: '13.5'
+          line_rule: atLeast
+        alignment: left
+        outline_level: '0'
+      run_properties:
+        fonts:
+          eastAsia: MS Mincho
+        bold: true
+        font_size: '13.0'
+        lang_eastasia: ja-JP
+    a3:
+      id: a3
+      type: paragraph
+      name: a3
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '12'
+      paragraph_properties:
+        keep_next: true
+        numbering:
+          num_id: '12'
+          ilvl: '2'
+        spacing:
+          before: '3.0'
+          line: '12.5'
+          line_rule: atLeast
+        alignment: left
+        outline_level: '0'
+      run_properties:
+        fonts:
+          eastAsia: MS Mincho
+        bold: true
+        font_size: '12.0'
+        lang_eastasia: ja-JP
+    a4:
+      id: a4
+      type: paragraph
+      name: a4
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '13'
+      paragraph_properties:
+        keep_next: true
+        numbering:
+          num_id: '12'
+          ilvl: '3'
+        tabs:
+        - type: left
+          position: '1.55'
+        spacing:
+          before: '3.0'
+        alignment: left
+        outline_level: '0'
+      run_properties:
+        fonts:
+          eastAsia: MS Mincho
+        bold: true
+        bold_cs: true
+        italic_cs: true
+        lang_eastasia: ja-JP
+    a5:
+      id: a5
+      type: paragraph
+      name: a5
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '14'
+      paragraph_properties:
+        keep_next: true
+        numbering:
+          num_id: '12'
+          ilvl: '4'
+        tabs:
+        - type: left
+          position: '2.2'
+        - type: left
+          position: '2.4'
+        spacing:
+          before: '3.0'
+        alignment: left
+        outline_level: '0'
+      run_properties:
+        fonts:
+          eastAsia: MS Mincho
+        bold: true
+        bold_cs: true
+        italic_cs: true
+        lang_eastasia: ja-JP
+    a6:
+      id: a6
+      type: paragraph
+      name: a6
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '15'
+      paragraph_properties:
+        keep_next: true
+        numbering:
+          num_id: '12'
+          ilvl: '5'
+        tabs:
+        - type: left
+          position: '2.2'
+        - type: left
+          position: '2.4'
+        spacing:
+          before: '3.0'
+        alignment: left
+        outline_level: '0'
+      run_properties:
+        fonts:
+          eastAsia: MS Mincho
+        bold: true
+        bold_cs: true
+        lang_eastasia: ja-JP
+    ANNEX:
+      id: ANNEX
+      type: paragraph
+      name: ANNEX
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '10'
+      paragraph_properties:
+        keep_next: true
+        page_break_before: true
+        numbering:
+          num_id: '12'
+        spacing:
+          after: '24.0'
+          line: '15.5'
+          line_rule: exact
+        alignment: center
+        outline_level: '0'
+      run_properties:
+        fonts:
+          eastAsia: MS Mincho
+        bold: true
+        font_size: '14.0'
+        lang_eastasia: ja-JP
+    BiblioTitle:
+      id: BiblioTitle
+      type: paragraph
+      name: Biblio Title
+      based_on: Normal
+      ui_priority: '5'
+      paragraph_properties:
+        spacing:
+          after: '15.5'
+          line: '15.5'
+          line_rule: atLeast
+        alignment: center
+        outline_level: '0'
+      run_properties:
+        bold: true
+        font_size: '14.0'
+    Definition:
+      id: Definition
+      type: paragraph
+      name: Definition
+      based_on: Normal
+      linked_style: DefinitionChar
+      ui_priority: '9'
+    ForewordTitle:
+      id: ForewordTitle
+      type: paragraph
+      name: Foreword Title
+      based_on: Normal
+      semi_hidden: true
+      paragraph_properties:
+        keep_next: true
+        page_break_before: true
+        spacing:
+          after: '15.5'
+          line: '15.5'
+          line_rule: atLeast
+        outline_level: '0'
+      run_properties:
+        bold: true
+        font_size: '14.0'
+    IntroTitle:
+      id: IntroTitle
+      type: paragraph
+      name: Intro Title
+      based_on: ForewordTitle
+      semi_hidden: true
+      paragraph_properties:
+        page_break_before: true
+    Terms:
+      id: Terms
+      type: paragraph
+      name: Term(s)
+      based_on: Normal
+      next_style: Definition
+      ui_priority: '8'
+      paragraph_properties:
+        keep_next: true
+        spacing:
+          after: '0.0'
+        alignment: left
+      run_properties:
+        bold: true
+    TermNum:
+      id: TermNum
+      type: paragraph
+      name: TermNum
+      based_on: Normal
+      next_style: Terms
+      ui_priority: '7'
+      paragraph_properties:
+        keep_next: true
+        spacing:
+          after: '0.0'
+        alignment: left
+      run_properties:
+        bold: true
+    TOC1:
+      id: TOC1
+      type: paragraph
+      name: toc 1
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '39'
+      paragraph_properties:
+        tabs:
+        - type: left
+          position: '1.27'
+        - type: right
+          position: '17.2'
+        spacing:
+          before: '6.0'
+          after: '0.0'
+        indent:
+          left: '1.27'
+          right: '0.88'
+          hanging: '1.27'
+        alignment: left
+      run_properties:
+        bold: true
+    TOC2:
+      id: TOC2
+      type: paragraph
+      name: toc 2
+      based_on: TOC1
+      next_style: Normal
+      ui_priority: '39'
+      paragraph_properties:
+        spacing:
+          before: '0.0'
+    TOC3:
+      id: TOC3
+      type: paragraph
+      name: toc 3
+      based_on: TOC2
+      next_style: Normal
+      ui_priority: '39'
+    zzContents:
+      id: zzContents
+      type: paragraph
+      name: zzContents
+      based_on: Normal
+      next_style: TOC1
+      semi_hidden: true
+      paragraph_properties:
+        keep_next: true
+        page_break_before: true
+        spacing:
+          before: '48.0'
+          after: '15.5'
+          line: '15.5'
+          line_rule: exact
+        alignment: left
+      run_properties:
+        bold: true
+        font_size: '14.0'
+    zzCopyright:
+      id: zzCopyright
+      type: paragraph
+      name: zzCopyright
+      based_on: Normal
+      next_style: Normal
+      semi_hidden: true
+      paragraph_properties:
+        borders:
+        - type: top
+          val: single
+          sz: '4'
+          space: '1'
+          color: 0000FF
+        - type: bottom
+          val: single
+          sz: '4'
+          space: '1'
+          color: 0000FF
+        - type: left
+          val: single
+          sz: '4'
+          space: '4'
+          color: 0000FF
+        - type: right
+          val: single
+          sz: '4'
+          space: '4'
+          color: 0000FF
+        tabs:
+        - type: left
+          position: '0.91'
+        - type: left
+          position: '16.97'
+        indent:
+          left: '0.5'
+          right: '0.5'
+      run_properties:
+        color: 0000FF
+    zzSTDTitle:
+      id: zzSTDTitle
+      type: paragraph
+      name: zzSTDTitle
+      based_on: Normal
+      next_style: Normal
+      semi_hidden: true
+      paragraph_properties:
+        spacing:
+          before: '20.0'
+          after: '38.0'
+          line: '17.5'
+          line_rule: exact
+        alignment: left
+      run_properties:
+        bold: true
+        color: 0000FF
+        font_size: '16.0'
+    Footer:
+      id: Footer
+      type: paragraph
+      name: footer
+      based_on: Normal
+      linked_style: FooterChar
+      ui_priority: '99'
+      semi_hidden: true
+      paragraph_properties:
+        tabs:
+        - type: clear
+          position: '0.71'
+        - type: right
+          position: '17.2'
+        spacing:
+          before: '18.0'
+          line: '11.0'
+          line_rule: exact
+    Header:
+      id: Header
+      type: paragraph
+      name: header
+      based_on: Normal
+      linked_style: HeaderChar
+      ui_priority: '99'
+      semi_hidden: true
+      paragraph_properties:
+        spacing:
+          after: '30.0'
+          line: '11.0'
+          line_rule: exact
+      run_properties:
+        bold: true
+    Code:
+      id: Code
+      type: paragraph
+      name: Code
+      based_on: Normal
+      ui_priority: '16'
+      quick_format: true
+      paragraph_properties:
+        spacing:
+          after: '0.0'
+          line: '10.0'
+          line_rule: atLeast
+        alignment: left
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        font_size: '9.0'
+    Caption:
+      id: Caption
+      type: paragraph
+      name: caption
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '35'
+      unhide_when_used: true
+      quick_format: true
+      paragraph_properties:
+        spacing:
+          after: '10.0'
+          line: '12.0'
+          line_rule: auto
+      run_properties:
+        italic: true
+        italic_cs: true
+        color: 44546A
+        theme_color: text2
+        font_size: '9.0'
+        font_size_cs: '9.0'
+    BodyText:
+      id: BodyText
+      type: paragraph
+      name: Body Text
+      based_on: Normal
+      linked_style: BodyTextChar
+      quick_format: true
+    Formula:
+      id: Formula
+      type: paragraph
+      name: Formula
+      based_on: Normal
+      semi_hidden: true
+      paragraph_properties:
+        tabs:
+        - type: clear
+          position: '0.71'
+        - type: right
+          position: '17.19'
+        spacing:
+          after: '11.0'
+        indent:
+          left: '0.71'
+        alignment: left
+      run_properties:
+        fonts:
+          eastAsia: Times New Roman
+    Tablebody:
+      id: Tablebody
+      type: paragraph
+      name: Table body
+      based_on: Normal
+      paragraph_properties:
+        spacing:
+          before: '3.0'
+          after: '3.0'
+        alignment: center
+      run_properties:
+        font_size: '10.0'
+    ForewordText:
+      id: ForewordText
+      type: paragraph
+      name: Foreword Text
+      based_on: Normal
+      linked_style: ForewordTextChar
+      paragraph_properties:
+        tabs:
+        - type: clear
+          position: '0.71'
+      run_properties:
+        lang_val: fr-FR
+    BalloonText:
+      id: BalloonText
+      type: paragraph
+      name: Balloon Text
+      based_on: Normal
+      linked_style: BalloonTextChar
+      ui_priority: '99'
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        spacing:
+          after: '0.0'
+          line: '12.0'
+          line_rule: auto
+      run_properties:
+        fonts:
+          ascii: Segoe UI
+          hAnsi: Segoe UI
+          cs: Segoe UI
+        font_size: '9.0'
+        font_size_cs: '9.0'
+    NormalWeb:
+      id: NormalWeb
+      type: paragraph
+      name: Normal (Web)
+      based_on: Normal
+      ui_priority: '99'
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        tabs:
+        - type: clear
+          position: '0.71'
+        spacing:
+          before: '5.0'
+          after: '5.0'
+          line: '12.0'
+          line_rule: auto
+        alignment: left
+      run_properties:
+        fonts:
+          ascii: Times New Roman
+          hAnsi: Times New Roman
+          eastAsia: Times New Roman
+        font_size: '12.0'
+        font_size_cs: '12.0'
+        lang_val: en-US
+    Source:
+      id: Source
+      type: paragraph
+      name: Source
+      based_on: Definition
+      linked_style: SourceChar
+      quick_format: true
+    List:
+      id: List
+      type: paragraph
+      name: List
+      based_on: ListParagraph
+      ui_priority: '4'
+      paragraph_properties:
+        keep_next: true
+        numbering:
+          num_id: '20'
+        tabs:
+        - type: clear
+          position: '0.71'
+        indent:
+          left: '0.75'
+          hanging: '0.75'
+    Example:
+      id: Example
+      type: paragraph
+      name: Example
+      based_on: Normal
+      linked_style: ExampleChar
+      quick_format: true
+      run_properties:
+        font_size: '10.0'
+        font_size_cs: '10.0'
+    Note:
+      id: Note
+      type: paragraph
+      name: Note
+      based_on: Normal
+      linked_style: NoteChar
+      quick_format: true
+      paragraph_properties:
+        spacing:
+          after: '12.0'
+      run_properties:
+        font_size: '10.0'
+        font_size_cs: '10.0'
+    FigureTitle:
+      id: FigureTitle
+      type: paragraph
+      name: Figure Title
+      based_on: ListParagraph
+      linked_style: FigureTitleChar
+      quick_format: true
+      paragraph_properties:
+        numbering:
+          num_id: '17'
+        alignment: center
+      run_properties:
+        bold: true
+        bold_cs: true
+    ListParagraph:
+      id: ListParagraph
+      type: paragraph
+      name: List Paragraph
+      based_on: Normal
+      linked_style: ListParagraphChar
+      ui_priority: '34'
+      semi_hidden: true
+      quick_format: true
+      paragraph_properties:
+        indent:
+          left: '1.27'
+    AnnexFigureTitle:
+      id: AnnexFigureTitle
+      type: paragraph
+      name: Annex Figure Title
+      based_on: Normal
+      linked_style: AnnexFigureTitleChar
+      quick_format: true
+      paragraph_properties:
+        numbering:
+          num_id: '13'
+        alignment: center
+      run_properties:
+        bold: true
+        bold_cs: true
+    AnnexTableTitle:
+      id: AnnexTableTitle
+      type: paragraph
+      name: Annex Table Title
+      based_on: ListParagraph
+      linked_style: AnnexTableTitleChar
+      quick_format: true
+      paragraph_properties:
+        keep_next: true
+        page_break_before: true
+        numbering:
+          num_id: '15'
+        alignment: center
+      run_properties:
+        bold: true
+    Tabletitle:
+      id: Tabletitle
+      type: paragraph
+      name: Table title
+      based_on: ListParagraph
+      linked_style: TabletitleChar
+      quick_format: true
+      paragraph_properties:
+        numbering:
+          num_id: '16'
+        alignment: center
+      run_properties:
+        bold: true
+        bold_cs: true
+        lang_val: fr-CH
+  character_styles:
+    DefaultParagraphFont:
+      id: DefaultParagraphFont
+      type: character
+      name: Default Paragraph Font
+      ui_priority: '1'
+      semi_hidden: true
+      unhide_when_used: true
+    Heading1Char:
+      id: Heading1Char
+      type: character
+      name: Heading 1 Char
+      linked_style: Heading1
+      ui_priority: '1'
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+          eastAsia: MS Mincho
+        bold: true
+        font_size: '13.0'
+        lang_val: en-GB
+        lang_eastasia: ja-JP
+    Heading2Char:
+      id: Heading2Char
+      type: character
+      name: Heading 2 Char
+      linked_style: Heading2
+      ui_priority: '2'
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+          eastAsia: MS Mincho
+        bold: true
+        font_size: '12.0'
+        lang_val: en-GB
+        lang_eastasia: ja-JP
+    Heading3Char:
+      id: Heading3Char
+      type: character
+      name: Heading 3 Char
+      linked_style: Heading3
+      ui_priority: '3'
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+          eastAsia: MS Mincho
+        bold: true
+        font_size: '11.0'
+        lang_val: en-GB
+        lang_eastasia: ja-JP
+    Heading4Char:
+      id: Heading4Char
+      type: character
+      name: Heading 4 Char
+      linked_style: Heading4
+      ui_priority: '4'
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+          eastAsia: MS Mincho
+        bold: true
+        font_size: '11.0'
+        lang_val: en-GB
+        lang_eastasia: ja-JP
+    Heading5Char:
+      id: Heading5Char
+      type: character
+      name: Heading 5 Char
+      linked_style: Heading5
+      ui_priority: '5'
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+          eastAsia: MS Mincho
+        bold: true
+        font_size: '11.0'
+        lang_val: en-GB
+        lang_eastasia: ja-JP
+    Heading6Char:
+      id: Heading6Char
+      type: character
+      name: Heading 6 Char
+      linked_style: Heading6
+      ui_priority: '6'
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+          eastAsia: MS Mincho
+        bold: true
+        font_size: '11.0'
+        lang_val: en-GB
+        lang_eastasia: ja-JP
+    FooterChar:
+      id: FooterChar
+      type: character
+      name: Footer Char
+      linked_style: Footer
+      ui_priority: '99'
+      semi_hidden: true
+      run_properties:
+        font_size: '11.0'
+        font_size_cs: '11.0'
+        lang_val: en-GB
+    HeaderChar:
+      id: HeaderChar
+      type: character
+      name: Header Char
+      linked_style: Header
+      ui_priority: '99'
+      semi_hidden: true
+      run_properties:
+        bold: true
+        font_size: '11.0'
+        font_size_cs: '11.0'
+        lang_val: en-GB
+    Hyperlink:
+      id: Hyperlink
+      type: character
+      name: Hyperlink
+      ui_priority: '99'
+      run_properties:
+        color: 0000FF
+        underline: single
+        lang_val: fr-FR
+    PlaceholderText:
+      id: PlaceholderText
+      type: character
+      name: Placeholder Text
+      based_on: DefaultParagraphFont
+      ui_priority: '99'
+      semi_hidden: true
+      run_properties:
+        color: '808080'
+    ForewordTextChar:
+      id: ForewordTextChar
+      type: character
+      name: Foreword Text Char
+      linked_style: ForewordText
+      run_properties:
+        font_size: '11.0'
+        font_size_cs: '11.0'
+        lang_val: fr-FR
+    BalloonTextChar:
+      id: BalloonTextChar
+      type: character
+      name: Balloon Text Char
+      based_on: DefaultParagraphFont
+      linked_style: BalloonText
+      ui_priority: '99'
+      semi_hidden: true
+      run_properties:
+        fonts:
+          ascii: Segoe UI
+          hAnsi: Segoe UI
+          cs: Segoe UI
+        font_size: '9.0'
+        font_size_cs: '9.0'
+        lang_val: en-GB
+    FollowedHyperlink:
+      id: FollowedHyperlink
+      type: character
+      name: FollowedHyperlink
+      based_on: DefaultParagraphFont
+      ui_priority: '99'
+      semi_hidden: true
+      unhide_when_used: true
+      run_properties:
+        color: 954F72
+        theme_color: followedHyperlink
+        underline: single
+    DefinitionChar:
+      id: DefinitionChar
+      type: character
+      name: Definition Char
+      based_on: DefaultParagraphFont
+      linked_style: Definition
+      ui_priority: '9'
+      run_properties:
+        font_size: '11.0'
+        font_size_cs: '11.0'
+        lang_val: en-GB
+    SourceChar:
+      id: SourceChar
+      type: character
+      name: Source Char
+      based_on: DefinitionChar
+      linked_style: Source
+      run_properties:
+        font_size: '11.0'
+        font_size_cs: '11.0'
+        lang_val: en-GB
+    ExampleChar:
+      id: ExampleChar
+      type: character
+      name: Example Char
+      based_on: DefaultParagraphFont
+      linked_style: Example
+      run_properties:
+        lang_val: en-GB
+    NoteChar:
+      id: NoteChar
+      type: character
+      name: Note Char
+      based_on: DefaultParagraphFont
+      linked_style: Note
+      run_properties:
+        lang_val: en-GB
+    ListParagraphChar:
+      id: ListParagraphChar
+      type: character
+      name: List Paragraph Char
+      based_on: DefaultParagraphFont
+      linked_style: ListParagraph
+      ui_priority: '34'
+      semi_hidden: true
+      run_properties:
+        font_size: '11.0'
+        font_size_cs: '11.0'
+        lang_val: en-GB
+    AnnexTableTitleChar:
+      id: AnnexTableTitleChar
+      type: character
+      name: Annex Table Title Char
+      based_on: ListParagraphChar
+      linked_style: AnnexTableTitle
+      run_properties:
+        bold: true
+        font_size: '11.0'
+        font_size_cs: '11.0'
+        lang_val: en-GB
+    FigureTitleChar:
+      id: FigureTitleChar
+      type: character
+      name: Figure Title Char
+      based_on: ListParagraphChar
+      linked_style: FigureTitle
+      run_properties:
+        bold: true
+        bold_cs: true
+        font_size: '11.0'
+        font_size_cs: '11.0'
+        lang_val: en-GB
+    TabletitleChar:
+      id: TabletitleChar
+      type: character
+      name: Table title Char
+      based_on: ListParagraphChar
+      linked_style: Tabletitle
+      run_properties:
+        bold: true
+        bold_cs: true
+        font_size: '11.0'
+        font_size_cs: '11.0'
+        lang_val: fr-CH
+    AnnexFigureTitleChar:
+      id: AnnexFigureTitleChar
+      type: character
+      name: Annex Figure Title Char
+      based_on: DefaultParagraphFont
+      linked_style: AnnexFigureTitle
+      run_properties:
+        bold: true
+        bold_cs: true
+        font_size: '11.0'
+        font_size_cs: '11.0'
+        lang_val: en-GB
+    BodyTextChar:
+      id: BodyTextChar
+      type: character
+      name: Body Text Char
+      based_on: DefaultParagraphFont
+      linked_style: BodyText
+      run_properties:
+        font_size: '11.0'
+        font_size_cs: '11.0'
+        lang_val: en-GB
+    UnresolvedMention:
+      id: UnresolvedMention
+      type: character
+      name: Unresolved Mention
+      based_on: DefaultParagraphFont
+      ui_priority: '99'
+      semi_hidden: true
+      unhide_when_used: true
+      run_properties:
+        color: 605E5C
+        shading_fill: E1DFDD
+        shading_color: auto
+        shading_type: clear

@@ -1,0 +1,10 @@
+---
+run_properties:
+  fonts:
+    ascii: Cambria
+    hAnsi: Cambria
+    cs: Times New Roman
+    eastAsia: Calibri
+  lang_val: en-US
+  lang_eastasia: en-US
+  lang_bidi: ar-SA
