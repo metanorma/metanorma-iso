@@ -1,18 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns="http://relaxng.org/ns/structure/1.0">
   <!--
-    Metanorma wrapper around the vendored W3C MathML 3.0 RelaxNG grammar.
-    Includes the unmodified W3C grammar (start = math) and augments it with
+    Metanorma wrapper around the vendored W3C MathML 4 RelaxNG grammar
+    (vendored with marked modifications - - see README.adoc).
+    Includes the W3C grammar (start = math) and augments it with
     metanorma's owned extension attributes. Referenced from basicdoc.rnc via:
       mathml = external "mathml/metanorma-mathml.rnc"
     Authoritative param list for data-metanorma-numberformat lives in plurimath
     (Formatter::Standard::DEFAULT_OPTIONS); see metanorma/basicdoc-models#35.
+    MathML 3 -> 4 migration: metanorma/basicdoc-models#39 /
+    metanorma/metanorma#585.
   -->
-  <include href="mathml3.rng"/>
+  <include href="mathml4.rng"/>
   <!--
     metanorma number-formatting hint on <mn>; opaque comma-separated option
     string parsed at presentation time (no-namespace data- attribute, which
-    the W3C CommonAtt/NonMathMLAtt does not otherwise permit).
+    the W3C MathMLPGlobalAttributes/NonMathMLAtt does not otherwise permit).
   -->
   <define name="mn.attributes" combine="interleave">
     <optional>
@@ -24,13 +27,14 @@
     serialiser emits no foreign markup, so the W3C annotation-xml escape hatch
     (and its anyElement wildcard) is forbidden in the MathML we process. This
     also removes the untyped `id` attribute the wildcard permits, which clashes
-    with xsd:ID under RELAX NG ID-type consistency (the callout-annotation error).
-    metanorma only emits presentation MathML; pre-empting the escape hatch before
-    semantic MathML is ever wired. Text-only <annotation> is retained.
+    with xsd:ID under RELAX NG ID-type consistency (the callout-annotation
+    error). metanorma only emits presentation MathML; pre-empting the escape
+    hatch before semantic MathML is ever wired. Text-only <annotation> is
+    retained.
     
     Expressed via `combine` (interleave with notAllowed) rather than an
     include-override: annotation-xml/anyElement are defined in the transitively
-    included mathml3-common, and libxml2's RelaxNG (used by Nokogiri for fragment
+    included mathml4-core, and libxml2's RelaxNG (used by Nokogiri for fragment
     / passthrough validation) cannot override a define from a nested include - -
     it demands the combine attribute and otherwise fails to compile the whole
     grammar (every passthrough then wrongly reports "Invalid passthrough
@@ -43,3 +47,13 @@
     <notAllowed/>
   </define>
 </grammar>
+<!--
+  NOTE on MathML 4's token content model: upstream `textorHTML`
+  (mathml4-core.rnc) admits embedded XHTML/SVG inside token elements
+  (mi/mn/mo/mtext/ms). That loosening is removed as a marked modification in
+  the vendored core file itself: libxml2's RELAX NG rejects the compiled svg
+  branch outright (breaking all passthrough validation), and metanorma's
+  serialiser never emits embedded HTML/SVG in math tokens. See the
+  METANORMA MODIFICATION comment in mathml4-core.rnc and
+  metanorma/basicdoc-models#39.
+-->
