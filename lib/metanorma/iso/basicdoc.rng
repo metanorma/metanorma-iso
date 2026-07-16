@@ -1931,7 +1931,7 @@ or as the string "auto"</a:documentation>
     </element>
   </define>
   <define name="mathml">
-    <a:documentation>Encoding of MathML: the official W3C MathML 3.0 grammar (namespace
+    <a:documentation>Encoding of MathML: the official W3C MathML 4 grammar (namespace
 http://www.w3.org/1998/Math/MathML), via the metanorma wrapper in
 grammars/mathml/. See grammars/mathml/README.adoc and basicdoc-models#35.</a:documentation>
     <externalRef href="metanorma-mathml.rng"/>

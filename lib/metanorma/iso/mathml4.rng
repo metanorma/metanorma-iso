@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  MathML 4 (full)
+  ##############
+-->
+<!--
+      Copyright 1998-2026 W3C (MIT, ERCIM, Keio)
+  
+      Use and distribution of this code are permitted under the terms
+      W3C Software Notice and License
+      http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+-->
+<grammar ns="http://www.w3.org/1998/Math/MathML" xmlns="http://relaxng.org/ns/structure/1.0">
+  <!--
+    Presentation MathML 
+    METANORMA MODIFICATION (basicdoc-models#39): upstream overrides
+    `anyElement` inside this include, but `anyElement` is defined in
+    mathml4-core.rnc, i.e. an include nested below mathml4-presentation.rnc;
+    libxml2's RELAX NG cannot override a define from a nested include (the
+    same constraint documented in metanorma-mathml.rnc). The override is
+    redundant for metanorma, whose wrapper bans anyElement outright.
+    Upstream text was:
+      include "mathml4-presentation.rnc"  {
+      anyElement =  element (* - m:*) {(attribute * {text}|text| anyElement)*}
+      }
+  -->
+  <include href="mathml4-presentation.rng"/>
+  <!-- Content  MathML -->
+  <include href="mathml4-content.rng"/>
+</grammar>

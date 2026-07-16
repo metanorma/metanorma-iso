@@ -1,16 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-      This is the Mathematical Markup Language (MathML) 3.0, an XML
-      application for describing mathematical notation and capturing
-      both its structure and content.
-  
-      Copyright 1998-2014 W3C (MIT, ERCIM, Keio, Beihang)
+  MathML 4 (Strict Content)
+  #########################
+-->
+<!--
+      Copyright 1998-2026 W3C (MIT, ERCIM, Keio, Beihang)
   
       Use and distribution of this code are permitted under the terms
       W3C Software Notice and License
       http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
 -->
 <grammar ns="http://www.w3.org/1998/Math/MathML" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start combine="choice">
+    <ref name="math.strict"/>
+  </start>
+  <define name="CommonAtt">
+    <optional>
+      <attribute name="id">
+        <data type="ID"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="xref"/>
+    </optional>
+  </define>
+  <define name="math.strict">
+    <element name="math">
+      <ref name="math.attributes"/>
+      <zeroOrMore>
+        <ref name="ContExp"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <!--
+    METANORMA MODIFICATION (basicdoc-models#39): upstream combines CommonAtt
+    (id, xref) into math.attributes here; in the full-MathML composition the
+    math element already carries `id` via MathMLPGlobalAttributes
+    (mathml4-core.rnc) and `xref` via the presentation augmentation
+    (mathml4-presentation.rnc), so RELAX NG's duplicate-attribute restriction
+    rejects the composed grammar (jing: 'duplicate attribute "id"').
+    Upstream text was:
+      math.attributes &= CommonAtt
+  -->
   <define name="ContExp">
     <choice>
       <ref name="semantics-contexp"/>
@@ -47,7 +78,7 @@
   </define>
   <define name="semantics-ci">
     <element name="semantics">
-      <ref name="semantics.attributes"/>
+      <ref name="CommonAtt"/>
       <choice>
         <ref name="ci"/>
         <ref name="semantics-ci"/>
@@ -62,8 +93,8 @@
   </define>
   <define name="semantics-contexp">
     <element name="semantics">
-      <ref name="semantics.attributes"/>
-      <ref name="ContExp"/>
+      <ref name="CommonAtt"/>
+      <ref name="MathExpression"/>
       <zeroOrMore>
         <choice>
           <ref name="annotation"/>
@@ -72,6 +103,42 @@
       </zeroOrMore>
     </element>
   </define>
+  <define name="annotation" combine="choice">
+    <element name="annotation">
+      <ref name="CommonAtt"/>
+      <text/>
+    </element>
+  </define>
+  <!--
+    METANORMA MODIFICATION (basicdoc-models#39): upstream re-opens
+    `anyElement` and `annotation-xml` here with combine=choice (|=). RELAX NG
+    permits only one combine method per name, which blocks the metanorma
+    wrapper's `&= notAllowed` bans (metanorma-mathml.rnc) of these foreign
+    markup escape hatches. The re-opens are dropped: the base definitions in
+    mathml4-core.rnc remain, and the wrapper forbids them outright anyway.
+    Upstream text was:
+      anyElement |=  element (* - m:*) {(attribute * {text}|text| anyElement)*}
+      annotation-xml |= element annotation-xml {annotation-xml.attributes,
+                                               (MathExpression*|anyElement*)}
+  -->
+  <define name="annotation-xml.attributes" combine="interleave">
+    <ref name="CommonAtt"/>
+    <optional>
+      <ref name="cd"/>
+    </optional>
+    <optional>
+      <ref name="encoding"/>
+    </optional>
+  </define>
+  <!--
+    METANORMA MODIFICATION (basicdoc-models#39): upstream combines a second
+    `attribute encoding` into the `encoding` define (already defined in
+    mathml4-core.rnc); the interleave yields the same attribute twice wherever
+    the define is used, which RELAX NG forbids (jing: 'duplicate attribute
+    "encoding"').
+    Upstream text was:
+      encoding &= attribute encoding {xsd:string}
+  -->
   <define name="ci">
     <element name="ci">
       <ref name="ci.attributes"/>
@@ -120,6 +187,23 @@
   </define>
   <define name="csymbol.content">
     <ref name="SymbolName"/>
+  </define>
+  <define name="cd">
+    <attribute name="cd">
+      <data type="NCName"/>
+    </attribute>
+  </define>
+  <define name="name">
+    <attribute name="name">
+      <data type="NCName"/>
+    </attribute>
+  </define>
+  <define name="src">
+    <optional>
+      <attribute name="src">
+        <data type="anyURI"/>
+      </attribute>
+    </optional>
   </define>
   <define name="BvarQ">
     <zeroOrMore>
