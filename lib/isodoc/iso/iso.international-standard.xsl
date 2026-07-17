@@ -3949,7 +3949,11 @@
 					<xsl:call-template name="setAltText">
 						<xsl:with-param name="value" select="@alt-text"/>
 					</xsl:call-template>
-					<xsl:apply-templates select="." mode="contents"/>
+					<xsl:variable name="item">
+						<!-- mnx:table/mn:fmt-name, mnx:figure/mn:fmt-name, mnx:example/mn:fmt-name -->
+						<xsl:apply-templates select="mn:fmt-name" mode="contents_item"/>
+					</xsl:variable>
+					<xsl:apply-templates select="xalan:nodeset($item)/node()"/>
 					<fo:inline keep-together.within-line="always" role="SKIP">
 						<fo:leader xsl:use-attribute-sets="toc-leader-style"/>
 						<fo:inline role="SKIP"><fo:page-number-citation ref-id="{@id}" role="SKIP"/></fo:inline>
@@ -7327,7 +7331,7 @@
 		<xsl:apply-templates mode="update_xml_step1"/>
 	</xsl:template>
 
-	<xsl:template match="mn:semx" mode="update_xml_step1">
+	<xsl:template match="mn:semx[not(@element = 'name')]" mode="update_xml_step1">
 		<xsl:apply-templates mode="update_xml_step1"/>
 	</xsl:template>
 
@@ -7713,7 +7717,7 @@
 	<xsl:variable name="non_white_space">[^\s\u3000-\u9FFF]</xsl:variable>
 	<xsl:variable name="regex_dots_units">((\b((<xsl:value-of select="$non_white_space"/>{1,3}\.<xsl:value-of select="$non_white_space"/>+)|(<xsl:value-of select="$non_white_space"/>+\.<xsl:value-of select="$non_white_space"/>{1,3}))\b)|(\.<xsl:value-of select="$non_white_space"/>{1,3})\b)</xsl:variable>
 
-	<xsl:template match="text()[not(ancestor::mn:bibdata or      ancestor::mn:fmt-link[not(contains(normalize-space(),' '))] or      ancestor::mn:sourcecode or      (ancestor::mn:tt and ancestor::mn:table and string-length() &gt; 20) or     ancestor::*[local-name() = 'math'] or     ancestor::*[local-name() = 'svg'] or     ancestor::mn:name or ancestor::mn:fmt-name or     starts-with(., 'http://') or starts-with(., 'https://') or starts-with(., 'www.') or normalize-space() = '' )]" name="keep_together_standard_number" mode="update_xml_enclose_keep-together_within-line">
+	<xsl:template match="text()[not( (ancestor::mn:bibdata and not(ancestor::mn:title)) or      ancestor::mn:fmt-link[not(contains(normalize-space(),' '))] or      ancestor::mn:sourcecode or      (ancestor::mn:tt and ancestor::mn:table and string-length() &gt; 20) or     ancestor::*[local-name() = 'math'] or     ancestor::*[local-name() = 'svg'] or     ancestor::mn:name or (ancestor::mn:fmt-name and not(ancestor::mn:semx[@element = 'name'])) or     starts-with(., 'http://') or starts-with(., 'https://') or starts-with(., 'www.') or normalize-space() = '' )]" name="keep_together_standard_number" mode="update_xml_enclose_keep-together_within-line">
 
 		<xsl:variable name="parent" select="local-name(..)"/>
 
@@ -7759,7 +7763,7 @@
 		<xsl:variable name="text">
 			<xsl:element name="text" namespace="{$namespace_full}">
 				<xsl:choose>
-					<xsl:when test="ancestor::mn:table"><xsl:value-of select="."/></xsl:when> <!-- no need enclose standard's number into tag 'keep-together_within-line' in table cells -->
+					<xsl:when test="ancestor::mn:table and not(ancestor::mn:fmt-name)"><xsl:value-of select="."/></xsl:when> <!-- no need enclose standard's number into tag 'keep-together_within-line' in table cells -->
 					<xsl:otherwise>
 						<xsl:variable name="text_" select="java:replaceAll(java:java.lang.String.new(.), $regex_standard_reference, concat($tag_keep-together_within-line_open,'$1',$tag_keep-together_within-line_close))"/>
 						<!-- <xsl:value-of select="$text__"/> -->
@@ -7852,6 +7856,10 @@
 
 	<xsl:template match="mn:fmt-stem | mn:image" mode="update_xml_enclose_keep-together_within-line">
 		<xsl:copy-of select="."/>
+	</xsl:template>
+
+	<xsl:template match="mn:semx" mode="update_xml_enclose_keep-together_within-line">
+		<xsl:apply-templates mode="update_xml_enclose_keep-together_within-line"/>
 	</xsl:template>
 
 	<xsl:template name="replace_text_tags">
@@ -19210,6 +19218,18 @@
 	</xsl:template>
 
 	<xsl:template match="mn:sup" mode="contents_item">
+		<xsl:copy>
+			<xsl:apply-templates mode="contents_item"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="mn:tt" mode="contents_item">
+		<xsl:copy>
+			<xsl:apply-templates mode="contents_item"/>
+		</xsl:copy>
+	</xsl:template>
+
+	<xsl:template match="*[local-name() = 'keep-together_within-line']" mode="contents_item">
 		<xsl:copy>
 			<xsl:apply-templates mode="contents_item"/>
 		</xsl:copy>
