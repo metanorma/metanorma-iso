@@ -169,6 +169,10 @@ module Metanorma
         iso_id_out_non_amd(xml, params, with_prf)
       rescue StandardError, *STAGE_ERROR => e
         @log.add("ISO_52", "Document identifier: #{e}")
+        # a taste layered on this flavour (:docstage-valid:) manages its
+        # own stage repertoire and docidentifier template: do not abort
+        # when pubid cannot parse a taste-supplied stage
+        @docstage_valid and return
         clean_abort("Document identifier: #{e}", xml)
       end
 

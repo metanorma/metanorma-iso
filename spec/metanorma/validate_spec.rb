@@ -65,6 +65,39 @@ RSpec.describe Metanorma::Iso, type: :validation do
       expect(illegal_stage_70).to include("Illegal document stage: 70.00")
       expect(legal_stage_60).not_to include("Illegal document stage: 60.00")
     end
+
+    it "degrades docidentifier errors to warnings when a taste supplies " \
+       "docstage-valid" do
+      input = <<~INPUT
+        = Document title
+        Author
+        :docfile: test.adoc
+        :nodoc:
+        :no-isobib:
+        :novalid:
+        :docnumber: 1000
+        :status: draft
+
+        text
+      INPUT
+      allow_any_instance_of(Metanorma::Iso::Converter)
+        .to receive(:iso_id_out_common)
+        .and_raise(StandardError.new("boom"))
+
+      # without a taste stage repertoire, identifier failure is fatal
+      expect { Asciidoctor.convert(input, *OPTIONS) }
+        .to raise_error(SystemExit)
+      FileUtils.rm_f "test.xml.abort"
+
+      # with one, it is logged (ISO_52) and the compile survives
+      expect do
+        Asciidoctor.convert(
+          input.sub(":status: draft",
+                    ":status: draft\n:docstage-valid: draft, published"),
+          *OPTIONS
+        )
+      end.not_to raise_error
+    end
   end
 
   context "Substage validation" do
