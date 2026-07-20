@@ -85,6 +85,7 @@ paragraph_styles:
   # Bibliography entries
   biblio_entry: BiblioEntry
   biblio_text: BiblioText
+  biblio_description: BiblioDescription
 
   # Cover page
   cover_title: CoverTitleA1

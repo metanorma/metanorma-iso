@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "plurimath"
+require "omml"
 
 module IsoDoc
   module Iso
@@ -151,7 +152,7 @@ module IsoDoc
           omml_xml = plurimath_formula.to_omml
           return nil if omml_xml.nil? || omml_xml.empty?
 
-          Uniword::Math::OMathPara.from_xml(omml_xml)
+          Omml.parse(omml_xml)
         rescue StandardError
           nil
         end
