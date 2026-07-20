@@ -17,9 +17,9 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       heading_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value.to_s.start_with?("Heading")
+        para_style_value(p).to_s.start_with?("Heading")
       end
-      expect(heading_paras.map { |p| p.properties.style.value })
+      expect(heading_paras.map { |p| para_style_value(p) })
         .to include("Heading1"),
         "top-level clause title should use Heading1, got: #{heading_paras.inspect}"
     end
@@ -37,9 +37,9 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       heading_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value.to_s.start_with?("Heading")
+        para_style_value(p).to_s.start_with?("Heading")
       end
-      levels = heading_paras.map { |p| p.properties.style.value }
+      levels = heading_paras.map { |p| para_style_value(p) }
       expect(levels).to include("Heading1"),
         "top-level should be Heading1, got: #{levels.inspect}"
       expect(levels).to include("Heading2"),

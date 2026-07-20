@@ -300,15 +300,12 @@ RSpec.describe "Rice DOCX structural invariants" do
     end
   end
 
-  describe "RawParagraph inline content is rendered, not serialized as XML" do
-    # metanorma-document 0.2.6's IsoDocument::RawParagraph captures a <p>'s
-    # mixed inline content as raw XML in #content (map_all_content).
+  describe "Term paragraph inline content is rendered, not serialized as XML" do
+    # <p> inside <terms> parses into ParagraphBlock, whose mixed inline
+    # children (semx, fmt-xref, xref) the inline dispatch walks directly.
     # Without a registered handler, the renderer fell back to
     # collect_text which returned the raw XML — and the output displayed
     # literal "<semx ...>" / "<xref ...>" tags as visible text.
-    #
-    # RawParagraphRenderer reparses content into a ParagraphBlock so the
-    # normal inline dispatch walks children (semx, fmt-xref, etc.).
     it "does not emit any semx tags as visible text" do
       raw = part("word/document.xml")
       expect(raw).not_to match(/semx[^<]/i),

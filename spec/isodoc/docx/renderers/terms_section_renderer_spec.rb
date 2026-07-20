@@ -17,7 +17,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermsSectionRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       heading_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "Heading1"
+        para_style_value(p) == "Heading1"
       end
       expect(heading_paras.length).to be >= 1,
         "terms section title should use Heading1"

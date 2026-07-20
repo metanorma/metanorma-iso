@@ -87,15 +87,13 @@ module IsoDoc
             end
           end
 
-          # Paragraph-like nodes — either ParagraphBlock (the canonical
-          # model) or RawParagraph (used for <p> inside <terms> in
-          # metanorma-document 0.2.6).
+          # Paragraph-like nodes — ParagraphBlock, the canonical model for
+          # <p> elements (including <p> inside <terms>).
           def text_carrier?(node)
             return false unless node.is_a?(Lutaml::Model::Serializable)
 
             name = node.class.name
-            name&.end_with?("ParagraphBlock") ||
-              name&.end_with?("RawParagraph")
+            name&.end_with?("ParagraphBlock")
           end
         end
       end

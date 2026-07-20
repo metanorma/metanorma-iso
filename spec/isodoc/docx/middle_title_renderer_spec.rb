@@ -16,7 +16,7 @@ RSpec.describe IsoDoc::Iso::Docx::MiddleTitleRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       main_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "MainTitle1"
+        para_style_value(p) == "MainTitle1"
       end
 
       expect(main_paras.length).to eq(1),
@@ -42,7 +42,7 @@ RSpec.describe IsoDoc::Iso::Docx::MiddleTitleRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       part_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "MainTitle2"
+        para_style_value(p) == "MainTitle2"
       end
 
       expect(part_paras.length).to eq(1),
@@ -67,7 +67,7 @@ RSpec.describe IsoDoc::Iso::Docx::MiddleTitleRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       main_paras = pkg.document.body.paragraphs.select do |p|
-        %w[MainTitle1 MainTitle2].include?(p.properties&.style&.value)
+        %w[MainTitle1 MainTitle2].include?(para_style_value(p))
       end
 
       expect(main_paras).to be_empty,

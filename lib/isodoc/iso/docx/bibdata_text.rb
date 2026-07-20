@@ -62,7 +62,7 @@ module IsoDoc
           return nil unless bib.class.attributes.key?(:doc_identifier)
 
           identifiers = Array(bib.doc_identifier)
-          identifiers.find { |d| extract_prop(d, :primary) == "true" } ||
+          identifiers.find { |d| extract_prop(d, :primary).to_s == "true" } ||
             identifiers.first
         end
 

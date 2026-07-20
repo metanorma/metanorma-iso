@@ -992,11 +992,11 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
         paras = pkg.document.body.paragraphs
 
         # First paragraph: doc identifier
-        cover_para = paras.find { |p| p.runs.any? { |r| (r.text || "").include?("ISO/CD 17301") } }
+        cover_para = paras.find { |p| p.runs.any? { |r| run_text(r).include?("ISO/CD 17301") } }
         expect(cover_para).not_to be_nil
 
         # Title paragraph
-        title_para = paras.find { |p| p.runs.any? { |r| (r.text || "").include?("Specifications") } }
+        title_para = paras.find { |p| p.runs.any? { |r| run_text(r).include?("Specifications") } }
         expect(title_para).not_to be_nil
       end
     end
@@ -1083,7 +1083,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
         paras = pkg.document.body.paragraphs
 
         # Contents heading
-        contents_para = paras.find { |p| p.runs.any? { |r| (r.text || "") == "Contents" } }
+        contents_para = paras.find { |p| p.runs.any? { |r| run_text(r) == "Contents" } }
         expect(contents_para).not_to be_nil
 
         # TOC field — check for TOC instruction in generated DOCX
@@ -1093,7 +1093,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
         end
 
         # TOC heading should be present (may appear in heading + field context)
-        contents_count = paras.count { |p| p.runs.any? { |r| (r.text || "") == "Contents" } }
+        contents_count = paras.count { |p| p.runs.any? { |r| run_text(r) == "Contents" } }
         expect(contents_count).to be >= 1
       end
     end
@@ -1135,7 +1135,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
 
         # Era C reference DOCX renders the middle title with MainTitle1
         title_paras = paras.select do |p|
-          p.properties&.style&.value == "MainTitle1"
+          para_style_value(p) == "MainTitle1"
         end
         expect(title_paras.length).to be >= 1
         title_text = title_paras.first.runs.map { |r| r.text || "" }.join
@@ -1163,8 +1163,8 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
         pkg = Uniword::Docx::Package.from_file(path)
         paras = pkg.document.body.paragraphs
 
-        main_paras = paras.select { |p| p.properties&.style&.value == "MainTitle1" }
-        part_paras = paras.select { |p| p.properties&.style&.value == "MainTitle2" }
+        main_paras = paras.select { |p| para_style_value(p) == "MainTitle1" }
+        part_paras = paras.select { |p| para_style_value(p) == "MainTitle2" }
 
         main_text = main_paras.first.runs.map { |r| r.text || "" }.join
         expect(main_text).to include("Cereals").and include("Specifications")
@@ -1319,8 +1319,8 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
             "XML-injected zzSTDTitle1 paragraph was not suppressed"
 
           # The adapter emits exactly one middle-title paragraph from
-          # bibdata (style zzSTDTitle).
-          middle = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='zzSTDTitle']]", ns)
+          # bibdata (Era C style MainTitle1 for the intro+main title).
+          middle = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='MainTitle1']]", ns)
           expect(middle.length).to eq(1),
             "Expected 1 adapter-emitted middle-title paragraph, got #{middle.length}"
         end
@@ -1855,7 +1855,7 @@ line3</sourcecode>
 
       convert_and_extract(adapter, xml) do |pkg|
         index_paras = pkg.document.body.paragraphs.select do |p|
-          p.properties&.style&.value == "IndexHead"
+          para_style_value(p) == "IndexHead"
         end
         expect(index_paras.length).to eq(1),
           "expected one IndexHead paragraph for indexsect title"

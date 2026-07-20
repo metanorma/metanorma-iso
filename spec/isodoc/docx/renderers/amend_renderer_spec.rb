@@ -21,7 +21,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::AmendRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       body_text_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "BodyText"
+        para_style_value(p) == "BodyText"
       end
 
       expect(body_text_paras.length).to be >= 1,
@@ -52,7 +52,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::AmendRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       a3_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "a3"
+        para_style_value(p) == "a3"
       end
 
       expect(a3_paras.length).to eq(1),
@@ -83,7 +83,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::AmendRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
 
       body_text_idx = styles.index("BodyText")
       a3_idx = styles.index("a3")
@@ -109,7 +109,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::AmendRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       a3_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "a3"
+        para_style_value(p) == "a3"
       end
 
       expect(a3_paras).to be_empty,
@@ -137,7 +137,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::AmendRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
 
       expect(styles).to include("Noteindent"),
         "note inside amend newcontent should be rendered via NoteRenderer, " \
@@ -169,7 +169,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::AmendRenderer do
 
       expect(last_text).to include("Body paragraph after amend")
 
-      last_style = paragraphs.last.properties&.style&.value
+      last_style = para_style_value(paragraphs.last)
       expect(last_style).not_to eq("a3"),
         "amend newcontent style should not bleed into following body paragraph"
       expect(last_style).not_to eq("BodyText"),

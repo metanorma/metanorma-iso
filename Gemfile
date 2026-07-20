@@ -5,7 +5,9 @@ gemspec
 gem "canon"
 gem "isodoc", github: "metanorma/isodoc", branch: "main"
 gem "metanorma", github: "metanorma/metanorma", branch: "main"
-gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "main"
+# standoc PR branch allowing isodoc 3.7; revert to branch: "main" once
+# https://github.com/metanorma/metanorma-standoc/pull/1215 merges.
+gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "rt-allow-isodoc-3.7"
 gem "rake"
 gem "relaton-bib", "~>2.1"
 gem "rspec"
@@ -16,7 +18,9 @@ gem "timecop"
 gem "webmock"
 gem "uniword", path: "../uniword" if File.exist?(File.expand_path("../uniword/Gemfile", __dir__))
 gem "lutaml-model", path: "../../lutaml/lutaml-model" if File.exist?(File.expand_path("../../lutaml/lutaml-model/Gemfile", __dir__))
-gem "html2doc", github: "metanorma/html2doc", branch: "rt-update-plurimath"
+# html2doc >= 1.12 is required for correct OMML math handling in Word output
+# (isodoc main also pins ~> 1.12).
+gem "html2doc", "~> 1.12.0"
 gem "moxml", "~> 0.1.23"
 
 eval_gemfile("Gemfile.devel") rescue nil
