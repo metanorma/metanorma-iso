@@ -98,11 +98,7 @@ module IsoDoc
           end
 
           def figure_name(figure)
-            if figure.class.attributes.key?(:fmt_name)
-              figure.fmt_name
-            elsif figure.class.attributes.key?(:name)
-              figure.name
-            end
+            figure.fmt_name || figure.name
           end
         end
       end

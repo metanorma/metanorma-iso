@@ -5,23 +5,23 @@ module IsoDoc
     module Docx
       module Renderers
         # Renders a BibliographicItem as a single bibliography-entry
-        # paragraph (BiblioEntry for informative, RefNorm for normative).
+        # paragraph (BiblioEntry for informative, RefNorm for normative),
+        # followed by one BiblioDescription paragraph per <note> child.
         #
         # The bookmark anchor (when present) lets hyperlinks scroll to
         # the entry; the entry content is the biblio tag (auto-numbered
         # citation) followed by the formatted reference text.
         #
-        # <note> and <abstract> children of the bibitem are metadata
-        # about the cited document (withdrawn status, abstract text)
-        # and are NOT rendered as visible content — including them
-        # produced stray "Withdrawn." and abstract paragraphs after
-        # each entry. The reference rice.docx doesn't show them.
+        # <abstract> children of the bibitem are metadata about the cited
+        # document and are NOT rendered as visible content — including
+        # them produced stray abstract paragraphs after each entry.
         class BibliographyRenderer
           include Base
           include ModelUtils
 
           def render(bibitem, doc)
             render_entry(bibitem, doc)
+            render_notes(bibitem, doc)
           end
 
           private
@@ -33,6 +33,19 @@ module IsoDoc
               render_bib_entry_content(bibitem, para)
             end
             doc << para
+          end
+
+          # Bibitem <note> children (e.g. availability remarks) render as
+          # BiblioDescription paragraphs directly after the entry.
+          def render_notes(bibitem, doc)
+            return unless bibitem.class.attributes.key?(:note)
+
+            Array(bibitem.note).each do |note|
+              para = build_unstyled_paragraph
+              para.style = @resolver.paragraph_style(:biblio_description)
+              @inline_renderer.render(note, para)
+              doc << para
+            end
           end
 
           def bib_item_style

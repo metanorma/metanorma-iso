@@ -169,7 +169,7 @@ module Metanorma
         def id_for_ref_section(ref_section)
           return remap(ref_section.id) if ref_section.id && @id_map.key?(ref_section.id)
 
-          normative = ref_section.normative == "true"
+          normative = ref_section.normative.to_s == "true"
           sts_id = normative ? "sec_normrefs" : "sec_bibl"
 
           register(ref_section.id, sts_id) if ref_section.id

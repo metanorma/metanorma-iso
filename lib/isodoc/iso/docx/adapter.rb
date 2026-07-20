@@ -2,6 +2,8 @@
 
 require "uniword"
 require "metanorma/document"
+# Resolves to the vendored copy in lib/metanorma/iso_document.rb (this gem's
+# lib precedes metanorma-document's lib in $LOAD_PATH).
 require "metanorma/iso_document"
 
 module IsoDoc
@@ -501,7 +503,7 @@ module IsoDoc
             doc << para
           end
 
-          is_normative = refs_sect.normative == "true"
+          is_normative = refs_sect.normative.to_s == "true"
           @context.with_normative(is_normative) do
             walk_mixed_content(refs_sect, doc)
           end

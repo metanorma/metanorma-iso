@@ -88,7 +88,7 @@ module IsoDoc
           identifiers = if bib.class.attributes.key?(:doc_identifier)
                           Array(bib.doc_identifier)
                         end
-          primary = identifiers&.find { |d| d.primary == "true" } || identifiers&.first
+          primary = identifiers&.find { |d| d.primary.to_s == "true" } || identifiers&.first
           return nil unless primary
 
           id = primary.value
@@ -103,7 +103,7 @@ module IsoDoc
           identifiers = if bib.class.attributes.key?(:doc_identifier)
                           Array(bib.doc_identifier)
                         end
-          primary = identifiers&.find { |d| d.primary == "true" } || identifiers&.first
+          primary = identifiers&.find { |d| d.primary.to_s == "true" } || identifiers&.first
           return nil unless primary
 
           id_text = primary.value
@@ -120,7 +120,7 @@ module IsoDoc
           identifiers = if bib.class.attributes.key?(:doc_identifier)
                           Array(bib.doc_identifier)
                         end
-          primary = identifiers&.find { |d| d.primary == "true" } || identifiers&.first
+          primary = identifiers&.find { |d| d.primary.to_s == "true" } || identifiers&.first
           return nil unless primary
 
           id_text = primary.value
