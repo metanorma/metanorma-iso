@@ -19,7 +19,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::FigureRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
 
       expect(styles).to include("Figuretitle"),
         "figure name should use Figuretitle, got: #{styles.inspect}"
@@ -40,7 +40,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::FigureRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
 
       expect(styles).to include("Figurenote"),
         "figure note should use Figurenote, got: #{styles.inspect}"

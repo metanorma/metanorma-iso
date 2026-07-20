@@ -157,11 +157,11 @@ RSpec.describe "DOCX sample validation" do
 
         contents = find_paragraph_by_text(paras, "Contents")
         expect(contents).not_to be_nil
-        expect(contents.properties&.style&.value).to eq("zzContents")
+        expect(para_style_value(contents)).to eq("zzContents")
 
         foreword = find_paragraph_by_text(paras, "Foreword")
         expect(foreword).not_to be_nil
-        expect(foreword.properties&.style&.value).to eq("ForewordTitle")
+        expect(para_style_value(foreword)).to eq("ForewordTitle")
       end
     end
 

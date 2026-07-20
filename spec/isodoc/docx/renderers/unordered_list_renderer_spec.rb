@@ -47,7 +47,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::UnorderedListRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
       list_continue_count = styles.count("ListContinue1")
       expect(list_continue_count).to eq(2),
         "expected 2 ListContinue1 paragraphs, got #{list_continue_count}"

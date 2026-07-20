@@ -18,7 +18,7 @@ RSpec.describe IsoDoc::Iso::Docx::HeaderFooterRenderer do
       para = part_content.paragraphs.first
       expect(para).not_to be_nil
 
-      style_value = para.properties&.style&.value
+      style_value = para_style_value(para)
       expect(style_value).to eq("HeaderCentered"),
         "header should use HeaderCentered style, got: #{style_value.inspect}"
 
@@ -47,7 +47,7 @@ RSpec.describe IsoDoc::Iso::Docx::HeaderFooterRenderer do
       renderer.render_footer(part_content, "© ISO 2016", scheme: scheme)
 
       para = part_content.paragraphs.first
-      style_value = para.properties&.style&.value
+      style_value = para_style_value(para)
       expect(style_value).to eq("FooterPageRomanNumber"),
         "roman footer should use FooterPageRomanNumber, got: #{style_value.inspect}"
     end
@@ -108,7 +108,7 @@ RSpec.describe IsoDoc::Iso::Docx::HeaderFooterRenderer do
       renderer.render_footer(part_content, "© ISO 2024", scheme: scheme)
 
       para = part_content.paragraphs.first
-      style_value = para.properties&.style&.value
+      style_value = para_style_value(para)
       expect(style_value).to eq("FooterPageNumber"),
         "arabic footer should use FooterPageNumber, got: #{style_value.inspect}"
     end

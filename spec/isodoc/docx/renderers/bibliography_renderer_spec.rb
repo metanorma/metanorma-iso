@@ -21,7 +21,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::BibliographyRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
       expect(styles).to include("BiblioEntry"),
         "informative bib item should use BiblioEntry, got: #{styles.inspect}"
     end
@@ -41,7 +41,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::BibliographyRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
       expect(styles).to include("RefNorm"),
         "normative bib item should use RefNorm, got: #{styles.inspect}"
     end
@@ -88,7 +88,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::BibliographyRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
 
       expect(styles).to include("BiblioEntry"),
         "main entry should use BiblioEntry, got: #{styles.inspect}"

@@ -167,7 +167,7 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
       expect(footer_part).not_to be_nil
 
       para = footer_part[:content].paragraphs.first
-      style_value = para.properties&.style&.value
+      style_value = para_style_value(para)
       expect(style_value).to eq("FooterPageRomanNumber"),
         "front matter footer should use FooterPageRomanNumber, got: #{style_value.inspect}"
     end
@@ -183,7 +183,7 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
       expect(footer_part).not_to be_nil
 
       para = footer_part[:content].paragraphs.first
-      style_value = para.properties&.style&.value
+      style_value = para_style_value(para)
       expect(style_value).to eq("FooterPageNumber"),
         "body footer should use FooterPageNumber, got: #{style_value.inspect}"
     end
@@ -197,8 +197,12 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
       footer_part = doc.model.header_footer_parts
         .find { |p| p[:r_id] == IsoDoc::Iso::Docx::SectionManager::FRONT_FOOTER_DEFAULT }
       para = footer_part[:content].paragraphs.first
-      expect(para.field_chars.map(&:fldCharType)).to eq(%w[begin separate end])
-      expect(para.instr_text.map(&:text).join).to include("PAGE")
+      # Field components live inside runs (bare <w:fldChar>/<w:instrText>
+      # paragraph children are schema-invalid OOXML).
+      fld_types = para.runs.filter_map { |r| r.field_char&.fldCharType }
+      expect(fld_types).to eq(%w[begin separate end])
+      instr = para.runs.filter_map { |r| r.instr_text&.content&.join }.join
+      expect(instr).to include("PAGE")
     end
   end
 end

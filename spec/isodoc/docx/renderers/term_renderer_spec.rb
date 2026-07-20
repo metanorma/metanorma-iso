@@ -19,7 +19,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
       expect(styles).to include("TermNum"),
         "term number should use TermNum, got: #{styles.inspect}"
     end
@@ -39,7 +39,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
       expect(styles).to include("Terms"),
         "preferred should use Terms style, got: #{styles.inspect}"
     end
@@ -60,7 +60,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
       expect(styles).to include("TermsAdmitted"),
         "admitted should use TermsAdmitted, got: #{styles.inspect}"
     end
@@ -86,7 +86,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermRenderer do
     convert_and_extract(adapter, xml) do |pkg|
       deprecated_paras = pkg.document.body.paragraphs.select do |p|
         text = p.runs.map(&:text).compact.join
-        p.properties&.style&.value == "TermsAdmitted" && text.include?("DEPRECATED")
+        para_style_value(p) == "TermsAdmitted" && text.include?("DEPRECATED")
       end
       expect(deprecated_paras.length).to eq(1),
         "expected exactly one deprecated paragraph with DEPRECATED prefix"
@@ -108,7 +108,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
       expect(styles).to include("Note"),
         "term note should use Note, got: #{styles.inspect}"
     end
@@ -133,7 +133,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       example_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "Example"
+        para_style_value(p) == "Example"
       end
       expect(example_paras.length).to be >= 1,
         "term example name should use Example style"
@@ -156,7 +156,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       source_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "Source"
+        para_style_value(p) == "Source"
       end
       expect(source_paras.length).to eq(1),
         "term source should use Source style"

@@ -62,3 +62,19 @@ def convert_and_extract(adapter, xml)
     yield pkg
   end
 end
+
+# First paragraph style ID of a Uniword paragraph. uniword 1.2+ made
+# ParagraphProperties#style a collection ("multiple tolerated"): parsed
+# paragraphs yield an Array of StyleReference, while ParagraphBuilder assigns
+# a single StyleReference. Tolerate both shapes (and nil).
+def para_style_value(para)
+  style = para.properties&.style
+  style = style.first if style.is_a?(Array)
+  style&.value
+end
+
+# Full string content of a Uniword run. uniword 1.2+ made Run#text a
+# collection of Text objects, so substring checks must join first.
+def run_text(run)
+  Array(run.text).join
+end

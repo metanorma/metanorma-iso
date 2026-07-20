@@ -83,7 +83,7 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer do
       renderer.render_copyright(model.boilerplate, doc)
 
       copyright_paras = doc.model.body.paragraphs.select do |p|
-        p.properties&.style&.value == "zzCopyright"
+        para_style_value(p) == "zzCopyright"
       end
       expect(copyright_paras.length).to be >= 1
     end
@@ -105,10 +105,10 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer do
       renderer.render_license(model.boilerplate, doc)
 
       title_paras = doc.model.body.paragraphs.select do |p|
-        p.properties&.style&.value == "Notice"
+        para_style_value(p) == "Notice"
       end
       body_paras = doc.model.body.paragraphs.select do |p|
-        p.properties&.style&.value == "Notice"
+        para_style_value(p) == "Notice"
       end
 
       expect(title_paras.length).to be >= 1

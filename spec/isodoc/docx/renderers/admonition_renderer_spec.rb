@@ -18,7 +18,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::AdmonitionRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
 
       expect(styles).to include("Box-begin"),
         "Box-begin should wrap admonition, got: #{styles.inspect}"
@@ -43,7 +43,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::AdmonitionRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
 
       expect(styles).to include("Warningtitle"),
         "admonition caption should use Warningtitle, got: #{styles.inspect}"

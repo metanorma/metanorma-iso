@@ -55,7 +55,7 @@ RSpec.describe IsoDoc::Iso::Docx::CoverRenderer do
       renderer.render(model.bibdata, doc)
 
       title_paras = doc.model.body.paragraphs.select do |p|
-        p.properties&.style&.value == "CoverTitleA1"
+        para_style_value(p) == "CoverTitleA1"
       end
       expect(title_paras.length).to be >= 1
       title_text = title_paras.first.runs.map { |r| r.text || "" }.join
@@ -82,7 +82,7 @@ RSpec.describe IsoDoc::Iso::Docx::CoverRenderer do
       renderer.render(model.bibdata, doc)
 
       subtitle_paras = doc.model.body.paragraphs.select do |p|
-        p.properties&.style&.value == "CoverTitleA2"
+        para_style_value(p) == "CoverTitleA2"
       end
       expect(subtitle_paras.length).to eq(1),
         "expected one CoverTitleA2 paragraph for the part subtitle"
@@ -90,7 +90,7 @@ RSpec.describe IsoDoc::Iso::Docx::CoverRenderer do
       expect(subtitle_text).to include("Rice")
 
       main_paras = doc.model.body.paragraphs.select do |p|
-        p.properties&.style&.value == "CoverTitleA1"
+        para_style_value(p) == "CoverTitleA1"
       end
       main_text = main_paras.first.runs.map { |r| r.text || "" }.join
       expect(main_text).to include("Cereals").and include("Specifications")
@@ -167,7 +167,7 @@ RSpec.describe IsoDoc::Iso::Docx::CoverRenderer do
       renderer.render(model.bibdata, doc)
 
       first_styled = doc.model.body.paragraphs.find do |p|
-        p.properties&.style&.value == "zzCoverlarge"
+        para_style_value(p) == "zzCoverlarge"
       end
       expect(first_styled).not_to be_nil,
         "expected a zzCoverlarge paragraph on the cover"

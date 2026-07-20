@@ -18,7 +18,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ExampleRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
 
       expect(styles).to include("Box-begin"),
         "Box-begin should wrap example, got: #{styles.inspect}"
@@ -43,7 +43,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ExampleRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
       example_count = styles.count("Exampleindent")
       continued_count = styles.count("Exampleindentcontinued")
       expect(example_count).to eq(1),

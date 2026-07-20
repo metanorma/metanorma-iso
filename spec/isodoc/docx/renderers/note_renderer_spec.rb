@@ -18,7 +18,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
 
       expect(styles).to include("Box-begin"),
         "Box-begin should wrap note, got: #{styles.inspect}"
@@ -43,8 +43,8 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       body = pkg.document.body
-      note_index = body.paragraphs.index { |p| p.properties&.style&.value == "Noteindent" }
-      box_end_index = body.paragraphs.index { |p| p.properties&.style&.value == "Box-end" }
+      note_index = body.paragraphs.index { |p| para_style_value(p) == "Noteindent" }
+      box_end_index = body.paragraphs.index { |p| para_style_value(p) == "Box-end" }
 
       expect(note_index).to be_truthy
       expect(box_end_index).to be_truthy
@@ -68,7 +68,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
       initial_count = styles.count("Noteindent")
       continued_count = styles.count("Noteindentcontinued")
 

@@ -19,7 +19,7 @@ RSpec.describe IsoDoc::Iso::Docx::SourcecodeRenderer do
       renderer.render(sourcecode, doc)
       para = doc.model.body.paragraphs.first
 
-      expect(para.properties.style.value).to eq("Code")
+      expect(para_style_value(para)).to eq("Code")
       expect(collect_text(para)).to include('puts "hi"')
     end
 
