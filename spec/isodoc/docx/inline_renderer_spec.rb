@@ -145,7 +145,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderer do
 
       code_run = built.runs.find { |r| r.text.to_s.include?("console.log") }
       expect(code_run).not_to be_nil
-      style_value = code_run.properties&.style&.value
+      style_value = para_style_value(code_run)
       expect(style_value).to eq("InlineCode"),
         "<tt> should carry InlineCode rStyle, got: #{style_value.inspect}"
     end

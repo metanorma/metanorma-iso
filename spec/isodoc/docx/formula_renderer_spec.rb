@@ -29,7 +29,7 @@ RSpec.describe IsoDoc::Iso::Docx::FormulaRenderer do
       renderer.render(formula, doc)
 
       paragraphs = doc.model.body.paragraphs
-      formula_para = paragraphs.find { |p| p.properties&.style&.value == "Formula" }
+      formula_para = paragraphs.find { |p| para_style_value(p) == "Formula" }
       expect(formula_para).not_to be_nil
 
       # Should contain OMML math content in o_math_paras
@@ -73,7 +73,7 @@ RSpec.describe IsoDoc::Iso::Docx::FormulaRenderer do
       renderer.render(formula, doc)
 
       paragraphs = doc.model.body.paragraphs
-      formula_para = paragraphs.find { |p| p.properties&.style&.value == "Formula" }
+      formula_para = paragraphs.find { |p| para_style_value(p) == "Formula" }
       expect(formula_para).not_to be_nil
 
       # Should contain the label text

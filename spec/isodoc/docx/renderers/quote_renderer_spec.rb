@@ -19,7 +19,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::QuoteRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
 
       expect(styles).to include("Disp-quotep"),
         "quote should use Disp-quotep style, got: #{styles.inspect}"
@@ -39,7 +39,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::QuoteRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
       quote_index = styles.index("Disp-quotep")
       expect(quote_index).to be_truthy
 
@@ -68,7 +68,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::QuoteRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
 
       expect(styles).to include("Disp-quotep"),
         "quote body should use Disp-quotep, got: #{styles.inspect}"
@@ -97,7 +97,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::QuoteRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       quote_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "Disp-quotep"
+        para_style_value(p) == "Disp-quotep"
       end
 
       expect(quote_paras.length).to eq(2),

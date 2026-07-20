@@ -26,7 +26,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::DefinitionListRenderer do
 
       convert_and_extract(adapter, xml) do |pkg|
         body = pkg.document.body
-        styles = body.paragraphs.map { |p| p.properties&.style&.value }
+        styles = body.paragraphs.map { |p| para_style_value(p) }
 
         expect(styles).to include("KeyTitle"),
           "expected at least one KeyTitle paragraph, got: #{styles.inspect}"
@@ -52,7 +52,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::DefinitionListRenderer do
 
       convert_and_extract(adapter, xml) do |pkg|
         body = pkg.document.body
-        styles = body.paragraphs.map { |p| p.properties&.style&.value }
+        styles = body.paragraphs.map { |p| para_style_value(p) }
 
         expect(styles).to include("Definition"),
           "expected at least one Definition paragraph, got: #{styles.inspect}"

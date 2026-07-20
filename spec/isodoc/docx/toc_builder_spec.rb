@@ -61,10 +61,10 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       toc_builder.render(model, doc)
 
       toc1_paras = doc.model.body.paragraphs.select do |p|
-        p.properties&.style&.value == "TOC1"
+        para_style_value(p) == "TOC1"
       end
       toc2_paras = doc.model.body.paragraphs.select do |p|
-        p.properties&.style&.value == "TOC2"
+        para_style_value(p) == "TOC2"
       end
 
       expect(toc1_paras.length).to be >= 1
@@ -83,7 +83,7 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
 
       # Find TOC entry paragraphs (not the heading)
       toc_paras = doc.model.body.paragraphs.select do |p|
-        p.properties&.style&.value&.start_with?("TOC")
+        para_style_value(p)&.start_with?("TOC")
       end
 
       # Each TOC entry should have field characters
@@ -119,12 +119,12 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       toc_builder.render(model, doc)
 
       toc_paras = doc.model.body.paragraphs.select do |p|
-        p.properties&.style&.value&.start_with?("TOC")
+        para_style_value(p)&.start_with?("TOC")
       end
 
       # Should have entries but not duplicate the TOC clause
       scope_entries = toc_paras.select do |p|
-        p.runs.any? { |r| (r.text || "").include?("Scope") }
+        p.runs.any? { |r| run_text(r).include?("Scope") }
       end
       expect(scope_entries.length).to be >= 1
     end

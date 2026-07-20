@@ -14,7 +14,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::AnnexRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value }
+      styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
       expect(styles).to include("ANNEX"),
         "annex title should use ANNEX style, got: #{styles.inspect}"
     end

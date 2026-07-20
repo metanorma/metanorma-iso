@@ -16,7 +16,7 @@ RSpec.describe IsoDoc::Iso::Docx::IndexsectRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       index_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "IndexHead"
+        para_style_value(p) == "IndexHead"
       end
 
       expect(index_paras.length).to eq(1),
@@ -38,7 +38,7 @@ RSpec.describe IsoDoc::Iso::Docx::IndexsectRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       index_title_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "IndexHead"
+        para_style_value(p) == "IndexHead"
       end
 
       expect(index_title_paras.length).to eq(1),

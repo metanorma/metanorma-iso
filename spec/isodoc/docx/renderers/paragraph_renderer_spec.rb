@@ -21,7 +21,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ParagraphRenderer do
       end
       expect(plain).not_to be_nil
       # Era C body text uses the document default; no rStyle is required.
-      style_value = plain.properties&.style&.value
+      style_value = para_style_value(plain)
       expect(style_value).to be_nil.or eq("Bodytext")
     end
   end
@@ -78,7 +78,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ParagraphRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       heading_paras = pkg.document.body.paragraphs.select do |p|
-        style_id = p.properties&.style&.value.to_s
+        style_id = para_style_value(p).to_s
         style_id.start_with?("Heading")
       end
       expect(heading_paras).not_to be_empty,
@@ -119,7 +119,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ParagraphRenderer do
 
       # The note is Box-wrapped: a Box-begin paragraph precedes the
       # Noteindent body, and a Box-end paragraph follows it.
-      styles = paragraphs.map { |p| p.properties&.style&.value.to_s }
+      styles = paragraphs.map { |p| para_style_value(p).to_s }
       expect(styles).to include("Box-begin"),
         "embedded note should be wrapped in Box-begin"
       expect(styles).to include("Noteindent"),

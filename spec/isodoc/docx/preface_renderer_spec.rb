@@ -18,7 +18,7 @@ RSpec.describe IsoDoc::Iso::Docx::PrefaceRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       foreword_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "ForewordTitle"
+        para_style_value(p) == "ForewordTitle"
       end
 
       expect(foreword_paras.length).to eq(1),
@@ -42,7 +42,7 @@ RSpec.describe IsoDoc::Iso::Docx::PrefaceRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       intro_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "IntroTitle"
+        para_style_value(p) == "IntroTitle"
       end
 
       expect(intro_paras.length).to eq(1),

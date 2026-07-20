@@ -60,7 +60,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       title_paras = pkg.document.body.paragraphs.select do |p|
-        p.properties&.style&.value == "Tabletitle"
+        para_style_value(p) == "Tabletitle"
       end
 
       expect(title_paras.length).to be >= 1,
@@ -84,7 +84,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = table_paragraphs(pkg).map { |p| p.properties&.style&.value }
+      styles = table_paragraphs(pkg).map { |p| para_style_value(p) }
       expect(styles).to include("Tableheader"),
         "header cell paragraph should use Tableheader, got: #{styles.inspect}"
     end
@@ -104,7 +104,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = table_paragraphs(pkg).map { |p| p.properties&.style&.value }
+      styles = table_paragraphs(pkg).map { |p| para_style_value(p) }
       expect(styles).to include("Tablebody"),
         "body cell paragraph should use Tablebody, got: #{styles.inspect}"
     end
@@ -125,7 +125,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = table_paragraphs(pkg).map { |p| p.properties&.style&.value }
+      styles = table_paragraphs(pkg).map { |p| para_style_value(p) }
       expect(styles).to include("Tablefooter"),
         "footer cell paragraph should use Tablefooter, got: #{styles.inspect}"
     end
@@ -151,7 +151,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      styles = table_paragraphs(pkg).map { |p| p.properties&.style&.value }
+      styles = table_paragraphs(pkg).map { |p| para_style_value(p) }
       expect(styles).to include("Note"),
         "note inside cell should use Note, got: #{styles.inspect}"
     end
@@ -184,17 +184,20 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      body_texts = pkg.document.body.paragraphs.map do |p|
+      # Era C wraps the table and its note attachments in an outer table,
+      # so the notes live in the wrapper's second-row cell, not in
+      # body-level paragraphs.
+      cell_texts = table_paragraphs(pkg).map do |p|
         p.runs.map(&:text).join
       end
-      joined = body_texts.join
+      joined = cell_texts.join
 
       expect(joined).to include("This table is based on ISO 7301."),
         "first table note body should be rendered after the table"
       expect(joined).to include("Some commercial contracts require more detail."),
         "second table note body should be rendered after the table"
 
-      styles = pkg.document.body.paragraphs.map { |p| p.properties&.style&.value.to_s }
+      styles = table_paragraphs(pkg).map { |p| para_style_value(p).to_s }
       noteindent_count = styles.count("Noteindent")
       expect(noteindent_count).to eq(2),
         "expected 2 Noteindent paragraphs (one per table note), got #{noteindent_count}"
