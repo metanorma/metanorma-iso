@@ -12,8 +12,8 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::InlineTransformer do
       fn_node.id = "fn1"
       fn_node.reference = "1"
 
-      p_node = Metanorma::IsoDocument::RawParagraph.new
-      p_node.content = "This is a footnote"
+      p_node = Metanorma::Document::Components::Paragraphs::ParagraphBlock.new
+      p_node.text = ["This is a footnote"]
       fn_node.p = [p_node]
 
       result = transformer.send(:transform_fn, fn_node)
@@ -26,8 +26,8 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::InlineTransformer do
       fn_node = Metanorma::Document::Components::Inline::FnElement.new
       fn_node.id = "fn1"
 
-      p_node = Metanorma::IsoDocument::RawParagraph.new
-      p_node.content = "Deduplicated text"
+      p_node = Metanorma::Document::Components::Paragraphs::ParagraphBlock.new
+      p_node.text = ["Deduplicated text"]
       fn_node.p = [p_node]
 
       transformer.send(:transform_fn, fn_node)

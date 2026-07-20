@@ -21,8 +21,7 @@ module Metanorma
               next if node == terms.title
 
               case node
-              when Metanorma::Document::Components::Paragraphs::ParagraphBlock,
-                   Metanorma::IsoDocument::RawParagraph
+              when Metanorma::Document::Components::Paragraphs::ParagraphBlock
                 ts.p paragraph_transformer.transform(node)
               when Metanorma::Document::Components::Lists::UnorderedList,
                    Metanorma::Document::Components::Lists::OrderedList

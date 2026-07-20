@@ -136,8 +136,6 @@ module IsoDoc
                      SpanRenderer.new(parent))
             register(Metanorma::Document::Components::Inline::SemxElement,
                      SemxRenderer.new(parent))
-            register(Metanorma::IsoDocument::RawParagraph,
-                     RawParagraphRenderer.new(parent))
             register(Metanorma::Document::Components::Paragraphs::ParagraphBlock,
                      MixedInlineFallbackRenderer.new(parent))
             register(Metanorma::Document::Components::Inline::FmtXrefElement,

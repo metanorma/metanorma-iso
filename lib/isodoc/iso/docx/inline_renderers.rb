@@ -47,8 +47,6 @@ module IsoDoc
         autoload :Bcp14Renderer, "isodoc/iso/docx/inline_renderers/bcp14_renderer"
         autoload :SpanRenderer, "isodoc/iso/docx/inline_renderers/span_renderer"
         autoload :SemxRenderer, "isodoc/iso/docx/inline_renderers/semx_renderer"
-        autoload :RawParagraphRenderer,
-                 "isodoc/iso/docx/inline_renderers/raw_paragraph_renderer"
         autoload :MixedInlineFallbackRenderer,
                  "isodoc/iso/docx/inline_renderers/mixed_inline_fallback_renderer"
         autoload :TermExpressionRenderer,

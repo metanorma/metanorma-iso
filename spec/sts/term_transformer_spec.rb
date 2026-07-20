@@ -71,8 +71,8 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::TermTransformer do
       term.preferred = [pref]
 
       tn = Metanorma::IsoDocument::Terms::TermNote.new
-      tn_p = Metanorma::IsoDocument::RawParagraph.new
-      tn_p.content = "Note to entry"
+      tn_p = Metanorma::Document::Components::Paragraphs::ParagraphBlock.new
+      tn_p.text = ["Note to entry"]
       tn.p = [tn_p]
       term.termnote = [tn]
 

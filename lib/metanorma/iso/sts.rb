@@ -2,7 +2,7 @@
 
 require "sts"
 require "metanorma/document"
-require "metanorma/iso_document"
+require_relative "../iso_document"
 
 require_relative "sts/transformer"
 
