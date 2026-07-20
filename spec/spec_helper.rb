@@ -67,8 +67,12 @@ def strip_guid(xml)
 end
 
 def metadata(hash)
-  hash.sort.to_h.delete_if do |_, v|
-    v.nil? || (v.respond_to?(:empty?) && v.empty?)
+  # Drop the :bibdata key: it is the whole //bibdata container reparsed into a
+  # hash for Liquid templates, and duplicates the rest of the metadata. Flavour
+  # metadata comparisons assert the curated per-key values, not the container,
+  # so strip it before comparison. (Replicate this in each flavour spec_helper.)
+  hash.sort.to_h.delete_if do |k, v|
+    k.to_s == "bibdata" || v.nil? || (v.respond_to?(:empty?) && v.empty?)
   end
 end
 
