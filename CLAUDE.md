@@ -65,6 +65,14 @@ Tests use VCR cassettes (in `spec/vcr_cassettes/`) for external HTTP interaction
 - `lib/relaton/render/` — Bibliographic reference rendering with ISO-specific formatting and selective capitalization
 - `lib/html2doc/lists.rb` — HTML-to-Word list conversion helper
 
+### Vendored document model: `lib/metanorma/iso_document/`
+`Metanorma::IsoDocument` (Root, Sections, Metadata, Terms, Blocks, Boilerplate) is **vendored in this repository**, copied from the metanorma-document gem (`../metanorma-document/lib/metanorma/iso_document/`, == released 0.2.12/0.3.0). Same pattern as metanorma-oiml owning its document Root: the flavor gem iterates on its own document model without waiting for metanorma-document releases.
+
+- `lib/metanorma/iso_document.rb` is the entry point: it requires `metanorma/document`, declares all autoloads with absolute `#{__dir__}` paths, and calls `Metanorma::Registers::Setup.setup_iso_register`.
+- The vendored copy always shadows the gem's copy: this gem's `lib/` precedes metanorma-document's `lib/` in `$LOAD_PATH`, so the gem's own `autoload :IsoDocument, "metanorma/iso_document"` (and any `require "metanorma/iso_document"`) resolves to our file. Nested autoloads use `#{__dir__}`, so they can never fall through to the gem.
+- The base classes (`Metanorma::StandardDocument`, `Metanorma::BasicDocument`, `Metanorma::Document::Components`) still come from the metanorma-document gem. Version skew between the vendored tree and the gem's base is a known hazard: released 0.2.12+/0.3.0 can't resolve in this bundle yet (pubid 2.0.0.pre / relaton-bib 2.2.0.pre conflicts), so the base is the newest compatible release. When the base upgrades, re-sync the vendored tree with `diff -rq lib/metanorma/iso_document ../metanorma-document/lib/metanorma/iso_document`.
+- Notable model changes vs the old 0.2.6 gem: `RawParagraph` removed (terms `<p>` parses directly into `ParagraphBlock`), `AmendContentBlock`/`Boilerplate`/`AnnotationContainer` are structured (no raw `content` string), and several attributes went string→boolean (`docidentifier/@primary`, `references/@normative`, `clause/@inline_header` — compare with `.to_s == "true"` in code).
+
 ### RNG Schemas
 `lib/metanorma/iso/*.rng` — RelaxNG schemas for validating ISO XML. `isostandard-compile.rng` is the main schema; `isostandard-amd.rng` is used for amendments/technical corrigenda.
 
