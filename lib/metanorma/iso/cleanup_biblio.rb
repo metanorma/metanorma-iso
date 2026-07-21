@@ -151,21 +151,32 @@ module Metanorma
                        Pubid::Iso::Identifier
                      else Pubid::Iec::Identifier
                      end
-        [base_pubid, base_pubid.parse(docid.text).to_h]
+        [base_pubid, base_pubid.parse(draft_parse_text(docid.text))]
+      end
+
+      # pubid 2's IEC grammar resolves the slash stage form ("IEC/PWI ...")
+      # to a WorkingDocument whose rendering ignores stage/date mutations
+      # (they are not part of its to_s template). The space form resolves
+      # to InternationalStandard, which renders them. Normalize for draft
+      # rendering.
+      def draft_parse_text(text)
+        text.to_s.sub(%r{\A(IEC)/(PWI|PNW)\s+}, '\1 \2 ')
       end
 
       def draft_biblio_docid(orig, base_pubid, docid)
-        ret = orig.dup
-        ret[:year] = "123456789"
-        ret.delete(:stage)
-        new = base_pubid.create(**ret).to_s.sub("123456789", "—")
-        docid.children = new
+        id = orig.dup
+        id.typed_stage = nil if id.respond_to?(:typed_stage=)
+        id.stage = nil if id.respond_to?(:stage=)
+        id.date = Pubid::Components::Date.new(year: 123456789)
+        docid.children = id.to_s.sub("123456789", "—")
       end
 
       def dated_draft_id(orig, base_pubid, cutoff = nil)
-        ret = orig.dup
-        ret[:year] = cutoff&.year || Date.today.year
-        base_pubid.create(**ret).to_s
+        id = orig.dup
+        id.date = Pubid::Components::Date.new(
+          year: cutoff&.year || Date.today.year,
+        )
+        id.to_s
       end
 
       def unpublished_ref?(bibitem)
