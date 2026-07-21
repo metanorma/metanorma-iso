@@ -40,11 +40,16 @@ module Metanorma
             end
           end
 
-          if preface.acknowledgements
+          # metanorma-document 0.4.0's IsoPreface deliberately dropped the
+          # acknowledgements/executivesummary mappings (forbidden by the ISO
+          # grammar); guard for older preface models.
+          if preface.class.attributes.key?(:acknowledgements) &&
+              preface.acknowledgements
             sections << section_transformer.transform(preface.acknowledgements)
           end
 
-          if preface.executivesummary
+          if preface.class.attributes.key?(:executivesummary) &&
+              preface.executivesummary
             sections << section_transformer.transform(preface.executivesummary)
           end
 
