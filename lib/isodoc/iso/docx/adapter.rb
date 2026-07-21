@@ -291,7 +291,6 @@ module IsoDoc
           if @template_path && File.exist?(@template_path)
             @template_root ||= Uniword.load(@template_path)
             root = @template_root
-            strip_junk_parts(root)
             if root.body
               root.body.paragraphs.clear
               root.body.tables.clear
@@ -327,17 +326,6 @@ module IsoDoc
             allocator.seed_from_rels(root.document_rels.relationships)
           end
           root.allocator = allocator
-        end
-
-        # Word templates may carry [trash]/*.dat junk parts with no declared
-        # content type. uniword 1.4's save-time OPC integrity check rejects
-        # those, so drop them right after loading the template.
-        def strip_junk_parts(root)
-          return unless root.raw_parts
-
-          root.raw_parts.keys
-            .select { |path| path.start_with?("[trash]/") }
-            .each { |path| root.raw_parts.delete(path) }
         end
 
         def clear_user_footnotes(root)
