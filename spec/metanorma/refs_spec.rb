@@ -129,7 +129,7 @@ RSpec.describe Metanorma::Iso do
                    </contributor>
                    <edition>1</edition>
                    <note type="Unpublished-Status">
-                      <p id="_">Under preparation. Stage at the time of publication: IEC PWI 100-44:#{Date.today.year} ED1.</p>
+                      <p id="_">Under preparation. Stage at the time of publication: IEC/PWI 100-44:#{Date.today.year} ED1.</p>
                    </note>
                    <language>en</language>
                    <language>fr</language>

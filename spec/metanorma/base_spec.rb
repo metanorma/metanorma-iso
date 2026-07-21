@@ -85,7 +85,7 @@ RSpec.describe Metanorma::Iso do
         <title language="fr" type="title-part-prefix">Partie 1</title>
         <docidentifier type="ISO" primary="true">ISO/WD 1000-1.3:2000</docidentifier>
         <docidentifier type="iso-reference">ISO/WD 1000-1.3:2000(E)</docidentifier>
-        <docidentifier type='URN'>urn:iso:std:iso:1000:-1:stage-20.20.v3:en</docidentifier>
+        <docidentifier type='URN'>urn:iso:std:iso:1000:-1:WD.3:en</docidentifier>
         <docidentifier type='iso-undated'>ISO/WD 1000-1.3</docidentifier>
         <docidentifier type="iso-with-lang">ISO/WD 1000-1.3:2000(en)</docidentifier>
         <docnumber>1000</docnumber>
@@ -240,7 +240,7 @@ RSpec.describe Metanorma::Iso do
                 <project-number part="1">ISO 1000</project-number>
              </structuredidentifier>
              <horizontal>true</horizontal>
-             <stagename abbreviation="WD">Working Draft International Standard</stagename>
+             <stagename abbreviation="WD">Working Draft for International Standard</stagename>
              <fast-track>true</fast-track>
              <price-code>XC</price-code>
              <iso-cen-parallel>true</iso-cen-parallel>
@@ -304,8 +304,8 @@ RSpec.describe Metanorma::Iso do
           <title language="fr" type="title-complementary">Complement du Titre</title>
           <title language="fr" type="title-part-prefix">Partie 1–1</title>
           <docidentifier type="ISO" primary="true">IEC/IETF/ISO TR 1000-1-1:2001</docidentifier>
-          <docidentifier type="iso-reference">IEC/IETF/ISO TR 1000-1-1:2001()</docidentifier>
-          <docidentifier type="URN">urn:iso:std:iec-ietf-iso:tr:1000:-1-1:stage-60.60:el</docidentifier>
+          <docidentifier type="iso-reference">IEC/IETF/ISO TR 1000-1-1:2001(el)</docidentifier>
+          <docidentifier type="URN">urn:iso:std:iec-ietf-iso:tr:1000:-1-1:el</docidentifier>
           <docidentifier type="iso-undated">IEC/IETF/ISO TR 1000-1-1</docidentifier>
           <docidentifier type="iso-with-lang">IEC/IETF/ISO TR 1000-1-1:2001(el)</docidentifier>
           <docidentifier type="iso-tc">2000</docidentifier>
@@ -404,7 +404,7 @@ RSpec.describe Metanorma::Iso do
           <language>el</language>
           <script>Grek</script>
           <status>
-             <stage abbreviation="IS">60</stage>
+             <stage abbreviation="TR">60</stage>
              <substage>60</substage>
           </status>
           <copyright>
@@ -430,7 +430,7 @@ RSpec.describe Metanorma::Iso do
              <structuredidentifier>
                 <project-number part="1" subpart="1">IEC/IETF/ISO 1000</project-number>
              </structuredidentifier>
-             <stagename abbreviation="TR">Technical Report</stagename>
+             <stagename abbreviation="TR">Published Technical Report</stagename>
           </ext>
        </bibdata>
     OUTPUT
@@ -455,7 +455,7 @@ RSpec.describe Metanorma::Iso do
           <bibdata type="standard">
         <docidentifier type="ISO" primary="true">ISO/IEC TR 1000:#{Date.today.year}</docidentifier>
         <docidentifier type="iso-reference">ISO/IEC TR 1000:#{Date.today.year}(E)</docidentifier>
-        <docidentifier type="URN">urn:iso:std:iso-iec:tr:1000:stage-60.60:en</docidentifier>
+        <docidentifier type="URN">urn:iso:std:iso-iec:tr:1000:en</docidentifier>
         <docidentifier type="iso-undated">ISO/IEC TR 1000</docidentifier>
         <docidentifier type="iso-with-lang">ISO/IEC TR 1000:#{Date.today.year}(en)</docidentifier>
         <docnumber>1000</docnumber>
@@ -498,7 +498,7 @@ RSpec.describe Metanorma::Iso do
         <language>en</language>
         <script>Latn</script>
         <status>
-          <stage abbreviation="IS">60</stage>
+          <stage abbreviation="TR">60</stage>
           <substage>60</substage>
         </status>
         <copyright>
@@ -525,7 +525,7 @@ RSpec.describe Metanorma::Iso do
           <structuredidentifier>
             <project-number>ISO/IEC 1000</project-number>
           </structuredidentifier>
-          <stagename abbreviation="TR">Technical Report</stagename>
+          <stagename abbreviation="TR">Published Technical Report</stagename>
         </ext>
       </bibdata>
     OUTPUT
@@ -563,7 +563,7 @@ RSpec.describe Metanorma::Iso do
       <bibdata type="standard">
          <docidentifier type="ISO" primary="true">EXP 1000:#{Date.today.year}</docidentifier>
          <docidentifier type="iso-reference">EXP 1000:#{Date.today.year}(E)</docidentifier>
-         <docidentifier type="URN">urn:iso:std:exp:1000:stage-60.60:en</docidentifier>
+         <docidentifier type="URN">urn:iso:std:exp:1000:en</docidentifier>
          <docidentifier type="iso-undated">EXP 1000</docidentifier>
          <docidentifier type="iso-with-lang">EXP 1000:#{Date.today.year}(en)</docidentifier>
          <docnumber>1000</docnumber>
@@ -746,7 +746,7 @@ RSpec.describe Metanorma::Iso do
            <bibdata type="standard">
        <docidentifier type="ISO" primary="true">ISO 1000:#{Date.today.year}</docidentifier>
        <docidentifier type="iso-reference">ISO 1000:#{Date.today.year}(E)</docidentifier>
-       <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
+       <docidentifier type="URN">urn:iso:std:iso:1000:en</docidentifier>
        <docidentifier type="iso-undated">ISO 1000</docidentifier>
        <docidentifier type="iso-with-lang">ISO 1000:#{Date.today.year}(en)</docidentifier>
        <docnumber>1000</docnumber>
@@ -873,7 +873,7 @@ RSpec.describe Metanorma::Iso do
       <bibdata type="standard">
         <docidentifier type="ISO" primary="true">ISO 1000:#{Date.today.year}</docidentifier>
         <docidentifier type="iso-reference">ISO 1000:#{Date.today.year}(E)</docidentifier>
-        <docidentifier type="URN">urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
+        <docidentifier type="URN">urn:iso:std:iso:1000:en</docidentifier>
         <docidentifier type="iso-undated">ISO 1000</docidentifier>
         <docidentifier type="iso-with-lang">ISO 1000:#{Date.today.year}(en)</docidentifier>
         <docnumber>1000</docnumber>
@@ -987,7 +987,7 @@ RSpec.describe Metanorma::Iso do
       <bibdata type='standard'>
         <docidentifier type='ISO' primary="true">ISO/FDTS 1000-1-1:2001</docidentifier>
         <docidentifier type='iso-reference'>ISO/FDTS 1000-1-1:2001(E)</docidentifier>
-        <docidentifier type='URN'>urn:iso:std:iso:ts:1000:-1-1:stage-50.00:en</docidentifier>
+        <docidentifier type='URN'>urn:iso:std:iso:ts:1000:-1-1:FDTS:en</docidentifier>
         <docidentifier type='iso-undated'>ISO/FDTS 1000-1-1</docidentifier>
         <docidentifier type='iso-with-lang'>ISO/FDTS 1000-1-1:2001(en)</docidentifier>
         <docnumber>1000</docnumber>
@@ -1457,7 +1457,7 @@ RSpec.describe Metanorma::Iso do
       <bibdata type="standard">
         <docidentifier type="ISO" primary="true">ISO 1000:#{Date.today.year}</docidentifier>
         <docidentifier type='iso-reference'>ISO 1000:#{Date.today.year}(E)</docidentifier>
-        <docidentifier type='URN'>urn:iso:std:iso:1000:stage-60.60:en</docidentifier>
+        <docidentifier type='URN'>urn:iso:std:iso:1000:en</docidentifier>
         <docidentifier type='iso-undated'>ISO 1000</docidentifier>
         <docidentifier type='iso-with-lang'>ISO 1000:#{Date.today.year}(en)</docidentifier>
         <docnumber>1000</docnumber>
