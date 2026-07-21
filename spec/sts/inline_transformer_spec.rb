@@ -47,7 +47,7 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::InlineTransformer do
       locality.type = "clause"
       locality.reference_from = "3.1"
       locality_stack = Metanorma::Document::Relaton::LocalityStack.new
-      locality_stack.bib_locality = [locality]
+      locality_stack.locality = [locality]
       eref.locality_stack = [locality_stack]
 
       result = transformer.send(:transform_eref, eref)
