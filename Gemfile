@@ -28,5 +28,9 @@ gem "lutaml-model", path: "../../lutaml/lutaml-model" if File.exist?(File.expand
 # (isodoc main also pins ~> 1.12).
 gem "html2doc", "~> 1.12.0"
 gem "moxml", "~> 0.1.23"
+# pubid main is required for undated-reference parsing (pubid/pubid#138)
+# and the SupplementIdentifier base rename (b23a084f, 1aae4e68); revert
+# to the released gem once 2.0.0.pre.alpha.9 ships.
+gem "pubid", github: "pubid/pubid", branch: "main"
 
 eval_gemfile("Gemfile.devel") rescue nil
