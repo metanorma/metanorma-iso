@@ -301,7 +301,7 @@ module Metanorma
         attrs[:languages] = langs if langs.any?
         stage = pubid_typed_stage(params[:stage], type_code)
         attrs[:typed_stage] = stage if stage
-        attrs[:base_identifier] = params[:base] if params[:base]
+        attrs[:base] = params[:base] if params[:base]
         if params[:iteration]
           attrs[:stage_iteration] =
             Pubid::Components::Iteration.new(number: params[:iteration].to_s)
