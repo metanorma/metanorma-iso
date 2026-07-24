@@ -17,8 +17,8 @@ module Metanorma
           return false unless entry
 
           transformer = transformer_for(entry.transformer_key)
-          result = transformer.send(entry.transform_method, node)
-          target.send(entry.target_setter, result)
+          result = transformer.public_send(entry.transform_method, node)
+          target.public_send(entry.target_setter, result)
           true
         end
 
@@ -40,7 +40,7 @@ target_setter:)
           entries = {
             # Block-level elements
             Metanorma::Document::Components::Paragraphs::ParagraphBlock =>
-              %i[paragraph_transformer transform p],
+              %i[paragraph_transformer transform paragraphs],
             Metanorma::Document::Components::Lists::UnorderedList =>
               %i[list_transformer transform list],
             Metanorma::Document::Components::Lists::OrderedList =>

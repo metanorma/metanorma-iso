@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specifications and test methods</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  --color-iso-blue: #0061B0;
+  --color-iso-blue-bright: #1a78c8;
+  --color-iso-blue-dark: #00487a;
+  --color-iso-red: #E4002B;
+  --color-accent: var(--color-iso-blue);
+  --color-accent-soft: #e7eff9;
+  --color-accent-strong: #4d97f5;
+  --color-nav-bg: #faf6ee;
+  --color-nav-border: #e8e0cf;
+  --color-nav-text: #4b4137;
+  --color-nav-btn-bg: #ffffff;
+  --color-nav-btn-border: #ddd2ba;
+  --color-ink: #1b2230;
+  --color-ink-soft: #4a5568;
+  --color-ink-faint: #8a94a6;
+  --color-paper: #ffffff;
+  --color-paper-soft: #f6f8fb;
+  --color-paper-inset: #eef2f7;
+  --color-line: #dde3ec;
+  --color-line-strong: #c3ccd9;
+  --color-link: #0b5ec4;
+  --color-link-hover: #084a9e;
+  --color-code-bg: #f0f3f8;
+  --font-body: "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+[data-theme="dark"] {
+  --color-accent: #4d97f5;
+  --color-accent-soft: #16283f;
+  --color-nav-bg: #221c14;
+  --color-nav-border: #3a3122;
+  --color-nav-text: #c9bda6;
+  --color-nav-btn-bg: #2b2419;
+  --color-nav-btn-border: #4a3f2a;
+  --color-ink: #e6eaf2;
+  --color-ink-soft: #aeb8c9;
+  --color-ink-faint: #76839a;
+  --color-paper: #10141c;
+  --color-paper-soft: #161c27;
+  --color-paper-inset: #1c2431;
+  --color-line: #2a3547;
+  --color-line-strong: #3a4a63;
+  --color-link: #6aa9f7;
+  --color-link-hover: #93c2fa;
+  --color-code-bg: #1d2736;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-accent: #4d97f5;
+    --color-accent-soft: #16283f;
+    --color-nav-bg: #221c14;
+    --color-nav-border: #3a3122;
+    --color-nav-text: #c9bda6;
+    --color-nav-btn-bg: #2b2419;
+    --color-nav-btn-border: #4a3f2a;
+    --color-ink: #e6eaf2;
+    --color-ink-soft: #aeb8c9;
+    --color-ink-faint: #76839a;
+    --color-paper: #10141c;
+    --color-paper-soft: #161c27;
+    --color-paper-inset: #1c2431;
+    --color-line: #2a3547;
+    --color-line-strong: #3a4a63;
+    --color-link: #6aa9f7;
+    --color-link-hover: #93c2fa;
+    --color-code-bg: #1d2736;
+  }
+}
+
+/* ISO brand wordmark (text-based; replaces the official ISO logo for
+   licensing reasons) */
+.brand-wordmark {
+  letter-spacing: 0.04em;
+}
+
+/* Semantic utilities used by the renderer's element handlers */
+@utility note {
+  margin: 1rem 0;
+  padding: 0.75rem 1.1rem;
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-accent-soft);
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 1px 2px rgba(16, 42, 84, 0.06);
+  & p:first-child { margin-top: 0; }
+  & p:last-child { margin-bottom: 0; }
+}
+
+@utility example {
+  margin: 1rem 0;
+  padding: 0.75rem 1.1rem;
+  border-left: 3px solid var(--color-iso-red);
+  background: var(--color-accent-soft);
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 1px 2px rgba(16, 42, 84, 0.06);
+  & p:first-child { margin-top: 0; }
+  & p:last-child { margin-bottom: 0; }
+}
+
+@utility table-wrap {
+  margin: 1.1rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(16, 42, 84, 0.06);
+}
+
+@utility formula {
+  margin: 1rem 0;
+  padding: 0.6rem 1rem;
+  overflow-x: auto;
+  background: var(--color-paper-inset);
+  border-radius: 8px;
+}
+
+@utility label {
+  font-weight: 700;
+  margin-right: 0.4em;
+}
+
+@utility citation { flex: 1; }
+
+@utility std {
+  display: block;
+  margin-top: 0.2em;
+  font-size: 0.94em;
+  color: var(--color-ink-soft);
+  & em { font-style: italic; }
+}
+
+@utility std-ref { font-style: italic; }
+
+@utility std-ident { color: var(--color-ink-soft); }
+
+@utility originator {
+  color: var(--color-ink-faint);
+  font-size: 0.9em;
+  &::before { content: " · "; }
+}
+
+@utility copyright { color: var(--color-ink-soft); }
+
+@utility footnote {
+  font-size: 0.85em;
+  vertical-align: super;
+}
+
+@utility small-caps { font-variant: small-caps; }
+
+@utility h-anchor {
+  position: absolute;
+  right: 0.35rem;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 0.3em;
+  font-size: 0.75em;
+  font-weight: 400;
+  color: var(--color-ink-faint);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  &:hover { color: var(--color-accent); }
+  &:focus { opacity: 1; }
+  &.copied { color: #0a9d58; opacity: 1; }
+}
+
+h2:hover .h-anchor, h3:hover .h-anchor, h4:hover .h-anchor { opacity: 1; }
+
+@utility ref-list {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-line);
+}
+
+@utility ref {
+  display: flex;
+  margin: 0.45rem 0;
+  padding: 0.55rem 0.8rem;
+  border-radius: 5px;
+  background: var(--color-paper-soft);
+  border: 1px solid var(--color-line);
+  & .label {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--color-ink-faint);
+    margin-right: 0.5em;
+  }
+  & .citation { flex: 1; }
+}
+
+@utility toc-link {
+  display: block;
+  padding: 0.34rem 0.5rem 0.34rem 1rem;
+  border-left: 2px solid transparent;
+  color: var(--color-ink-soft);
+  text-decoration: none;
+  line-height: 1.35;
+  border-radius: 0 5px 5px 0;
+  &:hover { color: var(--color-accent); background: var(--color-accent-soft); }
+  &.active {
+    color: var(--color-accent);
+    border-left-color: var(--color-accent);
+    background: var(--color-accent-soft);
+    font-weight: 600;
+  }
+}
+
+@utility toc-link-d1 {
+  padding-left: 1.9rem;
+  font-size: 0.94em;
+}
+
+@utility toc-link-d2 {
+  padding-left: 2.8rem;
+  font-size: 0.9em;
+}
+
+@utility toc-link-d3 {
+  padding-left: 3.7rem;
+  font-size: 0.88em;
+}
+
+@utility brand-logo-dark { display: none; }
+
+[data-theme="dark"] .brand-logo-light { display: none; }
+[data-theme="dark"] .brand-logo-dark { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .brand-logo-light { display: none; }
+  :root:not([data-theme="light"]) .brand-logo-dark { display: block; }
+}
+
+/* Page chrome that utilities alone can't express */
+html { scroll-padding-top: 68px; }
+body { -webkit-font-smoothing: antialiased; }
+
+/* Vertical rhythm (Tailwind preflight zeroes these) */
+main p { margin: 0.85rem 0; }
+main ul, main ol { margin: 0.85rem 0; }
+li { margin: 0.35rem 0; }
+li > p { margin: 0.3rem 0; }
+li > p:first-child { margin-top: 0; }
+li > p:last-child { margin-bottom: 0; }
+
+ul, ol { padding-left: 1.6em; }
+li::marker { color: var(--color-accent); }
+
+/* Notes and examples carry a kind label */
+.note-label {
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: 0.04em;
+}
+
+/* The TOC panel heading is an h2 for document structure, but must not
+   inherit the numbered-section band */
+h2.toc-heading {
+  border-left: none;
+  background: none;
+  padding: 0;
+  margin: 0 0 0.5rem 1rem;
+  font-size: 0.75rem;
+}
+
+/* Reference bodies are paragraphs; the flex ref card resets their rhythm */
+.ref > .ref-body { margin: 0; flex: 1; }
+
+/* Section numbers from the source's <label>, prefixed to headings */
+.sec-label {
+  font-weight: 750;
+  color: var(--color-accent);
+  margin-right: 0.35em;
+}
+
+/* Lists whose items carry explicit markers from the source */
+.mn-labeled-list { list-style: none; padding-left: 0.2em; }
+.mn-labeled-list > li { position: relative; padding-left: 1.9em; }
+.li-label {
+  position: absolute;
+  left: 0.2em;
+  color: var(--color-ink-soft);
+  font-weight: 500;
+}
+
+/* Table caption band above the table (tbl-caption, not table-caption:
+   Tailwind owns the latter as a display utility) */
+.tbl-caption {
+  margin: 0;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.88rem;
+  background: var(--color-paper-soft);
+  border-bottom: 1px solid var(--color-line);
+  border-radius: 8px 8px 0 0;
+}
+.tc-label { font-weight: 700; color: var(--color-accent); }
+.tc-delim { color: var(--color-ink-faint); }
+
+/* Unnumbered front-matter sections (Foreword, Introduction): separated
+   muted cards, no big heading band */
+.frontmatter {
+  margin: 0 0 1.1rem;
+  padding: 0.9rem 1.2rem;
+  background: var(--color-paper-soft);
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: var(--color-ink-soft);
+}
+.frontmatter h2 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0;
+  margin: 0 0 0.5rem;
+  border-left: none;
+  background: none;
+  border-radius: 0;
+  color: var(--color-ink-faint);
+}
+.frontmatter p { margin: 0.35rem 0; font-size: inherit; }
+.frontmatter p:last-child { margin-bottom: 0; }
+
+dt { margin-top: 0.7rem; font-weight: 650; color: var(--color-accent); }
+dd { margin: 0.15rem 0 0.4rem 1.4rem; }
+
+main section { margin-bottom: 1.75rem; }
+
+/* Cover hero */
+.hero {
+  padding: 2.5rem 1.5rem 2.25rem;
+  background: linear-gradient(135deg, var(--color-accent-soft) 0%, transparent 75%);
+  border-bottom: 1px solid var(--color-line);
+}
+.hero > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
+.hero-eyebrow {
+  margin: 0 0 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.hero-title {
+  margin: 0 0 1.1rem;
+  font-size: 2.1rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  max-width: 26ch;
+}
+.hero-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; }
+.hero-chip {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  color: var(--color-accent);
+  background: var(--color-paper);
+}
+.hero-chip-primary {
+  background: var(--color-accent);
+  color: #fff;
+}
+@media (max-width: 640px) {
+  .hero { padding: 1.75rem 1rem 1.75rem; }
+  .hero-title { font-size: 1.55rem; }
+}
+
+/* Footer */
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
+}
+.footer-block p { margin: 0.15rem 0; }
+.footer-license { font-weight: 650; color: var(--color-ink); }
+.footer-publisher { font-weight: 600; color: var(--color-ink-soft); }
+.footer-address, .footer-contact { color: var(--color-ink-faint); }
+.footer-meta { text-align: right; white-space: nowrap; }
+.footer-docid {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+}
+.footer-generated { color: var(--color-ink-faint); }
+/* The span must NOT set display: the brand-logo-light/dark utility
+   decides visibility, and an unlayered display here would override it
+   (unlayered CSS beats layered utilities) — showing BOTH metanorma
+   icons in light mode. */
+.mn-icon { vertical-align: -2px; margin-right: 0.35rem; }
+.mn-icon svg { height: 15px; width: auto; }
+@media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+  .footer-meta { text-align: left; }
+}
+
+h2, h3, h4 { position: relative; line-height: 1.3; }
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0.55rem 0 0.55rem 0.85rem;
+  margin: 0 0 0.8rem;
+  border-left: 4px solid var(--color-accent);
+  background: linear-gradient(90deg, var(--color-accent-soft), transparent 70%);
+  border-radius: 0 5px 5px 0;
+}
+h3 { font-size: 1.2rem; font-weight: 650; margin: 1.75rem 0 0.8rem; }
+h4 { font-size: 1.02rem; font-weight: 650; color: var(--color-ink-soft); margin: 1.5rem 0 0.8rem; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+th, td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-line);
+}
+th {
+  background: var(--color-paper-inset);
+  font-weight: 650;
+  border-bottom: 2px solid var(--color-accent);
+  white-space: nowrap;
+}
+tbody tr:nth-child(even) td { background: var(--color-paper-soft); }
+tbody tr:hover td { background: var(--color-accent-soft); }
+tr:last-child td { border-bottom: none; }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--color-code-bg);
+  border-radius: 4px;
+  padding: 0.12em 0.34em;
+  white-space: nowrap;
+}
+
+pre {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+a { color: var(--color-link); text-decoration: none; }
+a:hover { color: var(--color-link-hover); text-decoration: underline; }
+
+blockquote {
+  margin: 1rem 0;
+  padding: 0.5rem 1.2rem;
+  border-left: 3px solid var(--color-line-strong);
+  color: var(--color-ink-soft);
+  font-style: italic;
+}
+
+figure { margin: 1.2rem 0; text-align: center; }
+figure img { max-width: 100%; height: auto; }
+figcaption { margin-top: 0.4rem; font-size: 0.88rem; color: var(--color-ink-faint); }
+
+@media (max-width: 1024px) {
+  .toc-panel {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    z-index: 46;
+    width: min(320px, 84vw);
+    max-height: none !important;
+    padding: 1rem 1.1rem 1.5rem !important;
+    background: var(--color-paper);
+    border-right: 1px solid var(--color-line);
+    box-shadow: 0 8px 24px rgba(16, 42, 84, 0.10);
+    transform: translateX(-105%);
+    transition: transform 0.22s ease;
+  }
+  .toc-panel.open { transform: none; }
+}
+
+@media (max-width: 640px) {
+  h2 { font-size: 1.3rem; }
+  .crumb-current, .crumb-sep { display: none; }
+}
+
+@media print {
+  .site-nav { position: static; box-shadow: none; }
+  .toc-panel, .back-to-top, .site-footer, .nav-actions { display: none !important; }
+  .page { display: block !important; padding: 0 !important; }
+  main { max-width: none; }
+  h2 { break-after: avoid; }
+  section { break-inside: avoid-page; }
+}
+
+</style>
+</head>
+<body class="bg-paper text-ink font-body text-[16px] leading-relaxed m-0">
+<header class="site-nav sticky top-0 z-40 flex items-center gap-3 min-h-[56px] px-5 py-2 bg-nav-bg border-b border-nav-border text-nav-text shadow-sm">
+  <span class="brand-wordmark shrink-0 inline-flex items-center justify-center h-[34px] px-3 rounded-md bg-iso-blue text-white font-bold text-lg tracking-wide">ISO</span>
+  <span class="nav-doc-title font-semibold text-nav-text truncate min-w-0">Specifications and test methods</span>
+  <nav class="breadcrumb hidden md:flex items-baseline gap-2 min-w-0 text-sm whitespace-nowrap overflow-hidden ml-auto" aria-label="Breadcrumb">
+    <span class="crumb-doc font-mono text-xs font-bold tracking-wider uppercase text-accent">ISO 17301</span><span class="crumb-sep text-ink-faint" aria-hidden="true">›</span><span class="crumb-current overflow-hidden text-ellipsis text-ink-faint" id="crumb-current"></span>
+  </nav>
+  <span class="nav-actions ml-auto md:ml-0 flex gap-2">
+    <button id="theme-toggle" class="nav-btn inline-flex items-center justify-center w-9 h-9 rounded-md border border-nav-btn-border bg-nav-btn-bg text-nav-text hover:border-accent hover:text-accent transition-colors cursor-pointer" aria-label="Toggle light and dark mode" title="Toggle light / dark mode">
+      <svg class="icon-sun hidden dark:block" viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><line x1="8" y1="1" x2="8" y2="3"/><line x1="8" y1="13" x2="8" y2="15"/><line x1="1" y1="8" x2="3" y2="8"/><line x1="13" y1="8" x2="15" y2="8"/><line x1="3.05" y1="3.05" x2="4.46" y2="4.46"/><line x1="11.54" y1="3.05" x2="12.95" y2="4.46"/><line x1="3.05" y1="12.95" x2="4.46" y2="11.54"/><line x1="11.54" y1="12.95" x2="12.95" y2="11.54"/></svg>
+      <svg class="icon-moon dark:hidden" viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5 5.5 5.5 0 1 0 13.5 9.5z"/></svg>
+    </button>
+    <button id="toc-toggle" class="nav-btn hidden max-lg:inline-flex items-center justify-center w-9 h-9 rounded-md border border-nav-btn-border bg-nav-btn-bg text-nav-text hover:border-accent hover:text-accent transition-colors cursor-pointer" aria-label="Show contents" aria-expanded="false" aria-controls="toc" title="Contents">☰</button>
+  </span>
+</header>
+<div class="hero">
+  <p class="hero-eyebrow">International Organization for Standardization</p>
+  <h1 class="hero-title">Specifications and test methods</h1>
+  <p class="hero-chips">
+    
+    <span class="hero-chip hero-chip-primary">ISO 17301</span>
+    
+    <span class="hero-chip">EN</span>
+    
+  </p>
+</div>
+<div class="page grid max-lg:grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-10 max-w-[1200px] mx-auto px-6 pt-7 pb-8 max-lg:px-4">
+  <nav id="toc" class="toc-panel sticky top-[68px] self-start max-h-[calc(100vh-5rem)] overflow-y-auto py-4 pr-3 text-sm [scrollbar-width:thin]" aria-label="Contents"><h2 class="toc-heading m-0 mb-2 ml-4 text-xs font-bold tracking-[0.14em] uppercase text-ink-faint">Contents</h2><ol class="toc-list list-none m-0 p-0"><li><a class="toc-link toc-link-d0" href="#sec_foreword">Foreword</a></li><li><a class="toc-link toc-link-d0" href="#sec_intro">Introduction</a></li><li><a class="toc-link toc-link-d0" href="#sec_scope">Scope</a></li><li><a class="toc-link toc-link-d0" href="#_7fc2a7d9-d5cc-ab39-4004-0d24c616462b">Specifications</a></li><li><a class="toc-link toc-link-d1" href="#_74033a4a-a850-b432-8702-cf549bd25a82">General, organoleptic and health characteristics</a></li><li><a class="toc-link toc-link-d1" href="#_0f4de6b3-4c85-fee3-1614-9c649d083fd6">Physical and chemical characteristics</a></li><li><a class="toc-link toc-link-d0" href="#_4b0e5d3c-cd55-2f1b-3fe3-800e2f357ee3">Sampling</a></li><li><a class="toc-link toc-link-d0" href="#_71cb56fc-e172-2e68-8d1b-a4e27172745d">Test methods</a></li><li><a class="toc-link toc-link-d1" href="#_1bc21869-b02e-a448-9186-58f4850156e8">Moisture content</a></li><li><a class="toc-link toc-link-d1" href="#_3afa160f-5cf8-ba3e-ec1b-7fce3574ef84">Waxy rice content</a></li><li><a class="toc-link toc-link-d1" href="#_262e8fe5-9ade-e3c2-981f-bd39b3bdca2f">Nitrogen content and crude protein content</a></li><li><a class="toc-link toc-link-d1" href="#_6c9ccfbd-04a1-5f51-1205-eb10e34a3326">Gelatinization time</a></li><li><a class="toc-link toc-link-d1" href="#_60141726-1c72-78df-f70b-6eaf7c0081ae">Husked rice yield</a></li><li><a class="toc-link toc-link-d2" href="#_4df15db5-f815-3fd8-6922-2a930087c60c">Determination</a></li><li><a class="toc-link toc-link-d2" href="#_2be8095d-654b-f54f-a88f-ba2680501801">Precision</a></li><li><a class="toc-link toc-link-d3" href="#_1394e2c3-70e8-5b01-1317-2f3b0ba0e89d">Interlaboratory test</a></li><li><a class="toc-link toc-link-d3" href="#_579f5b2c-751e-3593-b1a7-35c0f92a71e0">Repeatability</a></li><li><a class="toc-link toc-link-d3" href="#_994e1552-045f-ca34-8e33-04226e36bdac">Reproducibility</a></li><li><a class="toc-link toc-link-d0" href="#_4402019e-478c-0f19-d348-9d3ae86733af">Test report</a></li><li><a class="toc-link toc-link-d0" href="#_2aa11b01-d9ce-5157-f44f-a0da4f5489b2">Packaging</a></li><li><a class="toc-link toc-link-d0" href="#_cf58d45c-88c1-4e3f-c254-4c7d1a1e4d75">Marking</a></li><li><a class="toc-link toc-link-d0" href="#sec_A">Determination of defects</a></li><li><a class="toc-link toc-link-d2" href="#_b9220d43-a57f-880b-6602-2f93ad0a41d2">Principle</a></li><li><a class="toc-link toc-link-d2" href="#_d2b1d825-1a36-9515-c21a-9529715f6f84">Apparatus</a></li><li><a class="toc-link toc-link-d3" href="#_adc0f922-10dc-3e48-5cb4-e22a2396ce81">Sample divider,</a></li><li><a class="toc-link toc-link-d3" href="#_431d8ed2-95be-f5cb-8dfb-6819d067958d">Sieve,</a></li><li><a class="toc-link toc-link-d3" href="#_fbf30670-e46d-c0a7-d898-43679d5064be">Tweezers.</a></li><li><a class="toc-link toc-link-d3" href="#_532b8522-1ff0-819e-b356-1fdfc8717f00">Scalpel.</a></li><li><a class="toc-link toc-link-d3" href="#_03d0c705-e5c3-3f2e-0c0f-d4d1306c6d8b">Paintbrush.</a></li><li><a class="toc-link toc-link-d3" href="#_83e2e495-80f3-77af-45fd-682984081b50">Steel bowls,</a></li><li><a class="toc-link toc-link-d3" href="#_8690695c-8b88-ea22-4153-afeb42443ae8">Balance,</a></li><li><a class="toc-link toc-link-d2" href="#_cdaa737a-25ef-6a0a-165d-50bd09e0c612">Sampling</a></li><li><a class="toc-link toc-link-d2" href="#_1bdf001e-f68b-fda2-5d6f-81511e5051f4">Procedure</a></li><li><a class="toc-link toc-link-d3" href="#_982921b6-f1db-bd2b-7131-a2d501969b13">Preparation of test sample</a></li><li><a class="toc-link toc-link-d2" href="#_2032a91f-1d37-875a-f067-975d21ca442f">Determination</a></li><li><a class="toc-link toc-link-d2" href="#_8c633381-7abb-a958-c88c-6c8c17c86a93">Calculation</a></li><li><a class="toc-link toc-link-d2" href="#_9664c37f-5e68-e9de-9888-fb24523d4f3e">Test report</a></li><li><a class="toc-link toc-link-d0" href="#sec_A">Determination of the waxy rice content of parboiled rice</a></li><li><a class="toc-link toc-link-d2" href="#_f1e90616-83fc-8a48-e9d5-b340bfef3b98">Principle</a></li><li><a class="toc-link toc-link-d2" href="#_11f10bb4-989f-4b01-43ec-ef96b306970b">Apparatus</a></li><li><a class="toc-link toc-link-d3" href="#_83defda3-5830-fb93-2e9d-58814ab9dbdf">Balance,</a></li><li><a class="toc-link toc-link-d3" href="#_66951cd5-e815-58a7-f5f2-b6e821591c53">Glass beaker,</a></li><li><a class="toc-link toc-link-d3" href="#_83eb7f64-cf4f-6099-f8b2-a0b7c4dfb048">Small white colour bowls,</a></li><li><a class="toc-link toc-link-d3" href="#_1f214584-6a06-90e5-70e6-28e6e198802e">Wire sieve,</a></li><li><a class="toc-link toc-link-d3" href="#_a620e57f-da21-8689-c1d8-52161f3ec7ae">Stirrer rod.</a></li><li><a class="toc-link toc-link-d3" href="#_9e1a45d6-4751-f051-4bc3-8167b6eeb227">Tweezers or forceps.</a></li><li><a class="toc-link toc-link-d3" href="#_e451bd6c-4867-7481-e7e8-36a4ee4a8e34">Tissue paper.</a></li><li><a class="toc-link toc-link-d2" href="#_2d52366e-36b1-8286-d47b-ea70833f8071">Reagents</a></li><li><a class="toc-link toc-link-d3" href="#_92abd034-0660-157d-3dce-fa2651122af1">Deionized water,</a></li><li><a class="toc-link toc-link-d3" href="#_a218e089-381d-db92-e210-bfdc5a0a15a6">Iodine stock solution,</a></li><li><a class="toc-link toc-link-d3" href="#_46de2d39-b7d0-75bd-4db8-c5a9fb2dcce3">Iodine working solution,</a></li><li><a class="toc-link toc-link-d2" href="#_f450a99e-0857-6764-6bc2-6b73ca0a2991">Sampling</a></li><li><a class="toc-link toc-link-d2" href="#_08a52d9b-633f-70bf-7b2c-67f5278b0ad8">Determination</a></li><li><a class="toc-link toc-link-d2" href="#_9582295c-7e67-63b3-40d4-493f8c6de195">Calculation</a></li><li><a class="toc-link toc-link-d2" href="#_fc0c7a40-6a73-4091-7c8c-cea0e6218059">Test report</a></li><li><a class="toc-link toc-link-d0" href="#sec_A">Gelatinization</a></li><li><a class="toc-link toc-link-d0" href="#sec_A">Results of interlaboratory test for husked rice yields</a></li><li><a class="toc-link toc-link-d0" href="#sec_A">Extraneous information</a></li><li><a class="toc-link toc-link-d2" href="#_e64908af-9064-88f1-d100-3c6643b0019d">Appendix 1</a></li><li><a class="toc-link toc-link-d0" href="#normative-references">Normative references</a></li><li><a class="toc-link toc-link-d0" href="#bibliography">Bibliography</a></li></ol></nav>
+  <div class="page-body min-w-0">
+    
+    
+    <section id="sec_foreword" class="frontmatter">
+      <h2>Foreword<a class="h-anchor" href="#sec_foreword" aria-label="Link to this section">§</a></h2>
+      <p>ISO (the International Organization for Standardization) is a worldwide federation of national standards bodies (ISO member bodies). The work of preparing International Standards is normally carried out through ISO technical committees. Each member body interested in a subject for which a technical committee has been established has the right to be represented on that committee. International organizations, governmental and non-governmental, in liaison with ISO, also take part in the work. ISO collaborates closely with the International Electrotechnical Commission (IEC) on all matters of electrotechnical standardization.</p>
+      <p>The procedures used to develop this document and those intended for its further maintenance are described in the ISO/IEC Directives, Part 1. In particular the different approval criteria needed for the different types of ISO documents should be noted. This document was drafted in accordance with the editorial rules of the ISO/IEC Directives, Part 2 (see www.iso.org/directives).</p>
+      <p>Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights. ISO shall not be held responsible for identifying any or all such patent rights. Details of any patent rights identified during the development of the document will be in the Introduction and/or on the ISO list of patent declarations received (see www.iso.org/patents).</p>
+      <p>Any trade name used in this document is information given for the convenience of users and does not constitute an endorsement.</p>
+      <p>For an explanation on the voluntary nature of standards, the meaning of ISO specific terms and expressions related to conformity assessment, as well as information about ISO’s adherence to the World Trade Organization (WTO) principles in the Technical Barriers to Trade (TBT) see the following URL: www.iso.org/iso/foreword.html.</p>
+      <p>This document was prepared by Technical Committee ISO/TC 34, <em>Food products</em>, Subcommittee SC 4, <em>Cereals and pulses</em>.</p>
+      <p>This second edition cancels and replaces the first edition (ISO 17301-1:2009), which has been technically revised.</p>
+      <p>The main changes compared to the previous edition are:</p>
+      <p>A list of all parts in the ISO 17301 series can be found on the ISO website.</p>
+      <ul>
+        <li>
+          <p></p>
+        </li>
+        <li>
+          <p></p>
+        </li>
+      </ul>
+    </section>
+    <section id="sec_intro" class="frontmatter">
+      <h2>Introduction<a class="h-anchor" href="#sec_intro" aria-label="Link to this section">§</a></h2>
+      <p>This document was developed in response to worldwide demand for minimum specifications for rice traded internationally, since most commercial bulks of grain, which have not been screened or aspirated, contain a proportion of other grains, weed seeds, chaff, straw, stones, sand, etc. The vegetable materials can have physical and biological properties which differ from those of the main constituent and can therefore affect the storage behaviour.</p>
+      <p>Rice is a permanent host to a considerable microflora; most of these microorganisms are cosmopolitan, the majority are innocuous, but some produce harmful by-products. Microflora communities present on freshly harvested rice include many types of bacteria, moulds and yeasts. While the rice is ripening and its moisture content is falling, the number of field microorganisms, mainly bacteria, diminishes. When the rice is harvested, it is invaded by storage microorganisms and the field microflora gradually dies out. If the mass fraction of moisture (formerly expressed as moisture content) is less than 18 %, the microflora does not multiply, whereas above 18 % it does so rapidly. Thus, at harvest, the qualitative and the quantitative composition of the microflora depends more upon ecological factors than upon the variety of the rice. During transport and storage, additions to the microfloral population occur. Microorganisms on the rice at harvest tend to die out during storage and are replaced by microorganisms adapted to storage conditions.</p>
+      <p>Storage losses have been estimated as being an average of 5 %, and as much as 30 %, especially in countries with climates favourable to the rapid development of agents of deterioration and where storage techniques are poorly developed, such as developing countries in the damp tropics. The magnitude of these figures highlights the need to promote throughout the world a rapid improvement in techniques of conservation.</p>
+      <p>The International Organization for Standardization (ISO) draws attention to the fact that it is claimed that compliance with this document may involve the use of a patent concerning sample dividers given in <a href="#AnnexA">[AnnexA]</a> and shown in <a href="#figureA-1">[figureA-1]</a>.</p>
+      <p>ISO takes no position concerning the evidence, validity and scope of this patent right.</p>
+      <p>The holder of this patent right has assured ISO that he/she is willing to negotiate licences under reasonable and non-discriminatory terms and conditions with applicants throughout the world. In this respect, the statement of the holder of this patent right is registered with ISO. Information may be obtained from:</p>
+      <p>Vache Equipment<br/> Fictitious<br/> World<br/> <a href="mailto:gehf@vacheequipment.fic">[""]</a></p>
+      <p>Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights other than those identified above. ISO shall not be held responsible for identifying any or all such patent rights.</p>
+    </section>
+  <main>
+    <section id="sec_scope">
+      <h2>Scope<a class="h-anchor" href="#sec_scope" aria-label="Link to this section">§</a></h2>
+      <p>This document specifies minimum requirements and test methods for rice (<em>Oryza sativa L.</em>).</p>
+      <p>It is applicable to husked rice, husked parboiled rice, milled rice and milled parboiled rice, suitable for human consumption, directly or after reconditioning.</p>
+      <p>It is not applicable to cooked rice products.</p>
+    </section>
+    <section id="_7fc2a7d9-d5cc-ab39-4004-0d24c616462b">
+      <h2>Specifications<a class="h-anchor" href="#_7fc2a7d9-d5cc-ab39-4004-0d24c616462b" aria-label="Link to this section">§</a></h2>
+      <section id="_74033a4a-a850-b432-8702-cf549bd25a82">
+        <h3>General, organoleptic and health characteristics<a class="h-anchor" href="#_74033a4a-a850-b432-8702-cf549bd25a82" aria-label="Link to this section">§</a></h3>
+        <p>Kernels of rice, whether parboiled, husked or milled, and whether whole or broken, shall be sound, clean and free from foreign odours or odour which indicates deterioration.</p>
+        <p>The levels of additives and pesticide residues and other contaminants shall not exceed the maximum limits permitted in the country of destination.</p>
+        <p>The presence of living insects which are visible to the naked eye is not permitted. This should be determined before separating the bulk sample into test samples.</p>
+      </section>
+      <section id="_0f4de6b3-4c85-fee3-1614-9c649d083fd6">
+        <h3>Physical and chemical characteristics<a class="h-anchor" href="#_0f4de6b3-4c85-fee3-1614-9c649d083fd6" aria-label="Link to this section">§</a></h3>
+        <section id="_070c6fa9-f66c-42df-9604-7b63972bbbac">
+          <p>The mass fraction of moisture, determined in accordance with <span class="std"><span class="std-ref">ISO 712:2009</span></span><a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a>, using an oven complying with the requirements of <span class="std"><span class="std-ref">IEC 61010-2</span></span>, shall not be greater than 15 %.<a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a></p>
+          <p>The mass fraction of extraneous matter and defective kernels in husked and milled rice, whether or not parboiled, determined in accordance with <a href="#AnnexA">[AnnexA]</a>, shall not be greater than the values specified in <a href="#table1">[table1]</a>.</p>
+        </section>
+        <section id="_2db6274a-4911-c2ff-e05a-770a564f64e5">
+          <p>The defect tolerance for the categories considered, and determined in accordance with the method given in <a href="#AnnexA">[AnnexA]</a>, shall not exceed the limits given in <a href="#table1">[table1]</a>.</p>
+          <div class="table-wrap">
+            
+            <table>
+              <thead>
+                <tr>
+                  <th>Defect</th>
+                  <th>Maximum permissible mass fraction of defects in husked rice<span class="formula">wmax</span>
+</th>
+                </tr>
+                <tr>
+                  <th>in husked rice</th>
+                  <th>in milled rice (non-glutinous)</th>
+                  <th>in husked parboiled rice</th>
+                  <th>in milled parboiled rice</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Extraneous matter: organic<a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a></td>
+                  <td>1,0</td>
+                  <td>0,5</td>
+                  <td>1,0</td>
+                  <td>0,5</td>
+                </tr>
+                <tr>
+                  <td>Extraneous matter: inorganic<a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a></td>
+                  <td>0,5</td>
+                  <td>0,5</td>
+                  <td>0,5</td>
+                  <td>0,5</td>
+                </tr>
+                <tr>
+                  <td>Paddy</td>
+                  <td>2,5</td>
+                  <td>0,3</td>
+                  <td>2,5</td>
+                  <td>0,3</td>
+                </tr>
+                <tr>
+                  <td>Husked rice, non-parboiled</td>
+                  <td>Not applicable</td>
+                  <td>1,0</td>
+                  <td>1,0</td>
+                  <td>1,0</td>
+                </tr>
+                <tr>
+                  <td>Milled rice, non-parboiled</td>
+                  <td>1,0</td>
+                  <td>Not applicable</td>
+                  <td>1,0</td>
+                  <td>1,0</td>
+                </tr>
+                <tr>
+                  <td>Husked rice, parboiled</td>
+                  <td>1,0</td>
+                  <td>1,0</td>
+                  <td>Not applicable</td>
+                  <td>1,0</td>
+                </tr>
+                <tr>
+                  <td>Milled rice, parboiled</td>
+                  <td>1,0</td>
+                  <td>1,0</td>
+                  <td>1,0</td>
+                  <td>Not applicable</td>
+                </tr>
+                <tr>
+                  <td>Chips</td>
+                  <td>0,1</td>
+                  <td>0,1</td>
+                  <td>0,1</td>
+                  <td>0,1</td>
+                </tr>
+                <tr>
+                  <td>HDK</td>
+                  <td>2,0<a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a></td>
+                  <td>2,0</td>
+                  <td>2,0<a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a></td>
+                  <td>2,0</td>
+                </tr>
+                <tr>
+                  <td>Damaged kernels</td>
+                  <td>4,0</td>
+                  <td>3,0</td>
+                  <td>4,0</td>
+                  <td>3,0</td>
+                </tr>
+                <tr>
+                  <td>Immature and/or malformed kernels</td>
+                  <td>8,0</td>
+                  <td>2,0</td>
+                  <td>8,0</td>
+                  <td>2,0</td>
+                </tr>
+                <tr>
+                  <td>Chalky kernels</td>
+                  <td>5,0<a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a></td>
+                  <td>5,0</td>
+                  <td>Not applicable</td>
+                  <td>Not applicable</td>
+                </tr>
+                <tr>
+                  <td>Red kernels and red-streaked kernels</td>
+                  <td>12,0</td>
+                  <td>12,0</td>
+                  <td>12,0<a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a></td>
+                  <td>12,0</td>
+                </tr>
+                <tr>
+                  <td>Partly gelatinized kernels</td>
+                  <td>Not applicable</td>
+                  <td>Not applicable</td>
+                  <td>11,0<a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a></td>
+                  <td>11,0</td>
+                </tr>
+                <tr>
+                  <td>Pecks</td>
+                  <td>Not applicable</td>
+                  <td>Not applicable</td>
+                  <td>4,0</td>
+                  <td>2,0</td>
+                </tr>
+                <tr>
+                  <td>Waxy rice</td>
+                  <td>1,0<a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a></td>
+                  <td>1,0</td>
+                  <td>1,0<a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a></td>
+                  <td>1,0</td>
+                </tr>
+              </tbody>
+              
+                <tr>
+                  <td>
+</td>
+                </tr>
+              
+            </table>
+            
+              <div class="note"></div>
+            
+          </div>
+        </section>
+      </section>
+    </section>
+    <section id="_4b0e5d3c-cd55-2f1b-3fe3-800e2f357ee3">
+      <h2>Sampling<a class="h-anchor" href="#_4b0e5d3c-cd55-2f1b-3fe3-800e2f357ee3" aria-label="Link to this section">§</a></h2>
+      <p>Sampling shall be carried out in accordance with <span class="std"><span class="std-ref">ISO 24333:2009, clause 5</span></span></p>
+    </section>
+    <section id="_71cb56fc-e172-2e68-8d1b-a4e27172745d">
+      <h2>Test methods<a class="h-anchor" href="#_71cb56fc-e172-2e68-8d1b-a4e27172745d" aria-label="Link to this section">§</a></h2>
+      <section id="_1bc21869-b02e-a448-9186-58f4850156e8">
+        <h3>Moisture content<a class="h-anchor" href="#_1bc21869-b02e-a448-9186-58f4850156e8" aria-label="Link to this section">§</a></h3>
+        <p>Determine the mass fraction of moisture in accordance with the method specified in <span class="std"><span class="std-ref">ISO 712:2009</span></span>.</p>
+      </section>
+      <section id="_3afa160f-5cf8-ba3e-ec1b-7fce3574ef84">
+        <h3>Waxy rice content<a class="h-anchor" href="#_3afa160f-5cf8-ba3e-ec1b-7fce3574ef84" aria-label="Link to this section">§</a></h3>
+        <p>Determine the mass fraction of waxy rice. <a href="#AnnexB">[AnnexB]</a> gives an example of a suitable method.</p>
+      </section>
+      <section id="_262e8fe5-9ade-e3c2-981f-bd39b3bdca2f">
+        <h3>Nitrogen content and crude protein content<a class="h-anchor" href="#_262e8fe5-9ade-e3c2-981f-bd39b3bdca2f" aria-label="Link to this section">§</a></h3>
+        <p>Determine the nitrogen content and crude protein content in accordance with either <span class="std"><span class="std-ref">ISO 16634:--, clause 9</span></span><a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a>, or <span class="std"><span class="std-ref">ISO 20483:2013</span></span>. For details on the determination of protein content using the Kjeldahl method, see Reference <span class="std"><span class="std-ref">[11]</span></span> in the Bibliography. For details concerning the use of the Dumas method, see References <span class="std"><span class="std-ref">[16]</span></span> and <span class="std"><span class="std-ref">[17]</span></span>.</p>
+        <p>Calculate the crude protein content of the dry product by multiplying the value of the nitrogen content by the conversion factor specified in <span class="std"><span class="std-ref">ISO 20483:2013, annex C</span></span> and Table C.1, that is adapted to the type of cereals or pulses <span class="std"><span class="std-ref">[12]</span></span><span class="std"><span class="std-ref">[13]</span></span> and to their use.</p>
+      </section>
+      <section id="_6c9ccfbd-04a1-5f51-1205-eb10e34a3326">
+        <h3>Gelatinization time<a class="h-anchor" href="#_6c9ccfbd-04a1-5f51-1205-eb10e34a3326" aria-label="Link to this section">§</a></h3>
+        <p>Determine the gelatinization time, <span class="formula">t90</span>, for rice kernels during cooking. An example of a typical curve is given in <a href="#figureC-1">[figureC-1]</a>. Three typical stages of gelatinization are shown in <a href="#figureC-2">[figureC-2]</a>.</p>
+        <p>Report the results as specified in <a href="#clause7">[clause7]</a>.</p>
+      </section>
+      <section id="_60141726-1c72-78df-f70b-6eaf7c0081ae">
+        <h3>Husked rice yield<a class="h-anchor" href="#_60141726-1c72-78df-f70b-6eaf7c0081ae" aria-label="Link to this section">§</a></h3>
+        <section id="_4df15db5-f815-3fd8-6922-2a930087c60c">
+          <h4>Determination<a class="h-anchor" href="#_4df15db5-f815-3fd8-6922-2a930087c60c" aria-label="Link to this section">§</a></h4>
+          <p>Determine the husked rice yield in accordance with <span class="std"><span class="std-ref">ISO 6646:2011</span></span>.</p>
+        </section>
+        <section id="_2be8095d-654b-f54f-a88f-ba2680501801">
+          <h4>Precision<a class="h-anchor" href="#_2be8095d-654b-f54f-a88f-ba2680501801" aria-label="Link to this section">§</a></h4>
+          <section id="_1394e2c3-70e8-5b01-1317-2f3b0ba0e89d">
+            <h4>Interlaboratory test<a class="h-anchor" href="#_1394e2c3-70e8-5b01-1317-2f3b0ba0e89d" aria-label="Link to this section">§</a></h4>
+            <p>The results of an interlaboratory test are given in <a href="#AnnexD">[AnnexD]</a> for information</p>
+          </section>
+          <section id="_579f5b2c-751e-3593-b1a7-35c0f92a71e0">
+            <h4>Repeatability<a class="h-anchor" href="#_579f5b2c-751e-3593-b1a7-35c0f92a71e0" aria-label="Link to this section">§</a></h4>
+            <p>The absolute difference between two independent single test results, obtained using the same method on identical test material in the same laboratory by the same operator using the same equipment within a short interval of time, shall not exceed the arithmetic mean of the values for <span class="formula">r</span> obtained from the interlaboratory study for husked rice in more than 5 % of cases:</p>
+            <div class="formula">
+              
+                
+                  r
+                  =
+                  1
+                  %
+                
+              
+            </div>
+          </section>
+          <section id="_994e1552-045f-ca34-8e33-04226e36bdac">
+            <h4>Reproducibility<a class="h-anchor" href="#_994e1552-045f-ca34-8e33-04226e36bdac" aria-label="Link to this section">§</a></h4>
+            <p>The absolute difference between two single test results, obtained using the same method on identical test material in different laboratories by different operators using different equipment, shall not exceed the arithmetic mean of the values for <span class="formula">R</span> obtained from the interlaboratory study in more than 5 % of cases:</p>
+            <div class="formula">
+              
+                
+                  R
+                  =
+                  3
+                  %
+                
+              
+            </div>
+          </section>
+        </section>
+      </section>
+    </section>
+    <section id="_4402019e-478c-0f19-d348-9d3ae86733af">
+      <h2>Test report<a class="h-anchor" href="#_4402019e-478c-0f19-d348-9d3ae86733af" aria-label="Link to this section">§</a></h2>
+      <p>For each test method, the test report shall specify the following:</p>
+      <ul>
+        <li>
+          <p></p>
+        </li>
+        <li>
+          <p></p>
+        </li>
+        <li>
+          <p></p>
+        </li>
+        <li>
+          <p></p>
+        </li>
+        <li>
+          <p></p>
+        </li>
+        <li>
+          <p></p>
+        </li>
+        <li>
+          <p></p>
+        </li>
+        <li>
+          <p></p>
+        </li>
+      </ul>
+    </section>
+    <section id="_2aa11b01-d9ce-5157-f44f-a0da4f5489b2">
+      <h2>Packaging<a class="h-anchor" href="#_2aa11b01-d9ce-5157-f44f-a0da4f5489b2" aria-label="Link to this section">§</a></h2>
+      <p>The packaging shall not transmit any odour or flavour to the product and shall not contain substances which may damage the product or constitute a health risk.</p>
+      <p>If bags are used, they shall comply with the requirements of <span class="std"><span class="std-ref">ISO 8351-1:1994, clause 9</span></span>, or <span class="std"><span class="std-ref">ISO 8351-2:1994</span></span>, as appropriate.</p>
+    </section>
+    <section id="_cf58d45c-88c1-4e3f-c254-4c7d1a1e4d75">
+      <h2>Marking<a class="h-anchor" href="#_cf58d45c-88c1-4e3f-c254-4c7d1a1e4d75" aria-label="Link to this section">§</a></h2>
+      <p>The packages shall be marked or labelled as required by the country of destination.</p>
+    </section>
+    <section id="sec_terms"></section>
+  
+    
+      <section id="sec_A">
+        <h2>Determination of defects<a class="h-anchor" href="#sec_A" aria-label="Link to this section">§</a></h2>
+        <section>
+          <section id="_b9220d43-a57f-880b-6602-2f93ad0a41d2">
+            <h4>Principle<a class="h-anchor" href="#_b9220d43-a57f-880b-6602-2f93ad0a41d2" aria-label="Link to this section">§</a></h4>
+            <p>Extraneous matter, broken kernels, damaged kernels and other kinds of rice are separated manually according to the following types: husked rice, milled rice, husked parboiled rice and milled parboiled rice. Each type is then weighed.</p>
+          </section>
+          <section id="_d2b1d825-1a36-9515-c21a-9529715f6f84">
+            <h4>Apparatus<a class="h-anchor" href="#_d2b1d825-1a36-9515-c21a-9529715f6f84" aria-label="Link to this section">§</a></h4>
+            <p>The usual laboratory apparatus and, in particular, the following.</p>
+            <section id="_adc0f922-10dc-3e48-5cb4-e22a2396ce81">
+              <h4>Sample divider,<a class="h-anchor" href="#_adc0f922-10dc-3e48-5cb4-e22a2396ce81" aria-label="Link to this section">§</a></h4>
+              <p>consisting of a conical sample divider or multiple-slot sample divider with a distribution system, e.g. “Split-it-right” sample divider, such as that shown in <a href="#figureA-1">[figureA-1]</a>.</p>
+            </section>
+            <section id="_431d8ed2-95be-f5cb-8dfb-6819d067958d">
+              <h4>Sieve,<a class="h-anchor" href="#_431d8ed2-95be-f5cb-8dfb-6819d067958d" aria-label="Link to this section">§</a></h4>
+              <p>with round perforations of diameter 1,4 mm.</p>
+            </section>
+            <section id="_fbf30670-e46d-c0a7-d898-43679d5064be">
+              <h4>Tweezers.<a class="h-anchor" href="#_fbf30670-e46d-c0a7-d898-43679d5064be" aria-label="Link to this section">§</a></h4>
+            </section>
+            <section id="_532b8522-1ff0-819e-b356-1fdfc8717f00">
+              <h4>Scalpel.<a class="h-anchor" href="#_532b8522-1ff0-819e-b356-1fdfc8717f00" aria-label="Link to this section">§</a></h4>
+            </section>
+            <section id="_03d0c705-e5c3-3f2e-0c0f-d4d1306c6d8b">
+              <h4>Paintbrush.<a class="h-anchor" href="#_03d0c705-e5c3-3f2e-0c0f-d4d1306c6d8b" aria-label="Link to this section">§</a></h4>
+            </section>
+            <section id="_83e2e495-80f3-77af-45fd-682984081b50">
+              <h4>Steel bowls,<a class="h-anchor" href="#_83e2e495-80f3-77af-45fd-682984081b50" aria-label="Link to this section">§</a></h4>
+              <p>of diameter 100 mm ± 5 mm; seven per test sample.</p>
+            </section>
+            <section id="_8690695c-8b88-ea22-4153-afeb42443ae8">
+              <h4>Balance,<a class="h-anchor" href="#_8690695c-8b88-ea22-4153-afeb42443ae8" aria-label="Link to this section">§</a></h4>
+              <p>which can be read to the nearest 0,01 g.</p>
+            </section>
+          </section>
+          <section id="_cdaa737a-25ef-6a0a-165d-50bd09e0c612">
+            <h4>Sampling<a class="h-anchor" href="#_cdaa737a-25ef-6a0a-165d-50bd09e0c612" aria-label="Link to this section">§</a></h4>
+            <p>See <a href="#clause5">[clause5]</a>.</p>
+          </section>
+          <section id="_1bdf001e-f68b-fda2-5d6f-81511e5051f4">
+            <h4>Procedure<a class="h-anchor" href="#_1bdf001e-f68b-fda2-5d6f-81511e5051f4" aria-label="Link to this section">§</a></h4>
+            <section id="_982921b6-f1db-bd2b-7131-a2d501969b13">
+              <h4>Preparation of test sample<a class="h-anchor" href="#_982921b6-f1db-bd2b-7131-a2d501969b13" aria-label="Link to this section">§</a></h4>
+              <p>Carefully mix the laboratory sample to make it as uniform as possible, then proceed to reduce it, using a divider (<a href="#AnnexA-2-1">[AnnexA-2-1]</a>), until a quantity of about 30 g is obtained.</p>
+              <p>All parts of kernels which get stuck in the perforations of a sieve should be considered to be retained by the sieve.</p>
+              <figure>
+                <figcaption></figcaption>
+                <img src="" alt=""/>
+              </figure>
+            </section>
+          </section>
+          <section id="_2032a91f-1d37-875a-f067-975d21ca442f">
+            <h4>Determination<a class="h-anchor" href="#_2032a91f-1d37-875a-f067-975d21ca442f" aria-label="Link to this section">§</a></h4>
+            <p>Weigh, to the nearest 0,1 g, one of the test samples obtained in accordance with <a href="#AnnexA-4-1">[AnnexA-4-1]</a> and separate the different defects into the bowls (<a href="#AnnexA-2-6">[AnnexA-2-6]</a>). When a kernel has several defects, classify it in the defect category for which the maximum permissible value is the lowest (see <a href="#table1">[table1]</a>).</p>
+            <p>Weigh, to the nearest 0,01 g, the fractions so obtained.</p>
+          </section>
+          <section id="_8c633381-7abb-a958-c88c-6c8c17c86a93">
+            <h4>Calculation<a class="h-anchor" href="#_8c633381-7abb-a958-c88c-6c8c17c86a93" aria-label="Link to this section">§</a></h4>
+            <p>Express the mass fraction of each defect using <a href="#formulaA-1">[formulaA-1]</a>:</p>
+            <div class="formula">
+              
+                
+                  w
+                  =
+                  
+                    
+                      m
+                      D
+                    
+                    
+                      m
+                      s
+                    
+                  
+                
+              
+            </div>
+          </section>
+          <section id="_9664c37f-5e68-e9de-9888-fb24523d4f3e">
+            <h4>Test report<a class="h-anchor" href="#_9664c37f-5e68-e9de-9888-fb24523d4f3e" aria-label="Link to this section">§</a></h4>
+            <p>Report the results as specified in <a href="#clause7">[clause7]</a>.</p>
+          </section>
+        </section>
+      </section>
+      <section id="sec_A">
+        <h2>Determination of the waxy rice content of parboiled rice<a class="h-anchor" href="#sec_A" aria-label="Link to this section">§</a></h2>
+        <section>
+          <section id="_f1e90616-83fc-8a48-e9d5-b340bfef3b98">
+            <h4>Principle<a class="h-anchor" href="#_f1e90616-83fc-8a48-e9d5-b340bfef3b98" aria-label="Link to this section">§</a></h4>
+            <p>Waxy rice kernels have a reddish brown colour when stained in an iodine solution, while non-waxy rice kernels show a dark blue colour.</p>
+          </section>
+          <section id="_11f10bb4-989f-4b01-43ec-ef96b306970b">
+            <h4>Apparatus<a class="h-anchor" href="#_11f10bb4-989f-4b01-43ec-ef96b306970b" aria-label="Link to this section">§</a></h4>
+            <p>The usual laboratory apparatus and, in particular, the following.</p>
+            <section id="_83defda3-5830-fb93-2e9d-58814ab9dbdf">
+              <h4>Balance,<a class="h-anchor" href="#_83defda3-5830-fb93-2e9d-58814ab9dbdf" aria-label="Link to this section">§</a></h4>
+              <p>capable of weighing to the nearest 0,01 g.</p>
+            </section>
+            <section id="_66951cd5-e815-58a7-f5f2-b6e821591c53">
+              <h4>Glass beaker,<a class="h-anchor" href="#_66951cd5-e815-58a7-f5f2-b6e821591c53" aria-label="Link to this section">§</a></h4>
+              <p>of capacity 250 ml.</p>
+            </section>
+            <section id="_83eb7f64-cf4f-6099-f8b2-a0b7c4dfb048">
+              <h4>Small white colour bowls,<a class="h-anchor" href="#_83eb7f64-cf4f-6099-f8b2-a0b7c4dfb048" aria-label="Link to this section">§</a></h4>
+              <p>or any white colour container of a suitable size.</p>
+            </section>
+            <section id="_1f214584-6a06-90e5-70e6-28e6e198802e">
+              <h4>Wire sieve,<a class="h-anchor" href="#_1f214584-6a06-90e5-70e6-28e6e198802e" aria-label="Link to this section">§</a></h4>
+              <p>with long rounded apertures of (1 mm <span class="formula">+0.020</span> mm) × (20 mm <span class="formula">+2−1</span> mm).</p>
+            </section>
+            <section id="_a620e57f-da21-8689-c1d8-52161f3ec7ae">
+              <h4>Stirrer rod.<a class="h-anchor" href="#_a620e57f-da21-8689-c1d8-52161f3ec7ae" aria-label="Link to this section">§</a></h4>
+            </section>
+            <section id="_9e1a45d6-4751-f051-4bc3-8167b6eeb227">
+              <h4>Tweezers or forceps.<a class="h-anchor" href="#_9e1a45d6-4751-f051-4bc3-8167b6eeb227" aria-label="Link to this section">§</a></h4>
+            </section>
+            <section id="_e451bd6c-4867-7481-e7e8-36a4ee4a8e34">
+              <h4>Tissue paper.<a class="h-anchor" href="#_e451bd6c-4867-7481-e7e8-36a4ee4a8e34" aria-label="Link to this section">§</a></h4>
+            </section>
+          </section>
+          <section id="_2d52366e-36b1-8286-d47b-ea70833f8071">
+            <h4>Reagents<a class="h-anchor" href="#_2d52366e-36b1-8286-d47b-ea70833f8071" aria-label="Link to this section">§</a></h4>
+            <section id="_92abd034-0660-157d-3dce-fa2651122af1">
+              <h4>Deionized water,<a class="h-anchor" href="#_92abd034-0660-157d-3dce-fa2651122af1" aria-label="Link to this section">§</a></h4>
+              <p>Grade 3 quality as specified in <span class="std"><span class="std-ref">ISO 3696:1987</span></span>.</p>
+            </section>
+            <section id="_a218e089-381d-db92-e210-bfdc5a0a15a6">
+              <h4>Iodine stock solution,<a class="h-anchor" href="#_a218e089-381d-db92-e210-bfdc5a0a15a6" aria-label="Link to this section">§</a></h4>
+              <p>containing a mass fraction of 4,1 % iodine and 6,3 % potassium iodide in deionized water such as Lugols.<a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a></p>
+            </section>
+            <section id="_46de2d39-b7d0-75bd-4db8-c5a9fb2dcce3">
+              <h4>Iodine working solution,<a class="h-anchor" href="#_46de2d39-b7d0-75bd-4db8-c5a9fb2dcce3" aria-label="Link to this section">§</a></h4>
+              <p>obtained by diluting the stock solution (<a href="#AnnexB-3-2">[AnnexB-3-2]</a>) two times (by volume) with deionized water (<a href="#AnnexB-3-1">[AnnexB-3-1]</a>).</p>
+              <p>Prepare fresh daily.</p>
+            </section>
+          </section>
+          <section id="_f450a99e-0857-6764-6bc2-6b73ca0a2991">
+            <h4>Sampling<a class="h-anchor" href="#_f450a99e-0857-6764-6bc2-6b73ca0a2991" aria-label="Link to this section">§</a></h4>
+            <p>Sampling shall be carried out in accordance with <a href="#clause5">[clause5]</a>.</p>
+          </section>
+          <section id="_08a52d9b-633f-70bf-7b2c-67f5278b0ad8">
+            <h4>Determination<a class="h-anchor" href="#_08a52d9b-633f-70bf-7b2c-67f5278b0ad8" aria-label="Link to this section">§</a></h4>
+            <section id="_45def8a1-f00e-2103-e430-954d98d7bf2a">
+              <p>Weigh a portion of about 100 g of milled rice and put it into a glass beaker (<a href="#AnnexB-2-2">[AnnexB-2-2]</a>).</p>
+            </section>
+            <section id="_ec61512e-0bc5-6680-4559-608c2db07e75">
+              <p>Add enough iodine working solution (<a href="#AnnexB-3-3">[AnnexB-3-3]</a>) to soak the kernels, and stir (<a href="#AnnexB-2-5">[AnnexB-2-5]</a>) until all the kernels are submerged under the solution. Let the kernels soak in the solution for 30 s.</p>
+            </section>
+            <section id="_c6560d92-a347-9b3f-204b-513c085b1037">
+              <p>Pour the rice and solution into a wire sieve (<a href="#AnnexB-2-4">[AnnexB-2-4]</a>), and shake the basket slightly in order to drain out the solution. Then place the wire sieve on a piece of tissue paper (<a href="#AnnexB-2-7">[AnnexB-2-7]</a>) to absorb the excess liquid.</p>
+            </section>
+            <section id="_e77402fc-7023-712e-c20d-fd407fd33a6c">
+              <p>Pour the stained kernels into a bowl (<a href="#AnnexB-2-3">[AnnexB-2-3]</a>). Using tweezers or forceps (<a href="#AnnexB-2-6">[AnnexB-2-6]</a>), separate the reddish brown kernels of waxy rice from the dark blue kernels of non-waxy rice.</p>
+            </section>
+            <section id="_7e950e7a-28a5-6455-a189-fd3f9ff0520e">
+              <p>Weigh the waxy rice portion (<span class="formula">m1</span>) and the non-waxy rice portion (<span class="formula">m2</span>) to the nearest 0,1 g.</p>
+            </section>
+          </section>
+          <section id="_9582295c-7e67-63b3-40d4-493f8c6de195">
+            <h4>Calculation<a class="h-anchor" href="#_9582295c-7e67-63b3-40d4-493f8c6de195" aria-label="Link to this section">§</a></h4>
+            <p>Calculate the mass fraction, expressed as a percentage, of the waxy rice, <span class="formula">wwax</span>, using <a href="#formulaB-1">[formulaB-1]</a>:</p>
+            <div class="formula">
+              
+                
+                  
+                    w
+                    
+                      w
+                      a
+                      x
+                    
+                  
+                  =
+                  
+                    
+                      m
+                      1
+                    
+                    
+                      
+                        m
+                        1
+                      
+                      +
+                      
+                        m
+                        2
+                      
+                    
+                  
+                  ×
+                  100
+                
+              
+            </div>
+          </section>
+          <section id="_fc0c7a40-6a73-4091-7c8c-cea0e6218059">
+            <h4>Test report<a class="h-anchor" href="#_fc0c7a40-6a73-4091-7c8c-cea0e6218059" aria-label="Link to this section">§</a></h4>
+            <p>Report the results as specified in <a href="#clause7">[clause7]</a>, giving the results calculated using <a href="#formulaB-1">[formulaB-1]</a>.</p>
+          </section>
+        </section>
+      </section>
+      <section id="sec_A">
+        <h2>Gelatinization<a class="h-anchor" href="#sec_A" aria-label="Link to this section">§</a></h2>
+        <section>
+          <p><a href="#figureC-1">[figureC-1]</a> gives an example of a typical gelatinization curve. <a href="#figureC-2">[figureC-2]</a> shows the three stages of gelatinization.</p>
+          <figure>
+            <figcaption></figcaption>
+            <img src="" alt=""/>
+          </figure>
+          <figure>
+            <figcaption></figcaption>
+          </figure>
+        </section>
+      </section>
+      <section id="sec_A">
+        <h2>Results of interlaboratory test for husked rice yields<a class="h-anchor" href="#sec_A" aria-label="Link to this section">§</a></h2>
+        <section>
+          <p>An interlaboratory test <span class="std"><span class="std-ref">[15]</span></span> was carried out by the ENR [Rice Research Centre (Italy)] in accordance with <span class="std"><span class="std-ref">ISO 5725-1:1994</span></span><a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a> and <span class="std"><span class="std-ref">ISO 5725-2:1994</span></span><a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a>, with the participation of 15 laboratories. Each laboratory carried out three determinations on four different types of kernel. The statistical results are shown in <a href="#tableD-1">[tableD-1]</a>.</p>
+          <div class="table-wrap">
+            
+            <table>
+              <thead>
+                <tr>
+                  <th>Description</th>
+                  <th>Rice sample</th>
+                </tr>
+                <tr>
+                  <th>Arborio</th>
+                  <th>Drago<a href="#fn_1">&lt;sup&gt;1)&lt;/sup&gt;</a></th>
+                  <th>Balilla</th>
+                  <th>Thaibonnet</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Number of laboratories retained after eliminating outliers</td>
+                  <td>13</td>
+                  <td>11</td>
+                  <td>13</td>
+                  <td>13</td>
+                </tr>
+                <tr>
+                  <td>Mean value, g/100 g</td>
+                  <td>81,2</td>
+                  <td>82,0</td>
+                  <td>81,8</td>
+                  <td>77,7</td>
+                </tr>
+                <tr>
+                  <td>Standard deviation of repeatability, <span class="formula">sr</span>, g/100 g</td>
+                  <td>0,41</td>
+                  <td>0,15</td>
+                  <td>0,31</td>
+                  <td>0,53</td>
+                </tr>
+                <tr>
+                  <td>Coefficient of variation of repeatability, %</td>
+                  <td>0,5</td>
+                  <td>0,2</td>
+                  <td>0,4</td>
+                  <td>0,7</td>
+                </tr>
+                <tr>
+                  <td>Repeatability limit, <span class="formula">r</span> (= 2,83 <span class="formula">sr</span>)</td>
+                  <td>1,16</td>
+                  <td>0,42</td>
+                  <td>0,88</td>
+                  <td>1,50</td>
+                </tr>
+                <tr>
+                  <td>Standard deviation of reproducibility, <span class="formula">sR</span>, g/100 g</td>
+                  <td>1,02</td>
+                  <td>0,20</td>
+                  <td>0,80</td>
+                  <td>2,14</td>
+                </tr>
+                <tr>
+                  <td>Coefficient of variation of reproducibility, %</td>
+                  <td>1,3</td>
+                  <td>0,2</td>
+                  <td>1,0</td>
+                  <td>2,7</td>
+                </tr>
+                <tr>
+                  <td>Reproducibility limit, <span class="formula">R</span> (= 2,83 <span class="formula">sR</span>)</td>
+                  <td>2,89</td>
+                  <td>0,57</td>
+                  <td>2,26</td>
+                  <td>6,06</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+      <section id="sec_A">
+        <h2>Extraneous information<a class="h-anchor" href="#sec_A" aria-label="Link to this section">§</a></h2>
+        <section>
+          <p>
+            <em>This appendix is not in the original Rice model document, and is inserted to illustrate elements absent from that document: block quotes, source code, and examples.</em>
+          </p>
+          <section id="_e64908af-9064-88f1-d100-3c6643b0019d">
+            <h4>Appendix 1<a class="h-anchor" href="#_e64908af-9064-88f1-d100-3c6643b0019d" aria-label="Link to this section">§</a></h4>
+            <div class="example"><span class="note-label">EXAMPLE</span> </div>
+          </section>
+          <blockquote>
+            <p>This International Standard gives the minimum specifications for rice (<em>Oryza sativa</em> L.) which is subject to international trade. It is applicable to the following types: husked rice and milled rice, parboiled or not, intended for direct human consumption. It is neither applicable to other products derived from rice, nor to waxy rice (glutinous rice).</p>
+          </blockquote>
+        </section>
+      </section>
+    
+    <div id="normative-references" class="ref-list">
+      <h2>Normative references<a class="h-anchor" href="#normative-references" aria-label="Link to this section">§</a></h2>
+      <div class="ref"><p class="ref-body"><span class="label">[1]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 712:2009</span></span>
+        <span class="citation">ISO 712:2009<em>Determination of moisture content</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[2]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 6646:2011</span></span>
+        <span class="citation">ISO 6646:2011<em>Determination of the potential milling yield from paddy and from husked rice</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[3]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 8351-1:1994</span></span>
+        <span class="citation">ISO 8351-1:1994<em>Method of specification for sacks</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[4]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 8351-2:1994</span></span>
+        <span class="citation">ISO 8351-2:1994<em>Method of specification for sacks</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[5]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 16634:—</span></span>
+        <span class="citation">ISO 16634:—<em>Cereals, pulses, milled cereal products, oilseeds and animal feeding stuffs — Determination of the total nitrogen content by combustion according to the Dumas principle and calculation of the crude protein content</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[6]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 20483:2013</span></span>
+        <span class="citation">ISO 20483:2013<em>Determination of the nitrogen content and calculation of the crude protein content</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[7]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 24333:2009</span></span>
+        <span class="citation">ISO 24333:2009<em>Sampling</em>, </span>
+      </p></div>
+      <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+    </div>
+    <div id="bibliography" class="ref-list">
+      <h2>Bibliography<a class="h-anchor" href="#bibliography" aria-label="Link to this section">§</a></h2>
+      <div class="ref"><p class="ref-body"><span class="label">[1]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 2146:1988</span></span>
+        <span class="citation">ISO 2146:1988<em>Directories of libraries, archives, information and documentation centres, and their data bases</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[2]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 3696:1987</span></span>
+        <span class="citation">ISO 3696:1987<em>Specification and test methods</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[3]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 5725-1:1994</span></span>
+        <span class="citation">ISO 5725-1:1994<em>Accuracy (trueness and precision) of measurement methods and results</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[4]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 5725-2:1994</span></span>
+        <span class="citation">ISO 5725-2:1994<em>Accuracy (trueness and precision) of measurement methods and results</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[5]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 6322-1:1996</span></span>
+        <span class="citation">ISO 6322-1:1996<em>Storage of cereals and pulses</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[6]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 6322-2:2000</span></span>
+        <span class="citation">ISO 6322-2:2000<em>Storage of cereals and pulses</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[7]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 6322-3:1989</span></span>
+        <span class="citation">ISO 6322-3:1989<em>Storage of cereals and pulses</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[8]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 7301:2011</span></span>
+        <span class="citation">ISO 7301:2011<em>Specification</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[9]</span> 
+        
+        <span class="std"><span class="std-ref">ISO 14864:1998</span></span>
+        <span class="citation">ISO 14864:1998<em>Evaluation of gelatinization time of kernels during cooking</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[10]</span> 
+        
+        <span class="std"><span class="std-ref">IEC 61010-2</span></span>
+        <span class="citation">IEC 61010-2<em>Safety requirements for electric equipment for measurement, control, and laboratory use — Part 2: Particular requirements for laboratory equipment for the heating of material</em>, </span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[11]</span> 
+        
+        <span class="std"><span class="std-ref">[11]</span></span>
+        <span class="citation">[11]</span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[12]</span> 
+        
+        <span class="std"><span class="std-ref">[12]</span></span>
+        <span class="citation">[12]</span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[13]</span> 
+        
+        <span class="std"><span class="std-ref">[13]</span></span>
+        <span class="citation">[13]</span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[14]</span> 
+        
+        <span class="std"><span class="std-ref">[14]</span></span>
+        <span class="citation">[14]</span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[15]</span> 
+        
+        <span class="std"><span class="std-ref">[15]</span></span>
+        <span class="citation">[15]</span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[16]</span> 
+        
+        <span class="std"><span class="std-ref">[16]</span></span>
+        <span class="citation">[16]</span>
+      </p></div>
+      <div class="ref"><p class="ref-body"><span class="label">[17]</span> 
+        
+        <span class="std"><span class="std-ref">[17]</span></span>
+        <span class="citation">[17]</span>
+      </p></div>
+    </div>
+    
+      <sup class="fn-label">&lt;sup&gt;1)&lt;/sup&gt;</sup>
+    
+  </main><p class="footnote">Withdrawn.</p>
+  </div>
+</div>
+<button id="back-to-top" class="back-to-top fixed right-6 bottom-6 z-40 w-10 h-10 rounded-full bg-accent text-white text-lg cursor-pointer shadow-lg opacity-0 translate-y-2 pointer-events-none transition-all hover:brightness-110" aria-label="Back to top" title="Back to top">↑</button>
+<footer class="site-footer px-6 py-6 text-xs text-ink-faint border-t border-line">
+  <div class="footer-grid">
+  <div class="footer-block">
+    <p class="footer-license">
+      © 2016 ISO · All rights reserved
+    </p>
+    <p class="footer-publisher">International Organization for Standardization</p>
+    <p class="footer-address">ISO Central Secretariat · CP 401 · Ch. de Blandonnet 8, 1214 Vernier, Geneva, Switzerland</p>
+    <p class="footer-contact">
+      <a href="https://www.iso.org">www.iso.org</a> ·
+      <a href="mailto:copyright@iso.org">copyright@iso.org</a>
+    </p>
+  </div>
+  <div class="footer-block footer-meta">
+    <p><span class="footer-docid">ISO 17301</span></p>
+    <p class="footer-meta-line">EN</p>
+    <p class="footer-generated">
+      <span class="mn-icon brand-logo-light"><svg id="uuid-db8c372e-944d-4df9-b8b0-4a61cf77f2ce" xmlns="http://www.w3.org/2000/svg" width="52mm" height="52mm" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 147.4 147.4"><defs><clipPath id="uuid-81f828fd-72f4-4a48-8d84-2e4c05ab6663"><path d="m145.28,119.33c-8.79,0-13.28,5.51-17.24,10.36-3.96,4.85-7.25,8.89-14.14,8.89-2.95.06-5.84-.87-8.19-2.65-1.38-12.25-2.77-24.51-4.15-36.76l-3.2-28.22v-.09c0-.07,0-.14,0-.21,0-.06-.02-.12-.05-.17-.03-.07-.06-.14-.09-.21l-.12-.11-.15-.21-.07-.09-.21-.2-.07-.06-.24-.16h-.09l-.25-.1h-1.76v-37.22c0-.06,0-.13,0-.19-.04-.36-.18-.71-.4-1l-19.61-25.43c-.74-.87-2.05-.97-2.92-.23-.08.07-.16.15-.23.23l-19.59,25.39c-.22.29-.36.64-.4,1v37.29h-1.53l-.27.11h-.06l-.27.17h-.05c-.08.07-.15.14-.22.21l-.06.07c-.06.07-.11.14-.16.22l-.07.12c-.04.07-.07.15-.1.22,0,.05-.03.11-.05.16,0,.07,0,.14,0,.21v.09l-3.2,28.2-4.11,36c-1.79-1.66-3.44-3.47-4.92-5.41-4-4.85-8.45-10.36-17.24-10.36s-13.35,5.65-17.31,10.51c-.65.79-1.29,1.58-2,2.35-.63.91-.41,2.15.5,2.78.77.54,1.81.46,2.5-.17.69-.8,1.36-1.62,2-2.43,3.89-4.77,7.25-8.89,14.14-8.89s10.25,4.11,14.14,8.89c3.89,4.78,8.55,10.36,17.33,10.36s13.28-5.51,17.24-10.36c2.85-3.49,5.34-6.56,9.09-8.01,2.26-.87,4.25-.89,5.05-.88,3.9.03,6.69,1.7,7.8,2.38,2.37,1.45,2.83,2.25,6.35,6.54,3.11,3.8,6.22,7.54,11.14,9.33,1.78.65,3.8,1.03,6.11,1.03,8.8,0,13.28-5.51,17.24-10.36,3.96-4.85,7.25-8.89,14.14-8.89,1.1,0,2-.9,2-2s-.9-2-2-2l.02-.04Zm-50.72-46.03l2.75,24.11h-6.14l-7-12.11,6.95-12h3.44Zm-27.87,10.01l-5.79-10.01h25.58l-5.79,10.01h-14Zm7-73.32l15.5,20.16h-31l15.5-20.16Zm-17.59,24.12h35.16v35.1h-35.16v-35.1Zm-6.34,67.3h6.46l7,12.11-7,12.11h-9.22l2.76-24.22Zm1.34,37.2c-1.88.02-3.74-.35-5.47-1.08l.9-7.88h9.71l3.45,6c-2.42,1.98-5.47,3.03-8.59,2.96m31.4-19.26c-8.8,0-13.28,5.5-17.24,10.35-.87,1.06-1.71,2.06-2.57,3.06l-3-5.12,7-12.11h14.17l2.24,3.84c-.19.01-.37-.03-.58-.03h-.02Zm62.78,0-63.71-61.88c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.9-2-2s.89-2,2-2h15.62m0-8.01c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.89-2-2s.89-2,2-2h15.62m0-8c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.6c-1.11-.05-1.96-.98-1.92-2.08.05-1.1.98-1.96,2.08-1.92h15.62m27.53,15.31s0,0,0,0c.66-.89,1.91-1.07,2.8-.42l20,16.09c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42l-20-16.09c-.78-.68-.91-1.85-.29-2.69m1.54-14.57c-.61,0-1.18-.28-1.56-.75-.69-.86-.55-2.12.31-2.81l20-16.07c.84-.62,2.01-.49,2.69.29.73.83.65,2.09-.18,2.82l-20,16.09c-.36.27-.81.41-1.26.39h0v.04Zm2.32,6.81c0-1.1.9-2,2-2h26.66c1.1.05,1.96.99,1.9,2.1-.05,1.1-.99,1.96-2.1,1.9h-26.47c-1.1,0-2-.9-2-2m-77.5,7.28c.86-.69,2.13-.55,2.82.31.69.86.56,2.13-.31,2.82l-19.97,16.09c-.86.7-2.12.57-2.83-.28-.7-.86-.57-2.12.28-2.83l20-16.11h0M15.36,25.5c-.83-.74-.91-2-.17-2.83.73-.83,2-.9,2.83-.17l19.98,16.11c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42L15.49,25.62h0l-.13-.12Zm-9.63,25.5c-1.1-.05-1.96-.98-1.91-2.08.05-1.1.98-1.96,2.08-1.92h26.47c1.11,0,2,.9,2,2s-.89,2-2,2H5.73" style="fill:none; stroke-width:0px;"/></clipPath><radialGradient id="uuid-3f814705-4d4c-4032-88ea-8f4480020c22" cx="73.7" cy="73.7" fx="73.7" fy="-49.12" r="203.08" gradientTransform="translate(.15 46.9) rotate(.33) scale(1 .36)" gradientUnits="userSpaceOnUse"><stop offset=".01" stop-color="#7c60e6"/><stop offset=".09" stop-color="#725edb"/><stop offset=".32" stop-color="#575abe"/><stop offset=".55" stop-color="#4458a9"/><stop offset=".78" stop-color="#38569d"/><stop offset="1" stop-color="#355699"/></radialGradient></defs><g style="clip-path:url(#uuid-81f828fd-72f4-4a48-8d84-2e4c05ab6663);"><rect x=".15" y=".15" width="147.1" height="147.1" style="fill:url(#uuid-3f814705-4d4c-4032-88ea-8f4480020c22); stroke-width:0px;"/></g></svg></span><span class="mn-icon brand-logo-dark"><svg id="uuid-5ecd4954-1c9b-4b8e-80be-243ce0d02998" xmlns="http://www.w3.org/2000/svg" width="52mm" height="52mm" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 147.4 147.4"><defs><clipPath id="uuid-cab9f5bb-b4da-4e94-9792-0a224cf9ffe6"><path d="m145.28,119.33c-8.79,0-13.28,5.51-17.24,10.36-3.96,4.85-7.25,8.89-14.14,8.89-2.95.06-5.84-.87-8.19-2.65-1.38-12.25-2.77-24.51-4.15-36.76l-3.2-28.22v-.09c0-.07,0-.14,0-.21,0-.06-.02-.12-.05-.17-.03-.07-.06-.14-.09-.21l-.12-.11-.15-.21-.07-.09-.21-.2-.07-.06-.24-.16h-.09l-.25-.1h-1.76v-37.22c.01-.06.01-.13,0-.19-.04-.36-.18-.71-.4-1l-19.61-25.43c-.74-.87-2.05-.97-2.92-.23-.08.07-.16.15-.23.23l-19.59,25.39c-.22.29-.36.64-.4,1v37.29h-1.53l-.27.11h-.06l-.27.17h-.05c-.08.07-.15.14-.22.21l-.06.07c-.06.07-.11.14-.16.22l-.07.12c-.04.07-.07.15-.1.22-.01.05-.03.11-.05.16,0,.07,0,.14,0,.21v.09l-3.2,28.2-4.11,36c-1.79-1.66-3.44-3.47-4.92-5.41-4-4.85-8.45-10.36-17.24-10.36s-13.35,5.65-17.31,10.51c-.65.79-1.29,1.58-2,2.35-.63.91-.41,2.15.5,2.78.77.54,1.81.46,2.5-.17.69-.8,1.36-1.62,2-2.43,3.89-4.77,7.25-8.89,14.14-8.89s10.25,4.11,14.14,8.89c3.89,4.78,8.55,10.36,17.33,10.36s13.28-5.51,17.24-10.36c2.85-3.49,5.34-6.56,9.09-8.01,2.47-.96,5.05-.88,5.05-.88,2.14,0,3.73.47,4.13.59,3.11.96,5.09,2.85,6.75,4.48,1.46,1.43,1.79,2.07,3.27,3.85,3.29,3.95,6.35,7.58,11.14,9.33,1.78.65,3.8,1.03,6.11,1.03,8.8,0,13.28-5.51,17.24-10.36,3.96-4.85,7.25-8.89,14.14-8.89,1.11,0,2-.9,2-2s-.89-2-2-2l.02-.04Zm-50.72-46.03l2.75,24.11h-6.14l-7-12.11,6.95-12h3.44Zm-27.87,10.01l-5.79-10.01h25.58l-5.79,10.01h-14Zm7-73.32l15.5,20.16h-31l15.5-20.16Zm-17.59,24.12h35.16v35.1h-35.16v-35.1Zm-6.34,67.3h6.46l7,12.11-7,12.11h-9.22l2.76-24.22Zm1.34,37.2c-1.88.02-3.74-.35-5.47-1.08l.9-7.88h9.71l3.45,6c-2.42,1.98-5.47,3.03-8.59,2.96m31.4-19.26c-8.8,0-13.28,5.5-17.24,10.35-.87,1.06-1.71,2.06-2.57,3.06l-3-5.12,7-12.11h14.17l2.24,3.84c-.19.01-.37-.03-.58-.03h-.02Zm62.78,0-63.71-61.88c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.9-2-2s.89-2,2-2h15.62m0-8.01c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.89-2-2s.89-2,2-2h15.62m0-8c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.6c-1.11-.05-1.96-.98-1.92-2.08.05-1.1.98-1.96,2.08-1.92h15.62m27.53,15.31s0,0,0,0c.66-.89,1.91-1.07,2.8-.42l20,16.09c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42l-20-16.09c-.78-.68-.91-1.85-.29-2.69m1.54-14.57c-.61,0-1.18-.28-1.56-.75-.69-.86-.55-2.12.31-2.81l20-16.07c.84-.62,2.01-.49,2.69.29.73.83.65,2.09-.18,2.82l-20,16.09c-.36.27-.81.41-1.26.39h0v.04Zm2.32,6.81c0-1.1.9-2,2-2h26.66c1.1.05,1.96.99,1.9,2.1-.05,1.1-.99,1.96-2.1,1.9h-26.47c-1.1,0-2-.9-2-2m-77.5,7.28c.86-.69,2.13-.55,2.82.31.69.86.56,2.13-.31,2.82l-19.97,16.09c-.86.7-2.12.57-2.83-.28-.7-.86-.57-2.12.28-2.83l20-16.11h0M15.36,25.5c-.83-.74-.91-2-.17-2.83.73-.83,2-.9,2.83-.17l19.98,16.11c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42L15.49,25.62h0l-.13-.12Zm-9.63,25.5c-1.1-.05-1.96-.98-1.91-2.08.05-1.1.98-1.96,2.08-1.92h26.47c1.11,0,2,.9,2,2s-.89,2-2,2H5.73" style="fill:none; stroke-width:0px;"/></clipPath><clipPath id="uuid-b81c2210-a2cc-4c27-bc7d-e842bd70bc8e"><path d="m145.28,119.33c-8.79,0-13.28,5.51-17.24,10.36-3.96,4.85-7.25,8.89-14.14,8.89-2.95.06-5.84-.87-8.19-2.65-1.38-12.25-2.77-24.51-4.15-36.76l-3.2-28.22v-.09c0-.07,0-.14,0-.21,0-.06-.02-.12-.05-.17-.03-.07-.06-.14-.09-.21l-.12-.11-.15-.21-.07-.09-.21-.2-.07-.06-.24-.16h-.09l-.25-.1h-1.76v-37.22c.01-.06.01-.13,0-.19-.04-.36-.18-.71-.4-1l-19.61-25.43c-.74-.87-2.05-.97-2.92-.23-.08.07-.16.15-.23.23l-19.59,25.39c-.22.29-.36.64-.4,1v37.29h-1.53l-.27.11h-.06l-.27.17h-.05c-.08.07-.15.14-.22.21l-.06.07c-.06.07-.11.14-.16.22l-.07.12c-.04.07-.07.15-.1.22-.01.05-.03.11-.05.16,0,.07,0,.14,0,.21v.09l-3.2,28.2-4.11,36c-1.79-1.66-3.44-3.47-4.92-5.41-4-4.85-8.45-10.36-17.24-10.36s-13.35,5.65-17.31,10.51c-.65.79-1.29,1.58-2,2.35-.63.91-.41,2.15.5,2.78.77.54,1.81.46,2.5-.17.69-.8,1.36-1.62,2-2.43,3.89-4.77,7.25-8.89,14.14-8.89s10.25,4.11,14.14,8.89c3.89,4.78,8.55,10.36,17.33,10.36s13.28-5.51,17.24-10.36c2.85-3.49,5.34-6.56,9.09-8.01,2.47-.96,5.05-.88,5.05-.88,2.14,0,3.73.47,4.13.59,3.11.96,5.09,2.85,6.75,4.48,1.46,1.43,1.79,2.07,3.27,3.85,3.29,3.95,6.35,7.58,11.14,9.33,1.78.65,3.8,1.03,6.11,1.03,8.8,0,13.28-5.51,17.24-10.36,3.96-4.85,7.25-8.89,14.14-8.89,1.11,0,2-.9,2-2s-.89-2-2-2l.02-.04Zm-50.72-46.03l2.75,24.11h-6.14l-7-12.11,6.95-12h3.44Zm-27.87,10.01l-5.79-10.01h25.58l-5.79,10.01h-14Zm7-73.32l15.5,20.16h-31l15.5-20.16Zm-17.59,24.12h35.16v35.1h-35.16v-35.1Zm-6.34,67.3h6.46l7,12.11-7,12.11h-9.22l2.76-24.22Zm1.34,37.2c-1.88.02-3.74-.35-5.47-1.08l.9-7.88h9.71l3.45,6c-2.42,1.98-5.47,3.03-8.59,2.96m31.4-19.26c-8.8,0-13.28,5.5-17.24,10.35-.87,1.06-1.71,2.06-2.57,3.06l-3-5.12,7-12.11h14.17l2.24,3.84c-.19.01-.37-.03-.58-.03h-.02Zm62.78,0-63.71-61.88c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.9-2-2s.89-2,2-2h15.62m0-8.01c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.89-2-2s.89-2,2-2h15.62m0-8c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.6c-1.11-.05-1.96-.98-1.92-2.08.05-1.1.98-1.96,2.08-1.92h15.62m27.53,15.31s0,0,0,0c.66-.89,1.91-1.07,2.8-.42l20,16.09c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42l-20-16.09c-.78-.68-.91-1.85-.29-2.69m1.54-14.57c-.61,0-1.18-.28-1.56-.75-.69-.86-.55-2.12.31-2.81l20-16.07c.84-.62,2.01-.49,2.69.29.73.83.65,2.09-.18,2.82l-20,16.09c-.36.27-.81.41-1.26.39h0v.04Zm2.32,6.81c0-1.1.9-2,2-2h26.66c1.1.05,1.96.99,1.9,2.1-.05,1.1-.99,1.96-2.1,1.9h-26.47c-1.1,0-2-.9-2-2m-77.5,7.28c.86-.69,2.13-.55,2.82.31.69.86.56,2.13-.31,2.82l-19.97,16.09c-.86.7-2.12.57-2.83-.28-.7-.86-.57-2.12.28-2.83l20-16.11h0M15.36,25.5c-.83-.74-.91-2-.17-2.83.73-.83,2-.9,2.83-.17l19.98,16.11c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42L15.49,25.62h0l-.13-.12Zm-9.63,25.5c-1.1-.05-1.96-.98-1.91-2.08.05-1.1.98-1.96,2.08-1.92h26.47c1.11,0,2,.9,2,2s-.89,2-2,2H5.73" style="fill:none; stroke-width:0px;"/></clipPath><radialGradient id="uuid-24fb7c6f-c54c-4f11-8696-f8b9e30f645f" cx="73.7" cy="73.7" fx="73.7" fy="-49.12" r="203.08" gradientUnits="userSpaceOnUse"><stop offset=".39" stop-color="#e2dbff"/><stop offset=".86" stop-color="#5a9cfa"/></radialGradient><clipPath id="uuid-a494d594-b8c5-4576-a707-0f3f62bf2ae2"><path d="m145.28,119.33c-8.79,0-13.28,5.51-17.24,10.36-3.96,4.85-7.25,8.89-14.14,8.89-2.95.06-5.84-.87-8.19-2.65-1.38-12.25-2.77-24.51-4.15-36.76l-3.2-28.22v-.09c0-.07,0-.14,0-.21,0-.06-.02-.12-.05-.17-.03-.07-.06-.14-.09-.21l-.12-.11-.15-.21-.07-.09-.21-.2-.07-.06-.24-.16h-.09l-.25-.1h-1.76v-37.22c.01-.06.01-.13,0-.19-.04-.36-.18-.71-.4-1l-19.61-25.43c-.74-.87-2.05-.97-2.92-.23-.08.07-.16.15-.23.23l-19.59,25.39c-.22.29-.36.64-.4,1v37.29h-1.53l-.27.11h-.06l-.27.17h-.05c-.08.07-.15.14-.22.21l-.06.07c-.06.07-.11.14-.16.22l-.07.12c-.04.07-.07.15-.1.22-.01.05-.03.11-.05.16,0,.07,0,.14,0,.21v.09l-3.2,28.2-4.11,36c-1.79-1.66-3.44-3.47-4.92-5.41-4-4.85-8.45-10.36-17.24-10.36s-13.35,5.65-17.31,10.51c-.65.79-1.29,1.58-2,2.35-.63.91-.41,2.15.5,2.78.77.54,1.81.46,2.5-.17.69-.8,1.36-1.62,2-2.43,3.89-4.77,7.25-8.89,14.14-8.89s10.25,4.11,14.14,8.89c3.89,4.78,8.55,10.36,17.33,10.36s13.28-5.51,17.24-10.36c2.85-3.49,5.34-6.56,9.09-8.01,2.47-.96,5.05-.88,5.05-.88,2.14,0,3.73.47,4.13.59,3.11.96,5.09,2.85,6.75,4.48,1.46,1.43,1.79,2.07,3.27,3.85,3.29,3.95,6.35,7.58,11.14,9.33,1.78.65,3.8,1.03,6.11,1.03,8.8,0,13.28-5.51,17.24-10.36,3.96-4.85,7.25-8.89,14.14-8.89,1.11,0,2-.9,2-2s-.89-2-2-2l.02-.04Zm-50.72-46.03l2.75,24.11h-6.14l-7-12.11,6.95-12h3.44Zm-27.87,10.01l-5.79-10.01h25.58l-5.79,10.01h-14Zm7-73.32l15.5,20.16h-31l15.5-20.16Zm-17.59,24.12h35.16v35.1h-35.16v-35.1Zm-6.34,67.3h6.46l7,12.11-7,12.11h-9.22l2.76-24.22Zm1.34,37.2c-1.88.02-3.74-.35-5.47-1.08l.9-7.88h9.71l3.45,6c-2.42,1.98-5.47,3.03-8.59,2.96m31.4-19.26c-8.8,0-13.28,5.5-17.24,10.35-.87,1.06-1.71,2.06-2.57,3.06l-3-5.12,7-12.11h14.17l2.24,3.84c-.19.01-.37-.03-.58-.03h-.02Zm62.78,0-63.71-61.88c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.9-2-2s.89-2,2-2h15.62m0-8.01c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.89-2-2s.89-2,2-2h15.62m0-8c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.6c-1.11-.05-1.96-.98-1.92-2.08.05-1.1.98-1.96,2.08-1.92h15.62m27.53,15.31s0,0,0,0c.66-.89,1.91-1.07,2.8-.42l20,16.09c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42l-20-16.09c-.78-.68-.91-1.85-.29-2.69m1.54-14.57c-.61,0-1.18-.28-1.56-.75-.69-.86-.55-2.12.31-2.81l20-16.07c.84-.62,2.01-.49,2.69.29.73.83.65,2.09-.18,2.82l-20,16.09c-.36.27-.81.41-1.26.39h0v.04Zm2.32,6.81c0-1.1.9-2,2-2h26.66c1.1.05,1.96.99,1.9,2.1-.05,1.1-.99,1.96-2.1,1.9h-26.47c-1.1,0-2-.9-2-2m-77.5,7.28c.86-.69,2.13-.55,2.82.31.69.86.56,2.13-.31,2.82l-19.97,16.09c-.86.7-2.12.57-2.83-.28-.7-.86-.57-2.12.28-2.83l20-16.11h0M15.36,25.5c-.83-.74-.91-2-.17-2.83.73-.83,2-.9,2.83-.17l19.98,16.11c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42L15.49,25.62h0l-.13-.12Zm-9.63,25.5c-1.1-.05-1.96-.98-1.91-2.08.05-1.1.98-1.96,2.08-1.92h26.47c1.11,0,2,.9,2,2s-.89,2-2,2H5.73" style="fill:none; stroke-width:0px;"/></clipPath></defs><g style="clip-path:url(#uuid-cab9f5bb-b4da-4e94-9792-0a224cf9ffe6);"><g style="clip-path:url(#uuid-b81c2210-a2cc-4c27-bc7d-e842bd70bc8e);"><rect x=".15" y=".15" width="147.1" height="147.1" style="fill:url(#uuid-24fb7c6f-c54c-4f11-8696-f8b9e30f645f); stroke-width:0px;"/></g><g style="clip-path:url(#uuid-a494d594-b8c5-4576-a707-0f3f62bf2ae2);"><rect x=".15" y=".15" width="147.1" height="147.1" style="fill:url(#uuid-24fb7c6f-c54c-4f11-8696-f8b9e30f645f); stroke-width:0px;"/></g></g></svg></span>
+      Generated by <a href="https://www.metanorma.org" title="Metanorma — aequitate verum">metanorma-iso</a> 3.4.8
+    </p>
+  </div>
+</div>
+</footer>
+<script>
+/* Page behaviour — vanilla JS, no dependencies.
+   - scroll-spy table of contents (IntersectionObserver)
+   - mobile TOC drawer with backdrop
+   - back-to-top button
+   - heading-anchor deep links (copy URL on click)
+*/
+(function () {
+  "use strict";
+
+  var toc = document.getElementById("toc");
+  var toggle = document.getElementById("toc-toggle");
+  var themeToggle = document.getElementById("theme-toggle");
+  var crumbCurrent = document.getElementById("crumb-current");
+  var backToTop = document.getElementById("back-to-top");
+  var root = document.documentElement;
+
+  /* ---- light/dark theme: stored choice wins, else system ---- */
+  var THEME_KEY = "mn-theme";
+  function systemTheme() {
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark" : "light";
+  }
+  function applyTheme(theme) {
+    root.setAttribute("data-theme", theme);
+    if (themeToggle) {
+      themeToggle.setAttribute("aria-pressed", String(theme === "dark"));
+      themeToggle.title = theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
+    }
+  }
+  var stored = null;
+  try { stored = localStorage.getItem(THEME_KEY); } catch (e) { /* private mode */ }
+  applyTheme(stored === "dark" || stored === "light" ? stored : systemTheme());
+  if (themeToggle) {
+    themeToggle.addEventListener("click", function () {
+      var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      applyTheme(next);
+      try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* ignore */ }
+    });
+  }
+  if (window.matchMedia) {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (event) {
+      var saved = null;
+      try { saved = localStorage.getItem(THEME_KEY); } catch (e) { /* ignore */ }
+      if (!saved) applyTheme(event.matches ? "dark" : "light");
+    });
+  }
+
+  /* ---- mobile TOC drawer ---- */
+  var backdrop = null;
+  function setDrawer(open) {
+    if (!toc || !toggle) return;
+    toc.classList.toggle("open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.textContent = open ? "×" : "☰";
+    if (open && !backdrop) {
+      backdrop = document.createElement("div");
+      backdrop.className = "toc-backdrop";
+      backdrop.addEventListener("click", function () { setDrawer(false); });
+      document.body.appendChild(backdrop);
+    } else if (!open && backdrop) {
+      backdrop.remove();
+      backdrop = null;
+    }
+  }
+  if (toggle) {
+    toggle.addEventListener("click", function () {
+      setDrawer(!(toc && toc.classList.contains("open")));
+    });
+  }
+  if (toc) {
+    toc.addEventListener("click", function (event) {
+      if (event.target.closest("a")) setDrawer(false);
+    });
+  }
+
+  /* ---- scroll-spy (also drives the breadcrumb) ---- */
+  var links = toc ? Array.prototype.slice.call(toc.querySelectorAll("a[href^='#']")) : [];
+  if (links.length && "IntersectionObserver" in window) {
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+    var current = null;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var link = byId[entry.target.id];
+        if (!link || link === current) return;
+        if (current) current.classList.remove("active");
+        link.classList.add("active");
+        current = link;
+        if (crumbCurrent) crumbCurrent.textContent = link.textContent;
+        scrollTocIntoView(link);
+      });
+    }, { rootMargin: "-10% 0px -75% 0px", threshold: 0 });
+    Object.keys(byId).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  }
+
+  // Scrolls the TOC panel so the active entry stays visible. Uses
+  // nearest() so a nested <a> finds its <li> wrapper, then computes
+  // the minimum scroll needed (only moves when the link is outside
+  // the visible band — no jumpy centre-on-every-change behaviour).
+  function scrollTocIntoView(link) {
+    if (!toc) return;
+    var item = link.closest("li");
+    if (!item) return;
+    var top = item.offsetTop;
+    var bottom = top + item.offsetHeight;
+    var viewTop = toc.scrollTop;
+    var viewBottom = viewTop + toc.clientHeight;
+    if (top < viewTop) {
+      toc.scrollTo({ top: top - 8, behavior: "smooth" });
+    } else if (bottom > viewBottom) {
+      toc.scrollTo({ top: bottom - toc.clientHeight + 8, behavior: "smooth" });
+    }
+  }
+
+  /* ---- heading anchor links: click to copy ---- */
+  document.addEventListener("click", function (event) {
+    var anchor = event.target.closest("a.h-anchor");
+    if (!anchor) return;
+    event.preventDefault();
+    var url = location.href.split("#")[0] + anchor.getAttribute("href");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url);
+      anchor.classList.add("copied");
+      setTimeout(function () { anchor.classList.remove("copied"); }, 900);
+    }
+    history.replaceState(null, "", anchor.getAttribute("href"));
+  });
+
+  /* ---- back to top ---- */
+  function onScroll() {
+    if (!backToTop) return;
+    backToTop.classList.toggle("visible", window.scrollY > 600);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  if (backToTop) {
+    backToTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    onScroll();
+  }
+})();
+
+</script>
+</body>
+</html>
