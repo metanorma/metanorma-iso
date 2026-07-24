@@ -4,28 +4,26 @@ module Metanorma
   module Iso
     module Sts
       class Transformer::Context
-        attr_reader :source_document, :id_generator, :footnote_collector
+        attr_reader :source, :id_generator, :footnote_collector
 
-        def initialize(source_document)
-          @source_document = source_document
+        # Accepts a {Transformer::SourceDocument}, a raw
+        # {Metanorma::IsoDocument::Root}, or +nil+ (legacy test fixtures
+        # build contexts without a source). Internally always stores a
+        # {SourceDocument} so transformers have a uniform accessor surface.
+        def initialize(source)
+          @source = coerce_source(source)
           @id_generator = Transformer::IdGenerator.new(self)
           @footnote_collector = Transformer::FootnoteCollector.new
         end
 
         def language
-          return nil unless @source_document
-
-          bibdata = @source_document.bibdata
-          return nil unless bibdata
-
-          lang = bibdata.language
-          lang.is_a?(Array) ? lang.first : lang
+          @source&.language
         end
 
         def script
-          return nil unless @source_document
+          return nil unless @source
 
-          bibdata = @source_document.bibdata
+          bibdata = @source.bibdata
           return nil unless bibdata
 
           scr = bibdata.script
@@ -33,8 +31,7 @@ module Metanorma
         end
 
         def doctype
-          bibdata = @source_document.bibdata
-          bibdata&.ext&.doctype
+          @source&.bibdata&.ext&.doctype
         end
 
         def bibitem_lookup
@@ -43,17 +40,20 @@ module Metanorma
 
         private
 
+        def coerce_source(input)
+          return input if input.is_a?(Transformer::SourceDocument)
+          return nil if input.nil?
+
+          Transformer::SourceDocument.new(input)
+        end
+
         def build_bibitem_lookup
           lookup = {}
-          bib = @source_document.bibliography
-          return lookup unless bib
+          bibitems = @source ? @source.bibitems : []
+          bibitems.each do |bibitem|
+            next unless bibitem.id
 
-          bib.references&.each do |ref_section|
-            ref_section.references&.each do |bibitem|
-              next unless bibitem.id
-
-              lookup[bibitem.id] = bibitem
-            end
+            lookup[bibitem.id] = bibitem
           end
 
           lookup

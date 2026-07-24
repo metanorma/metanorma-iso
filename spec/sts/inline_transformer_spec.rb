@@ -51,7 +51,7 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::InlineTransformer do
       eref.locality_stack = [locality_stack]
 
       result = transformer.send(:transform_eref, eref)
-      expect(result).to be_a(Sts::IsoSts::Std)
+      expect(result).to be_a(Sts::NisoSts::ReferenceStandard)
       xml = result.to_xml
       expect(xml).to include("ISO 8601-1:2019, clause 3.1")
     end

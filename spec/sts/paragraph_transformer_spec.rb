@@ -12,7 +12,7 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::ParagraphTransformer do
     para.text = ["Hello world"]
 
     result = transformer.transform(para)
-    expect(result).to be_a(Sts::IsoSts::Paragraph)
+    expect(result).to be_a(Sts::NisoSts::Paragraph)
   end
 
   it "skips underscore-prefixed IDs" do

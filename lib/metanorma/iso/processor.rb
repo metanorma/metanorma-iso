@@ -18,6 +18,7 @@ module Metanorma
           pdf: "pdf",
           sts: "sts.xml",
           isosts: "iso.sts.xml",
+          sts_html: "sts.html",
         )
       end
 
@@ -61,6 +62,7 @@ module Metanorma
         # XML (matching mnconvert's input_format: MN); while gated off, keep
         # the historical presentation-XML routing so mnconvert is unchanged.
         return false if ext == :isosts && Metanorma::Iso::Sts.enabled?
+        return false if ext == :sts_html
         return true if %i[html_alt sts isosts doc docx].include?(ext)
 
         super
@@ -95,6 +97,14 @@ module Metanorma
         when :sts
           IsoDoc::Iso::StsConvert.new(options)
             .convert(inname, isodoc_node, nil, outname)
+        when :sts_html
+          # PXML → ISO-STS XML → branded HTML. Consumes the presentation
+          # XML (semantic), not the isodoc-rendered node — the native
+          # transformer reads the typed IsoDocument::Root directly.
+          pxml = isodoc_node.nil? ? File.read(inname) : isodoc_node.to_xml
+          sts_xml = Metanorma::Iso::Sts.convert(pxml)
+          html = Metanorma::Iso::Sts.render_html(sts_xml)
+          File.write(outname, html)
         when :isosts
           if Metanorma::Iso::Sts.enabled?
             # native metanorma-document transformer via the base-class

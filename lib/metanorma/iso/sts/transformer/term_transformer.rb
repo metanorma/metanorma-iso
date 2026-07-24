@@ -5,15 +5,12 @@ module Metanorma
     module Sts
       class Transformer::TermTransformer < Transformer::Base
         def transform_section(terms)
-          build_ordered(::Sts::IsoSts::TermSec) do |ts|
+          build_ordered(::Sts::NisoSts::TermSection) do |ts|
             ts.id = id_for(terms)
+            ts.sec_type = "terms"
 
             if terms.number && !terms.number.empty?
-              ts.label = ::Sts::IsoSts::Label.new(content: [terms.number])
-            end
-
-            if terms.title
-              ts.title transform_title(terms.title)
+              ts.label = ::Sts::NisoSts::Label.new(content: [terms.number])
             end
 
             terms.each_mixed_content do |node|
@@ -22,12 +19,12 @@ module Metanorma
 
               case node
               when Metanorma::Document::Components::Paragraphs::ParagraphBlock
-                ts.p paragraph_transformer.transform(node)
+                ts.paragraph paragraph_transformer.transform(node)
               when Metanorma::Document::Components::Lists::UnorderedList,
                    Metanorma::Document::Components::Lists::OrderedList
                 ts.list list_transformer.transform(node)
               when Metanorma::IsoDocument::Terms::IsoTerm
-                ts.tbz_term_entry transform_entry(node)
+                ts.term_entry transform_entry(node)
               end
             end
           end
@@ -94,7 +91,6 @@ module Metanorma
 
         def build_note(tn)
           note = ::Sts::TbxIsoTml::Note.new
-          note.instance_variable_set(:@__order_tracking__, true)
 
           if tn.p && !tn.p.empty?
             tn.p.each do |para|
