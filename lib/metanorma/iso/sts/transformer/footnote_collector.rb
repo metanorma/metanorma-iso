@@ -4,6 +4,15 @@ module Metanorma
   module Iso
     module Sts
       class Transformer::FootnoteCollector
+        # Use the NisoSts::Fn / NisoSts::FnGroup pair (not TbxIsoTml::*).
+        # The NisoSts::Back#fn_group attribute is typed as NisoSts::FnGroup,
+        # and NisoSts::FnGroup's :fn collection is typed as NisoSts::Fn.
+        # Passing a TbxIsoTml::Fn would hit a lutaml-model type-mismatch
+        # (silently reusing NisoSts::Fn's transformation on the wrong
+        # value class) — see TODO.fixup-sts/21 for the diagnosis.
+        FN_GROUP_CLASS = ::Sts::NisoSts::FnGroup
+        FN_CLASS = ::Sts::NisoSts::Fn
+
         def initialize
           @footnotes = {}
           @counter = 0
@@ -37,13 +46,13 @@ module Metanorma
         def fn_group
           return nil if @footnotes.empty?
 
-          group = build_ordered_fn_group
+          group = FN_GROUP_CLASS.new
 
           @footnotes.each do |text, entry|
-            fn = build_ordered_fn
+            fn = FN_CLASS.new
             fn.id = entry[:id]
 
-            fn_label = ::Sts::IsoSts::Label.new
+            fn_label = ::Sts::NisoSts::Label.new
             fn_label.content = ["<sup>#{entry[:number]})</sup>"]
             fn.label = fn_label
 
@@ -51,8 +60,8 @@ module Metanorma
             if paras && !paras.empty?
               paras.each { |para| fn.paragraph para }
             else
-              fn_para = ::Sts::IsoSts::Paragraph.new
-              fn_para.content = [text]
+              fn_para = ::Sts::NisoSts::Paragraph.new
+              fn_para.text = [text]
               fn.paragraph fn_para
             end
 
@@ -60,21 +69,6 @@ module Metanorma
           end
 
           group
-        end
-
-        private
-
-        def build_ordered_fn_group
-          inst = ::Sts::IsoSts::FnGroup.new
-          inst.instance_variable_set(:@__order_tracking__, true)
-          inst.content_type = "footnotes"
-          inst
-        end
-
-        def build_ordered_fn
-          inst = ::Sts::IsoSts::Fn.new
-          inst.instance_variable_set(:@__order_tracking__, true)
-          inst
         end
       end
     end

@@ -6,6 +6,8 @@ module Metanorma
       class Transformer::IsoMetaTransformer < Transformer::Base
         include Transformer::ContentText
 
+        # Maps IsoDocument doctype values to the abbreviated forms used
+        # inside <std-ident><doc-type> per the IEC/ISO Coding Guidelines.
         DOC_TYPE_MAP = {
           "international-standard" => "IS",
           "technical-specification" => "TS",
@@ -19,18 +21,22 @@ module Metanorma
           "recommendation" => "R",
         }.freeze
 
+        # Emits a <iso-meta> block (NisoSts::MetadataIso) per Coding
+        # Guidelines ed. 2.1. Most children are bare strings on the model;
+        # only title_wrap, doc_ident, std_ident, std_ref, permissions, ics
+        # remain typed.
         def transform(bibdata)
-          build_ordered(::Sts::IsoSts::IsoMeta) do |m|
+          return Transformer::ModelBuilder.metadata_iso unless bibdata
+
+          Transformer::ModelBuilder.metadata_iso do |m|
             title_wraps_for(bibdata).each { |tw| m.title_wrap tw }
-            m.doc_ident doc_ident_for(bibdata)
-            m.std_ident std_ident_for(bibdata)
+            m.doc_ident = doc_ident_for(bibdata) if doc_ident_for(bibdata)
+            m.std_ident = std_ident_for(bibdata) if std_ident_for(bibdata)
             std_refs_for(bibdata).each { |sr| m.std_ref sr }
-            m.doc_ref doc_ref_for(bibdata)
+            m.doc_ref = doc_ref_for(bibdata) if doc_ref_for(bibdata)
             release_dates_for(bibdata).each { |rd| m.release_date rd }
-            m.comm_ref comm_ref_for(bibdata)
-            if (sec = secretariat_for(bibdata))
-              m.secretariat sec
-            end
+            m.comm_ref = comm_ref_for(bibdata) if comm_ref_for(bibdata)
+            m.secretariat = secretariat_for(bibdata) if secretariat_for(bibdata)
             ics_codes_for(bibdata).each { |i| m.ics i }
             permissions_for(bibdata).each { |p| m.permissions p }
           end
@@ -42,23 +48,25 @@ module Metanorma
           wraps = []
 
           languages_for(bibdata).each do |lang|
-            title = title_for_language(bibdata, lang)
-            next unless title
+            intro_text = title_text_for(bibdata, lang, "title-intro")
+            main_text = title_text_for(bibdata, lang, "title-main")
+            compl_text = title_text_for(bibdata, lang, "title-part")
 
-            tw = build_ordered(::Sts::IsoSts::TitleWrap)
-            tw.xml_lang = lang
+            if intro_text.nil? && main_text.nil? && compl_text.nil?
+              main_text = title_text_for(bibdata, lang, nil)
+            end
+            next if intro_text.nil? && main_text.nil? && compl_text.nil?
 
-            intro_text = title_intro_text(title)
-            tw.intro = ::Sts::IsoSts::TitleIntro.new(content: [intro_text]) if intro_text
+            tw = Transformer::ModelBuilder.title_wrap(lang: lang) do |t|
+              t.intro = intro_text if intro_text
+              t.main = main_text if main_text
+              t.compl = Transformer::ModelBuilder.title_compl(content: [compl_text]) if compl_text
 
-            main_text = title_main_text(title)
-            tw.main = ::Sts::IsoSts::TitleMain.new(content: [main_text]) if main_text
-
-            compl_text = title_compl_text(title)
-            tw.compl = ::Sts::IsoSts::TitleCompl.new(content: [compl_text]) if compl_text
-
-            full_text = [intro_text, main_text, compl_text].compact.join(" — ")
-            tw.full = ::Sts::IsoSts::TitleFull.new(content: [full_text]) if full_text
+              full_text = [intro_text, main_text, compl_text].compact.join(" — ")
+              if full_text && !full_text.empty?
+                t.full = Transformer::ModelBuilder.title_full(content: [full_text])
+              end
+            end
 
             wraps << tw
           end
@@ -66,86 +74,56 @@ module Metanorma
           wraps
         end
 
-        def title_for_language(bibdata, lang)
-          titles = bibdata.titles
+        def title_text_for(bibdata, lang, type)
+          titles = Array(bibdata.titles)
           titles = titles.items if titles.is_a?(Lutaml::Model::Collection)
-          Array(titles).find do |t|
+          title = titles.find do |t|
             t_lang = t.language || t.lang
-            t_lang == lang
+            (lang.nil? || t_lang == lang) && (type.nil? || t._type == type)
           end
+          return nil unless title
+
+          text = title.value.to_s.strip
+          text.empty? ? nil : text
         end
 
-        def title_intro_text(title)
-          ti = title.title_intro
-          extract_text_value(ti) if ti
-        end
-
-        def title_main_text(title)
-          tm = title.title_main
-          if tm
-            extract_text_value(tm)
-          elsif title.content
-            extract_text_value(title)
-          end
-        end
-
-        def title_compl_text(title)
-          tp = title.title_part
-          extract_text_value(tp) if tp
-        end
-
+        # <doc-ident> in NISO STS v1.2: all children are bare strings.
         def doc_ident_for(bibdata)
-          di = ::Sts::IsoSts::DocumentIdentification.new
-          di.sdo = ::Sts::NisoSts::Sdo.new(content: [publisher_for(bibdata)])
+          sdo = publisher_for(bibdata)
+          proj_id = project_number_for(bibdata)
+          language = primary_language(bibdata)
+          release_version = release_version_for(bibdata)
 
-          ext = bibdata.ext
-          if ext&.structuredidentifier
-            si = ext.structuredidentifier
-            proj_num = extract_text_value(si.project_number || si)
-            di.proj_id = ::Sts::NisoSts::ProjId.new(content: [proj_num]) if proj_num && !proj_num.empty?
-          end
+          return nil if sdo.nil? && proj_id.nil? && language.nil? && release_version.nil?
 
-          lang = primary_language(bibdata)
-          di.language = ::Sts::IsoSts::Language.new(content: [lang]) if lang
-
-          release_ver = release_version_for(bibdata)
-          di.release_version = ::Sts::NisoSts::ReleaseVersion.new(content: [release_ver]) if release_ver
-
-          di
+          Transformer::ModelBuilder.document_identification(
+            sdo: sdo,
+            proj_id: proj_id,
+            language: language,
+            release_version: release_version,
+          )
         end
 
+        # <std-ident> in NISO STS v1.2: all children are bare strings.
         def std_ident_for(bibdata)
-          si = ::Sts::IsoSts::StandardIdentification.new
-          si.originator = ::Sts::NisoSts::Originator.new(content: [publisher_for(bibdata)])
+          originator = publisher_for(bibdata)
+          doc_type = doctype_abbreviation(bibdata)
+          doc_number = bibdata.docnumber
+          part_number = part_number_from(bibdata)
+          edition = edition_text_for(bibdata)
+          version = version_text_for(bibdata)
 
-          doctype_abbrev = doctype_abbreviation(bibdata)
-          si.doc_type = ::Sts::NisoSts::DocType.new(content: [doctype_abbrev]) if doctype_abbrev
+          return nil if originator.nil? && doc_type.nil? && doc_number.nil? &&
+                        part_number.nil? && edition.nil? && version.nil?
 
-          if bibdata.docnumber
-            si.doc_number = ::Sts::NisoSts::DocNumber.new(content: [bibdata.docnumber])
-          end
-
-          ext = bibdata.ext
-          if ext&.structuredidentifier
-            si_struct = ext.structuredidentifier
-            if si_struct.partnumber
-              si.part_number = ::Sts::NisoSts::PartNumber.new(content: [si_struct.partnumber.to_s])
-            end
-          end
-
-          if bibdata.edition && !bibdata.edition.empty?
-            edition_val = bibdata.edition.is_a?(Array) ? bibdata.edition.first : bibdata.edition
-            edition_text = extract_text_value(edition_val) || edition_val.to_s
-            si.edition = ::Sts::IsoSts::Edition.new(content: [edition_text]) if edition_text && !edition_text.empty?
-          end
-
-          if bibdata.version
-            ver = bibdata.version
-            ver_text = ver.revision_date || "1"
-            si.version = ::Sts::NisoSts::Version.new(content: [ver_text.to_s])
-          end
-
-          si
+          Transformer::ModelBuilder.standard_identification(
+            originator: originator,
+            doc_type: doc_type,
+            doc_number: doc_number,
+            edition: edition,
+            version: version,
+            part_number: part_number,
+          )
         end
 
         def std_refs_for(bibdata)
@@ -155,25 +133,20 @@ module Metanorma
           primary_id = identifiers.first
           return refs unless primary_id
 
-          ref_text = extract_text_value(primary_id) || primary_id.to_s
-          if ref_text && !ref_text.empty?
-            sr = ::Sts::IsoSts::StdRef.new
-            sr.type = "dated"
-            sr.content = [ref_text]
-            refs << sr
+          ref_text = extract_text_value(primary_id)
+          return refs unless ref_text && !ref_text.empty?
 
-            undated = undated_ref(ref_text)
-            if undated != ref_text
-              sr2 = ::Sts::IsoSts::StdRef.new
-              sr2.type = "undated"
-              sr2.content = [undated]
-              refs << sr2
-            end
+          refs << Transformer::ModelBuilder.standard_ref(type: "dated", value: ref_text)
+
+          undated = undated_ref(ref_text)
+          if undated != ref_text
+            refs << Transformer::ModelBuilder.standard_ref(type: "undated", value: undated)
           end
 
           refs
         end
 
+        # <doc-ref> is a bare STRING on MetadataIso in NISO STS v1.2.
         def doc_ref_for(bibdata)
           pub = publisher_for(bibdata)
           num = bibdata.docnumber
@@ -182,10 +155,11 @@ module Metanorma
           lang = primary_language(bibdata)
           ref_text = "#{pub} #{num}"
           ref_text += " (#{lang})" if lang && lang != "en"
-
-          ::Sts::IsoSts::DocRef.new(content: [ref_text])
+          ref_text
         end
 
+        # <release-date> is a bare STRING on MetadataIso. One per
+        # released date.
         def release_dates_for(bibdata)
           dates = []
           return dates unless bibdata.date
@@ -194,35 +168,28 @@ module Metanorma
             next unless d.type == "released"
 
             date_val = d.on&.content || extract_text_value(d)
-            if date_val
-              rd = ::Sts::IsoSts::ReleaseDate.new
-              rd.content = [date_val.to_s]
-              dates << rd
-            end
+            dates << date_val.to_s if date_val
           end
 
           dates
         end
 
+        # <comm-ref> is a bare STRING on MetadataIso.
         def comm_ref_for(bibdata)
           eg = bibdata.ext&.editorial_group
           return nil unless eg
 
-          parts = []
           tc = eg.technical_committee
-          if tc
-            if tc.is_a?(Hash)
-              parts << "ISO/#{tc['type']} #{tc['number']}"
-            elsif tc.number
-              parts << extract_text_value(tc)
-            end
+          return nil unless tc
+
+          if tc.is_a?(Hash)
+            "ISO/#{tc['type']} #{tc['number']}"
+          elsif tc.number
+            extract_text_value(tc)
           end
-
-          return nil if parts.empty?
-
-          ::Sts::IsoSts::CommRef.new(content: [parts.join("/")])
         end
 
+        # <secretariat> is a bare STRING on MetadataIso.
         def secretariat_for(bibdata)
           eg = bibdata.ext&.editorial_group
           return nil unless eg
@@ -230,7 +197,7 @@ module Metanorma
           sec = eg.secretariat
           return nil unless sec
 
-          ::Sts::IsoSts::Secretariat.new(content: [sec.to_s])
+          sec.to_s
         end
 
         def ics_codes_for(bibdata)
@@ -241,9 +208,7 @@ module Metanorma
             code = ics.code
             next unless code
 
-            i = ::Sts::NisoSts::Ics.new
-            i.ics_code = ::Sts::NisoSts::IcsCode.new(content: [code.to_s])
-            i
+            Transformer::ModelBuilder.ics(code: code.to_s)
           end
         end
 
@@ -252,41 +217,34 @@ module Metanorma
           return perms unless bibdata.copyright
 
           Array(bibdata.copyright).each do |cr|
-            perm = build_ordered(::Sts::IsoSts::Permissions) do |p|
-              p.copyright_statement = ::Sts::IsoSts::CopyrightStatement.new(
-                content: ["All rights reserved"],
-              )
+            from = cr.from
+            year = from.is_a?(Metanorma::Document::Relaton::DateTime) ? from.content.to_s : from.to_s
+            holder = copyright_holder_for(cr)
+            holder_text = holder.is_a?(Array) ? holder.first : holder
+            statement = year && holder_text ? "© #{year} #{holder_text}" : nil
 
-              if cr.from
-                p.copyright_year = ::Sts::IsoSts::CopyrightYear.new(
-                  content: [cr.from.to_s],
-                )
-              end
-
-              if cr.owner
-                owners = cr.owner.is_a?(Array) ? cr.owner : [cr.owner]
-                owners.each do |owner|
-                  name = owner.organization || owner
-                  name_text = if name.name
-                                extract_text_value(name.name) || name.name.to_s
-                              elsif name.abbreviation
-                                extract_text_value(name.abbreviation) || name.abbreviation.to_s
-                              else
-                                name.to_s
-                              end
-                  next if name_text.empty?
-
-                  p.copyright_holder = ::Sts::IsoSts::CopyrightHolder.new(
-                    content: [name_text],
-                  )
-                end
-              end
-            end
-
-            perms << perm
+            perms << Transformer::ModelBuilder.permissions(
+              copyright_statement: statement,
+              copyright_year: year,
+              copyright_holder: holder,
+            )
           end
 
           perms
+        end
+
+        def copyright_holder_for(copyright)
+          return nil unless copyright.owner
+
+          owners = copyright.owner.is_a?(Array) ? copyright.owner : [copyright.owner]
+          names = owners.filter_map do |owner|
+            org = owner.organization || owner
+            text = extract_text_value(org.name) ||
+                   extract_text_value(org.abbreviation) ||
+                   extract_text_value(org)
+            text&.strip
+          end
+          names.empty? ? nil : names
         end
 
         def publisher_for(bibdata)
@@ -300,13 +258,12 @@ module Metanorma
               rtype.to_s.include?("publisher")
             end
           end
-
           return "ISO" unless publisher
 
           org = publisher.organization || publisher
           abbr = org.abbreviation
-          abbr_text = extract_text_value(abbr) || abbr.to_s
-          abbr_text.empty? ? "ISO" : abbr_text
+          abbr_text = extract_text_value(abbr)
+          abbr_text&.empty? ? "ISO" : abbr_text || "ISO"
         end
 
         def doctype_abbreviation(bibdata)
@@ -314,9 +271,7 @@ module Metanorma
           return nil unless dt
 
           dt = Array(dt).first if dt.is_a?(Array)
-
           value = dt.is_a?(String) ? dt : (dt.value || dt.abbreviation || dt.to_s)
-
           DOC_TYPE_MAP[value] || value
         end
 
@@ -327,8 +282,7 @@ module Metanorma
           stage = status.stage
           return nil unless stage
 
-          stage_val = extract_text_value(stage) || stage.to_s
-
+          stage_val = extract_text_value(stage)
           stage_abbrev = status.stage_abbreviation
           abbrev = extract_text_value(stage_abbrev) if stage_abbrev
 
@@ -338,15 +292,50 @@ module Metanorma
           when "40" then "DIS"
           when "30" then "CD"
           when "20" then "WD"
-          else abbrev || nil
+          else abbrev
           end
+        end
+
+        def project_number_for(bibdata)
+          ext = bibdata.ext
+          return nil unless ext&.structuredidentifier
+
+          pn = ext.structuredidentifier.project_number
+          extract_text_value(pn)
+        end
+
+        def part_number_from(bibdata)
+          ext = bibdata.ext
+          return nil unless ext&.structuredidentifier
+
+          si_struct = ext.structuredidentifier
+          return nil unless si_struct.is_a?(Metanorma::IsoDocument::Metadata::StructuredIdentifier)
+
+          pn = si_struct.project_number
+          return nil unless pn && pn.class.method_defined?(:part)
+
+          pn.part
+        end
+
+        def edition_text_for(bibdata)
+          return nil unless bibdata.edition && !bibdata.edition.empty?
+
+          edition_val = bibdata.edition.is_a?(Array) ? bibdata.edition.first : bibdata.edition
+          extract_text_value(edition_val)
+        end
+
+        def version_text_for(bibdata)
+          return nil unless bibdata.version
+
+          ver = bibdata.version
+          ver.revision_date || "1"
         end
 
         def languages_for(bibdata)
           langs = []
           if bibdata.language
             Array(bibdata.language).each do |l|
-              langs << (l.is_a?(String) ? l : (l.value || l.to_s))
+              langs << (l.is_a?(String) ? l : l.value)
             end
           end
           langs.empty? ? ["en"] : langs

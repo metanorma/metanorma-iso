@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Specifications and test methods</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+@theme {
+  --color-iso-blue: #0061B0;
+  --color-iso-blue-bright: #1a78c8;
+  --color-iso-blue-dark: #00487a;
+  --color-iso-red: #E4002B;
+  --color-accent: var(--color-iso-blue);
+  --color-accent-soft: #e7eff9;
+  --color-accent-strong: #4d97f5;
+  --color-nav-bg: #faf6ee;
+  --color-nav-border: #e8e0cf;
+  --color-nav-text: #4b4137;
+  --color-nav-btn-bg: #ffffff;
+  --color-nav-btn-border: #ddd2ba;
+  --color-ink: #1b2230;
+  --color-ink-soft: #4a5568;
+  --color-ink-faint: #8a94a6;
+  --color-paper: #ffffff;
+  --color-paper-soft: #f6f8fb;
+  --color-paper-inset: #eef2f7;
+  --color-line: #dde3ec;
+  --color-line-strong: #c3ccd9;
+  --color-link: #0b5ec4;
+  --color-link-hover: #084a9e;
+  --color-code-bg: #f0f3f8;
+  --font-body: "Helvetica Neue", "Segoe UI", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+}
+
+[data-theme="dark"] {
+  --color-accent: #4d97f5;
+  --color-accent-soft: #16283f;
+  --color-nav-bg: #221c14;
+  --color-nav-border: #3a3122;
+  --color-nav-text: #c9bda6;
+  --color-nav-btn-bg: #2b2419;
+  --color-nav-btn-border: #4a3f2a;
+  --color-ink: #e6eaf2;
+  --color-ink-soft: #aeb8c9;
+  --color-ink-faint: #76839a;
+  --color-paper: #10141c;
+  --color-paper-soft: #161c27;
+  --color-paper-inset: #1c2431;
+  --color-line: #2a3547;
+  --color-line-strong: #3a4a63;
+  --color-link: #6aa9f7;
+  --color-link-hover: #93c2fa;
+  --color-code-bg: #1d2736;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-accent: #4d97f5;
+    --color-accent-soft: #16283f;
+    --color-nav-bg: #221c14;
+    --color-nav-border: #3a3122;
+    --color-nav-text: #c9bda6;
+    --color-nav-btn-bg: #2b2419;
+    --color-nav-btn-border: #4a3f2a;
+    --color-ink: #e6eaf2;
+    --color-ink-soft: #aeb8c9;
+    --color-ink-faint: #76839a;
+    --color-paper: #10141c;
+    --color-paper-soft: #161c27;
+    --color-paper-inset: #1c2431;
+    --color-line: #2a3547;
+    --color-line-strong: #3a4a63;
+    --color-link: #6aa9f7;
+    --color-link-hover: #93c2fa;
+    --color-code-bg: #1d2736;
+  }
+}
+
+/* ISO brand wordmark (text-based; replaces the official ISO logo for
+   licensing reasons) */
+.brand-wordmark {
+  letter-spacing: 0.04em;
+}
+
+/* Semantic utilities used by the renderer's element handlers */
+@utility note {
+  margin: 1rem 0;
+  padding: 0.75rem 1.1rem;
+  border-left: 3px solid var(--color-accent);
+  background: var(--color-accent-soft);
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 1px 2px rgba(16, 42, 84, 0.06);
+  & p:first-child { margin-top: 0; }
+  & p:last-child { margin-bottom: 0; }
+}
+
+@utility example {
+  margin: 1rem 0;
+  padding: 0.75rem 1.1rem;
+  border-left: 3px solid var(--color-iso-red);
+  background: var(--color-accent-soft);
+  border-radius: 0 8px 8px 0;
+  box-shadow: 0 1px 2px rgba(16, 42, 84, 0.06);
+  & p:first-child { margin-top: 0; }
+  & p:last-child { margin-bottom: 0; }
+}
+
+@utility table-wrap {
+  margin: 1.1rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(16, 42, 84, 0.06);
+}
+
+@utility formula {
+  margin: 1rem 0;
+  padding: 0.6rem 1rem;
+  overflow-x: auto;
+  background: var(--color-paper-inset);
+  border-radius: 8px;
+}
+
+@utility label {
+  font-weight: 700;
+  margin-right: 0.4em;
+}
+
+@utility citation { flex: 1; }
+
+@utility std {
+  display: block;
+  margin-top: 0.2em;
+  font-size: 0.94em;
+  color: var(--color-ink-soft);
+  & em { font-style: italic; }
+}
+
+@utility std-ref { font-style: italic; }
+
+@utility std-ident { color: var(--color-ink-soft); }
+
+@utility originator {
+  color: var(--color-ink-faint);
+  font-size: 0.9em;
+  &::before { content: " · "; }
+}
+
+@utility copyright { color: var(--color-ink-soft); }
+
+@utility footnote {
+  font-size: 0.85em;
+  vertical-align: super;
+}
+
+@utility small-caps { font-variant: small-caps; }
+
+@utility h-anchor {
+  position: absolute;
+  right: 0.35rem;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 0.3em;
+  font-size: 0.75em;
+  font-weight: 400;
+  color: var(--color-ink-faint);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  &:hover { color: var(--color-accent); }
+  &:focus { opacity: 1; }
+  &.copied { color: #0a9d58; opacity: 1; }
+}
+
+h2:hover .h-anchor, h3:hover .h-anchor, h4:hover .h-anchor { opacity: 1; }
+
+@utility ref-list {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-line);
+}
+
+@utility ref {
+  display: flex;
+  margin: 0.45rem 0;
+  padding: 0.55rem 0.8rem;
+  border-radius: 5px;
+  background: var(--color-paper-soft);
+  border: 1px solid var(--color-line);
+  & .label {
+    font-family: var(--font-mono);
+    font-size: 0.85em;
+    color: var(--color-ink-faint);
+    margin-right: 0.5em;
+  }
+  & .citation { flex: 1; }
+}
+
+@utility toc-link {
+  display: block;
+  padding: 0.34rem 0.5rem 0.34rem 1rem;
+  border-left: 2px solid transparent;
+  color: var(--color-ink-soft);
+  text-decoration: none;
+  line-height: 1.35;
+  border-radius: 0 5px 5px 0;
+  &:hover { color: var(--color-accent); background: var(--color-accent-soft); }
+  &.active {
+    color: var(--color-accent);
+    border-left-color: var(--color-accent);
+    background: var(--color-accent-soft);
+    font-weight: 600;
+  }
+}
+
+@utility toc-link-d1 {
+  padding-left: 1.9rem;
+  font-size: 0.94em;
+}
+
+@utility toc-link-d2 {
+  padding-left: 2.8rem;
+  font-size: 0.9em;
+}
+
+@utility toc-link-d3 {
+  padding-left: 3.7rem;
+  font-size: 0.88em;
+}
+
+@utility brand-logo-dark { display: none; }
+
+[data-theme="dark"] .brand-logo-light { display: none; }
+[data-theme="dark"] .brand-logo-dark { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .brand-logo-light { display: none; }
+  :root:not([data-theme="light"]) .brand-logo-dark { display: block; }
+}
+
+/* Page chrome that utilities alone can't express */
+html { scroll-padding-top: 68px; }
+body { -webkit-font-smoothing: antialiased; }
+
+/* Vertical rhythm (Tailwind preflight zeroes these) */
+main p { margin: 0.85rem 0; }
+main ul, main ol { margin: 0.85rem 0; }
+li { margin: 0.35rem 0; }
+li > p { margin: 0.3rem 0; }
+li > p:first-child { margin-top: 0; }
+li > p:last-child { margin-bottom: 0; }
+
+ul, ol { padding-left: 1.6em; }
+li::marker { color: var(--color-accent); }
+
+/* Notes and examples carry a kind label */
+.note-label {
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: 0.04em;
+}
+
+/* The TOC panel heading is an h2 for document structure, but must not
+   inherit the numbered-section band */
+h2.toc-heading {
+  border-left: none;
+  background: none;
+  padding: 0;
+  margin: 0 0 0.5rem 1rem;
+  font-size: 0.75rem;
+}
+
+/* Reference bodies are paragraphs; the flex ref card resets their rhythm */
+.ref > .ref-body { margin: 0; flex: 1; }
+
+/* Section numbers from the source's <label>, prefixed to headings */
+.sec-label {
+  font-weight: 750;
+  color: var(--color-accent);
+  margin-right: 0.35em;
+}
+
+/* Lists whose items carry explicit markers from the source */
+.mn-labeled-list { list-style: none; padding-left: 0.2em; }
+.mn-labeled-list > li { position: relative; padding-left: 1.9em; }
+.li-label {
+  position: absolute;
+  left: 0.2em;
+  color: var(--color-ink-soft);
+  font-weight: 500;
+}
+
+/* Table caption band above the table (tbl-caption, not table-caption:
+   Tailwind owns the latter as a display utility) */
+.tbl-caption {
+  margin: 0;
+  padding: 0.55rem 0.75rem;
+  font-size: 0.88rem;
+  background: var(--color-paper-soft);
+  border-bottom: 1px solid var(--color-line);
+  border-radius: 8px 8px 0 0;
+}
+.tc-label { font-weight: 700; color: var(--color-accent); }
+.tc-delim { color: var(--color-ink-faint); }
+
+/* Unnumbered front-matter sections (Foreword, Introduction): separated
+   muted cards, no big heading band */
+.frontmatter {
+  margin: 0 0 1.1rem;
+  padding: 0.9rem 1.2rem;
+  background: var(--color-paper-soft);
+  border: 1px solid var(--color-line);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: var(--color-ink-soft);
+}
+.frontmatter h2 {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 0;
+  margin: 0 0 0.5rem;
+  border-left: none;
+  background: none;
+  border-radius: 0;
+  color: var(--color-ink-faint);
+}
+.frontmatter p { margin: 0.35rem 0; font-size: inherit; }
+.frontmatter p:last-child { margin-bottom: 0; }
+
+dt { margin-top: 0.7rem; font-weight: 650; color: var(--color-accent); }
+dd { margin: 0.15rem 0 0.4rem 1.4rem; }
+
+main section { margin-bottom: 1.75rem; }
+
+/* Cover hero */
+.hero {
+  padding: 2.5rem 1.5rem 2.25rem;
+  background: linear-gradient(135deg, var(--color-accent-soft) 0%, transparent 75%);
+  border-bottom: 1px solid var(--color-line);
+}
+.hero > * { max-width: 1200px; margin-left: auto; margin-right: auto; }
+.hero-eyebrow {
+  margin: 0 0 0.9rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+.hero-title {
+  margin: 0 0 1.1rem;
+  font-size: 2.1rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--color-ink);
+  max-width: 26ch;
+}
+.hero-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; margin: 0; }
+.hero-chip {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.65rem;
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  color: var(--color-accent);
+  background: var(--color-paper);
+}
+.hero-chip-primary {
+  background: var(--color-accent);
+  color: #fff;
+}
+@media (max-width: 640px) {
+  .hero { padding: 1.75rem 1rem 1.75rem; }
+  .hero-title { font-size: 1.55rem; }
+}
+
+/* Footer */
+.footer-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
+}
+.footer-block p { margin: 0.15rem 0; }
+.footer-license { font-weight: 650; color: var(--color-ink); }
+.footer-publisher { font-weight: 600; color: var(--color-ink-soft); }
+.footer-address, .footer-contact { color: var(--color-ink-faint); }
+.footer-meta { text-align: right; white-space: nowrap; }
+.footer-docid {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  border-radius: 999px;
+  padding: 0.2rem 0.6rem;
+}
+.footer-generated { color: var(--color-ink-faint); }
+/* The span must NOT set display: the brand-logo-light/dark utility
+   decides visibility, and an unlayered display here would override it
+   (unlayered CSS beats layered utilities) — showing BOTH metanorma
+   icons in light mode. */
+.mn-icon { vertical-align: -2px; margin-right: 0.35rem; }
+.mn-icon svg { height: 15px; width: auto; }
+@media (max-width: 640px) {
+  .footer-grid { grid-template-columns: 1fr; gap: 0.75rem; }
+  .footer-meta { text-align: left; }
+}
+
+h2, h3, h4 { position: relative; line-height: 1.3; }
+h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  padding: 0.55rem 0 0.55rem 0.85rem;
+  margin: 0 0 0.8rem;
+  border-left: 4px solid var(--color-accent);
+  background: linear-gradient(90deg, var(--color-accent-soft), transparent 70%);
+  border-radius: 0 5px 5px 0;
+}
+h3 { font-size: 1.2rem; font-weight: 650; margin: 1.75rem 0 0.8rem; }
+h4 { font-size: 1.02rem; font-weight: 650; color: var(--color-ink-soft); margin: 1.5rem 0 0.8rem; }
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.92rem;
+}
+th, td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-line);
+}
+th {
+  background: var(--color-paper-inset);
+  font-weight: 650;
+  border-bottom: 2px solid var(--color-accent);
+  white-space: nowrap;
+}
+tbody tr:nth-child(even) td { background: var(--color-paper-soft); }
+tbody tr:hover td { background: var(--color-accent-soft); }
+tr:last-child td { border-bottom: none; }
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--color-code-bg);
+  border-radius: 4px;
+  padding: 0.12em 0.34em;
+  white-space: nowrap;
+}
+
+pre {
+  margin: 1rem 0;
+  padding: 0.75rem 1rem;
+  background: var(--color-code-bg);
+  border: 1px solid var(--color-line);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+a { color: var(--color-link); text-decoration: none; }
+a:hover { color: var(--color-link-hover); text-decoration: underline; }
+
+blockquote {
+  margin: 1rem 0;
+  padding: 0.5rem 1.2rem;
+  border-left: 3px solid var(--color-line-strong);
+  color: var(--color-ink-soft);
+  font-style: italic;
+}
+
+figure { margin: 1.2rem 0; text-align: center; }
+figure img { max-width: 100%; height: auto; }
+figcaption { margin-top: 0.4rem; font-size: 0.88rem; color: var(--color-ink-faint); }
+
+@media (max-width: 1024px) {
+  .toc-panel {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    z-index: 46;
+    width: min(320px, 84vw);
+    max-height: none !important;
+    padding: 1rem 1.1rem 1.5rem !important;
+    background: var(--color-paper);
+    border-right: 1px solid var(--color-line);
+    box-shadow: 0 8px 24px rgba(16, 42, 84, 0.10);
+    transform: translateX(-105%);
+    transition: transform 0.22s ease;
+  }
+  .toc-panel.open { transform: none; }
+}
+
+@media (max-width: 640px) {
+  h2 { font-size: 1.3rem; }
+  .crumb-current, .crumb-sep { display: none; }
+}
+
+@media print {
+  .site-nav { position: static; box-shadow: none; }
+  .toc-panel, .back-to-top, .site-footer, .nav-actions { display: none !important; }
+  .page { display: block !important; padding: 0 !important; }
+  main { max-width: none; }
+  h2 { break-after: avoid; }
+  section { break-inside: avoid-page; }
+}
+
+</style>
+</head>
+<body class="bg-paper text-ink font-body text-[16px] leading-relaxed m-0">
+<header class="site-nav sticky top-0 z-40 flex items-center gap-3 min-h-[56px] px-5 py-2 bg-nav-bg border-b border-nav-border text-nav-text shadow-sm">
+  <span class="brand-wordmark shrink-0 inline-flex items-center justify-center h-[34px] px-3 rounded-md bg-iso-blue text-white font-bold text-lg tracking-wide">ISO</span>
+  <span class="nav-doc-title font-semibold text-nav-text truncate min-w-0">Specifications and test methods</span>
+  <nav class="breadcrumb hidden md:flex items-baseline gap-2 min-w-0 text-sm whitespace-nowrap overflow-hidden ml-auto" aria-label="Breadcrumb">
+    <span class="crumb-doc font-mono text-xs font-bold tracking-wider uppercase text-accent">ISO 1730</span><span class="crumb-sep text-ink-faint" aria-hidden="true">›</span><span class="crumb-current overflow-hidden text-ellipsis text-ink-faint" id="crumb-current"></span>
+  </nav>
+  <span class="nav-actions ml-auto md:ml-0 flex gap-2">
+    <button id="theme-toggle" class="nav-btn inline-flex items-center justify-center w-9 h-9 rounded-md border border-nav-btn-border bg-nav-btn-bg text-nav-text hover:border-accent hover:text-accent transition-colors cursor-pointer" aria-label="Toggle light and dark mode" title="Toggle light / dark mode">
+      <svg class="icon-sun hidden dark:block" viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><line x1="8" y1="1" x2="8" y2="3"/><line x1="8" y1="13" x2="8" y2="15"/><line x1="1" y1="8" x2="3" y2="8"/><line x1="13" y1="8" x2="15" y2="8"/><line x1="3.05" y1="3.05" x2="4.46" y2="4.46"/><line x1="11.54" y1="3.05" x2="12.95" y2="4.46"/><line x1="3.05" y1="12.95" x2="4.46" y2="11.54"/><line x1="11.54" y1="12.95" x2="12.95" y2="11.54"/></svg>
+      <svg class="icon-moon dark:hidden" viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5 5.5 5.5 0 1 0 13.5 9.5z"/></svg>
+    </button>
+    <button id="toc-toggle" class="nav-btn hidden max-lg:inline-flex items-center justify-center w-9 h-9 rounded-md border border-nav-btn-border bg-nav-btn-bg text-nav-text hover:border-accent hover:text-accent transition-colors cursor-pointer" aria-label="Show contents" aria-expanded="false" aria-controls="toc" title="Contents">☰</button>
+  </span>
+</header>
+<div class="hero">
+  <p class="hero-eyebrow">International Organization for Standardization</p>
+  <h1 class="hero-title">Specifications and test methods</h1>
+  <p class="hero-chips">
+    
+    <span class="hero-chip hero-chip-primary">ISO 1730</span>
+    
+    <span class="hero-chip">EN</span>
+    
+  </p>
+</div>
+<div class="page grid max-lg:grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-10 max-w-[1200px] mx-auto px-6 pt-7 pb-8 max-lg:px-4">
+  
+  <div class="page-body min-w-0">
+    
+    
+  <main></main>
+  </div>
+</div>
+<button id="back-to-top" class="back-to-top fixed right-6 bottom-6 z-40 w-10 h-10 rounded-full bg-accent text-white text-lg cursor-pointer shadow-lg opacity-0 translate-y-2 pointer-events-none transition-all hover:brightness-110" aria-label="Back to top" title="Back to top">↑</button>
+<footer class="site-footer px-6 py-6 text-xs text-ink-faint border-t border-line">
+  <div class="footer-grid">
+  <div class="footer-block">
+    <p class="footer-license">
+      All rights reserved · All rights reserved
+    </p>
+    <p class="footer-publisher">International Organization for Standardization</p>
+    <p class="footer-address">ISO Central Secretariat · CP 401 · Ch. de Blandonnet 8, 1214 Vernier, Geneva, Switzerland</p>
+    <p class="footer-contact">
+      <a href="https://www.iso.org">www.iso.org</a> ·
+      <a href="mailto:copyright@iso.org">copyright@iso.org</a>
+    </p>
+  </div>
+  <div class="footer-block footer-meta">
+    <p><span class="footer-docid">ISO 1730</span></p>
+    <p class="footer-meta-line">EN</p>
+    <p class="footer-generated">
+      <span class="mn-icon brand-logo-light"><svg id="uuid-db8c372e-944d-4df9-b8b0-4a61cf77f2ce" xmlns="http://www.w3.org/2000/svg" width="52mm" height="52mm" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 147.4 147.4"><defs><clipPath id="uuid-81f828fd-72f4-4a48-8d84-2e4c05ab6663"><path d="m145.28,119.33c-8.79,0-13.28,5.51-17.24,10.36-3.96,4.85-7.25,8.89-14.14,8.89-2.95.06-5.84-.87-8.19-2.65-1.38-12.25-2.77-24.51-4.15-36.76l-3.2-28.22v-.09c0-.07,0-.14,0-.21,0-.06-.02-.12-.05-.17-.03-.07-.06-.14-.09-.21l-.12-.11-.15-.21-.07-.09-.21-.2-.07-.06-.24-.16h-.09l-.25-.1h-1.76v-37.22c0-.06,0-.13,0-.19-.04-.36-.18-.71-.4-1l-19.61-25.43c-.74-.87-2.05-.97-2.92-.23-.08.07-.16.15-.23.23l-19.59,25.39c-.22.29-.36.64-.4,1v37.29h-1.53l-.27.11h-.06l-.27.17h-.05c-.08.07-.15.14-.22.21l-.06.07c-.06.07-.11.14-.16.22l-.07.12c-.04.07-.07.15-.1.22,0,.05-.03.11-.05.16,0,.07,0,.14,0,.21v.09l-3.2,28.2-4.11,36c-1.79-1.66-3.44-3.47-4.92-5.41-4-4.85-8.45-10.36-17.24-10.36s-13.35,5.65-17.31,10.51c-.65.79-1.29,1.58-2,2.35-.63.91-.41,2.15.5,2.78.77.54,1.81.46,2.5-.17.69-.8,1.36-1.62,2-2.43,3.89-4.77,7.25-8.89,14.14-8.89s10.25,4.11,14.14,8.89c3.89,4.78,8.55,10.36,17.33,10.36s13.28-5.51,17.24-10.36c2.85-3.49,5.34-6.56,9.09-8.01,2.26-.87,4.25-.89,5.05-.88,3.9.03,6.69,1.7,7.8,2.38,2.37,1.45,2.83,2.25,6.35,6.54,3.11,3.8,6.22,7.54,11.14,9.33,1.78.65,3.8,1.03,6.11,1.03,8.8,0,13.28-5.51,17.24-10.36,3.96-4.85,7.25-8.89,14.14-8.89,1.1,0,2-.9,2-2s-.9-2-2-2l.02-.04Zm-50.72-46.03l2.75,24.11h-6.14l-7-12.11,6.95-12h3.44Zm-27.87,10.01l-5.79-10.01h25.58l-5.79,10.01h-14Zm7-73.32l15.5,20.16h-31l15.5-20.16Zm-17.59,24.12h35.16v35.1h-35.16v-35.1Zm-6.34,67.3h6.46l7,12.11-7,12.11h-9.22l2.76-24.22Zm1.34,37.2c-1.88.02-3.74-.35-5.47-1.08l.9-7.88h9.71l3.45,6c-2.42,1.98-5.47,3.03-8.59,2.96m31.4-19.26c-8.8,0-13.28,5.5-17.24,10.35-.87,1.06-1.71,2.06-2.57,3.06l-3-5.12,7-12.11h14.17l2.24,3.84c-.19.01-.37-.03-.58-.03h-.02Zm62.78,0-63.71-61.88c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.9-2-2s.89-2,2-2h15.62m0-8.01c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.89-2-2s.89-2,2-2h15.62m0-8c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.6c-1.11-.05-1.96-.98-1.92-2.08.05-1.1.98-1.96,2.08-1.92h15.62m27.53,15.31s0,0,0,0c.66-.89,1.91-1.07,2.8-.42l20,16.09c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42l-20-16.09c-.78-.68-.91-1.85-.29-2.69m1.54-14.57c-.61,0-1.18-.28-1.56-.75-.69-.86-.55-2.12.31-2.81l20-16.07c.84-.62,2.01-.49,2.69.29.73.83.65,2.09-.18,2.82l-20,16.09c-.36.27-.81.41-1.26.39h0v.04Zm2.32,6.81c0-1.1.9-2,2-2h26.66c1.1.05,1.96.99,1.9,2.1-.05,1.1-.99,1.96-2.1,1.9h-26.47c-1.1,0-2-.9-2-2m-77.5,7.28c.86-.69,2.13-.55,2.82.31.69.86.56,2.13-.31,2.82l-19.97,16.09c-.86.7-2.12.57-2.83-.28-.7-.86-.57-2.12.28-2.83l20-16.11h0M15.36,25.5c-.83-.74-.91-2-.17-2.83.73-.83,2-.9,2.83-.17l19.98,16.11c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42L15.49,25.62h0l-.13-.12Zm-9.63,25.5c-1.1-.05-1.96-.98-1.91-2.08.05-1.1.98-1.96,2.08-1.92h26.47c1.11,0,2,.9,2,2s-.89,2-2,2H5.73" style="fill:none; stroke-width:0px;"/></clipPath><radialGradient id="uuid-3f814705-4d4c-4032-88ea-8f4480020c22" cx="73.7" cy="73.7" fx="73.7" fy="-49.12" r="203.08" gradientTransform="translate(.15 46.9) rotate(.33) scale(1 .36)" gradientUnits="userSpaceOnUse"><stop offset=".01" stop-color="#7c60e6"/><stop offset=".09" stop-color="#725edb"/><stop offset=".32" stop-color="#575abe"/><stop offset=".55" stop-color="#4458a9"/><stop offset=".78" stop-color="#38569d"/><stop offset="1" stop-color="#355699"/></radialGradient></defs><g style="clip-path:url(#uuid-81f828fd-72f4-4a48-8d84-2e4c05ab6663);"><rect x=".15" y=".15" width="147.1" height="147.1" style="fill:url(#uuid-3f814705-4d4c-4032-88ea-8f4480020c22); stroke-width:0px;"/></g></svg></span><span class="mn-icon brand-logo-dark"><svg id="uuid-5ecd4954-1c9b-4b8e-80be-243ce0d02998" xmlns="http://www.w3.org/2000/svg" width="52mm" height="52mm" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 147.4 147.4"><defs><clipPath id="uuid-cab9f5bb-b4da-4e94-9792-0a224cf9ffe6"><path d="m145.28,119.33c-8.79,0-13.28,5.51-17.24,10.36-3.96,4.85-7.25,8.89-14.14,8.89-2.95.06-5.84-.87-8.19-2.65-1.38-12.25-2.77-24.51-4.15-36.76l-3.2-28.22v-.09c0-.07,0-.14,0-.21,0-.06-.02-.12-.05-.17-.03-.07-.06-.14-.09-.21l-.12-.11-.15-.21-.07-.09-.21-.2-.07-.06-.24-.16h-.09l-.25-.1h-1.76v-37.22c.01-.06.01-.13,0-.19-.04-.36-.18-.71-.4-1l-19.61-25.43c-.74-.87-2.05-.97-2.92-.23-.08.07-.16.15-.23.23l-19.59,25.39c-.22.29-.36.64-.4,1v37.29h-1.53l-.27.11h-.06l-.27.17h-.05c-.08.07-.15.14-.22.21l-.06.07c-.06.07-.11.14-.16.22l-.07.12c-.04.07-.07.15-.1.22-.01.05-.03.11-.05.16,0,.07,0,.14,0,.21v.09l-3.2,28.2-4.11,36c-1.79-1.66-3.44-3.47-4.92-5.41-4-4.85-8.45-10.36-17.24-10.36s-13.35,5.65-17.31,10.51c-.65.79-1.29,1.58-2,2.35-.63.91-.41,2.15.5,2.78.77.54,1.81.46,2.5-.17.69-.8,1.36-1.62,2-2.43,3.89-4.77,7.25-8.89,14.14-8.89s10.25,4.11,14.14,8.89c3.89,4.78,8.55,10.36,17.33,10.36s13.28-5.51,17.24-10.36c2.85-3.49,5.34-6.56,9.09-8.01,2.47-.96,5.05-.88,5.05-.88,2.14,0,3.73.47,4.13.59,3.11.96,5.09,2.85,6.75,4.48,1.46,1.43,1.79,2.07,3.27,3.85,3.29,3.95,6.35,7.58,11.14,9.33,1.78.65,3.8,1.03,6.11,1.03,8.8,0,13.28-5.51,17.24-10.36,3.96-4.85,7.25-8.89,14.14-8.89,1.11,0,2-.9,2-2s-.89-2-2-2l.02-.04Zm-50.72-46.03l2.75,24.11h-6.14l-7-12.11,6.95-12h3.44Zm-27.87,10.01l-5.79-10.01h25.58l-5.79,10.01h-14Zm7-73.32l15.5,20.16h-31l15.5-20.16Zm-17.59,24.12h35.16v35.1h-35.16v-35.1Zm-6.34,67.3h6.46l7,12.11-7,12.11h-9.22l2.76-24.22Zm1.34,37.2c-1.88.02-3.74-.35-5.47-1.08l.9-7.88h9.71l3.45,6c-2.42,1.98-5.47,3.03-8.59,2.96m31.4-19.26c-8.8,0-13.28,5.5-17.24,10.35-.87,1.06-1.71,2.06-2.57,3.06l-3-5.12,7-12.11h14.17l2.24,3.84c-.19.01-.37-.03-.58-.03h-.02Zm62.78,0-63.71-61.88c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.9-2-2s.89-2,2-2h15.62m0-8.01c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.89-2-2s.89-2,2-2h15.62m0-8c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.6c-1.11-.05-1.96-.98-1.92-2.08.05-1.1.98-1.96,2.08-1.92h15.62m27.53,15.31s0,0,0,0c.66-.89,1.91-1.07,2.8-.42l20,16.09c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42l-20-16.09c-.78-.68-.91-1.85-.29-2.69m1.54-14.57c-.61,0-1.18-.28-1.56-.75-.69-.86-.55-2.12.31-2.81l20-16.07c.84-.62,2.01-.49,2.69.29.73.83.65,2.09-.18,2.82l-20,16.09c-.36.27-.81.41-1.26.39h0v.04Zm2.32,6.81c0-1.1.9-2,2-2h26.66c1.1.05,1.96.99,1.9,2.1-.05,1.1-.99,1.96-2.1,1.9h-26.47c-1.1,0-2-.9-2-2m-77.5,7.28c.86-.69,2.13-.55,2.82.31.69.86.56,2.13-.31,2.82l-19.97,16.09c-.86.7-2.12.57-2.83-.28-.7-.86-.57-2.12.28-2.83l20-16.11h0M15.36,25.5c-.83-.74-.91-2-.17-2.83.73-.83,2-.9,2.83-.17l19.98,16.11c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42L15.49,25.62h0l-.13-.12Zm-9.63,25.5c-1.1-.05-1.96-.98-1.91-2.08.05-1.1.98-1.96,2.08-1.92h26.47c1.11,0,2,.9,2,2s-.89,2-2,2H5.73" style="fill:none; stroke-width:0px;"/></clipPath><clipPath id="uuid-b81c2210-a2cc-4c27-bc7d-e842bd70bc8e"><path d="m145.28,119.33c-8.79,0-13.28,5.51-17.24,10.36-3.96,4.85-7.25,8.89-14.14,8.89-2.95.06-5.84-.87-8.19-2.65-1.38-12.25-2.77-24.51-4.15-36.76l-3.2-28.22v-.09c0-.07,0-.14,0-.21,0-.06-.02-.12-.05-.17-.03-.07-.06-.14-.09-.21l-.12-.11-.15-.21-.07-.09-.21-.2-.07-.06-.24-.16h-.09l-.25-.1h-1.76v-37.22c.01-.06.01-.13,0-.19-.04-.36-.18-.71-.4-1l-19.61-25.43c-.74-.87-2.05-.97-2.92-.23-.08.07-.16.15-.23.23l-19.59,25.39c-.22.29-.36.64-.4,1v37.29h-1.53l-.27.11h-.06l-.27.17h-.05c-.08.07-.15.14-.22.21l-.06.07c-.06.07-.11.14-.16.22l-.07.12c-.04.07-.07.15-.1.22-.01.05-.03.11-.05.16,0,.07,0,.14,0,.21v.09l-3.2,28.2-4.11,36c-1.79-1.66-3.44-3.47-4.92-5.41-4-4.85-8.45-10.36-17.24-10.36s-13.35,5.65-17.31,10.51c-.65.79-1.29,1.58-2,2.35-.63.91-.41,2.15.5,2.78.77.54,1.81.46,2.5-.17.69-.8,1.36-1.62,2-2.43,3.89-4.77,7.25-8.89,14.14-8.89s10.25,4.11,14.14,8.89c3.89,4.78,8.55,10.36,17.33,10.36s13.28-5.51,17.24-10.36c2.85-3.49,5.34-6.56,9.09-8.01,2.47-.96,5.05-.88,5.05-.88,2.14,0,3.73.47,4.13.59,3.11.96,5.09,2.85,6.75,4.48,1.46,1.43,1.79,2.07,3.27,3.85,3.29,3.95,6.35,7.58,11.14,9.33,1.78.65,3.8,1.03,6.11,1.03,8.8,0,13.28-5.51,17.24-10.36,3.96-4.85,7.25-8.89,14.14-8.89,1.11,0,2-.9,2-2s-.89-2-2-2l.02-.04Zm-50.72-46.03l2.75,24.11h-6.14l-7-12.11,6.95-12h3.44Zm-27.87,10.01l-5.79-10.01h25.58l-5.79,10.01h-14Zm7-73.32l15.5,20.16h-31l15.5-20.16Zm-17.59,24.12h35.16v35.1h-35.16v-35.1Zm-6.34,67.3h6.46l7,12.11-7,12.11h-9.22l2.76-24.22Zm1.34,37.2c-1.88.02-3.74-.35-5.47-1.08l.9-7.88h9.71l3.45,6c-2.42,1.98-5.47,3.03-8.59,2.96m31.4-19.26c-8.8,0-13.28,5.5-17.24,10.35-.87,1.06-1.71,2.06-2.57,3.06l-3-5.12,7-12.11h14.17l2.24,3.84c-.19.01-.37-.03-.58-.03h-.02Zm62.78,0-63.71-61.88c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.9-2-2s.89-2,2-2h15.62m0-8.01c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.89-2-2s.89-2,2-2h15.62m0-8c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.6c-1.11-.05-1.96-.98-1.92-2.08.05-1.1.98-1.96,2.08-1.92h15.62m27.53,15.31s0,0,0,0c.66-.89,1.91-1.07,2.8-.42l20,16.09c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42l-20-16.09c-.78-.68-.91-1.85-.29-2.69m1.54-14.57c-.61,0-1.18-.28-1.56-.75-.69-.86-.55-2.12.31-2.81l20-16.07c.84-.62,2.01-.49,2.69.29.73.83.65,2.09-.18,2.82l-20,16.09c-.36.27-.81.41-1.26.39h0v.04Zm2.32,6.81c0-1.1.9-2,2-2h26.66c1.1.05,1.96.99,1.9,2.1-.05,1.1-.99,1.96-2.1,1.9h-26.47c-1.1,0-2-.9-2-2m-77.5,7.28c.86-.69,2.13-.55,2.82.31.69.86.56,2.13-.31,2.82l-19.97,16.09c-.86.7-2.12.57-2.83-.28-.7-.86-.57-2.12.28-2.83l20-16.11h0M15.36,25.5c-.83-.74-.91-2-.17-2.83.73-.83,2-.9,2.83-.17l19.98,16.11c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42L15.49,25.62h0l-.13-.12Zm-9.63,25.5c-1.1-.05-1.96-.98-1.91-2.08.05-1.1.98-1.96,2.08-1.92h26.47c1.11,0,2,.9,2,2s-.89,2-2,2H5.73" style="fill:none; stroke-width:0px;"/></clipPath><radialGradient id="uuid-24fb7c6f-c54c-4f11-8696-f8b9e30f645f" cx="73.7" cy="73.7" fx="73.7" fy="-49.12" r="203.08" gradientUnits="userSpaceOnUse"><stop offset=".39" stop-color="#e2dbff"/><stop offset=".86" stop-color="#5a9cfa"/></radialGradient><clipPath id="uuid-a494d594-b8c5-4576-a707-0f3f62bf2ae2"><path d="m145.28,119.33c-8.79,0-13.28,5.51-17.24,10.36-3.96,4.85-7.25,8.89-14.14,8.89-2.95.06-5.84-.87-8.19-2.65-1.38-12.25-2.77-24.51-4.15-36.76l-3.2-28.22v-.09c0-.07,0-.14,0-.21,0-.06-.02-.12-.05-.17-.03-.07-.06-.14-.09-.21l-.12-.11-.15-.21-.07-.09-.21-.2-.07-.06-.24-.16h-.09l-.25-.1h-1.76v-37.22c.01-.06.01-.13,0-.19-.04-.36-.18-.71-.4-1l-19.61-25.43c-.74-.87-2.05-.97-2.92-.23-.08.07-.16.15-.23.23l-19.59,25.39c-.22.29-.36.64-.4,1v37.29h-1.53l-.27.11h-.06l-.27.17h-.05c-.08.07-.15.14-.22.21l-.06.07c-.06.07-.11.14-.16.22l-.07.12c-.04.07-.07.15-.1.22-.01.05-.03.11-.05.16,0,.07,0,.14,0,.21v.09l-3.2,28.2-4.11,36c-1.79-1.66-3.44-3.47-4.92-5.41-4-4.85-8.45-10.36-17.24-10.36s-13.35,5.65-17.31,10.51c-.65.79-1.29,1.58-2,2.35-.63.91-.41,2.15.5,2.78.77.54,1.81.46,2.5-.17.69-.8,1.36-1.62,2-2.43,3.89-4.77,7.25-8.89,14.14-8.89s10.25,4.11,14.14,8.89c3.89,4.78,8.55,10.36,17.33,10.36s13.28-5.51,17.24-10.36c2.85-3.49,5.34-6.56,9.09-8.01,2.47-.96,5.05-.88,5.05-.88,2.14,0,3.73.47,4.13.59,3.11.96,5.09,2.85,6.75,4.48,1.46,1.43,1.79,2.07,3.27,3.85,3.29,3.95,6.35,7.58,11.14,9.33,1.78.65,3.8,1.03,6.11,1.03,8.8,0,13.28-5.51,17.24-10.36,3.96-4.85,7.25-8.89,14.14-8.89,1.11,0,2-.9,2-2s-.89-2-2-2l.02-.04Zm-50.72-46.03l2.75,24.11h-6.14l-7-12.11,6.95-12h3.44Zm-27.87,10.01l-5.79-10.01h25.58l-5.79,10.01h-14Zm7-73.32l15.5,20.16h-31l15.5-20.16Zm-17.59,24.12h35.16v35.1h-35.16v-35.1Zm-6.34,67.3h6.46l7,12.11-7,12.11h-9.22l2.76-24.22Zm1.34,37.2c-1.88.02-3.74-.35-5.47-1.08l.9-7.88h9.71l3.45,6c-2.42,1.98-5.47,3.03-8.59,2.96m31.4-19.26c-8.8,0-13.28,5.5-17.24,10.35-.87,1.06-1.71,2.06-2.57,3.06l-3-5.12,7-12.11h14.17l2.24,3.84c-.19.01-.37-.03-.58-.03h-.02Zm62.78,0-63.71-61.88c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.9-2-2s.89-2,2-2h15.62m0-8.01c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.43c-1.11,0-2-.89-2-2s.89-2,2-2h15.62m0-8c1.1.05,1.96.99,1.9,2.1-.05,1.11-.99,1.96-2.1,1.9h-15.6c-1.11-.05-1.96-.98-1.92-2.08.05-1.1.98-1.96,2.08-1.92h15.62m27.53,15.31s0,0,0,0c.66-.89,1.91-1.07,2.8-.42l20,16.09c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42l-20-16.09c-.78-.68-.91-1.85-.29-2.69m1.54-14.57c-.61,0-1.18-.28-1.56-.75-.69-.86-.55-2.12.31-2.81l20-16.07c.84-.62,2.01-.49,2.69.29.73.83.65,2.09-.18,2.82l-20,16.09c-.36.27-.81.41-1.26.39h0v.04Zm2.32,6.81c0-1.1.9-2,2-2h26.66c1.1.05,1.96.99,1.9,2.1-.05,1.1-.99,1.96-2.1,1.9h-26.47c-1.1,0-2-.9-2-2m-77.5,7.28c.86-.69,2.13-.55,2.82.31.69.86.56,2.13-.31,2.82l-19.97,16.09c-.86.7-2.12.57-2.83-.28-.7-.86-.57-2.12.28-2.83l20-16.11h0M15.36,25.5c-.83-.74-.91-2-.17-2.83.73-.83,2-.9,2.83-.17l19.98,16.11c.78.69.91,1.86.29,2.69-.66.89-1.91,1.07-2.8.42L15.49,25.62h0l-.13-.12Zm-9.63,25.5c-1.1-.05-1.96-.98-1.91-2.08.05-1.1.98-1.96,2.08-1.92h26.47c1.11,0,2,.9,2,2s-.89,2-2,2H5.73" style="fill:none; stroke-width:0px;"/></clipPath></defs><g style="clip-path:url(#uuid-cab9f5bb-b4da-4e94-9792-0a224cf9ffe6);"><g style="clip-path:url(#uuid-b81c2210-a2cc-4c27-bc7d-e842bd70bc8e);"><rect x=".15" y=".15" width="147.1" height="147.1" style="fill:url(#uuid-24fb7c6f-c54c-4f11-8696-f8b9e30f645f); stroke-width:0px;"/></g><g style="clip-path:url(#uuid-a494d594-b8c5-4576-a707-0f3f62bf2ae2);"><rect x=".15" y=".15" width="147.1" height="147.1" style="fill:url(#uuid-24fb7c6f-c54c-4f11-8696-f8b9e30f645f); stroke-width:0px;"/></g></g></svg></span>
+      Generated by <a href="https://www.metanorma.org" title="Metanorma — aequitate verum">metanorma-iso</a> 3.4.8
+    </p>
+  </div>
+</div>
+</footer>
+<script>
+/* Page behaviour — vanilla JS, no dependencies.
+   - scroll-spy table of contents (IntersectionObserver)
+   - mobile TOC drawer with backdrop
+   - back-to-top button
+   - heading-anchor deep links (copy URL on click)
+*/
+(function () {
+  "use strict";
+
+  var toc = document.getElementById("toc");
+  var toggle = document.getElementById("toc-toggle");
+  var themeToggle = document.getElementById("theme-toggle");
+  var crumbCurrent = document.getElementById("crumb-current");
+  var backToTop = document.getElementById("back-to-top");
+  var root = document.documentElement;
+
+  /* ---- light/dark theme: stored choice wins, else system ---- */
+  var THEME_KEY = "mn-theme";
+  function systemTheme() {
+    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark" : "light";
+  }
+  function applyTheme(theme) {
+    root.setAttribute("data-theme", theme);
+    if (themeToggle) {
+      themeToggle.setAttribute("aria-pressed", String(theme === "dark"));
+      themeToggle.title = theme === "dark" ? "Switch to light mode" : "Switch to dark mode";
+    }
+  }
+  var stored = null;
+  try { stored = localStorage.getItem(THEME_KEY); } catch (e) { /* private mode */ }
+  applyTheme(stored === "dark" || stored === "light" ? stored : systemTheme());
+  if (themeToggle) {
+    themeToggle.addEventListener("click", function () {
+      var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+      applyTheme(next);
+      try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* ignore */ }
+    });
+  }
+  if (window.matchMedia) {
+    window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", function (event) {
+      var saved = null;
+      try { saved = localStorage.getItem(THEME_KEY); } catch (e) { /* ignore */ }
+      if (!saved) applyTheme(event.matches ? "dark" : "light");
+    });
+  }
+
+  /* ---- mobile TOC drawer ---- */
+  var backdrop = null;
+  function setDrawer(open) {
+    if (!toc || !toggle) return;
+    toc.classList.toggle("open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.textContent = open ? "×" : "☰";
+    if (open && !backdrop) {
+      backdrop = document.createElement("div");
+      backdrop.className = "toc-backdrop";
+      backdrop.addEventListener("click", function () { setDrawer(false); });
+      document.body.appendChild(backdrop);
+    } else if (!open && backdrop) {
+      backdrop.remove();
+      backdrop = null;
+    }
+  }
+  if (toggle) {
+    toggle.addEventListener("click", function () {
+      setDrawer(!(toc && toc.classList.contains("open")));
+    });
+  }
+  if (toc) {
+    toc.addEventListener("click", function (event) {
+      if (event.target.closest("a")) setDrawer(false);
+    });
+  }
+
+  /* ---- scroll-spy (also drives the breadcrumb) ---- */
+  var links = toc ? Array.prototype.slice.call(toc.querySelectorAll("a[href^='#']")) : [];
+  if (links.length && "IntersectionObserver" in window) {
+    var byId = {};
+    links.forEach(function (a) { byId[a.getAttribute("href").slice(1)] = a; });
+    var current = null;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var link = byId[entry.target.id];
+        if (!link || link === current) return;
+        if (current) current.classList.remove("active");
+        link.classList.add("active");
+        current = link;
+        if (crumbCurrent) crumbCurrent.textContent = link.textContent;
+        scrollTocIntoView(link);
+      });
+    }, { rootMargin: "-10% 0px -75% 0px", threshold: 0 });
+    Object.keys(byId).forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+  }
+
+  // Scrolls the TOC panel so the active entry stays visible. Uses
+  // nearest() so a nested <a> finds its <li> wrapper, then computes
+  // the minimum scroll needed (only moves when the link is outside
+  // the visible band — no jumpy centre-on-every-change behaviour).
+  function scrollTocIntoView(link) {
+    if (!toc) return;
+    var item = link.closest("li");
+    if (!item) return;
+    var top = item.offsetTop;
+    var bottom = top + item.offsetHeight;
+    var viewTop = toc.scrollTop;
+    var viewBottom = viewTop + toc.clientHeight;
+    if (top < viewTop) {
+      toc.scrollTo({ top: top - 8, behavior: "smooth" });
+    } else if (bottom > viewBottom) {
+      toc.scrollTo({ top: bottom - toc.clientHeight + 8, behavior: "smooth" });
+    }
+  }
+
+  /* ---- heading anchor links: click to copy ---- */
+  document.addEventListener("click", function (event) {
+    var anchor = event.target.closest("a.h-anchor");
+    if (!anchor) return;
+    event.preventDefault();
+    var url = location.href.split("#")[0] + anchor.getAttribute("href");
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url);
+      anchor.classList.add("copied");
+      setTimeout(function () { anchor.classList.remove("copied"); }, 900);
+    }
+    history.replaceState(null, "", anchor.getAttribute("href"));
+  });
+
+  /* ---- back to top ---- */
+  function onScroll() {
+    if (!backToTop) return;
+    backToTop.classList.toggle("visible", window.scrollY > 600);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  if (backToTop) {
+    backToTop.addEventListener("click", function () {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+    onScroll();
+  }
+})();
+
+</script>
+</body>
+</html>

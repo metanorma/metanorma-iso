@@ -6,6 +6,8 @@ module Metanorma
       module Transformer
         autoload :Base, "#{__dir__}/transformer/base"
         autoload :Context, "#{__dir__}/transformer/context"
+        autoload :SourceDocument, "#{__dir__}/transformer/source_document"
+        autoload :ModelBuilder, "#{__dir__}/transformer/model_builder"
         autoload :DocumentTransformer,
                  "#{__dir__}/transformer/document_transformer"
         autoload :FrontTransformer, "#{__dir__}/transformer/front_transformer"

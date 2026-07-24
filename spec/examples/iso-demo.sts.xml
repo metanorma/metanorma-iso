@@ -1,0 +1,32 @@
+<standard lang="en" dtd-version="1.2">
+  <front>
+    <iso-meta>
+      <title-wrap xml:lang="en">
+        <intro>Cereals and pulses</intro>
+        <main>Specifications and test methods</main>
+        <compl>Rice</compl>
+        <full>Cereals and pulses — Specifications and test methods — Rice</full>
+      </title-wrap>
+      <doc-ident>
+        <sdo>ISO</sdo>
+        <proj-id>ISO/PreCD3 17301</proj-id>
+        <language>en</language>
+      </doc-ident>
+      <std-ident>
+        <originator>ISO</originator>
+        <doc-type>IS</doc-type>
+        <doc-number>1730</doc-number>
+        <part-number>1</part-number>
+        <edition>2</edition>
+        <version>2016-05-01</version>
+      </std-ident>
+      <doc-ref>ISO 1730</doc-ref>
+      <permissions>
+        <copyright-statement>All rights reserved</copyright-statement>
+        <copyright-year>#&lt;Metanorma::Document::Relaton::DateTime:0x000000012788f590&gt;</copyright-year>
+      </permissions>
+    </iso-meta>
+  </front>
+  <body/>
+  <back/>
+</standard>

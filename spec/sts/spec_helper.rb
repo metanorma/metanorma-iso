@@ -8,11 +8,15 @@ require "sts"
 require "metanorma/document"
 require "metanorma/iso_document"
 
-require "metanorma/iso/sts/transformer"
+require "metanorma/iso/sts"
 
 module TransformerTestHelpers
   def make_context(source_document = nil)
     Metanorma::Iso::Sts::Transformer::Context.new(source_document)
+  end
+
+  def rice_xml_path
+    File.expand_path("../examples/rice.xml", __dir__)
   end
 
   class MockModel
