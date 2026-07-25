@@ -4962,7 +4962,9 @@
 
 			<xsl:call-template name="setBlockSpanAll"/>
 
-			<xsl:call-template name="refine_clause_style"/>
+			<xsl:call-template name="addTagElementT"/>
+
+			<xsl:call-template name="refine_clause-style"/>
 
 			<xsl:call-template name="addReviewHelper"/>
 
@@ -6530,6 +6532,7 @@
 
 	<!-- Characters -->
 	<xsl:variable name="linebreak">&#8232;</xsl:variable>
+	<xsl:variable name="em_space"> </xsl:variable>
 	<xsl:variable name="tab_zh">　</xsl:variable>
 	<xsl:variable name="non_breaking_hyphen">‑</xsl:variable>
 	<xsl:variable name="thin_space"> </xsl:variable>
@@ -10104,7 +10107,15 @@
 	<!-- END requirement, recommendation, permission table -->
 	<!-- ========== -->
 
+	<xsl:attribute-set name="terms-style">
+		<xsl:attribute name="role">Sect</xsl:attribute>
+	</xsl:attribute-set>
+
+	<xsl:template name="refine_terms-style">
+	</xsl:template>
+
 	<xsl:attribute-set name="term-style">
+		<xsl:attribute name="role">Sect</xsl:attribute>
 		<xsl:attribute name="margin-bottom">10pt</xsl:attribute>
 	</xsl:attribute-set> <!-- term-style -->
 
@@ -10203,7 +10214,10 @@
 	<xsl:template match="mn:terms">
 		<!-- <xsl:message>'terms' <xsl:number/> processing...</xsl:message> -->
 		<xsl:call-template name="setNamedDestination"/>
-		<fo:block id="{@id}">
+		<fo:block id="{@id}" xsl:use-attribute-sets="terms-style">
+			<xsl:call-template name="refine_terms-style"/>
+			<xsl:call-template name="addTagElementT"/>
+
 			<xsl:apply-templates/>
 		</fo:block>
 	</xsl:template>
@@ -10212,6 +10226,7 @@
 		<xsl:call-template name="setNamedDestination"/>
 		<fo:block id="{@id}" xsl:use-attribute-sets="term-style">
 			<xsl:call-template name="refine_term-style"/>
+			<xsl:call-template name="addTagElementT"/>
 
 			<xsl:apply-templates select="node()[not(self::mn:fmt-name)]"/>
 		</fo:block>
@@ -10442,7 +10457,9 @@
 
 	<xsl:template match="mn:definitions">
 		<xsl:call-template name="setNamedDestination"/>
-		<fo:block id="{@id}">
+		<fo:block id="{@id}" role="Sect">
+			<xsl:call-template name="addTagElementT"/>
+
 			<xsl:apply-templates/>
 		</fo:block>
 	</xsl:template>
@@ -13381,6 +13398,7 @@
 	<!-- ========================== -->
 
 	<xsl:attribute-set name="dl-block-style">
+		<xsl:attribute name="role">SKIP</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_dl-block-style">
@@ -13390,18 +13408,21 @@
 	</xsl:template>
 
 	<xsl:attribute-set name="dt-row-style">
+		<xsl:attribute name="role">LI</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_dt-row-style">
 	</xsl:template>
 
 	<xsl:attribute-set name="dt-cell-style">
+		<xsl:attribute name="role">Lbl</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_dt-cell-style">
 	</xsl:template> <!-- refine_dt-cell-style -->
 
 	<xsl:attribute-set name="dt-block-style">
+		<xsl:attribute name="role">SKIP</xsl:attribute>
 		<xsl:attribute name="margin-top">0pt</xsl:attribute>
 		<xsl:attribute name="margin-bottom">8pt</xsl:attribute>
 	</xsl:attribute-set>
@@ -13425,6 +13446,7 @@
 	</xsl:template>
 
 	<xsl:attribute-set name="dd-cell-style">
+		<xsl:attribute name="role">LBody</xsl:attribute>
 		<xsl:attribute name="padding-left">2mm</xsl:attribute>
 	</xsl:attribute-set>
 
@@ -13460,7 +13482,7 @@
 		<xsl:variable name="isAdded" select="@added"/>
 		<xsl:variable name="isDeleted" select="@deleted"/>
 		<!-- <dl><xsl:copy-of select="."/></dl> -->
-		<fo:block-container xsl:use-attribute-sets="dl-block-style" role="SKIP">
+		<fo:block-container xsl:use-attribute-sets="dl-block-style">
 
 			<xsl:call-template name="refine_dl-block-style"/>
 
@@ -13582,7 +13604,7 @@
 								<fo:block id="{concat('table_if_start_',@id)}" keep-with-next="always" font-size="1pt">Start table '<xsl:value-of select="@id"/>'.</fo:block>
 							</xsl:if>
 
-							<fo:table width="95%" table-layout="fixed">
+							<fo:table width="95%" table-layout="fixed" role="L">
 
 								<xsl:if test="$isGenerateTableIF = 'true'">
 									<xsl:attribute name="wrap-option">no-wrap</xsl:attribute>
@@ -13651,7 +13673,7 @@
 											<xsl:with-param name="table_or_dl">dl</xsl:with-param>
 										</xsl:apply-templates>
 
-									</xsl:when>
+									</xsl:when> <!-- $isGenerateTableIF = 'true' -->
 									<xsl:otherwise>
 
 										<xsl:variable name="simple-table">
@@ -13708,7 +13730,7 @@
 											<xsl:with-param name="isContainsKeepTogetherTag" select="$isContainsKeepTogetherTag"/>
 										</xsl:call-template>
 
-										<fo:table-body>
+										<fo:table-body role="SKIP">
 
 											<!-- DEBUG -->
 											<xsl:if test="$table_if_debug = 'true'">
@@ -13922,8 +13944,8 @@
 			<td number-columns-spanned="2">NOTE <xsl:apply-templates /> </td>
 		</tr> 
 		-->
-		<fo:table-row>
-			<fo:table-cell number-columns-spanned="2">
+		<fo:table-row role="SKIP">
+			<fo:table-cell number-columns-spanned="2" role="SKIP">
 				<fo:block role="SKIP">
 					<xsl:call-template name="note"/>
 				</fo:block>
@@ -13987,7 +14009,7 @@
 			<xsl:call-template name="refine_dt-cell-style"/>
 
 			<xsl:call-template name="setNamedDestination"/>
-			<fo:block xsl:use-attribute-sets="dt-block-style" role="SKIP">
+			<fo:block xsl:use-attribute-sets="dt-block-style">
 
 				<xsl:choose>
 					<xsl:when test="$isGenerateTableIF = 'true'">
@@ -14076,7 +14098,7 @@
 		</xsl:variable>
 		<xsl:choose>
 			<xsl:when test="$is_inline_element_after_where = 'true'">
-				<fo:inline><xsl:text> </xsl:text><xsl:apply-templates/></fo:inline>
+				<fo:inline role="SKIP"><xsl:text> </xsl:text><xsl:apply-templates/></fo:inline>
 			</xsl:when>
 			<xsl:otherwise>
 				<xsl:apply-templates select="."/>
@@ -18210,9 +18232,9 @@
 	<xsl:template name="fo_inline_bookmark">
 		<xsl:param name="bookmark_id"/>
 		<!-- <fo:inline id="{@id}" font-size="1pt"/> -->
-		<fo:inline id="{@id}" font-size="1pt"><xsl:if test="preceding-sibling::node()[self::mn:fmt-annotation-start][@source = $bookmark_id] and      following-sibling::node()[self::mn:fmt-annotation-end][@source = $bookmark_id]"><xsl:attribute name="line-height">0.1</xsl:attribute></xsl:if><xsl:value-of select="$hair_space"/></fo:inline>
+		<fo:inline id="{@id}" font-size="1pt" role="SKIP"><xsl:if test="preceding-sibling::node()[self::mn:fmt-annotation-start][@source = $bookmark_id] and      following-sibling::node()[self::mn:fmt-annotation-end][@source = $bookmark_id]"><xsl:attribute name="line-height">0.1</xsl:attribute></xsl:if><fo:wrapper role="artifact"><xsl:value-of select="$hair_space"/></fo:wrapper></fo:inline>
 		<!-- we need to add zero-width space, otherwise this fo:inline is missing in IF xml -->
-		<xsl:if test="not(following-sibling::node()[normalize-space() != ''])"><fo:inline font-size="1pt"> </fo:inline></xsl:if>
+		<xsl:if test="not(following-sibling::node()[normalize-space() != ''])"><fo:inline font-size="1pt" role="SKIP"><fo:wrapper role="artifact"> </fo:wrapper></fo:inline></xsl:if>
 	</xsl:template>
 	<!-- =================== -->
 	<!-- End of Index processing -->
@@ -20520,22 +20542,14 @@
 	</xsl:attribute-set>
 
 	<xsl:attribute-set name="clause-style">
-
+		<xsl:attribute name="role">Sect</xsl:attribute>
 	</xsl:attribute-set>
 
 	<xsl:template name="refine_clause-style">
-		<!-- commented for https://github.com/metanorma/metanorma-ribose/issues/421 -->
-		<!-- <xsl:if test="$namespace = 'rsd'">
-			<xsl:variable name="level">
-				<xsl:call-template name="getLevel">
-					<xsl:with-param name="depth" select="mn:fmt-title/@depth"/>
-				</xsl:call-template>
-			</xsl:variable>
-			<xsl:if test="$level &gt;= 4">
-				<xsl:attribute name="margin-left">13mm</xsl:attribute>
-			</xsl:if>
-		</xsl:if> -->
-	</xsl:template>
+		<xsl:if test="parent::mn:copyright-statement">
+			<xsl:attribute name="role">SKIP</xsl:attribute>
+		</xsl:if>
+	</xsl:template> <!-- refine_clause-style -->
 
 	<!-- main sections -->
 	<xsl:template match="/*/mn:sections/*" name="sections_node" priority="2">
@@ -20627,16 +20641,15 @@
 
 	<xsl:template match="mn:clause[normalize-space() != '' or mn:figure or @id]" name="template_clause"> <!-- if clause isn't empty -->
 		<xsl:call-template name="setNamedDestination"/>
-		<fo:block>
-			<xsl:if test="parent::mn:copyright-statement">
-				<xsl:attribute name="role">SKIP</xsl:attribute>
-			</xsl:if>
+		<fo:block role="Sect">
 
 			<xsl:call-template name="setId"/>
 
+			<xsl:call-template name="addTagElementT"/>
+
 			<xsl:call-template name="setBlockSpanAll"/>
 
-			<xsl:call-template name="refine_clause_style"/>
+			<xsl:call-template name="refine_clause-style"/>
 
 			<xsl:call-template name="addReviewHelper"/>
 
@@ -20644,13 +20657,10 @@
 		</fo:block>
 	</xsl:template>
 
-	<xsl:template name="refine_clause_style">
-	</xsl:template> <!-- refine_clause_style -->
-
 	<xsl:template match="mn:annex[normalize-space() != '']">
 		<xsl:choose>
 			<xsl:when test="@continue = 'true'"> <!-- it's using for figure/table on top level for block span -->
-				<fo:block>
+				<fo:block role="SKIP">
 					<xsl:apply-templates/>
 				</fo:block>
 			</xsl:when>
@@ -20659,13 +20669,18 @@
 				<fo:block break-after="page"/>
 				<xsl:call-template name="setNamedDestination"/>
 
-				<fo:block id="{@id}">
+				<fo:block>
+
+					<xsl:call-template name="setId"/>
+
+					<!-- <xsl:if test="$namespace = 'iso'"> -->
 					<xsl:attribute name="role">Sect</xsl:attribute>
 					<xsl:call-template name="addTagElementT"/>
+					<!-- </xsl:if> -->
 
 					<xsl:call-template name="setBlockSpanAll"/>
 
-					<xsl:call-template name="refine_annex_style"/>
+					<xsl:call-template name="refine_annex-style"/>
 
 				</fo:block>
 
@@ -20678,7 +20693,7 @@
 		</xsl:choose>
 	</xsl:template>
 
-	<xsl:template name="refine_annex_style">
+	<xsl:template name="refine_annex-style">
 	</xsl:template>
 
 	<xsl:template match="mn:name/text() | mn:fmt-name/text()">
@@ -20796,6 +20811,13 @@
 	<xsl:template name="addTagElementT">
 		<xsl:variable name="title_">
 			<xsl:apply-templates select="mn:fmt-title"/>
+			<xsl:if test="not(mn:fmt-title) and self::mn:term">
+				<name>
+					<xsl:apply-templates select="mn:fmt-name"/>
+					<xsl:text> </xsl:text>
+					<xsl:apply-templates select="mn:fmt-preferred/node()[1]"/>
+				</name>
+			</xsl:if>
 		</xsl:variable>
 		<xsl:variable name="title__">
 			<xsl:for-each select="xalan:nodeset($title_)/*/node()">
@@ -20805,7 +20827,7 @@
 				</xsl:choose>
 			</xsl:for-each>
 		</xsl:variable>
-		<xsl:variable name="title" select="normalize-space($title__)"/>
+		<xsl:variable name="title" select="normalize-space(translate($title__, concat($em_space,' '), '  '))"/>
 		<xsl:if test="$title != ''">
 			<xsl:attribute name="fox:title">
 				<xsl:if test="ancestor::mn:sections">
