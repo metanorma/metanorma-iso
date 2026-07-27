@@ -18402,6 +18402,13 @@
 	<!-- End Form's elements processing -->
 	<!-- =================== -->
 
+	<xsl:attribute-set name="toc-container-style">
+		<xsl:attribute name="role">Sect</xsl:attribute>
+	</xsl:attribute-set>
+
+	<xsl:template name="refine_toc-container-style">
+	</xsl:template>
+
 	<xsl:attribute-set name="toc-style">
 		<xsl:attribute name="font-weight">bold</xsl:attribute>
 	</xsl:attribute-set>
