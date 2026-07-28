@@ -7,6 +7,7 @@ module Metanorma
       # html_renderer/ruby.rb).
       module HtmlRenderer
         autoload :Ruby, "#{__dir__}/html_renderer/ruby"
+        autoload :Handlers, "#{__dir__}/html_renderer/handlers"
 
         module_function
 
