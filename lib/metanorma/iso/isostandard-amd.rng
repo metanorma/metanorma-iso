@@ -39,7 +39,7 @@
         <ref name="preface"/>
         <ref name="sections"/>
         <optional>
-          <ref name="review-container"/>
+          <ref name="annotation-container"/>
         </optional>
       </element>
     </define>
