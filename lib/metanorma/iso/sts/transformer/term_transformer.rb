@@ -71,12 +71,12 @@ module Metanorma
           if defn.verbal_definition
             vd = defn.verbal_definition
             if vd.p && !vd.p.empty?
-              vd.p.each { |para| inline_transformer.apply_tbx_content(para, d) }
+              vd.p.each { |para| inline_transformer.apply_inline_content(para, d) }
             end
           end
 
           if defn.p && !defn.p.empty?
-            defn.p.each { |para| inline_transformer.apply_tbx_content(para, d) }
+            defn.p.each { |para| inline_transformer.apply_inline_content(para, d) }
           end
 
           if defn.ul && !defn.ul.empty?
@@ -94,7 +94,7 @@ module Metanorma
 
           if tn.p && !tn.p.empty?
             tn.p.each do |para|
-              inline_transformer.apply_tbx_content(para, note)
+              inline_transformer.apply_inline_content(para, note)
             end
           end
 
@@ -106,7 +106,7 @@ module Metanorma
 
           if te.p && !te.p.empty?
             te.p.each do |para|
-              inline_transformer.apply_tbx_content(para, ex, text_attr: :value)
+              inline_transformer.apply_inline_content(para, ex)
             end
           end
 

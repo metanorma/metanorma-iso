@@ -22,7 +22,7 @@ module Metanorma
           # ---- Document shell --------------------------------------------------
 
           def standard(lang: "en", dtd_version: "1.2", front: nil, body: nil, back: nil)
-            NISO::Standard.new(lang: lang, dtd_version: dtd_version).tap do |std|
+            NISO::Standard.new(lang: lang, dtd_version: dtd_version) do |std|
               std.front = front if front
               std.body = body if body
               std.back = back if back
@@ -30,31 +30,39 @@ module Metanorma
           end
 
           def front(iso_meta: nil, sec: [])
-            NISO::Front.new.tap do |f|
+            NISO::Front.new do |f|
               f.iso_meta = iso_meta if iso_meta
               Array(sec).each { |s| f.sec s }
+              yield f if block_given?
             end
           end
 
           def body(sec: [])
-            NISO::Body.new.tap { |b| Array(sec).each { |s| b.sec s } }
+            NISO::Body.new do |b|
+              Array(sec).each { |s| b.sec s }
+              yield b if block_given?
+            end
           end
 
           def back(app_group: nil, ref_list: [])
-            NISO::Back.new.tap do |b|
+            NISO::Back.new do |b|
               b.app_group = app_group if app_group
               Array(ref_list).each { |r| b.ref_list r }
+              yield b if block_given?
             end
           end
 
           def app_group(app: [])
-            NISO::AppGroup.new.tap { |g| Array(app).each { |a| g.app a } }
+            NISO::AppGroup.new do |g|
+              Array(app).each { |a| g.app a }
+              yield g if block_given?
+            end
           end
 
           # ---- Sections & blocks ----------------------------------------------
 
           def section(id: nil, sec_type: nil, label: nil, title: nil)
-            NISO::Section.new.tap do |s|
+            NISO::Section.new do |s|
               s.id = id if id
               s.type = sec_type if sec_type
               s.label = label_obj(label) if label
@@ -64,7 +72,7 @@ module Metanorma
           end
 
           def term_section(id: nil, label: nil, title: nil)
-            NISO::TermSection.new.tap do |s|
+            NISO::TermSection.new do |s|
               s.id = id if id
               s.label = label_obj(label) if label
               s.title = title_obj(title) if title
@@ -73,7 +81,7 @@ module Metanorma
           end
 
           def app(id: nil, label: nil, title: nil)
-            NISO::App.new.tap do |a|
+            NISO::App.new do |a|
               a.id = id if id
               a.label = label_obj(label) if label
               a.title = title_obj(title) if title
@@ -82,7 +90,7 @@ module Metanorma
           end
 
           def paragraph(id: nil, content: nil)
-            NISO::Paragraph.new.tap do |p|
+            NISO::Paragraph.new do |p|
               p.id = id if id
               yield p if block_given?
               p.content = Array(content) if content
@@ -90,22 +98,22 @@ module Metanorma
           end
 
           def list(id: nil, list_type: "bullet")
-            NISO::List.new(id: id, list_type: list_type).tap { |l| yield l if block_given? }
+            NISO::List.new(id: id, list_type: list_type) { |l| yield l if block_given? }
           end
 
           def list_item
-            NISO::ListItem.new.tap { |i| yield i if block_given? }
+            NISO::ListItem.new { |i| yield i if block_given? }
           end
 
           def def_list(id: nil)
-            NISO::DefList.new.tap do |dl|
+            NISO::DefList.new do |dl|
               dl.id = id if id
               yield dl if block_given?
             end
           end
 
           def table_wrap(id: nil, label: nil, caption: nil)
-            TBX::TableWrap.new.tap do |tw|
+            TBX::TableWrap.new do |tw|
               tw.id = id if id
               tw.label = label_obj(label) if label
               tw.caption = caption if caption
@@ -114,14 +122,14 @@ module Metanorma
           end
 
           def caption(title: nil)
-            NISO::Caption.new.tap do |c|
+            NISO::Caption.new do |c|
               c.title = title_obj(title) if title
               yield c if block_given?
             end
           end
 
           def figure(id: nil, label: nil, caption: nil, graphic: nil)
-            NISO::Figure.new.tap do |f|
+            NISO::Figure.new do |f|
               f.id = id if id
               f.label = label_obj(label) if label
               f.caption = caption if caption
@@ -134,7 +142,7 @@ module Metanorma
           end
 
           def display_formula(id: nil, label: nil)
-            NISO::DisplayFormula.new.tap do |f|
+            NISO::DisplayFormula.new do |f|
               f.id = id if id
               f.label = label_obj(label) if label
               yield f if block_given?
@@ -142,11 +150,11 @@ module Metanorma
           end
 
           def inline_formula
-            NISO::InlineFormula.new.tap { |f| yield f if block_given? }
+            NISO::InlineFormula.new { |f| yield f if block_given? }
           end
 
           def non_normative_note(id: nil, label: nil)
-            NISO::NonNormativeNote.new.tap do |n|
+            NISO::NonNormativeNote.new do |n|
               n.id = id if id
               n.label = label_obj(label) if label
               yield n if block_given?
@@ -154,7 +162,7 @@ module Metanorma
           end
 
           def non_normative_example(id: nil, label: nil)
-            NISO::NonNormativeExample.new.tap do |e|
+            NISO::NonNormativeExample.new do |e|
               e.id = id if id
               e.label = label_obj(label) if label
               yield e if block_given?
@@ -162,11 +170,11 @@ module Metanorma
           end
 
           def disp_quote
-            NISO::DispQuote.new.tap { |q| yield q if block_given? }
+            NISO::DispQuote.new { |q| yield q if block_given? }
           end
 
           def preformat(id: nil)
-            NISO::Preformat.new.tap do |p|
+            NISO::Preformat.new do |p|
               p.id = id if id
               yield p if block_given?
             end
@@ -175,7 +183,7 @@ module Metanorma
           # ---- Bibliography ----------------------------------------------------
 
           def ref_list(content_type: nil, title: nil)
-            NISO::ReferenceList.new.tap do |rl|
+            NISO::ReferenceList.new do |rl|
               rl.content_type = content_type if content_type
               rl.title = title_obj(title) if title
               yield rl if block_given?
@@ -183,7 +191,7 @@ module Metanorma
           end
 
           def ref(label: nil, mixed_citation: nil, std: nil)
-            NISO::Reference.new.tap do |r|
+            NISO::Reference.new do |r|
               r.label = label_obj(label) if label
               yield r if block_given?
               r.mixed_citation = mixed_citation if mixed_citation
@@ -192,26 +200,26 @@ module Metanorma
           end
 
           def mixed_citation(content: nil)
-            NISO::MixedCitation.new.tap do |c|
+            NISO::MixedCitation.new do |c|
               yield c if block_given?
               c.content = Array(content) if content
             end
           end
 
           def element_citation(content: nil)
-            NISO::ElementCitation.new.tap do |c|
+            NISO::ElementCitation.new do |c|
               yield c if block_given?
               c.content = Array(content) if content
             end
           end
 
           def reference_standard
-            NISO::ReferenceStandard.new.tap { |s| yield s if block_given? }
+            NISO::ReferenceStandard.new { |s| yield s if block_given? }
           end
 
-          def standard_ref(type: "dated", value: nil)
-            NISO::StandardRef.new.tap do |r|
-              r.type = type
+          def standard_ref(type: nil, value: nil)
+            NISO::StandardRef.new do |r|
+              r.type = type if type
               r.value = value if value
               yield r if block_given?
             end
@@ -220,41 +228,46 @@ module Metanorma
           # ---- Inline phrase ---------------------------------------------------
 
           def bold
-            TBX::Bold.new.tap { |b| yield b if block_given? }
+            TBX::Bold.new { |b| yield b if block_given? }
           end
 
           def italic
-            TBX::Italic.new.tap { |i| yield i if block_given? }
+            TBX::Italic.new { |i| yield i if block_given? }
           end
 
           def sub
-            NISO::Sub.new.tap { |s| yield s if block_given? }
+            NISO::Sub.new { |s| yield s if block_given? }
           end
 
           def sup
-            NISO::Sup.new.tap { |s| yield s if block_given? }
+            NISO::Sup.new { |s| yield s if block_given? }
           end
 
           def monospace
-            NISO::Monospace.new.tap { |m| yield m if block_given? }
+            NISO::Monospace.new { |m| yield m if block_given? }
           end
 
           def sc
-            NISO::Sc.new.tap { |s| yield s if block_given? }
+            NISO::Sc.new { |s| yield s if block_given? }
           end
 
-          def ext_link(href: nil, ext_link_type: "uri")
-            NISO::ExtLink.new(ext_link_type: ext_link_type, href: href).tap do |l|
+          def ext_link(href: nil)
+            NISO::ExtLink.new do |l|
+              l.href = href if href
               yield l if block_given?
             end
           end
 
-          def xref(rid: nil, ref_type: "other")
-            TBX::Xref.new(rid: rid, ref_type: ref_type).tap { |x| yield x if block_given? }
+          def xref(rid: nil, ref_type: nil)
+            TBX::Xref.new do |x|
+              x.rid = rid if rid
+              x.ref_type = ref_type if ref_type
+              yield x if block_given?
+            end
           end
 
           def fn(id: nil)
-            TBX::Fn.new.tap do |f|
+            TBX::Fn.new do |f|
               f.id = id if id
               yield f if block_given?
             end
@@ -265,7 +278,7 @@ module Metanorma
           end
 
           def styled_content
-            NISO::StyledContent.new.tap { |s| yield s if block_given? }
+            NISO::StyledContent.new { |s| yield s if block_given? }
           end
 
           # ---- ISO metadata (iso-meta, NISO STS v1.2 shape) -------------------
@@ -277,25 +290,25 @@ module Metanorma
           # callers can attach the typed children + set string fields
           # directly.
           def metadata_iso
-            NISO::MetadataIso.new.tap { |m| yield m if block_given? }
+            NISO::MetadataIso.new { |m| yield m if block_given? }
           end
 
           def title_wrap(lang: nil)
-            NISO::TitleWrap.new.tap do |tw|
+            NISO::TitleWrap.new do |tw|
               tw.lang = lang if lang
               yield tw if block_given?
             end
           end
 
           def title_full(content: nil)
-            NISO::TitleFull.new.tap do |t|
+            NISO::TitleFull.new do |t|
               yield t if block_given?
               t.content = Array(content) if content
             end
           end
 
           def title_compl(content: nil)
-            NISO::TitleCompl.new.tap do |t|
+            NISO::TitleCompl.new do |t|
               yield t if block_given?
               t.content = Array(content) if content
             end
@@ -335,27 +348,27 @@ module Metanorma
           end
 
           def ics(code: nil)
-            NISO::Ics.new.tap do |i|
+            NISO::Ics.new do |i|
               i.content = code if code
               yield i if block_given?
             end
           end
 
           def fn_group(id: nil)
-            NISO::FnGroup.new.tap do |g|
+            NISO::FnGroup.new do |g|
               g.id = id if id
               yield g if block_given?
             end
           end
 
           def table_wrap_foot
-            TBX::TableWrapFoot.new.tap { |f| yield f if block_given? }
+            TBX::TableWrapFoot.new { |f| yield f if block_given? }
           end
 
           # ---- Common leaves ---------------------------------------------------
 
           def title(content: nil)
-            NISO::Title.new.tap do |t|
+            NISO::Title.new do |t|
               yield t if block_given?
               t.content = Array(content) if content
             end

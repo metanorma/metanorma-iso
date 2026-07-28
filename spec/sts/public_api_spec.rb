@@ -18,7 +18,7 @@ RSpec.describe Metanorma::Iso::Sts do
   describe ".convert" do
     it "returns ISO-STS XML with a <standard> root" do
       xml = <<~XML
-        <iso-standard xmlns="https://www.metanorma.org/ns/iso">
+        <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic">
           <bibdata type="standard">
             <title language="en" type="main">Test</title>
             <docidentifier>ISO 9999</docidentifier>
@@ -26,7 +26,7 @@ RSpec.describe Metanorma::Iso::Sts do
             <status><stage>60</stage></status>
           </bibdata>
           <sections><clause id="s1"><title>Scope</title><p>Hello</p></clause></sections>
-        </iso-standard>
+        </metanorma>
       XML
 
       sts = described_class.convert(xml)
@@ -35,7 +35,7 @@ RSpec.describe Metanorma::Iso::Sts do
     end
 
     it "handles empty bibdata gracefully" do
-      xml = '<iso-standard xmlns="https://www.metanorma.org/ns/iso"/>'
+      xml = '<metanorma xmlns="https://www.metanorma.org/ns/standoc"/>'
       sts = described_class.convert(xml)
       expect(sts).to include("<standard")
     end

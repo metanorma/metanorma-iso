@@ -43,17 +43,30 @@ module Metanorma
           end
         end
 
-        # Mixed-content models in NISO STS v1.2 don't all agree on the
-        # text attribute name — Paragraph uses :text, TbxIsoTml::Bold/
-        # Italic/Xref use :value. Map target classes to the right setter.
+        # SINGLE SOURCE OF TRUTH for sts-ruby text-attribute names.
+        #
+        # NISO STS v1.2 models don't agree on a single text attr name:
+        # NisoSts models use :text, every TbxIsoTml model uses :value.
+        # This hash is the one place in this repo that knows which name
+        # each class uses. If sts-ruby renames one (e.g. the recent Fn
+        # :p → :paragraph in PR #47), update this hash and only this hash.
+        #
+        # Do NOT extract into a separate Appender module yet — there is
+        # only one caller today (this class). Extract when a second
+        # caller materialises; until then the lookup belongs here.
         TEXT_ATTR_FOR = {
           ::Sts::NisoSts::Paragraph => :text,
           ::Sts::NisoSts::MixedCitation => :text,
           ::Sts::NisoSts::ElementCitation => :text,
+          ::Sts::NisoSts::Fn => :text,
           ::Sts::TbxIsoTml::Bold => :value,
           ::Sts::TbxIsoTml::Italic => :value,
           ::Sts::TbxIsoTml::Xref => :value,
-          ::Sts::NisoSts::Fn => :text,
+          ::Sts::TbxIsoTml::Definition => :value,
+          ::Sts::TbxIsoTml::Note => :value,
+          ::Sts::TbxIsoTml::Example => :value,
+          ::Sts::TbxIsoTml::Source => :value,
+          ::Sts::TbxIsoTml::Term => :value,
         }.freeze
 
         def apply_inline_content(source, target)
@@ -77,60 +90,6 @@ module Metanorma
           text_attr = TEXT_ATTR_FOR[target.class] || :content
           target.public_send(text_attr, text) if text && !text.empty?
           target
-        end
-
-        def apply_tbx_content(source, target, text_attr: :value)
-          source.each_mixed_content do |node|
-            result = transform_tbx_inline(node)
-            next unless result
-
-            type, value = result
-            if type == :content
-              target.public_send(text_attr, value)
-            else
-              target.public_send(type, value)
-            end
-          end
-          target
-        end
-
-        def transform_tbx_inline(node)
-          case node
-          when String
-            [:content, node]
-          when Metanorma::Document::Components::Inline::EmRawElement
-            [:italic, build_tbx_italic(node)]
-          when Metanorma::Document::Components::Inline::StrongRawElement
-            [:bold, build_tbx_bold(node)]
-          when Metanorma::Document::Components::Inline::SubElement
-            [:sub, transform_sub(node)]
-          when Metanorma::Document::Components::Inline::SupElement
-            [:sup, transform_sup(node)]
-          when Metanorma::Document::Components::Inline::XrefElement
-            [:xref, transform_xref(node)]
-          when Metanorma::Document::Components::Inline::ErefElement
-            [:std, transform_eref(node)]
-          when Metanorma::Document::Components::Inline::FnElement
-            [:xref, transform_fn(node)]
-          when Metanorma::Document::Components::Inline::LinkElement
-            [:ext_link, transform_link(node)]
-          when Metanorma::Document::Components::Inline::StemInlineElement
-            [:inline_formula, transform_stem(node)]
-          when Metanorma::Document::Components::Inline::TtElement
-            [:monospace, transform_monospace(node)]
-          end
-        end
-
-        def build_tbx_italic(node)
-          ::Sts::TbxIsoTml::Italic.new do |i|
-            apply_inline_content(node, i)
-          end
-        end
-
-        def build_tbx_bold(node)
-          ::Sts::TbxIsoTml::Bold.new do |b|
-            apply_inline_content(node, b)
-          end
         end
 
         private
