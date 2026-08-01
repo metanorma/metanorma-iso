@@ -15284,7 +15284,8 @@
 
 					<!-- debug scale='<xsl:value-of select="$scale"/>', indent='<xsl:value-of select="$indent"/>' -->
 
-					<fo:external-graphic src="{$src}" fox:alt-text="Image {@alt}" vertical-align="middle">
+					<fo:external-graphic src="{$src}" vertical-align="middle">
+						<xsl:call-template name="addAltText"/>
 
 						<xsl:if test="parent::mn:logo"> <!-- publisher's logo -->
 							<xsl:attribute name="scaling">uniform</xsl:attribute>
@@ -15348,11 +15349,12 @@
 					<xsl:choose>
 						<xsl:when test="$isDeleted = 'true'">
 							<!-- enclose in svg -->
-							<fo:instream-foreign-object fox:alt-text="Image {@alt}">
+							<fo:instream-foreign-object>
 								<xsl:attribute name="width">100%</xsl:attribute>
 								<xsl:attribute name="content-height">100%</xsl:attribute>
 								<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
 								<xsl:attribute name="scaling">uniform</xsl:attribute>
+								<xsl:call-template name="addAltText"/>
 
 								<xsl:apply-templates select="." mode="cross_image"/>
 
@@ -15368,7 +15370,8 @@
 							<xsl:value-of select="concat('scale=', $scale,', indent=', $indent)"/>
 							</fo:block> -->
 
-							<fo:external-graphic src="{$src}" fox:alt-text="Image {@alt}">
+							<fo:external-graphic src="{$src}">
+								<xsl:call-template name="addAltText"/>
 
 								<xsl:choose>
 									<!-- default -->
@@ -15426,6 +15429,25 @@
 				</fo:block>
 			</xsl:otherwise>
 		</xsl:choose>
+	</xsl:template>
+
+	<xsl:template name="addAltText">
+		<xsl:param name="name">Image</xsl:param>
+		<xsl:variable name="alt-text">
+			<xsl:choose>
+				<xsl:when test="self::mn:image and normalize-space(@alt) != ''">
+					<xsl:value-of select="@alt"/>
+				</xsl:when>
+				<xsl:when test="normalize-space(../@alt) != ''">
+					<xsl:value-of select="../@alt"/>
+				</xsl:when>
+				<xsl:when test="normalize-space(../mn:fmt-name) != ''">
+					<xsl:value-of select="../mn:fmt-name"/>
+				</xsl:when>
+				<xsl:otherwise><xsl:value-of select="$name"/></xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:attribute name="fox:alt-text"><xsl:value-of select="$alt-text"/></xsl:attribute>
 	</xsl:template>
 
 	<xsl:template name="setImageWidth">
@@ -15616,6 +15638,9 @@
 
 		<xsl:variable name="alt-text">
 			<xsl:choose>
+				<xsl:when test="normalize-space(../@alt) != ''">
+					<xsl:value-of select="../@alt"/>
+				</xsl:when>
 				<xsl:when test="normalize-space(../mn:fmt-name) != ''">
 					<xsl:value-of select="../mn:fmt-name"/>
 				</xsl:when>
