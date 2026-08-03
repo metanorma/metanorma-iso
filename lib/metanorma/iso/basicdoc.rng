@@ -1527,12 +1527,16 @@ to indicate that the index range covers a range of locations between the current
       <ref name="index-primary">
         <a:documentation>Primary index term to be recorded at the current location</a:documentation>
       </ref>
-      <ref name="index-secondary">
-        <a:documentation>Secondary index term to be recorded at the current location</a:documentation>
-      </ref>
-      <ref name="index-tertiary">
-        <a:documentation>Tertiary index term to be recorded at the current </a:documentation>
-      </ref>
+      <optional>
+        <ref name="index-secondary">
+          <a:documentation>Secondary index term to be recorded at the current location</a:documentation>
+        </ref>
+      </optional>
+      <optional>
+        <ref name="index-tertiary">
+          <a:documentation>Tertiary index term to be recorded at the current </a:documentation>
+        </ref>
+      </optional>
     </element>
   </define>
   <define name="index-xref">
@@ -1547,12 +1551,16 @@ The text in the inline element is the primary index term to be be cross-referenc
       <ref name="index-primary">
         <a:documentation>The primary index term to be cross-referenced</a:documentation>
       </ref>
-      <ref name="index-secondary">
-        <a:documentation>The secondary index term to be cross-referenced</a:documentation>
-      </ref>
-      <ref name="index-tertiary">
-        <a:documentation>The tertiary index term to be cross-referenced</a:documentation>
-      </ref>
+      <optional>
+        <ref name="index-secondary">
+          <a:documentation>The secondary index term to be cross-referenced</a:documentation>
+        </ref>
+      </optional>
+      <optional>
+        <ref name="index-tertiary">
+          <a:documentation>The tertiary index term to be cross-referenced</a:documentation>
+        </ref>
+      </optional>
       <element name="target">
         <a:documentation>The index term to be cross-referenced to</a:documentation>
         <oneOrMore>
@@ -1933,7 +1941,8 @@ or as the string "auto"</a:documentation>
   <define name="mathml">
     <a:documentation>Encoding of MathML: the official W3C MathML 4 grammar (namespace
 http://www.w3.org/1998/Math/MathML), via the metanorma wrapper in
-grammars/mathml/. See grammars/mathml/README.adoc and basicdoc-models#35.</a:documentation>
+grammars/mathml/. See grammars/mathml/README.adoc, basicdoc-models#35,
+and the MathML 3 -&gt; 4 migration: basicdoc-models#39 / metanorma#585.</a:documentation>
     <externalRef href="metanorma-mathml.rng"/>
   </define>
   <define name="StemAttributes">
