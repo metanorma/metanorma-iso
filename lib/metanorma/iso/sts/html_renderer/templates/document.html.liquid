@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ title | escape }}</title>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<style type="text/tailwindcss">
+{{ css }}
+</style>
+</head>
+<body class="bg-paper text-ink font-body text-[16px] leading-relaxed m-0">
+<header class="site-nav sticky top-0 z-40 flex items-center gap-3 min-h-[56px] px-5 py-2 bg-nav-bg border-b border-nav-border text-nav-text shadow-sm">
+  <span class="brand-wordmark shrink-0 inline-flex items-center justify-center h-[34px] px-3 rounded-md bg-iso-blue text-white font-bold text-lg tracking-wide">ISO</span>
+  <span class="nav-doc-title font-semibold text-nav-text truncate min-w-0">{{ title | escape }}</span>
+  <nav class="breadcrumb hidden md:flex items-baseline gap-2 min-w-0 text-sm whitespace-nowrap overflow-hidden ml-auto" aria-label="Breadcrumb">
+    <span class="crumb-doc font-mono text-xs font-bold tracking-wider uppercase text-accent">{{ docid | escape }}</span><span class="crumb-sep text-ink-faint" aria-hidden="true">›</span><span class="crumb-current overflow-hidden text-ellipsis text-ink-faint" id="crumb-current"></span>
+  </nav>
+  <span class="nav-actions ml-auto md:ml-0 flex gap-2">
+    <button id="theme-toggle" class="nav-btn inline-flex items-center justify-center w-9 h-9 rounded-md border border-nav-btn-border bg-nav-btn-bg text-nav-text hover:border-accent hover:text-accent transition-colors cursor-pointer" aria-label="Toggle light and dark mode" title="Toggle light / dark mode">
+      <svg class="icon-sun hidden dark:block" viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><circle cx="8" cy="8" r="3"/><line x1="8" y1="1" x2="8" y2="3"/><line x1="8" y1="13" x2="8" y2="15"/><line x1="1" y1="8" x2="3" y2="8"/><line x1="13" y1="8" x2="15" y2="8"/><line x1="3.05" y1="3.05" x2="4.46" y2="4.46"/><line x1="11.54" y1="3.05" x2="12.95" y2="4.46"/><line x1="3.05" y1="12.95" x2="4.46" y2="11.54"/><line x1="11.54" y1="12.95" x2="12.95" y2="11.54"/></svg>
+      <svg class="icon-moon dark:hidden" viewBox="0 0 16 16" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 9.5A5.5 5.5 0 0 1 6.5 2.5 5.5 5.5 0 1 0 13.5 9.5z"/></svg>
+    </button>
+    <button id="toc-toggle" class="nav-btn hidden max-lg:inline-flex items-center justify-center w-9 h-9 rounded-md border border-nav-btn-border bg-nav-btn-bg text-nav-text hover:border-accent hover:text-accent transition-colors cursor-pointer" aria-label="Show contents" aria-expanded="false" aria-controls="toc" title="Contents">☰</button>
+  </span>
+</header>
+{{ hero }}
+<div class="page grid max-lg:grid-cols-1 lg:grid-cols-[300px_minmax(0,1fr)] gap-10 max-w-[1200px] mx-auto px-6 pt-7 pb-8 max-lg:px-4">
+  {{ toc }}
+  <div class="page-body min-w-0">
+    {{ content }}
+  </div>
+</div>
+<button id="back-to-top" class="back-to-top fixed right-6 bottom-6 z-40 w-10 h-10 rounded-full bg-accent text-white text-lg cursor-pointer shadow-lg opacity-0 translate-y-2 pointer-events-none transition-all hover:brightness-110" aria-label="Back to top" title="Back to top">↑</button>
+<footer class="site-footer px-6 py-6 text-xs text-ink-faint border-t border-line">
+  {{ footer }}
+</footer>
+<script>
+{{ js }}
+</script>
+</body>
+</html>

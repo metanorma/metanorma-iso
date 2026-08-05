@@ -5,15 +5,12 @@ module Metanorma
     module Sts
       class Transformer::TermTransformer < Transformer::Base
         def transform_section(terms)
-          build_ordered(::Sts::IsoSts::TermSec) do |ts|
+          build_ordered(::Sts::NisoSts::TermSection) do |ts|
             ts.id = id_for(terms)
+            ts.sec_type = "terms"
 
             if terms.number && !terms.number.empty?
-              ts.label = ::Sts::IsoSts::Label.new(content: [terms.number])
-            end
-
-            if terms.title
-              ts.title transform_title(terms.title)
+              ts.label = ::Sts::NisoSts::Label.new(content: [terms.number])
             end
 
             terms.each_mixed_content do |node|
@@ -21,14 +18,13 @@ module Metanorma
               next if node == terms.title
 
               case node
-              when Metanorma::Document::Components::Paragraphs::ParagraphBlock,
-                   Metanorma::IsoDocument::RawParagraph
-                ts.p paragraph_transformer.transform(node)
+              when Metanorma::Document::Components::Paragraphs::ParagraphBlock
+                ts.paragraph paragraph_transformer.transform(node)
               when Metanorma::Document::Components::Lists::UnorderedList,
                    Metanorma::Document::Components::Lists::OrderedList
                 ts.list list_transformer.transform(node)
               when Metanorma::IsoDocument::Terms::IsoTerm
-                ts.tbz_term_entry transform_entry(node)
+                ts.term_entry transform_entry(node)
               end
             end
           end
@@ -75,12 +71,12 @@ module Metanorma
           if defn.verbal_definition
             vd = defn.verbal_definition
             if vd.p && !vd.p.empty?
-              vd.p.each { |para| inline_transformer.apply_tbx_content(para, d) }
+              vd.p.each { |para| inline_transformer.apply_inline_content(para, d) }
             end
           end
 
           if defn.p && !defn.p.empty?
-            defn.p.each { |para| inline_transformer.apply_tbx_content(para, d) }
+            defn.p.each { |para| inline_transformer.apply_inline_content(para, d) }
           end
 
           if defn.ul && !defn.ul.empty?
@@ -95,11 +91,10 @@ module Metanorma
 
         def build_note(tn)
           note = ::Sts::TbxIsoTml::Note.new
-          note.instance_variable_set(:@__order_tracking__, true)
 
           if tn.p && !tn.p.empty?
             tn.p.each do |para|
-              inline_transformer.apply_tbx_content(para, note)
+              inline_transformer.apply_inline_content(para, note)
             end
           end
 
@@ -111,7 +106,7 @@ module Metanorma
 
           if te.p && !te.p.empty?
             te.p.each do |para|
-              inline_transformer.apply_tbx_content(para, ex, text_attr: :value)
+              inline_transformer.apply_inline_content(para, ex)
             end
           end
 

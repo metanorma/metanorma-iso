@@ -1,13 +1,11 @@
 require "date"
 require "twitter_cldr"
-require "pubid-iso"
-require "pubid-cen"
-require "pubid-iec"
+require "pubid"
 
 module Metanorma
   module Iso
     class Converter < Standoc::Converter
-      def metadata_id_primary_type(node)
+      def metadata_id_primary_type(_node)
         "ISO"
       end
 
@@ -18,10 +16,10 @@ module Metanorma
       end
 
       DOCTYPE2HASHID =
-        { directive: :dir, "technical-report": :tr, "guide": :guide,
+        { directive: :dir, "technical-report": :tr, guide: :guide,
           "technical-specification": :ts,
           "publicly-available-specification": :pas,
-          "committee-document": :tc, "recommendation": :r }.freeze
+          "committee-document": :tc, recommendation: :r }.freeze
 
       # @param type [nil, :tr, :ts, :amd, :cor, :guide, :dir, :tc, Type]
       # document's type, eg. :tr, :ts, :amd, :cor, Type.new(:tr)
@@ -35,10 +33,10 @@ module Metanorma
       end
 
       def metadata_id_primary(node, xml)
-        (!@amd && node.attr("docnumber") || node.attr("adopted-from")) ||
+        ((!@amd && node.attr("docnumber")) || node.attr("adopted-from")) ||
           (@amd && node.attr("updates")) or return
         params = iso_id_params(node)
-        iso_id_out(xml, params, true)
+        iso_id_out(xml, params)
       end
 
       def iso_id_params(node)
@@ -56,13 +54,12 @@ module Metanorma
       end
 
       def orig_id_parse(orig)
-        cen?(orig) and return Pubid::Cen::Identifier::Base.parse(orig)
+        cen?(orig) and return Pubid::CenCenelec::Identifier.parse(orig)
         ret = case orig
-              when /^ISO/ then Pubid::Iso::Identifier::Base.parse(orig)
               when /^IEC/ then Pubid::Iec::Identifier.parse(orig)
-              else base_pubid::Base.parse(orig)
+              else Pubid::Iso::Identifier.parse(orig)
               end
-        ret.edition ||= 1
+        ret.edition ||= Pubid::Components::Edition.new(number: 1)
         ret
       end
 
@@ -72,7 +69,7 @@ module Metanorma
 
       def pubid_select(params)
         if cen?(Array(params[:publisher])&.first || "")
-          Pubid::Cen::Identifier
+          Pubid::CenCenelec::Identifier
         else base_pubid
         end
       end
@@ -162,17 +159,13 @@ module Metanorma
         params
       end
 
-      def iso_id_out(xml, params, with_prf)
+      def iso_id_out(xml, params)
         cen?(params[:publisher]) and return cen_id_out(xml, params)
-        iso_id_out_common(xml, params, with_prf)
+        iso_id_out_common(xml, params)
         @amd and return
-        iso_id_out_non_amd(xml, params, with_prf)
+        iso_id_out_non_amd(xml, params)
       rescue StandardError, *STAGE_ERROR => e
         @log.add("ISO_52", "Document identifier: #{e}")
-        # a taste layered on this flavour (:docstage-valid:) manages its
-        # own stage repertoire and docidentifier template: do not abort
-        # when pubid cannot parse a taste-supplied stage
-        @docstage_valid and return
         clean_abort("Document identifier: #{e}", xml)
       end
 
@@ -182,25 +175,24 @@ module Metanorma
                       **attr_code(type: "CEN", primary: "true"))
       end
 
-      def iso_id_out_common(xml, params, with_prf)
+      def iso_id_out_common(xml, params)
         params1 = skip_60_60(params)
         add_noko_elem(xml, "docidentifier",
-                      iso_id_default(params1).to_s(with_prf:),
+                      iso_id_default(params1).to_s,
                       **attr_code(type: "ISO", primary: "true"))
-        add_noko_elem(xml, "docidentifier", iso_id_reference(params1)
-                      .to_s(format: :ref_num_short, with_prf:),
+        add_noko_elem(xml, "docidentifier", iso_id_reference(params1).to_s,
                       **attr_code(type: "iso-reference"))
-        add_noko_elem(xml, "docidentifier", iso_id_reference(params).urn,
+        add_noko_elem(xml, "docidentifier", iso_id_reference(params).to_urn,
                       **attr_code(type: "URN"))
       end
 
-      def iso_id_out_non_amd(xml, params, with_prf)
+      def iso_id_out_non_amd(xml, params)
         params1 = skip_60_60(params)
         add_noko_elem(xml, "docidentifier",
-                      iso_id_undated(params1).to_s(with_prf:),
+                      iso_id_undated(params1).to_s,
                       **attr_code(type: "iso-undated"))
         add_noko_elem(xml, "docidentifier",
-                      iso_id_with_lang(params1).to_s(format: :ref_num_long, with_prf:),
+                      iso_id_with_lang(params1).to_s,
                       **attr_code(type: "iso-with-lang"))
       end
 
@@ -215,7 +207,7 @@ module Metanorma
         params_nolang = params.dup.tap { |hs| hs.delete(:language) }
         params1 = params_nolang
         params1.delete(:unpublished)
-        pubid_select(params1).create(**params1)
+        pubid_create(params1)
       end
 
       def iso_id_undated(params)
@@ -224,18 +216,18 @@ module Metanorma
           hs.delete(:year)
           hs.delete(:unpublished)
         end
-        pubid_select(params2).create(**params2)
+        pubid_create(params2)
       end
 
       def iso_id_with_lang(params)
         params1 = params
         params1.delete(:unpublished)
-        pubid_select(params1).create(**params1)
+        pubid_create(params1, lang_form: :long)
       end
 
       def iso_id_reference(params)
         params1 = params.dup.tap { |hs| hs.delete(:unpublished) }
-        pubid_select(params1).create(**params1)
+        pubid_create(params1, lang_form: :short)
       end
 
       def id_add_year(docnum, node)
@@ -257,6 +249,163 @@ module Metanorma
         ret = node.attr("docsubstage")
         ret = (stage == "60" ? "60" : "00") if ret.nil? || ret.empty?
         ret
+      end
+
+      # ── pubid 2.x construction layer ────────────────────────────────
+      #
+      # pubid 2 replaced pubid-iso 1.x's `Identifier.create(**params)`
+      # with flavor-based identifier classes built from typed components
+      # (Pubid::Iso::Identifiers::*, Pubid::CenCenelec::Identifiers::*).
+      # The helpers below translate the legacy params hash (produced by
+      # iso_id_params_core/iso_id_params_add) into those constructions.
+
+      # Legacy doctype abbreviation -> pubid 2 type code.
+      ISO_TYPE_CODES = {
+        dir: "dir", tr: "tr", guide: "guide", ts: "ts", pas: "pas",
+        tc: "tc", r: "rec", amd: "amd", cor: "cor", add: "add",
+        sup: "suppl", ext: "ext",
+      }.freeze
+
+      # Build a pubid Identifier from the legacy params hash.
+      #
+      # @param params [Hash] legacy identifier params (see iso_id_params_core)
+      # @param lang_form [:none, :short, :long] language-code rendering:
+      #   :none hides the language suffix entirely (ISO house style),
+      #   :short renders a single-char code ("(E)"), :long the ISO
+      #   language code ("(en)").
+      def pubid_create(params, lang_form: :none)
+        if cen?(Array(params[:publisher])&.first || params[:publisher] || "")
+          cen_pubid_create(params, lang_form)
+        else
+          iso_pubid_create(params, lang_form)
+        end
+      end
+
+      def iso_pubid_create(params, lang_form)
+        type_code = ISO_TYPE_CODES[params[:type]] || "is"
+        klass = Pubid::Iso.locate_type(type_code)
+        klass.new(**iso_pubid_attributes(params, lang_form, type_code))
+      end
+
+      def iso_pubid_attributes(params, lang_form, type_code)
+        attrs = {}
+        attrs[:number] = pubid_code(params[:number]) if params[:number]
+        attrs[:part] = pubid_code(params[:part]) if params[:part]
+        attrs[:date] = pubid_date(params[:year]) if params[:year]
+        attrs[:publisher] = iso_pubid_publisher(params)
+        cops = Array(params[:copublisher])
+        attrs[:copublishers] = cops.map do |cp|
+          Pubid::Iso::Components::Publisher.new(publisher: cp)
+        end
+        langs = pubid_languages(params[:language], lang_form)
+        attrs[:languages] = langs if langs.any?
+        stage = pubid_typed_stage(params[:stage], type_code)
+        attrs[:typed_stage] = stage if stage
+        attrs[:base] = params[:base] if params[:base]
+        if params[:iteration]
+          attrs[:stage_iteration] =
+            Pubid::Components::Iteration.new(number: params[:iteration].to_s)
+        end
+        tc_pubid_attributes(attrs, params) if type_code == "tc"
+        attrs
+      end
+
+      # Committee-document committee fields (TC/SC/WG type + number).
+      def tc_pubid_attributes(attrs, params)
+        %w[sc tc wg].each do |k|
+          type = params[:"#{k}type"]
+          number = params[:"#{k}number"]
+          attrs[:"#{k}_type"] = pubid_code(type) if type
+          attrs[:"#{k}_number"] = pubid_code(number) if number
+        end
+      end
+
+      def cen_pubid_create(params, lang_form)
+        attrs = {}
+        attrs[:number] = pubid_code(params[:number]) if params[:number]
+        attrs[:part] = pubid_code(params[:part]) if params[:part]
+        attrs[:date] = pubid_date(params[:year]) if params[:year]
+        attrs[:publisher] = Pubid::Components::Publisher.new(
+          publisher: params[:publisher],
+        )
+        langs = pubid_languages(params[:language], lang_form)
+        attrs[:languages] = langs if langs.any?
+        stage = params[:stage]
+        if stage && stage != "60.60"
+          stage = "60.00" if stage == :PRF
+          ts = Pubid::CenCenelec.all_typed_stages.find do |s|
+            s.harmonized_stages&.include?(stage.to_s)
+          end
+          attrs[:typed_stage] = ts if ts
+        end
+        if params[:adopted]
+          attrs[:adopted_identifier] = params[:adopted]
+          Pubid::CenCenelec::Identifiers::AdoptedEuropeanNorm.new(**attrs)
+        else
+          Pubid::CenCenelec::Identifiers::EuropeanNorm.new(**attrs)
+        end
+      end
+
+      # Resolve a legacy stage token ("50.00" harmonized code, or the :PRF
+      # shorthand for 60.00) to a pubid 2 typed stage, within the document
+      # type's stage family (FDIS for IS, FDTR for TR, ...). 60.60 (published)
+      # resolves to the type's published typed stage (abbr "IS"/"TR"/...).
+      # Unresolvable stage codes are illegal and must surface (pubid 1.x
+      # raised here; the ISO_9 illegal-stage warning depends on it).
+      def pubid_typed_stage(stage, type_code)
+        return nil if stage.nil?
+
+        stage = "60.00" if stage == :PRF
+        ts = Pubid::Iso.all_typed_stages.find do |s|
+          s.harmonized_stages&.include?(stage.to_s) &&
+            s.type_code.to_s == type_code
+        end
+        ts || raise(ArgumentError, "Illegal document stage: #{stage}")
+      end
+
+      # The visible abbreviation of a typed stage: pubid 2 stages can carry
+      # an empty first variant (e.g. published IS has ["", "IS"]); the
+      # non-empty variant is the one ISO renders as the stage abbreviation.
+      def pubid_stage_abbr(typed_stage)
+        typed_stage.abbr.find { |a| !a.to_s.empty? } || typed_stage.abbr.first
+      end
+
+      def iso_pubid_publisher(params)
+        cops = Array(params[:copublisher])
+        Pubid::Iso::Components::Publisher.new(
+          publisher: params[:publisher],
+          copublisher: (cops unless cops.empty?),
+        )
+      end
+
+      def pubid_code(value)
+        Pubid::Iso::Components::Code.new(value: value.to_s)
+      end
+
+      def pubid_date(year)
+        Pubid::Components::Date.new(year: year.to_i)
+      end
+
+      # Language components for the requested rendering form. :short
+      # renders the single-char code for languages that have one ("(E)",
+      # "(F)", "(R)", "(A)", "(S)", "(D)" — pubid's CHAR_MAP), falling back
+      # to the ISO code for languages without a single-char form. :long
+      # renders the ISO code ("(en)"). URN always uses the lowercase ISO code.
+      LANG_SINGLE_CHAR = {
+        "en" => "E", "fr" => "F", "ru" => "R",
+        "ar" => "A", "es" => "S", "de" => "D",
+      }.freeze
+
+      def pubid_languages(language, lang_form)
+        return [] if language.nil? || lang_form == :none
+
+        lang = language.to_s
+        original = if lang_form == :short
+                     LANG_SINGLE_CHAR[lang] || lang
+                   else
+                     lang
+                   end
+        [Pubid::Components::Language.new(code: lang, original_code: original)]
       end
     end
   end

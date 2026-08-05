@@ -8,11 +8,15 @@ require "sts"
 require "metanorma/document"
 require "metanorma/iso_document"
 
-require "metanorma/iso/sts/transformer"
+require "metanorma/iso/sts"
 
 module TransformerTestHelpers
   def make_context(source_document = nil)
     Metanorma::Iso::Sts::Transformer::Context.new(source_document)
+  end
+
+  def rice_xml_path
+    File.expand_path("../examples/rice.xml", __dir__)
   end
 
   class MockModel
@@ -87,19 +91,5 @@ RSpec.configure do |config|
   config.include TransformerTestHelpers
   config.expect_with :rspec do |c|
     c.syntax = :expect
-  end
-
-  # QA GATE: the native ISO-STS transformer is off by default (see
-  # lib/metanorma/iso/sts.rb — mnconvert remains the :isosts default until QA
-  # sign-off). These specs exercise that gated-off, still-in-development
-  # transformer, so they must not run — and must not redden the main suite —
-  # unless the same switch that enables the transformer at runtime is set.
-  # Scoped to spec/sts/ only, so the rest of the suite is unaffected.
-  unless ENV["METANORMA_ISO_NATIVE_STS"] == "1"
-    config.define_derived_metadata(file_path: %r{/spec/sts/}) do |meta|
-      meta[:skip] =
-        "ISO-STS native transformer gated off; set METANORMA_ISO_NATIVE_STS=1 " \
-        "to run these specs"
-    end
   end
 end
