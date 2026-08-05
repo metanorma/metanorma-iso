@@ -109,7 +109,7 @@ RSpec.describe Metanorma::Iso::Processor do
 
   it "registers output formats against metanorma" do
     output = <<~OUTPUT
-      [[:doc, "doc"], [:html, "html"], [:html_alt, "alt.html"], [:isosts, "iso.sts.xml"], [:pdf, "pdf"], [:presentation, "presentation.xml"], [:rxl, "rxl"], [:sts, "sts.xml"], [:xml, "xml"]]
+      [[:doc, "doc"], [:html, "html"], [:html_alt, "alt.html"], [:isosts, "iso.sts.xml"], [:pdf, "pdf"], [:presentation, "presentation.xml"], [:rxl, "rxl"], [:sts, "sts.xml"], [:sts_html, "sts.html"], [:xml, "xml"]]
     OUTPUT
     expect(processor.output_formats.sort.to_s).to be_equivalent_to output.chop
   end
@@ -159,7 +159,8 @@ RSpec.describe Metanorma::Iso::Processor do
       OUTPUT
   end
 
-  it "generates STS from Metanorma XML" do
+  it "generates STS from Metanorma XML via mnconvert (native gate off)" do
+    Metanorma::Iso::Sts.enabled = false
     FileUtils.rm_f "test.xml"
     FileUtils.rm_f "test.sts.xml"
     FileUtils.rm_f "test.iso.sts.xml"
@@ -168,5 +169,14 @@ RSpec.describe Metanorma::Iso::Processor do
     processor.output(inputxml, "test.xml", "test.iso.sts.xml", :isosts)
     expect(File.exist?("test.sts.xml")).to be true
     expect(File.exist?("test.iso.sts.xml")).to be true
+  ensure
+    Metanorma::Iso::Sts.enabled = nil
+  end
+
+  # Native document-model routing is the default; the transformer itself is
+  # covered end-to-end in spec/sts. Here we assert the routing decision only.
+  it "routes :isosts through the native driver by default (gate on)" do
+    expect(Metanorma::Iso::Sts.enabled?).to be(true)
+    expect(processor.document_transformers).to have_key(:isosts)
   end
 end

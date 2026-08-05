@@ -21,9 +21,12 @@ module Metanorma
             tw.table transform(table)
 
             if table.note && !table.note.empty?
-              table.note.each do |n|
-                tw.non_normative_note note_transformer.transform(n)
+              foot = build_ordered(::Sts::TbxIsoTml::TableWrapFoot) do |f|
+                table.note.each do |n|
+                  f.non_normative_note note_transformer.transform(n)
+                end
               end
+              tw.table_wrap_foot foot
             end
           end
         end
@@ -91,7 +94,7 @@ module Metanorma
 
         def label_for(table)
           autonum = table.autonum if table.class.method_defined?(:autonum)
-          autonum && !autonum.to_s.empty? ? ::Sts::IsoSts::Label.new(content: [autonum.to_s]) : nil
+          autonum && !autonum.to_s.empty? ? ::Sts::NisoSts::Label.new(content: [autonum.to_s]) : nil
         end
       end
     end

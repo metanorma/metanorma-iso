@@ -17,6 +17,7 @@ module Metanorma
           pdf: "pdf",
           sts: "sts.xml",
           isosts: "iso.sts.xml",
+          sts_html: "sts.html",
         )
       end
 
@@ -93,6 +94,13 @@ module Metanorma
             IsoDoc::Iso::IsoStsConvert.new(options)
               .convert(inname, isodoc_node, nil, outname)
           end
+        when :sts_html
+          # ISO-STS XML -> branded HTML via the native STS html_renderer.
+          # Consumes semantic XML (the isodoc node, or +inname+ when nil),
+          # the same source as the native +:isosts+ transformer.
+          pxml = isodoc_node.nil? ? File.read(inname) : isodoc_node.to_s
+          sts_xml = Metanorma::Iso::Sts.convert(pxml)
+          File.write(outname, Metanorma::Iso::Sts.render_html(sts_xml))
         when :presentation
           IsoDoc::Iso::PresentationXMLConvert.new(options)
             .convert(inname, isodoc_node, nil, outname)

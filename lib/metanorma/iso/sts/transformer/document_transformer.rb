@@ -5,12 +5,14 @@ module Metanorma
     module Sts
       class Transformer::DocumentTransformer < Transformer::Base
         def transform(source)
-          build_ordered(::Sts::IsoSts::Standard) do |s|
-            s.lang = @context.language
-            s.front = Transformer::FrontTransformer.new(@context).transform(source)
-            s.body = Transformer::BodyTransformer.new(@context).transform(source)
-            s.back = Transformer::BackTransformer.new(@context).transform(source)
-          end
+          source = Transformer::SourceDocument.parse(source) unless source.is_a?(Transformer::SourceDocument)
+
+          Transformer::ModelBuilder.standard(
+            lang: @context.language,
+            front: Transformer::FrontTransformer.new(@context).transform(source),
+            body: Transformer::BodyTransformer.new(@context).transform(source),
+            back: Transformer::BackTransformer.new(@context).transform(source),
+          )
         end
 
         def transform_to_xml(source)

@@ -14,7 +14,7 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::IsoMetaTransformer do
     )
     result = transformer.transform(bibdata)
 
-    expect(result).to be_a(Sts::IsoSts::IsoMeta)
+    expect(result).to be_a(Sts::NisoSts::MetadataIso)
     xml = result.to_xml
     expect(xml).to include("<sdo>ISO</sdo>")
     expect(xml).to include("<doc-number>99999</doc-number>")
@@ -32,7 +32,7 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::IsoMetaTransformer do
     result = transformer.transform(bibdata)
 
     xml = result.to_xml
-    expect(xml).to include("<copyright-statement>All rights reserved</copyright-statement>")
+    expect(xml).to include("<copyright-statement>© 2025 ISO</copyright-statement>")
     expect(xml).to include("<copyright-year>2025</copyright-year>")
     expect(xml).to include("<copyright-holder>ISO</copyright-holder>")
   end
