@@ -17665,8 +17665,10 @@
 
 	</xsl:template> <!-- references[not(@normative='true')]/bibitem -->
 
+	<!-- commented 2026-08-06: from https://github.com/metanorma/metanorma-standoc/issues/1140:
+			Presentation XML will no longer contain notes following bibitem, those notes will have been moved in Presentation XML to inside bibitem, and then duplicated to inside formattedref. -->
 	<!-- bibitem's notes will be processing in 'processBibitemFollowingNotes' -->
-	<xsl:template match="mn:references/mn:note" priority="2"/> <!-- [not(@normative='true')] -->
+	<!-- <xsl:template match="mn:references/mn:note" priority="2"/>--> <!-- [not(@normative='true')] -->
 
 	<xsl:template name="insertListItem_Bibitem">
 		<xsl:choose>
