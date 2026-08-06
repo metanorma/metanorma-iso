@@ -49,9 +49,11 @@ module IsoDoc
       def section_name_anchors_section(clause, num, level)
         xref = labelled_autonum(@labels["section"], num)
         label = labelled_autonum(@labels["section"], num)
+        t = clause_title(clause)
         @anchors[clause["id"]] =
           { label:, xref:, elem: @labels["section"],
-            title: clause_title(clause), level: level, type: "clause" }
+            title: t && semx(clause, t, "title"), level: level,
+            type: "clause" }
       end
 
       # subclauses are not prefixed with "Clause" but @labels["subclause"],
@@ -59,9 +61,10 @@ module IsoDoc
       # Retaining subtype for the semantics
       def section_name_anchors_subclause(clause, num, level)
         xref = labelled_autonum(@labels["subclause"], num)
+        t = subclause_title(clause)
         @anchors[clause["id"]] =
           { label: num, level: level, xref:, subtype: "clause",
-            title: subclause_title(clause), elem: @labels["subclause"] }
+            title: t && semx(clause, t, "title"), elem: @labels["subclause"] }
       end
 
       def annex_name_anchors1(clause, num, level)
