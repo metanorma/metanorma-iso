@@ -8863,7 +8863,7 @@
 	</xsl:template>
 
 	<!-- outer table with line numbers for sourcecode -->
-	<xsl:template match="mn:sourcecode[@linenums = 'true']/mn:table" priority="2"> <!-- *[local-name()='table'][@type = 'sourcecode'] |  -->
+	<xsl:template match="mn:sourcecode[@linenums = 'true']/mn:table" priority="3"> <!-- *[local-name()='table'][@type = 'sourcecode'] |  -->
 		<fo:block>
 			<fo:table width="100%" table-layout="fixed">
 				<xsl:copy-of select="@id"/>
@@ -8875,16 +8875,16 @@
 			</fo:table>
 		</fo:block>
 	</xsl:template>
-	<xsl:template match="mn:sourcecode[@linenums = 'true']/mn:table/mn:tbody" priority="2"> <!-- *[local-name()='table'][@type = 'sourcecode']/*[local-name() = 'tbody'] |  -->
+	<xsl:template match="mn:sourcecode[@linenums = 'true']/mn:table/mn:tbody" priority="3"> <!-- *[local-name()='table'][@type = 'sourcecode']/*[local-name() = 'tbody'] |  -->
 		<xsl:apply-templates/>
 	</xsl:template>
-	<xsl:template match="mn:sourcecode[@linenums = 'true']/mn:table//mn:tr" priority="2"> <!-- *[local-name()='table'][@type = 'sourcecode']//*[local-name()='tr'] |  -->
+	<xsl:template match="mn:sourcecode[@linenums = 'true']/mn:table//mn:tr" priority="3"> <!-- *[local-name()='table'][@type = 'sourcecode']//*[local-name()='tr'] |  -->
 		<fo:table-row>
 			<xsl:apply-templates/>
 		</fo:table-row>
 	</xsl:template>
 	<!-- first td with line numbers -->
-	<xsl:template match="mn:sourcecode[@linenums = 'true']/mn:table//mn:tr/*[local-name() = 'td'][not(preceding-sibling::*)]" priority="2"> <!-- *[local-name()='table'][@type = 'sourcecode'] -->
+	<xsl:template match="mn:sourcecode[@linenums = 'true']/mn:table//mn:tr/*[local-name() = 'td'][not(preceding-sibling::*)]" priority="3"> <!-- *[local-name()='table'][@type = 'sourcecode'] -->
 		<fo:table-cell>
 			<fo:block>
 
@@ -8906,7 +8906,7 @@
 	</xsl:template>
 
 	<!-- second td with sourcecode -->
-	<xsl:template match="mn:sourcecode[@linenums = 'true']/mn:table//mn:tr/*[local-name() = 'td'][preceding-sibling::*]" priority="2"> <!-- *[local-name()='table'][@type = 'sourcecode'] -->
+	<xsl:template match="mn:sourcecode[@linenums = 'true']/mn:table//mn:tr/*[local-name() = 'td'][preceding-sibling::*]" priority="3"> <!-- *[local-name()='table'][@type = 'sourcecode'] -->
 		<fo:table-cell>
 			<fo:block role="SKIP">
 				<xsl:apply-templates/>
