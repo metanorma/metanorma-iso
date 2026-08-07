@@ -11463,28 +11463,31 @@
 		<xsl:if test="normalize-space() != ''">
 
 			<fo:block xsl:use-attribute-sets="table-name-style">
-
 				<xsl:call-template name="refine_table-name-style">
 					<xsl:with-param name="continued" select="$continued"/>
 				</xsl:call-template>
 
-				<xsl:choose>
-					<xsl:when test="$continued = 'true'">
-					</xsl:when>
-					<xsl:otherwise>
-						<xsl:apply-templates/>
-					</xsl:otherwise>
-				</xsl:choose>
-					<xsl:if test="$continued = 'true'">
-						<fo:inline font-weight="bold" font-style="normal" role="SKIP">
-							<fo:retrieve-table-marker retrieve-class-name="table_number"/>
-						</fo:inline>
-						<fo:inline font-weight="normal" font-style="italic" role="SKIP">
-							<xsl:text> </xsl:text>
-							<fo:retrieve-table-marker retrieve-class-name="table_continued"/>
-						</fo:inline>
-					</xsl:if>
+				<!-- <Caption><P> tags, see https://github.com/metanorma/metanorma-pdfa/issues/81 -->
+				<fo:block role="P">
 
+					<xsl:choose>
+						<xsl:when test="$continued = 'true'">
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:apply-templates/>
+						</xsl:otherwise>
+					</xsl:choose>
+						<xsl:if test="$continued = 'true'">
+							<fo:inline font-weight="bold" font-style="normal" role="SKIP">
+								<fo:retrieve-table-marker retrieve-class-name="table_number"/>
+							</fo:inline>
+							<fo:inline font-weight="normal" font-style="italic" role="SKIP">
+								<xsl:text> </xsl:text>
+								<fo:retrieve-table-marker retrieve-class-name="table_continued"/>
+							</fo:inline>
+						</xsl:if>
+
+				</fo:block>
 			</fo:block>
 
 			<!-- <xsl:if test="$namespace = 'bsi' or $namespace = 'pas' or $namespace = 'iec' or $namespace = 'iso'"> -->
@@ -14800,11 +14803,15 @@
 					<fo:block-container margin-left="0mm" margin-right="0mm" role="SKIP">
 						<fo:block xsl:use-attribute-sets="quote-source-style">
 							<xsl:call-template name="refine_quote-source-style"/>
-							<!-- — ISO, ISO 7301:2011, Clause 1 -->
-							<xsl:apply-templates select="mn:author"/>
-							<xsl:apply-templates select="mn:fmt-source"/>
-							<!-- added for https://github.com/metanorma/isodoc/issues/607 -->
-							<xsl:apply-templates select="mn:attribution/mn:p/node()"/>
+
+							<!-- <Caption><P> tags, see https://github.com/metanorma/metanorma-pdfa/issues/81 -->
+							<fo:block role="P">
+								<!-- — ISO, ISO 7301:2011, Clause 1 -->
+								<xsl:apply-templates select="mn:author"/>
+								<xsl:apply-templates select="mn:fmt-source"/>
+								<!-- added for https://github.com/metanorma/isodoc/issues/607 -->
+								<xsl:apply-templates select="mn:attribution/mn:p/node()"/>
+							</fo:block>
 						</fo:block>
 					</fo:block-container>
 				</xsl:if>
@@ -16099,10 +16106,12 @@
 	<xsl:template match="mn:figure/mn:fmt-name |         mn:image/mn:fmt-name">
 		<xsl:if test="normalize-space() != ''">
 			<fo:block xsl:use-attribute-sets="figure-name-style">
-
 				<xsl:call-template name="refine_figure-name-style"/>
 
-				<xsl:apply-templates/>
+				<!-- <Caption><P> tags, see https://github.com/metanorma/metanorma-pdfa/issues/81 -->
+				<fo:block role="P">
+					<xsl:apply-templates/>
+				</fo:block>
 			</fo:block>
 		</xsl:if>
 	</xsl:template>
