@@ -262,7 +262,7 @@ RSpec.describe IsoDoc do
       <xref target="O" style="title" id="_"/>
       <semx element="xref" source="_">
          <fmt-xref target="O" style="title">
-            <span class="citesec">Title B</span>
+            <span class="citesec"><semx element="title" source="O">Title B</semx></span>
          </fmt-xref>
       </semx>
       <xref target="M1" style="title" id="_"/>
@@ -524,7 +524,7 @@ RSpec.describe IsoDoc do
             <xref target="O" style="title" id="_"/>
             <semx element="xref" source="_">
                <fmt-xref target="O" style="title">
-                  <span class="citesec">Title B</span>
+                  <span class="citesec"><semx element="title" source="O">Title B</semx></span>
                </fmt-xref>
             </semx>
             <xref target="M1" style="title" id="_"/>
