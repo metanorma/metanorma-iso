@@ -96,6 +96,25 @@ module Metanorma
         bibitem_validate(root)
         figure_validate(root)
         list_validate(doc)
+        model_validate(doc)
+      end
+
+      # Foundation hook: runs the new model-driven validator alongside the
+      # existing Ruby + RNG pipeline. At foundation stage the registry is
+      # empty and Layer 1 has no declarations, so this is a no-op for
+      # behavior. As rules are migrated (TODOs 02-31), each one removes its
+      # corresponding method above and the new pipeline takes over.
+      # End-state (TODO 32) deletes the legacy methods entirely and this
+      # becomes the sole validator.
+      def model_validate(doc)
+        state = Metanorma::Iso::Validation::ConverterState.new(
+          lang: @lang, script: @script, doctype: @doctype,
+          vocab: @vocab, amd: @amd, i18n: @i18n,
+          novalid: @novalid, document: @localdir
+        )
+        Metanorma::Iso::Validation::ModelValidator.run(
+          doc.to_xml, log: @log, state: state
+        )
       end
 
       def list_validate(doc)
