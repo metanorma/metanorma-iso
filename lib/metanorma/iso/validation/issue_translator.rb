@@ -5,17 +5,20 @@ module Metanorma
     module Validation
       # Single sink for every validation finding. Translates Layer 1 errors
       # (Lutaml::Model::*Error) and Layer 3 Issues
-      # (Lutaml::Model::Validation::Issue) into both:
+      # (Metanorma::Iso::Validation::Issue) into both:
       #   1. @log.add(code, location, params: [...]) — preserves the existing
-      #      error-reporting pipeline (renders to .err.html).
+      #      error-reporting pipeline (renders to .err.html). The log does
+      #      its own template interpolation from ISO_LOG_MESSAGES, so raw
+      #      params are forwarded (not the pre-formatted Issue message).
       #   2. Report#add_issue — accumulates the structured Report used by
-      #      Reporters (text/json/yaml).
+      #      Reporters (text/json/yaml). The Report re-interpolates from
+      #      ISO_LOG_MESSAGES too.
       #
-      # Rules emit raw findings via Base#build_issue; the orchestrator hands
-      # every Issue to translate_layer3. Layer 1 declarations trigger
-      # Lutaml::Model errors which the orchestrator hands to translate_layer1.
-      # Neither rules nor Layer 1 know about @log or Report — only this class
-      # does (DRY).
+      # Rules emit raw findings via Base#build_issue (code + params); the
+      # orchestrator hands every Issue to translate_layer3. Layer 1
+      # declarations trigger Lutaml::Model errors which the orchestrator
+      # hands to translate_layer1. Neither rules nor Layer 1 know about
+      # @log or Report — only this class does (DRY).
       class IssueTranslator
         def initialize(log:, report:)
           @log = log
@@ -29,12 +32,14 @@ module Metanorma
           layer1_errors.each { |err| add(**classify_layer1(err)) }
         end
 
-        # layer3_issues: Array of Lutaml::Model::Validation::Issue produced
-        # by Lutaml::Model::Validation.validate(context, registry).
+        # layer3_issues: Array of Metanorma::Iso::Validation::Issue produced
+        # by ModelValidator#run_layer3_rules. Issues carry raw params; we
+        # forward them so @log and Report can each interpolate from
+        # ISO_LOG_MESSAGES (single source of truth — DRY).
         def translate_layer3(layer3_issues)
           layer3_issues.each do |issue|
             add(code: issue.code, location: issue.location,
-                params: extract_params(issue))
+                params: issue.params.to_a)
           end
         end
 
@@ -74,13 +79,6 @@ module Metanorma
           err.message
         rescue StandardError => e
           "#{err.class.name} (translator note: message raised #{e.class})"
-        end
-
-        # Lutaml::Model::Validation::Issue has no +params+ field; we use
-        # +message+ as the single param so @log can interpolate it into
-        # STANDOC_48 / STANDOC_7 templates ("%s").
-        def extract_params(issue)
-          issue.message ? [issue.message] : []
         end
       end
     end

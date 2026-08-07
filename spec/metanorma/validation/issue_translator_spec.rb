@@ -19,18 +19,18 @@ RSpec.describe Metanorma::Iso::Validation::IssueTranslator do
   let(:translator) { described_class.new(log: log, report: report) }
 
   describe "#translate_layer3" do
-    it "routes Lutaml Issues to both @log and Report" do
-      issue = Lutaml::Model::Validation::Issue.new(
-        severity: "error", code: "ISO_5",
-        message: "pizza is not a recognised document type",
-        location: nil
+    it "routes Issues to both @log and Report without re-interpolation" do
+      issue = Metanorma::Iso::Validation::Issue.from_finding(
+        code: "ISO_5", location: nil, params: ["pizza"]
       )
       translator.translate_layer3([issue])
 
       expect(log.entries.size).to eq(1)
       expect(log.entries.first[:code]).to eq("ISO_5")
+      expect(log.entries.first[:params]).to eq(["pizza"]) # raw params, not pre-formatted
       expect(report.issues.size).to eq(1)
       expect(report.issues.first.code).to eq("ISO_5")
+      expect(report.issues.first.message).to eq("pizza is not a recognised document type")
     end
 
     it "is a no-op for empty issues" do
@@ -61,8 +61,8 @@ RSpec.describe Metanorma::Iso::Validation::IssueTranslator do
     let(:translator) { described_class.new(log: nil, report: report) }
 
     it "skips @log but still populates Report" do
-      issue = Lutaml::Model::Validation::Issue.new(
-        severity: "error", code: "ISO_5", message: "x", location: nil
+      issue = Metanorma::Iso::Validation::Issue.from_finding(
+        code: "ISO_5", location: nil, params: ["pizza"]
       )
       translator.translate_layer3([issue])
       expect(report.issues.size).to eq(1)

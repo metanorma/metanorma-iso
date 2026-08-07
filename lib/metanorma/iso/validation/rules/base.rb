@@ -68,17 +68,14 @@ module Metanorma
             { category: "Unknown", severity: 2, error: "%s" }
           end
 
-          # Build a Lutaml::Model::Validation::Issue carrying the rule's code,
-          # severity, and message. The IssueTranslator picks this up from
-          # Validation.validate's return value.
+          # Build a Metanorma::Iso::Validation::Issue carrying the rule's code,
+          # severity, category, formatted message, AND raw params. The raw
+          # params let IssueTranslator hand them to @log.add without
+          # re-interpolation; the formatted message lets Reporters render
+          # without re-running the template.
           def build_issue(location:, params: [])
-            message = format_message(log_spec[:error], params)
-            Lutaml::Model::Validation::Issue.new(
-              severity: severity,
-              code: code,
-              message: message,
-              location: location,
-              suggestion: nil
+            Metanorma::Iso::Validation::Issue.from_finding(
+              code: code, location: location, params: params
             )
           end
 
