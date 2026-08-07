@@ -7,6 +7,7 @@ module Metanorma
       # (one file per rule). New rule = new file + one autoload line here.
       module Rules
         autoload :Base, "metanorma/iso/validation/rules/base"
+        autoload :DoctypeRule, "metanorma/iso/validation/rules/doctype_rule"
       end
     end
   end

@@ -49,14 +49,9 @@ module Metanorma
         end
       end
 
-      def doctype_validate(_xmldoc)
-        %w(international-standard technical-specification technical-report
-           publicly-available-specification international-workshop-agreement
-           guide amendment technical-corrigendum committee-document addendum
-           supplement extract recommendation)
-          .include? @doctype or
-          @log.add("ISO_5", nil, params: [@doctype])
-      end
+      # ISO_5 doctype validation: migrated to
+      # Metanorma::Iso::Validation::Rules::DoctypeRule (see TODO.validate/05).
+      # Removed in the same commit as the new rule lands.
 
       def iteration_validate(xmldoc)
         iteration = xmldoc&.at("//bibdata/status/iteration")&.text or return
@@ -65,7 +60,6 @@ module Metanorma
       end
 
       def bibdata_validate(doc)
-        doctype_validate(doc)
         iteration_validate(doc)
       end
 

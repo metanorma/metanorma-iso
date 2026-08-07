@@ -76,11 +76,15 @@ module Metanorma
           end
 
           def run_layer3_rules(context)
-            registry = Lutaml::Model::Validation::Registry.new
-            RuleRegistry.new.all.each do |rule_class|
-              registry.register(rule_class)
+            RuleRegistry.new.all.flat_map do |rule_class|
+              rule = rule_class.new
+              next [] unless rule.applicable?(context)
+
+              rule.check(context)
+            rescue StandardError => e
+              warn "Metanorma::Iso::ModelValidator: rule #{rule_class} raised: #{e.message}"
+              []
             end
-            Lutaml::Model::Validation.validate(context, registry)
           end
 
           def reporter_for(output_format)
