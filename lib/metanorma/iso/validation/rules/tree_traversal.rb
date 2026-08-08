@@ -46,6 +46,19 @@ module Metanorma
             walk_clauses(sections) { |clause| yield(clause) }
           end
 
+          # Yield every definitions section in the document along with its
+          # parent container symbol (:sections or :annex). Used by ISO_25
+          # (count), ISO_26 (content), ISO_27 (vocab-annex) rules.
+          def each_definitions_section(root)
+            return enum_for(__method__, root) unless block_given?
+
+            sections = root&.sections
+            visit_definitions_in(sections, :sections) { |d, p| yield(d, p) } if sections
+            Array(root.annex).each do |annex|
+              visit_definitions_in(annex, :annex) { |d, p| yield(d, p) }
+            end
+          end
+
           # Concatenate the text content of a model node, with optional
           # child element types stripped. Used by style rules to reproduce
           # the existing extract_text() behavior without Nokogiri.
@@ -146,6 +159,16 @@ module Metanorma
             when Lutaml::Model::Serializable then walk_text(value, stripped_types, parts)
             else
               parts << value.to_s unless value.nil?
+            end
+          end
+
+          def visit_definitions_in(holder, parent_symbol)
+            return unless holder
+            return unless holder.class.method_defined?(:definitions)
+
+            Array(holder.definitions).each do |d|
+              yield(d, parent_symbol)
+              Array(d.definitions).each { |sub| yield(sub, parent_symbol) }
             end
           end
         end
