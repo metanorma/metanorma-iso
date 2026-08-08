@@ -54,7 +54,7 @@ into a **layered, model-driven, OOP validator**. See
 | 32 | rng-and-jing-removal | P1 | DONE |
 | 33 | upstream-pr-metanorma-document-declarative | P2 | PLANNED (8 work items, each its own PR) |
 | 34 | standoc-migration-followup | P2 | PLANNED (~20 PRs across standoc + flavor gems) |
-| 35 | public-api-cli | P2 | PLANNED (pure addition, 1-2 PRs) |
+| 35 | public-api-cli | P2 | DONE |
 
 ## What's done on this branch
 

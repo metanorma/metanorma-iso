@@ -1,0 +1,88 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "optparse"
+require "metanorma-iso"
+
+module MetanormaIso
+  # CLI shim for Layer 4 of the validation architecture. Wraps
+  # Metanorma::Iso.validate (Layer 4) and the Reporter classes (Layer 3)
+  # with a stable command-line contract.
+  module CLI
+    module_function
+
+    def parse_options(argv)
+      options = { format: :text, strict: false, output: nil }
+      parser = OptionParser.new do |opts|
+        opts.banner = "Usage: metanorma-iso-validate [options] FILE"
+        opts.on("--format FORMAT", %i[text json yaml report],
+                "Output format: text (default), json, yaml, report") do |f|
+          options[:format] = f.to_sym
+        end
+        opts.on("--strict", "Treat warnings as errors (exit 1)") do
+          options[:strict] = true
+        end
+        opts.on("-o", "--output FILE", "Write to FILE instead of stdout") do |f|
+          options[:output] = f
+        end
+        opts.on("--lang LANG", "Document language (default en)") do |v|
+          options[:lang] = v
+        end
+        opts.on("--script SCRIPT", "Document script (default Latn)") do |v|
+          options[:script] = v
+        end
+        opts.on("--doctype TYPE", "Document type") do |v|
+          options[:doctype] = v
+        end
+        opts.on("--vocab", "Vocabulary document") do
+          options[:vocab] = true
+        end
+        opts.on("-h", "--help", "Show this help") do
+          puts opts
+          exit 0
+        end
+      end
+      parser.parse!(argv)
+      options
+    end
+
+    def run(argv)
+      options = parse_options(argv)
+      file = argv.shift
+      abort "Usage: metanorma-iso-validate FILE (see --help)" unless file
+
+      xml = File.read(file)
+      report = Metanorma::Iso::API.validate(
+        xml,
+        lang: options.fetch(:lang, "en"),
+        script: options.fetch(:script, "Latn"),
+        doctype: options[:doctype],
+        vocab: options.fetch(:vocab, false),
+        document: file
+      )
+
+      write_output(options, report)
+      exit_code(report, options)
+    end
+
+    def write_output(options, report)
+      output = Metanorma::Iso::API.render(report, format: options[:format])
+      return if output.nil?
+
+      if options[:output]
+        File.write(options[:output], output)
+      else
+        $stdout.puts output
+      end
+    end
+
+    def exit_code(report, options)
+      return 1 unless report.valid?
+      return 1 if options[:strict] && !report.warnings.empty?
+
+      0
+    end
+  end
+end
+
+exit(MetanormaIso::CLI.run(ARGV.dup)) if $PROGRAM_NAME == __FILE__

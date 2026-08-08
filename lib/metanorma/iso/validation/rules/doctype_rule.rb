@@ -33,6 +33,7 @@ module Metanorma
 
           def check(context)
             doctype = context.state.doctype
+            return [] if doctype.nil? || doctype.to_s.empty?
             return [] if ALLOWED_DOCTYPES.include?(doctype)
 
             [build_issue(location: nil, params: [doctype])]

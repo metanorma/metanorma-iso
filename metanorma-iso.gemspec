@@ -23,8 +23,9 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/metanorma/metanorma-iso"
   spec.license       = "BSD-2-Clause"
 
-  spec.bindir        = "bin"
+  spec.bindir        = "exe"
   spec.require_paths = ["lib"]
+  spec.executables   = %w[metanorma-iso-validate]
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features|bin|.github)/}) \
     || f.match(%r{Rakefile|bin/rspec})
