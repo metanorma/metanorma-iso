@@ -97,7 +97,7 @@ module Metanorma
           def build_issue_explicit(code, component, lang)
             Metanorma::Iso::Validation::Issue.from_finding(
               code: code,
-              location: "bibdata/title[@type='#{component}'][@language='#{lang}']",
+              location: "AbstractTitle[type=#{component},language=#{lang}]",
               params: []
             )
           end

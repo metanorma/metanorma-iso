@@ -23,7 +23,8 @@ module Metanorma
             return [] if iteration.nil?
             return [] if iteration.to_s.match?(/\A\d+/)
 
-            [build_issue(location: "bibdata/status/iteration",
+            status = context.root.bibdata.status
+            [build_issue(location: model_location(status),
                          params: [iteration.to_s])]
           end
         end

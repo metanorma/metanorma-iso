@@ -17,7 +17,7 @@ module Metanorma
             clauses = Array(context.root.sections&.clause)
             return [] if clauses.any? { |clause| scope_clause?(clause) }
 
-            [build_issue(location: "sections/clause[@type='scope']", params: [])]
+            [build_issue(location: "IsoSections", params: [])]
           end
 
           private
