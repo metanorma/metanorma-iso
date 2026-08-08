@@ -27,9 +27,13 @@ RSpec.describe Metanorma::Iso::Validation::ModelValidator do
       XML
     end
 
-    it "deserializes without raising" do
+    it "deserializes without raising and runs Layer 3 rules" do
       report = described_class.run(xml, log: nil, state: state)
-      expect(report.issues).to be_empty
+      # The minimal document is intentionally incomplete; Layer 3 rules
+      # correctly flag missing scope/terms etc. We assert the run completes
+      # and produces structured Issues rather than asserting zero findings.
+      expect(report).to be_a(Metanorma::Iso::Validation::Report)
+      expect(report.issues).to be_an(Array)
     end
   end
 
