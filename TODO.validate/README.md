@@ -43,9 +43,9 @@ validators + Layer 3 Rule classes) operating on
 | 21 | rule-iso43-only-child-clause | P1 | DONE |
 | 22 | rule-iso44-iso45-vocab-terms-titles | P1 | DONE |
 | 23 | rule-iso21-iso22-unreferenced-assets | P1 | DONE |
-| 24 | rule-iso46-iso47-iso48-see-xrefs | P1 | NEEDS INLINE ORDER (preceding-sibling text) |
+| 24 | rule-iso46-iso47-iso48-see-xrefs | P1 | DONE |
 | 25 | rule-iso49-locality-erefs | P1 | DONE |
-| 26 | rule-iso50-iso51-term-xrefs | P1 | NEEDS INLINE ORDER (ancestor walking) |
+| 26 | rule-iso50-iso51-term-xrefs | P1 | DONE |
 | 27 | rule-list-punctuation-and-counts | P1 | PARTIAL (count + depth done; punctuation needs inline order) |
 | 28 | rule-style-numeric-percent-units | P1 | PARTIAL (number + units done; subscript needs nested-sub model support) |
 | 29 | rule-style-requirements-ambig-misspell | P1 | PARTIAL (ambig + misspelling done; modal-in-clause needs clause-type discrimination) |
