@@ -70,6 +70,10 @@ module Metanorma
                  "metanorma/iso/validation/rules/unreferenced_assets_rule"
         autoload :LocalityErefsRule,
                  "metanorma/iso/validation/rules/locality_erefs_rule"
+        autoload :SeeXrefsRule,
+                 "metanorma/iso/validation/rules/see_xrefs_rule"
+        autoload :TermXrefsRule,
+                 "metanorma/iso/validation/rules/term_xrefs_rule"
       end
     end
   end

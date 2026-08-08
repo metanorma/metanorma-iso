@@ -278,6 +278,70 @@ module Metanorma
             each_instance_of(root, Metanorma::Document::Components::Inline::ErefElement, &block)
           end
 
+          # Walk every paragraph and yield (paragraph, parent_container).
+          # Used by rules that need paragraph-level access (TODOs 24, 26, 29).
+          def each_paragraph_with_parent(root)
+            return enum_for(__method__, root) unless block_given?
+
+            visited = Set.new
+            walk_paragraph_with_parent(root, visited, nil) { |p, parent| yield(p, parent) }
+          end
+
+          def walk_paragraph_with_parent(node, visited, parent, &block)
+            return unless node
+            return unless node.is_a?(Lutaml::Model::Serializable)
+            return if visited.include?(node.object_id)
+
+            visited << node.object_id
+
+            yield_paragraphs(node, parent, &block)
+
+            node.class.attributes.each_value do |attr_def|
+              value = node.public_send(attr_def.name)
+              walk_paragraph_children_with_parent(value, visited, node, &block)
+            end
+          end
+
+          def yield_paragraphs(node, parent)
+            return unless node.class.method_defined?(:paragraphs)
+            return unless node.is_a?(Lutaml::Model::Serializable)
+
+            Array(node.paragraphs).each { |p| yield(p, parent) }
+          end
+
+          def walk_paragraph_children_with_parent(value, visited, parent, &block)
+            case value
+            when Array
+              value.each do |v|
+                next unless v.is_a?(Lutaml::Model::Serializable)
+                walk_paragraph_with_parent(v, visited, parent, &block)
+              end
+            when Lutaml::Model::Serializable
+              walk_paragraph_with_parent(value, visited, parent, &block)
+            end
+          end
+
+          # For a given paragraph, iterate its inline children (mixed content)
+          # in document order. Yields (item, preceding_text) where preceding_text
+          # is the concatenated text content immediately before this item.
+          # Used by rules that need preceding-sibling text (TODO 24, 26, 27).
+          def each_inline_with_preceding_text(paragraph)
+            return enum_for(__method__, paragraph) unless block_given?
+
+            return unless paragraph.is_a?(Lutaml::Model::Serializable)
+
+            accumulated_text = +""
+            paragraph.each_mixed_content do |item|
+              if item.is_a?(String)
+                accumulated_text << item
+                next
+              end
+
+              yield(item, accumulated_text.dup)
+              accumulated_text.clear
+            end
+          end
+
           def enqueue_value(value, queue)
             case value
             when Array
