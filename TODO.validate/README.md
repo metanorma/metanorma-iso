@@ -49,7 +49,7 @@ validators + Layer 3 Rule classes) operating on
 | 27 | rule-list-punctuation-and-counts | P1 | TODO |
 | 28 | rule-style-numeric-percent-units | P1 | TODO |
 | 29 | rule-style-requirements-ambig-misspell | P1 | TODO |
-| 30 | rule-standoc36-unique-ids-anchors | P1 | TODO |
+| 30 | rule-standoc36-unique-ids-anchors | P1 | DONE |
 | 31 | structural-grammar-rule | P1 | TODO |
 | 32 | rng-and-jing-removal | P1 | TODO |
 | 33 | upstream-pr-metanorma-document-declarative | P2 | TODO |

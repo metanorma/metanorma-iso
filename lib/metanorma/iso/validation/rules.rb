@@ -54,6 +54,8 @@ module Metanorma
                  "metanorma/iso/validation/rules/section_sequence_rule"
         autoload :ForewordPresenceRule,
                  "metanorma/iso/validation/rules/foreword_presence_rule"
+        autoload :UniqueIdRule,
+                 "metanorma/iso/validation/rules/unique_id_rule"
       end
     end
   end

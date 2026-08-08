@@ -98,6 +98,25 @@ module Metanorma
         else "isostandard-compile.rng"
         end
       end
+
+      # Override standoc's duplicate-id detection helpers to skip emission
+      # of STANDOC_36 (population continues; duplicate detection happens in
+      # Metanorma::Iso::Validation::Rules::UniqueIdRule). Without these
+      # overrides, both code paths fire and the same duplicate is reported
+      # twice. TODO 34 will remove these overrides along with the standoc
+      # helpers themselves.
+      def repeat_id_validate1(elem)
+        return unless elem["id"]
+
+        @doc_ids[elem["id"]] ||= { line: elem.line, anchor: elem["anchor"] }.compact
+      end
+
+      def repeat_anchor_validate1(elem)
+        return unless elem["anchor"]
+
+        @doc_anchors[elem["anchor"]] ||= { line: elem.line, id: elem["id"] }
+        @doc_anchor_seq << elem["anchor"]
+      end
     end
   end
 end
