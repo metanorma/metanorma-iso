@@ -1,32 +1,8 @@
 module Metanorma
   module Iso
     class Validate < Standoc::Validate
-      # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-lists
-      def listcount_validate(doc)
-        return if @novalid
-
-        ol_count_validate(doc)
-        li_depth_validate(doc)
-      end
-
-      def ol_count_validate(doc)
-        doc.xpath("//clause | //annex").each do |c|
-          next if c.xpath(".//ol").empty?
-
-          ols = c.xpath(".//ol") -
-            c.xpath(".//ul//ol | .//ol//ol | .//clause//ol")
-          ols.size > 1 and
-            style_warning(c, "More than 1 ordered list in a numbered clause",
-                          nil)
-        end
-      end
-
-      def li_depth_validate(doc)
-        doc.xpath("//li//li//li//li").each do |l|
-          l.at(".//li") and
-            style_warning(l, "List more than four levels deep", nil)
-        end
-      end
+      # ISO list count + depth style warnings: migrated to ListCountRule
+      # and ListDepthRule (TODO 27). Emitted via STANDOC_48.
 
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-text-r-p-lists
       def list_punctuation(doc)
