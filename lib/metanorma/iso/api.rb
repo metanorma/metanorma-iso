@@ -30,23 +30,24 @@ module Metanorma
         # @param xml [String] The XML document to validate.
         # @param lang [String] Document language (default "en").
         # @param script [String] Document script (default "Latn").
-        # @param doctype [String, nil] Document type (e.g.
-        #   "international-standard"). When nil, doctype-specific rules
-        #   skip via +applicable?+ predicates.
+        # @param doctype [String, nil] Document type.
         # @param vocab [Boolean] Vocabulary document (default false).
         # @param amd [Boolean] Amendment/technical corrigendum (default false).
-        # @param document [String, nil] Source identifier for the report
-        #   (file path or "<stdin>"). Used by Reporters in summaries.
-        # @return [Metanorma::Iso::Validation::Report] Structured report
-        #   carrying every finding. Use #valid?, #errors, #warnings, #infos,
-        #   #to_json, #to_yaml, #to_xml.
+        # @param document [String, nil] Source identifier for the report.
+        # @param profile [Metanorma::Iso::Validation::Profile, Symbol] Validation
+        #   profile. Accepts a Profile instance or a Symbol (:default,
+        #   :strict, :publication) resolved to the built-in constant.
+        # @return [Metanorma::Iso::Validation::Report] Structured report.
         def validate(xml, lang: "en", script: "Latn", doctype: nil,
-                     vocab: false, amd: false, document: nil)
+                     vocab: false, amd: false, document: nil, profile: :default)
           state = Validation::ConverterState.new(
             lang: lang, script: script, doctype: doctype,
             vocab: vocab, amd: amd, document: document
           )
-          Validation::ModelValidator.run(xml, log: nil, state: state)
+          Validation::ModelValidator.run(
+            xml, log: nil, state: state,
+            profile: resolve_profile(profile)
+          )
         end
 
         # Render a report in a specific format. Convenience wrapper for
@@ -65,6 +66,20 @@ module Metanorma
           when :report then report
           else
             raise ArgumentError, "unknown format #{format.inspect}"
+          end
+        end
+
+        private
+
+        def resolve_profile(profile)
+          return profile if profile.is_a?(Validation::Profile)
+
+          case profile
+          when :default then Validation::Profile::DEFAULT
+          when :strict then Validation::Profile::STRICT
+          when :publication then Validation::Profile::PUBLICATION
+          else
+            raise ArgumentError, "unknown profile #{profile.inspect}"
           end
         end
       end

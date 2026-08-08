@@ -32,17 +32,14 @@ module Metanorma
           # @param state [ConverterState] Snapshot of converter state.
           # @param output_format [Symbol] :log (default, no reporter output),
           #   :text, :json, :yaml.
+          # @param profile [Profile] Validation profile. Filters which rules
+          #   run and configures strict-warning behavior. Default: all rules.
           # @param enable_layer1 [Boolean] Gate for Layer 1 attribute-level
-          #   validation. The vendored IsoDocument tree has built-in lutaml-model
-          #   attribute validations (collection ranges, required fields, etc.)
-          #   that fire as soon as #validate is called. Until Layer 1
-          #   declarations are explicitly migrated (TODO 02+), this gate is
-          #   false so the foundation is a no-op alongside the existing
-          #   validators. Flip to true once Layer 1 is wired intentionally.
+          #   validation (see TODO 33).
           # @return [Report] when output_format is :log.
           # @return [Array(Report, String)] when output_format is :text/:json/:yaml.
           def run(xml_string, log:, state:, output_format: :log,
-                  enable_layer1: false)
+                  profile: Profile::DEFAULT, enable_layer1: false)
             root = deserialize(xml_string)
             context = Context.new(root: root, log: log, state: state,
                                   shared: SharedState.new)
@@ -53,7 +50,7 @@ module Metanorma
             translator = IssueTranslator.new(log: log, report: report)
 
             translator.translate_layer1(root&.validate || []) if enable_layer1
-            translator.translate_layer3(run_layer3_rules(context))
+            translator.translate_layer3(run_layer3_rules(context, profile))
 
             return report if output_format == :log
 
@@ -75,14 +72,16 @@ module Metanorma
             nil
           end
 
-          def run_layer3_rules(context)
-            RuleRegistry.new.all.flat_map do |rule_class|
-              rule = rule_class.new
+          def run_layer3_rules(context, profile)
+            instances = RuleRegistry.new.all.map(&:new)
+            instances = profile.select_rules(instances)
+
+            instances.flat_map do |rule|
               next [] unless rule.applicable?(context)
 
               rule.check(context)
             rescue StandardError => e
-              warn "Metanorma::Iso::ModelValidator: rule #{rule_class} raised: #{e.message}"
+              warn "Metanorma::Iso::ModelValidator: rule #{rule.class} raised: #{e.message}"
               []
             end
           end
