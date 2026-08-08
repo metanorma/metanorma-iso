@@ -20,4 +20,14 @@ RSpec.describe Metanorma::Iso::Validation::RuleRegistry do
     registry = described_class.new
     expect(registry.all).not_to include(42)
   end
+
+  it "excludes abstract rule classes from discovery" do
+    registry = described_class.new
+    expect(registry.all).not_to include(Metanorma::Iso::Validation::Rules::StyleRule)
+  end
+
+  it "includes concrete subclasses of abstract bases" do
+    registry = described_class.new
+    expect(registry.all).to include(Metanorma::Iso::Validation::Rules::StyleNumberRule)
+  end
 end

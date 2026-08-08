@@ -17,10 +17,30 @@ module Metanorma
           include TreeTraversal
 
           class << self
-            attr_reader :code_value
+            # Mark a class as abstract — RuleRegistry skips abstract
+            # classes when discovering runnable rules. Used by StyleRule
+            # and other base classes in the rule hierarchy.
+            def abstract!
+              @abstract_rule = true
+            end
 
-            # Declare the ISO_N log key on the class. Required for every
-            # concrete rule.
+            def abstract_rule?
+              @abstract_rule == true
+            end
+
+            # Code value declared via +code "ISO_N"+. Walks up the
+            # inheritance chain so subclasses (e.g. StyleRule < Base)
+            # inherit their parent's code unless overridden. This lets
+            # StyleRule declare +code "STANDOC_48"+ once and have every
+            # StyleRule subclass emit STANDOC_48 without re-declaring.
+            def code_value
+              return @code_value if instance_variable_defined?(:@code_value) && @code_value
+
+              sup = superclass
+              sup.respond_to?(:code_value) ? sup.code_value : nil
+            end
+
+            # Declare the ISO_N log key on the class.
             def code(value)
               @code_value = value.to_s
             end
