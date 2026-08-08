@@ -19,26 +19,10 @@ module Metanorma
       # ISO_2 / ISO_3 subcommittee type validation: migrated to
       # Metanorma::Iso::Validation::Rules::TechnicalCommitteeTypeRule and
       # SubcommitteeTypeRule (see TODO.validate/04).
-
-      def termdef_warn(text, regex, elem, term, msg)
-        regex.match(text) && @log.add(msg, elem, params: [term])
-      end
-
-      # ISO/IEC DIR 2, 16.5.6
-      def termdef_style(xmldoc)
-        xmldoc.xpath("//term").each do |t|
-          para = t.at("./definition/verbal-definition") || return
-          term = t.at("./preferred//name").text
-          @lang == "en" and
-            termdef_warn(para.text, /\A(the|a)\b/i, t, term, "ISO_4")
-          %(Cyrl Latn).include?(@script) and
-            termdef_warn(para.text, /\.\Z/i, t, term, "ISO_35")
-        end
-      end
+      # ISO_4 / ISO_35 termdef style: migrated to TermdefStyleRule (TODO 07).
 
       # ISO_5 doctype validation: migrated to
       # Metanorma::Iso::Validation::Rules::DoctypeRule (see TODO.validate/05).
-      # Removed in the same commit as the new rule lands.
 
       # ISO_6 iteration validation: migrated to
       # Metanorma::Iso::Validation::Rules::IterationRule (see TODO.validate/06).
@@ -68,7 +52,6 @@ module Metanorma
         super
         root = doc.root
         title_validate(root)
-        termdef_style(root)
         iso_xref_validate(root)
         bibdata_validate(root)
         bibitem_validate(root)

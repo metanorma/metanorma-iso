@@ -27,12 +27,15 @@ module Metanorma
             end
           end
 
-          # Recursively yield every term in the document.
+          # Recursively yield every term in the document. A terms section
+          # contains a +term+ collection (IsoTerm); each IsoTerm can also
+          # contain nested +term+ (related terms).
           def each_term(root)
             return enum_for(__method__, root) unless block_given?
 
             sections = root&.sections or return
-            walk_terms(sections) { |term| yield(term) }
+            visit_terms_section(sections.terms) { |term| yield(term) }
+            visit_clause_subtree_for_terms(sections.clause) { |t| yield(t) }
           end
 
           # Yield every clause (recursive) under root.sections.
@@ -89,11 +92,22 @@ module Metanorma
             Array(node.value).map(&:to_s)
           end
 
-          def walk_terms(sections, &block)
-            return unless sections
+          def visit_terms_section(terms_section)
+            return unless terms_section
 
-            Array(sections.terms).each(&block) if sections.respond_to?(:terms)
-            Array(sections.clause).each { |c| walk_clauses(c, &block) }
+            Array(terms_section.term).each { |t| yield_subterms(t) { |term| yield(term) } }
+          end
+
+          def yield_subterms(term)
+            yield(term)
+            Array(term.term).each { |sub| yield_subterms(sub) { |t| yield(t) } }
+          end
+
+          def visit_clause_subtree_for_terms(clause_node)
+            Array(clause_node).each do |clause|
+              visit_terms_section(clause) { |t| yield(t) } if clause.is_a?(Metanorma::IsoDocument::Sections::IsoTermsSection)
+              visit_clause_subtree_for_terms(clause.clause) { |t| yield(t) } if clause.class.method_defined?(:clause)
+            end
           end
 
           def walk_clauses(node, &block)

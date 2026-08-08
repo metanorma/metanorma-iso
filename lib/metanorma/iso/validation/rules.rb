@@ -30,6 +30,8 @@ module Metanorma
                  "metanorma/iso/validation/rules/only_child_clause_rule"
         autoload :NormativeBibitemRule,
                  "metanorma/iso/validation/rules/normative_bibitem_rule"
+        autoload :TermdefStyleRule,
+                 "metanorma/iso/validation/rules/termdef_style_rule"
       end
     end
   end
