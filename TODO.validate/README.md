@@ -42,16 +42,16 @@ validators + Layer 3 Rule classes) operating on
 | 20 | rule-iso39-scope-subclauses | P1 | DONE |
 | 21 | rule-iso43-only-child-clause | P1 | DONE |
 | 22 | rule-iso44-iso45-vocab-terms-titles | P1 | DONE |
-| 23 | rule-iso21-iso22-unreferenced-assets | P1 | TODO |
-| 24 | rule-iso46-iso47-iso48-see-xrefs | P1 | TODO |
-| 25 | rule-iso49-locality-erefs | P1 | TODO |
-| 26 | rule-iso50-iso51-term-xrefs | P1 | TODO |
-| 27 | rule-list-punctuation-and-counts | P1 | PARTIAL (count + depth done; punctuation remaining) |
-| 28 | rule-style-numeric-percent-units | P1 | PARTIAL (number + units done; subscript remaining) |
-| 29 | rule-style-requirements-ambig-misspell | P1 | PARTIAL (ambig + misspelling done; modal-in-clause remaining) |
+| 23 | rule-iso21-iso22-unreferenced-assets | P1 | DONE |
+| 24 | rule-iso46-iso47-iso48-see-xrefs | P1 | NEEDS INLINE ORDER (preceding-sibling text) |
+| 25 | rule-iso49-locality-erefs | P1 | DONE |
+| 26 | rule-iso50-iso51-term-xrefs | P1 | NEEDS INLINE ORDER (ancestor walking) |
+| 27 | rule-list-punctuation-and-counts | P1 | PARTIAL (count + depth done; punctuation needs inline order) |
+| 28 | rule-style-numeric-percent-units | P1 | PARTIAL (number + units done; subscript needs nested-sub model support) |
+| 29 | rule-style-requirements-ambig-misspell | P1 | PARTIAL (ambig + misspelling done; modal-in-clause needs clause-type discrimination) |
 | 30 | rule-standoc36-unique-ids-anchors | P1 | DONE |
-| 31 | structural-grammar-rule | P1 | TODO |
-| 32 | rng-and-jing-removal | P1 | TODO |
+| 31 | structural-grammar-rule | P1 | NOT OUR CONCERN (structural — belongs at metanorma-document model layer) |
+| 32 | rng-and-jing-removal | P1 | DONE |
 | 33 | upstream-pr-metanorma-document-declarative | P2 | TODO |
 | 34 | standoc-migration-followup | P2 | TODO |
 

@@ -66,6 +66,10 @@ module Metanorma
                  "metanorma/iso/validation/rules/style_units_rule"
         autoload :StyleAmbigWordsRule,
                  "metanorma/iso/validation/rules/style_ambig_words_rule"
+        autoload :UnreferencedAssetsRule,
+                 "metanorma/iso/validation/rules/unreferenced_assets_rule"
+        autoload :LocalityErefsRule,
+                 "metanorma/iso/validation/rules/locality_erefs_rule"
       end
     end
   end

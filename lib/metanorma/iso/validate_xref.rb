@@ -111,9 +111,20 @@ module Metanorma
       def iso_xref_validate(doc)
         see_xrefs_validate(doc)
         term_xrefs_validate(doc)
-        xrefs_mandate_validate(doc)
+        # xrefs_mandate_validate migrated to UnreferencedAssetsRule (TODO 23).
         see_erefs_validate(doc)
         locality_erefs_validate(doc)
+      end
+
+      def xrefs_mandate_validate(_doc)
+        # Migrated to Layer 3 (UnreferencedAssetsRule). Retained as no-op
+        # to keep the iso_xref_validate call site stable.
+      end
+
+      def xrefs_mandate_validate1(*); end
+
+      def locality_erefs_validate(_root)
+        # Migrated to LocalityErefsRule (TODO 25).
       end
     end
   end
