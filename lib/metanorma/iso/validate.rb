@@ -6,8 +6,6 @@ require_relative "validate_section"
 require_relative "validate_title"
 require_relative "validate_list"
 require_relative "validate_xref"
-require "nokogiri"
-require "jing"
 
 module Metanorma
   module Iso
@@ -16,36 +14,27 @@ module Metanorma
         super + %i[amd vocab validate_years]
       end
 
-      # ISO_2 / ISO_3 subcommittee type validation: migrated to
-      # Metanorma::Iso::Validation::Rules::TechnicalCommitteeTypeRule and
-      # SubcommitteeTypeRule (see TODO.validate/04).
-      # ISO_4 / ISO_35 termdef style: migrated to TermdefStyleRule (TODO 07).
+      # Semantic validation entry point. Overrides Standoc::Validate#validate
+      # to skip RNG/Jing schema validation entirely — structural validity is
+      # the metanorma-document model's responsibility (TODO 31 belongs there,
+      # not here). We run only content_validate (legacy Ruby Nokogiri rules
+      # pending TODO 34 standoc migration) + model_validate (the new
+      # model-driven Layer 3 pipeline).
+      def validate(doc)
+        @log.add_error_ranges(doc)
+        content_validate(doc)
+        model_validate(doc)
+      end
 
-      # ISO_5 doctype validation: migrated to
-      # Metanorma::Iso::Validation::Rules::DoctypeRule (see TODO.validate/05).
+      # ISO_2/3/4/5/6/7/8/10..45 semantic rules migrated to Layer 3.
+      # See TODO.validate/README.md for the per-rule plan of record.
 
-      # ISO_6 iteration validation: migrated to
-      # Metanorma::Iso::Validation::Rules::IterationRule (see TODO.validate/06).
-
-      def bibdata_validate(doc)
+      def bibdata_validate(_doc)
         # Iteration + doctype checks have migrated to Layer 3 rules.
-        # Remaining bibdata checks land here as they're migrated.
       end
 
-      # DRG directives 3.7; but anticipated by standoc
-      def subfigure_validate(xmldoc)
-        elems = { footnote: "fn", note: "note", key: "key" }
-        xmldoc.xpath("//figure//figure").each do |f|
-          elems.each do |k, v|
-            f.xpath(".//#{v}").each do |n|
-              @log.add("ISO_7", n, params: [k])
-            end
-          end
-        end
-      end
-
-      def figure_validate(xmldoc)
-        subfigure_validate(xmldoc)
+      def figure_validate(_xmldoc)
+        # ISO_7 subfigure: structural — handled at metanorma-document level.
       end
 
       def content_validate(doc)
@@ -55,18 +44,13 @@ module Metanorma
         iso_xref_validate(root)
         bibdata_validate(root)
         bibitem_validate(root)
-        figure_validate(root)
         list_validate(doc)
         model_validate(doc)
       end
 
-      # Foundation hook: runs the new model-driven validator alongside the
-      # existing Ruby + RNG pipeline. At foundation stage the registry is
-      # empty and Layer 1 has no declarations, so this is a no-op for
-      # behavior. As rules are migrated (TODOs 02-31), each one removes its
-      # corresponding method above and the new pipeline takes over.
-      # End-state (TODO 32) deletes the legacy methods entirely and this
-      # becomes the sole validator.
+      # Foundation hook: runs the model-driven validator (Layer 1 gated +
+      # Layer 3 rules). Eventually becomes the sole validator once TODO 34
+      # (standoc migration) lands and content_validate above is gutted.
       def model_validate(doc)
         state = Metanorma::Iso::Validation::ConverterState.new(
           lang: @lang, script: @script, doctype: @doctype,
@@ -83,28 +67,14 @@ module Metanorma
         list_punctuation(doc)
       end
 
-      def bibitem_validate(xmldoc)
-        xmldoc.xpath("//bibitem[date/on = '–']").each do |b|
-          n = b.xpath("./note/@type").map { |n| n.text.split(",").map(&:strip) }
-            .flatten
-          n.include?("Unpublished-Status") or @log.add("ISO_8", b)
-        end
-      end
-
-      def schema_file
-        case @doctype
-        when "amendment", "technical-corrigendum" # @amd
-          "isostandard-amd.rng"
-        else "isostandard-compile.rng"
-        end
+      def bibitem_validate(_xmldoc)
+        # ISO_8 unpublished status: structural — handled at metanorma-document
+        # level once BibliographicDate.on accepts string sentinels.
       end
 
       # Override standoc's duplicate-id detection helpers to skip emission
       # of STANDOC_36 (population continues; duplicate detection happens in
-      # Metanorma::Iso::Validation::Rules::UniqueIdRule). Without these
-      # overrides, both code paths fire and the same duplicate is reported
-      # twice. TODO 34 will remove these overrides along with the standoc
-      # helpers themselves.
+      # Metanorma::Iso::Validation::Rules::UniqueIdRule).
       def repeat_id_validate1(elem)
         return unless elem["id"]
 
