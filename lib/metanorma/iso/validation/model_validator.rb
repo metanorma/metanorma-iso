@@ -38,9 +38,11 @@ module Metanorma
           #   validation (see TODO 33).
           # @return [Report] when output_format is :log.
           # @return [Array(Report, String)] when output_format is :text/:json/:yaml.
-          def run(xml_string, log:, state:, output_format: :log,
+          def run(xml_string, log:, state: nil, document: nil,
+                  output_format: :log,
                   profile: Profile::DEFAULT, enable_layer1: false)
             root = deserialize(xml_string)
+            state ||= StateExtractor.extract(root, document: document)
             context = Context.new(root: root, log: log, state: state,
                                   shared: SharedState.new)
             report = Report.new(
