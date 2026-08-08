@@ -5,25 +5,24 @@ module Metanorma
     class Validate < Standoc::Validate
       def section_validate(doc)
         unless %w(amendment technical-corrigendum).include? @doctype
-          foreword_validate(doc.root)
           normref_validate(doc.root)
           symbols_validate(doc.root)
-          sections_presence_validate(doc.root)
           sections_sequence_validate(doc.root)
         end
         section_style(doc.root)
         subclause_validate(doc.root)
-        onlychild_clause_validate(doc.root)
         @vocab and vocab_terms_titles_validate(doc.root)
         super
       end
 
-      # ISO/IEC DIR 2, 12.4
-      def foreword_validate(root)
-        f = root.at("//foreword") || return
-        s = f.at("./clause")
-        @log.add("ISO_23", f) unless s.nil?
-      end
+      # ISO_23 foreword structure: migrated to
+      # Metanorma::Iso::Validation::Rules::ForewordStructureRule (TODO 15).
+      # ISO_24 normref structure: blocked on TODO 33 model extension
+      # (StandardReferencesSection drops nested clause/refs children).
+      # ISO_29/30/31 section presence: migrated to ScopePresenceRule,
+      # NormativeReferencesPresenceRule, TermsPresenceRule (TODO 18).
+      # ISO_39 scope subclauses: migrated to ScopeSubclausesRule (TODO 20).
+      # ISO_43 only-child clause: migrated to OnlyChildClauseRule (TODO 21).
 
       # ISO/IEC DIR 2, 15.4
       def normref_validate(root)
@@ -57,12 +56,9 @@ module Metanorma
       end
 
       def sections_presence_validate(root)
-        root.at("//sections/clause[@type = 'scope']") or
-          @log.add("ISO_29", nil)
-        root.at("//references[@normative = 'true']") or
-          @log.add("ISO_30", nil)
-        root.at("//terms") or
-          @log.add("ISO_31", nil)
+        # Migrated to Layer 3 rules (ScopePresenceRule, NormativeReferencesPresenceRule,
+        # TermsPresenceRule). Method retained as no-op to keep the call site
+        # stable during incremental migration; remove once all callers are gone.
       end
 
       # spec of permissible section sequence
@@ -158,9 +154,7 @@ module Metanorma
         foreword_style(root.at("//foreword"))
         introduction_style(root.at("//introduction"))
         scope_style(root.at("//clause[@type = 'scope']"))
-        scope = root.at("//clause[@type = 'scope']/clause")
-        # ISO/IEC DIR 2, 14.4
-        scope.nil? || @log.add("ISO_39", scope)
+        # ISO_39 scope subclauses: migrated to ScopeSubclausesRule (TODO 20).
         tech_report_style(root)
       end
 
@@ -194,12 +188,7 @@ module Metanorma
       end
 
       # ISO/IEC DIR 2, 22.3.2
-      def onlychild_clause_validate(root)
-        root.xpath(Standoc::Utils::SUBCLAUSE_XPATH).each do |c|
-          c.xpath("../clause").size == 1 or next
-          @log.add("ISO_43", c)
-        end
-      end
+      # ISO_43 only-child clause: migrated to OnlyChildClauseRule (TODO 21).
 
       # https://www.iso.org/ISO-house-style.html#iso-hs-s-formatting-r-vocabulary
       def vocab_terms_titles_validate(root)

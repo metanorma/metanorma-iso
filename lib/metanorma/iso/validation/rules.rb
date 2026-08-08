@@ -14,6 +14,20 @@ module Metanorma
                  "metanorma/iso/validation/rules/technical_committee_type_rule"
         autoload :SubcommitteeTypeRule,
                  "metanorma/iso/validation/rules/subcommittee_type_rule"
+        autoload :ScopePresenceRule,
+                 "metanorma/iso/validation/rules/scope_presence_rule"
+        autoload :NormativeReferencesPresenceRule,
+                 "metanorma/iso/validation/rules/normative_references_presence_rule"
+        autoload :TermsPresenceRule,
+                 "metanorma/iso/validation/rules/terms_presence_rule"
+        autoload :ForewordStructureRule,
+                 "metanorma/iso/validation/rules/foreword_structure_rule"
+        # TODO 16 (ISO_24) is blocked on TODO 33: the StandardReferencesSection
+        # model drops nested <clause>/<references> children during from_xml.
+        autoload :ScopeSubclausesRule,
+                 "metanorma/iso/validation/rules/scope_subclauses_rule"
+        autoload :OnlyChildClauseRule,
+                 "metanorma/iso/validation/rules/only_child_clause_rule"
       end
     end
   end
