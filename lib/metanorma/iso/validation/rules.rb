@@ -50,6 +50,8 @@ module Metanorma
                  "metanorma/iso/validation/rules/title_first_level_rule"
         autoload :TitleSiblingsConsistencyRule,
                  "metanorma/iso/validation/rules/title_siblings_consistency_rule"
+        autoload :SectionSequenceRule,
+                 "metanorma/iso/validation/rules/section_sequence_rule"
       end
     end
   end
