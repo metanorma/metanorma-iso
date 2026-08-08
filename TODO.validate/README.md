@@ -23,9 +23,9 @@ validators + Layer 3 Rule classes) operating on
 | 01 | foundation-model-validator | P0 | DONE |
 | 02 | declarative-preface-foreword-required | P1 | TODO |
 | 03 | declarative-cleanup-audit | P1 | TODO |
-| 04 | rule-iso2-iso3-subcommittee-types | P1 | TODO |
+| 04 | rule-iso2-iso3-subcommittee-types | P1 | DONE |
 | 05 | rule-iso5-doctype | P1 | DONE |
-| 06 | rule-iso6-iteration | P1 | TODO |
+| 06 | rule-iso6-iteration | P1 | DONE |
 | 07 | rule-iso4-iso35-termdef-style | P1 | TODO |
 | 08 | rule-iso7-subfigure | P1 | TODO |
 | 09 | rule-iso8-bibitem-unpublished | P1 | TODO |

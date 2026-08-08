@@ -16,22 +16,9 @@ module Metanorma
         super + %i[amd vocab validate_years]
       end
 
-      COMMITTEE_XPATH = <<~XPATH.freeze
-        //contributor[role/description = 'committee']/organization/subdivision
-      XPATH
-
-      def isosubgroup_validate(root)
-        root.xpath("#{COMMITTEE_XPATH}[@type = 'Technical committee']/@subtype")
-          .each do |t|
-          %w{TC PC JTC JPC}.include?(t.text) or
-            @log.add("ISO_2", nil, params: [t.text])
-        end
-        root.xpath("#{COMMITTEE_XPATH}[@type = 'Subcommittee']/@subtype")
-          .each do |t|
-          %w{SC JSC}.include?(t.text) or
-            @log.add("ISO_3", nil, params: [t.text])
-        end
-      end
+      # ISO_2 / ISO_3 subcommittee type validation: migrated to
+      # Metanorma::Iso::Validation::Rules::TechnicalCommitteeTypeRule and
+      # SubcommitteeTypeRule (see TODO.validate/04).
 
       def termdef_warn(text, regex, elem, term, msg)
         regex.match(text) && @log.add(msg, elem, params: [term])
@@ -53,14 +40,12 @@ module Metanorma
       # Metanorma::Iso::Validation::Rules::DoctypeRule (see TODO.validate/05).
       # Removed in the same commit as the new rule lands.
 
-      def iteration_validate(xmldoc)
-        iteration = xmldoc&.at("//bibdata/status/iteration")&.text or return
-        /^\d+/.match(iteration) or
-          @log.add("ISO_6", nil, params: [iteration])
-      end
+      # ISO_6 iteration validation: migrated to
+      # Metanorma::Iso::Validation::Rules::IterationRule (see TODO.validate/06).
 
       def bibdata_validate(doc)
-        iteration_validate(doc)
+        # Iteration + doctype checks have migrated to Layer 3 rules.
+        # Remaining bibdata checks land here as they're migrated.
       end
 
       # DRG directives 3.7; but anticipated by standoc
@@ -83,7 +68,6 @@ module Metanorma
         super
         root = doc.root
         title_validate(root)
-        isosubgroup_validate(root)
         termdef_style(root)
         iso_xref_validate(root)
         bibdata_validate(root)
