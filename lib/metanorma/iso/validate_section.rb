@@ -32,16 +32,9 @@ module Metanorma
       end
 
       def symbols_validate(root)
-        f = root.xpath("//definitions")
-        f.empty? && return
-        (f.size == 1 || @vocab) or
-          @log.add("ISO_25", f.first)
-        f.first.elements.reject { |e| %w(title dl).include? e.name }.empty? or
-          @log.add("ISO_26", f.first)
-        @vocab and f.each do |f1|
-          f1.at("./ancestor::annex") or
-            @log.add("ISO_27", f1)
-        end
+        # Migrated to Layer 3 rules: SymbolsSectionCountRule (ISO_25),
+        # SymbolsSectionContentRule (ISO_26), SymbolsInAnnexRule (ISO_27).
+        # See TODO.validate/17.
       end
 
       def seqcheck(names, msg, accepted)

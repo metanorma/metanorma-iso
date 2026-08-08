@@ -32,6 +32,12 @@ module Metanorma
                  "metanorma/iso/validation/rules/normative_bibitem_rule"
         autoload :TermdefStyleRule,
                  "metanorma/iso/validation/rules/termdef_style_rule"
+        autoload :SymbolsSectionCountRule,
+                 "metanorma/iso/validation/rules/symbols_section_count_rule"
+        autoload :SymbolsSectionContentRule,
+                 "metanorma/iso/validation/rules/symbols_section_content_rule"
+        autoload :SymbolsInAnnexRule,
+                 "metanorma/iso/validation/rules/symbols_in_annex_rule"
       end
     end
   end
