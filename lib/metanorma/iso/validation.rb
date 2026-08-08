@@ -22,6 +22,7 @@ module Metanorma
       autoload :IssueTranslator, "metanorma/iso/validation/issue_translator"
       autoload :RuleRegistry, "metanorma/iso/validation/rule_registry"
       autoload :Profile, "metanorma/iso/validation/profile"
+      autoload :StateExtractor, "metanorma/iso/validation/state_extractor"
       autoload :Rules, "metanorma/iso/validation/rules"
       autoload :Reporter, "metanorma/iso/validation/reporter"
       autoload :ModelValidator, "metanorma/iso/validation/model_validator"
