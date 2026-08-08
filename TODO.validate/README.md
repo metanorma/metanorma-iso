@@ -36,7 +36,7 @@ validators + Layer 3 Rule classes) operating on
 | 14 | rule-iso19-iso20-title-siblings | P1 | TODO |
 | 15 | rule-iso23-foreword-structure | P1 | DONE |
 | 16 | rule-iso24-normref-structure | P1 | BLOCKED on TODO 33 (see below) |
-| 17 | rule-iso25-iso26-iso27-symbols | P1 | TODO |
+| 17 | rule-iso25-iso26-iso27-symbols | P1 | DONE |
 | 18 | rule-iso29-iso30-iso31-section-presence | P1 | DONE |
 | 19 | rule-section-sequence | P1 | TODO |
 | 20 | rule-iso39-scope-subclauses | P1 | DONE |
