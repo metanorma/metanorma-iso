@@ -242,6 +242,42 @@ module Metanorma
             end
           end
 
+          # Walk every instance of a given model class anywhere in the tree.
+          # Yields each match. Used for inline elements (xref, eref, concept)
+          # that may appear inside any text-bearing block. BFS with visited-set.
+          def each_instance_of(root, klass)
+            return enum_for(__method__, root, klass) unless block_given?
+
+            visited = Set.new
+            queue = [root].compact
+            until queue.empty?
+              node = queue.shift
+              next unless node.is_a?(Lutaml::Model::Serializable)
+              next if visited.include?(node.object_id)
+
+              visited << node.object_id
+              yield(node) if node.is_a?(klass)
+
+              node.class.attributes.each_value do |attr_def|
+                value = node.public_send(attr_def.name)
+                case value
+                when Array
+                  value.each { |v| queue << v if v.is_a?(Lutaml::Model::Serializable) }
+                when Lutaml::Model::Serializable
+                  queue << value
+                end
+              end
+            end
+          end
+
+          def each_xref(root, &block)
+            each_instance_of(root, Metanorma::Document::Components::Inline::XrefElement, &block)
+          end
+
+          def each_eref(root, &block)
+            each_instance_of(root, Metanorma::Document::Components::Inline::ErefElement, &block)
+          end
+
           def enqueue_value(value, queue)
             case value
             when Array
