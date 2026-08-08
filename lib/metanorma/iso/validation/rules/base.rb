@@ -14,6 +14,8 @@ module Metanorma
         # closest_ancestor, each_anchored) are added incrementally as rule
         # TODOs need them. The foundation ships the minimum.
         class Base < Lutaml::Model::Validation::Rule
+          include TreeTraversal
+
           class << self
             attr_reader :code_value
 
