@@ -56,6 +56,10 @@ module Metanorma
                  "metanorma/iso/validation/rules/foreword_presence_rule"
         autoload :UniqueIdRule,
                  "metanorma/iso/validation/rules/unique_id_rule"
+        autoload :ListCountRule,
+                 "metanorma/iso/validation/rules/list_count_rule"
+        autoload :ListDepthRule,
+                 "metanorma/iso/validation/rules/list_depth_rule"
       end
     end
   end

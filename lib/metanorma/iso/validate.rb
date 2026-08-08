@@ -79,7 +79,7 @@ module Metanorma
       end
 
       def list_validate(doc)
-        listcount_validate(doc)
+        # listcount_validate migrated to ListCountRule + ListDepthRule (TODO 27).
         list_punctuation(doc)
       end
 
