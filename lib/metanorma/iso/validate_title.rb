@@ -3,39 +3,11 @@ require "metanorma-standoc"
 module Metanorma
   module Iso
     class Validate < Standoc::Validate
+      # ISO_10/11/12/13/14/15 title bilingual pairing: migrated to
+      # TitlePairingRule (TODO 11).
+
       def title_lang_part(doc, part, lang)
         doc.at("//bibdata/title[@type='title-#{part}' and @language='#{lang}']")
-      end
-
-      def title_intro_validate(root)
-        title_intro_en = title_lang_part(root, "intro", "en")
-        title_intro_fr = title_lang_part(root, "intro", "fr")
-        if title_intro_en.nil? && !title_intro_fr.nil?
-          @log.add("ISO_10", title_intro_fr)
-        end
-        if !title_intro_en.nil? && title_intro_fr.nil?
-          @log.add("ISO_11", title_intro_en)
-        end
-      end
-
-      def title_main_validate(root)
-        title_main_en = title_lang_part(root, "main", "en")
-        title_main_fr = title_lang_part(root, "main", "fr")
-        if title_main_en.nil? && !title_main_fr.nil?
-          @log.add("ISO_12", title_main_fr)
-        end
-        if !title_main_en.nil? && title_main_fr.nil?
-          @log.add("ISO_13", title_main_en)
-        end
-      end
-
-      def title_part_validate(root)
-        title_part_en = title_lang_part(root, "part", "en")
-        title_part_fr = title_lang_part(root, "part", "fr")
-        title_part_en.nil? && !title_part_fr.nil? &&
-          @log.add("ISO_14", title_part_fr)
-        !title_part_en.nil? && title_part_fr.nil? &&
-          @log.add("ISO_15", title_part_en)
       end
 
       # ISO/IEC DIR 2, 11.4
@@ -101,9 +73,6 @@ module Metanorma
       end
 
       def title_validate(root)
-        title_intro_validate(root)
-        title_main_validate(root)
-        title_part_validate(root)
         title_subpart_validate(root)
         title_names_type_validate(root)
         title_first_level_validate(root)

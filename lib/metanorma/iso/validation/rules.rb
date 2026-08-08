@@ -40,6 +40,8 @@ module Metanorma
                  "metanorma/iso/validation/rules/symbols_in_annex_rule"
         autoload :VocabTermsTitlesRule,
                  "metanorma/iso/validation/rules/vocab_terms_titles_rule"
+        autoload :TitlePairingRule,
+                 "metanorma/iso/validation/rules/title_pairing_rule"
       end
     end
   end
