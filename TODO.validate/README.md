@@ -48,7 +48,7 @@ into a **layered, model-driven, OOP validator**. See
 | 26 | rule-iso50-iso51-term-xrefs | P1 | DONE |
 | 27 | rule-list-punctuation-and-counts | P1 | PARTIAL (count + depth + wrong-prefix DONE; colon/period internal punctuation remains in legacy) |
 | 28 | rule-style-numeric-percent-units | P1 | PARTIAL (number + units DONE; subscript needs TODO 33 SubElement extension) |
-| 29 | rule-style-requirements-ambig-misspell | P1 | PARTIAL (ambig + misspelling DONE; modal-in-clause needs clause-type discrimination helper) |
+| 29 | rule-style-requirements-ambig-misspell | P1 | DONE |
 | 30 | rule-standoc36-unique-ids-anchors | P1 | DONE |
 | 31 | structural-grammar-rule | P1 | TRACKED UPSTREAM (TODO 33: Layer 1 declarations) |
 | 32 | rng-and-jing-removal | P1 | DONE |
