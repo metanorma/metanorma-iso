@@ -46,7 +46,7 @@ validators + Layer 3 Rule classes) operating on
 | 24 | rule-iso46-iso47-iso48-see-xrefs | P1 | TODO |
 | 25 | rule-iso49-locality-erefs | P1 | TODO |
 | 26 | rule-iso50-iso51-term-xrefs | P1 | TODO |
-| 27 | rule-list-punctuation-and-counts | P1 | TODO |
+| 27 | rule-list-punctuation-and-counts | P1 | PARTIAL (count + depth done; punctuation remaining) |
 | 28 | rule-style-numeric-percent-units | P1 | TODO |
 | 29 | rule-style-requirements-ambig-misspell | P1 | TODO |
 | 30 | rule-standoc36-unique-ids-anchors | P1 | DONE |
