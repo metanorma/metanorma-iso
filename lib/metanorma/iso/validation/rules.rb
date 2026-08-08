@@ -42,6 +42,14 @@ module Metanorma
                  "metanorma/iso/validation/rules/vocab_terms_titles_rule"
         autoload :TitlePairingRule,
                  "metanorma/iso/validation/rules/title_pairing_rule"
+        autoload :SubpartIecRule,
+                 "metanorma/iso/validation/rules/subpart_iec_rule"
+        autoload :TitleNamesDoctypeRule,
+                 "metanorma/iso/validation/rules/title_names_doctype_rule"
+        autoload :TitleFirstLevelRule,
+                 "metanorma/iso/validation/rules/title_first_level_rule"
+        autoload :TitleSiblingsConsistencyRule,
+                 "metanorma/iso/validation/rules/title_siblings_consistency_rule"
       end
     end
   end

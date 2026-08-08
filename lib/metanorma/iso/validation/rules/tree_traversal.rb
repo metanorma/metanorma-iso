@@ -83,6 +83,63 @@ module Metanorma
             parts.join
           end
 
+          # Find the first docidentifier with the given +type+ on the
+          # document's bibdata. Returns nil when absent.
+          def find_docidentifier(bibdata, type)
+            return nil unless bibdata
+            return nil unless bibdata.class.method_defined?(:doc_identifier)
+
+            Array(bibdata.doc_identifier).find { |id| id.type == type }
+          end
+
+          # Yield every organization that has a "publisher" role on the
+          # bibliographic item. Used by publisher-identity checks
+          # (ISO_42, ISO_16).
+          def each_publisher_organization(bibitem)
+            return enum_for(__method__, bibitem) unless block_given?
+            return unless bibitem
+            return unless bibitem.class.method_defined?(:contributor)
+
+            Array(bibitem.contributor).each do |contributor|
+              next unless publisher_role?(contributor)
+              next unless contributor.organization
+
+              yield(contributor.organization)
+            end
+          end
+
+          ISO_ABBR = "ISO".freeze
+          IEC_ABBR = "IEC".freeze
+          ISO_NAME = "International Organization for Standardization".freeze
+          IEC_NAME = "International Electrotechnical Commission".freeze
+
+          def iso_iec_publisher?(bibitem)
+            each_publisher_organization(bibitem).any? do |org|
+              org.abbreviation.to_s == ISO_ABBR ||
+                org.abbreviation.to_s == IEC_ABBR ||
+                organization_name_text(org) == ISO_NAME ||
+                organization_name_text(org) == IEC_NAME
+            end
+          end
+
+          def iec_publisher?(bibitem)
+            each_publisher_organization(bibitem).any? do |org|
+              org.abbreviation.to_s == IEC_ABBR ||
+                organization_name_text(org) == IEC_NAME
+            end
+          end
+
+          def organization_name_text(org)
+            names = Array(org.name) if org.class.method_defined?(:name)
+            return "" if Array(names).empty?
+
+            name = Array(names).first
+            return name.to_s unless name.is_a?(Lutaml::Model::Serializable)
+
+            values = array_value_of(name)
+            values.nil? ? name.to_s : values.join.strip
+          end
+
           private
 
           def contributor_has_role?(contributor, role_text)
@@ -188,6 +245,12 @@ module Metanorma
               yield(clause.terms) if clause.class.method_defined?(:terms) && clause.terms
               visit_clauses_for_terms(clause.clause) { |t| yield(t) } if clause.class.method_defined?(:clause)
             end
+          end
+
+          def publisher_role?(contributor)
+            return false unless contributor.class.method_defined?(:role)
+
+            Array(contributor.role).any? { |role| role.type == "publisher" }
           end
         end
       end
