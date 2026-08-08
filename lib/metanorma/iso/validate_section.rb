@@ -168,17 +168,8 @@ module Metanorma
         end
       end
 
-      NORM_BIBITEMS =
-        "//references[@normative = 'true']/bibitem".freeze
-
-      # ISO/IEC DIR 2, 10.2
-      def norm_bibitem_style(root)
-        root.xpath(NORM_BIBITEMS).each do |b|
-          unless PublisherIdentity.iso_iec_publisher?(b)
-            @log.add("ISO_42", b, params: [b.text])
-          end
-        end
-      end
+      # ISO_42 normative bibitem style: migrated to
+      # Metanorma::Iso::Validation::Rules::NormativeBibitemRule (TODO 10).
 
       def subclause_validate(root)
         root.xpath("//clause/clause/clause/clause/clause/clause/clause/clause")
