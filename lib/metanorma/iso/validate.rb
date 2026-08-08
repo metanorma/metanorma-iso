@@ -62,9 +62,12 @@ module Metanorma
         )
       end
 
-      def list_validate(doc)
-        # listcount_validate migrated to ListCountRule + ListDepthRule (TODO 27).
-        list_punctuation(doc)
+      def list_validate(_doc)
+        # List count + depth migrated to ListCountRule + ListDepthRule.
+        # List "wrong prefix" migrated to ListPunctuationRule.
+        # Colon/period internal punctuation (list_after_colon_punctuation,
+        # list_full_sentence) remain in legacy form pending finer-grained
+        # inline-text-walking helpers.
       end
 
       def bibitem_validate(_xmldoc)

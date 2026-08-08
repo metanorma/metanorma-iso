@@ -74,6 +74,8 @@ module Metanorma
                  "metanorma/iso/validation/rules/see_xrefs_rule"
         autoload :TermXrefsRule,
                  "metanorma/iso/validation/rules/term_xrefs_rule"
+        autoload :ListPunctuationRule,
+                 "metanorma/iso/validation/rules/list_punctuation_rule"
       end
     end
   end
