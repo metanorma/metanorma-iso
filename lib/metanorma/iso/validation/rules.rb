@@ -28,6 +28,8 @@ module Metanorma
                  "metanorma/iso/validation/rules/scope_subclauses_rule"
         autoload :OnlyChildClauseRule,
                  "metanorma/iso/validation/rules/only_child_clause_rule"
+        autoload :NormativeBibitemRule,
+                 "metanorma/iso/validation/rules/normative_bibitem_rule"
       end
     end
   end

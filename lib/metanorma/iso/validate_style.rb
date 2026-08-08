@@ -159,7 +159,7 @@ module Metanorma
         root.xpath("//note").each { |e| note_style(e) }
         root.xpath("//fn").each { |e| footnote_style(e) }
         root.xpath(ASSETS_TO_STYLE).each { |e| style(e, extract_text(e)) }
-        norm_bibitem_style(root)
+        # ISO_42 normative bibitem: migrated to NormativeBibitemRule (TODO 10).
         super
       end
     end
