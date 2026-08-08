@@ -30,7 +30,7 @@ validators + Layer 3 Rule classes) operating on
 | 08 | rule-iso7-subfigure | P1 | TODO |
 | 09 | rule-iso8-bibitem-unpublished | P1 | TODO |
 | 10 | rule-iso42-normative-bibitem | P1 | TODO |
-| 11 | rule-iso10-iso15-title-pairing | P1 | TODO |
+| 11 | rule-iso10-iso15-title-pairing | P1 | DONE |
 | 12 | rule-iso16-subpart-iec | P1 | TODO |
 | 13 | rule-iso17-iso18-title-names-doctype | P1 | TODO |
 | 14 | rule-iso19-iso20-title-siblings | P1 | TODO |
