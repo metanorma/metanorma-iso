@@ -38,6 +38,8 @@ module Metanorma
                  "metanorma/iso/validation/rules/symbols_section_content_rule"
         autoload :SymbolsInAnnexRule,
                  "metanorma/iso/validation/rules/symbols_in_annex_rule"
+        autoload :VocabTermsTitlesRule,
+                 "metanorma/iso/validation/rules/vocab_terms_titles_rule"
       end
     end
   end

@@ -59,6 +59,17 @@ module Metanorma
             end
           end
 
+          # Yield every terms section in the document (top-level sections/terms
+          # plus any clause containing a terms sub-section). Used by ISO_44/45
+          # (vocab terms titles).
+          def each_terms_section(root)
+            return enum_for(__method__, root) unless block_given?
+
+            sections = root&.sections or return
+            yield(sections.terms) if sections.terms
+            visit_clauses_for_terms(sections.clause) { |t| yield(t) }
+          end
+
           # Concatenate the text content of a model node, with optional
           # child element types stripped. Used by style rules to reproduce
           # the existing extract_text() behavior without Nokogiri.
@@ -169,6 +180,13 @@ module Metanorma
             Array(holder.definitions).each do |d|
               yield(d, parent_symbol)
               Array(d.definitions).each { |sub| yield(sub, parent_symbol) }
+            end
+          end
+
+          def visit_clauses_for_terms(clauses)
+            Array(clauses).each do |clause|
+              yield(clause.terms) if clause.class.method_defined?(:terms) && clause.terms
+              visit_clauses_for_terms(clause.clause) { |t| yield(t) } if clause.class.method_defined?(:clause)
             end
           end
         end
