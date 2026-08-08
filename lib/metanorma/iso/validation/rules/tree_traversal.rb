@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "set"
+
 module Metanorma
   module Iso
     module Validation
@@ -138,6 +140,72 @@ module Metanorma
 
             values = array_value_of(name)
             values.nil? ? name.to_s : values.join.strip
+          end
+
+          # Walk every model node that has an :id or :anchor attribute,
+          # yielding (node, id, anchor). Used by UniqueIdRule to detect
+          # duplicates and populate SharedState for xref rules. Walker is
+          # breadth-first over the typed attribute graph; a visited-set
+          # prevents infinite loops on cyclic references.
+          def each_node_with_id_or_anchor(root)
+            return enum_for(__method__, root) unless block_given?
+
+            visited = Set.new
+            queue = [root].compact
+            until queue.empty?
+              node = queue.shift
+              next unless node.is_a?(Lutaml::Model::Serializable)
+              next if visited.include?(node.object_id)
+
+              visited << node.object_id
+
+              if has_id_or_anchor?(node)
+                yield(node, read_id_attr(node), read_anchor_attr(node))
+              end
+
+              enqueue_children(node, queue)
+            end
+          end
+
+          def has_id_or_anchor?(node)
+            (node.class.method_defined?(:id) && !read_id_attr(node).nil?) ||
+              (node.class.method_defined?(:anchor) && !read_anchor_attr(node).nil?)
+          end
+
+          def read_id_attr(node)
+            return nil unless node.class.method_defined?(:id)
+
+            value = node.id
+            return nil if value.nil? || value.to_s.empty?
+
+            value.to_s
+          end
+
+          def read_anchor_attr(node)
+            return nil unless node.class.method_defined?(:anchor)
+
+            value = node.anchor
+            return nil if value.nil? || value.to_s.empty?
+
+            value.to_s
+          end
+
+          def enqueue_children(node, queue)
+            return unless node.is_a?(Lutaml::Model::Serializable)
+
+            node.class.attributes.each_value do |attr_def|
+              value = node.public_send(attr_def.name)
+              enqueue_value(value, queue)
+            end
+          end
+
+          def enqueue_value(value, queue)
+            case value
+            when Array
+              value.each { |v| queue << v if v.is_a?(Lutaml::Model::Serializable) }
+            when Lutaml::Model::Serializable
+              queue << value
+            end
           end
 
           private
