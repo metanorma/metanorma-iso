@@ -52,6 +52,8 @@ module Metanorma
                  "metanorma/iso/validation/rules/title_siblings_consistency_rule"
         autoload :SectionSequenceRule,
                  "metanorma/iso/validation/rules/section_sequence_rule"
+        autoload :ForewordPresenceRule,
+                 "metanorma/iso/validation/rules/foreword_presence_rule"
       end
     end
   end
