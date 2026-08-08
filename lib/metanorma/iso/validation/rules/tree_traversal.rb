@@ -302,11 +302,14 @@ module Metanorma
             end
           end
 
-          def yield_paragraphs(node, parent)
+          # For a node that declares :paragraphs, yield each paragraph
+          # with the IMMEDIATE CONTAINER (the node itself) as parent —
+          # not the recursive walker's parent. This lets downstream
+          # rules classify paragraphs by their containing clause type.
+          def yield_paragraphs(node, _recursive_parent)
             return unless node.class.method_defined?(:paragraphs)
-            return unless node.is_a?(Lutaml::Model::Serializable)
 
-            Array(node.paragraphs).each { |p| yield(p, parent) }
+            Array(node.paragraphs).each { |p| yield(p, node) }
           end
 
           def walk_paragraph_children_with_parent(value, visited, parent, &block)
