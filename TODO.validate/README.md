@@ -31,9 +31,9 @@ validators + Layer 3 Rule classes) operating on
 | 09 | rule-iso8-bibitem-unpublished | P1 | TODO |
 | 10 | rule-iso42-normative-bibitem | P1 | TODO |
 | 11 | rule-iso10-iso15-title-pairing | P1 | DONE |
-| 12 | rule-iso16-subpart-iec | P1 | TODO |
-| 13 | rule-iso17-iso18-title-names-doctype | P1 | TODO |
-| 14 | rule-iso19-iso20-title-siblings | P1 | TODO |
+| 12 | rule-iso16-subpart-iec | P1 | DONE |
+| 13 | rule-iso17-iso18-title-names-doctype | P1 | DONE |
+| 14 | rule-iso19-iso20-title-siblings | P1 | DONE |
 | 15 | rule-iso23-foreword-structure | P1 | DONE |
 | 16 | rule-iso24-normref-structure | P1 | BLOCKED on TODO 33 (see below) |
 | 17 | rule-iso25-iso26-iso27-symbols | P1 | DONE |
