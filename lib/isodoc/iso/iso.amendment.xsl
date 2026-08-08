@@ -20706,8 +20706,7 @@
 		</xsl:choose>
 
 		<xsl:call-template name="setNamedDestination"/>
-		<fo:block>
-			<xsl:attribute name="role">Sect</xsl:attribute>
+		<fo:block role="Sect">
 			<xsl:call-template name="addTagElementT"/>
 			<xsl:call-template name="setId"/>
 			<xsl:call-template name="addReviewHelper"/>
