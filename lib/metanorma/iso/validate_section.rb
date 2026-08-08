@@ -11,7 +11,7 @@ module Metanorma
         end
         section_style(doc.root)
         subclause_validate(doc.root)
-        @vocab and vocab_terms_titles_validate(doc.root)
+        # ISO_44 / ISO_45 vocab terms titles: migrated to VocabTermsTitlesRule.
         super
       end
 
@@ -173,20 +173,8 @@ module Metanorma
 
       # ISO/IEC DIR 2, 22.3.2
       # ISO_43 only-child clause: migrated to OnlyChildClauseRule (TODO 21).
-
-      # https://www.iso.org/ISO-house-style.html#iso-hs-s-formatting-r-vocabulary
-      def vocab_terms_titles_validate(root)
-        terms = root.xpath("//sections/terms | //sections/clause[.//terms]")
-        if terms.size == 1
-          ((t = terms.first.at("./title")) && (t&.text == @i18n.termsdef)) or
-            @log.add("ISO_44", terms.first)
-        elsif terms.size > 1
-          terms.each do |x|
-            ((t = x.at("./title")) && /^#{@i18n.termsrelated}/.match?(t&.text)) or
-              @log.add("ISO_45", x)
-          end
-        end
-      end
+      # ISO_44 / ISO_45 vocab terms titles: migrated to VocabTermsTitlesRule
+      # (TODO 22).
     end
   end
 end

@@ -41,7 +41,7 @@ validators + Layer 3 Rule classes) operating on
 | 19 | rule-section-sequence | P1 | TODO |
 | 20 | rule-iso39-scope-subclauses | P1 | DONE |
 | 21 | rule-iso43-only-child-clause | P1 | DONE |
-| 22 | rule-iso44-iso45-vocab-terms-titles | P1 | TODO |
+| 22 | rule-iso44-iso45-vocab-terms-titles | P1 | DONE |
 | 23 | rule-iso21-iso22-unreferenced-assets | P1 | TODO |
 | 24 | rule-iso46-iso47-iso48-see-xrefs | P1 | TODO |
 | 25 | rule-iso49-locality-erefs | P1 | TODO |
