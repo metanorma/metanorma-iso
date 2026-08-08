@@ -18,7 +18,7 @@ module Metanorma
             return [] if count <= 1
             return [] if context.state.vocab
 
-            [build_issue(location: "definitions", params: [])]
+            [build_issue(location: "DefinitionSection", params: [])]
           end
 
           private

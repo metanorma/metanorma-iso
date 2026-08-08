@@ -22,7 +22,7 @@ module Metanorma
             subsections = safe_collection(foreword, :subsection)
             return [] if subsections.empty?
 
-            [build_issue(location: "preface/foreword", params: [])]
+            [build_issue(location: model_location(foreword), params: [])]
           end
 
           private

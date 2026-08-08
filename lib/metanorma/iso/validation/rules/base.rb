@@ -81,6 +81,32 @@ module Metanorma
             )
           end
 
+          # Model-based location string for an Issue. Returns nil for nil
+          # nodes; "ClassName#id" when the model has an id; "ClassName"
+          # otherwise. NEVER produces XPath — locations are diagnostic
+          # labels, not XML queries.
+          def model_location(node)
+            return nil if node.nil?
+
+            class_name = node.class.name.split("::").last
+            id = read_id(node)
+            return class_name if id.nil? || id.to_s.empty?
+
+            "#{class_name}##{id}"
+          end
+
+          # Read +id+ from a model node if (and only if) the node's class
+          # declares an :id attribute. Uses method_defined? rather than
+          # respond_to? to keep type checks static (per project rules).
+          def read_id(node)
+            return nil unless node.class.method_defined?(:id)
+
+            value = node.id
+            return nil if value.nil? || value.to_s.empty?
+
+            value
+          end
+
           def format_message(template, params)
             return template if params.empty?
             return template unless template.include?("%")

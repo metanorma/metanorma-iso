@@ -17,7 +17,7 @@ module Metanorma
             return [] unless context.root.sections
             return [] unless context.root.sections.terms.nil?
 
-            [build_issue(location: "sections/terms", params: [])]
+            [build_issue(location: "IsoSections", params: [])]
           end
         end
       end

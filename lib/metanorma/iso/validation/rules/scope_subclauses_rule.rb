@@ -19,7 +19,7 @@ module Metanorma
               subclauses = Array(scope.clause)
               next if subclauses.empty?
 
-              issues << build_issue(location: "clause[@type='scope']/clause",
+              issues << build_issue(location: model_location(scope),
                                     params: [])
             end
             issues

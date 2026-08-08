@@ -20,7 +20,7 @@ module Metanorma
             refs_sections = Array(bibliography.references)
             return [] if refs_sections.any? { |section| normative?(section) }
 
-            [build_issue(location: "bibliography/references[@normative='true']",
+            [build_issue(location: "BibliographySection[normative]",
                         params: [])]
           end
 
