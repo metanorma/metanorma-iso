@@ -60,6 +60,12 @@ module Metanorma
                  "metanorma/iso/validation/rules/list_count_rule"
         autoload :ListDepthRule,
                  "metanorma/iso/validation/rules/list_depth_rule"
+        autoload :StyleNumberRule,
+                 "metanorma/iso/validation/rules/style_number_rule"
+        autoload :StyleUnitsRule,
+                 "metanorma/iso/validation/rules/style_units_rule"
+        autoload :StyleAmbigWordsRule,
+                 "metanorma/iso/validation/rules/style_ambig_words_rule"
       end
     end
   end
