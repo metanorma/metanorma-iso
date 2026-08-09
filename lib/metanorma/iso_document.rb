@@ -1,14 +1,18 @@
 # frozen_string_literal: true
 
-# Vendored copy of Metanorma::IsoDocument (from the metanorma-document gem).
+# Metanorma::IsoDocument — the ISO-specific document model.
 #
-# The ISO document model lives in this repository so metanorma-iso can iterate
-# on it directly (same approach as metanorma-oiml owning its document Root).
-# All autoloads below use absolute paths so this copy always shadows the
-# metanorma-document gem's lib/metanorma/iso_document* files, regardless of
-# $LOAD_PATH order.
+# This is the canonical home for IsoDocument. It is NOT a vendored copy
+# of metanorma-document. The ownership model is:
 #
-# Keep in sync with: ../metanorma-document/lib/metanorma/iso_document/
+#   metanorma-document  → Metanorma::Document (components, relaton)
+#   metanorma-standoc   → Metanorma::StandardDocument (generic standard document)
+#   metanorma-iso       → Metanorma::IsoDocument (ISO-specific extensions)
+#
+# IsoDocument extends StandardDocument with ISO-specific types:
+# IsoBibliographicItem, IsoSections, IsoPreface, IsoTermsSection, etc.
+#
+# All autoloads below use absolute paths so this tree is self-contained.
 
 require "metanorma/document"
 

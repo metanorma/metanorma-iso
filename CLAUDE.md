@@ -65,12 +65,22 @@ Tests use VCR cassettes (in `spec/vcr_cassettes/`) for external HTTP interaction
 - `lib/relaton/render/` — Bibliographic reference rendering with ISO-specific formatting and selective capitalization
 - `lib/html2doc/lists.rb` — HTML-to-Word list conversion helper
 
-### Vendored document model: `lib/metanorma/iso_document/`
-`Metanorma::IsoDocument` (Root, Sections, Metadata, Terms, Blocks, Boilerplate) is **vendored in this repository**, copied from the metanorma-document gem (`../metanorma-document/lib/metanorma/iso_document/`, == released **0.4.0**). Same pattern as metanorma-oiml owning its document Root: the flavor gem iterates on its own document model without waiting for metanorma-document releases.
+### Document model ownership
+
+The document model is split across three gems, each owning its own layer:
+
+```
+metanorma-document  → Metanorma::Document (components), Metanorma::BasicDocument
+metanorma-standoc   → Metanorma::StandardDocument (generic standard document)
+metanorma-iso       → Metanorma::IsoDocument (ISO-specific extensions)
+```
+
+`Metanorma::IsoDocument` (Root, Sections, Metadata, Terms, Blocks, Boilerplate under `lib/metanorma/iso_document/`) is **canonical to this repository** — it lives here, not in metanorma-document. Flavor gems iterate on their own document model without waiting for upstream releases. Same pattern as metanorma-oiml owning its own document Root.
 
 - `lib/metanorma/iso_document.rb` is the entry point: it requires `metanorma/document`, declares all autoloads with absolute `#{__dir__}` paths, and calls `Metanorma::Registers::Setup.setup_iso_register`.
-- The vendored copy always shadows the gem's copy: this gem's `lib/` precedes metanorma-document's `lib/` in `$LOAD_PATH`, so the gem's own `autoload :IsoDocument, "metanorma/iso_document"` (and any `require "metanorma/iso_document"`) resolves to our file. Nested autoloads use `#{__dir__}`, so they can never fall through to the gem.
-- The base classes (`Metanorma::StandardDocument`, `Metanorma::BasicDocument`, `Metanorma::Document::Components`) still come from the metanorma-document gem, used at **released 0.4.0** (gemspec `~> 0.4.0`). That chain requires pubid 2.0.0.pre.alpha + relaton-bib 2.2.0.pre; the pubid-2 migration of the converter is DONE (see "pubid 2 migration" below). Re-sync the vendored tree with `diff -rq lib/metanorma/iso_document ../metanorma-document/lib/metanorma/iso_document`.
+- This gem's `lib/` precedes metanorma-document's `lib/` in `$LOAD_PATH`. metanorma-document still ships its own (older) IsoDocument tree for backwards compatibility — it is shadowed by this gem's canonical copy at runtime.
+- Base classes (`Metanorma::StandardDocument`, `Metanorma::BasicDocument`, `Metanorma::Document::Components`) come from the metanorma-document gem at **released 0.4.0** (gemspec `~> 0.4.0`). That chain requires pubid 2.0.0.pre.alpha + relaton-bib 2.2.0.pre; the pubid-2 migration of the converter is DONE (see "pubid 2 migration" below).
+- **Planned cleanup** (tracked in TODO.validate/): StandardDocument moves to metanorma-standoc, and metanorma-document shrinks to Document components only. IsoDocument disappears from metanorma-document entirely once StandardDocument lands in metanorma-standoc. Each step is a separate PR.
 - Notable model changes vs the old 0.2.6 gem: `RawParagraph` removed (terms `<p>` parses directly into `ParagraphBlock`), `AmendContentBlock`/`Boilerplate`/`AnnotationContainer` are structured (no raw `content` string), several attributes went string→boolean (`docidentifier/@primary`, `references/@normative`, `clause/@inline_header` — compare with `.to_s == "true"` in code), and 0.4.0's `IsoPreface` no longer inherits `StandardDocument::Preface` (no `acknowledgements`/`executivesummary` mappings — guard consumers with `class.attributes.key?`).
 
 ### pubid 2 migration (pubid 2.0.0.pre.alpha)
