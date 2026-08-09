@@ -14421,6 +14421,38 @@
 		</xsl:if>
 	</xsl:template> <!-- refine_note-style -->
 
+	<xsl:attribute-set name="note-block-style">
+		<xsl:attribute name="role">SKIP</xsl:attribute>
+	</xsl:attribute-set> <!-- note-block-style -->
+
+	<xsl:template name="refine_note-block-style">
+		<xsl:variable name="layoutVersion">
+			<xsl:call-template name="getVariable"><xsl:with-param name="variable">layoutVersion</xsl:with-param></xsl:call-template>
+		</xsl:variable>
+		<xsl:if test="$layoutVersion = '1951' or $layoutVersion = '1987'">
+			<xsl:if test="following-sibling::*[1][self::mn:note] and not(preceding-sibling::*[1][self::mn:note])">
+				<!-- NOTES -->
+				<fo:block font-size="9.5pt" keep-with-next="always" margin-bottom="6pt" text-transform="uppercase" role="Lbl">
+					<xsl:variable name="i18n_notes">
+						<xsl:call-template name="getLocalizedString">
+							<xsl:with-param name="key">Note.pl</xsl:with-param>
+						</xsl:call-template>
+					</xsl:variable>
+					<xsl:choose>
+						<xsl:when test="$layoutVersion = '1951'">
+							<xsl:call-template name="smallcaps">
+								<xsl:with-param name="txt" select="$i18n_notes"/>
+							</xsl:call-template>
+						</xsl:when>
+						<xsl:otherwise>
+							<xsl:value-of select="$i18n_notes"/>
+						</xsl:otherwise>
+					</xsl:choose>
+				</fo:block>
+			</xsl:if>
+		</xsl:if>
+	</xsl:template> <!-- refine_note-block-style -->
+
 	<xsl:variable name="note-body-indent">10mm</xsl:variable>
 	<xsl:variable name="note-body-indent-table">5mm</xsl:variable>
 
@@ -14534,9 +14566,9 @@
 			<xsl:call-template name="refine_note-style"/>
 
 			<fo:block-container margin-left="0mm" margin-right="0mm" role="SKIP">
-						<fo:block role="SKIP">
+						<fo:block xsl:use-attribute-sets="note-block-style">
 
-							<xsl:call-template name="refine_note_block_style"/>
+							<xsl:call-template name="refine_note-block-style"/>
 
 							<fo:inline xsl:use-attribute-sets="note-name-style">
 
@@ -14574,34 +14606,6 @@
 			</fo:block-container>
 		</fo:block-container>
 	</xsl:template>
-
-	<xsl:template name="refine_note_block_style">
-		<xsl:variable name="layoutVersion">
-			<xsl:call-template name="getVariable"><xsl:with-param name="variable">layoutVersion</xsl:with-param></xsl:call-template>
-		</xsl:variable>
-		<xsl:if test="$layoutVersion = '1951' or $layoutVersion = '1987'">
-			<xsl:if test="following-sibling::*[1][self::mn:note] and not(preceding-sibling::*[1][self::mn:note])">
-				<!-- NOTES -->
-				<fo:block font-size="9.5pt" keep-with-next="always" margin-bottom="6pt" text-transform="uppercase" role="Lbl">
-					<xsl:variable name="i18n_notes">
-						<xsl:call-template name="getLocalizedString">
-							<xsl:with-param name="key">Note.pl</xsl:with-param>
-						</xsl:call-template>
-					</xsl:variable>
-					<xsl:choose>
-						<xsl:when test="$layoutVersion = '1951'">
-							<xsl:call-template name="smallcaps">
-								<xsl:with-param name="txt" select="$i18n_notes"/>
-							</xsl:call-template>
-						</xsl:when>
-						<xsl:otherwise>
-							<xsl:value-of select="$i18n_notes"/>
-						</xsl:otherwise>
-					</xsl:choose>
-				</fo:block>
-			</xsl:if>
-		</xsl:if>
-	</xsl:template> <!-- refine_note_block_style -->
 
 	<xsl:template match="mn:note/mn:p">
 		<xsl:variable name="num"><xsl:number/></xsl:variable>
