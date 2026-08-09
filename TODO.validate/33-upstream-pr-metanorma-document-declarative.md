@@ -4,13 +4,11 @@
 
 The layered architecture (see ARCHITECTURE.md) assigns structural
 validation to Layer 1 — the document model. metanorma-document
-currently has zero Layer 1 declarations (`required:`, `values:`,
-`pattern:`, `collection: N..M`) on its IsoDocument classes. Adding
-them eliminates the structural regressions caused by removing RNG and
-unblocks the rules noted below. Each item is a small focused PR; they
-compose and may land in any order.
+currently has zero Layer 1 declarations on its IsoDocument classes.
+Adding them eliminates the structural regressions caused by removing
+RNG and unblocks the rules noted below.
 
-## Work items
+## Work items (1 PR to metanorma-document)
 
 ### Layer 1 declarations (declarative constraints on existing attributes)
 
