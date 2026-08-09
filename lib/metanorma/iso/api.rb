@@ -97,8 +97,9 @@ module Metanorma
           end
         end
 
-        private
-
+        # Resolve a profile symbol (:default, :strict, :publication) to
+        # a Profile instance. Returns the argument unchanged when it's
+        # already a Profile. Public for CLI use.
         def resolve_profile(profile)
           return profile if profile.is_a?(Validation::Profile)
 

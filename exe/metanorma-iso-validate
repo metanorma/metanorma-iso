@@ -12,7 +12,7 @@ module MetanormaIso
     module_function
 
     def parse_options(argv)
-      options = { format: :text, strict: false, output: nil }
+      options = { format: :text, strict: false, output: nil, profile: :default }
       parser = OptionParser.new do |opts|
         opts.banner = "Usage: metanorma-iso-validate [options] FILE"
         opts.on("--format FORMAT", %i[text json yaml report],
@@ -37,6 +37,11 @@ module MetanormaIso
         opts.on("--vocab", "Vocabulary document") do
           options[:vocab] = true
         end
+        opts.on("--profile PROFILE", %i[default strict publication],
+                "Validation profile: default (all rules), strict " \
+                "(warnings fatal), publication (no style checks)") do |p|
+          options[:profile] = p.to_sym
+        end
         opts.on("-h", "--help", "Show this help") do
           puts opts
           exit 0
@@ -54,11 +59,12 @@ module MetanormaIso
       xml = File.read(file)
       report = Metanorma::Iso::API.validate(
         xml,
-        lang: options.fetch(:lang, "en"),
-        script: options.fetch(:script, "Latn"),
+        lang: options.fetch(:lang, nil),
+        script: options.fetch(:script, nil),
         doctype: options[:doctype],
-        vocab: options.fetch(:vocab, false),
-        document: file
+        vocab: options[:vocab],
+        document: file,
+        profile: options.fetch(:profile, :default)
       )
 
       write_output(options, report)
@@ -77,8 +83,8 @@ module MetanormaIso
     end
 
     def exit_code(report, options)
-      return 1 unless report.valid?
-      return 1 if options[:strict] && !report.warnings.empty?
+      profile = Metanorma::Iso::API.resolve_profile(options.fetch(:profile, :default))
+      return 1 if profile.fatal_findings?(report)
 
       0
     end
