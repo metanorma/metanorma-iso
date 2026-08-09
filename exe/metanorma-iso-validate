@@ -12,15 +12,12 @@ module MetanormaIso
     module_function
 
     def parse_options(argv)
-      options = { format: :text, strict: false, output: nil, profile: :default }
+      options = { format: :text, output: nil, profile: :default }
       parser = OptionParser.new do |opts|
         opts.banner = "Usage: metanorma-iso-validate [options] FILE"
         opts.on("--format FORMAT", %i[text json yaml report],
                 "Output format: text (default), json, yaml, report") do |f|
           options[:format] = f.to_sym
-        end
-        opts.on("--strict", "Treat warnings as errors (exit 1)") do
-          options[:strict] = true
         end
         opts.on("-o", "--output FILE", "Write to FILE instead of stdout") do |f|
           options[:output] = f
