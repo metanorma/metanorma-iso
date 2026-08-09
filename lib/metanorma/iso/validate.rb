@@ -275,7 +275,6 @@ module Metanorma
       end
 
       def content_validate(doc)
-        @doctype = doc.at("//bibdata/ext/doctype")&.text
         super
         root = doc.root
         normref_validate(root)
