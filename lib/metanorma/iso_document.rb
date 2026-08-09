@@ -12,9 +12,15 @@
 # IsoDocument extends StandardDocument with ISO-specific types:
 # IsoBibliographicItem, IsoSections, IsoPreface, IsoTermsSection, etc.
 #
+# Standoc is required eagerly because StandardDocument lives there. Loading
+# metanorma/document alone would still resolve StandardDocument while
+# metanorma-document ships its legacy copy, but the canonical home is
+# metanorma-standoc and the require makes that explicit.
+#
 # All autoloads below use absolute paths so this tree is self-contained.
 
 require "metanorma/document"
+require "metanorma/standoc"
 
 module Metanorma
   module IsoDocument
