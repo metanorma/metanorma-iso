@@ -276,16 +276,44 @@ module Metanorma
 
       def content_validate(doc)
         @doctype = doc.at("//bibdata/ext/doctype")&.text
+        super
         root = doc.root
         title_validate(root)
-        section_style(root)
-        subclause_validate(root)
-        list_punctuation(doc)
         asset_style(root)
         model_validate(doc)
         fatalerrors = @log.abort_messages
         fatalerrors.empty? or
           @conv.clean_abort("\n\nFATAL ERRORS:\n\n#{fatalerrors.join("\n\n")}", doc)
+      end
+
+      # Override standoc validators that have Layer 3 equivalents.
+      # Each no-op prevents duplicate findings while preserving the
+      # standoc validators we HAVEN'T migrated (table, image, math, etc.).
+      # TODO 34 (standoc migration) will remove these overrides.
+
+      def section_validate(_doc)
+        # Migrated: SectionSequenceRule, ScopePresenceRule, TermsPresenceRule,
+        # ScopeSubclausesRule, OnlyChildClauseRule, SymbolsSection*Rule,
+        # VocabTermsTitlesRule, NormativeReferencesPresenceRule.
+      end
+
+      def xref_validate_exists(_doc)
+        # Migrated: BrokenXrefRule (STANDOC_38).
+      end
+
+      def norm_ref_validate(_doc)
+        # Migrated: NormativeReferencesPresenceRule (ISO_30).
+      end
+
+      def repeat_id_validate1(elem)
+        return unless elem["id"]
+        @doc_ids[elem["id"]] ||= { line: elem.line, anchor: elem["anchor"] }.compact
+      end
+
+      def repeat_anchor_validate1(elem)
+        return unless elem["anchor"]
+        @doc_anchors[elem["anchor"]] ||= { line: elem.line, id: elem["id"] }
+        @doc_anchor_seq << elem["anchor"]
       end
 
       def model_validate(doc)
