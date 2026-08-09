@@ -68,7 +68,6 @@ module Metanorma
       end
 
       def style_warning(node, msg, text = nil, display: true)
-        @novalid and return
         w = msg; w += ": #{text}" if text
         @log.add("STANDOC_48", node, params: [w], display:)
       end
@@ -92,7 +91,6 @@ module Metanorma
       NONSTD_UNITS = { sec: "s", mins: "min", hrs: "h", hr: "h", cc: "cm^3", lit: "l", amp: "A", amps: "A", rpm: "r/min" }.freeze
 
       def style(node, text)
-        @novalid and return
         @novalid_number or style_number(node, text)
         style_percent(node, text); style_abbrev(node, text); style_units(node, text)
         style_punct(node, text); style_subscript(node); style_problem_words(node, text)
@@ -103,12 +101,12 @@ module Metanorma
       end
 
       def foreword_style(_node); end
-      def scope_style(node); @novalid and return; style_no_guidance(node, extract_text(node), "Scope"); end
-      def introduction_style(node); @novalid and return; (r = requirement_check(extract_text(node))) and style_warning(node, "Introduction may contain requirement", r, display: false); end
-      def definition_style(node); @novalid and return; (r = requirement_check(extract_text(node))) and style_warning(node, "Definition may contain requirement", r, display: false); end
-      def example_style(node); @novalid and return; style_no_guidance(node, extract_text(node), "Example"); style(node, extract_text(node)); end
-      def note_style(node); @novalid and return; style_no_guidance(node, extract_text(node), "Note"); style(node, extract_text(node)); end
-      def footnote_style(node); @novalid and return; style_no_guidance(node, extract_text(node), "Footnote"); style(node, extract_text(node)); end
+      def scope_style(node); style_no_guidance(node, extract_text(node), "Scope"); end
+      def introduction_style(node); (r = requirement_check(extract_text(node))) and style_warning(node, "Introduction may contain requirement", r, display: false); end
+      def definition_style(node); (r = requirement_check(extract_text(node))) and style_warning(node, "Definition may contain requirement", r, display: false); end
+      def example_style(node); style_no_guidance(node, extract_text(node), "Example"); style(node, extract_text(node)); end
+      def note_style(node); style_no_guidance(node, extract_text(node), "Note"); style(node, extract_text(node)); end
+      def footnote_style(node); style_no_guidance(node, extract_text(node), "Footnote"); style(node, extract_text(node)); end
 
       def style_abbrev(node, text)
         style_regex(/(?:\A|\p{Zs})(?!e\.g\.|i\.e\.) (?<num>[a-z]{1,2}\.(?:[a-z]{1,2}|\.))\b/ix, "no dots in abbreviations", node, text)
@@ -167,7 +165,6 @@ module Metanorma
       end
 
       def list_punctuation(doc)
-        return if @novalid
         ((doc.xpath("//ol") - doc.xpath("//ul//ol | //ol//ol")) + (doc.xpath("//ul") - doc.xpath("//ul//ul | //ol//ul"))).each do |list|
           next if skip_list_punctuation(list)
           prec = list.at("./preceding::text()[normalize-space(.) != ''][1]")
@@ -279,8 +276,6 @@ module Metanorma
 
       def content_validate(doc)
         @doctype = doc.at("//bibdata/ext/doctype")&.text
-        repeat_id_validate(doc.root)
-        xref_validate(doc)
         root = doc.root
         title_validate(root)
         section_style(root)
@@ -307,17 +302,6 @@ module Metanorma
 
       def validation_profile
         Metanorma::Iso::Validation::Profile::DEFAULT
-      end
-
-      def repeat_id_validate1(elem)
-        return unless elem["id"]
-        @doc_ids[elem["id"]] ||= { line: elem.line, anchor: elem["anchor"] }.compact
-      end
-
-      def repeat_anchor_validate1(elem)
-        return unless elem["anchor"]
-        @doc_anchors[elem["anchor"]] ||= { line: elem.line, id: elem["id"] }
-        @doc_anchor_seq << elem["anchor"]
       end
     end
   end
