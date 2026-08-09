@@ -300,8 +300,13 @@ module Metanorma
           novalid: @novalid, document: @localdir
         )
         Metanorma::Iso::Validation::ModelValidator.run(
-          doc.to_xml, log: @log, state: state
+          doc.to_xml, log: @log, state: state,
+          profile: validation_profile
         )
+      end
+
+      def validation_profile
+        Metanorma::Iso::Validation::Profile::DEFAULT
       end
 
       def repeat_id_validate1(elem)

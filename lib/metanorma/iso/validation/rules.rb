@@ -79,6 +79,8 @@ module Metanorma
                  "metanorma/iso/validation/rules/list_punctuation_rule"
         autoload :ModalInClauseRule,
                  "metanorma/iso/validation/rules/modal_in_clause_rule"
+        autoload :BrokenXrefRule,
+                 "metanorma/iso/validation/rules/broken_xref_rule"
       end
     end
   end
