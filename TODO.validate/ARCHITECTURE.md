@@ -192,11 +192,11 @@ validate1). These overrides go away when TODO 34 lands.
 ## Cross-repo work
 
 ### metanorma-document (TODO 33)
-8 focused PRs adding Layer 1 declarations and model extensions.
-Each unblocks specific Layer 3 rules. See TODO.validate/33-*.md.
+1 PR adding Layer 1 declarations and model extensions.
+See TODO.validate/33-*.md.
 
 ### metanorma-standoc (TODO 34)
-~20 PRs migrating STANDOC_* rules to Layer 3 classes. After this,
+1 PR migrating all STANDOC_* rules to Layer 3 classes. After this,
 the LegacyChecks module and all override hacks are deleted in one
 edit. See TODO.validate/34-*.md.
 

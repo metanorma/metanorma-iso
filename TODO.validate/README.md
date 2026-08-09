@@ -52,8 +52,8 @@ into a **layered, model-driven, OOP validator**. See
 | 30 | rule-standoc36-unique-ids-anchors | P1 | DONE |
 | 31 | structural-grammar-rule | P1 | TRACKED UPSTREAM (TODO 33: Layer 1 declarations) |
 | 32 | rng-and-jing-removal | P1 | DONE |
-| 33 | upstream-pr-metanorma-document-declarative | P2 | PLANNED (8 work items, each its own PR) |
-| 34 | standoc-migration-followup | P2 | PLANNED (~20 PRs across standoc + flavor gems) |
+| 33 | upstream-pr-metanorma-document-declarative | P2 | PLANNED (1 PR, all model extensions) |
+| 34 | standoc-migration-followup | P2 | PLANNED (1 PR to standoc) |
 | 35 | public-api-cli | P2 | DONE |
 
 ## What's done on this branch
@@ -77,11 +77,11 @@ into a **layered, model-driven, OOP validator**. See
 The layered design assigns each kind of validation a home. Items not
 done in this repo belong elsewhere — see [ARCHITECTURE.md](ARCHITECTURE.md).
 
-- **TODO 33 (metanorma-document)**: 8 focused PRs adding Layer 1
-  declarations and extending the model to preserve data currently
-  dropped by from_xml (nested sub, recursive figure, string-typed
-  dates, references-within-references).
-- **TODO 34 (metanorma-standoc)**: ~20 PRs migrating STANDOC_* rules
+- **TODO 33 (metanorma-document)**: 1 PR adding Layer 1 declarations
+  and extending the model to preserve data currently dropped by
+  from_xml (nested sub, recursive figure, string-typed dates,
+  references-within-references).
+- **TODO 34 (metanorma-standoc)**: 1 PR migrating all STANDOC_* rules
   to Layer 3. After this, the override hacks in Iso::Validate go away
   and the last Nokogiri usage in validation disappears.
 

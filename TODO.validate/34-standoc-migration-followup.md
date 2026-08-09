@@ -56,7 +56,7 @@ Mirror metanorma-iso's foundation: ModelValidator, Context, Report,
 Issue, IssueTranslator, RuleRegistry, Base, TreeTraversal. Wire as
 no-op alongside existing `Standoc::Validate`. Zero behavior change.
 
-### Phase B — Simple rules (one PR per rule, ~15 rules)
+### Phase B — All rules in the same PR
 - STANDOC_2 (empty tables)
 - STANDOC_4 (table rowspan)
 - STANDOC_5 (table max columns)
@@ -103,6 +103,6 @@ Each rule-migration PR:
 
 ## Estimating
 
-15-20 PRs across standoc + 4-5 PRs in each of the ~8 flavor gems to
-adopt the new wiring. ~2-3 months of focused work, parallelizable
-across flavors.
+1 PR to standoc (all rules + foundation + retire Validate class).
+Flavor gems pick up the new wiring automatically — no per-flavor PRs
+needed since they inherit Standoc::Validate.
