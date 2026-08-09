@@ -278,6 +278,10 @@ module Metanorma
         @doctype = doc.at("//bibdata/ext/doctype")&.text
         super
         root = doc.root
+        normref_validate(root)
+        section_style(root)
+        subclause_validate(root)
+        list_punctuation(doc)
         title_validate(root)
         asset_style(root)
         model_validate(doc)
