@@ -55,6 +55,7 @@ into a **layered, model-driven, OOP validator**. See
 | 33 | upstream-pr-metanorma-document-declarative | P2 | PLANNED (1 PR, all model extensions) |
 | 34 | standoc-migration-followup | P2 | PLANNED (1 PR to standoc) |
 | 35 | public-api-cli | P2 | DONE |
+| 36 | model-ownership-migration | P2 | PLANNED (5 phases, 3+ gems; awaiting user timing decision) |
 
 ## What's done on this branch
 
@@ -90,6 +91,11 @@ done in this repo belong elsewhere — see [ARCHITECTURE.md](ARCHITECTURE.md).
 - **TODO 35 (Public API + CLI)**: 1-2 PRs exposing
   `Metanorma::Iso.validate(xml)` and `metanorma-iso validate FILE`.
   Builds entirely on the existing ModelValidator; no migration.
+- **TODO 36 (Model ownership migration)**: 5-phase plan to move
+  StandardDocument from metanorma-document to metanorma-standoc, then
+  each flavor's document model back to its own gem. 124-file / 4.6k-
+  line scope across 3+ repos. Awaiting user timing decision before
+  opening cross-gem PRs.
 
 ## Execution order
 
