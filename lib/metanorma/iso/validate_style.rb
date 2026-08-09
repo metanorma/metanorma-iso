@@ -157,7 +157,8 @@ module Metanorma
         root.xpath("//fn").each { |e| footnote_style(e) }
         root.xpath(ASSETS_TO_STYLE).each { |e| style(e, extract_text(e)) }
         # ISO_42 normative bibitem: migrated to NormativeBibitemRule (TODO 10).
-        super
+        # Standoc's asset_style super call removed — overlapping checks
+        # are now handled by Layer 3 rules.
       end
     end
   end
