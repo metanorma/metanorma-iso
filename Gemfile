@@ -11,7 +11,15 @@ gem "isodoc", github: "metanorma/isodoc", branch: "rt-pubid-2-migration"
 gem "metanorma", github: "metanorma/metanorma", branch: "main"
 # standoc PR branch allowing isodoc 3.7; revert to branch: "main" once
 # https://github.com/metanorma/metanorma-standoc/pull/1215 merges.
-gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "rt-allow-isodoc-3.7"
+# TEMPORARY: pointing to feat/move-standard-document for the namespace
+# rename (Metanorma::Standoc::Document). Revert to main once PR
+# https://github.com/metanorma/metanorma-standoc/pull/1232 merges.
+gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "feat/move-standard-document"
+# TEMPORARY: pointing to feat/model-validation-l1-declarations for the
+# model extensions (SubElement recursive, StandardReferencesSection nested).
+# Revert to main once PR
+# https://github.com/metanorma/metanorma-document/pull/45 merges.
+gem "metanorma-document", github: "metanorma/metanorma-document", branch: "feat/model-validation-l1-declarations"
 gem "rake"
 # relaton-bib 2.2.0.pre is the pubid-2-native line required by
 # metanorma-document 0.4.0.
