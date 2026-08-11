@@ -1141,7 +1141,7 @@
 											<fo:table-cell number-rows-spanned="2">
 												<fo:block font-size="0">
 													<xsl:variable name="content-height">25</xsl:variable>
-													<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo-1987))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo"/>
+													<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo-1987))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo" fox:placement="Block"/>
 												</fo:block>
 											</fo:table-cell>
 											<fo:table-cell font-size="11pt" font-weight="bold">
@@ -1660,7 +1660,7 @@
 
 							<fo:block text-align="center" font-family="Arial" margin-top="14mm">
 								<fo:block>
-									<fo:instream-foreign-object content-width="23mm" fox:alt-text="Image ISO Logo">
+									<fo:instream-foreign-object content-width="23mm" fox:alt-text="Image ISO Logo" fox:placement="Block">
 										<xsl:copy-of select="$Image-ISO-Logo-1951-SVG"/>
 									</fo:instream-foreign-object>
 								</fo:block>
@@ -1813,7 +1813,7 @@
 														<xsl:otherwise>27</xsl:otherwise>
 													</xsl:choose>
 												</xsl:variable>
-												<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo-1972))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo"/>
+												<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo-1972))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo" fox:placement="Block"/>
 											</fo:block>
 										</fo:table-cell>
 										<fo:table-cell text-align="right">
@@ -1915,7 +1915,7 @@
 													<fo:table-cell>
 														<fo:block margin-top="-0.5mm" font-size="0">
 															<xsl:variable name="content-height">18</xsl:variable>
-															<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo-1987))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo"/>
+															<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo-1987))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo" fox:placement="Block"/>
 														</fo:block>
 													</fo:table-cell>
 													<fo:table-cell font-size="7.5pt" border-top="0.5pt solid black" border-bottom="0.5pt solid black" text-align-last="justify" display-align="center" line-height="1.6" padding-left="32mm">
@@ -2284,7 +2284,7 @@
 																<fo:table-row>
 																	<fo:table-cell text-align="right" padding-top="3mm">
 																		<fo:block>
-																			<fo:instream-foreign-object fox:alt-text="QRcode">
+																			<fo:instream-foreign-object fox:alt-text="QRcode" fox:placement="Block">
 																				<!-- Todo: link generation -->
 																				<barcode:barcode message="{$feedback_link}">
 																					<barcode:qr>
@@ -2864,7 +2864,7 @@
 									<fo:table-row height="32mm" role="SKIP">
 										<fo:table-cell display-align="center" role="SKIP">
 											<fo:block text-align="left">
-												<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo))}" width="21mm" content-height="21mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/>
+												<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo))}" width="21mm" content-height="21mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}" fox:placement="Block"/>
 											</fo:block>
 										</fo:table-cell>
 										<fo:table-cell display-align="center" role="SKIP">
@@ -3258,7 +3258,7 @@
 		</xsl:choose>
 		<xsl:if test="$variables/mnx:doc[@num = $num]/copyrightAbbrIEEE != ''">
 			<fo:block>
-				<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-IEEE-Logo))}" content-height="11mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}"/>
+				<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-IEEE-Logo))}" content-height="11mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}" fox:placement="Block"/>
 			</fo:block>
 		</xsl:if>
 	</xsl:template> <!-- END: insertLogoImages -->
@@ -3301,26 +3301,26 @@
 			<xsl:when test="mn:abbreviation = 'ISO'">
 				<xsl:choose>
 					<xsl:when test="$layoutVersion = '1989' and $revision_date_num &lt; 19930101">
-						<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo-1987))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo"/>
+						<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo-1987))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo" fox:placement="Block"/>
 					</xsl:when>
 					<xsl:otherwise>
-						<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo"/>
+						<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-ISO-Logo))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image ISO Logo" fox:placement="Block"/>
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:when>
 			<xsl:when test="mn:abbreviation = 'IEC'">
 				<xsl:choose>
 					<xsl:when test="$layoutVersion = '1989' and $revision_date_num &lt; 19930101">
-						<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-IEC-Logo-1989))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image IEC Logo"/>
+						<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-IEC-Logo-1989))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image IEC Logo" fox:placement="Block"/>
 					</xsl:when>
 					<xsl:otherwise>
-						<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-IEC-Logo))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image IEC Logo"/>
+						<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-IEC-Logo))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image IEC Logo" fox:placement="Block"/>
 					</xsl:otherwise>
 				</xsl:choose>
 			</xsl:when>
 			<xsl:when test="mn:abbreviation = 'IEEE'"/>
 			<xsl:when test="mn:abbreviation = 'IDF' or mn:name = 'IDF'">
-				<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-IDF-Logo))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image IDF Logo"/>
+				<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-IDF-Logo))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image IDF Logo" fox:placement="Block"/>
 			</xsl:when>
 			<xsl:otherwise/>
 		</xsl:choose>
@@ -3367,7 +3367,7 @@
 				<xsl:variable name="Image-IEEE-Logo2">
 					<xsl:call-template name="get_Image-IEEE-Logo2"><xsl:with-param name="num" select="$num"/></xsl:call-template>
 				</xsl:variable>
-				<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-IEEE-Logo2))}" content-width="{$content-height * 2 + 2}mm" content-height="scale-to-fit" scaling="uniform" fox:alt-text="Image IEEE Logo"/>
+				<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-IEEE-Logo2))}" content-width="{$content-height * 2 + 2}mm" content-height="scale-to-fit" scaling="uniform" fox:alt-text="Image IEEE Logo" fox:placement="Block"/>
 			</fo:block>
 		</xsl:if>
 	</xsl:template> <!-- END: insertLogoImages2024 -->
@@ -3433,18 +3433,18 @@
 				</xsl:choose>
 			</xsl:when>
 			<xsl:when test="mn:abbreviation = 'ISO'">
-				<fo:instream-foreign-object content-height="{$content-height}mm" fox:alt-text="Image ISO Logo">
+				<fo:instream-foreign-object content-height="{$content-height}mm" fox:alt-text="Image ISO Logo" fox:placement="Block">
 					<xsl:call-template name="get_Image-ISO-Logo-SVG"><xsl:with-param name="num" select="$num"/></xsl:call-template>
 				</fo:instream-foreign-object>
 			</xsl:when>
 			<xsl:when test="mn:abbreviation = 'IEC'">
-				<fo:instream-foreign-object content-height="{$content-height}mm" fox:alt-text="Image IEC Logo">
+				<fo:instream-foreign-object content-height="{$content-height}mm" fox:alt-text="Image IEC Logo" fox:placement="Block">
 					<xsl:call-template name="get_Image-IEC-Logo-SVG"><xsl:with-param name="num" select="$num"/></xsl:call-template>
 				</fo:instream-foreign-object>
 			</xsl:when>
 			<xsl:when test="mn:abbreviation = 'IEEE'"/>
 			<xsl:when test="mn:abbreviation = 'IDF' or mn:name = 'IDF'">
-				<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-IDF-Logo))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image IDF Logo"/>
+				<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-IDF-Logo))}" content-height="{$content-height}mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image IDF Logo" fox:placement="Block"/>
 			</xsl:when>
 			<xsl:otherwise/>
 		</xsl:choose>
@@ -4422,7 +4422,7 @@
 				<fo:block xsl:use-attribute-sets="copyright-statement-title-style">
 					<xsl:call-template name="refine_copyright-statement-title-style"/>
 
-					<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-Attention))}" width="14mm" content-height="13mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}">
+					<fo:external-graphic src="{concat('data:image/png;base64,', normalize-space($Image-Attention))}" width="14mm" content-height="13mm" content-width="scale-to-fit" scaling="uniform" fox:alt-text="Image {@alt}" fox:placement="Inline">
 						<!-- <xsl:if test="$layoutVersion = '2024'">
 							<xsl:attribute name="width">13mm</xsl:attribute>
 							<xsl:attribute name="content-height">11.5mm</xsl:attribute>
@@ -6262,7 +6262,7 @@
 	</xsl:template>
 
 	<xsl:template name="insertBlackCircle">
-		<fo:instream-foreign-object content-width="1.3mm" fox:alt-text="black circle">
+		<fo:instream-foreign-object content-width="1.3mm" fox:alt-text="black circle" fox:placement="Inline">
 			<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
 				<circle cx="10" cy="10" r="5" stroke="black" stroke-width="5" fill="black"/>
 			</svg>
@@ -9482,7 +9482,7 @@
 		<xsl:param name="value"/>
 		<xsl:variable name="add_width" select="string-length($value) * 20"/>
 		<xsl:variable name="maxwidth" select="60 + $add_width"/>
-			<fo:instream-foreign-object fox:alt-text="OpeningTag" baseline-shift="-10%"><!-- alignment-baseline="middle" -->
+			<fo:instream-foreign-object fox:alt-text="OpeningTag" baseline-shift="-10%" fox:placement="Inline"><!-- alignment-baseline="middle" -->
 				<xsl:attribute name="height">3.5mm</xsl:attribute> <!-- 5mm -->
 				<xsl:attribute name="content-width">100%</xsl:attribute>
 				<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
@@ -9724,7 +9724,7 @@
 						<xsl:attribute name="margin-top">0pt</xsl:attribute>
 						<xsl:attribute name="margin-bottom">0pt</xsl:attribute>
 					</xsl:if>
-					<fo:instream-foreign-object fox:alt-text="{.}" content-width="95%">
+					<fo:instream-foreign-object fox:alt-text="{.}" content-width="95%" fox:placement="Inline">
 						<math xmlns="http://www.w3.org/1998/Math/MathML">
 							<mtext><xsl:value-of select="."/></mtext>
 						</math>
@@ -15296,7 +15296,7 @@
 
 					<!-- debug scale='<xsl:value-of select="$scale"/>', indent='<xsl:value-of select="$indent"/>' -->
 
-					<fo:external-graphic src="{$src}" vertical-align="middle" fox:placement="inline">
+					<fo:external-graphic src="{$src}" vertical-align="middle" fox:placement="Inline">
 						<xsl:call-template name="addAltText"/>
 
 						<xsl:if test="parent::mn:logo"> <!-- publisher's logo -->
@@ -15361,7 +15361,7 @@
 					<xsl:choose>
 						<xsl:when test="$isDeleted = 'true'">
 							<!-- enclose in svg -->
-							<fo:instream-foreign-object>
+							<fo:instream-foreign-object fox:placement="Block">
 								<xsl:attribute name="width">100%</xsl:attribute>
 								<xsl:attribute name="content-height">100%</xsl:attribute>
 								<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
@@ -15382,7 +15382,7 @@
 							<xsl:value-of select="concat('scale=', $scale,', indent=', $indent)"/>
 							</fo:block> -->
 
-							<fo:external-graphic src="{$src}">
+							<fo:external-graphic src="{$src}" fox:placement="Block">
 								<xsl:call-template name="addAltText"/>
 
 								<xsl:choose>
@@ -15721,7 +15721,7 @@
 											</xsl:if>
 											<fo:block text-depth="0" line-height="0" font-size="0">
 
-												<fo:instream-foreign-object fox:alt-text="{$alt-text}">
+												<fo:instream-foreign-object fox:alt-text="{$alt-text}" fox:placement="Block">
 													<xsl:attribute name="width">100%</xsl:attribute>
 													<xsl:attribute name="content-height">100%</xsl:attribute>
 													<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
@@ -15770,7 +15770,7 @@
 					<xsl:copy>
 						<xsl:copy-of select="@*"/>
 					<!-- <fo:block xsl:use-attribute-sets="image-style"> -->
-						<fo:instream-foreign-object fox:alt-text="{$alt-text}">
+						<fo:instream-foreign-object fox:alt-text="{$alt-text}" fox:placement="Block">
 
 							<xsl:choose>
 								<xsl:when test="$image_class = 'corrigenda-tag'">
@@ -15836,7 +15836,7 @@
 							</xsl:if>
 
 							<xsl:if test="self::fo:inline">
-								<xsl:attribute name="fox:placement">inline</xsl:attribute>
+								<xsl:attribute name="fox:placement">Inline</xsl:attribute>
 							</xsl:if>
 
 							<xsl:copy-of select="$svg_content"/>
@@ -16177,6 +16177,24 @@
 	<xsl:template name="refine_mathml-style">
 	</xsl:template>
 
+	<xsl:attribute-set name="mathml-instream-foreign-object-style">
+		<xsl:attribute name="fox:alt-text">Math</xsl:attribute>
+		<xsl:attribute name="fox:actual-text">Math</xsl:attribute>
+		<xsl:attribute name="fox:placement">Inline</xsl:attribute>
+	</xsl:attribute-set> <!-- mathml-instream-foreign-object-style -->
+
+	<xsl:template name="refine_mathml-instream-foreign-object-style">
+		<xsl:if test="count(ancestor::mn:table) &gt; 1">
+			<xsl:attribute name="width">95%</xsl:attribute>
+			<xsl:attribute name="content-height">100%</xsl:attribute>
+			<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
+			<xsl:attribute name="scaling">uniform</xsl:attribute>
+		</xsl:if>
+		<xsl:if test="ancestor::mn:formula">
+			<xsl:attribute name="fox:placement">Block</xsl:attribute>
+		</xsl:if>
+	</xsl:template> <!-- refine_mathml-instream-foreign-object-style -->
+
 	<!-- ====== -->
 	<!-- formula  -->
 	<!-- ====== -->
@@ -16388,9 +16406,9 @@
 			<xsl:apply-templates select="." mode="mathml"/>
 		</xsl:variable>
 
-		<fo:instream-foreign-object fox:alt-text="Math" fox:actual-text="Math" fox:placement="inline">
+		<fo:instream-foreign-object xsl:use-attribute-sets="mathml-instream-foreign-object-style">
 
-			<xsl:call-template name="refine_mathml_insteam_object_style"/>
+			<xsl:call-template name="refine_mathml-instream-foreign-object-style"/>
 
 			<xsl:if test="$isGenerateTableIF = 'false'">
 				<!-- put MathML in Actual Text -->
@@ -16413,15 +16431,6 @@
 
 		</fo:instream-foreign-object>
 	</xsl:template>
-
-	<xsl:template name="refine_mathml_insteam_object_style">
-		<xsl:if test="count(ancestor::mn:table) &gt; 1">
-			<xsl:attribute name="width">95%</xsl:attribute>
-			<xsl:attribute name="content-height">100%</xsl:attribute>
-			<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
-			<xsl:attribute name="scaling">uniform</xsl:attribute>
-		</xsl:if>
-	</xsl:template> <!-- refine_mathml_insteam_object_style -->
 
 	<xsl:template match="mathml:*" mode="mathml_actual_text">
 		<!-- <xsl:text>a+b</xsl:text> -->
@@ -18378,7 +18387,7 @@
 			<xsl:call-template name="set_id_metanorma_form_item">
 				<xsl:with-param name="form_item_type" select="$form_item_type"/>
 			</xsl:call-template>
-			<fo:instream-foreign-object fox:alt-text="Box" baseline-shift="-10%">
+			<fo:instream-foreign-object fox:alt-text="Box" baseline-shift="-10%" fox:placement="Inline">
 				<xsl:attribute name="height">3.5mm</xsl:attribute>
 				<xsl:attribute name="content-width">100%</xsl:attribute>
 				<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
@@ -18405,7 +18414,7 @@
 			<xsl:call-template name="set_id_metanorma_form_item">
 				<xsl:with-param name="form_item_type" select="$form_item_type"/>
 			</xsl:call-template>
-			<fo:instream-foreign-object fox:alt-text="Box" baseline-shift="-10%">
+			<fo:instream-foreign-object fox:alt-text="Box" baseline-shift="-10%" fox:placement="Inline">
 				<xsl:attribute name="height">3.5mm</xsl:attribute>
 				<xsl:attribute name="content-width">100%</xsl:attribute>
 				<xsl:attribute name="content-width">scale-down-to-fit</xsl:attribute>
@@ -20804,7 +20813,7 @@
 
 	<xsl:template match="mn:blacksquare" name="blacksquare">
 		<fo:inline padding-right="2.5mm" baseline-shift="5%">
-			<fo:instream-foreign-object content-height="2mm" content-width="2mm" fox:alt-text="Quad">
+			<fo:instream-foreign-object content-height="2mm" content-width="2mm" fox:alt-text="Quad" fox:placement="Inline">
 					<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" viewBox="0 0 2 2">
 						<rect x="0" y="0" width="2" height="2" fill="black"/>
 					</svg>
@@ -21792,13 +21801,13 @@
 		<xsl:param name="bitmap_width" select="$pageWidth"/>
 		<xsl:choose>
 			<xsl:when test="*[local-name() = 'svg'] or java:endsWith(java:java.lang.String.new(@src), '.svg')">
-				<fo:instream-foreign-object fox:alt-text="Image Front">
+				<fo:instream-foreign-object fox:alt-text="Image Front" fox:placement="Block">
 					<xsl:attribute name="content-height"><xsl:value-of select="$svg_content_height"/>mm</xsl:attribute>
 					<xsl:call-template name="getSVG"/>
 				</fo:instream-foreign-object>
 			</xsl:when>
 			<xsl:when test="starts-with(@src, 'data:application/pdf;base64')">
-				<fo:external-graphic src="{@src}" fox:alt-text="Image Front"/>
+				<fo:external-graphic src="{@src}" fox:alt-text="Image Front" fox:placement="Block"/>
 			</xsl:when>
 			<xsl:otherwise> <!-- bitmap image -->
 				<xsl:variable name="coverimage_src" select="normalize-space(@src)"/>
@@ -21808,7 +21817,7 @@
 							<xsl:with-param name="src" select="$coverimage_src"/>
 						</xsl:call-template>
 					</xsl:variable>
-					<fo:external-graphic src="{$coverpage}" width="{$bitmap_width}mm" content-height="scale-to-fit" scaling="uniform" fox:alt-text="Image Front"/>
+					<fo:external-graphic src="{$coverpage}" width="{$bitmap_width}mm" content-height="scale-to-fit" scaling="uniform" fox:alt-text="Image Front" fox:placement="Block"/>
 				</xsl:if>
 			</xsl:otherwise>
 		</xsl:choose>
