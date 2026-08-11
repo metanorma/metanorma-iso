@@ -20,6 +20,13 @@ on:
     types:
       - completed
   status: {}
+
+# Least-privilege: pascalgn/automerge-action merges PRs with GITHUB_TOKEN,
+# which requires contents:write (merge) and pull-requests:write.
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   automerge:
     runs-on: ubuntu-latest
