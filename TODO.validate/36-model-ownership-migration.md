@@ -54,12 +54,48 @@ breaks the children.
 PR metanorma/metanorma-document#45 marks both autoloads as deprecated
 in `lib/metanorma/document.rb` but does not remove the trees.
 
-### Phase 4 — DEFERRED (out of 3-gem scope)
+### Phase 4 — IN PROGRESS (6 of ~18 flavors migrated)
 
 Move each remaining flavor tree out of metanorma-document into its own
-flavor gem (itu, ieee, bsi, csa, iec, ietf, jis, oiml). One PR per
-flavor gem. Each flavor's document model adopts the
-`Metanorma::<Flavor>::Document::*` namespace pattern.
+flavor gem. One PR per flavor gem. Each flavor's document model adopts
+the `Metanorma::<Flavor>::Document::*` namespace pattern.
+
+Migration script: `/tmp/migrate-flavor.sh <flavor> <FlavorClass>` runs
+the full pattern (branch, copy, sed-rename, alias, deprecate, Gemfile
+pins, namespace spec, verify).
+
+#### Successfully migrated (draft PRs open)
+
+| Flavor | PR | Status |
+|---|---|---|
+| generic | metanorma/metanorma-generic#125 | draft, 8 examples green |
+| ribose | metanorma/metanorma-ribose#541 | draft, 7 examples green |
+| ogc | metanorma/metanorma-ogc#989 | draft, 7 examples green |
+| iho | metanorma/metanorma-iho#515 | draft, 7 examples green |
+| nist | branch pushed (PR pending rate-limit reset) | 7 examples green |
+| ietf | branch pushed (PR pending rate-limit reset) | 7 examples green |
+
+#### Blocked by pre-existing bundle issues (need per-gem investigation)
+
+| Flavor | Blocker |
+|---|---|
+| ieee | `pubid-ieee` not in bundle |
+| iec | `pubid-iso` not in bundle |
+| bsi | `pubid-iso` not in bundle |
+| jis | `pubid-iso` not in bundle |
+| itu | `pubid-itu` not in bundle |
+| plateau | transitively blocked (depends on jis) |
+| bipm | bundle resolution failure |
+| m3d | gemspec `rubocop ~> 1.5.2` conflicts with isodoc |
+| gb | gemspec `twitter_cldr ~> 4.4.4` conflicts with isodoc |
+
+#### Special cases (need custom handling)
+
+| Flavor | Issue |
+|---|---|
+| un | Source `Metanorma::UnDocument`, target gem is `metanorma-unece` — namespace mismatch (need `Unece::Document`, not `Un::Document`) |
+| cc | No `metanorma-cc` gem exists locally (only `metanorma-model-cc`) |
+| csa | Only `metanorma-csand` exists locally; mapping to `csa_document` unclear |
 
 ### Phase 5 — DEFERRED (out of 3-gem scope)
 
