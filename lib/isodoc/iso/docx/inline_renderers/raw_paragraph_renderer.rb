@@ -6,7 +6,7 @@ module IsoDoc
   module Iso
     module Docx
       module InlineRenderers
-        # Renders Metanorma::IsoDocument::RawParagraph — a paragraph whose
+        # Renders Metanorma::Iso::Document::RawParagraph — a paragraph whose
         # mixed inline content is captured as a raw XML string in
         # +content+ (see <tt>map_all_content to: :content</tt>).
         #

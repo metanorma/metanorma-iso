@@ -3,8 +3,8 @@
 module Metanorma
   module Iso::Document
     module Terms
-      TermNameElement = Metanorma::StandardDocument::Terms::TermNameElement
-      TermExpression = Metanorma::StandardDocument::Terms::TermExpression
+      TermNameElement = Metanorma::Standoc::Document::Terms::TermNameElement
+      TermExpression = Metanorma::Standoc::Document::Terms::TermExpression
     end
   end
 end

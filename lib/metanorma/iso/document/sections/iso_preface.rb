@@ -26,7 +26,7 @@ module Metanorma
 
         # Presentation front-matter clauses (e.g. table of contents placeholder)
         attribute :clause, IsoClauseSection, collection: true
-        attribute :content, Metanorma::StandardDocument::Sections::ContentSection,
+        attribute :content, Metanorma::Standoc::Document::Sections::ContentSection,
                   collection: true
 
         # Presentation-specific attributes
@@ -43,7 +43,7 @@ module Metanorma
           map_element "clause",       to: :clause
           map_element "clause",       to: :content
 
-          Metanorma::StandardDocument::SectionXmlMapping.apply_preface_attributes(self)
+          Metanorma::Standoc::Document::SectionXmlMapping.apply_preface_attributes(self)
         end
       end
     end

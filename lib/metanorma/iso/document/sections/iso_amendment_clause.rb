@@ -6,7 +6,7 @@ module Metanorma
       # Clause appearing in an ISO/IEC Amendment or Technical Corrigendum document.
       class IsoAmendmentClause < Lutaml::Model::Serializable
         # Block expressing a machine-readable change in a document.
-        attribute :amend, Metanorma::StandardDocument::Blocks::AmendBlock
+        attribute :amend, Metanorma::Standoc::Document::Blocks::AmendBlock
         attribute :semx_id, :string
         attribute :autonum, :string
         attribute :displayorder, :integer

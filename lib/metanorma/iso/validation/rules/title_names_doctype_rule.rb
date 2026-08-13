@@ -41,7 +41,7 @@ module Metanorma
             titles = bibdata.titles if bibdata.class.method_defined?(:titles)
             return [] unless titles
 
-            return Array(titles) unless titles.is_a?(Metanorma::IsoDocument::Metadata::TitleCollection)
+            return Array(titles) unless titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
 
             Array(titles.items)
           end

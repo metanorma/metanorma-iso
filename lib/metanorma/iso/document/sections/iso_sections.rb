@@ -7,7 +7,7 @@ module Metanorma
       # Extends StandardDocument::Sections with ISO strict ordering:
       #   (note | admonition)*, clause, (term-clause | terms)?, definitions?,
       #   (clause | term-clause | terms)+
-      class IsoSections < Metanorma::StandardDocument::Sections::Sections
+      class IsoSections < Metanorma::Standoc::Document::Sections::Sections
         # Notes applicable to the entire document (appearing before clauses)
         attribute :note,
                   Metanorma::Document::Components::Blocks::NoteBlock,
@@ -23,7 +23,7 @@ module Metanorma
 
         # Override: ISO definitions is singular (zero or one)
         attribute :definitions,
-                  Metanorma::StandardDocument::Sections::DefinitionSection
+                  Metanorma::Standoc::Document::Sections::DefinitionSection
 
         # Override: ISO clauses use IsoClauseSection
         attribute :clause, IsoClauseSection, collection: true
@@ -40,10 +40,10 @@ module Metanorma
           map_element "note",         to: :note
           map_element "admonition",   to: :admonition
 
-          Metanorma::StandardDocument::SectionXmlMapping.apply_sections_elements(self)
+          Metanorma::Standoc::Document::SectionXmlMapping.apply_sections_elements(self)
           map_element "p", to: :p
 
-          Metanorma::StandardDocument::SectionXmlMapping.apply_sections_attributes(self)
+          Metanorma::Standoc::Document::SectionXmlMapping.apply_sections_attributes(self)
         end
       end
     end

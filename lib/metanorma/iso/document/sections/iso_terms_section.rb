@@ -6,7 +6,7 @@ module Metanorma
       # Terms section specific to ISO/IEC documents.
       # Maps <terms> element with <title>, <p>, <ul>, <term> children.
       class IsoTermsSection < Lutaml::Model::Serializable
-        include Metanorma::StandardDocument::PresentationAttributes
+        include Metanorma::Standoc::Document::PresentationAttributes
 
         attribute :id, :string
         attribute :type, :string
@@ -41,7 +41,7 @@ module Metanorma
 
         # Definitions section within terms
         attribute :definitions,
-                  Metanorma::StandardDocument::Sections::DefinitionSection
+                  Metanorma::Standoc::Document::Sections::DefinitionSection
 
         # Nested terms sections (terms within terms)
         attribute :terms, IsoTermsSection, collection: true
@@ -52,7 +52,7 @@ module Metanorma
         xml do
           element "terms"
 
-          Metanorma::StandardDocument::SectionXmlMapping.apply_content_section_attributes(self)
+          Metanorma::Standoc::Document::SectionXmlMapping.apply_content_section_attributes(self)
 
           map_element "title", to: :title
           map_element "variant-title", to: :variant_title

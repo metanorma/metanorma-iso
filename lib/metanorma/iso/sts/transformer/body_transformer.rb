@@ -23,7 +23,7 @@ module Metanorma
 
         def dispatch_body_node(node, body, dispatcher)
           case node
-          when Metanorma::StandardDocument::Sections::DefinitionSection
+          when Metanorma::Standoc::Document::Sections::DefinitionSection
             sec = Transformer::ModelBuilder.section(
               id: "sec_symbols",
               sec_type: "symbols",

@@ -22,7 +22,7 @@ module Metanorma
         attribute :admonition, Metanorma::Document::Components::MultiParagraph::AdmonitionBlock,
                   collection: true
         attribute :term, IsoTerm, collection: true
-        attribute :related, Metanorma::StandardDocument::Terms::RelatedTerm,
+        attribute :related, Metanorma::Standoc::Document::Terms::RelatedTerm,
                   collection: true
         attribute :semx_id, :string
         attribute :fmt_xref_label,

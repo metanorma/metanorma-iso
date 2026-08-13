@@ -255,7 +255,7 @@ module IsoDoc
           return nil unless bib.class.attributes.key?(:titles)
 
           titles = bib.titles
-          return nil unless titles.is_a?(Metanorma::IsoDocument::Metadata::TitleCollection)
+          return nil unless titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
 
           localized = titles.for_language("en")
           return localized unless localized.nil? || localized.to_s.empty?

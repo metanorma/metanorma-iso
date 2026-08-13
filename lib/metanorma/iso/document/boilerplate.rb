@@ -2,6 +2,6 @@
 
 module Metanorma
   module Iso::Document
-    Boilerplate = Metanorma::StandardDocument::Boilerplate
+    Boilerplate = Metanorma::Standoc::Document::Boilerplate
   end
 end

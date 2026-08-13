@@ -4,9 +4,9 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        # Facade over the parsed {Metanorma::IsoDocument::Root} that provides
+        # Facade over the parsed {Metanorma::Iso::Document::Root} that provides
         # uniform read accessors for every transformer. Converting the source
-        # tree (raw {Metanorma::IsoDocument::Root}, XML string, or anything
+        # tree (raw {Metanorma::Iso::Document::Root}, XML string, or anything
         # responding to +#read+) into a {SourceDocument} concentrates "how do
         # I read X from the source?" in one place — mirroring the OIML
         # transformer pipeline and giving us one seam to evolve when the
@@ -16,11 +16,11 @@ module Metanorma
 
           def self.parse(input)
             xml_string = parse_xml(input)
-            new(Metanorma::IsoDocument::Root.from_xml(xml_string))
+            new(Metanorma::Iso::Document::Root.from_xml(xml_string))
           end
 
           def self.parse_xml(input)
-            return input if input.is_a?(Metanorma::IsoDocument::Root)
+            return input if input.is_a?(Metanorma::Iso::Document::Root)
             return input.read if input.is_a?(IO) || input.is_a?(StringIO)
 
             input.to_s
@@ -84,7 +84,7 @@ module Metanorma
             return "en" unless langs
 
             lang = langs.is_a?(Array) ? langs.first : langs
-            lang = lang.is_a?(Metanorma::IsoDocument::Metadata::LanguageElement) ? lang.value : lang
+            lang = lang.is_a?(Metanorma::Iso::Document::Metadata::LanguageElement) ? lang.value : lang
             lang.to_s.strip.match?(/\A[a-z]{2}(-[A-Z]{2})?\z/) ? lang.to_s.strip : "en"
           end
 

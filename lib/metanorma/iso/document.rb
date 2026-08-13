@@ -1,12 +1,20 @@
 # frozen_string_literal: true
 
+# Forward-declare parent namespace so this file is safe to require
+# directly (without first requiring metanorma/iso.rb). Re-opening
+# an existing module is idempotent.
+module Metanorma
+  module Iso
+  end
+end
+
 # Metanorma::Iso::Document — the ISO-specific document model.
 #
 # This is the canonical home for IsoDocument. It is NOT a vendored copy
 # of metanorma-document. The ownership model is:
 #
 #   metanorma-document  → Metanorma::Document (components, relaton)
-#   metanorma-standoc   → Metanorma::StandardDocument (generic standard document)
+#   metanorma-standoc   → Metanorma::Standoc::Document (generic standard document)
 #   metanorma-iso       → Metanorma::Iso::Document (ISO-specific extensions)
 #
 # IsoDocument extends StandardDocument with ISO-specific types:
@@ -34,4 +42,24 @@ module Metanorma
   end
 end
 
+# Reassign the Metanorma::IsoDocument alias to point at our canonical
+# Iso::Document BEFORE setup_iso_register runs (the register references
+# Metanorma::IsoDocument to wire type substitutions). Silently overrides
+# any prior constant (older metanorma-document releases shipped their
+# own IsoDocument) to avoid Ruby's "already initialized constant"
+# warning. Scheduled for removal once downstream consumers migrate.
+module Metanorma
+  existing = defined?(Metanorma::IsoDocument) && Metanorma::IsoDocument
+  if !existing.equal?(Metanorma::Iso::Document)
+    Metanorma.send(:remove_const, :IsoDocument) if existing
+    IsoDocument = Metanorma::Iso::Document
+  end
+end
+
 Metanorma::Registers::Setup.setup_iso_register
+
+# Mark alias as deprecated AFTER setup so the register's own reference
+# doesn't trip the warning.
+module Metanorma
+  deprecate_constant :IsoDocument
+end

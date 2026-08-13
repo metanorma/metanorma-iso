@@ -3,7 +3,7 @@
 module Metanorma
   module Iso::Document
     module Metadata
-      MetanormaExtension = Metanorma::StandardDocument::Metadata::MetanormaExtension
+      MetanormaExtension = Metanorma::Standoc::Document::Metadata::MetanormaExtension
     end
   end
 end

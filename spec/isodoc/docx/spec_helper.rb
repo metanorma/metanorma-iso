@@ -7,7 +7,7 @@ require "zip"
 require "rspec"
 
 require "metanorma/document"
-require "metanorma/iso_document"
+require "metanorma/iso/document"
 require "uniword"
 
 require "isodoc/iso/docx"

@@ -6,13 +6,13 @@ module Metanorma
       # Foreword section of an ISO/IEC document.
       # Extends ContentSection (blocks + optional subsections) but maps to
       # the "foreword" element. ISO foreword typically has no subsections.
-      class IsoForewordSection < Metanorma::StandardDocument::Sections::ContentSection
+      class IsoForewordSection < Metanorma::Standoc::Document::Sections::ContentSection
         xml do
           element "foreword"
           ordered
 
-          Metanorma::StandardDocument::SectionXmlMapping.apply_content_section_attributes(self)
-          Metanorma::StandardDocument::SectionXmlMapping.apply_content_section_elements(self)
+          Metanorma::Standoc::Document::SectionXmlMapping.apply_content_section_attributes(self)
+          Metanorma::Standoc::Document::SectionXmlMapping.apply_content_section_elements(self)
         end
 
         json do

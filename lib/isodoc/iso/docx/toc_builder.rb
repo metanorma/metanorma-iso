@@ -134,11 +134,11 @@ module IsoDoc
 
           top_level.sort_by { |node| display_order_of(node) }.each do |node|
             case node
-            when Metanorma::IsoDocument::Sections::IsoClauseSection,
-                 Metanorma::StandardDocument::Sections::StandardReferencesSection,
+            when Metanorma::Iso::Document::Sections::IsoClauseSection,
+                 Metanorma::Standoc::Document::Sections::StandardReferencesSection,
                  Metanorma::Document::Components::Sections::ReferencesSection
               add_clause_entries(entries, node, 1)
-            when Metanorma::IsoDocument::Sections::IsoTermsSection
+            when Metanorma::Iso::Document::Sections::IsoTermsSection
               entries << build_entry(node, 1)
             else
               entries << build_entry(node, 1)

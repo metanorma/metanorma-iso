@@ -47,7 +47,7 @@ module Metanorma
       def document_transformers
         {
           isosts: {
-            reader: Metanorma::IsoDocument::Root,
+            reader: Metanorma::Iso::Document::Root,
             transformer: Metanorma::Iso::Sts::Transformer::Standard,
             strip_default_namespace: true,
             post_process: lambda do |xml, _transformer, _options|

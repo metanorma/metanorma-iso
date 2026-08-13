@@ -47,9 +47,9 @@ module Metanorma
             return nil unless parent
 
             case parent
-            when Metanorma::IsoDocument::Sections::IsoForewordSection then :foreword
-            when Metanorma::IsoDocument::Sections::IsoAbstractSection then :abstract
-            when Metanorma::IsoDocument::Sections::IsoClauseSection
+            when Metanorma::Iso::Document::Sections::IsoForewordSection then :foreword
+            when Metanorma::Iso::Document::Sections::IsoAbstractSection then :abstract
+            when Metanorma::Iso::Document::Sections::IsoClauseSection
               parent.type == "scope" ? :scope : nil
             else
               nil

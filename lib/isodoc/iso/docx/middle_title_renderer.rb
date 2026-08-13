@@ -88,7 +88,7 @@ module IsoDoc
           return nil unless bib.class.attributes.key?(:titles)
 
           titles = bib.titles
-          return nil unless titles.is_a?(Metanorma::IsoDocument::Metadata::TitleCollection)
+          return nil unless titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
 
           titles.for_language("en")
         rescue StandardError

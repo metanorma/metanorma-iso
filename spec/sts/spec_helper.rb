@@ -6,7 +6,7 @@ require "nokogiri"
 
 require "sts"
 require "metanorma/document"
-require "metanorma/iso_document"
+require "metanorma/iso/document"
 
 require "metanorma/iso/sts"
 

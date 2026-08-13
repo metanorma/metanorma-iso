@@ -12,7 +12,7 @@ module Metanorma
         # STS exactly like any other document-model transformer.
         class Standard
           # @param model [Object] a metanorma-document model
-          #   (+Metanorma::IsoDocument::Root+), as returned by the reader's
+          #   (+Metanorma::Iso::Document::Root+), as returned by the reader's
           #   +.from_xml+.
           # @param options [Hash] processor options (accepted for interface
           #   conformance; not yet consumed).

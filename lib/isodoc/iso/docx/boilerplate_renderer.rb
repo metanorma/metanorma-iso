@@ -6,7 +6,7 @@ module IsoDoc
       # Renders boilerplate sections (copyright, license, legal) from the
       # document model's structured boilerplate attribute.
       #
-      # Metanorma::StandardDocument::Boilerplate holds each statement as a
+      # Metanorma::Standoc::Document::Boilerplate holds each statement as a
       # ContentSection collection; statements typically wrap their content
       # in an inner <clause> subsection. This renderer walks sections
       # recursively, emitting title and paragraph content with the correct

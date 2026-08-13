@@ -2,14 +2,14 @@
 
 require "uniword"
 require "metanorma/document"
-# Resolves to the vendored copy in lib/metanorma/iso_document.rb (this gem's
+# Resolves to the canonical copy in lib/metanorma/iso/document.rb (this gem's
 # lib precedes metanorma-document's lib in $LOAD_PATH).
-require "metanorma/iso_document"
+require "metanorma/iso/document"
 
 module IsoDoc
   module Iso
     module Docx
-      # Converts a Metanorma::IsoDocument::Root model to DOCX/MHTML via Uniword.
+      # Converts a Metanorma::Iso::Document::Root model to DOCX/MHTML via Uniword.
       #
       # Architecture:
       #   metanorma-document model → Adapter → Uniword builders → DOCX/MHTML
@@ -55,21 +55,21 @@ module IsoDoc
         ].freeze
 
         SECTION_RENDERERS = [
-          [Metanorma::IsoDocument::Sections::IsoAnnexSection,
+          [Metanorma::Iso::Document::Sections::IsoAnnexSection,
            Renderers::AnnexRenderer],
-          [Metanorma::IsoDocument::Sections::IsoTermsSection,
+          [Metanorma::Iso::Document::Sections::IsoTermsSection,
            Renderers::TermsSectionRenderer],
-          [Metanorma::IsoDocument::Sections::IsoClauseSection,
+          [Metanorma::Iso::Document::Sections::IsoClauseSection,
            Renderers::ClauseRenderer],
-          [Metanorma::StandardDocument::Sections::StandardReferencesSection,
+          [Metanorma::Standoc::Document::Sections::StandardReferencesSection,
            Renderers::ReferencesRenderer],
           [Metanorma::Document::Components::Sections::ReferencesSection,
            Renderers::ReferencesRenderer],
-          [Metanorma::IsoDocument::Terms::IsoTerm,
+          [Metanorma::Iso::Document::Terms::IsoTerm,
            Renderers::TermRenderer],
           [Metanorma::Document::Components::BibData::BibliographicItem,
            Renderers::BibliographyRenderer],
-          [Metanorma::StandardDocument::Blocks::AmendBlock,
+          [Metanorma::Standoc::Document::Blocks::AmendBlock,
            Renderers::AmendRenderer],
         ].freeze
 
@@ -284,7 +284,7 @@ module IsoDoc
                 else
                   source.to_s
                 end
-          Metanorma::IsoDocument::Root.from_xml(xml)
+          Metanorma::Iso::Document::Root.from_xml(xml)
         end
 
         def create_document

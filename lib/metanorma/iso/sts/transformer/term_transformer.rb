@@ -23,7 +23,7 @@ module Metanorma
               when Metanorma::Document::Components::Lists::UnorderedList,
                    Metanorma::Document::Components::Lists::OrderedList
                 ts.list list_transformer.transform(node)
-              when Metanorma::IsoDocument::Terms::IsoTerm
+              when Metanorma::Iso::Document::Terms::IsoTerm
                 ts.term_entry transform_entry(node)
               end
             end

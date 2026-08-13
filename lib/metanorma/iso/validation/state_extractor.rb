@@ -14,7 +14,7 @@ module Metanorma
         DEFAULT_SCRIPT = "Latn".freeze
 
         class << self
-          # @param root [Metanorma::IsoDocument::Root, nil] Deserialized model.
+          # @param root [Metanorma::Iso::Document::Root, nil] Deserialized model.
           # @param document [String, nil] Source identifier for the report.
           # @return [ConverterState]
           def extract(root, document: nil)
