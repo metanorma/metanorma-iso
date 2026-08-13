@@ -36,7 +36,7 @@ module Metanorma
                   collection: true
         attribute :series, Metanorma::Document::Relaton::SeriesType,
                   collection: true
-        attribute :editorialgroup, Metanorma::StandardDocument::Metadata::EditorialGroupType
+        attribute :editorialgroup, Metanorma::Standoc::Document::Metadata::EditorialGroupType
         attribute :semx_id, :string
         attribute :schema_version, :string
 

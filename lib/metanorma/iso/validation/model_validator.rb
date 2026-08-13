@@ -6,7 +6,7 @@ module Metanorma
       # Orchestrator. Single entry point for model-driven validation.
       #
       # Pipeline:
-      #   1. Deserialize the XML string to Metanorma::IsoDocument::Root
+      #   1. Deserialize the XML string to Metanorma::Iso::Document::Root
       #      (rescue returns nil — Layer 3 rules then skip via applicable?).
       #   2. Build Context + Report.
       #   3. Run Layer 1: root&.validate (Lutaml::Model attribute validations).
@@ -65,7 +65,7 @@ module Metanorma
           def deserialize(xml_string)
             return nil if xml_string.nil? || xml_string.empty?
 
-            Metanorma::IsoDocument::Root.from_xml(xml_string)
+            Metanorma::Iso::Document::Root.from_xml(xml_string)
           rescue StandardError => e
             # Layer 1 + Layer 3 will surface what they can via the partial
             # model. Log the deserialization failure as STANDOC_7 so it is

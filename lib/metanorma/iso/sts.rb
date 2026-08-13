@@ -4,7 +4,7 @@ require "sts"
 require "metanorma/document"
 
 module Metanorma
-  autoload :IsoDocument, "metanorma/iso_document"
+  autoload :IsoDocument, "metanorma/iso/document"
 
   module Iso
     # Native metanorma-document ISO-STS transformer (the +:isosts+ output
@@ -37,7 +37,7 @@ module Metanorma
 
         # Convert a Metanorma ISO XML input into an ISO-STS XML string.
         #
-        # @param input [String, Pathname, #read, Metanorma::IsoDocument::Root]
+        # @param input [String, Pathname, #read, Metanorma::Iso::Document::Root]
         #   the source. Strings/pathnames/IO are parsed as XML.
         # @return [String] ISO-STS XML.
         def convert(input)

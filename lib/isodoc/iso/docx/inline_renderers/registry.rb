@@ -154,9 +154,9 @@ module IsoDoc
                      MixedInlineFallbackRenderer.new(parent))
             register(Metanorma::Document::Components::Inline::FmtNameElement,
                      MixedInlineFallbackRenderer.new(parent))
-            register(Metanorma::IsoDocument::Terms::TermExpression,
+            register(Metanorma::Iso::Document::Terms::TermExpression,
                      TermExpressionRenderer.new(parent))
-            register(Metanorma::IsoDocument::Terms::TermNameElement,
+            register(Metanorma::Iso::Document::Terms::TermNameElement,
                      TermNameRenderer.new(parent))
             register(Metanorma::Document::Components::Inline::VariantTitleElement,
                      MixedInlineFallbackRenderer.new(parent))

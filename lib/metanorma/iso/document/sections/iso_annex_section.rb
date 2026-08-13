@@ -6,7 +6,7 @@ module Metanorma
       # Annex appearing in ISO/IEC document.
       # Inherits structure from StandardDocument::AnnexSection and overrides
       # clause/appendix/terms to use ISO-specific types.
-      class IsoAnnexSection < Metanorma::StandardDocument::Sections::AnnexSection
+      class IsoAnnexSection < Metanorma::Standoc::Document::Sections::AnnexSection
         # Override: ISO sub-clauses are IsoClauseSection
         attribute :clause, IsoClauseSection, collection: true
 
@@ -20,8 +20,8 @@ module Metanorma
           element "annex"
           ordered
 
-          Metanorma::StandardDocument::SectionXmlMapping.apply_annex_attributes(self)
-          Metanorma::StandardDocument::SectionXmlMapping.apply_annex_elements(self)
+          Metanorma::Standoc::Document::SectionXmlMapping.apply_annex_attributes(self)
+          Metanorma::Standoc::Document::SectionXmlMapping.apply_annex_elements(self)
         end
 
         json do

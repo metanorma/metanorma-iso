@@ -7,7 +7,7 @@ module Metanorma
       # Extends StandardDocument::ClauseSection with ISO-specific overrides:
       #   - Recursive clauses are IsoClauseSection (not ClauseSection)
       #   - Terms sections are IsoTermsSection (not TermsSection)
-      class IsoClauseSection < Metanorma::StandardDocument::Sections::ClauseSection
+      class IsoClauseSection < Metanorma::Standoc::Document::Sections::ClauseSection
         # Override: ISO sub-clauses are IsoClauseSection
         attribute :clause, IsoClauseSection, collection: true
 
@@ -18,8 +18,8 @@ module Metanorma
           element "clause"
           ordered
 
-          Metanorma::StandardDocument::SectionXmlMapping.apply_clause_attributes(self)
-          Metanorma::StandardDocument::SectionXmlMapping.apply_clause_elements(self)
+          Metanorma::Standoc::Document::SectionXmlMapping.apply_clause_attributes(self)
+          Metanorma::Standoc::Document::SectionXmlMapping.apply_clause_elements(self)
         end
 
         json do

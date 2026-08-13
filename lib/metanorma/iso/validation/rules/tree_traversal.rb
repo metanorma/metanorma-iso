@@ -400,7 +400,7 @@ module Metanorma
 
           def visit_clause_subtree_for_terms(clause_node)
             Array(clause_node).each do |clause|
-              visit_terms_section(clause) { |t| yield(t) } if clause.is_a?(Metanorma::IsoDocument::Sections::IsoTermsSection)
+              visit_terms_section(clause) { |t| yield(t) } if clause.is_a?(Metanorma::Iso::Document::Sections::IsoTermsSection)
               visit_clause_subtree_for_terms(clause.clause) { |t| yield(t) } if clause.class.method_defined?(:clause)
             end
           end

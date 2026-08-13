@@ -54,7 +54,7 @@ module Metanorma
           def visit_terms_anchor_holder(holder, anchors)
             return unless holder
 
-            if holder.is_a?(Metanorma::IsoDocument::Sections::IsoTermsSection)
+            if holder.is_a?(Metanorma::Iso::Document::Sections::IsoTermsSection)
               record_self_anchor(anchors, holder)
             end
             return unless holder.class.method_defined?(:clause)
@@ -73,7 +73,7 @@ module Metanorma
             return false unless node
 
             case node
-            when Metanorma::IsoDocument::Sections::IsoTermsSection then true
+            when Metanorma::Iso::Document::Sections::IsoTermsSection then true
             else
               contained_in_terms?(node)
             end

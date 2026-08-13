@@ -115,7 +115,7 @@ module Metanorma
         def parse_root(xml)
           return nil if xml.nil? || xml.empty?
 
-          Metanorma::IsoDocument::Root.from_xml(xml)
+          Metanorma::Iso::Document::Root.from_xml(xml)
         rescue StandardError
           nil
         end

@@ -52,7 +52,7 @@ module Metanorma
           end
 
           def collect_assets(root)
-            yield_each_asset_of_type(root, Metanorma::IsoDocument::Sections::IsoAnnexSection, "Annex") { |n, a, m| yield(m, a, n) }
+            yield_each_asset_of_type(root, Metanorma::Iso::Document::Sections::IsoAnnexSection, "Annex") { |n, a, m| yield(m, a, n) }
             yield_each_asset_of_type(root, Metanorma::Document::Components::Tables::TableBlock, "Table") { |n, a, m| yield(m, a, n) }
             yield_each_asset_of_type(root, Metanorma::BasicDocument::AncillaryBlocks::FigureBlock, "Figure") { |n, a, m| yield(m, a, n) }
             yield_each_asset_of_type(root, Metanorma::Document::Components::AncillaryBlocks::FormulaBlock, "Formula") { |n, a, m| yield(m, a, n) }

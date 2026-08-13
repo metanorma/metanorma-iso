@@ -2,6 +2,6 @@
 
 module Metanorma
   module Iso::Document
-    AnnotationContainer = Metanorma::StandardDocument::AnnotationContainer
+    AnnotationContainer = Metanorma::Standoc::Document::AnnotationContainer
   end
 end

@@ -50,7 +50,7 @@ module Metanorma
 
             # TitleCollection wraps AbstractTitle items. Collection class
             # exposes them via .items; bare AbstractTitle arrays pass through.
-            return Array(titles) unless titles.is_a?(Metanorma::IsoDocument::Metadata::TitleCollection)
+            return Array(titles) unless titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
 
             Array(titles.items)
           end
