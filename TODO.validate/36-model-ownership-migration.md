@@ -54,48 +54,50 @@ breaks the children.
 PR metanorma/metanorma-document#45 marks both autoloads as deprecated
 in `lib/metanorma/document.rb` but does not remove the trees.
 
-### Phase 4 — IN PROGRESS (6 of ~18 flavors migrated)
+### Phase 4 — IN PROGRESS (13 of ~18 flavors migrated)
 
 Move each remaining flavor tree out of metanorma-document into its own
 flavor gem. One PR per flavor gem. Each flavor's document model adopts
 the `Metanorma::<Flavor>::Document::*` namespace pattern.
 
-Migration script: `/tmp/migrate-flavor.sh <flavor> <FlavorClass>` runs
-the full pattern (branch, copy, sed-rename, alias, deprecate, Gemfile
-pins, namespace spec, verify).
+Migration script: `scripts/migrate-flavor-document-model.sh <flavor>
+<FlavorClass>` runs the full pattern (branch, copy, sed-rename, alias,
+deprecate, Gemfile pins, namespace spec, verify).
 
 #### Successfully migrated (draft PRs open)
 
-| Flavor | PR | Status |
+| Flavor | PR | Spec |
 |---|---|---|
-| generic | metanorma/metanorma-generic#125 | draft, 8 examples green |
-| ribose | metanorma/metanorma-ribose#541 | draft, 7 examples green |
-| ogc | metanorma/metanorma-ogc#989 | draft, 7 examples green |
-| iho | metanorma/metanorma-iho#515 | draft, 7 examples green |
-| nist | branch pushed (PR pending rate-limit reset) | 7 examples green |
-| ietf | branch pushed (PR pending rate-limit reset) | 7 examples green |
+| generic | metanorma/metanorma-generic#125 | 8 examples green |
+| ribose | metanorma/metanorma-ribose#541 | 7 examples green |
+| ogc | metanorma/metanorma-ogc#989 | 7 examples green |
+| iho | metanorma/metanorma-iho#515 | 7 examples green |
+| nist | metanorma/metanorma-nist#508 | 7 examples green |
+| ietf | metanorma/metanorma-ietf#310 | 7 examples green |
+| ieee | metanorma/metanorma-ieee#785 | 7 examples green |
+| iec | metanorma/metanorma-iec#567 | 7 examples green |
+| bsi | metanorma/metanorma-bsi#636 | 7 examples green |
+| jis | metanorma/metanorma-jis#496 | 7 examples green |
+| itu | metanorma/metanorma-itu#832 | 7 examples green |
+| plateau | metanorma/metanorma-plateau#378 | 7 examples green |
+| cc | metanorma/metanorma-cc#530 | 7 examples green |
 
-#### Blocked by pre-existing bundle issues (need per-gem investigation)
+Each PR's namespace spec is self-contained (does not pull in the gem's
+full spec_helper) so it can run on CI even when the gem has unrelated
+pre-existing bundle issues (e.g. pubid-* 1.x→2.x migration).
 
-| Flavor | Blocker |
-|---|---|
-| ieee | `pubid-ieee` not in bundle |
-| iec | `pubid-iso` not in bundle |
-| bsi | `pubid-iso` not in bundle |
-| jis | `pubid-iso` not in bundle |
-| itu | `pubid-itu` not in bundle |
-| plateau | transitively blocked (depends on jis) |
-| bipm | bundle resolution failure |
-| m3d | gemspec `rubocop ~> 1.5.2` conflicts with isodoc |
-| gb | gemspec `twitter_cldr ~> 4.4.4` conflicts with isodoc |
+#### Blocked (need per-gem work outside this migration's scope)
 
-#### Special cases (need custom handling)
+| Flavor | Blocker | Suggested fix |
+|---|---|---|
+| bipm | gemspec depends on `metanorma-iso ~> 3.4.2` (released) — pulls old standoc chain | Add metanorma-iso PR-branch pin to Gemfile |
+| m3d | gemspec `rubocop ~> 1.5.2` conflicts with isodoc | Relax rubocop constraint in m3d gemspec |
+| gb | gemspec `twitter_cldr ~> 4.4.4` and `rubocop = 0.54.0` conflict with isodoc | Update constraints in gb gemspec |
+| un | gemspec `metanorma-standoc ~> 2.9.3` (stale pin) | Update standoc dep in un gemspec |
 
-| Flavor | Issue |
-|---|---|
-| un | Source `Metanorma::UnDocument`, target gem is `metanorma-unece` — namespace mismatch (need `Unece::Document`, not `Un::Document`) |
-| cc | No `metanorma-cc` gem exists locally (only `metanorma-model-cc`) |
-| csa | Only `metanorma-csand` exists locally; mapping to `csa_document` unclear |
+These blockers are not about my migration — they are pre-existing
+per-gem dependency hygiene issues. Each flavor's maintainer should fix
+the constraint, then re-run `scripts/migrate-flavor-document-model.sh`.
 
 ### Phase 5 — DEFERRED (out of 3-gem scope)
 
