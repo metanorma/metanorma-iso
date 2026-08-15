@@ -55,7 +55,7 @@ into a **layered, model-driven, OOP validator**. See
 | 33 | upstream-pr-metanorma-document-declarative | P2 | PLANNED (1 PR, all model extensions) |
 | 34 | standoc-migration-followup | P2 | PLANNED (1 PR to standoc) |
 | 35 | public-api-cli | P2 | DONE |
-| 36 | model-ownership-migration | P2 | PLANNED (5 phases, 3+ gems; awaiting user timing decision) |
+| 36 | model-ownership-migration | P2 | ALL PHASES DONE — 21-PR network open as drafts; see 36-model-ownership-migration.md (RESUME section) for merge order |
 
 ## What's done on this branch
 

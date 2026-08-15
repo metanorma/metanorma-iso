@@ -11,7 +11,7 @@ module Metanorma
     # Model-driven validation namespace.
     #
     # Replaces the legacy Ruby + Nokogiri + RelaxNG/Jing pipeline with a
-    # lutaml-model-native validator operating on {Metanorma::IsoDocument::Root}.
+    # lutaml-model-native validator operating on {Metanorma::Iso::Document::Root}.
     # See TODO.validate/README.md for the migration plan of record.
     module Validation
       autoload :Context, "metanorma/iso/validation/context"

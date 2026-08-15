@@ -1,156 +1,118 @@
-# 36 — Model ownership migration: StandardDocument → metanorma-standoc, IsoDocument ← metanorma-iso
+# RESUME — Model ownership migration (all phases COMPLETE, awaiting merge)
 
-## Why
+> **How to resume:** all 21 PRs are open drafts. Nothing is left to build.
+> This file is the merge-order plan of record. Read "Merge order" below,
+> merge PRs top-to-bottom, then revert each Gemfile branch pin noted in
+> "Gemfile pin reverts". Session date: 2026-08-15.
 
-The document model is currently mis-homed. metanorma-document ships
-`Document::Components`, `BasicDocument`, `StandardDocument`, AND
-`IsoDocument` (plus other flavor models: ItuDocument, IeeeDocument,
-BsiDocument, CsaDocument, IecDocument). The layered ownership should be:
+## Final architecture (what each gem owns now)
 
 ```
-metanorma-document  → Metanorma::Document::Components, Metanorma::BasicDocument
-metanorma-standoc   → Metanorma::Standoc::Document         (this TODO)
-metanorma-iso       → Metanorma::Iso::Document (canonical)   (already done)
-metanorma-itu       → Metanorma::Itu::Document               (follow-up)
-metanorma-ieee      → Metanorma::Ieee::Document              (follow-up)
-metanorma-bsi       → Metanorma::Bsi::Document               (follow-up)
-metanorma-csa       → Metanorma::Csa::Document               (follow-up)
-metanorma-iec       → Metanorma::Iec::Document               (follow-up)
+metanorma-document  → Document::Components + Document::Root, BasicDocument,
+                      Registers (invoked by flavor gems), Html + Mirror
+                      rendering core (lazy String-constant flavor dispatch)
+metanorma-standoc   → Metanorma::Standoc::Document        (was StandardDocument)
+metanorma-iso       → Metanorma::Iso::Document            (was IsoDocument)
+each flavor gem     → Metanorma::<Flavor>::Document       (was <Flavor>Document)
 ```
 
-This TODO tracks the **StandardDocument move + namespace rename** in a
-3-gem scope (metanorma-standoc, metanorma-iso, metanorma-document).
+Namespace pattern everywhere: `Metanorma::<Flavor>::Document::*`.
+Backwards-compat aliases (`Metanorma::StandardDocument`,
+`Metanorma::IsoDocument`, `Metanorma::<Flavor>Document`) are set via
+`remove_const` + reassign + `deprecate_constant` in each gem. They warn
+under `ruby -W` and are scheduled for removal after consumers migrate.
 
-## Status (2026-08-13)
+## The 21-PR network (all drafts, none merged)
 
-### Phase 1 — DONE (PR metanorma/metanorma-standoc#1232)
+### Merge in THIS order
 
-StandardDocument moved from metanorma-document to metanorma-standoc,
-renamed to `Metanorma::Standoc::Document`. 151 files at
-`lib/metanorma/standoc/document*`. Backwards-compat alias
-`Metanorma::StandardDocument = Metanorma::Standoc::Document` marked
-deprecated via `deprecate_constant`.
-
-### Phase 2 — DONE (PR metanorma/metanorma-iso#1618)
-
-metanorma-iso requires `metanorma/standoc` so the parent class resolves
-from standoc. `Metanorma::Iso::Document` is the canonical name
-(`lib/metanorma/iso/document*`, 60 files). All internal call sites
-updated to use the new namespaces — no internal `Metanorma::StandardDocument`
-or `Metanorma::IsoDocument` references remain.
-
-Backwards-compat alias `Metanorma::IsoDocument = Metanorma::Iso::Document`
-marked deprecated via `deprecate_constant`.
-
-### Phase 3 — DEFERRED (out of 3-gem scope)
-
-Removal of `lib/metanorma/standard_document*` and
-`lib/metanorma/iso_document*` from metanorma-document. Blocked: other
-flavor trees in metanorma-document (ItuDocument, IeeeDocument,
-IetfDocument, BsiDocument, CsaDocument, IecDocument) extend
-`StandardDocument::Root` as their parent class. Removing the parent
-breaks the children.
-
-PR metanorma/metanorma-document#45 marks both autoloads as deprecated
-in `lib/metanorma/document.rb` but does not remove the trees.
-
-### Phase 4 — DONE (18 of 18 flavors migrated)
-
-Move each remaining flavor tree out of metanorma-document into its own
-flavor gem. One PR per flavor gem. Each flavor's document model adopts
-the `Metanorma::<Flavor>::Document::*` namespace pattern.
-
-Migration script: `scripts/migrate-flavor-document-model.sh <flavor>
-<FlavorClass>` runs the full pattern (branch, copy, sed-rename, alias,
-deprecate, Gemfile pins, namespace spec, verify).
-
-#### All 18 flavor PRs open (draft)
-
-| Flavor | PR | Spec | Notes |
+| Order | PR | What | Key commits |
 |---|---|---|---|
-| generic | metanorma/metanorma-generic#125 | 8 green | — |
-| ribose | metanorma/metanorma-ribose#541 | 7 green | — |
-| ogc | metanorma/metanorma-ogc#989 | 7 green | — |
-| iho | metanorma/metanorma-iho#515 | 7 green | — |
-| nist | metanorma/metanorma-nist#508 | 7 green | — |
-| ietf | metanorma/metanorma-ietf#310 | 7 green | — |
-| ieee | metanorma/metanorma-ieee#785 | 7 green | — |
-| iec | metanorma/metanorma-iec#567 | 7 green | — |
-| bsi | metanorma/metanorma-bsi#636 | 7 green | — |
-| jis | metanorma/metanorma-jis#496 | 7 green | — |
-| itu | metanorma/metanorma-itu#832 | 7 green | — |
-| plateau | metanorma/metanorma-plateau#378 | 7 green | — |
-| cc | metanorma/metanorma-cc#530 | 7 green | — |
-| un | metanorma/metanorma-un#290 | 7 green | relax `standoc ~> 2.9.3` + `rubocop` |
-| gb | riboseinc/metanorma-gb#168 | 7 green | relax 4 stale pins |
-| m3d | riboseinc/metanorma-m3d#252 | 7 green | relax generic + rubocop; new `M3d::Document` namespace coexists with legacy `M3AAWG` |
-| bipm | metanorma/metanorma-bipm#667 | 7 green | relax pins + cross-PR iso/generic pins |
-| csa | metanorma/metanorma-csa#354 | 7 green | relax generic pin + cross-PR generic pin |
+| 1 | metanorma/metanorma-standoc#1232 | StandardDocument → Standoc::Document, 151 files, load-order fix, deprecation, 65 migrated spec examples | 0884cfee, 1cacd416, de644a61, c2d7fcc4, 8e95ff3d, 336cdf0b |
+| 2 | metanorma/metanorma-iso#1618 | IsoDocument → Iso::Document + full validation migration (TODOs 1–32, 35), Phase A/B/C cleanup, 117 migrated roundtrip examples | many, through b65839ff |
+| 3–20 | 18 flavor PRs (table below) | each flavor's document model + migrated specs | one migration commit each (+roundtrip commits) |
+| 21 | metanorma/metanorma-document#45 | **Phase 5 removal — MERGES LAST.** −89.5k lines, Html/Mirror lazy dispatch | b859a26, d07dbd2, d83c83f, 41cc6f5, 6bdbae0 |
 
-**Total: 130 examples, 0 failures** across all flavor namespace specs.
+### The 18 flavor PRs (merge in any order between #2 and #21)
 
-Each PR's namespace spec is self-contained (does not pull in the gem's
-full spec_helper) so it can run on CI even when the gem has unrelated
-pre-existing bundle issues.
+| Flavor | PR | Namespace | Extra changes |
+|---|---|---|---|
+| generic | metanorma/metanorma-generic#125 | Generic::Document | — |
+| ribose | metanorma/metanorma-ribose#541 | Ribose::Document | — |
+| ogc | metanorma/metanorma-ogc#989 | Ogc::Document | — |
+| iho | metanorma/metanorma-iho#515 | Iho::Document | — |
+| nist | metanorma/metanorma-nist#508 | Nist::Document | — |
+| ietf | metanorma/metanorma-ietf#310 | Ietf::Document | — |
+| ieee | metanorma/metanorma-ieee#785 | Ieee::Document | — |
+| iec | metanorma/metanorma-iec#567 | Iec::Document | — |
+| bsi | metanorma/metanorma-bsi#636 | Bsi::Document | — |
+| jis | metanorma/metanorma-jis#496 | Jis::Document | — |
+| itu | metanorma/metanorma-itu#832 | Itu::Document | — |
+| plateau | metanorma/metanorma-plateau#378 | Plateau::Document | — |
+| cc | metanorma/metanorma-cc#530 | Cc::Document | — |
+| un | metanorma/metanorma-un#290 | Un::Document | gemspec: standoc ~> 3.4, rubocop ~> 1.50 |
+| gb | riboseinc/metanorma-gb#168 | Gb::Document | gemspec: 4 stale pins relaxed |
+| m3d | riboseinc/metanorma-m3d#252 | M3d::Document | gemspec: generic ~> 3.0, rubocop; new M3d ns coexists with legacy M3AAWG |
+| bipm | metanorma/metanorma-bipm#667 | Bipm::Document | gemspec relax + Gemfile pins iso/generic PR branches |
+| csa | metanorma/metanorma-csa#354 | Csa::Document | gemspec: generic ~> 3.4 + Gemfile pin generic PR branch |
 
-#### Network verification (2026-08-14)
+## Gemfile pin reverts (after all merges)
 
-- All 21 PRs (3 base + 18 flavor) confirmed in `OPEN` state, `isDraft: true`.
-- Every flavor PR's Gemfile pins `metanorma-standoc → feat/move-standard-document` and `metanorma-document → feat/model-validation-l1-declarations`. bipm and csa also pin `metanorma-iso` / `metanorma-generic` PR branches for transitive deps.
-- Spot-checked end-to-end namespace resolution on 3 flavors (generic, ietf, plateau): each correctly resolves `Metanorma::<Flavor>::Document::Root` AND `Metanorma::Standoc::Document::Root` from the cross-PR branch chain.
-- None of the PRs touch main; the whole graph resolves from feature branches.
+Every PR's Gemfile carries `# TEMPORARY: cross-PR branch pins` comments.
+After the referenced PR merges, revert that pin to released gems:
 
-### Phase 5 — DEFERRED (out of 3-gem scope)
+- metanorma-standoc PR: unpins metanorma-document, isodoc, relaton-bib, pubid
+- metanorma-iso PR: unpins standoc, document, isodoc, relaton-bib, pubid
+- flavor PRs: unpins standoc, document, isodoc, relaton-bib, pubid
+  (+ iso/generic for bipm, csa; + ogc, iec for metanorma-document)
+- metanorma-document PR: unpins standoc, iso, itu, ogc, iec, isodoc, relaton-bib, pubid
 
-metanorma-document shrinks to Document components only. Final rename
-to `metanorma-document-model` is optional.
+After reverting pins, each gemspec needs version bumps:
+- metanorma-document: MAJOR (removes 20 constants)
+- metanorma-standoc, metanorma-iso, flavors: MINOR (additive + rename alias)
 
-## Bug fixes in this 3-gem scope (Phase A)
+## Migrated spec coverage (nothing lost)
 
-- **A1 (load-order trap)**: `module Foo::Bar` chained declarations
-  silently broke if the file was required before its parent's file.
-  Fixed by forward-declaring the parent namespace at the top of each
-  affected file. Verified in standoc/document.rb and iso/document.rb.
-- **A2 (alias re-init warning)**: when an older metanorma-document
-  release was bundled alongside the renamed gems, Ruby warned
-  "already initialized constant" on the alias assignment. Fixed via
-  `remove_const` before reassignment.
-- **A3 (Root superclass)**: audited Iso::Document::Root — extends
-  Serializable directly, matching the released 0.4 behavior. Design
-  choice, not a bug. No change.
+| Coverage | Now lives in | Examples |
+|---|---|---|
+| StandardDocument model specs | standoc spec/standoc_document/ | 45 + 2 extension |
+| StandardReferencesSection nested | standoc spec/standoc_document/standard_references_section_spec.rb | 2 |
+| ISO roundtrips (is/amd/title) | metanorma-iso spec/roundtrip/ + spec/fixtures/iso | 117 |
+| 12 flavor fixture roundtrips | each flavor gem spec/<flavor>_roundtrip_spec.rb + fixtures | ~400 |
+| 6 synthetic roundtrips (bsi/gb/generic/jis/nist/plateau) | each flavor gem | 12 |
+| UN model specs | metanorma-un spec/un/ | 21 |
+| 18 namespace specs | each flavor gem spec/<flavor>_document_namespace_spec.rb | 7-8 each |
+| Html/Mirror specs | stay in metanorma-document (adapted to new namespaces) | all green |
+| SubElement extension | metanorma-document spec/model_validation_extensions_spec.rb | 1 |
 
-## Internal namespace cleanup (Phase B)
+## Scripts (in this repo, on the branch)
 
-- **B1**: replaced 30+ `Metanorma::StandardDocument::*` references
-  inside the Iso::Document tree with `Metanorma::Standoc::Document::*`.
-- **B2**: replaced all `Metanorma::IsoDocument::*` references in
-  lib/metanorma/iso/ and lib/isodoc/iso/ with `Metanorma::Iso::Document::*`.
-  Updated require paths from `metanorma/iso_document` to
-  `metanorma/iso/document` in lib + spec helpers.
-- **B3**: aliases are now public-API-only. No internal call site uses
-  them.
+- `scripts/migrate-flavor-document-model.sh <flavor> <FlavorClass>` — full
+  flavor migration (branch, copy, sed-rename, alias, deprecate, Gemfile
+  pins, namespace spec, verify). Re-runnable if any PR needs revision.
+- (session-local, not committed) roundtrip/synthetic spec splitters were
+  ad-hoc; if a new flavor needs them, follow the pattern in the committed
+  script + the roundtrip spec shape in any flavor gem.
 
-## Deprecation signals (Phase C)
+## Known follow-ups (NOT blockers for merging)
 
-- **C1**: `Metanorma::StandardDocument` and `Metanorma::IsoDocument`
-  declared via `deprecate_constant`. Consumers referencing the old
-  names see `warning: constant X is deprecated` under `ruby -W`.
-- **C2**: metanorma-document's `document.rb` autoloads for
-  StandardDocument + IsoDocument carry explicit deprecation comments
-  linking to the tracking PRs.
+1. **Alias removal** — once every consumer (incl. external gems) uses the
+   new namespaces, drop the `deprecate_constant` aliases.
+2. **pubid-* 1.x→2.x migration** in flavor converters (ieee, iec, bsi,
+   jis, itu still `require "pubid-ieee"` etc.). Their namespace specs are
+   self-contained so PR CI passes regardless; converter-level pubid work
+   is separate.
+3. **STANDOC_* rule migration** (TODO.validate/34) — separate standoc PR.
+4. **metanorma-document rename** to `metanorma-document-model` — optional.
+5. Html/Mirror subsystems still render all flavors from metanorma-document
+   via lazy dispatch — a future split could move per-flavor renderers into
+   flavor gems following the same pattern.
 
-## What silences the maintainer critique
+## Phase history (for context)
 
-- "Buggy" — Phase A: load-order, alias warning, Root superclass audit
-  all addressed.
-- "Incomplete rename" — Phase B: internal refs use new namespace
-  consistently. Aliases visibly external-only.
-- "No deprecation story" — Phase C: callers see a warning, alias is
-  documented as scheduled-for-removal.
-
-## What this does NOT silence
-
-- "Rename is half-finished across the ecosystem" — true. ItuDocument,
-  IeeeDocument, IetfDocument, BsiDocument, CsaDocument, IecDocument
-  still live in metanorma-document (Phase 4). The aliases stay until
-  each flavor migrates.
+- Phase 1 — standoc move + rename: DONE (PR #1232)
+- Phase 2 — iso resolution: DONE (PR #1618)
+- Phase 3 — deprecation markers: DONE (superseded by Phase 5 removal)
+- Phase 4 — 18 flavor migrations: DONE (18 PRs)
+- Phase 5 — metanorma-document tree removal + Html/Mirror lazy dispatch:
+  DONE (PR #45, merges LAST)
