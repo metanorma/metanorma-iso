@@ -35,9 +35,12 @@ the tag name of the top level containers</a:documentation>
         <ref name="ReqtObligationType"/>
       </attribute>
     </optional>
-    <attribute name="id">
-      <data type="ID"/>
-    </attribute>
+    <ref name="RequiredId">
+      <a:documentation>Identification of provisions routed through the shared ID patterns,
+like every other identified block: content GUID in `id`, with the
+isodoc context adding the user-supplied `anchor` (e.g. Modspec
+identifiers) and `source` (metanorma-model-iso#149)</a:documentation>
+    </ref>
     <ref name="NumberingAttributes"/>
     <ref name="BlockAttributesCore">
       <a:documentation>requirement carries its own semantic `class` (provision class, below), so
@@ -126,6 +129,15 @@ interruption by other sub-containers</a:documentation>
           <a:documentation>Provisions nested within this provision, which cannot be referenced autonomously and have
 subclasses specific to the parent provision. Not expressed with provision metadata</a:documentation>
         </ref>
+        <ref name="requirement">
+          <a:documentation>Provisions nested within this provision, which are self-standing and do not have
+subclasses specific to the parent provision. Interleaved with the other
+sub-containers: a requirements class alternates descriptions with its member
+provisions, and descriptions resume after interruption
+(metanorma-model-iso#160)</a:documentation>
+        </ref>
+        <ref name="recommendation"/>
+        <ref name="permission"/>
       </choice>
     </zeroOrMore>
     <optional>
@@ -133,15 +145,17 @@ subclasses specific to the parent provision. Not expressed with provision metada
         <a:documentation>A list of references for the requirement, following the Relaton model</a:documentation>
       </ref>
     </optional>
-    <zeroOrMore>
-      <choice>
-        <a:documentation>Provisions nested within this provision, which are self-standing and do not have
-subclasses specific to the parent provision</a:documentation>
-        <ref name="requirement"/>
-        <ref name="recommendation"/>
-        <ref name="permission"/>
-      </choice>
-    </zeroOrMore>
+  </define>
+  <define name="ExampleBodyContent" combine="choice">
+    <a:documentation>Provisions presented illustratively inside examples. This shape is
+expected only in documents defining schemas and standards (e.g. the
+Modspec specification exhibiting requirement boxes), not in
+standards proper (metanorma-model-iso#160)</a:documentation>
+    <choice>
+      <ref name="requirement"/>
+      <ref name="recommendation"/>
+      <ref name="permission"/>
+    </choice>
   </define>
   <define name="reqtitle">
     <element name="title">
@@ -214,6 +228,12 @@ subclasses specific to the parent provision</a:documentation>
 mixture of the two.
 A machine-readable component can be included as source code with
 nomination of the language</a:documentation>
+    <ref name="OptionalId">
+      <a:documentation>Identification of subparts routed through the shared ID patterns
+(metanorma-model-iso#149). Optional, not required: only some generator
+pipelines (Modspec) stamp subparts with content GUIDs; others emit
+description/specification/component without ids</a:documentation>
+    </ref>
     <optional>
       <attribute name="type">
         <a:documentation>Type of sub-container.

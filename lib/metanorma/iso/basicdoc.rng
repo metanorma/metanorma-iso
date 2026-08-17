@@ -954,30 +954,36 @@ in case the table cannot be rendered accessibly (HTML 5)</a:documentation>
   <define name="TdBody">
     <choice>
       <zeroOrMore>
-        <group>
-          <a:documentation>Table cell is a block</a:documentation>
+        <choice>
+          <a:documentation>Table cell is a block; footnotes admitted inline (metanorma-model-iso#154)</a:documentation>
           <ref name="TextElement"/>
-        </group>
+          <ref name="fn"/>
+        </choice>
       </zeroOrMore>
       <oneOrMore>
-        <ref name="paragraph-with-footnote">
-          <a:documentation>Table cell contains a block</a:documentation>
-        </ref>
+        <choice>
+          <a:documentation>Table cell contains a block; notes admitted alongside paragraphs (metanorma-model-iso#157)</a:documentation>
+          <ref name="paragraph-with-footnote"/>
+          <ref name="note"/>
+        </choice>
       </oneOrMore>
     </choice>
   </define>
   <define name="TdNoIdBody">
     <choice>
       <zeroOrMore>
-        <group>
-          <a:documentation>Table cell is a block</a:documentation>
+        <choice>
+          <a:documentation>Table cell is a block; footnotes admitted inline (metanorma-model-iso#154)</a:documentation>
           <ref name="TextElement"/>
-        </group>
+          <ref name="fn"/>
+        </choice>
       </zeroOrMore>
       <oneOrMore>
-        <ref name="paragraph-with-footnote-no-id">
-          <a:documentation>Table cell contains a block</a:documentation>
-        </ref>
+        <choice>
+          <a:documentation>Table cell contains a block; notes admitted alongside paragraphs (metanorma-model-iso#157)</a:documentation>
+          <ref name="paragraph-with-footnote-no-id"/>
+          <ref name="note-no-id"/>
+        </choice>
       </oneOrMore>
     </choice>
   </define>
@@ -1030,22 +1036,32 @@ in case the table cannot be rendered accessibly (HTML 5)</a:documentation>
       </ref>
     </optional>
     <oneOrMore>
-      <choice>
+      <ref name="ExampleBodyContent">
         <a:documentation>Content of the example</a:documentation>
-        <ref name="formula"/>
-        <ref name="ul"/>
-        <ref name="ol"/>
-        <ref name="dl"/>
-        <ref name="quote"/>
-        <ref name="sourcecode"/>
-        <ref name="paragraph-with-footnote"/>
-      </choice>
+      </ref>
     </oneOrMore>
     <zeroOrMore>
       <ref name="note">
         <a:documentation>Notes whose scope is the current block</a:documentation>
       </ref>
     </zeroOrMore>
+  </define>
+  <define name="ExampleBodyContent">
+    <a:documentation>Content alternatives of an example. Named as an extension hook: higher
+layers may admit further alternatives additively (|=) without copying the
+example model (metanorma-model-iso#160). note is admitted interleaved as
+attested authoring practice (metanorma-model-iso#157, maintainer hierarchy
+reservation recorded there)</a:documentation>
+    <choice>
+      <ref name="formula"/>
+      <ref name="ul"/>
+      <ref name="ol"/>
+      <ref name="dl"/>
+      <ref name="quote"/>
+      <ref name="sourcecode"/>
+      <ref name="paragraph-with-footnote"/>
+      <ref name="note"/>
+    </choice>
   </define>
   <define name="ExampleNoIdBody">
     <optional>
@@ -1054,22 +1070,29 @@ in case the table cannot be rendered accessibly (HTML 5)</a:documentation>
       </ref>
     </optional>
     <oneOrMore>
-      <choice>
+      <ref name="ExampleNoIdBodyContent">
         <a:documentation>Content of the example</a:documentation>
-        <ref name="formula-no-id"/>
-        <ref name="ul-no-id"/>
-        <ref name="ol-no-id"/>
-        <ref name="dl-no-id"/>
-        <ref name="quote-no-id"/>
-        <ref name="sourcecode-no-id"/>
-        <ref name="paragraph-with-footnote-no-id"/>
-      </choice>
+      </ref>
     </oneOrMore>
     <zeroOrMore>
       <ref name="note-no-id">
         <a:documentation>Notes whose scope is the current block</a:documentation>
       </ref>
     </zeroOrMore>
+  </define>
+  <define name="ExampleNoIdBodyContent">
+    <a:documentation>Content alternatives of the no-id example variant; extension hook as
+ExampleBodyContent (metanorma-model-iso#160)</a:documentation>
+    <choice>
+      <ref name="formula-no-id"/>
+      <ref name="ul-no-id"/>
+      <ref name="ol-no-id"/>
+      <ref name="dl-no-id"/>
+      <ref name="quote-no-id"/>
+      <ref name="sourcecode-no-id"/>
+      <ref name="paragraph-with-footnote-no-id"/>
+      <ref name="note-no-id"/>
+    </choice>
   </define>
   <define name="admonition">
     <a:documentation>A sidebar block outside of the main flow of text, conveying particular warnings or supplementary text to the reader</a:documentation>

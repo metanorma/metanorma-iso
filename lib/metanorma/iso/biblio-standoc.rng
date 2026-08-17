@@ -50,6 +50,24 @@
         </choice>
       </element>
     </define>
+    <define name="formattedref">
+      <a:documentation>Footnotes are admitted in formatted references in the standoc context:
+free-form bibliography entries may carry authored footnotes
+(metanorma-model-iso#154)</a:documentation>
+      <element name="formattedref">
+        <optional>
+          <attribute name="format">
+            <a:documentation>format of formatted reference; Metanorma assumes references are formatted as Metanorma XML</a:documentation>
+          </attribute>
+        </optional>
+        <oneOrMore>
+          <choice>
+            <ref name="TextElement"/>
+            <ref name="fn"/>
+          </choice>
+        </oneOrMore>
+      </element>
+    </define>
   </include>
   <define name="ext">
     <a:documentation>The extension point of the bibliographic description of a standardisation document</a:documentation>

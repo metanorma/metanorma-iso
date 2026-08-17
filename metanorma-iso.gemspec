@@ -33,7 +33,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = Gem::Requirement.new(">= 3.3.0")
 
   spec.add_dependency "metanorma-document", "~> 0.2.0"
-  spec.add_dependency "metanorma-standoc", "~> 3.4.2"
+  spec.add_dependency "metanorma-standoc", "~> 3.5.0"
   spec.add_dependency "mnconvert", "~> 1.14"
   spec.add_dependency "pubid"
   spec.add_dependency "sts", "~> 0.5.3"

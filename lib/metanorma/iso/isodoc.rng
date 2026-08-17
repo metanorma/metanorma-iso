@@ -27,11 +27,89 @@
     <define name="amend">
       <a:documentation>Block expressing a machine-readable change in a document</a:documentation>
       <element name="amend">
+        <ref name="OptionalId"/>
         <ref name="BlockAttributes"/>
-        <ref name="AmendType"/>
+        <attribute name="change">
+          <a:documentation>The type of change described in this block</a:documentation>
+          <choice>
+            <value>add</value>
+            <value>modify</value>
+            <value>delete</value>
+            <value>replace</value>
+          </choice>
+        </attribute>
+        <optional>
+          <attribute name="path"/>
+        </optional>
+        <optional>
+          <attribute name="path_end"/>
+        </optional>
+        <optional>
+          <attribute name="title"/>
+        </optional>
+        <optional>
+          <attribute name="position">
+            <choice>
+              <value>before</value>
+              <value>after</value>
+            </choice>
+          </attribute>
+        </optional>
+        <optional>
+          <element name="location">
+            <a:documentation>The location(s) in the original document which have undergone the change described in this block</a:documentation>
+            <zeroOrMore>
+              <choice>
+                <ref name="locality"/>
+                <ref name="localityStack"/>
+              </choice>
+            </zeroOrMore>
+          </element>
+        </optional>
         <zeroOrMore>
           <ref name="autonumber">
-            <a:documentation>Specification of how blocks of a given class should be autonumbered within an AmendBlock newContent element</a:documentation>
+            <a:documentation>Specification of how blocks of a given class should be autonumbered within the newcontent element.
+Precedes the content it numbers</a:documentation>
+          </ref>
+        </zeroOrMore>
+        <zeroOrMore>
+          <element name="description">
+            <a:documentation>Description(s) of the change described in this block</a:documentation>
+            <oneOrMore>
+              <ref name="BasicBlock"/>
+            </oneOrMore>
+          </element>
+        </zeroOrMore>
+        <optional>
+          <element name="newcontent">
+            <a:documentation>New content to be added to the document; applicable to add and modify.
+Can be blocks and/or clauses</a:documentation>
+            <ref name="OptionalId"/>
+            <zeroOrMore>
+              <choice>
+                <ref name="BasicBlock"/>
+                <ref name="clause"/>
+              </choice>
+            </zeroOrMore>
+          </element>
+        </optional>
+        <zeroOrMore>
+          <element name="description">
+            <a:documentation>Further description(s) of the change, following the new content
+(e.g. consequential renumbering instructions)</a:documentation>
+            <oneOrMore>
+              <ref name="BasicBlock"/>
+            </oneOrMore>
+          </element>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="classification">
+            <a:documentation>Classification of the change</a:documentation>
+          </ref>
+        </zeroOrMore>
+        <zeroOrMore>
+          <ref name="contributor">
+            <a:documentation>Contributor responsible for the change</a:documentation>
           </ref>
         </zeroOrMore>
       </element>
@@ -42,6 +120,27 @@ All IdRefType instances point not to `@id` in Semantic XML, which is the Content
 but to `@anchor`, the user-supplied cross-reference</a:documentation>
       <text/>
     </define>
+    <define name="image-no-id">
+      <a:documentation>Container for image content: optional ID attributes recursively (for use in Relaton, metadata).
+The embedded SVG content is admitted here as in ImageBody, and is NOT subject to the no-id
+convention of this model family: SVGs carry ids pervasively, and those ids cannot be stripped,
+because they are load-bearing for image-map functionality (svgmap hyperlink targets)</a:documentation>
+      <element name="image">
+        <ref name="OptionalId"/>
+        <ref name="ImageAttributes"/>
+        <optional>
+          <element name="svg">
+            <a:documentation>image can contain SVG XML, which is used to access its identifiers within the Metanorma XML</a:documentation>
+            <oneOrMore>
+              <choice>
+                <text/>
+                <ref name="AnyElement"/>
+              </choice>
+            </oneOrMore>
+          </element>
+        </optional>
+      </element>
+    </define>
     <define name="review">
       <a:documentation>Generalise BasicDoc element from just review comments, to general annotations;
 the type attribute defaults to `review` for reviews</a:documentation>
@@ -49,7 +148,7 @@ the type attribute defaults to `review` for reviews</a:documentation>
         <ref name="RequiredId"/>
         <ref name="ReviewAttributes"/>
         <oneOrMore>
-          <ref name="paragraph">
+          <ref name="BasicBlock">
             <a:documentation>Reviewer comments content</a:documentation>
           </ref>
         </oneOrMore>
@@ -85,10 +184,14 @@ the type attribute defaults to `review` for reviews</a:documentation>
     <define name="section-title">
       <a:documentation>Title(s) of a clause</a:documentation>
       <element name="title">
-        <a:documentation>Title proper for a clause</a:documentation>
+        <a:documentation>Title proper for a clause. Footnotes on section headings are admitted
+(metanorma-model-iso#154)</a:documentation>
         <ref name="RequiredId"/>
         <zeroOrMore>
-          <ref name="TextElement"/>
+          <choice>
+            <ref name="TextElement"/>
+            <ref name="fn"/>
+          </choice>
         </zeroOrMore>
       </element>
       <zeroOrMore>
@@ -154,13 +257,17 @@ Sources are currently only rendered in metanorma-plateau</a:documentation>
       <ref name="BlockAttributes"/>
       <optional>
         <attribute name="type">
-          <a:documentation>Type of numbering to be applied to the list items</a:documentation>
+          <a:documentation>Type of numbering to be applied to the list items: one of the five named
+numbering styles, or a renderer-native numbering format string passed
+through for the target rendering language to expand (e.g. xml2rfc v2
+format strings such as "R%d", carried through by metanorma-ietf)</a:documentation>
           <choice>
             <value>roman</value>
             <value>alphabet</value>
             <value>arabic</value>
             <value>roman_upper</value>
             <value>alphabet_upper</value>
+            <text/>
           </choice>
         </attribute>
       </optional>
@@ -220,30 +327,23 @@ Sources are currently only rendered in metanorma-plateau</a:documentation>
         </attribute>
       </optional>
     </define>
-    <define name="ExampleBody">
-      <optional>
-        <ref name="tname">
-          <a:documentation>The caption of the example</a:documentation>
-        </ref>
-      </optional>
-      <oneOrMore>
-        <choice>
-          <a:documentation>Content of the example</a:documentation>
-          <ref name="formula"/>
-          <ref name="ul"/>
-          <ref name="ol"/>
-          <ref name="dl"/>
-          <ref name="quote"/>
-          <ref name="sourcecode"/>
-          <ref name="paragraph-with-footnote"/>
-          <ref name="figure"/>
-        </choice>
-      </oneOrMore>
-      <zeroOrMore>
-        <ref name="note">
-          <a:documentation>Notes whose scope is the current block</a:documentation>
-        </ref>
-      </zeroOrMore>
+    <define name="ExampleBodyContent">
+      <a:documentation>Content alternatives of an example in the isodoc context: as basicdoc,
+with figure admitted, and note admitted only trailing the example body
+rather than interleaved. The content hook is overridden rather than
+ExampleBody itself, so that the extension seam survives: additive
+admissions (|=) from higher layers, such as illustrative provisions in
+reqt, attach to the definition that governs (metanorma-model-iso#160)</a:documentation>
+      <choice>
+        <ref name="formula"/>
+        <ref name="ul"/>
+        <ref name="ol"/>
+        <ref name="dl"/>
+        <ref name="quote"/>
+        <ref name="sourcecode"/>
+        <ref name="paragraph-with-footnote"/>
+        <ref name="figure"/>
+      </choice>
     </define>
     <define name="TableBody">
       <optional>
@@ -413,20 +513,22 @@ and is intended to be referenced by a callout within the source code</a:document
     <define name="source">
       <element name="source">
         <attribute name="status">
-          <a:documentation>The status of the term as it is used in this document, relative to its definition in the original document</a:documentation>
+          <a:documentation>The status of the block content, relative to the source it has been taken from</a:documentation>
           <ref name="SourceStatusType"/>
         </attribute>
-        <attribute name="type">
-          <a:documentation>The type of the managed term in the present context</a:documentation>
-          <ref name="SourceTypeType"/>
-        </attribute>
+        <optional>
+          <attribute name="type">
+            <a:documentation>The type of the source relation. Term-management vocabulary (authoritative/lineage);
+not normally applicable to block attribution, and omitted by the generator for blocks</a:documentation>
+            <ref name="SourceTypeType"/>
+          </attribute>
+        </optional>
         <ref name="origin">
-          <a:documentation>The original document and location where the term definition has been obtained from</a:documentation>
+          <a:documentation>The original document and location the block content has been obtained from</a:documentation>
         </ref>
         <optional>
           <ref name="modification">
-            <a:documentation>Any changes that the definition of the term has undergone relative to the original document,
-in order to be applicable in this standardisation document</a:documentation>
+            <a:documentation>Any changes that the block content has undergone relative to the original document</a:documentation>
           </ref>
         </optional>
       </element>
@@ -852,6 +954,11 @@ titlecase, or lowercase</a:documentation>
         <a:documentation>Width of the figure block in rendering</a:documentation>
       </attribute>
     </optional>
+    <optional>
+      <attribute name="height">
+        <a:documentation>Height of the figure block in rendering</a:documentation>
+      </attribute>
+    </optional>
     <ref name="BlockAttributesCore"/>
   </define>
   <define name="SourceAttributes" combine="interleave">
@@ -1066,6 +1173,9 @@ parargaph sources are currently only rendered in metanorma-plateau</a:documentat
     <a:documentation>Internal reference (for Metanorma document collections)</a:documentation>
   </define>
   <define name="TextElement" combine="choice">
+    <a:documentation>Form input elements are admitted as inline content generally, mirroring
+HTML phrasing content: inputs sit inside paragraphs and table cells
+within forms (metanorma-model-iso#145)</a:documentation>
     <choice>
       <ref name="concept"/>
       <ref name="add"/>
@@ -1073,13 +1183,18 @@ parargaph sources are currently only rendered in metanorma-plateau</a:documentat
       <ref name="span"/>
       <ref name="erefstack"/>
       <ref name="date_inline"/>
+      <ref name="FormInput"/>
+      <ref name="formlabel"/>
     </choice>
   </define>
   <define name="PureTextElement" combine="choice">
     <ref name="passthrough_inline"/>
   </define>
   <define name="NestedTextElement" combine="choice">
-    <ref name="erefstack"/>
+    <choice>
+      <ref name="erefstack"/>
+      <ref name="concept"/>
+    </choice>
   </define>
   <define name="passthrough_inline">
     <a:documentation>Inline text not to be processed semantically, and left in the markup of a target rendering language (e.g. raw HTML)</a:documentation>
@@ -1227,7 +1342,24 @@ That concept may be defined as a term within the current document, or it may be 
         <ref name="termref">
           <a:documentation>Link to a definition of the term in a termbase</a:documentation>
         </ref>
+        <ref name="errormsg">
+          <a:documentation>Error message inserted by the Metanorma generator, replacing a concept reference
+that could not be resolved. Only ever emitted by Metanorma itself, never authored;
+its presence marks the document as not ready for publication</a:documentation>
+        </ref>
       </choice>
+    </element>
+  </define>
+  <define name="errormsg">
+    <a:documentation>Error message inserted by the Metanorma generator, replacing markup it could not process</a:documentation>
+    <element name="errormsg">
+      <zeroOrMore>
+        <choice>
+          <ref name="PureTextElement"/>
+          <ref name="index"/>
+          <ref name="index-xref"/>
+        </choice>
+      </zeroOrMore>
     </element>
   </define>
   <define name="BasicBlock" combine="choice">
@@ -1272,12 +1404,16 @@ That concept may be defined as a term within the current document, or it may be 
     <a:documentation>Input form, for use under HTML</a:documentation>
     <element name="form">
       <ref name="RequiredId"/>
-      <attribute name="name">
-        <a:documentation>Name of the input form block</a:documentation>
-      </attribute>
-      <attribute name="action">
-        <a:documentation>Action to be taken on submission of the input form</a:documentation>
-      </attribute>
+      <optional>
+        <attribute name="name">
+          <a:documentation>Name of the input form block</a:documentation>
+        </attribute>
+      </optional>
+      <optional>
+        <attribute name="action">
+          <a:documentation>Action to be taken on submission of the input form</a:documentation>
+        </attribute>
+      </optional>
       <optional>
         <attribute name="class">
           <a:documentation>Class of input form</a:documentation>
@@ -1289,8 +1425,13 @@ avoid duplicating the custom-class slot in BlockAttributes. Treated like
 figure. See metanorma/metanorma-standoc#1197</a:documentation>
       </ref>
       <zeroOrMore>
-        <!-- Input form contents -->
+        <!--
+          Input form contents: as in HTML, a form contains block-level content,
+          with form input elements appearing inline within it
+        -->
         <choice>
+          <ref name="paragraph-with-footnote"/>
+          <ref name="table"/>
           <ref name="TextElement"/>
           <ref name="FormInput"/>
           <ref name="formlabel"/>
@@ -1734,14 +1875,18 @@ terms sections</a:documentation>
         </ref>
       </optional>
       <oneOrMore>
-        <zeroOrMore>
+        <choice>
           <ref name="BasicBlock">
-            <a:documentation>Prefatory material, may be specific to each definition list</a:documentation>
+            <a:documentation>Prefatory or discursive material; a symbols section may consist of prose only,
+e.g. deferring to symbols defined in another standard</a:documentation>
           </ref>
-        </zeroOrMore>
-        <ref name="dl">
-          <a:documentation>Definition list containing symbols and abbreviations</a:documentation>
-        </ref>
+          <ref name="dl">
+            <a:documentation>Definition list(s) containing symbols and abbreviations</a:documentation>
+          </ref>
+          <ref name="definitions">
+            <a:documentation>Subsections of the symbols section</a:documentation>
+          </ref>
+        </choice>
       </oneOrMore>
     </element>
   </define>
@@ -2011,22 +2156,31 @@ used in document amendments</a:documentation>
         <a:documentation>Type of relation of term applicable</a:documentation>
         <ref name="RelatedTermType"/>
       </attribute>
-      <element name="preferred">
-        <a:documentation>Preferred designation of the term related to the current term</a:documentation>
-        <ref name="Designation"/>
-      </element>
       <choice>
-        <ref name="eref">
-          <a:documentation>Link to a definition of the term in a bibliographic entry</a:documentation>
-        </ref>
-        <ref name="erefstack">
-          <a:documentation>Stack of links to a definition of the term in a bibliographic entry</a:documentation>
-        </ref>
-        <ref name="xref">
-          <a:documentation>Link to a definition of the term in an element of the current document</a:documentation>
-        </ref>
-        <ref name="termref">
-          <a:documentation>Link to a definition of the term in a termbase</a:documentation>
+        <group>
+          <element name="preferred">
+            <a:documentation>Preferred designation of the term related to the current term</a:documentation>
+            <ref name="Designation"/>
+          </element>
+          <choice>
+            <ref name="eref">
+              <a:documentation>Link to a definition of the term in a bibliographic entry</a:documentation>
+            </ref>
+            <ref name="erefstack">
+              <a:documentation>Stack of links to a definition of the term in a bibliographic entry</a:documentation>
+            </ref>
+            <ref name="xref">
+              <a:documentation>Link to a definition of the term in an element of the current document</a:documentation>
+            </ref>
+            <ref name="termref">
+              <a:documentation>Link to a definition of the term in a termbase</a:documentation>
+            </ref>
+          </choice>
+        </group>
+        <ref name="errormsg">
+          <a:documentation>Error message inserted by the Metanorma generator, replacing a related-term
+reference that could not be resolved. Only ever emitted by Metanorma itself,
+never authored; its presence marks the document as not ready for publication</a:documentation>
         </ref>
       </choice>
     </element>
@@ -2177,16 +2331,21 @@ used in document amendments</a:documentation>
           <data type="boolean"/>
         </attribute>
       </optional>
-      <element name="name">
-        <a:documentation>The textual form of the designation</a:documentation>
-        <zeroOrMore>
-          <choice>
-            <ref name="PureTextElement"/>
-            <ref name="index"/>
-            <ref name="index-xref"/>
-          </choice>
-        </zeroOrMore>
-      </element>
+      <oneOrMore>
+        <element name="name">
+          <a:documentation>The textual form of the designation. Repeated for language variants of the
+same designation: repetition of name with language attributes replaces the
+retired variant element (metanorma-standoc#940, metanorma-model-iso#155)</a:documentation>
+          <ref name="LocalizedStringAttributes"/>
+          <zeroOrMore>
+            <choice>
+              <ref name="PureTextElement"/>
+              <ref name="index"/>
+              <ref name="index-xref"/>
+            </choice>
+          </zeroOrMore>
+        </element>
+      </oneOrMore>
       <optional>
         <element name="abbreviation-type">
           <a:documentation>Type of abbreviation that constitutes the designation, according to how it is formed</a:documentation>
@@ -2556,6 +2715,7 @@ to better fit some local requirement, though still with the intent of retaining 
           <value>sourcecode</value>
           <value>example</value>
           <value>note</value>
+          <value>clause</value>
         </choice>
       </attribute>
       <text>
