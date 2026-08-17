@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <grammar xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
-<!-- VERSION v2.2.0 -->
+<!-- VERSION v2.3.0 -->
 
   <!--
     ALERT: cannot have root comments, because of https://github.com/metanorma/metanorma/issues/437
@@ -328,7 +328,7 @@ Sources are currently only rendered in metanorma-plateau</a:documentation>
       </optional>
     </define>
     <define name="ExampleBodyContent">
-      <a:documentation>Content alternatives of an example in the isodoc context: as basicdoc,
+      <a:documentation>Content alternatives of an example in the standoc context: as basicdoc,
 with figure admitted, and note admitted only trailing the example body
 rather than interleaved. The content hook is overridden rather than
 ExampleBody itself, so that the extension seam survives: additive
