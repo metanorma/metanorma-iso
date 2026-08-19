@@ -64,6 +64,8 @@ Metanorma::Iso::Registers.setup
 # another renderer is a change to this entry only.
 require "metanorma-core"
 require "metanorma/iso/html"
+require "metanorma/iso/mirror"
+Metanorma::Iso::MirrorRegistration.register!
 
 Metanorma::Core::Flavors.register(Metanorma::Core::Flavor.new(
                                     name: :iso,
