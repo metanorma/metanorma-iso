@@ -9,6 +9,8 @@ gem "canon"
 # https://github.com/metanorma/isodoc/pull/825 merges.
 gem "isodoc", github: "metanorma/isodoc", branch: "rt-pubid-2-migration"
 gem "metanorma", github: "metanorma/metanorma", branch: "main"
+# TEMPORARY cross-PR pin for the flavor-table restructure (metanorma-core#18)
+gem "metanorma-core", github: "metanorma/metanorma-core", branch: "feat/flavor-table"
 # standoc PR branch allowing isodoc 3.7; revert to branch: "main" once
 # https://github.com/metanorma/metanorma-standoc/pull/1215 merges.
 # TEMPORARY: pointing to feat/move-standard-document for the namespace
