@@ -63,6 +63,7 @@ Metanorma::Iso::Registers.setup
 # model root, processor, pubid, and per-format renderers. Re-basing to
 # another renderer is a change to this entry only.
 require "metanorma-core"
+require "metanorma/iso/html"
 
 Metanorma::Core::Flavors.register(Metanorma::Core::Flavor.new(
                                     name: :iso,
