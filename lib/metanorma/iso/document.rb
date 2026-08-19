@@ -56,6 +56,7 @@ module Metanorma
   end
 end
 
+require "metanorma/iso/registers"
 Metanorma::Iso::Registers.setup
 
 # OCP adoption: register the ISO flavor with the metanorma-document
