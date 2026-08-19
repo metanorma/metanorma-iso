@@ -60,25 +60,15 @@ require "metanorma/iso/registers"
 Metanorma::Iso::Registers.setup
 
 # OCP adoption: one registration declares the ISO flavor for every
-# output format. The html entry is a variant resolver (flavor-owned
-# selection): ICC-published documents render via IccRenderer.
-require "metanorma/iso/html"
-require "metanorma/iso/mirror"
-Metanorma::Iso::MirrorRegistration.register!
-
+# output format. ICC and other publisher variants are NOT here: a
+# variant that is its own flavor registers itself (own repo, own entry,
+# most-specific-wins over this one); a variant that is genuinely ISO's
+# owns its resolver here. ISO has neither today.
 Metanorma.register_flavor(Metanorma::Flavor.new(
                             name: :iso,
                             model_class: Metanorma::Iso::Document::Root,
                             pubid_module: :"Pubid::Iso",
-                            renderers: {
-                              html: lambda do |document, **_options|
-                                if Metanorma::Iso::Html.publisher_abbreviation(document) == "ICC"
-                                  Metanorma::Iso::Html::IccRenderer
-                                else
-                                  Metanorma::Iso::Html::Renderer
-                                end
-                              end,
-                            },
+                            renderers: { html: Metanorma::Iso::Html::Renderer },
                           ))
 
 # Mark alias as deprecated AFTER setup so the register's own reference
