@@ -56,7 +56,22 @@ module Metanorma
   end
 end
 
-Metanorma::Registers::Setup.setup_iso_register
+Metanorma::Iso::Registers.setup
+
+# OCP adoption: register the ISO flavor with the metanorma-document
+# harness (renderer + pubid). The harness itself ships zero flavor
+# knowledge; this file is the single registration point for ISO.
+require "metanorma/iso/html"
+
+Metanorma::Html.register_flavor(Metanorma::Html::Flavor.new(
+                                  name: :iso,
+                                  model_class: Metanorma::Iso::Document::Root,
+                                  renderer_class: Metanorma::Iso::Html::Renderer,
+                                  pubid_module: :"Pubid::Iso",
+                                ))
+Metanorma::Html::Generator.register_taste(
+  Metanorma::Iso::Document::Root, "ICC", Metanorma::Iso::Html::IccRenderer,
+)
 
 # Mark alias as deprecated AFTER setup so the register's own reference
 # doesn't trip the warning.
