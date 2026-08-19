@@ -535,10 +535,6 @@ module Metanorma
           dark_span.empty? ? light_span : "#{light_span}\n#{dark_span}"
         end
       end
-    end
-      # Publisher taste within the ISO model: ICC documents render via
-      # the same machinery.
-      class IccRenderer < Renderer; end
-    end
+    end    end
   end
 end
