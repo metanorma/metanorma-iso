@@ -59,17 +59,19 @@ end
 require "metanorma/iso/registers"
 Metanorma::Iso::Registers.setup
 
-# OCP adoption: one registration declares the ISO flavor for every
-# output format. ICC and other publisher variants are NOT here: a
-# variant that is its own flavor registers itself (own repo, own entry,
-# most-specific-wins over this one); a variant that is genuinely ISO's
-# owns its resolver here. ISO has neither today.
-Metanorma.register_flavor(Metanorma::Flavor.new(
-                            name: :iso,
-                            model_class: Metanorma::Iso::Document::Root,
-                            pubid_module: :"Pubid::Iso",
-                            renderers: { html: Metanorma::Iso::Html::Renderer },
-                          ))
+# OCP adoption: ONE registration in the metanorma-core flavor table —
+# model root, processor, pubid, and per-format renderers. Re-basing to
+# another renderer is a change to this entry only.
+require "metanorma-core"
+
+Metanorma::Core::Flavors.register(Metanorma::Core::Flavor.new(
+                                    name: :iso,
+                                    gem: "metanorma-iso",
+                                    model_root: Metanorma::Iso::Document::Root,
+                                    processor: defined?(Metanorma::Iso::Processor) ? Metanorma::Iso::Processor : nil,
+                                    pubid_module: :"Pubid::Iso",
+                                    renderers: { html: Metanorma::Iso::Html::Renderer },
+                                  ))
 
 # Mark alias as deprecated AFTER setup so the register's own reference
 # doesn't trip the warning.
