@@ -58,13 +58,13 @@ end
 
 require "metanorma/iso/registers"
 Metanorma::Iso::Registers.setup
-Metanorma::Iso::MirrorRegistration.register!
 
 # OCP adoption: one registration declares the ISO flavor for every
 # output format. The html entry is a variant resolver (flavor-owned
 # selection): ICC-published documents render via IccRenderer.
 require "metanorma/iso/html"
 require "metanorma/iso/mirror"
+Metanorma::Iso::MirrorRegistration.register!
 
 Metanorma.register_flavor(Metanorma::Flavor.new(
                             name: :iso,
