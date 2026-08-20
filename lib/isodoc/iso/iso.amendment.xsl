@@ -7481,7 +7481,11 @@
 			<xsl:text disable-output-escaping="yes">&lt;/page_sequence&gt;</xsl:text>
 
 			<!-- create a new page_sequence (opening elements) -->
-			<xsl:text disable-output-escaping="yes">&lt;page_sequence xmlns="</xsl:text><xsl:value-of select="$namespace_full"/>"<xsl:if test="$orientation != ''"> orientation="<xsl:value-of select="$orientation"/>"</xsl:if><xsl:text disable-output-escaping="yes">&gt;</xsl:text>
+			<xsl:text disable-output-escaping="yes">&lt;page_sequence xmlns="</xsl:text><xsl:value-of select="$namespace_full"/>"<xsl:if test="$orientation != ''"> orientation="<xsl:value-of select="$orientation"/>"</xsl:if>
+			<xsl:text> xmlns:fox="http://xmlgraphics.apache.org/fop/extensions"</xsl:text>
+			<!-- prevent for role="Part_continue" for last pagebreak in preface, sections, annex -->
+			<xsl:if test="(ancestor::mn:preface and following::*[ancestor::mn:preface])     or (ancestor::mn:sections and following::*[ancestor::mn:sections])     or (ancestor::mn:annex and following::*[ancestor::mn:annex])"><xsl:text> role="NonStruct"</xsl:text></xsl:if>
+			<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
 
 			<xsl:call-template name="insertOpeningElements">
 				<xsl:with-param name="tree" select="$tree"/>
@@ -7541,6 +7545,7 @@
 					<xsl:text>"</xsl:text>
 				</xsl:for-each>
 				<xsl:if test="position() = 1 and $add_continue = 'true'"> continue="true"</xsl:if>
+				<xsl:if test="$add_continue = 'true'"> role="NonStruct"</xsl:if><!-- the condition 'xsl:if' to prevent the attribute role for math -->
 				<xsl:if test="position() = 1 and $xmlns != ''"> xmlns="<xsl:value-of select="$xmlns"/>"</xsl:if>
 			<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
 			<xsl:if test="$debug = 'true'">
@@ -20671,6 +20676,7 @@
 			<xsl:call-template name="setId"/>
 
 			<xsl:call-template name="sections_element_style"/>
+			<xsl:copy-of select="@role"/>
 
 			<!-- <xsl:if test="$namespace = 'rsd'"> -->
 			<xsl:call-template name="addTagElementT"/>
@@ -20728,6 +20734,7 @@
 
 		<xsl:call-template name="setNamedDestination"/>
 		<fo:block role="Sect">
+			<xsl:copy-of select="@role"/>
 			<xsl:call-template name="addTagElementT"/>
 			<xsl:call-template name="setId"/>
 			<xsl:call-template name="addReviewHelper"/>
@@ -20766,6 +20773,7 @@
 			<xsl:call-template name="setBlockSpanAll"/>
 
 			<xsl:call-template name="refine_clause-style"/>
+			<xsl:copy-of select="@role"/>
 
 			<xsl:call-template name="addReviewHelper"/>
 
