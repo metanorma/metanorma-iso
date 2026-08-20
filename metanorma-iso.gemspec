@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "metanorma-standoc", ">= 3.4.2" # relaxed until standoc#1232 releases
   spec.add_dependency "mnconvert", "~> 1.14"
   spec.add_dependency "pubid"
-  spec.add_dependency "sts", "~> 0.6.11"
+  spec.add_dependency "sts", ">= 0.5.6" # relaxed until glossarist supports 0.6
   spec.add_dependency "tokenizer", "~> 0.3.0"
   spec.add_dependency "uniword", "~> 1.0"
 
