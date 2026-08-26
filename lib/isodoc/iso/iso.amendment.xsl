@@ -20962,10 +20962,11 @@
 		</xsl:variable>
 		<xsl:variable name="title__">
 			<xsl:for-each select="xalan:nodeset($title_)/*/node()">
-				<xsl:choose>
+				<!-- <xsl:choose>
 					<xsl:when test="self::text()"><xsl:text> </xsl:text><xsl:value-of select="."/><xsl:text> </xsl:text></xsl:when>
 					<xsl:otherwise><xsl:text> </xsl:text><xsl:copy-of select="."/><xsl:text> </xsl:text></xsl:otherwise>
-				</xsl:choose>
+				</xsl:choose> -->
+				<xsl:apply-templates select="xalan:nodeset($title_)" mode="addTagElementT"/>
 			</xsl:for-each>
 		</xsl:variable>
 		<xsl:variable name="title" select="normalize-space(translate($title__, concat($em_space,' &#8232;'), '   '))"/>
@@ -20976,6 +20977,13 @@
 				</xsl:if>
 				<xsl:value-of select="$title"/></xsl:attribute>
 		</xsl:if>
+	</xsl:template>
+
+	<xsl:template match="node()" mode="addTagElementT">
+		<xsl:apply-templates select="node()" mode="addTagElementT"/>
+	</xsl:template>
+	<xsl:template match="text()" mode="addTagElementT">
+		<xsl:value-of select="concat(' ', ., ' ')"/>
 	</xsl:template>
 
 	<xsl:template name="replaceChar">
