@@ -283,8 +283,31 @@ module Metanorma
 
       def iso_pubid_create(params, lang_form)
         type_code = ISO_TYPE_CODES[params[:type]] || "is"
-        klass = Pubid::Iso.locate_type(type_code)
+        # Use the publisher-specific pubid registry (e.g. Pubid::Iec for
+        # IEC documents) so the rendered identifier matches the new pubid-2
+        # format. Falls back to Pubid::Iso for unknown publishers.
+        registry = pubid_select(params)
+        klass = registry.respond_to?(:locate_type) ?
+                  registry.locate_type(type_code) :
+                  Pubid::Iso.locate_type(type_code)
         klass.new(**iso_pubid_attributes(params, lang_form, type_code))
+      end
+
+      # Allow IEC and other flavors to override base_pubid, then walk the
+      # ancestor chain to find a registry module that exposes locate_type.
+      def iso_pubid_registry(params)
+        mod = pubid_select(params)
+        mod.respond_to?(:locate_type) ? mod :
+          iso_pubid_registry_walk(mod)
+      end
+
+      def iso_pubid_registry_walk(mod)
+        mod.constants.each do |c|
+          m = mod.const_get(c)
+          next unless m.is_a?(Module)
+          return m if m.respond_to?(:locate_type)
+        end
+        Pubid::Iso
       end
 
       def iso_pubid_attributes(params, lang_form, type_code)
