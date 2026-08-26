@@ -16708,6 +16708,10 @@
 
 		</fo:inline>
 	</xsl:template>
+
+	<!-- remove whitespace from PDF structure tree (https://github.com/metanorma/mn-native-pdf/issues/1071) -->
+	<xsl:template match="mn:fmt-stem/mn:semx/text()[normalize-space() = ''] |    mn:fmt-stem/text()[normalize-space() = ''] |    text()[preceding-sibling::*[1][self::mn:fmt-stem]][following-sibling::*[1][self::mn:bookmark]][normalize-space() = '']" priority="3"/>
+
 	<!-- ======================================= -->
 	<!-- END: math -->
 	<!-- ======================================= -->
