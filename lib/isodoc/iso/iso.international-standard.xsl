@@ -8519,7 +8519,7 @@
 			<fo:inline-container width="6mm" height="1mm" keep-with-previous.within-line="always" id="__internal_layout__attachment_{@target}_{generate-id()}">
 				<!-- underline for paperclip icon -->
 				<fo:block line-height="0.5">        </fo:block>
-				<fo:block margin-top="-4mm" text-decoration="underline" font-size="1pt" text-align="center">
+				<fo:block line-height="1" margin-top="-4mm" font-size="1pt" text-align="center">
 					<fo:instream-foreign-object content-height="3.8mm" scaling="uniform" fox:alt-text="PaperClip" fox:placement="Inline">
 						<xsl:copy-of select="$paperClipImage"/>
 					</fo:instream-foreign-object>
