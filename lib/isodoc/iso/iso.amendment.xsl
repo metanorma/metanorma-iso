@@ -6543,6 +6543,7 @@
 	</xsl:variable>
 
 	<!-- Characters -->
+	<xsl:variable name="nbsp"> </xsl:variable>
 	<xsl:variable name="linebreak">&#8232;</xsl:variable>
 	<xsl:variable name="em_space"> </xsl:variable>
 	<xsl:variable name="tab_zh">　</xsl:variable>
@@ -18759,7 +18760,11 @@
 						<xsl:variable name="fmt_name">
 							<xsl:apply-templates select="mn:fmt-name" mode="update_xml_step1"/>
 						</xsl:variable>
-						<mnx:table id="{@id}" alt-text="{normalize-space($fmt_name)}">
+						<xsl:variable name="fmt_name_rendered_">
+							<xsl:apply-templates select="xalan:nodeset($fmt_name)/node()"/>
+						</xsl:variable>
+						<xsl:variable name="fmt_name_rendered" select="normalize-space(translate(normalize-space($fmt_name_rendered_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
+						<mnx:table id="{@id}" alt-text="{$fmt_name_rendered}">
 							<xsl:copy-of select="$fmt_name"/>
 						</mnx:table>
 					</xsl:when>
@@ -18781,7 +18786,11 @@
 						<xsl:variable name="fmt_name">
 							<xsl:apply-templates select="mn:fmt-name" mode="update_xml_step1"/>
 						</xsl:variable>
-						<mnx:figure id="{@id}" alt-text="{normalize-space($fmt_name)}">
+						<xsl:variable name="fmt_name_rendered_">
+							<xsl:apply-templates select="xalan:nodeset($fmt_name)/node()"/>
+						</xsl:variable>
+						<xsl:variable name="fmt_name_rendered" select="normalize-space(translate(normalize-space($fmt_name_rendered_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
+						<mnx:figure id="{@id}" alt-text="{$fmt_name_rendered}">
 							<xsl:copy-of select="$fmt_name"/>
 						</mnx:figure>
 					</xsl:when>
@@ -18802,9 +18811,14 @@
 				//example/fmt-xref-label[@container] + //example/fmt-name/span[@class = 'fmt-caption-delim'] + //example/name, 
 				with the last two elements dropped if //example/name does not exist. -->
 				<xsl:variable name="example_name">
-					<xsl:apply-templates select="mn:name/node()" mode="update_xml_step1"/>
+					<!-- <xsl:apply-templates select="mn:name/node()" mode="update_xml_step1"/> -->
+					<xsl:apply-templates select="mn:fmt-name/mn:semx[@element = 'name']/node()" mode="update_xml_step1"/>
 				</xsl:variable>
-				<mnx:example id="{@id}" alt-text="{normalize-space($example_name)}">
+				<xsl:variable name="example_name_rendered_">
+					<xsl:apply-templates select="xalan:nodeset($example_name)/node()"/>
+				</xsl:variable>
+				<xsl:variable name="example_name_rendered" select="normalize-space(translate(normalize-space($example_name_rendered_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
+				<mnx:example id="{@id}" alt-text="{$example_name_rendered}">
 					<xsl:element name="fmt-name" namespace="{$namespace_full}">
 						<xsl:call-template name="capitalize"><!-- https://github.com/metanorma/metanorma-pdfa/issues/72 -->
 							<xsl:with-param name="str" select="mn:fmt-xref-label[@container]"/>
@@ -19293,6 +19307,12 @@
 	</xsl:template>
 
 	<xsl:template match="mn:asciimath" mode="bookmark_clean"/>
+
+	<xsl:template match="mn:fmt-link" mode="bookmark_clean">
+		<!-- apply template from common.link.xsl -->
+		<xsl:variable name="link"><xsl:apply-templates select="."/></xsl:variable>
+		<xsl:value-of select="normalize-space($link)"/>
+	</xsl:template>
 	<!-- ============================ -->
 	<!-- END: mode="bookmark_clean" -->
 	<!-- ============================ -->
@@ -19493,6 +19513,16 @@
 		<xsl:apply-templates mode="contents_item">
 			<xsl:with-param name="element" select="$element"/>
 		</xsl:apply-templates>
+	</xsl:template>
+
+	<xsl:template match="mn:fmt-link" mode="contents_item">
+		<!-- apply template from common.link.xsl -->
+		<xsl:variable name="link"><xsl:apply-templates select="."/></xsl:variable>
+		<xsl:value-of select="normalize-space($link)"/>
+	</xsl:template>
+
+	<xsl:template match="mn:image" mode="contents_item">
+		<xsl:copy-of select="."/>
 	</xsl:template>
 
 	<!-- =================== -->
