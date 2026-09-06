@@ -1,0 +1,91 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "optparse"
+require "metanorma-iso"
+
+module MetanormaIso
+  # CLI shim for Layer 4 of the validation architecture. Wraps
+  # Metanorma::Iso.validate (Layer 4) and the Reporter classes (Layer 3)
+  # with a stable command-line contract.
+  module CLI
+    module_function
+
+    def parse_options(argv)
+      options = { format: :text, output: nil, profile: :default }
+      parser = OptionParser.new do |opts|
+        opts.banner = "Usage: metanorma-iso-validate [options] FILE"
+        opts.on("--format FORMAT", %i[text json yaml report],
+                "Output format: text (default), json, yaml, report") do |f|
+          options[:format] = f.to_sym
+        end
+        opts.on("-o", "--output FILE", "Write to FILE instead of stdout") do |f|
+          options[:output] = f
+        end
+        opts.on("--lang LANG", "Document language (default en)") do |v|
+          options[:lang] = v
+        end
+        opts.on("--script SCRIPT", "Document script (default Latn)") do |v|
+          options[:script] = v
+        end
+        opts.on("--doctype TYPE", "Document type") do |v|
+          options[:doctype] = v
+        end
+        opts.on("--vocab", "Vocabulary document") do
+          options[:vocab] = true
+        end
+        opts.on("--profile PROFILE", %i[default strict publication],
+                "Validation profile: default (all rules), strict " \
+                "(warnings fatal), publication (no style checks)") do |p|
+          options[:profile] = p.to_sym
+        end
+        opts.on("-h", "--help", "Show this help") do
+          puts opts
+          exit 0
+        end
+      end
+      parser.parse!(argv)
+      options
+    end
+
+    def run(argv)
+      options = parse_options(argv)
+      file = argv.shift
+      abort "Usage: metanorma-iso-validate FILE (see --help)" unless file
+
+      xml = File.read(file)
+      report = Metanorma::Iso::API.validate(
+        xml,
+        lang: options.fetch(:lang, nil),
+        script: options.fetch(:script, nil),
+        doctype: options[:doctype],
+        vocab: options[:vocab],
+        document: file,
+        profile: options.fetch(:profile, :default)
+      )
+
+      write_output(options, report)
+      exit_code(report, options)
+    end
+
+    def write_output(options, report)
+      output = Metanorma::Iso::API.render(report, format: options[:format])
+      return if output.nil?
+
+      if options[:output]
+        File.write(options[:output], output)
+      else
+        $stdout.puts output
+      end
+    end
+
+    def exit_code(report, options)
+      profile = Metanorma::Iso::API.resolve_profile(options.fetch(:profile, :default))
+      return 1 if profile.fatal_findings?(report)
+
+      0
+    end
+  end
+end
+
+exit(MetanormaIso::CLI.run(ARGV.dup)) if $PROGRAM_NAME == __FILE__

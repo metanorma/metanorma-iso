@@ -309,7 +309,7 @@ module Metanorma
           return nil unless ext&.structuredidentifier
 
           si_struct = ext.structuredidentifier
-          return nil unless si_struct.is_a?(Metanorma::IsoDocument::Metadata::StructuredIdentifier)
+          return nil unless si_struct.is_a?(Metanorma::Iso::Document::Metadata::StructuredIdentifier)
 
           pn = si_struct.project_number
           return nil unless pn && pn.class.method_defined?(:part)

@@ -23,19 +23,20 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/metanorma/metanorma-iso"
   spec.license       = "BSD-2-Clause"
 
-  spec.bindir        = "bin"
+  spec.bindir        = "exe"
   spec.require_paths = ["lib"]
+  spec.executables   = %w[metanorma-iso-validate]
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features|bin|.github)/}) \
     || f.match(%r{Rakefile|bin/rspec})
   end
   spec.required_ruby_version = Gem::Requirement.new(">= 3.3.0")
 
-  spec.add_dependency "metanorma-document", "~> 0.4.0"
-  spec.add_dependency "metanorma-standoc", "~> 3.4.2"
+  spec.add_dependency "metanorma-document", "~> 0.5.0"
+  spec.add_dependency "metanorma-standoc", ">= 3.4.2" # relaxed until standoc#1232 releases
   spec.add_dependency "mnconvert", "~> 1.14"
   spec.add_dependency "pubid"
-  spec.add_dependency "sts", "~> 0.6.11"
+  spec.add_dependency "sts", ">= 0.5.6" # relaxed until glossarist supports 0.6
   spec.add_dependency "tokenizer", "~> 0.3.0"
   spec.add_dependency "uniword", "~> 1.0"
 

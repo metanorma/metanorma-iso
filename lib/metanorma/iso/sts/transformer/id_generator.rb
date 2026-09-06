@@ -27,15 +27,15 @@ module Metanorma
 
         def id_for(element)
           case element
-          when Metanorma::IsoDocument::Sections::IsoForewordSection
+          when Metanorma::Iso::Document::Sections::IsoForewordSection
             "sec_foreword"
-          when Metanorma::IsoDocument::Sections::IsoAbstractSection
+          when Metanorma::Iso::Document::Sections::IsoAbstractSection
             "sec_abstract"
-          when Metanorma::IsoDocument::Sections::IsoClauseSection
+          when Metanorma::Iso::Document::Sections::IsoClauseSection
             id_for_clause(element)
-          when Metanorma::IsoDocument::Sections::IsoAnnexSection
+          when Metanorma::Iso::Document::Sections::IsoAnnexSection
             id_for_annex(element)
-          when Metanorma::IsoDocument::Sections::IsoTermsSection
+          when Metanorma::Iso::Document::Sections::IsoTermsSection
             id_for_terms(element)
           when Metanorma::Document::Components::Tables::TableBlock
             id_for_table(element)
@@ -45,7 +45,7 @@ module Metanorma
             id_for_formula(element)
           when Metanorma::Document::Components::Paragraphs::ParagraphBlock
             id_for_paragraph(element)
-          when Metanorma::StandardDocument::Sections::StandardReferencesSection
+          when Metanorma::Standoc::Document::Sections::StandardReferencesSection
             id_for_ref_section(element)
           else
             id = element.id if element.class.method_defined?(:id)
@@ -54,9 +54,9 @@ module Metanorma
         end
 
         def section_number(element)
-          if element.is_a?(Metanorma::IsoDocument::Sections::IsoClauseSection) ||
-              element.is_a?(Metanorma::IsoDocument::Sections::IsoAnnexSection) ||
-              element.is_a?(Metanorma::IsoDocument::Sections::IsoTermsSection)
+          if element.is_a?(Metanorma::Iso::Document::Sections::IsoClauseSection) ||
+              element.is_a?(Metanorma::Iso::Document::Sections::IsoAnnexSection) ||
+              element.is_a?(Metanorma::Iso::Document::Sections::IsoTermsSection)
             element.number
           end
         end
