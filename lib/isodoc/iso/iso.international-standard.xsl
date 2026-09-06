@@ -8468,10 +8468,10 @@
 				<xsl:attribute name="keep-together.within-line">always</xsl:attribute>
 			</xsl:if>
 
-			<xsl:if test="$isLinkToEmbeddedFile = 'true'">
+			<!-- <xsl:if test="$isLinkToEmbeddedFile = 'true'">
 				<xsl:attribute name="color">inherit</xsl:attribute>
 				<xsl:attribute name="text-decoration">none</xsl:attribute>
-			</xsl:if>
+			</xsl:if> -->
 
 			<xsl:call-template name="refine_link-style"/>
 
@@ -8533,6 +8533,9 @@
 				<!-- underline for paperclip icon -->
 				<fo:block line-height="0.5">        </fo:block>
 				<fo:block line-height="1" margin-top="-4mm" font-size="1pt" text-align="center">
+					<xsl:if test="ancestor::mn:tr">
+						<xsl:attribute name="margin-top">-3mm</xsl:attribute>
+					</xsl:if>
 					<fo:instream-foreign-object content-height="3.8mm" scaling="uniform" fox:alt-text="PaperClip" fox:placement="Inline">
 						<xsl:copy-of select="$paperClipImage"/>
 					</fo:instream-foreign-object>
