@@ -101,7 +101,13 @@ module Metanorma
           # PXML → ISO-STS XML → branded HTML. Consumes the presentation
           # XML (semantic), not the isodoc-rendered node — the native
           # transformer reads the typed IsoDocument::Root directly.
-          pxml = isodoc_node.nil? ? File.read(inname) : isodoc_node.to_xml
+          # The compile layer hands the semantic XML over as a String;
+          # isodoc hands off by file path (nil) or parsed node.
+          pxml = case isodoc_node
+                 when String then isodoc_node
+                 when nil then File.read(inname)
+                 else isodoc_node.to_xml
+                 end
           sts_xml = Metanorma::Iso::Sts.convert(pxml)
           html = Metanorma::Iso::Sts.render_html(sts_xml)
           File.write(outname, html)

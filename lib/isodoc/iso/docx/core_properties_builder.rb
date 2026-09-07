@@ -42,10 +42,14 @@ module IsoDoc
 
         def dc_title
           return nil unless bib_has?(:titles)
-          return nil unless @bib.titles
 
-          localized = @bib.titles.for_language("en") ||
-                      @bib.titles.for_language(nil)
+          titles = @bib.titles
+          # a bibdata with no <title> parses the collection attribute
+          # as a plain (empty) Array — same guard as find_en_title
+          return nil unless titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
+
+          localized = titles.for_language("en") ||
+                      titles.for_language(nil)
           return nil unless localized
 
           value = localized.to_s
