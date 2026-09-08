@@ -68,7 +68,11 @@ module Metanorma
 
       # Format doc identifier with publisher prefix (e.g. "OGC 00-027").
       def formatted_doc_id(bibdata)
-        identifiers = bibdata.doc_identifier
+        # Flavor bibdata shapes diverge (e.g. IETF carries no ISO-ish
+        # doc_identifier): degrade to no cover id rather than raising.
+        identifiers = if bibdata.class.attributes.key?(:doc_identifier)
+                        bibdata.doc_identifier
+                      end
         return nil unless identifiers && !identifiers.empty?
 
         raw_id = extract_text_value(identifiers.first).to_s.strip
