@@ -50,10 +50,12 @@ module Metanorma
       end
 
       def extract_display_title(bibdata)
-        titles = bibdata.titles
+        titles = safe_attr(bibdata, :titles)
         return nil unless titles
 
-        en_title = bibdata.title_for("en")
+        en_title = if titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
+                     bibdata.title_for("en")
+                   end
         result = en_title&.to_s
         return result if result && !result.empty?
 
@@ -95,9 +97,7 @@ module Metanorma
       end
 
       def extract_stage(bibdata)
-        return nil unless bibdata.status&.stage
-
-        stages = Array(bibdata.status.stage)
+        stages = Array(safe_attr(safe_attr(bibdata, :status), :stage))
         return nil if stages.empty?
 
         en_stage = stages.find do |s|
@@ -173,7 +173,7 @@ module Metanorma
         doc_id = formatted_doc_id(bibdata)
 
         pub_date = nil
-        bibdata.date&.each do |date|
+        Array(safe_attr(bibdata, :date)).each do |date|
           date_type = extract_text_value(safe_attr(date,
                                                    :type_attr) || safe_attr(
                                                      date, :type
@@ -189,7 +189,8 @@ module Metanorma
         doctype = extract_doctype(bibdata)
 
         title_text = nil
-        if bibdata.titles
+        titles = safe_attr(bibdata, :titles)
+        if titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
           en_title = bibdata.title_for("en")
           if en_title
             title_text = if en_title.is_a?(Metanorma::Iso::Document::Metadata::AbstractTitle) && en_title.value
@@ -216,8 +217,8 @@ module Metanorma
         bibdata = doc.bibdata
         return nil unless bibdata
 
-        titles = bibdata.titles
-        return nil unless titles
+        titles = safe_attr(bibdata, :titles)
+        return nil unless titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
 
         en_title = bibdata.title_for("en")
         return nil unless en_title
