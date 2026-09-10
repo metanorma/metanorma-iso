@@ -3883,7 +3883,8 @@
 
 								<!-- Reference/Link for title -->
 								<!-- <fo:wrapper role="Reference"> -->
-									<fo:basic-link internal-destination="{@id}" fox:alt-text="{mnx:title}"> <!-- role="SKIP" -->
+									<xsl:variable name="alt_text"><xsl:apply-templates select="mnx:title" mode="bookmarks"/></xsl:variable>
+									<fo:basic-link internal-destination="{@id}" fox:alt-text="{$alt_text}"> <!-- role="SKIP" -->
 										<xsl:if test="$layoutVersion = '1987' and @type = 'section'">
 											<xsl:value-of select="concat(@section, ' ')"/>
 										</xsl:if>
@@ -15727,6 +15728,7 @@
 	<xsl:template match="mn:figure[not(mn:image) and *[local-name() = 'svg']]/mn:fmt-name/mn:bookmark" priority="2"/>
 	<xsl:template match="mn:figure[not(mn:image)]/*[local-name() = 'svg']" priority="2" name="image_svg">
 		<xsl:param name="name"/>
+		<xsl:param name="inline_image">false</xsl:param>
 
 		<xsl:variable name="svg_content">
 			<xsl:apply-templates select="." mode="svg_update"/>
@@ -15838,7 +15840,7 @@
 						<xsl:when test="ancestor::*[local-name() = 'tr'] and $isGenerateTableIF = 'true'">
 							<fo:inline xsl:use-attribute-sets="image-style" text-align="left"/>
 						</xsl:when>
-						<xsl:when test="not(ancestor::mn:figure)">
+						<xsl:when test="not(ancestor::mn:figure) or ancestor::mn:fmt-name">
 							<fo:inline xsl:use-attribute-sets="image-style" text-align="left"/>
 						</xsl:when>
 						<xsl:otherwise>
@@ -15867,7 +15869,7 @@
 									<xsl:attribute name="height">3.5mm</xsl:attribute>
 								</xsl:when>
 								<xsl:otherwise>
-									<xsl:if test="$isGenerateTableIF = 'false'">
+									<xsl:if test="$isGenerateTableIF = 'false' and normalize-space($inline_image) = 'false'">
 										<xsl:attribute name="width">100%</xsl:attribute>
 									</xsl:if>
 									<xsl:attribute name="content-height">100%</xsl:attribute>
@@ -16063,9 +16065,12 @@
 	</xsl:template>
 
 	<!-- For the structures like: <dt><image src="" mimetype="image/svg+xml" height="" width=""><svg xmlns="http://www.w3.org/2000/svg" ... -->
-	<xsl:template match="*[not(self::mn:figure)]/mn:image[*[local-name() = 'svg']]" priority="3">
+	<!-- Note: count(ancestor::*) = 0 for image in mnx:figures/mnx:figure/fmt-name, when fmt-name is context/root node in template insertListOf_Item -->
+	<xsl:template match="*[not(self::mn:figure)]/mn:image[*[local-name() = 'svg']] | mn:image[count(ancestor::*) = 0][*[local-name() = 'svg']]" priority="3">
 		<xsl:for-each select="*[local-name() = 'svg']">
-			<xsl:call-template name="image_svg"/>
+			<xsl:call-template name="image_svg">
+				<xsl:with-param name="inline_image" select="not(ancestor::mn:bibdata)"/>
+			</xsl:call-template>
 		</xsl:for-each>
 	</xsl:template>
 
@@ -18763,11 +18768,11 @@
 						<xsl:variable name="fmt_name">
 							<xsl:apply-templates select="mn:fmt-name" mode="update_xml_step1"/>
 						</xsl:variable>
-						<xsl:variable name="fmt_name_rendered_">
-							<xsl:apply-templates select="xalan:nodeset($fmt_name)/node()"/>
+						<xsl:variable name="alt_text_">
+							<xsl:apply-templates select="xalan:nodeset($fmt_name)/node()" mode="bookmarks"/>
 						</xsl:variable>
-						<xsl:variable name="fmt_name_rendered" select="normalize-space(translate(normalize-space($fmt_name_rendered_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
-						<mnx:table id="{@id}" alt-text="{$fmt_name_rendered}">
+						<xsl:variable name="alt_text" select="normalize-space(translate(normalize-space($alt_text_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
+						<mnx:table id="{@id}" alt-text="{$alt_text}">
 							<xsl:copy-of select="$fmt_name"/>
 						</mnx:table>
 					</xsl:when>
@@ -18789,11 +18794,11 @@
 						<xsl:variable name="fmt_name">
 							<xsl:apply-templates select="mn:fmt-name" mode="update_xml_step1"/>
 						</xsl:variable>
-						<xsl:variable name="fmt_name_rendered_">
-							<xsl:apply-templates select="xalan:nodeset($fmt_name)/node()"/>
+						<xsl:variable name="alt_text_">
+							<xsl:apply-templates select="xalan:nodeset($fmt_name)/node()" mode="bookmarks"/>
 						</xsl:variable>
-						<xsl:variable name="fmt_name_rendered" select="normalize-space(translate(normalize-space($fmt_name_rendered_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
-						<mnx:figure id="{@id}" alt-text="{$fmt_name_rendered}">
+						<xsl:variable name="alt_text" select="normalize-space(translate(normalize-space($alt_text_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
+						<mnx:figure id="{@id}" alt-text="{$alt_text}">
 							<xsl:copy-of select="$fmt_name"/>
 						</mnx:figure>
 					</xsl:when>
@@ -18817,11 +18822,11 @@
 					<!-- <xsl:apply-templates select="mn:name/node()" mode="update_xml_step1"/> -->
 					<xsl:apply-templates select="mn:fmt-name/mn:semx[@element = 'name']/node()" mode="update_xml_step1"/>
 				</xsl:variable>
-				<xsl:variable name="example_name_rendered_">
-					<xsl:apply-templates select="xalan:nodeset($example_name)/node()"/>
+				<xsl:variable name="alt_text_">
+					<xsl:apply-templates select="xalan:nodeset($example_name)/node()" mode="bookmarks"/>
 				</xsl:variable>
-				<xsl:variable name="example_name_rendered" select="normalize-space(translate(normalize-space($example_name_rendered_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
-				<mnx:example id="{@id}" alt-text="{$example_name_rendered}">
+				<xsl:variable name="alt_text" select="normalize-space(translate(normalize-space($alt_text_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
+				<mnx:example id="{@id}" alt-text="{$alt_text_}">
 					<xsl:element name="fmt-name" namespace="{$namespace_full}">
 						<xsl:call-template name="capitalize"><!-- https://github.com/metanorma/metanorma-pdfa/issues/72 -->
 							<xsl:with-param name="str" select="mn:fmt-xref-label[@container]"/>
@@ -19029,6 +19034,11 @@
 		<xsl:apply-templates mode="bookmarks"/>
 	</xsl:template>
 
+	<xsl:template match="*[local-name() = 'math']" mode="bookmarks">
+		<xsl:value-of select="normalize-space(.)"/>
+	</xsl:template>
+	<xsl:template match="mn:asciimath" mode="bookmarks"/>
+
 	<!-- Note: to enable the addition of character span markup with semantic styling for DIS Word output -->
 	<xsl:template match="mn:span" mode="bookmarks">
 		<xsl:apply-templates mode="bookmarks"/>
@@ -19046,6 +19056,54 @@
 	<xsl:template match="mn:erefstack" mode="bookmarks"/>
 
 	<xsl:template match="mn:requirement |             mn:recommendation |              mn:permission" mode="bookmarks" priority="3"/>
+
+	<xsl:template match="mn:fmt-link" mode="bookmarks">
+		<!-- apply template from common.link.xsl -->
+		<xsl:variable name="link"><xsl:apply-templates select="."/></xsl:variable>
+		<xsl:value-of select="normalize-space($link)"/>
+	</xsl:template>
+
+	<xsl:template match="mn:image" mode="bookmarks"/>
+
+	<xsl:template match="mn:image[normalize-space(@alt) != '']" mode="bookmarks">
+		<xsl:value-of select="concat('[', normalize-space(@alt), ']')"/>
+	</xsl:template>
+
+	<xsl:template match="mnx:item" mode="bookmarks">
+		<xsl:apply-templates mode="bookmarks"/>
+	</xsl:template>
+
+	<xsl:template match="mnx:item[@id != '']" mode="bookmarks">
+		<fo:bookmark internal-destination="{@id}" starting-state="hide">
+			<fo:bookmark-title>
+				<xsl:if test="@section != ''">
+					<xsl:value-of select="@section"/>
+					<xsl:text> </xsl:text>
+				</xsl:if>
+				<xsl:variable name="title">
+					<xsl:if test="1 = 2">
+					<xsl:for-each select="mnx:title/node()">
+						<xsl:choose>
+							<xsl:when test="local-name() = 'add' and starts-with(., $ace_tag)"><!-- skip --></xsl:when>
+							<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+						</xsl:choose>
+					</xsl:for-each>
+					</xsl:if>
+					<xsl:apply-templates select="mnx:title/node()" mode="bookmarks"/>
+				</xsl:variable>
+				<xsl:value-of select="normalize-space($title)"/>
+			</fo:bookmark-title>
+			<xsl:apply-templates select="mnx:item" mode="bookmarks"/>
+		</fo:bookmark>
+	</xsl:template>
+
+	<xsl:template match="text()" mode="bookmarks">
+		<xsl:value-of select="."/>
+	</xsl:template>
+
+	<xsl:template match="mnx:item/text()" mode="bookmarks"/>
+
+	<xsl:template match="*[local-name() = 'add'][starts-with(., $ace_tag)]" mode="bookmarks"/>
 
 	<!-- Bookmarks -->
 	<xsl:template name="addBookmarks">
@@ -19100,7 +19158,7 @@
 											</xsl:choose>
 										</fo:bookmark-title>
 
-										<xsl:apply-templates select="mnx:contents/mnx:item" mode="bookmark"/>
+										<xsl:apply-templates select="mnx:contents/mnx:item" mode="bookmarks"/>
 
 										<xsl:call-template name="insertFigureBookmarks">
 											<xsl:with-param name="contents" select="mnx:contents"/>
@@ -19126,7 +19184,7 @@
 							<xsl:otherwise>
 								<xsl:for-each select="$contents_nodes/mnx:doc">
 
-									<xsl:apply-templates select="mnx:contents/mnx:item" mode="bookmark"/>
+									<xsl:apply-templates select="mnx:contents/mnx:item" mode="bookmarks"/>
 
 									<xsl:call-template name="insertFigureBookmarks">
 										<xsl:with-param name="contents" select="mnx:contents"/>
@@ -19150,7 +19208,7 @@
 						</xsl:choose>
 					</xsl:when>
 					<xsl:otherwise>
-						<xsl:apply-templates select="$contents_nodes/mnx:contents/mnx:item" mode="bookmark"/>
+						<xsl:apply-templates select="$contents_nodes/mnx:contents/mnx:item" mode="bookmarks"/>
 
 						<xsl:call-template name="insertFigureBookmarks">
 							<xsl:with-param name="contents" select="$contents_nodes/mnx:contents"/>
@@ -19204,7 +19262,9 @@
 				<fo:bookmark-title><xsl:value-of select="normalize-space($bookmark-title)"/></fo:bookmark-title>
 				<xsl:for-each select="$contents_nodes//mnx:figures/mnx:figure">
 					<fo:bookmark internal-destination="{@id}">
-						<fo:bookmark-title><xsl:value-of select="normalize-space(.)"/></fo:bookmark-title>
+						<!-- <fo:bookmark-title><xsl:value-of select="normalize-space(.)"/></fo:bookmark-title> -->
+						<xsl:variable name="title"><xsl:apply-templates mode="bookmarks"/></xsl:variable>
+						<fo:bookmark-title><xsl:value-of select="normalize-space($title)"/></fo:bookmark-title>
 					</fo:bookmark>
 				</xsl:for-each>
 			</fo:bookmark>
@@ -19245,7 +19305,9 @@
 				<xsl:for-each select="$contents_nodes//mnx:tables/mnx:table">
 					<fo:bookmark internal-destination="{@id}">
 						<!-- <fo:bookmark-title><xsl:value-of select="normalize-space(.)"/></fo:bookmark-title> -->
-						<fo:bookmark-title><xsl:apply-templates mode="bookmark_clean"/></fo:bookmark-title>
+						<!-- <fo:bookmark-title><xsl:apply-templates mode="bookmark_clean"/></fo:bookmark-title> -->
+						<xsl:variable name="title"><xsl:apply-templates mode="bookmarks"/></xsl:variable>
+						<fo:bookmark-title><xsl:value-of select="normalize-space($title)"/></fo:bookmark-title>
 					</fo:bookmark>
 				</xsl:for-each>
 			</fo:bookmark>
@@ -19286,43 +19348,15 @@
 				<xsl:for-each select="$contents_nodes//mnx:examples/mnx:example">
 					<fo:bookmark internal-destination="{@id}">
 						<!-- <fo:bookmark-title><xsl:value-of select="normalize-space(.)"/></fo:bookmark-title> -->
-						<fo:bookmark-title><xsl:apply-templates mode="bookmark_clean"/></fo:bookmark-title>
+						<!-- <fo:bookmark-title><xsl:apply-templates mode="bookmark_clean"/></fo:bookmark-title> -->
+						<xsl:variable name="title"><xsl:apply-templates mode="bookmarks"/></xsl:variable>
+						<fo:bookmark-title><xsl:value-of select="normalize-space($title)"/></fo:bookmark-title>
 					</fo:bookmark>
 				</xsl:for-each>
 			</fo:bookmark>
 		</xsl:if>
 	</xsl:template> <!-- insertExampleBookmarks -->
 	<!-- End Bookmarks -->
-
-	<!-- ============================ -->
-	<!-- mode="bookmark_clean" -->
-	<!-- ============================ -->
-	<xsl:template match="node()" mode="bookmark_clean">
-		<xsl:apply-templates select="node()" mode="bookmark_clean"/>
-	</xsl:template>
-
-	<xsl:template match="text()" mode="bookmark_clean">
-		<xsl:value-of select="."/>
-	</xsl:template>
-
-	<xsl:template match="*[local-name() = 'math']" mode="bookmark_clean">
-		<xsl:value-of select="normalize-space(.)"/>
-	</xsl:template>
-
-	<xsl:template match="mn:asciimath" mode="bookmark_clean"/>
-
-	<xsl:template match="mn:fmt-link" mode="bookmark_clean">
-		<!-- apply template from common.link.xsl -->
-		<xsl:variable name="link"><xsl:apply-templates select="."/></xsl:variable>
-		<xsl:value-of select="normalize-space($link)"/>
-	</xsl:template>
-
-	<xsl:template match="mn:image[normalize-space(@alt) != '']" mode="bookmark_clean">
-		<xsl:value-of select="concat('[', normalize-space(@alt), ']')"/>
-	</xsl:template>
-	<!-- ============================ -->
-	<!-- END: mode="bookmark_clean" -->
-	<!-- ============================ -->
 
 	<xsl:template name="getLangVersion">
 		<xsl:param name="lang"/>
@@ -19337,37 +19371,6 @@
 			<xsl:otherwise><xsl:value-of select="$lang"/> version</xsl:otherwise>
 		</xsl:choose>
 	</xsl:template>
-
-	<xsl:template match="mnx:item" mode="bookmark">
-		<xsl:choose>
-			<xsl:when test="@id != ''">
-				<fo:bookmark internal-destination="{@id}" starting-state="hide">
-					<fo:bookmark-title>
-						<xsl:if test="@section != ''">
-							<xsl:value-of select="@section"/>
-							<xsl:text> </xsl:text>
-						</xsl:if>
-						<xsl:variable name="title">
-							<xsl:for-each select="mnx:title/node()">
-								<xsl:choose>
-									<xsl:when test="local-name() = 'add' and starts-with(., $ace_tag)"><!-- skip --></xsl:when>
-									<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
-								</xsl:choose>
-							</xsl:for-each>
-						</xsl:variable>
-						<xsl:value-of select="normalize-space($title)"/>
-					</fo:bookmark-title>
-					<xsl:apply-templates mode="bookmark"/>
-				</fo:bookmark>
-			</xsl:when>
-			<xsl:otherwise>
-				<xsl:apply-templates mode="bookmark"/>
-			</xsl:otherwise>
-		</xsl:choose>
-	</xsl:template>
-
-	<xsl:template match="mnx:title" mode="bookmark"/>
-	<xsl:template match="text()" mode="bookmark"/>
 
 	<!-- ====== -->
 	<!-- ====== -->
@@ -19422,6 +19425,10 @@
 		<xsl:text> </xsl:text>
 	</xsl:template>
 
+	<xsl:template match="mn:br | mn:tab" mode="bookmarks">
+		<xsl:text> </xsl:text>
+	</xsl:template>
+
 	<xsl:template match="mn:strong" mode="contents_item">
 		<xsl:param name="element"/>
 		<xsl:copy>
@@ -19431,26 +19438,9 @@
 		</xsl:copy>
 	</xsl:template>
 
-	<xsl:template match="mn:em" mode="contents_item">
+	<xsl:template match="mn:em | mn:sub | mn:sup | mn:tt | mn:underline | mn:hi | mn:strike | mn:span[@class] | mn:smallcap" mode="contents_item">
 		<xsl:copy>
-			<xsl:apply-templates mode="contents_item"/>
-		</xsl:copy>
-	</xsl:template>
-
-	<xsl:template match="mn:sub" mode="contents_item">
-		<xsl:copy>
-			<xsl:apply-templates mode="contents_item"/>
-		</xsl:copy>
-	</xsl:template>
-
-	<xsl:template match="mn:sup" mode="contents_item">
-		<xsl:copy>
-			<xsl:apply-templates mode="contents_item"/>
-		</xsl:copy>
-	</xsl:template>
-
-	<xsl:template match="mn:tt" mode="contents_item">
-		<xsl:copy>
+			<xsl:copy-of select="@*"/>
 			<xsl:apply-templates mode="contents_item"/>
 		</xsl:copy>
 	</xsl:template>
@@ -21009,25 +20999,16 @@
 
 	<xsl:template name="addTagElementT">
 		<xsl:variable name="title_">
-			<xsl:apply-templates select="mn:fmt-title"/>
+			<xsl:apply-templates select="mn:fmt-title" mode="bookmarks"/>
 			<xsl:if test="not(mn:fmt-title) and self::mn:term">
 				<name>
-					<xsl:apply-templates select="mn:fmt-name"/>
+					<xsl:apply-templates select="mn:fmt-name" mode="bookmarks"/>
 					<xsl:text> </xsl:text>
 					<xsl:apply-templates select="mn:fmt-preferred/node()[1]"/>
 				</name>
 			</xsl:if>
 		</xsl:variable>
-		<xsl:variable name="title__">
-			<!--  <xsl:for-each select="xalan:nodeset($title_)/*/node()">
-				<xsl:choose>
-					<xsl:when test="self::text()"><xsl:text> </xsl:text><xsl:value-of select="."/><xsl:text> </xsl:text></xsl:when>
-					<xsl:otherwise><xsl:text> </xsl:text><xsl:copy-of select="."/><xsl:text> </xsl:text></xsl:otherwise>
-				</xsl:choose
-			</xsl:for-each> -->
-			<xsl:apply-templates select="xalan:nodeset($title_)" mode="addTagElementT"/>
-		</xsl:variable>
-		<xsl:variable name="title" select="normalize-space(translate($title__, concat($em_space,' &#8232;'), '   '))"/>
+		<xsl:variable name="title" select="normalize-space(translate($title_, concat($em_space,' &#8232;'), '   '))"/>
 		<xsl:if test="$title != ''">
 			<xsl:attribute name="fox:title">
 				<xsl:if test="ancestor::mn:sections">
@@ -21035,13 +21016,6 @@
 				</xsl:if>
 				<xsl:value-of select="$title"/></xsl:attribute>
 		</xsl:if>
-	</xsl:template>
-
-	<xsl:template match="node()" mode="addTagElementT">
-		<xsl:apply-templates select="node()" mode="addTagElementT"/>
-	</xsl:template>
-	<xsl:template match="text()" mode="addTagElementT">
-		<xsl:value-of select="concat(' ', ., ' ')"/>
 	</xsl:template>
 
 	<xsl:template name="replaceChar">
