@@ -40,7 +40,7 @@ gem "lutaml-model", path: "../../lutaml/lutaml-model" if File.exist?(File.expand
 # (isodoc main also pins ~> 1.12).
 gem "html2doc", "~> 1.12.0"
 gem "moxml", "~> 0.5" # leptris wave (metanorma-document#60)
-gem "omml", github: "plurimath/omml", branch: "moxml-0.5-range" # TEMPORARY: plurimath/omml#11; flip on release
+gem "omml", "~> 0.2.6" # 0.2.6 (2026-09-08) carries the moxml-0.5 range (plurimath/omml#11)
 # pubid main is required for undated-reference parsing (pubid/pubid#138)
 # and the SupplementIdentifier base rename (b23a084f, 1aae4e68); revert
 # to the released gem once 2.0.0.pre.alpha.9 ships.
