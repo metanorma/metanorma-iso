@@ -23,7 +23,7 @@ gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "feat/te
 # Revert to main once PR
 # https://github.com/metanorma/metanorma-document/pull/45 merges.
 # TEMPORARY: full audit chain — flip to main on PR merges
-gem "metanorma-document", github: "metanorma/metanorma-document", branch: "feat/render-new-vocabulary"
+gem "metanorma-document", github: "metanorma/metanorma-document", branch: "main"
 gem "rake"
 # relaton-bib 2.2.0.pre is the pubid-2-native line required by
 # metanorma-document 0.4.0.
