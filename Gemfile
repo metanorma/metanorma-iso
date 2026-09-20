@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 gemspec
+gem "metanorma-mirror", "~> 1.0"
 
 gem "canon"
 # isodoc PR branch: pubid 2 migration for std_docid_semantic +
@@ -23,7 +24,6 @@ gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "feat/te
 # https://github.com/metanorma/metanorma-document/pull/45 merges.
 # TEMPORARY: full audit chain — flip to main on PR merges
 gem "metanorma-document", github: "metanorma/metanorma-document", branch: "feat/render-new-vocabulary"
-gem "metanorma-mirror", github: "metanorma/metanorma-mirror", branch: "feat/svgmap-imagemap-handlers"
 gem "rake"
 # relaton-bib 2.2.0.pre is the pubid-2-native line required by
 # metanorma-document 0.4.0.
