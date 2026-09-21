@@ -26,9 +26,11 @@ module Metanorma
         node.attr("iso-cen-parallel") and xml.iso_cen_parallel true
       end
 
-      STAGE_ERROR = [Pubid::Errors::HarmonizedStageCodeInvalidError,
-                     Pubid::Errors::TypeStageParseError,
-                     Pubid::Errors::StageInvalidError].freeze
+      # Unified pubid surfaces all stage failures as ParseError /
+      # InvalidInputError (the fine-grained stage errors are not yet
+      # ported).
+      STAGE_ERROR = [Pubid::Errors::ParseError,
+                     Pubid::Errors::InvalidInputError].freeze
 
       def metadata_stage(node, xml)
         id = iso_id_default(iso_id_params(node))
