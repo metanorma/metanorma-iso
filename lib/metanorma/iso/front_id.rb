@@ -1,8 +1,8 @@
 require "date"
 require "twitter_cldr"
-require "pubid-iso"
-require "pubid-cen"
-require "pubid-iec"
+# Unified pubid gem (pubid-iso/-iec/-cen are deprecated; the single
+# gem ships every flavor under Pubid::*).
+require "pubid"
 
 module Metanorma
   module Iso
