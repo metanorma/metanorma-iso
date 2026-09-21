@@ -406,7 +406,9 @@ module Metanorma
       end
 
       def pubid_code(value)
-        Pubid::Iso::Components::Code.new(value: value.to_s)
+        # pubid 2 retired Components::Code: number/part are plain :string
+        # attributes that cast on assignment (pubid api/builder).
+        value.to_s
       end
 
       def pubid_date(year)
