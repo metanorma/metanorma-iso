@@ -18859,28 +18859,36 @@
 	<xsl:template name="processExamples_Contents">
 		<mnx:examples>
 			<xsl:for-each select="//mn:example[@id and mn:fmt-name and normalize-space(@id) != '']">
-				<!-- https://github.com/metanorma/metanorma-pdfa/issues/32#issuecomment-4929133938:
-				//example/fmt-xref-label[@container] + //example/fmt-name/span[@class = 'fmt-caption-delim'] + //example/name, 
-				with the last two elements dropped if //example/name does not exist. -->
-				<xsl:variable name="example_name">
-					<!-- <xsl:apply-templates select="mn:name/node()" mode="update_xml_step1"/> -->
-					<xsl:apply-templates select="mn:fmt-name/mn:semx[@element = 'name']/node()" mode="update_xml_step1"/>
-				</xsl:variable>
-				<xsl:variable name="alt_text_">
-					<xsl:apply-templates select="xalan:nodeset($example_name)/node()" mode="bookmarks"/>
-				</xsl:variable>
-				<xsl:variable name="alt_text" select="normalize-space(translate(normalize-space($alt_text_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
-				<mnx:example id="{@id}" alt-text="{$alt_text_}">
-					<xsl:element name="fmt-name" namespace="{$namespace_full}">
-						<xsl:call-template name="capitalize"><!-- https://github.com/metanorma/metanorma-pdfa/issues/72 -->
-							<xsl:with-param name="str" select="mn:fmt-xref-label[@container]"/>
-						</xsl:call-template>
-						<xsl:if test="normalize-space($example_name) != ''">
-							<xsl:value-of select="mn:fmt-name/mn:span[@class = 'fmt-caption-delim']"/>
-							<xsl:copy-of select="$example_name"/>
-						</xsl:if>
-					</xsl:element>
-				</mnx:example>
+				<xsl:choose>
+					<!-- https://github.com/metanorma/mn-native-pdf/issues/1116 -->
+					<!-- example's will be processed from fmt-footnote-container -->
+					<xsl:when test="ancestor::mn:fn and ancestor::mn:tr"><!--skip--></xsl:when>
+					<xsl:otherwise>
+						<!-- https://github.com/metanorma/metanorma-pdfa/issues/32#issuecomment-4929133938:
+						//example/fmt-xref-label[@container] + //example/fmt-name/span[@class = 'fmt-caption-delim'] + //example/name, 
+						with the last two elements dropped if //example/name does not exist. -->
+						<xsl:variable name="example_name">
+							<!-- <xsl:apply-templates select="mn:name/node()" mode="update_xml_step1"/> -->
+							<xsl:apply-templates select="mn:fmt-name/mn:semx[@element = 'name']/node()" mode="update_xml_step1"/>
+						</xsl:variable>
+						<xsl:variable name="alt_text_">
+							<xsl:apply-templates select="xalan:nodeset($example_name)/node()" mode="bookmarks"/>
+						</xsl:variable>
+						<xsl:variable name="alt_text" select="normalize-space(translate(normalize-space($alt_text_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
+
+						<mnx:example id="{@id}" alt-text="{$alt_text_}">
+							<xsl:element name="fmt-name" namespace="{$namespace_full}">
+								<xsl:call-template name="capitalize"><!-- https://github.com/metanorma/metanorma-pdfa/issues/72 -->
+									<xsl:with-param name="str" select="mn:fmt-xref-label[@container]"/>
+								</xsl:call-template>
+								<xsl:if test="normalize-space($example_name) != ''">
+									<xsl:value-of select="mn:fmt-name/mn:span[@class = 'fmt-caption-delim']"/>
+									<xsl:copy-of select="$example_name"/>
+								</xsl:if>
+							</xsl:element>
+						</mnx:example>
+					</xsl:otherwise>
+				</xsl:choose>
 			</xsl:for-each>
 		</mnx:examples>
 	</xsl:template>
