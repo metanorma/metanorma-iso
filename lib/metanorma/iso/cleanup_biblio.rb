@@ -192,7 +192,7 @@ module Metanorma
           n.include?("Unpublished-Status") and next
           withdrawn_ref?(b, cutoff) or next
           if id = replacement_standard(b)
-            insert_unpub_note(b, @i18n.cancelled_and_replaced.sub("%", id))
+            insert_unpub_note(b, @i18n.cancelled_and_replaced.gsub("%") { id })
           else insert_unpub_note(b, @i18n.withdrawn)
           end
         end

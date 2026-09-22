@@ -56,7 +56,7 @@ module IsoDoc
       def subclause?(target, type, from)
         (from&.include?(".") && type == "clause") ||
           type == "list" ||
-          target&.gsub(/<[^<>]+>/, "")&.match(/^IEV$|^IEC 60050-/)
+          target&.gsub(/<[^<>]*+>|[<>]/, "")&.match(/^IEV$|^IEC 60050-/)
       end
 
       # ISO has not bothered to communicate to us what most of these
