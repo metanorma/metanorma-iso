@@ -27,15 +27,23 @@ module Metanorma
           end
         end
 
-        # Apply the NBSP rules to every text node of a serialised XML string
-        # (walks each +>text<+ run). Used as the metanorma-core
-        # +document_transformers+ +:post_process+ hook, replacing the
-        # previously-private DocumentTransformer#apply_nbsp_to_text.
+        # Apply the NBSP rules to every text node of a serialised XML string.
+        # Used as the metanorma-core +document_transformers+ +:post_process+
+        # hook, replacing the previously-private
+        # DocumentTransformer#apply_nbsp_to_text.
+        #
+        # Tags are split out and only the text chunks pass through
+        # #process — a single linear pass (the previous gsub over
+        # +>([^<]+)<+ rescanned each +>+ start position and went
+        # polynomial on pathologically repetitive input, CodeQL
+        # rb/polynomial-redos).
         #
         # @param xml [String] serialised STS XML.
         # @return [String] XML with NBSP rules applied to text content.
         def self.apply_to_text(xml)
-          xml.gsub(/>([^<]+)</) { ">#{process(Regexp.last_match(1))}<" }
+          xml.split(/(<[^>]*>)/).map do |chunk|
+            chunk.start_with?("<") ? chunk : process(chunk)
+          end.join
         end
       end
     end

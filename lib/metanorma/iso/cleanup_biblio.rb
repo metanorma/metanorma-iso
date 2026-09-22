@@ -139,7 +139,7 @@ module Metanorma
           bibitem.at("./docidentifier")
         base_pubid, orig = parse_draft_docid(docid, bibitem)
         insert_unpub_note(bibitem, @i18n.under_preparation
-          .sub("%", dated_draft_id(orig, base_pubid, cutoff)))
+          .gsub("%") { dated_draft_id(orig, base_pubid, cutoff) })
         draft_biblio_docid(orig, base_pubid, docid)
       end
 
