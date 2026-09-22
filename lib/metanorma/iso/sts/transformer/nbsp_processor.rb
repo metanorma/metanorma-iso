@@ -32,18 +32,29 @@ module Metanorma
         # hook, replacing the previously-private
         # DocumentTransformer#apply_nbsp_to_text.
         #
-        # Tags are split out and only the text chunks pass through
-        # #process — a single linear pass (the previous gsub over
-        # +>([^<]+)<+ rescanned each +>+ start position and went
-        # polynomial on pathologically repetitive input, CodeQL
-        # rb/polynomial-redos).
+        # Tags are extracted with index arithmetic instead of a quantified
+        # regex: a scanning regex (gsub or split) retries every '<' start
+        # position and goes polynomial on pathologically repetitive input
+        # (CodeQL rb/polynomial-redos). One index walk is linear.
         #
         # @param xml [String] serialised STS XML.
         # @return [String] XML with NBSP rules applied to text content.
         def self.apply_to_text(xml)
-          xml.split(/(<[^>]*>)/).map do |chunk|
-            chunk.start_with?("<") ? chunk : process(chunk)
-          end.join
+          out = +""
+          pos = 0
+          while (tag_start = xml.index("<", pos))
+            out << process(xml.slice(pos...tag_start))
+            tag_end = xml.index(">", tag_start)
+            if tag_end
+              out << xml.slice(tag_start..tag_end)
+              pos = tag_end + 1
+            else
+              out << process(xml.slice(tag_start..))
+              pos = xml.length
+            end
+          end
+          out << process(xml.slice(pos..)) if pos < xml.length
+          out
         end
       end
     end
