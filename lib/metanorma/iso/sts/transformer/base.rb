@@ -82,19 +82,18 @@ module Metanorma
 
         def build_ordered(klass)
           instance = klass.new
-          instance.instance_variable_set(:@__order_tracking__, true)
-          yield instance
+          yield instance if block_given?
           instance
         end
 
         def transform_title(source_title)
-          ::Sts::IsoSts::Title.new do |t|
-            if source_title.is_a?(String)
-              t.content source_title
-            else
-              inline_transformer.apply_inline_content(source_title, t)
-            end
+          title = Transformer::ModelBuilder.title
+          if source_title.is_a?(String)
+            title.content source_title
+          else
+            inline_transformer.apply_inline_content(source_title, title)
           end
+          title
         end
 
         def skip_node?(node)

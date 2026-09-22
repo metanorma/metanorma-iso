@@ -5,7 +5,7 @@ module Metanorma
     module Sts
       class Transformer::DefListTransformer < Transformer::Base
         def transform(source)
-          build_ordered(::Sts::IsoSts::DefList) do |dl|
+          build_ordered(::Sts::NisoSts::DefList) do |dl|
             dl.id = source.id if source.id && !source.id.start_with?("_")
             dl.list_type = source.key if source.key
 
@@ -26,21 +26,21 @@ module Metanorma
         private
 
         def transform_def_item(dt, dd)
-          build_ordered(::Sts::IsoSts::DefItem) do |item|
+          build_ordered(::Sts::NisoSts::DefItem) do |item|
             item.term transform_term(dt) if dt
             item.def transform_def(dd) if dd
           end
         end
 
         def transform_term(dt)
-          build_ordered(::Sts::IsoSts::Term) do |t|
+          build_ordered(::Sts::NisoSts::Term) do |t|
             t.id = dt.id if dt.id
             inline_transformer.apply_inline_content(dt, t)
           end
         end
 
         def transform_def(dd)
-          build_ordered(::Sts::IsoSts::Def) do |d|
+          build_ordered(::Sts::NisoSts::Def) do |d|
             if dd.p && !dd.p.empty?
               dd.p.each do |para|
                 d.p paragraph_transformer.transform(para)

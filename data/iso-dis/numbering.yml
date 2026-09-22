@@ -1,0 +1,698 @@
+---
+definitions:
+- kind: abstractNum
+  id: '0'
+  levels:
+  - ilvl: '0'
+    format: decimal
+    text: "%1"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '576'
+        hanging: '576'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '1'
+    start: '1'
+    format: decimal
+    text: "%1.%2"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '720'
+        hanging: '720'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '2'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '864'
+        hanging: '864'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '3'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1008'
+        hanging: '1008'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '4'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1152'
+        hanging: '1152'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '5'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5.%6"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1296'
+        hanging: '1296'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '6'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5.%6.%7"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1440'
+        hanging: '1440'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '7'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5.%6.%7.%8"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1584'
+        hanging: '1584'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '8'
+    format: decimal
+    text: ''
+    alignment: left
+- kind: abstractNum
+  id: '1'
+  levels:
+  - ilvl: '0'
+    format: bullet
+    text: "—"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '360'
+        hanging: '360'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '1'
+    start: '1'
+    format: bullet
+    text: o
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1440'
+        hanging: '360'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '2'
+    start: '1'
+    format: bullet
+    text: ""
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '2160'
+        hanging: '360'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '3'
+    start: '1'
+    format: bullet
+    text: ""
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '2880'
+        hanging: '360'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '4'
+    start: '1'
+    format: bullet
+    text: o
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '3600'
+        hanging: '360'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '5'
+    start: '1'
+    format: bullet
+    text: ""
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '4320'
+        hanging: '360'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '6'
+    start: '1'
+    format: bullet
+    text: ""
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '5040'
+        hanging: '360'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '7'
+    start: '1'
+    format: bullet
+    text: o
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '5760'
+        hanging: '360'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '8'
+    start: '1'
+    format: bullet
+    text: ""
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '6480'
+        hanging: '360'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+- kind: abstractNum
+  id: '2'
+  levels:
+  - ilvl: '0'
+    format: bullet
+    text: "—"
+    alignment: left
+  - ilvl: '1'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '2'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '3'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '4'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '5'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '6'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '7'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '8'
+    format: decimal
+    text: ''
+    alignment: left
+- kind: abstractNum
+  id: '3'
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: decimal
+    text: "%1"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '432'
+        hanging: '432'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '1'
+    start: '1'
+    format: decimal
+    text: "%1.%2"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '576'
+        hanging: '576'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '2'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '720'
+        hanging: '720'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '3'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '864'
+        hanging: '864'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '4'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1008'
+        hanging: '1008'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '5'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5.%6"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1152'
+        hanging: '1152'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '6'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5.%6.%7"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1296'
+        hanging: '1296'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '7'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5.%6.%7.%8"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1440'
+        hanging: '1440'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '8'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5.%6.%7.%8.%9"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1584'
+        hanging: '1584'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+- kind: abstractNum
+  id: '4'
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: decimal
+    text: "%1."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '720'
+        hanging: '720'
+      tabs:
+      - type: num
+        position: '720'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '1'
+    start: '1'
+    format: decimal
+    text: "%2."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '1440'
+        hanging: '720'
+      tabs:
+      - type: num
+        position: '1440'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '2'
+    start: '1'
+    format: decimal
+    text: "%3."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '2160'
+        hanging: '720'
+      tabs:
+      - type: num
+        position: '2160'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '3'
+    start: '1'
+    format: decimal
+    text: "%4."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '2880'
+        hanging: '720'
+      tabs:
+      - type: num
+        position: '2880'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '4'
+    start: '1'
+    format: decimal
+    text: "%5."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '3600'
+        hanging: '720'
+      tabs:
+      - type: num
+        position: '3600'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '5'
+    start: '1'
+    format: decimal
+    text: "%6."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '4320'
+        hanging: '720'
+      tabs:
+      - type: num
+        position: '4320'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '6'
+    start: '1'
+    format: decimal
+    text: "%7."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '5040'
+        hanging: '720'
+      tabs:
+      - type: num
+        position: '5040'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '7'
+    start: '1'
+    format: decimal
+    text: "%8."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '5760'
+        hanging: '720'
+      tabs:
+      - type: num
+        position: '5760'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '8'
+    start: '1'
+    format: decimal
+    text: "%9."
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '6480'
+        hanging: '720'
+      tabs:
+      - type: num
+        position: '6480'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+- kind: abstractNum
+  id: '5'
+  levels:
+  - ilvl: '0'
+    format: bullet
+    text: "—"
+    alignment: left
+  - ilvl: '1'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '2'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '3'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '4'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '5'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '6'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '7'
+    format: decimal
+    text: ''
+    alignment: left
+  - ilvl: '8'
+    format: decimal
+    text: ''
+    alignment: left
+- kind: abstractNum
+  id: '6'
+  levels:
+  - ilvl: '0'
+    start: '1'
+    format: upperLetter
+    text: Annex %1
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0'
+        firstLine: '0'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '1'
+    start: '1'
+    format: decimal
+    text: "%1.%2"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0'
+        firstLine: '0'
+      tabs:
+      - type: num
+        position: '360'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '2'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0'
+        firstLine: '0'
+      tabs:
+      - type: num
+        position: '720'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '3'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0'
+        firstLine: '0'
+      tabs:
+      - type: num
+        position: '1080'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '4'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0'
+        firstLine: '0'
+      tabs:
+      - type: num
+        position: '1080'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '5'
+    start: '1'
+    format: decimal
+    text: "%1.%2.%3.%4.%5.%6"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0'
+        firstLine: '0'
+      tabs:
+      - type: num
+        position: '1440'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '6'
+    start: '1'
+    format: decimal
+    text: Figure %1.%7 —
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0'
+        firstLine: '0'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '7'
+    start: '1'
+    format: decimal
+    text: Table %1.%8 —
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0'
+        firstLine: '0'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+  - ilvl: '8'
+    start: '1'
+    format: lowerRoman
+    text: "(%9)"
+    alignment: left
+    paragraph_properties:
+      indent:
+        left: '0'
+        firstLine: '0'
+      tabs:
+      - type: num
+        position: '6120'
+      keep_next: false
+      keep_lines: false
+      page_break_before: false
+- kind: num
+  id: '1'
+  abstract_num_id: '4'
+- kind: num
+  id: '2'
+  abstract_num_id: '4'
+- kind: num
+  id: '3'
+  abstract_num_id: '1'
+- kind: num
+  id: '4'
+  abstract_num_id: '3'
+- kind: num
+  id: '5'
+  abstract_num_id: '2'
+- kind: num
+  id: '6'
+  abstract_num_id: '5'
+- kind: num
+  id: '7'
+  abstract_num_id: '6'
+- kind: num
+  id: '8'
+  abstract_num_id: '0'
+template_era: late_typefi
+reference_doc: 20250530-ISO_DIS_15926-100.docx
+reference_doc_sha256: 3d500eabc9564a8872edce573a2c1daee39de5e70282d4e061b5d9a53e64954c
+extracted_at: '2026-06-18T14:43:56Z'

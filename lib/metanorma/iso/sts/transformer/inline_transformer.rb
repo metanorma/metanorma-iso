@@ -43,6 +43,32 @@ module Metanorma
           end
         end
 
+        # SINGLE SOURCE OF TRUTH for sts-ruby text-attribute names.
+        #
+        # NISO STS v1.2 models don't agree on a single text attr name:
+        # NisoSts models use :text, every TbxIsoTml model uses :value.
+        # This hash is the one place in this repo that knows which name
+        # each class uses. If sts-ruby renames one (e.g. the recent Fn
+        # :p → :paragraph in PR #47), update this hash and only this hash.
+        #
+        # Do NOT extract into a separate Appender module yet — there is
+        # only one caller today (this class). Extract when a second
+        # caller materialises; until then the lookup belongs here.
+        TEXT_ATTR_FOR = {
+          ::Sts::NisoSts::Paragraph => :text,
+          ::Sts::NisoSts::MixedCitation => :text,
+          ::Sts::NisoSts::ElementCitation => :text,
+          ::Sts::NisoSts::Fn => :text,
+          ::Sts::TbxIsoTml::Bold => :value,
+          ::Sts::TbxIsoTml::Italic => :value,
+          ::Sts::TbxIsoTml::Xref => :value,
+          ::Sts::TbxIsoTml::Definition => :value,
+          ::Sts::TbxIsoTml::Note => :value,
+          ::Sts::TbxIsoTml::Example => :value,
+          ::Sts::TbxIsoTml::Source => :value,
+          ::Sts::TbxIsoTml::Term => :value,
+        }.freeze
+
         def apply_inline_content(source, target)
           source.each_mixed_content do |node|
             result = transform_inline(node)
@@ -50,9 +76,10 @@ module Metanorma
 
             type, value = result
             if type == :content
-              target.content value
+              text_attr = TEXT_ATTR_FOR[target.class] || :content
+              target.public_send(text_attr, value)
             else
-              target.send(type, value)
+              target.public_send(type, value)
             end
           end
           target
@@ -60,74 +87,21 @@ module Metanorma
 
         def apply_term_inline_content(source, target)
           text = extract_text(source)
-          target.content = [text] if text && !text.empty?
+          text_attr = TEXT_ATTR_FOR[target.class] || :content
+          target.public_send(text_attr, text) if text && !text.empty?
           target
-        end
-
-        def apply_tbx_content(source, target, text_attr: :value)
-          source.each_mixed_content do |node|
-            result = transform_tbx_inline(node)
-            next unless result
-
-            type, value = result
-            if type == :content
-              target.send(text_attr, value)
-            else
-              target.send(type, value)
-            end
-          end
-          target
-        end
-
-        def transform_tbx_inline(node)
-          case node
-          when String
-            [:content, node]
-          when Metanorma::Document::Components::Inline::EmRawElement
-            [:italic, build_tbx_italic(node)]
-          when Metanorma::Document::Components::Inline::StrongRawElement
-            [:bold, build_tbx_bold(node)]
-          when Metanorma::Document::Components::Inline::SubElement
-            [:sub, transform_sub(node)]
-          when Metanorma::Document::Components::Inline::SupElement
-            [:sup, transform_sup(node)]
-          when Metanorma::Document::Components::Inline::XrefElement
-            [:xref, transform_xref(node)]
-          when Metanorma::Document::Components::Inline::ErefElement
-            [:std, transform_eref(node)]
-          when Metanorma::Document::Components::Inline::FnElement
-            [:xref, transform_fn(node)]
-          when Metanorma::Document::Components::Inline::LinkElement
-            [:ext_link, transform_link(node)]
-          when Metanorma::Document::Components::Inline::StemInlineElement
-            [:inline_formula, transform_stem(node)]
-          when Metanorma::Document::Components::Inline::TtElement
-            [:monospace, transform_monospace(node)]
-          end
-        end
-
-        def build_tbx_italic(node)
-          ::Sts::TbxIsoTml::Italic.new do |i|
-            apply_inline_content(node, i)
-          end
-        end
-
-        def build_tbx_bold(node)
-          ::Sts::TbxIsoTml::Bold.new do |b|
-            apply_inline_content(node, b)
-          end
         end
 
         private
 
         def transform_bold(node)
-          ::Sts::IsoSts::Bold.new do |b|
+          ::Sts::TbxIsoTml::Bold.new do |b|
             apply_inline_content(node, b)
           end
         end
 
         def transform_italic(node)
-          ::Sts::IsoSts::Italic.new do |i|
+          ::Sts::TbxIsoTml::Italic.new do |i|
             apply_inline_content(node, i)
           end
         end
@@ -172,11 +146,11 @@ module Metanorma
           node.bibitemid
           citeas = node.citeas
 
-          std = ::Sts::IsoSts::Std.new
+          std = ::Sts::NisoSts::ReferenceStandard.new
           std.std_id = citeas
           std.type = "dated"
 
-          std_ref = ::Sts::IsoSts::StdRef.new
+          std_ref = ::Sts::NisoSts::StandardRef.new
           ref_text = citeas.to_s
           if node.locality_stack && !node.locality_stack.empty?
             localities = node.locality_stack.map do |ls|
@@ -190,7 +164,7 @@ module Metanorma
             end.flatten.join(", ")
             ref_text = "#{ref_text}, #{localities}" unless localities.empty?
           end
-          std_ref.content = [ref_text]
+          std_ref.value = ref_text
           std.std_ref std_ref
           std
         end
@@ -213,7 +187,7 @@ module Metanorma
           return paras unless node.p && !node.p.empty?
 
           node.p.each do |para|
-            fn_para = ::Sts::IsoSts::Paragraph.new
+            fn_para = ::Sts::NisoSts::Paragraph.new
             apply_inline_content(para, fn_para)
             paras << fn_para
           end
@@ -233,26 +207,26 @@ module Metanorma
 
         def transform_link(node)
           link = ::Sts::NisoSts::ExtLink.new
-          link.xlink_href = node.target if node.target
+          link.href = node.target if node.target
           text = extract_text(node)
           link.content = [text] if text && !text.empty?
           link
         end
 
         def transform_br(_node)
-          ::Sts::IsoSts::Break.new
+          ::Sts::NisoSts::Break.new
         end
 
         def transform_stem(node)
-          formula = ::Sts::IsoSts::InlineFormula.new
-          if node.content
-            formula.content = [node.content]
+          formula = ::Sts::NisoSts::InlineFormula.new
+          if node.class.method_defined?(:math) && node.math
+            formula.math = node.math
           end
           formula
         end
 
         def transform_span(node)
-          styled = ::Sts::IsoSts::StyledContent.new
+          styled = ::Sts::NisoSts::StyledContent.new
           styled.style_type = node.style if node.style
           apply_inline_content(node, styled)
           styled
@@ -260,7 +234,7 @@ module Metanorma
 
         def transform_bcp14(node)
           content = extract_text(node)
-          ::Sts::IsoSts::Bold.new do |b|
+          ::Sts::TbxIsoTml::Bold.new do |b|
             b.content content if content
           end
         end

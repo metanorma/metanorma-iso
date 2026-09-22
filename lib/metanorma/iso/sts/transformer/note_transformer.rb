@@ -5,7 +5,7 @@ module Metanorma
     module Sts
       class Transformer::NoteTransformer < Transformer::Base
         def transform(source)
-          build_ordered(::Sts::IsoSts::NonNormativeNote) do |note|
+          build_ordered(::Sts::NisoSts::NonNormativeNote) do |note|
             note.id = source.id if source.id && !source.id.start_with?("_")
 
             transform_note_content(source, note)
@@ -25,7 +25,7 @@ module Metanorma
         def dispatch_block(node, target)
           case node
           when Metanorma::Document::Components::Paragraphs::ParagraphBlock
-            target.p paragraph_transformer.transform(node)
+            target.paragraph paragraph_transformer.transform(node)
           when Metanorma::Document::Components::Lists::UnorderedList,
                Metanorma::Document::Components::Lists::OrderedList
             target.list list_transformer.transform(node)

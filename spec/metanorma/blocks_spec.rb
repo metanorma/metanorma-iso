@@ -60,7 +60,7 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "processes review blocks if document is in draft mode" do
-    input = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+    input = Asciidoctor.convert(<<~INPUT, *OPTIONS)
       = Document title
       Author
       :docfile: test.adoc
@@ -81,20 +81,20 @@ RSpec.describe Metanorma::Iso do
       ****
     INPUT
     output = <<~OUTPUT
-       <metanorma>
-          <sections>
-             <p id="_" anchor="foreword">Foreword</p>
-          </sections>
-          <annotation-container>
-             <annotation id="_" reviewer="ISO" date="20170101T00:00:00Z" type="review" from="foreword" to="foreword">
-                <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
-                <p id="_">
-                   For further information on the Foreword, see
-                   <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong>
-                </p>
-             </annotation>
-          </annotation-container>
-       </metanorma>
+      <metanorma>
+         <sections>
+            <p id="_" anchor="foreword">Foreword</p>
+         </sections>
+         <annotation-container>
+            <annotation id="_" reviewer="ISO" date="20170101T00:00:00Z" type="review" from="foreword" to="foreword">
+               <p id="_">A Foreword shall appear in each document. The generic text is shown here. It does not contain requirements, recommendations or permissions.</p>
+               <p id="_">
+                  For further information on the Foreword, see
+                  <strong>ISO/IEC Directives, Part 2, 2016, Clause 12.</strong>
+               </p>
+            </annotation>
+         </annotation-container>
+      </metanorma>
     OUTPUT
     expect(strip_guid(input)
       .sub(/^.+<sections>/m, "<metanorma><sections>"))

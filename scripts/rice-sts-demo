@@ -1,0 +1,45 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+# End-to-end demonstration of the native ISO STS pipeline:
+#   PXML (semantic Metanorma XML) → ISO-STS XML → branded HTML
+#
+# Usage:
+#   bundle exec scripts/rice-sts-demo                # uses spec/examples/rice.xml
+#   bundle exec scripts/rice-sts-demo path/to/input.xml [output_prefix]
+#
+# Outputs three artifacts next to the input:
+#   <prefix>.sts.xml   — ISO-STS XML
+#   <prefix>.sts.html  — branded HTML render of the STS XML
+#
+# The STS XML and HTML can be opened in any browser / XML viewer.
+
+require "fileutils"
+require "pathname"
+require "metanorma/iso/sts"
+
+input = ARGV[0] || File.expand_path("../spec/examples/rice.xml", __dir__)
+output_prefix = ARGV[1] || input.sub(/\.xml\z/, "")
+
+xml = File.read(input)
+warn "Read #{input} (#{xml.bytesize} bytes)"
+
+sts_xml = Metanorma::Iso::Sts.convert(xml)
+sts_path = "#{output_prefix}.sts.xml"
+File.write(sts_path, sts_xml)
+warn "Wrote #{sts_path} (#{sts_xml.bytesize} bytes)"
+
+html = Metanorma::Iso::Sts.render_html(sts_xml)
+html_path = "#{output_prefix}.sts.html"
+File.write(html_path, html)
+warn "Wrote #{html_path} (#{html.bytesize} bytes)"
+
+warn "Structural sanity checks:"
+require "nokogiri"
+sts_doc = Nokogiri::XML(sts_xml) { |config| config.huge }
+html_doc = Nokogiri::HTML(html_path)
+warn "  STS root: #{sts_doc.root&.name}"
+warn "  HTML <html>: #{!html_doc.at_css('html').nil?}"
+warn "  HTML <section>: #{html_doc.css('section').size}"
+warn "  HTML <p>: #{html_doc.css('p').size}"
+warn "  HTML <table>: #{html_doc.css('table').size}"

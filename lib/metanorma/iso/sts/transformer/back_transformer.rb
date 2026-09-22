@@ -5,7 +5,7 @@ module Metanorma
     module Sts
       class Transformer::BackTransformer < Transformer::Base
         def transform(source)
-          ::Sts::IsoSts::Back.new do |back|
+          ::Sts::NisoSts::Back.new do |back|
             transform_annexes(source, back)
             transform_bibliography(source, back)
             transform_fn_group(back)
@@ -20,7 +20,7 @@ module Metanorma
           return unless annexes
           return if annexes.empty?
 
-          app_group = build_ordered(::Sts::IsoSts::AppGroup) do |ag|
+          app_group = build_ordered(::Sts::NisoSts::AppGroup) do |ag|
             Array(annexes).each do |annex|
               ag.app transform_annex(annex)
             end
@@ -29,25 +29,32 @@ module Metanorma
         end
 
         def transform_annex(annex)
-          build_ordered(::Sts::IsoSts::App) do |app|
+          build_ordered(::Sts::NisoSts::App) do |app|
             app.id = id_for(annex)
 
             if annex.number && !annex.number.empty?
               label_text = "Annex #{annex.number}"
               label_text += " (#{annex.obligation})" if annex.obligation
-              app.label ::Sts::IsoSts::Label.new(content: [label_text])
+              app.label ::Sts::NisoSts::Label.new(content: [label_text])
             end
 
             app.title transform_title(annex.title) if annex.title
 
-            dispatcher = block_dispatcher
-            annex.each_mixed_content do |node|
-              next if node.is_a?(String)
-              next if node == annex.title
-              next if skip_node?(node)
+            # App's attribute set is narrower than Sec's (no list, table_wrap,
+            # disp_quote, etc.), so dispatch the annex's body into a nested
+            # Sec instead of into the App directly. The Sec holds all the
+            # block-level setters the dispatcher needs.
+            sec = build_ordered(::Sts::NisoSts::Section) do |inner|
+              dispatcher = block_dispatcher
+              annex.each_mixed_content do |node|
+                next if node.is_a?(String)
+                next if node == annex.title
+                next if skip_node?(node)
 
-              dispatcher.dispatch(node, app)
+                dispatcher.dispatch(node, inner)
+              end
             end
+            app.sec sec
           end
         end
 
@@ -68,9 +75,9 @@ module Metanorma
         def transform_index(source, back)
           return unless source.indexsect
 
-          sec = build_ordered(::Sts::IsoSts::Sec) do |s|
+          sec = build_ordered(::Sts::NisoSts::Section) do |s|
             s.id = "sec_index"
-            s.sec_type = "index"
+            s.type = "index"
           end
           back.sec sec
         end

@@ -68,7 +68,7 @@ module Metanorma
         ret = super
         ret.delete(:type)
         # test
-        #ret[:display] = node.attr("display")
+        # ret[:display] = node.attr("display")
         ret
       end
 

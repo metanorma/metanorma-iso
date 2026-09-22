@@ -119,7 +119,7 @@ RSpec.describe Metanorma::Iso, type: :validation do
       12121
     INPUT
     expect(errors1).to include("number not broken up in threes")
-    expect(errors1.scan(/number not broken up in threes/).length).to be 1
+    expect(errors1.scan("number not broken up in threes").length).to be 1
 
     errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
@@ -205,7 +205,7 @@ RSpec.describe Metanorma::Iso, type: :validation do
       8.1
     INPUT
     expect(errors1).to include("possible decimal point")
-    expect(errors1.scan(/possible decimal point/).length).to be 1
+    expect(errors1.scan("possible decimal point").length).to be 1
 
     errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}

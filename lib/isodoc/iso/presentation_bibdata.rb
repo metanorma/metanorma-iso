@@ -27,9 +27,9 @@ module IsoDoc
       end
 
       def edition_printing_date(bibdata)
-        @i18n.get["date_printing"] &&
+        (@i18n.get["date_printing"] &&
           pd = bibdata.at(ns("//metanorma-extension/presentation-metadata/" \
-                             "printing-date[1]")) or return
+                             "printing-date[1]"))) or return
         x = @i18n.populate("date_printing", { "var1" => pd.text.to_i })
         bibdata.at(ns("./ext")) << "<date-printing>#{x}</date-printing>"
       end

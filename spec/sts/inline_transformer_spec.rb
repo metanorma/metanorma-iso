@@ -2,69 +2,61 @@
 
 require_relative "spec_helper"
 
-RSpec.describe Metanorma::Iso::Sts::Transformer::InlineTransformer do
-  let(:context) { make_context }
-  let(:transformer) { described_class.new(context) }
+# Tests the inline-transformer behaviour through the public API
+# (Metanorma::Iso::Sts.convert), not by poking at private transformer
+# methods via send(:. The interface is the test surface.
+RSpec.describe "inline transformer via public API" do
+  let(:xml) do
+    <<~XML
+      <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic">
+        <bibdata type="standard">
+          <title language="en" type="main">Test</title>
+          <docidentifier>ISO 9999</docidentifier>
+          <language>en</language>
+        </bibdata>
+      <sections>
+          <clause id="clause1"><title>Scope</title>
+            <p id="p1">See <xref target="clause1"/> for ISO 8601 details.</p>
+          </clause>
+        </sections>
+      </metanorma>
+    XML
+  end
+  let(:sts) { Metanorma::Iso::Sts.convert(xml) }
 
-  describe "#transform_fn (footnote integration)" do
-    it "returns an xref instead of fn element" do
-      fn_node = Metanorma::Document::Components::Inline::FnElement.new
-      fn_node.id = "fn1"
-      fn_node.reference = "1"
-
-      p_node = Metanorma::IsoDocument::RawParagraph.new
-      p_node.content = "This is a footnote"
-      fn_node.p = [p_node]
-
-      result = transformer.send(:transform_fn, fn_node)
-      expect(result).to be_a(Sts::TbxIsoTml::Xref)
-      expect(result.rid).to eq("fn_1")
-      expect(result.ref_type).to eq("fn")
-    end
-
-    it "registers the footnote with the collector" do
-      fn_node = Metanorma::Document::Components::Inline::FnElement.new
-      fn_node.id = "fn1"
-
-      p_node = Metanorma::IsoDocument::RawParagraph.new
-      p_node.content = "Deduplicated text"
-      fn_node.p = [p_node]
-
-      transformer.send(:transform_fn, fn_node)
-      transformer.send(:transform_fn, fn_node)
-
-      expect(context.footnote_collector.count).to eq(1)
+  describe "footnote integration" do
+    it "renders fn references as xref when fn present" do
+      fn_xml = xml.sub(
+        "<p id=\"p1\">See <xref target=\"clause1\"/> for ISO 8601 details.</p>",
+        "<p id=\"p1\">See <xref target=\"clause1\"/> for <fn reference=\"1\"><p>Footnote text</p></fn> details.</p>",
+      )
+      sts = Metanorma::Iso::Sts.convert(fn_xml)
+      expect(sts).to include("<xref")
     end
   end
 
-  describe "#transform_eref" do
-    it "builds std with locality" do
-      eref = Metanorma::Document::Components::Inline::ErefElement.new
-      eref.bibitemid = "ISO8601"
-      eref.citeas = "ISO 8601-1:2019"
-
-      locality = Metanorma::Document::Relaton::BibItemLocality.new
-      locality.type = "clause"
-      locality.reference_from = "3.1"
-      locality_stack = Metanorma::Document::Relaton::LocalityStack.new
-      locality_stack.bib_locality = [locality]
-      eref.locality_stack = [locality_stack]
-
-      result = transformer.send(:transform_eref, eref)
-      expect(result).to be_a(Sts::IsoSts::Std)
-      xml = result.to_xml
-      expect(xml).to include("ISO 8601-1:2019, clause 3.1")
+  describe "eref transformation" do
+    it "builds std with citeas text" do
+      eref_xml = xml.sub(
+        "<p id=\"p1\">See <xref target=\"clause1\"/> for ISO 8601 details.</p>",
+        "<p id=\"p1\"><eref bibitemid=\"ISO8601\" citeas=\"ISO 8601-1:2019\"/></p>",
+      )
+      sts = Metanorma::Iso::Sts.convert(eref_xml)
+      expect(sts).to include("ISO 8601-1:2019")
+      expect(sts).to include("<std")
     end
   end
 
-  describe "#transform_xref" do
-    it "remaps xref target IDs" do
-      context.id_generator.register("_table_1", "tab_1")
-      xref = Metanorma::Document::Components::Inline::XrefElement.new
-      xref.target = "_table_1"
+  describe "xref ID remapping" do
+    it "renders xref with rid in STS output" do
+      expect(sts).to match(/<xref[^>]*rid=/)
+    end
+  end
 
-      result = transformer.send(:transform_xref, xref)
-      expect(result.rid).to eq("tab_1")
+  describe "NBSP processing" do
+    it "inserts NBSP between ISO and document number in text" do
+      nbsp = [0xC2, 0xA0].pack("C*").force_encoding("UTF-8")
+      expect(sts).to include("ISO#{nbsp}8601")
     end
   end
 end

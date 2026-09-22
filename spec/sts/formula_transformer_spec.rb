@@ -12,6 +12,6 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::FormulaTransformer do
     source.displayorder = 1
 
     result = transformer.transform(source)
-    expect(result).to be_a(Sts::IsoSts::DispFormula)
+    expect(result).to be_a(Sts::NisoSts::DisplayFormula)
   end
 end

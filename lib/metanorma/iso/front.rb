@@ -21,19 +21,20 @@ module Metanorma
         @amd and
           add_noko_elem(xml, "updates_document_type",
                         node.attr("updates-document-type"))
-        a = node.attr("fast-track") and xml.send "fast-track", a != "false"
+        a = node.attr("fast-track") and xml.send :"fast-track", a != "false"
         add_noko_elem(xml, "price_code", node.attr("price-code"))
         node.attr("iso-cen-parallel") and xml.iso_cen_parallel true
       end
 
-      STAGE_ERROR = [Pubid::Core::Errors::HarmonizedStageCodeInvalidError,
-                     Pubid::Core::Errors::TypeStageParseError,
-                     Pubid::Core::Errors::StageInvalidError].freeze
+      # pubid 2 raises Parslet::ParseFailed for unparseable identifiers and
+      # ArgumentError for over-long input / unknown formats (the 1.x
+      # Pubid::Core::Errors hierarchy no longer exists).
+      STAGE_ERROR = [Parslet::ParseFailed, ArgumentError].freeze
 
       def metadata_stage(node, xml)
         id = iso_id_default(iso_id_params(node))
-        id.stage or return
-        if abbr = id.typed_stage_abbrev
+        id.typed_stage or return
+        if abbr = id.typed_stage && pubid_stage_abbr(id.typed_stage)
           # remove IS: work around breakages in pubid-iso
           abbr = abbr.to_s.upcase.strip.sub(/^IS /, "")
         end
@@ -43,23 +44,17 @@ module Metanorma
       end
 
       def metadata_stagename(id)
-        if @amd
-          id.amendments&.first&.stage&.name ||
-            id.corrigendums&.first&.stage&.name
-        else
-          begin
-            id.typed_stage_name
-          rescue StandardError
-            id.stage&.name
-          end
-        end
+        id.typed_stage&.name || id.stage&.name
       end
 
       def metadata_status(node, xml)
         stage = get_stage(node)
         substage = get_substage(node)
-        abbrev = node.attr("docstage-abbrev") ||
-          iso_id_default(iso_id_params(node)).stage&.abbr&.upcase
+        id = iso_id_default(iso_id_params(node))
+        # pubid 2 derives #stage from #typed_stage; the visible abbreviation
+        # is the typed stage's non-empty variant (published IS is ["", "IS"]).
+        stage_abbr = id.typed_stage && pubid_stage_abbr(id.typed_stage)
+        abbrev = node.attr("docstage-abbrev") || stage_abbr&.upcase
         xml.status do |s|
           add_noko_elem(s, "stage", stage, **attr_code(abbreviation: abbrev))
           add_noko_elem(s, "substage", substage)

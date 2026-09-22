@@ -7,7 +7,7 @@ module Metanorma
         def transform_list(ref_section)
           normative = ref_section.normative == "true"
 
-          build_ordered(::Sts::IsoSts::RefList) do |rl|
+          build_ordered(::Sts::NisoSts::ReferenceList) do |rl|
             rl.id = id_for(ref_section)
             rl.content_type = normative ? "norm-refs" : "bibl"
 
@@ -17,7 +17,7 @@ module Metanorma
 
             if ref_section.p && !ref_section.p.empty?
               ref_section.p.each do |para|
-                rl.p paragraph_transformer.transform(para)
+                rl.paragraph paragraph_transformer.transform(para)
               end
             end
 
@@ -30,10 +30,10 @@ module Metanorma
         end
 
         def transform_bibitem(bibitem, index)
-          build_ordered(::Sts::IsoSts::Ref) do |ref|
+          build_ordered(::Sts::NisoSts::Reference) do |ref|
             ref.id = "biblref_#{index}"
 
-            lbl = ::Sts::IsoSts::Label.new(content: ["[#{index}]"])
+            lbl = ::Sts::NisoSts::Label.new(content: ["[#{index}]"])
             ref.label lbl
 
             mc = build_mixed_citation(bibitem)
@@ -47,7 +47,7 @@ module Metanorma
         private
 
         def build_mixed_citation(bibitem)
-          mc = ::Sts::IsoSts::MixedCitation.new
+          mc = ::Sts::NisoSts::MixedCitation.new
 
           doc_id = primary_docidentifier(bibitem)
           title_text = reference_title(bibitem)
@@ -56,8 +56,8 @@ module Metanorma
             mc.content doc_id
             if title_text
               mc.content ", "
-              italic = ::Sts::IsoSts::Italic.new
-              italic.content title_text
+              italic = ::Sts::TbxIsoTml::Italic.new
+              italic.value = title_text
               mc.italic italic
             end
           elsif title_text
@@ -73,19 +73,19 @@ module Metanorma
           doc_id = primary_docidentifier(bibitem)
           return nil unless doc_id
 
-          std = ::Sts::IsoSts::Std.new
+          std = ::Sts::NisoSts::ReferenceStandard.new
           std.type = "dated"
 
-          dated_ref = ::Sts::IsoSts::StdRef.new
+          dated_ref = ::Sts::NisoSts::StandardRef.new
           dated_ref.type = "dated"
-          dated_ref.content = [doc_id]
+          dated_ref.value = doc_id
           std.std_ref dated_ref
 
           undated = undated_identifier(doc_id)
           if undated && undated != doc_id
-            undated_ref = ::Sts::IsoSts::StdRef.new
+            undated_ref = ::Sts::NisoSts::StandardRef.new
             undated_ref.type = "undated"
-            undated_ref.content = [undated]
+            undated_ref.value = undated
             std.std_ref undated_ref
           end
 

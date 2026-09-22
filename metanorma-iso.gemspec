@@ -10,7 +10,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ribose Inc."]
   spec.email         = ["open.source@ribose.com"]
 
-  spec.summary       = "metanorma-iso lets you write ISO standards "\
+  spec.summary       = "metanorma-iso lets you write ISO standards " \
                        "in AsciiDoc."
   spec.description   = <<~DESCRIPTION
     metanorma-iso lets you write ISO standards in AsciiDoc syntax.
@@ -23,21 +23,22 @@ Gem::Specification.new do |spec|
   spec.homepage      = "https://github.com/metanorma/metanorma-iso"
   spec.license       = "BSD-2-Clause"
 
-  spec.bindir        = "bin"
+  spec.bindir        = "exe"
   spec.require_paths = ["lib"]
+  spec.executables   = %w[metanorma-iso-validate]
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features|bin|.github)/}) \
     || f.match(%r{Rakefile|bin/rspec})
   end
-  spec.test_files = `git ls-files -- {spec}/*`.split("\n")
   spec.required_ruby_version = Gem::Requirement.new(">= 3.3.0")
 
-  spec.add_dependency "metanorma-document", "~> 0.2.0"
-  spec.add_dependency "metanorma-standoc", "~> 3.5.0"
+  spec.add_dependency "metanorma-document", "~> 0.5.0"
+  spec.add_dependency "metanorma-standoc", ">= 3.4.2" # relaxed until standoc#1232 releases
   spec.add_dependency "mnconvert", "~> 1.14"
   spec.add_dependency "pubid"
-  spec.add_dependency "sts", "~> 0.5.3"
+  spec.add_dependency "sts", ">= 0.5.6" # relaxed until glossarist supports 0.6
   spec.add_dependency "tokenizer", "~> 0.3.0"
+  spec.add_dependency "uniword", "~> 1.0"
 
   spec.add_development_dependency "benchmark"
   spec.add_development_dependency "canon" #, "= 0.2.3"
@@ -55,4 +56,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "simplecov", "~> 0.15"
   spec.add_development_dependency "timecop", "~> 0.9"
   spec.add_development_dependency "webmock"
+  spec.metadata["rubygems_mfa_required"] = "true"
 end

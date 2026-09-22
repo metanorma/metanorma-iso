@@ -1,0 +1,9 @@
+<div class="hero">
+  <p class="hero-eyebrow">{{ eyebrow | escape }}</p>
+  <h1 class="hero-title">{{ title | escape }}</h1>
+  <p class="hero-chips">
+    {% for chip in chips %}
+    <span class="hero-chip{% if forloop.first %} hero-chip-primary{% endif %}">{{ chip | escape }}</span>
+    {% endfor %}
+  </p>
+</div>
