@@ -40,6 +40,88 @@ module Metanorma
         attribute :semx_id, :string
         attribute :schema_version, :string
 
+        # --- Cover identity facts -------------------------------------
+        # Derived cover facts exposed to Liquid templates through the
+        # model's auto-generated Drop (lutaml-model `liquid` mapping);
+        # templates read cover.<key> directly off the model.
+
+        def cover_tc_docnumbers
+          doc_identifier.select { |i| i.type == "iso-tc" }.filter_map(&:value)
+        end
+
+        def cover_docnumber_undated
+          doc_identifier.find { |i| i.type == "iso-undated" }&.value
+        end
+
+        def cover_stage_abbreviation
+          ext&.stagename&.abbreviation.to_s
+        end
+
+        def cover_draft?
+          cover_stage_abbreviation.start_with?("FD")
+        end
+
+        def cover_published_date
+          published = date.find { |d| d.type == "published" }
+          return nil unless published
+
+          raw = published.on || published.text
+          raw = raw.content if raw.respond_to?(:content) && raw.content
+          raw = raw.to_s if raw.respond_to?(:strftime)
+          raw.to_s
+        end
+
+        def cover_draftinfo
+          return nil unless cover_draft? && !cover_published_date.empty?
+
+          "(draft #{cover_published_date})"
+        end
+
+        def cover_edition_display
+          content = Array(edition).first&.content.to_s
+          return nil if content.empty?
+
+          ordinals = %w[first second third fourth fifth sixth seventh
+                        eighth ninth tenth]
+          word = ordinals[content.to_i - 1] || "#{content}th"
+          "#{word} edition".capitalize
+        end
+
+        def cover_secretariat
+          subdivision_text_for("secretariat", :name)
+        end
+
+        def cover_ics
+          codes = Array(ext&.ics).filter_map(&:code)
+          codes.empty? ? nil : codes.join(", ")
+        end
+
+        def cover_committee_identifier
+          subdivision_text_for("committee", :identifier)
+        end
+
+
+        def subdivision_text_for(role_description, kind)
+          Array(contributor).each do |entry|
+            described = Array(entry.role).any? do |role|
+              Array(role.description).map(&:value).join.include?(role_description)
+            end
+            next unless described
+
+            Array(entry.organization&.subdivision).each do |sub|
+              if kind == :name
+                name = Array(sub.name).first&.content
+                name = Array(name).join
+                return name unless name.empty?
+              else
+                value = Array(sub.identifier).first&.value.to_s
+                return value unless value.empty?
+              end
+            end
+          end
+          nil
+        end
+
         xml do
           element "bibdata"
           ordered
@@ -96,6 +178,17 @@ module Metanorma
 
         def title
           @title ||= title_for("en")
+        end
+        liquid do
+          map "tc_docnumber", to: :cover_tc_docnumbers
+          map "docnumber_undated", to: :cover_docnumber_undated
+          map "draftinfo", to: :cover_draftinfo
+          map "edition_display", to: :cover_edition_display
+          map "revdate", to: :cover_published_date
+          map "editorialgroup", to: :cover_committee_identifier
+          map "secretariat", to: :cover_secretariat
+          map "stage_abbreviation", to: :cover_stage_abbreviation
+          map "ics", to: :cover_ics
         end
       end
     end

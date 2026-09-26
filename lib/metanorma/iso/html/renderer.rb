@@ -68,34 +68,6 @@ module Metanorma
         nil
       end
 
-      # Format doc identifier with publisher prefix (e.g. "OGC 00-027").
-      def formatted_doc_id(bibdata)
-        # Flavor bibdata shapes diverge (e.g. IETF carries no ISO-ish
-        # doc_identifier): degrade to no cover id rather than raising.
-        identifiers = if bibdata.class.attributes.key?(:doc_identifier)
-                        bibdata.doc_identifier
-                      end
-        return nil unless identifiers && !identifiers.empty?
-
-        raw_id = extract_text_value(identifiers.first).to_s.strip
-        return nil if raw_id.empty?
-
-        raw_id = strip_doc_id_prefix(raw_id)
-        pub = flavor_publisher_name
-        if pub && !raw_id.start_with?(pub)
-          "#{pub} #{raw_id}"
-        else
-          raw_id
-        end
-      end
-
-      def strip_doc_id_prefix(raw_id)
-        prefix = theme.doc_id_strip_prefix
-        return raw_id unless prefix
-
-        raw_id.to_s.gsub(/\A#{Regexp.escape(prefix)}\s+/, "").strip
-      end
-
       def extract_stage(bibdata)
         stages = Array(safe_attr(safe_attr(bibdata, :status), :stage))
         return nil if stages.empty?
@@ -170,47 +142,38 @@ module Metanorma
         return "" unless bibdata
 
         logos = publisher_logos_html(doc) || []
-        doc_id = formatted_doc_id(bibdata)
-
-        pub_date = nil
-        Array(safe_attr(bibdata, :date)).each do |date|
-          date_type = extract_text_value(safe_attr(date,
-                                                   :type_attr) || safe_attr(
-                                                     date, :type
-                                                   ))
-          date_val = extract_text_value(date.is_a?(Metanorma::Document::Relaton::BibliographicDate) ? date.on : safe_attr(
-            date, :text
-          ))
-          if date_type == "published" && date_val
-            pub_date = date_val
-          end
-        end
-
         doctype = extract_doctype(bibdata)
+        title_text = cover_title(bibdata, "en")
+        title_fr = cover_title(bibdata, "fr")
 
-        title_text = nil
-        titles = safe_attr(bibdata, :titles)
-        if titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
-          en_title = bibdata.title_for("en")
-          if en_title
-            title_text = if en_title.is_a?(Metanorma::Iso::Document::Metadata::AbstractTitle) && en_title.value
-                           en_title.value.to_s
-                         else
-                           en_title.to_s
-                         end
-          end
-        end
+        stage_abbr = bibdata.cover_stage_abbreviation.to_s
+        stage_text = stage_abbr.empty? ? extract_stage(bibdata) : "#{stage_abbr} stage"
 
-        stage_text = extract_stage(bibdata)
-
+        # The bibdata model itself: its lutaml-model auto-Drop (with the
+        # model's `liquid` mappings) serves every cover identity fact.
         render_liquid("_standard_cover.html.liquid", {
                         "publisher_logos" => logos,
-                        "doc_id" => doc_id,
-                        "pub_date" => pub_date,
+                        "cover" => bibdata,
                         "doctype" => doctype,
                         "title" => title_text,
+                        "title_fr" => title_fr,
                         "stage" => stage_text,
                       })
+      end
+
+
+      def cover_title(bibdata, language)
+        titles = safe_attr(bibdata, :titles)
+        return nil unless titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
+
+        title = bibdata.title_for(language)
+        return nil unless title
+
+        if title.is_a?(Metanorma::Iso::Document::Metadata::AbstractTitle) && title.value
+          title.value.to_s
+        else
+          title.to_s
+        end
       end
 
       def render_doc_title(doc)
@@ -467,6 +430,16 @@ module Metanorma
       def render_boilerplate_clause_content(section)
         fmt_title = safe_attr(section, :fmt_title)
         parts = []
+        # The copyright statement's title ("COPYRIGHT PROTECTED DOCUMENT")
+        # is visible text in the native render — headings are the one
+        # boilerplate child that must not be skipped. Rendered directly
+        # (not through render_title) so it stays out of the TOC.
+        title = safe_attr(section, :fmt_title) || safe_attr(section, :title)
+        if title && !Array(title).empty?
+          parts << render_liquid("_heading.html.liquid", tag: "h1",
+                                                 class_attr: "",
+                                                 content: render_mixed_inline(title))
+        end
         section.each_mixed_content do |child|
           next if child.is_a?(String)
           next if is_title_element?(child, section)
