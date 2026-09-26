@@ -96,7 +96,7 @@ module Metanorma
         ext = bibdata.ext
         return nil unless ext
 
-        doctypes = ext.doctype
+        doctypes = ext.doctype_element
         return nil unless doctypes && !doctypes.empty?
 
         en_dt = doctypes.find do |d|
