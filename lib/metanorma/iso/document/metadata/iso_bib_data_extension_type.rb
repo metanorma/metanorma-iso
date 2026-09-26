@@ -10,7 +10,7 @@ module Metanorma
         attribute :category, :string
         attribute :updates_document_type, :string
         attribute :semx_id, :string
-        attribute :doctype, DoctypeElement, collection: true
+        attribute :doctype_element, DoctypeElement, collection: true
         attribute :flavor, :string
         attribute :ics, Ics, collection: true
         attribute :structuredidentifier, StructuredIdentifier
@@ -24,7 +24,7 @@ module Metanorma
           map_attribute "stage-name", to: :stage_name
           map_attribute "category", to: :category
           map_attribute "semx-id", to: :semx_id
-          map_element "doctype", to: :doctype
+          map_element "doctype", to: :doctype_element
           map_element "flavor", to: :flavor
           map_element "ics", to: :ics
           map_element "structuredidentifier", to: :structuredidentifier

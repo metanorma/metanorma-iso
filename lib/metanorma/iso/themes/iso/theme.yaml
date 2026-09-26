@@ -1,0 +1,40 @@
+primary: "#b3000c"
+accent: "#e3000f"
+accent_deep: "#b3000c"
+gradient: "linear-gradient(135deg, #8a0009 0%, #b3000c 50%, #e3000f 100%)"
+primary_light: "#fef0f1"
+accent_light: "#fde8ea"
+warm: "#1a1a1a"
+warm_light: "#f5f5f5"
+header_background: "linear-gradient(135deg, #8a0009 0%, #b3000c 40%, #e3000f 100%)"
+cover_background: "linear-gradient(175deg, #5a0006 0%, #8a0009 25%, #b3000c 50%, #e3000f 80%, #ff4d4d 100%)"
+cover_before_bg: "background: radial-gradient(ellipse at 25% 20%, rgba(255,77,77,0.15) 0%, transparent 50%), radial-gradient(ellipse at 75% 80%, rgba(26,26,26,0.1) 0%, transparent 40%)"
+cover_after_bg: "height: 3px; background: linear-gradient(90deg, transparent, #e3000f, #1a1a1a, transparent)"
+progress_bar_color: "#e3000f"
+note_border: "#e3000f"
+note_bg: "#fde8ea"
+note_color: "#e3000f"
+example_border: "#b3000c"
+example_bg: "#fef0f1"
+example_color: "#b3000c"
+admonition_border: "#1a1a1a"
+admonition_color: "#1a1a1a"
+footer_border_color: "#e3000f"
+cover_separator_color: "rgba(227,0,15,0.25)"
+
+# Publisher metadata
+publishers:
+  - "ISO"
+publisher_name: "ISO"
+logos_light:
+  "ISO": "iso-logo.svg"
+
+# Section ordering
+preface_order:
+  - foreword
+  - introduction
+  - abstract
+  - clause
+  - acknowledgements
+  - executivesummary
+toc_filter_types: []
