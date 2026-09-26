@@ -55,7 +55,7 @@ module Metanorma
             ext = bibdata.ext if bibdata.class.method_defined?(:ext)
             return nil unless ext
 
-            doctypes = Array(ext.doctype) if ext.class.method_defined?(:doctype)
+            doctypes = Array(ext.doctype_element) if ext.class.method_defined?(:doctype_element)
             first_value(doctypes)
           end
 
