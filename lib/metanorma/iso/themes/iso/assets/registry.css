@@ -69,6 +69,19 @@ body {
 }
 .wrap { max-width: 60rem; margin: 0 auto; padding: 0 1.5rem; }
 
+/* Brand lockup — logo fixed to the header line, never oversized */
+.brand-logo {
+  display: inline-flex; align-items: center; justify-content: center;
+  height: 32px; width: auto;
+  overflow: hidden;
+}
+.brand-logo svg {
+  height: 100%; width: auto; max-width: 130px;
+  display: block;
+}
+.header-brand { display: flex; align-items: center; gap: 0.75rem; min-width: 0; }
+.header-brand .brand-logo { flex: 0 0 auto; }
+
 /* Header — same bar as the documents */
 .doc-header {
   display: flex; align-items: center; justify-content: space-between;
