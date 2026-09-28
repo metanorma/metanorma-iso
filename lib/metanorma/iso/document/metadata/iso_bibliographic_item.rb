@@ -62,7 +62,9 @@ module Metanorma
         end
 
         def cover_published_date
-          published = date.find { |d| d.type == "published" }
+          published = date.find { |d| d.type == "published" } ||
+                      date.find { |d| d.type == "updated" } ||
+                      date.find { |d| d.type == "created" }
           return nil unless published
 
           raw = published.on || published.text
@@ -97,7 +99,11 @@ module Metanorma
         end
 
         def cover_committee_identifier
-          subdivision_text_for("committee", :identifier)
+          # The committee subdivision carries the full chain ("TC 34/SC
+          # 4/WG 4") as the identifier typed "full"; prefer it over the
+          # bare TC code.
+          subdivision_text_for("committee", :identifier_full) ||
+            subdivision_text_for("committee", :identifier)
         end
 
 
@@ -113,6 +119,10 @@ module Metanorma
                 name = Array(sub.name).first&.content
                 name = Array(name).join
                 return name unless name.empty?
+              elsif kind == :identifier_full
+                full = Array(sub.identifier).find { |i| i.type == "full" }
+                value = full&.value.to_s
+                return value unless value.empty?
               else
                 value = Array(sub.identifier).first&.value.to_s
                 return value unless value.empty?
