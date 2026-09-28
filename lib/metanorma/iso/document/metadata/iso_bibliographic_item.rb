@@ -57,10 +57,6 @@ module Metanorma
           ext&.stagename&.abbreviation.to_s
         end
 
-        def cover_draft?
-          cover_stage_abbreviation.start_with?("FD")
-        end
-
         def cover_published_date
           published = date.find { |d| d.type == "published" } ||
                       date.find { |d| d.type == "updated" } ||
@@ -73,13 +69,27 @@ module Metanorma
           raw.to_s
         end
 
+        # isodoc parity: the "(draft …)" cover info line is driven by the
+        # bibdata <version> element (its text is the draft identifier),
+        # not by the stage; the updated date is appended only when it
+        # differs from the draft identifier.
         def cover_draftinfo
-          return nil unless cover_draft? && !cover_published_date.empty?
+          draft = version&.content.to_s
+          return nil if draft.empty?
 
-          "(draft #{cover_published_date})"
+          info = " (draft #{draft}"
+          revdate = cover_published_date.to_s
+          info += ", #{revdate}" if !revdate.empty? && revdate != draft
+          "#{info})"
         end
 
         def cover_edition_display
+          # isodoc renders edition[@language=en] verbatim (spelled out,
+          # e.g. "one thousand nine hundred seventy-ninth edition");
+          # fall back to ordinal synthesis for numeric-only editions.
+          localized = Array(edition).find { |e| e.language == "en" }&.content.to_s
+          return localized.capitalize unless localized.empty?
+
           content = Array(edition).first&.content.to_s
           return nil if content.empty?
 
