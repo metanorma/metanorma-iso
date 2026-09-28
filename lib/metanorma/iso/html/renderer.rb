@@ -145,6 +145,10 @@ module Metanorma
         doctype = extract_doctype(bibdata)
         title_text = cover_title(bibdata, "en")
         title_fr = cover_title(bibdata, "fr")
+        # Amendments carry their own title line ("AMENDMENT 1: …") under
+        # each language's title on the isodoc titlepage.
+        title_text = [title_text, amendment_title_line(bibdata, "en")].compact.join(" ")
+        title_fr = [title_fr, amendment_title_line(bibdata, "fr")].compact.join(" ")
 
         stage_abbr = bibdata.cover_stage_abbreviation.to_s
         stage_text = stage_abbr.empty? ? extract_stage(bibdata) : "#{stage_abbr} stage"
@@ -159,6 +163,17 @@ module Metanorma
                         "title_fr" => title_fr,
                         "stage" => stage_text,
                       })
+      end
+
+      def amendment_title_line(bibdata, language)
+        localized = bibdata.title_for(language)
+        return nil unless localized.is_a?(Metanorma::Iso::Document::Metadata::IsoLocalizedTitle)
+
+        amd = localized.title_amd&.value.to_s
+        return nil if amd.strip.empty?
+
+        prefix = localized.title_amendment_prefix&.value.to_s
+        prefix.empty? ? amd : "#{prefix}: #{amd}"
       end
 
 
