@@ -325,6 +325,12 @@ module Metanorma
           vocab: @vocab, amd: @amd, i18n: @i18n,
           novalid: @novalid, document: @localdir
         )
+        # ModelValidator deserializes the full document into a typed model
+        # tree — for large documents that tree is gigabytes on top of the
+        # converter-phase garbage (asciidoctor tree, macro temporaries).
+        # Collect the garbage first so the spike stacks on the live set,
+        # not on the high-water mark of earlier phases.
+        GC.start
         Metanorma::Iso::Validation::ModelValidator.run(
           doc.to_xml, log: @log, state: state,
           profile: validation_profile
