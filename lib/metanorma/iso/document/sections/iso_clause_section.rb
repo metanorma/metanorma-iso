@@ -14,12 +14,19 @@ module Metanorma
         # Override: ISO terms sections use IsoTermsSection
         attribute :terms, IsoTermsSection, collection: true
 
+        # Presentation XML carries the term entries of a "Terms and
+        # definitions" clause as direct <clause> children (isodoc
+        # flattens the <terms> wrapper); parse them so they render.
+        attribute :term, Metanorma::Iso::Document::Terms::IsoTerm,
+                  collection: true
+
         xml do
           element "clause"
           ordered
 
           Metanorma::Standoc::Document::SectionXmlMapping.apply_clause_attributes(self)
           Metanorma::Standoc::Document::SectionXmlMapping.apply_clause_elements(self)
+          map_element "term", to: :term
         end
 
         json do
