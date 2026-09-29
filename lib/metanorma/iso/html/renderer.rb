@@ -90,6 +90,15 @@ module Metanorma
         stage_text.empty? ? nil : stage_text
       end
 
+      # ISO unpublished stages are 00-59 (front_id: /^[0-5]/); the first
+      # numeric stage element decides.
+      def cover_draft_stage?(bibdata)
+        stages = Array(safe_attr(safe_attr(bibdata, :status), :stage))
+        code = stages.filter_map { |s| Array(s.value).join.strip }
+                     .find { |val| /\A\d/.match?(val) }
+        !code.nil? && /^[0-5]/.match?(code)
+      end
+
       def extract_doctype(bibdata)
         return nil unless bibdata.is_a?(Metanorma::Iso::Document::Metadata::IsoBibliographicItem)
 
@@ -150,8 +159,13 @@ module Metanorma
         title_text = [title_text, amendment_title_line(bibdata, "en")].compact.join(" ")
         title_fr = [title_fr, amendment_title_line(bibdata, "fr")].compact.join(" ")
 
-        stage_abbr = bibdata.cover_stage_abbreviation.to_s
-        stage_text = stage_abbr.empty? ? extract_stage(bibdata) : "#{stage_abbr} stage"
+        # isodoc titlepage parity: the "<abbr> stage" cover line is
+        # draft-only — a published document (stage 60 and above) carries
+        # no stage line on the cover.
+        stage_text = if cover_draft_stage?(bibdata)
+                       stage_abbr = bibdata.cover_stage_abbreviation.to_s
+                       stage_abbr.empty? ? extract_stage(bibdata) : "#{stage_abbr} stage"
+                     end
 
         # The bibdata model itself: its lutaml-model auto-Drop (with the
         # model's `liquid` mappings) serves every cover identity fact.
