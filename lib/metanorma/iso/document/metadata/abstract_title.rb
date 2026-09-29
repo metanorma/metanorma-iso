@@ -16,6 +16,13 @@ module Metanorma
         attribute :format, :string
         attribute :value, :string
         attribute :semx_id, :string
+        # Presentation-XML titles can carry inline equations (BIPM SI MEP
+        # part titles embed the recommended frequency); without a receiver
+        # the <stem> child parses into element_order and its content is
+        # lost.
+        attribute :stem,
+                  "Metanorma::Document::Components::Inline::StemInlineElement",
+                  collection: true
 
         xml do
           map_attribute "language", to: :language
@@ -23,6 +30,7 @@ module Metanorma
           map_attribute "format", to: :format
           map_content to: :value
           map_attribute "semx-id", to: :semx_id
+          map_element "stem", to: :stem
         end
 
         json do
