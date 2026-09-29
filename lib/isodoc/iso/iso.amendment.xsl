@@ -18831,6 +18831,10 @@
 	<xsl:template name="processTables_Contents">
 		<mnx:tables>
 			<xsl:for-each select="//mn:table[not(ancestor::mn:metanorma-extension)][@id and mn:fmt-name and normalize-space(@id) != '']">
+				<xsl:variable name="root">
+					<xsl:if test="ancestor-or-self::mn:preface">preface</xsl:if>
+					<xsl:if test="ancestor-or-self::mn:annex">annex</xsl:if>
+				</xsl:variable>
 				<xsl:choose>
 					<xsl:when test="mn:fmt-name">
 						<xsl:variable name="fmt_name">
@@ -18840,12 +18844,13 @@
 							<xsl:apply-templates select="xalan:nodeset($fmt_name)/node()" mode="bookmarks"/>
 						</xsl:variable>
 						<xsl:variable name="alt_text" select="normalize-space(translate(normalize-space($alt_text_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
-						<mnx:table id="{@id}" alt-text="{$alt_text}">
+
+						<mnx:table id="{@id}" alt-text="{$alt_text}" root="{$root}">
 							<xsl:copy-of select="$fmt_name"/>
 						</mnx:table>
 					</xsl:when>
 					<xsl:otherwise>
-						<mnx:table id="{@id}" alt-text="{mn:name}">
+						<mnx:table id="{@id}" alt-text="{mn:name}" root="{$root}">
 							<xsl:copy-of select="mn:name"/>
 						</mnx:table>
 					</xsl:otherwise>
@@ -18857,6 +18862,10 @@
 	<xsl:template name="processFigures_Contents">
 		<mnx:figures>
 			<xsl:for-each select="//mn:figure[@id and mn:fmt-name and not(@unnumbered = 'true') and normalize-space(@id) != ''] | //*[@id and starts-with(mn:name, 'Figure ') and normalize-space(@id) != '']">
+				<xsl:variable name="root">
+					<xsl:if test="ancestor-or-self::mn:preface">preface</xsl:if>
+					<xsl:if test="ancestor-or-self::mn:annex">annex</xsl:if>
+				</xsl:variable>
 				<xsl:choose>
 					<xsl:when test="mn:fmt-name">
 						<xsl:variable name="fmt_name">
@@ -18866,12 +18875,13 @@
 							<xsl:apply-templates select="xalan:nodeset($fmt_name)/node()" mode="bookmarks"/>
 						</xsl:variable>
 						<xsl:variable name="alt_text" select="normalize-space(translate(normalize-space($alt_text_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
-						<mnx:figure id="{@id}" alt-text="{$alt_text}">
+
+						<mnx:figure id="{@id}" alt-text="{$alt_text}" root="{$root}">
 							<xsl:copy-of select="$fmt_name"/>
 						</mnx:figure>
 					</xsl:when>
 					<xsl:otherwise>
-						<mnx:figure id="{@id}" alt-text="{mn:name}">
+						<mnx:figure id="{@id}" alt-text="{mn:name}" root="{$root}">
 							<xsl:copy-of select="mn:name"/>
 						</mnx:figure>
 					</xsl:otherwise>
@@ -18899,8 +18909,12 @@
 							<xsl:apply-templates select="xalan:nodeset($example_name)/node()" mode="bookmarks"/>
 						</xsl:variable>
 						<xsl:variable name="alt_text" select="normalize-space(translate(normalize-space($alt_text_), concat($nbsp,$zero_width_space,$hair_space), ' '))"/>
+						<xsl:variable name="root">
+							<xsl:if test="ancestor-or-self::mn:preface">preface</xsl:if>
+							<xsl:if test="ancestor-or-self::mn:annex">annex</xsl:if>
+						</xsl:variable>
 
-						<mnx:example id="{@id}" alt-text="{$alt_text_}">
+						<mnx:example id="{@id}" alt-text="{$alt_text_}" root="{$root}">
 							<xsl:element name="fmt-name" namespace="{$namespace_full}">
 								<xsl:call-template name="capitalize"><!-- https://github.com/metanorma/metanorma-pdfa/issues/72 -->
 									<xsl:with-param name="str" select="mn:fmt-xref-label[@container]"/>
