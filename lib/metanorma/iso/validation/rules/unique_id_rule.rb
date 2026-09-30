@@ -17,6 +17,23 @@ module Metanorma
         class UniqueIdRule < Base
           code "STANDOC_36"
 
+          # Nodes whose +id+ is bibliographic *content* (docidentifier text,
+          # ORCID, …), not an XML identity attribute. UniqueIdRule only cares
+          # about the latter; Relaton repeats the same identifier across
+          # amendment/relation graphs and must not be treated as a clash.
+          NON_IDENTITY_ID_NODES = [
+            "Metanorma::Document::Relaton::DocumentIdentifier",
+            "Metanorma::Document::Relaton::OrgIdentifier",
+            "Metanorma::Document::Relaton::PersonIdentifier",
+            "Metanorma::Document::Relaton::OrgSubdivisionIdentifier",
+          ].freeze
+
+          # IsoPreface maps every front-matter <clause> into both +clause+
+          # (IsoClauseSection) and +content+ (ContentSection) as a render
+          # mirror. Only the typed clause instance is identity-bearing.
+          MIRRORED_CONTENT_SECTION =
+            "Metanorma::Standoc::Document::Sections::ContentSection"
+
           def applicable?(context)
             !context.root.nil?
           end
@@ -73,6 +90,36 @@ module Metanorma
             end
 
             issues
+          end
+
+          # Override TreeTraversal readers: only XML identity attributes count.
+          def read_id_attr(node)
+            return nil if non_identity_id_node?(node)
+            return nil unless node.class.method_defined?(:id)
+
+            value = node.id
+            return nil if value.nil? || value.to_s.empty?
+
+            value.to_s
+          end
+
+          def read_anchor_attr(node)
+            return nil if mirrored_content_section?(node)
+            return nil unless node.class.method_defined?(:anchor)
+
+            value = node.anchor
+            return nil if value.nil? || value.to_s.empty?
+
+            value.to_s
+          end
+
+          def non_identity_id_node?(node)
+            NON_IDENTITY_ID_NODES.include?(node.class.name) ||
+              mirrored_content_section?(node)
+          end
+
+          def mirrored_content_section?(node)
+            node.class.name == MIRRORED_CONTENT_SECTION
           end
         end
       end
