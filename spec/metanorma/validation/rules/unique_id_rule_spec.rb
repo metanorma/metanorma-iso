@@ -54,6 +54,39 @@ RSpec.describe Metanorma::Iso::Validation::Rules::UniqueIdRule do
       expect(context.shared.doc_ids).to include("c1")
       expect(context.shared.id_seq).to include("c1")
     end
+
+    it "does not treat repeated docidentifier content as duplicate ids" do
+      xml = <<~XML
+        <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="iso">
+          <bibdata>
+            <docidentifier type="ISO">ISO 6707-1</docidentifier>
+            <relation type="amends">
+              <bibitem>
+                <docidentifier type="ISO">ISO 6707-1</docidentifier>
+              </bibitem>
+            </relation>
+          </bibdata>
+          <sections>
+            <clause id="c1"><title>One</title></clause>
+          </sections>
+        </metanorma>
+      XML
+      expect(rule.check(context_with(xml))).to eq([])
+    end
+
+    it "does not flag IsoPreface clause/content mirror pairs" do
+      xml = <<~XML
+        <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="iso">
+          <bibdata><docidentifier>ISO 1</docidentifier></bibdata>
+          <preface>
+            <clause id="toc0_02" anchor="toc0_02" type="publication-history">
+              <title>Hist</title>
+            </clause>
+          </preface>
+        </metanorma>
+      XML
+      expect(rule.check(context_with(xml))).to eq([])
+    end
   end
 
   describe "code" do

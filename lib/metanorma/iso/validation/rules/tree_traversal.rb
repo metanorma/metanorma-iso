@@ -77,7 +77,13 @@ module Metanorma
           # the existing extract_text() behavior without Nokogiri.
           def extract_text(node, strip: [])
             return "" if node.nil?
-            return node.to_s unless node.is_a?(Lutaml::Model::Serializable)
+            return node if node.is_a?(String)
+
+            unless node.is_a?(Lutaml::Model::Serializable)
+              # unknown node type may cause error when calling `.to_s`
+              return node.to_s if node.respond_to?(:to_s)
+              return ""
+            end
 
             stripped_types = strip.to_set
             parts = []
