@@ -124,7 +124,14 @@ module Metanorma
         root.xpath("//definition/verbal-definition").each { |e| definition_style(e) }
         root.xpath("//note").each { |e| note_style(e) }
         root.xpath("//fn").each { |e| footnote_style(e) }
-        root.xpath(ASSETS_TO_STYLE).each { |e| style(e, extract_text(e)) }
+        Metanorma::Utils::GcBudget.gc_when_bloated!
+        n = 0
+        root.xpath(ASSETS_TO_STYLE).each do |e|
+          # the per-node style checks churn gsub/split/regex transients; bound
+          # the collection window inside the pass, not only around it
+          Metanorma::Utils::GcBudget.gc_when_bloated! if ((n += 1) % 100).zero?
+          style(e, extract_text(e))
+        end
       end
 
       def style_subscript(node)
