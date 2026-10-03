@@ -4,25 +4,20 @@ gemspec
 gem "metanorma-mirror", "~> 1.0"
 
 gem "canon"
-# isodoc PR branch: pubid 2 migration for std_docid_semantic +
-# relaton-cli 3.0.0.pre allowance (both required by the pubid-2 /
-# metanorma-document 0.4.0 chain); revert to branch: "main" once
-# https://github.com/metanorma/isodoc/pull/825 merges.
-gem "isodoc", github: "metanorma/isodoc", branch: "main" # merged as isodoc#825; audit chain
-gem "metanorma", github: "metanorma/metanorma", branch: "main"
-# TEMPORARY cross-PR pin for the flavor-table restructure (metanorma-core#18)
-gem "metanorma-core", github: "metanorma/metanorma-core", branch: "feat/flavor-table"
-# standoc PR branch allowing isodoc 3.7; revert to branch: "main" once
-# https://github.com/metanorma/metanorma-standoc/pull/1215 merges.
-# TEMPORARY: pointing to feat/move-standard-document for the namespace
-# rename (Metanorma::Standoc::Document). Revert to main once PR
-# https://github.com/metanorma/metanorma-standoc/pull/1232 merges.
-gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "feat/term-grammar-coverage" # TEMPORARY: stacked chain (1251+1252) for the audit; revert per PR notes on merge
-# TEMPORARY: pointing to feat/model-validation-l1-declarations for the
-# model extensions (SubElement recursive, StandardReferencesSection nested).
-# Revert to main once PR
-# https://github.com/metanorma/metanorma-document/pull/45 merges.
-# TEMPORARY: full audit chain — flip to main on PR merges
+# isodoc main carries the relaton-render >= 1.3.0, < 1.5.0 range (#846)
+# that the relaton 3 prerelease chain co-resolves with; the released
+# 3.7.3 still pins ~> 1.3.0 and conflicts. Revert to the gem once an
+# isodoc release carries #846.
+gem "isodoc", github: "metanorma/isodoc", branch: "main"
+# plugin-lutaml main carries LutamlDataPreprocessor (registered by
+# standoc main's converter); released 0.7.53 does not define it yet.
+gem "metanorma-plugin-lutaml", github: "metanorma/metanorma-plugin-lutaml", branch: "main"
+# standoc main carries the Metanorma::Standoc::Document split and the
+# pubid-dispatch refs world (1251/1252/1267/1268); the released 3.5.0
+# gem does not define Standoc::Document yet. Revert to the gem once a
+# standoc release carries it.
+gem "metanorma-standoc", github: "metanorma/metanorma-standoc", branch: "main"# metanorma-document main carries the relaton-bib 2.2.0.pre allowance;
+# the released 0.5.1 does not yet, so the pin stays until that release.
 gem "metanorma-document", github: "metanorma/metanorma-document", branch: "main"
 gem "rake"
 # relaton-bib 2.2.0.pre is the pubid-2-native line required by
@@ -41,9 +36,5 @@ gem "lutaml-model", path: "../../lutaml/lutaml-model" if File.exist?(File.expand
 gem "html2doc", "~> 1.12.0"
 gem "moxml", "~> 0.5" # leptris wave (metanorma-document#60)
 gem "omml", "~> 0.2.6" # 0.2.6 (2026-09-08) carries the moxml-0.5 range (plurimath/omml#11)
-# pubid main is required for undated-reference parsing (pubid/pubid#138)
-# and the SupplementIdentifier base rename (b23a084f, 1aae4e68); revert
-# to the released gem once 2.0.0.pre.alpha.9 ships.
-gem "pubid", github: "pubid/pubid", branch: "main"
 
 eval_gemfile("Gemfile.devel") rescue nil
