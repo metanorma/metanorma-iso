@@ -10251,6 +10251,7 @@
 	</xsl:attribute-set> <!-- preferred-block-style -->
 
 	<xsl:template name="refine_term-preferred-block-style">
+		<xsl:attribute name="role">SKIP</xsl:attribute>
 	</xsl:template>
 
 	<xsl:attribute-set name="term-preferred-style">
@@ -10271,12 +10272,14 @@
 	</xsl:template>
 
 	<xsl:attribute-set name="term-admitted-style">
+		<xsl:attribute name="role">SKIP</xsl:attribute>
 	</xsl:attribute-set> <!-- term-admitted-style -->
 
 	<xsl:template name="refine_term-admitted-style">
 	</xsl:template>
 
 	<xsl:attribute-set name="term-deprecates-style">
+		<xsl:attribute name="role">SKIP</xsl:attribute>
 	</xsl:attribute-set> <!-- term-deprecates-style -->
 
 	<xsl:template name="refine_term-deprecates-style">
@@ -10335,7 +10338,19 @@
 			<xsl:call-template name="refine_term-style"/>
 			<xsl:call-template name="addTagElementT"/>
 
-			<xsl:apply-templates select="node()[not(self::mn:fmt-name)]"/>
+			<fo:block role="SKIP">
+				<xsl:variable name="levelTerm">
+					<xsl:call-template name="getLevelTermName"/>
+				</xsl:variable>
+				<xsl:attribute name="role">H<xsl:value-of select="$levelTerm"/></xsl:attribute>
+
+				<!-- element before fmt-defition -->
+				<xsl:apply-templates select="node()[not(self::mn:fmt-name) and not(self::mn:fmt-definition) and not(preceding-sibling::mn:fmt-definition)]"/>
+			</fo:block>
+
+			<!-- elements after fmt-definition (include fmt-definition) -->
+			<xsl:apply-templates select="node()[self::mn:fmt-definition or preceding-sibling::mn:fmt-definition]"/>
+
 		</fo:block>
 	</xsl:template>
 
@@ -21648,6 +21663,27 @@
 	<!-- Get or calculate depth of term's name -->
 	<xsl:template name="getLevelTermName">
 		<xsl:choose>
+			<xsl:when test="self::mn:term">
+				<xsl:choose>
+					<xsl:when test="normalize-space(@depth) != ''">
+						<xsl:value-of select="@depth"/>
+					</xsl:when>
+					<xsl:otherwise>
+						<xsl:variable name="title_level_">
+							<xsl:for-each select="preceding-sibling::mn:fmt-title[1]">
+								<xsl:call-template name="getLevel"/>
+							</xsl:for-each>
+						</xsl:variable>
+						<xsl:variable name="title_level" select="normalize-space($title_level_)"/>
+						<xsl:choose>
+							<xsl:when test="$title_level != ''"><xsl:value-of select="$title_level + 1"/></xsl:when>
+							<xsl:otherwise>
+								<xsl:call-template name="getLevel"/>
+							</xsl:otherwise>
+						</xsl:choose>
+					</xsl:otherwise>
+				</xsl:choose>
+			</xsl:when><!-- end: self::mn:term -->
 			<xsl:when test="normalize-space(../@depth) != ''">
 				<xsl:value-of select="../@depth"/>
 			</xsl:when>
