@@ -1,0 +1,34 @@
+# The metanorma-iso CitationStyle instance (relaton-render 3.0.0.pre
+# Iso690 engine). Templates place the clause 7 data elements in each
+# resource kind's order; an absent element takes its trailing
+# punctuation with it.
+name: "ISO 690 (metanorma-iso flavour)"
+scheme:
+  system: name-date
+  nameForm:
+    initials: true
+    rolePlacement: afterPeriod
+  locale:
+    labels:
+      oxford_comma: ""
+      edition: "edition"
+      edition_1: "First edition"
+      edition_2: "Second edition"
+      edition_3: "Third edition"
+      edition_4: "Fourth edition"
+      edition_5: "Fifth edition"
+      edition_6: "Sixth edition"
+      edition_7: "Seventh edition"
+      edition_8: "Eighth edition"
+      edition_9: "Ninth edition"
+      edition_10: "Tenth edition"
+templates:
+  titleOpen: "<em>"
+  titleClose: "</em>"
+  citation: "{{surname}}, {{date}}{{disambiguator}}"
+  reference: "{{creator}}{{title}}. {{medium}}. {{edition}}. {{series}}. {{production}}. {{date}}. {{size}}. {{identifier}}. {{location}}."
+  name: "{{surname}}, {{givenNames}}"
+  series: "({{series_title}} {{series_number}})"
+perType:
+  - type: monograph
+    template: "{{creator}}{{title}}. {{medium}}. {{edition}}. {{series}}. {{production}}. {{date}}. {{size}}."
