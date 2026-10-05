@@ -2,6 +2,7 @@ require "isodoc"
 require_relative "metadata"
 require_relative "xref"
 require_relative "i18n"
+require_relative "../../metanorma/iso/citation_style"
 
 module IsoDoc
   module Iso
@@ -34,9 +35,7 @@ module IsoDoc
       end
 
       def bibrenderer(options = {})
-        require_relative "../../metanorma/iso/relaton_render/general"
-
-        ::Relaton::Render::Iso::General.new(options
+        Metanorma::Iso::CitationStyle.new(options
           .merge(language: @lang, script: @script, i18nhash: @i18n.get,
                  config: @relatonrenderconfig))
       end
