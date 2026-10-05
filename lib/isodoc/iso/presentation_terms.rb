@@ -2,7 +2,7 @@ require_relative "init"
 require "isodoc"
 require_relative "presentation_xref"
 require_relative "presentation_bibdata"
-require_relative "../../relaton/render/general"
+require_relative "../../metanorma/iso/relaton_render/general"
 
 module IsoDoc
   module Iso
