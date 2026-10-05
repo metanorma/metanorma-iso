@@ -8,9 +8,13 @@ scheme:
   nameForm:
     initials: true
     rolePlacement: afterPeriod
+    completenameUpcase: true
+  homeDocidType: "ISO"
   locale:
     labels:
+      in: ""
       oxford_comma: ""
+      available_from: "Available at:"
       edition: "edition"
       edition_1: "First edition"
       edition_2: "Second edition"
@@ -29,6 +33,27 @@ templates:
   reference: "{{creator}}{{title}}. {{medium}}. {{edition}}. {{series}}. {{production}}. {{date}}. {{size}}. {{identifier}}. {{location}}."
   name: "{{surname}}, {{givenNames}}"
   series: "({{series_title}} {{series_number}})"
+  uri: "<span class='biburl'><fmt-link target='{{uri}}'>{{uri}}</fmt-link></span>"
 perType:
   - type: monograph
-    template: "{{creator}}{{title}}. {{medium}}. {{edition}}. {{series}}. {{production}}. {{date}}. {{size}}."
+    template: "{{creator}}{{title}}. {{medium}}. {{edition}}. {{series}}. {{location}}: {{production}}. {{date}}. {{size}}."
+  - type: component_part
+    template: "{{creator}}{{title}}. {{componentpart}}. {{date}}. {{extent}}. {{access}}"
+  - type: continuing
+    template: "{{title}}. {{date}}"
+  - type: serial_part
+    template: "{{creator}}{{title}}. {{series}}. {{date}}, {{extent}}"
+    series: "<em>{{series_title}}</em> ({{series_run}})"
+  - type: report
+    template: "{{creator}}{{title}}. {{stddoc}}"
+    title: "<span class='stddocTitle'>{{title}}</span>"
+    home: false
+  - type: report
+    template: "{{title}}"
+    title: "<span class='stddocTitle'>{{title}}</span>"
+    home: true
+  - type: online
+    template: "{{creator}}{{title}}. {{edition}}. {{medium}}. {{production}}. {{date}}. {{location}}. {{size}}. {{access}}"
+  - type: webdoc
+    template: "{{creator}}{{title}} {{medium}}. {{production}}. {{date}}. {{location}}. {{size}}. {{access}}"
+    title: "<span class='stddocTitle'>{{title}}</span>"
