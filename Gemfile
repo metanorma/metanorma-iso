@@ -2,6 +2,9 @@ source "https://rubygems.org"
 
 gemspec
 gem "metanorma-mirror", "~> 1.0"
+# The port's dev pin: the family prerelease the CitationStyle port
+# targets (isodoc's range alone does not name it).
+gem "relaton-render", path: "/Users/mulgogi/src/relaton/relaton-render"
 
 gem "canon"
 # isodoc main carries the relaton-render >= 1.3.0, < 1.5.0 range (#846)

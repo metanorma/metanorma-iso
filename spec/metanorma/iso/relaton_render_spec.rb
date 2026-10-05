@@ -2,7 +2,7 @@
 
 require "spec_helper"
 
-RSpec.describe Relaton::Render::Iso do
+RSpec.describe Metanorma::Iso::CitationStyle do
   it "renders book, five editors with generic class" do
     input = <<~INPUT
       <bibitem type="book">
@@ -661,7 +661,7 @@ RSpec.describe Relaton::Render::Iso do
   private
 
   def renderer
-    Relaton::Render::Iso::General
+    Metanorma::Iso::CitationStyle
       .new("language" => "en", "script" => "Latn",
            "i18nhash" => IsoDoc::Iso::PresentationXMLConvert.new({})
       .i18n_init("en", "Latn", nil).get)
