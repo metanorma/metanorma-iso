@@ -2,6 +2,7 @@ require_relative "init"
 require "isodoc"
 require_relative "presentation_xref"
 require_relative "presentation_bibdata"
+require_relative "../../metanorma/iso/citation_style"
 
 module IsoDoc
   module Iso
