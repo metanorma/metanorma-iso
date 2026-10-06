@@ -37,10 +37,14 @@ templates:
 perType:
   - type: monograph
     template: "{{creator}}{{title}}. {{medium}}. {{edition}}. {{series}}. {{location}}: {{production}}. {{date}}. {{size}}."
+    fallbacks:
+      date: "n.d."
   - type: component_part
     template: "{{creator}}{{title}}. {{componentpart}}. {{date}}. {{extent}}. {{access}}"
   - type: continuing
     template: "{{title}}. {{date}}"
+    fallbacks:
+      date: "n.d."
   - type: serial_part
     template: "{{creator}}{{title}}. {{series}}. {{date}}, {{extent}}"
     series: "<em>{{series_title}}</em> ({{series_run}})"
