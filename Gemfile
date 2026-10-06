@@ -15,6 +15,7 @@ gem "isodoc", github: "metanorma/isodoc", branch: "main"
 # plugin-lutaml main carries LutamlDataPreprocessor (registered by
 # standoc main's converter); released 0.7.53 does not define it yet.
 gem "metanorma-plugin-lutaml", github: "metanorma/metanorma-plugin-lutaml", branch: "main"
+gem "metanorma-utils", github: "metanorma/metanorma-utils", branch: "main" # GcBudget, unreleased past 2.0.7
 # standoc main carries the Metanorma::Standoc::Document split and the
 # pubid-dispatch refs world (1251/1252/1267/1268); the released 3.5.0
 # gem does not define Standoc::Document yet. Revert to the gem once a
