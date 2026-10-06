@@ -33,8 +33,11 @@ module Metanorma
 
       def metadata_stage(node, xml)
         id = iso_id_default(iso_id_params(node))
-        id.typed_stage or return
-        if abbr = id.typed_stage && pubid_stage_abbr(id.typed_stage)
+        # typed_stage is an ISO pubid feature: flavors whose base_pubid
+        # creates other pubid types (BSI) carry no typed_stage
+        typed_stage = id.respond_to?(:typed_stage) ? id.typed_stage : nil
+        typed_stage or return
+        if abbr = typed_stage && pubid_stage_abbr(typed_stage)
           # remove IS: work around breakages in pubid-iso
           abbr = abbr.to_s.upcase.strip.sub(/^IS /, "")
         end
@@ -44,7 +47,8 @@ module Metanorma
       end
 
       def metadata_stagename(id)
-        id.typed_stage&.name || id.stage&.name
+        (id.respond_to?(:typed_stage) && id.typed_stage)&.name ||
+          id.stage&.name
       end
 
       def metadata_status(node, xml)
@@ -53,7 +57,10 @@ module Metanorma
         id = iso_id_default(iso_id_params(node))
         # pubid 2 derives #stage from #typed_stage; the visible abbreviation
         # is the typed stage's non-empty variant (published IS is ["", "IS"]).
-        stage_abbr = id.typed_stage && pubid_stage_abbr(id.typed_stage)
+        # typed_stage is an ISO pubid feature: flavors whose base_pubid
+        # creates other pubid types (BSI) carry no typed_stage
+        typed_stage = id.respond_to?(:typed_stage) ? id.typed_stage : nil
+        stage_abbr = typed_stage && pubid_stage_abbr(typed_stage)
         abbrev = node.attr("docstage-abbrev") || stage_abbr&.upcase
         xml.status do |s|
           add_noko_elem(s, "stage", stage, **attr_code(abbreviation: abbrev))
