@@ -4,7 +4,7 @@ gemspec
 gem "metanorma-mirror", "~> 1.0"
 # The family prerelease the CitationStyle port targets; the floor pin
 # names it for resolution (isodoc's range alone is prerelease-blind).
-gem "relaton", "~> 3.0.0.pre.alpha.11"
+gem "relaton", "= 3.0.0.pre.alpha.11"
 
 gem "canon"
 # isodoc main carries the relaton-render >= 1.3.0, < 1.5.0 range (#846)
@@ -26,7 +26,7 @@ gem "metanorma-document", github: "metanorma/metanorma-document", branch: "main"
 gem "rake"
 # relaton-bib 2.2.0.pre is the pubid-2-native line required by
 # metanorma-document 0.4.0.
-gem "relaton-bib", "~> 2.2.0.pre.alpha.1"
+gem "relaton-bib", "2.2.0.pre.alpha.1"
 gem "rspec"
 gem "rubocop"
 gem "rubocop-performance"
