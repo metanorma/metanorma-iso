@@ -1,10 +1,10 @@
 source "https://rubygems.org"
 
 gemspec
-gem "metanorma-mirror", "~> 1.0"
+gem "metanorma-mirror", "~> 1.0", github: "metanorma/metanorma-mirror", branch: "main"
 # The family prerelease the CitationStyle port targets; the floor pin
 # names it for resolution (isodoc's range alone is prerelease-blind).
-gem "relaton", "= 3.0.0.pre.alpha.11"
+gem "relaton", "~> 3.0.0.pre.alpha"
 
 gem "canon"
 # isodoc main carries the relaton-render >= 1.3.0, < 1.5.0 range (#846)
@@ -15,7 +15,7 @@ gem "isodoc", github: "metanorma/isodoc", branch: "main"
 # plugin-lutaml main carries LutamlDataPreprocessor (registered by
 # standoc main's converter); released 0.7.53 does not define it yet.
 gem "metanorma-plugin-lutaml", github: "metanorma/metanorma-plugin-lutaml", branch: "main"
-gem "metanorma-utils", "~> 2.0.8" # GcBudget + the array-join table cell buffer, released in 2.0.8
+gem "metanorma-utils", "~> 2.0.8" # GcBudget + the array-join table cell buffer, released in 2.0.8, github: "metanorma/metanorma-utils", branch: "main"
 # standoc main carries the Metanorma::Standoc::Document split and the
 # pubid-dispatch refs world (1251/1252/1267/1268); the released 3.5.0
 # gem does not define Standoc::Document yet. Revert to the gem once a
@@ -26,7 +26,6 @@ gem "metanorma-document", github: "metanorma/metanorma-document", branch: "main"
 gem "rake"
 # relaton-bib 2.2.0.pre is the pubid-2-native line required by
 # metanorma-document 0.4.0.
-gem "relaton-bib", "2.2.0.pre.alpha.1"
 gem "rspec"
 gem "rubocop"
 gem "rubocop-performance"
