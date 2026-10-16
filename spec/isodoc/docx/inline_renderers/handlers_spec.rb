@@ -123,6 +123,19 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
       expect(built.bookmark_ends.length).to eq(1)
       expect(built.bookmark_starts.first.name).to eq("bm1")
     end
+
+    it "uses the anchor of a bookmark with no id" do
+      xml = minimal_iso_xml("<sections><clause id='c'><p>Text <bookmark anchor='myanchor'/></p></clause></sections>")
+      element = parse_iso_document(xml).sections.clause.first.paragraphs.first
+      bookmark = walk_to_first_inline(element)
+
+      para = build_para
+      described_class.new(parent).render(bookmark, para)
+
+      built = para.build
+      expect(built.bookmark_starts.length).to eq(1)
+      expect(built.bookmark_starts.first.name).to eq("myanchor")
+    end
   end
 
   describe IsoDoc::Iso::Docx::InlineRenderers::Bcp14Renderer do
