@@ -37,7 +37,6 @@ gem "lutaml-model", path: "../../lutaml/lutaml-model" if File.exist?(File.expand
 # html2doc >= 1.12 is required for correct OMML math handling in Word output
 # (isodoc main also pins ~> 1.12).
 gem "html2doc", "~> 1.12.0"
-gem "moxml", "~> 0.5" # leptris wave (metanorma-document#60)
 gem "omml", "~> 0.2.6" # 0.2.6 (2026-09-08) carries the moxml-0.5 range (plurimath/omml#11)
 
 eval_gemfile("Gemfile.devel") rescue nil
