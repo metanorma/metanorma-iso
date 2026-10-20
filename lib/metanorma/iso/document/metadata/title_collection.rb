@@ -39,7 +39,7 @@ module Metanorma
 
         # Find the localized title for a given language
         def for_language(language = "en")
-          per_language.find { |g| g.language == language }
+          Array(per_language).find { |g| g.language == language }
         end
       end
     end
