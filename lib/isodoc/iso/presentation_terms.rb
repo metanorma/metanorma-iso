@@ -11,7 +11,7 @@ module IsoDoc
         concept_term(docxml)
         (docxml.xpath(ns("//concept")) - docxml.xpath(ns("//term//concept")))
           .each do |node|
-          node.ancestors("definition, source, related").empty? and
+          in_concept_container?(node) and
             concept_render(node, ital: "false", ref: "false",
                                  linkref: "true", linkmention: "false")
         end
@@ -22,10 +22,23 @@ module IsoDoc
           m = {}
           (f.xpath(ns(".//concept")) - f.xpath(ns(".//term//concept")))
             .each do |c|
-              c.ancestors("definition, source, related").empty? and
+              in_concept_container?(c) and
                 concept_term1(c, m)
             end
         end
+      end
+
+      # Node#ancestors(selector) runs an XPath match per ancestor; with
+      # this called per concept on deeply nested terms it is quadratic on
+      # large vocabularies. Walk parents directly instead.
+      def in_concept_container?(node)
+        parent = node.parent
+        while parent.is_a?(Nokogiri::XML::Element)
+          return true if %w[definition source related].include?(parent.name)
+
+          parent = parent.parent
+        end
+        false
       end
 
       def concept_term1(node, seen)
