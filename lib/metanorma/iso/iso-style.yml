@@ -26,6 +26,7 @@ scheme:
       edition_8: "Eighth edition"
       edition_9: "Ninth edition"
       edition_10: "Tenth edition"
+      size_volume: "% vol."
 templates:
   titleOpen: "<em>"
   titleClose: "</em>"
@@ -41,23 +42,25 @@ perType:
       date: "n.d."
   - type: component_part
     template: "{{creator}}{{title}}. {{componentpart}}. {{date}}. {{extent}}. {{access}}"
+    title: "{{title}}"
   - type: continuing
     template: "{{title}}. {{date}}"
     fallbacks:
       date: "n.d."
   - type: serial_part
     template: "{{creator}}{{title}}. {{series}}. {{date}}, {{extent}}"
+    title: "{{title}}"
     series: "<em>{{series_title}}</em> ({{series_run}})"
   - type: report
     template: "{{creator}}{{title}}. {{stddoc}}"
-    title: "<span class='stddocTitle'>{{title}}</span>"
+    title: "<em><span class='stddocTitle'>{{title}}</span></em>"
     home: false
   - type: report
     template: "{{title}}"
-    title: "<span class='stddocTitle'>{{title}}</span>"
+    title: "<em><span class='stddocTitle'>{{title}}</span></em>"
     home: true
   - type: online
     template: "{{creator}}{{title}}. {{edition}}. {{medium}}. {{production}}. {{date}}. {{location}}. {{size}}. {{access}}"
   - type: webdoc
     template: "{{creator}}{{title}} {{medium}}. {{production}}. {{date}}. {{location}}. {{size}}. {{access}}"
-    title: "<span class='stddocTitle'>{{title}}</span>"
+    title: "<em><span class='stddocTitle'>{{title}}</span></em>"
