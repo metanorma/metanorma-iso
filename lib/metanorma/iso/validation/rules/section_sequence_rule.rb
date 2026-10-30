@@ -68,7 +68,9 @@ module Metanorma
                 items << SectionItem.new(kind: clause_kind(clause), node: clause) if clause
                 clause_idx += 1
               when "terms"
-                terms = sections.terms
+                # Multiple terms clauses are an Array; the order walk is
+                # per-occurrence, so index like the clause branch does.
+                terms = Array(sections.terms)[terms_idx]
                 items << SectionItem.new(kind: :terms, node: terms) if terms
                 terms_idx += 1
               when "definitions"

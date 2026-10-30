@@ -36,7 +36,11 @@ module Metanorma
             return enum_for(__method__, root) unless block_given?
 
             sections = root&.sections or return
-            visit_terms_section(sections.terms) { |term| yield(term) }
+            # sections.terms is an Array when the document carries multiple
+            # terms clauses (vocabulary corpora carry one per concept).
+            Array(sections.terms).each do |terms_section|
+              visit_terms_section(terms_section) { |term| yield(term) }
+            end
             visit_clause_subtree_for_terms(sections.clause) { |t| yield(t) }
           end
 
@@ -68,7 +72,7 @@ module Metanorma
             return enum_for(__method__, root) unless block_given?
 
             sections = root&.sections or return
-            yield(sections.terms) if sections.terms
+            Array(sections.terms).each { |terms_section| yield(terms_section) }
             visit_clauses_for_terms(sections.clause) { |t| yield(t) }
           end
 
@@ -462,7 +466,9 @@ module Metanorma
 
           def visit_clauses_for_terms(clauses)
             Array(clauses).each do |clause|
-              yield(clause.terms) if clause.class.method_defined?(:terms) && clause.terms
+              if clause.class.method_defined?(:terms) && clause.terms
+                Array(clause.terms).each { |terms_section| yield(terms_section) }
+              end
               visit_clauses_for_terms(clause.clause) { |t| yield(t) } if clause.class.method_defined?(:clause)
             end
           end
