@@ -24,6 +24,8 @@ module IsoDoc
 
       # style [1] references as [Reference 1], eref or origin
       def bracketed_refs_processing(docxml)
+        @elem_id_lookup = docxml.xpath("//*[@id]")
+          .each_with_object({}) { |e, h| h[e["id"]] ||= e }
         (docxml.xpath(ns("//semx[@element = 'eref']")) -
         docxml.xpath(ns("//semx[@element = 'erefstack']//semx[@element = 'eref']")))
           .each { |n| bracket_eref_style(n) }
@@ -46,9 +48,16 @@ module IsoDoc
         end
       end
 
+      # Reference sources resolve through a one-pass id index: a
+      # per-reference //*[@id = '...'] document scan is quadratic on
+      # large vocabulary documents.
+      def source_semx(elem)
+        @elem_id_lookup[elem["source"]]
+      end
+
       # is the eref corresponding to this semx a simple [n] reference?
       def bracket_eref_original(elem)
-        semx = elem.document.at("//*[@id = '#{elem['source']}']") or return
+        semx = source_semx(elem) or return
         dup = elem.at(ns(".//fmt-eref | .//fmt-xref | .//fmt-origin"))
         non_locality_elems(semx).empty? or return
         /^\[\d+\]$/.match?(semx["citeas"]) or return
@@ -75,7 +84,7 @@ module IsoDoc
       def bracket_erefstack_style_prep(elem)
         semx = elem.xpath(ns(".//semx[@element = 'eref']"))
           .filter_map { |e| bracket_eref_original(e) }
-        erefstack_orig = elem.document.at("//*[@id = '#{elem['source']}']")
+        erefstack_orig = source_semx(elem)
         [semx, erefstack_orig]
       end
 
@@ -85,7 +94,7 @@ module IsoDoc
       end
 
       def insert_biblio_callout(elem)
-        semx = elem.document.at("//*[@id = '#{elem['source']}']") or return
+        semx = source_semx(elem) or return
         if ref = @bibitem_lookup[semx["bibitemid"]]
           Metanorma::Iso::PublisherIdentity
             .iso_iec_publisher?(ref, ns: method(:ns)) and return
