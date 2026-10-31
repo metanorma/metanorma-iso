@@ -57,12 +57,12 @@ module Metanorma
 
           def add_id(shared, id, node)
             shared.doc_ids[id] ||= { node: node }
-            shared.id_seq << id unless shared.id_seq.include?(id)
+            shared.id_seq << id
           end
 
           def add_anchor(shared, anchor, node)
             shared.doc_anchors[anchor] ||= { node: node }
-            shared.anchor_seq << anchor unless shared.anchor_seq.include?(anchor)
+            shared.anchor_seq << anchor
           end
 
           def collect_duplicate_issues(context)

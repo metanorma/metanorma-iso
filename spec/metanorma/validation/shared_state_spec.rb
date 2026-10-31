@@ -6,8 +6,8 @@ RSpec.describe Metanorma::Iso::Validation::SharedState do
     expect(state.doc_ids).to eq({})
     expect(state.doc_anchors).to eq({})
     expect(state.doc_xrefs).to eq({})
-    expect(state.id_seq).to eq([])
-    expect(state.anchor_seq).to eq([])
+    expect(state.id_seq).to be_empty
+    expect(state.anchor_seq).to be_empty
   end
 
   it "allows mutation so rules can populate it" do
