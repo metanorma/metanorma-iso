@@ -27,6 +27,12 @@ module IsoDoc
       def example_p_parse(node, div)
         name = node.at(ns("./fmt-name"))
         para = node.at(ns("./p")) || node.at(ns("./semx/p"))
+        # starts_with_para? can see a paragraph nested one level below a
+        # wrapper block (e.g. an example whose first block is a note whose
+        # first child is a p); the extraction above only reads a direct
+        # p, so fall back to the generic path when it finds none.
+        return example_parse1(node, div) unless para
+
         div.p(**attr_code(class: example_p_class)) do |p|
           name and p.span class: "example_label" do |s|
             name.children.each { |n| parse(n, s) }
