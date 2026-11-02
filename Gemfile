@@ -23,6 +23,6 @@ gem "lutaml-model", "~> 0.8"
 # html2doc >= 1.12 is required for correct OMML math handling in Word output
 # (isodoc main also pins ~> 1.12).
 gem "html2doc", "~> 1.12.0"
-gem "omml", "~> 0.2.6" # 0.2.6 (2026-09-08) carries the moxml-0.5 range (plurimath/omml#11)
+gem "omml", "~> 0.2.11" # 0.2.7+ carries the moxml-0.6 range (omml => moxml ~> 0.6.1)
 
 eval_gemfile("Gemfile.devel") rescue nil
