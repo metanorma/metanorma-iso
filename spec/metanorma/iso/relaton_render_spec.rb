@@ -59,7 +59,7 @@ RSpec.describe Metanorma::Iso::CitationStyle do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders book, five editors with specific class, broken down place" do
@@ -122,7 +122,7 @@ RSpec.describe Metanorma::Iso::CitationStyle do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders incollection, two authors" do
@@ -199,7 +199,7 @@ RSpec.describe Metanorma::Iso::CitationStyle do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders journal" do
@@ -214,7 +214,7 @@ RSpec.describe Metanorma::Iso::CitationStyle do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders article" do
@@ -285,7 +285,7 @@ RSpec.describe Metanorma::Iso::CitationStyle do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders software" do
@@ -314,7 +314,7 @@ RSpec.describe Metanorma::Iso::CitationStyle do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders home standard" do
@@ -384,7 +384,7 @@ RSpec.describe Metanorma::Iso::CitationStyle do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders external standard, IETF" do
@@ -454,7 +454,7 @@ RSpec.describe Metanorma::Iso::CitationStyle do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders external standard, W3C" do
@@ -514,7 +514,7 @@ RSpec.describe Metanorma::Iso::CitationStyle do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders dataset" do
@@ -556,7 +556,7 @@ RSpec.describe Metanorma::Iso::CitationStyle do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders website" do
@@ -591,7 +591,7 @@ RSpec.describe Metanorma::Iso::CitationStyle do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders unpublished" do
@@ -623,7 +623,7 @@ RSpec.describe Metanorma::Iso::CitationStyle do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders month-year dates" do
@@ -655,7 +655,7 @@ RSpec.describe Metanorma::Iso::CitationStyle do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   private

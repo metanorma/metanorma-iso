@@ -292,7 +292,7 @@ RSpec.describe Metanorma::Iso do
     INPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     expect(xml.xpath("//xmlns:bibliography//xmlns:docidentifier").map(&:text))
-      .to be_equivalent_to ["ISO 9", "ISO 8000-8", "ISO 8000-61",
+      .to be_xml_equivalent_to ["ISO 9", "ISO 8000-8", "ISO 8000-61",
                             "ISO 8000-110", "ISO/IEC 646", "ISO/IEEE 32675"]
   end
 
@@ -317,7 +317,7 @@ RSpec.describe Metanorma::Iso do
     INPUT
     xml = Nokogiri::XML(Asciidoctor.convert(input, *OPTIONS))
     expect(xml.xpath("//xmlns:bibliography//xmlns:docidentifier").map(&:text))
-      .to be_equivalent_to ["IEC 60050", "ISO 9"]
+      .to be_xml_equivalent_to ["IEC 60050", "ISO 9"]
   end
 
   it "renders withdrawn and cancelled ISO references" do

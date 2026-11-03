@@ -1051,7 +1051,7 @@ RSpec.describe IsoDoc do
         updateddate: "2000-01-01",
         wg: "WG 62A1" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "processes IsoXML metadata for amendment in French" do
@@ -1209,7 +1209,7 @@ RSpec.describe IsoDoc do
         unpublished: true, 
         updateddate: "2000-01-01" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "processes IsoXML metadata for addendum" do
@@ -1362,7 +1362,7 @@ RSpec.describe IsoDoc do
         unpublished: true,
         updateddate: "2000-01-01" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "processes IsoXML metadata for supplement" do
@@ -1515,7 +1515,7 @@ RSpec.describe IsoDoc do
         unpublished: true,
         updateddate: "2000-01-01" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "processes IsoXML metadata for extract" do
@@ -1668,7 +1668,7 @@ RSpec.describe IsoDoc do
         unpublished: true,
         updateddate: "2000-01-01" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "processes middle title" do
