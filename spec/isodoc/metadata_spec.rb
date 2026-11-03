@@ -277,7 +277,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         unpublished: true,
         wg: "WG 62A1" }
     expect(metadata(c.info(Nokogiri::XML(input),
-                           nil))).to be_equivalent_to output
+                           nil))).to be_xml_equivalent_to output
   end
 
   it "processes IsoXML metadata #2" do
@@ -383,7 +383,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         tc_docnumber: ["17301"],
         unpublished: false }
     expect(metadata(c.info(Nokogiri::XML(input),
-                           nil))).to be_equivalent_to output
+                           nil))).to be_xml_equivalent_to output
   end
 
   it "processes IsoXML metadata in French" do
@@ -501,7 +501,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         tc_docnumber: ["17301"],
         unpublished: false }
     expect(metadata(c.info(Nokogiri::XML(input),
-                           nil))).to be_equivalent_to output
+                           nil))).to be_xml_equivalent_to output
   end
 
   it "processes IsoXML metadata in Russian" do
@@ -730,7 +730,7 @@ RSpec.describe IsoDoc::Iso::Metadata do
         unpublished: false,
         wg: "WG 62A1" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "warns of missing Secretariat" do
