@@ -123,7 +123,7 @@ module Metanorma
                   error: "'see %s' is pointing to a normative section",
                   severity: 2 },
         ISO_47: { category: "Bibliography",
-                  error: "'%s is not pointing to a real reference",
+                  error: "'%s' is not pointing to a real reference",
                   severity: 2 },
         ISO_48: { category: "Style",
                   error: "'see %s' is pointing to a normative reference",

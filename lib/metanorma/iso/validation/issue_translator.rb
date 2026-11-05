@@ -48,7 +48,7 @@ module Metanorma
         def add(code:, location:, params: [])
           return unless code
 
-          @log.add(code, nil, params: params) if @log
+          @log.add(code, location, params: params) if @log
           @report.add_issue(code: code, location: location, params: params)
         end
 
