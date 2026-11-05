@@ -5,13 +5,13 @@ gem "metanorma-mirror", "~> 1.0", github: "metanorma/metanorma-mirror", branch: 
 gem "relaton", "~> 3.0"
 
 gem "canon"
-gem "isodoc", "~> 3.7.4.pre.alpha" # carries the relaton-render range #846
+gem "isodoc", "~> 3.7.9" # carries the relaton-render range #846
 # plugin-lutaml main carries LutamlDataPreprocessor (registered by
 # standoc main's converter); released 0.7.53 does not define it yet.
 gem "metanorma-plugin-lutaml", github: "metanorma/metanorma-plugin-lutaml", branch: "main"
 gem "metanorma-utils", "~> 2.0" # GcBudget + the array-join table cell buffer
-gem "metanorma-standoc", "~> 3.5.1.pre.alpha" # Standoc::Document split + the pubid-dispatch refs world
-gem "metanorma-document", "~> 0.5.2.pre.alpha" # relaton-bib 2.2.0.pre allowance
+gem "metanorma-standoc", "~> 3.5.7" # Standoc::Document split + the pubid-dispatch refs world
+gem "metanorma-document", "~> 0.5.3" # relaton-bib 2.2.0.pre allowance
 gem "rake"
 # relaton-bib 2.2.0.pre is the pubid-2-native line required by
 # metanorma-document 0.4.0.
