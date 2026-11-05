@@ -33,6 +33,17 @@ RSpec.describe Metanorma::Iso::Validation::IssueTranslator do
       expect(report.issues.first.message).to eq("pizza is not a recognised document type")
     end
 
+    it "forwards the issue location to @log so warnings stay traceable" do
+      issue = Metanorma::Iso::Validation::Issue.from_finding(
+        code: "ISO_5", location: "OgcStandardMetadata#_doc-1",
+        params: ["pizza"]
+      )
+      translator.translate_layer3([issue])
+
+      expect(log.entries.first[:location])
+        .to eq("OgcStandardMetadata#_doc-1")
+    end
+
     it "is a no-op for empty issues" do
       translator.translate_layer3([])
       expect(log.entries).to be_empty
