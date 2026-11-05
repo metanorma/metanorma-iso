@@ -1,4 +1,4 @@
-require "relaton-render"
+require "relaton/render"
 
 module Metanorma
   module Iso
