@@ -11,10 +11,9 @@ gem "isodoc", "~> 3.7.9" # carries the relaton-render range #846
 gem "metanorma-plugin-lutaml", github: "metanorma/metanorma-plugin-lutaml", branch: "main"
 gem "metanorma-utils", "~> 2.0" # GcBudget + the array-join table cell buffer
 gem "metanorma-standoc", "~> 3.5.7" # Standoc::Document split + the pubid-dispatch refs world
-gem "metanorma-document", "~> 0.5.3" # relaton-bib 2.2.0.pre allowance
+gem "metanorma-document", "~> 0.5.3" # relaton 3.1 line; relaton-bib retired
 gem "rake"
-# relaton-bib 2.2.0.pre is the pubid-2-native line required by
-# metanorma-document 0.4.0.
+# relaton-bib is retired; its successors ship in the relaton 3.1 line.
 gem "rspec"
 gem "rubocop"
 gem "rubocop-performance"
