@@ -165,8 +165,15 @@ module Metanorma
 
       def draft_biblio_docid(orig, base_pubid, docid)
         id = orig.dup
-        id.typed_stage = nil if id.respond_to?(:typed_stage=)
-        id.stage = nil if id.respond_to?(:stage=)
+        # DIR 2 26.4's stage-less em-dash form ("ISO 17664-1:—") applies to a
+        # plain draft's year slot. A supplement draft ("ISO .../DAM 1") keeps
+        # its stage: stripping it leaves a bare "/" and an orphan number
+        # (metanorma-iso#1696).
+        unless id.is_a?(Pubid::Iso::SupplementIdentifier) ||
+            id.is_a?(Pubid::Iec::SupplementIdentifier)
+          id.typed_stage = nil
+          id.stage = nil
+        end
         id.date = Pubid::Components::Date.new(year: 123456789)
         docid.children = id.to_s.sub("123456789", "—")
       end
