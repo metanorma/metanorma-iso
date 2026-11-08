@@ -156,6 +156,47 @@ RSpec.describe Metanorma::Iso do
       .to be_xml_equivalent_to output
   end
 
+  it "keeps the DAM stage in draft supplement references" do
+    allow(Relaton::Iso::Bibliography).to receive(:get).and_return(
+      Relaton::Bib::Bibitem.from_xml(<<~"BIBITEM")
+        <bibitem id="_" type="standard">
+          <fetched>#{Date.today}</fetched>
+          <title format="text/plain" language="en" script="Latn">Document management</title>
+          <docidentifier type="ISO" primary="true">ISO 32000-2:2020/DAM 1</docidentifier>
+          <docnumber>32000</docnumber>
+          <date type="published"><on>2020</on></date>
+          <contributor>
+            <role type="publisher"/>
+            <organization>
+              <name>International Organization for Standardization</name>
+              <abbreviation>ISO</abbreviation>
+            </organization>
+          </contributor>
+          <status><stage>40</stage></status>
+          <language>en</language>
+          <script>Latn</script>
+        </bibitem>
+      BIBITEM
+    )
+    input = <<~INPUT
+      #{ISOBIB_BLANK_HDR}
+      == Clause
+      <<dam1>>
+
+      [bibliography]
+      == Normative References
+
+      * [[[dam1,ISO 32000-2:2020/DAM 1]]] Document management
+    INPUT
+    xml = strip_guid(Asciidoctor.convert(input, *OPTIONS))
+    expect(xml).to include("citeas=\"ISO\u00a032000-2:2020/DAM\u00a01:\u2014\"")
+    expect(xml).not_to match(%r{/[  ]1:})
+    expect(xml).to include(
+      "Stage at the time of publication: " \
+      "ISO 32000-2:2020/DAM 1:#{Date.today.year}.",
+    )
+  end
+
   it "processes all-parts ISO reference" do
     input = <<~INPUT
       #{ASCIIDOC_BLANK_HDR}
