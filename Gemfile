@@ -1,14 +1,12 @@
 source "https://rubygems.org"
 
 gemspec
-gem "metanorma-mirror", "~> 1.0", github: "metanorma/metanorma-mirror", branch: "main"
+gem "metanorma-mirror", "~> 1.0"
 gem "relaton", "~> 3.0"
 
 gem "canon"
 gem "isodoc", "~> 3.7.9" # carries the relaton-render range #846
-# plugin-lutaml main carries LutamlDataPreprocessor (registered by
-# standoc main's converter); released 0.7.53 does not define it yet.
-gem "metanorma-plugin-lutaml", github: "metanorma/metanorma-plugin-lutaml", branch: "main"
+gem "metanorma-plugin-lutaml", "~> 0.7"
 gem "metanorma-utils", "~> 2.0" # GcBudget + the array-join table cell buffer
 gem "metanorma-standoc", "~> 3.5.7" # Standoc::Document split + the pubid-dispatch refs world
 gem "metanorma-document", "~> 0.5.3" # relaton 3.1 line; relaton-bib retired
