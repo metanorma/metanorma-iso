@@ -40,6 +40,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency "tokenizer", "~> 0.3.0"
   spec.add_dependency "uniword", "~> 1.0"
 
+  # Bundled-gem successor required directly by lib code: docx/model_utils.rb
+  # uses base64. Ruby 4 warns on undeclared bundled gems and pruned bundles
+  # would fail (epic metanorma/metanorma#669).
+  spec.add_dependency "base64"
+
   spec.add_development_dependency "benchmark"
   spec.add_development_dependency "canon" #, "= 0.2.3"
   spec.add_development_dependency "debug"
