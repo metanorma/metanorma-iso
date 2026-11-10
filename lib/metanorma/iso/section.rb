@@ -1,5 +1,4 @@
 require "htmlentities"
-require "uri" if /^2\./.match?(RUBY_VERSION)
 
 module Metanorma
   module Iso
