@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "unitsdb"
+
 module Metanorma
   module Iso
     module Validation
@@ -8,19 +10,22 @@ module Metanorma
         # the ISO 4217 alphabetic code precedes the amount, e.g.
         # "USD 100 million", not "100 USD" or "100 million dollars".
         #
-        # The code list is the documented, conservative subset of
-        # ISO 4217 codes in common use in standards text. Year-like
-        # amounts ("in 2026 USD terms") are exempt: a four-digit 18xx/
-        # 19xx/20xx number followed by a code is read as a year
-        # qualifier, not an amount.
+        # The code set is Unitsdb's full ISO 4217 alphabetic code list,
+        # not a hand-picked subset. Year-like amounts ("in 2026 USD
+        # terms") are exempt: a four-digit 18xx/19xx/20xx number
+        # followed by a code is read as a year qualifier, not an amount.
         class StyleCurrencyCodeOrderRule < StyleRule
-          CURRENCY_CODES = %w[
-            USD EUR GBP JPY CNY CHF CAD AUD NZD SEK NOK DKK INR KRW
-            SGD HKD MXN BRL ZAR TRY PLN THB MYR IDR PHP AED SAR RUB
-          ].freeze
+          # Unitsdb-derived ISO 4217 alpha-code set, built once per
+          # process at rule autoload: the Unitsdb database load happens
+          # here, never per scanned paragraph.
+          CURRENCY_CODES = Unitsdb.database.currencies.filter_map do |currency|
+            currency.identifiers.find do |identifier|
+              identifier.type == "iso4217"
+            end&.id
+          end.freeze
 
           CODE_ORDER_REGEX =
-            /\b(\d[\d.,]*)\s+(#{CURRENCY_CODES.join("|")})\b/.freeze
+            /\b(\d[\d.,]*)\s+(#{CURRENCY_CODES.join('|')})\b/.freeze
 
           YEAR_LIKE_AMOUNT_REGEX = /\A(?:18|19|20)\d{2}\z/.freeze
 

@@ -38,6 +38,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "pubid", "~> 2.0.3"
   spec.add_dependency "sts", ">= 0.5.6" # relaxed until glossarist supports 0.6
   spec.add_dependency "tokenizer", "~> 0.3.0"
+  spec.add_dependency "unitsdb", "~> 2.2"
   spec.add_dependency "uniword", "~> 1.0"
 
   # Bundled-gem successor required directly by lib code: docx/model_utils.rb
