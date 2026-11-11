@@ -135,6 +135,36 @@ module Metanorma
                  "metanorma/iso/validation/rules/style_nested_parens_rule"
         autoload :StylePenultimateListRule,
                  "metanorma/iso/validation/rules/style_penultimate_list_rule"
+        # ISO House Style 2026-08 quick wins, second tranche (issue
+        # #1701), in alphabetical order:
+        autoload :StyleAbbrevArticlesRule,
+                 "metanorma/iso/validation/rules/style_abbrev_articles_rule"
+        autoload :StyleAbbrevPluralRule,
+                 "metanorma/iso/validation/rules/style_abbrev_plural_rule"
+        autoload :StyleBareSlashRule,
+                 "metanorma/iso/validation/rules/style_bare_slash_rule"
+        autoload :StyleCurrencyCodeOrderRule,
+                 "metanorma/iso/validation/rules/style_currency_code_order_rule"
+        autoload :StyleCurrencySymbolsRule,
+                 "metanorma/iso/validation/rules/style_currency_symbols_rule"
+        autoload :StyleEnDashRangesRule,
+                 "metanorma/iso/validation/rules/style_en_dash_ranges_rule"
+        autoload :StyleFormulaeRule,
+                 "metanorma/iso/validation/rules/style_formulae_rule"
+        autoload :StyleGuidelinesRule,
+                 "metanorma/iso/validation/rules/style_guidelines_rule"
+        autoload :StyleInclusiveLanguageRule,
+                 "metanorma/iso/validation/rules/style_inclusive_language_rule"
+        autoload :StyleIsoDatesRule,
+                 "metanorma/iso/validation/rules/style_iso_dates_rule"
+        autoload :StyleLatinPluralsRule,
+                 "metanorma/iso/validation/rules/style_latin_plurals_rule"
+        autoload :StyleNoBoxesRule,
+                 "metanorma/iso/validation/rules/style_no_boxes_rule"
+        autoload :StyleNoNosRule,
+                 "metanorma/iso/validation/rules/style_no_nos_rule"
+        autoload :StyleVagueTimeRule,
+                 "metanorma/iso/validation/rules/style_vague_time_rule"
       end
     end
   end
