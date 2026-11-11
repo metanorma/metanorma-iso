@@ -1,0 +1,23 @@
+# frozen_string_literal: true
+
+module Metanorma
+  module Iso
+    module Validation
+      module Rules
+        # Style warnings for ordinal adverbs (ISO House Style: use
+        # "first", "second", "third", not "firstly", "secondly",
+        # "thirdly").
+        class StyleOrdinalsRule < StyleRule
+          ORDINAL_ADVERBS_REGEX = /\b(firstly|secondly|thirdly)\b/i.freeze
+
+          def scan_text(node, text)
+            findings_for_matches(
+              node, text, ORDINAL_ADVERBS_REGEX,
+              "style: '%s' (use 'first', 'second', 'third')"
+            )
+          end
+        end
+      end
+    end
+  end
+end

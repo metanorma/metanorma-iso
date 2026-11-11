@@ -28,12 +28,23 @@ module Metanorma
           def check(context)
             issues = []
             each_paragraph_with_parent(context.root) do |paragraph, parent|
-              text = extract_text(paragraph).strip
+              text = extract_text(paragraph, strip: prose_exclusions).strip
               next if text.empty?
 
               issues.concat(scan_text(parent, text))
             end
             issues
+          end
+
+          # Model attribute names excluded from the extracted prose text.
+          # Mathematical content (<stem>, <fmt-stem>) is technical, not
+          # prose: word-list rules must not lint formula source. This
+          # reproduces the legacy checks' behavior, which removed <stem>
+          # nodes before text extraction. <sourcecode> needs no entry:
+          # it is a block element and never a paragraph child, so it is
+          # excluded structurally.
+          def prose_exclusions
+            %i(stem fmt_stem)
           end
 
           # Hook: return true if this rule should run for the given context.

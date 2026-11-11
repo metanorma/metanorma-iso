@@ -81,6 +81,42 @@ module Metanorma
                  "metanorma/iso/validation/rules/modal_in_clause_rule"
         autoload :BrokenXrefRule,
                  "metanorma/iso/validation/rules/broken_xref_rule"
+        # ISO House Style 2026-08 word-list rules (issue #1701), in
+        # alphabetical order:
+        autoload :StyleAcDcRfRule,
+                 "metanorma/iso/validation/rules/style_ac_dc_rf_rule"
+        autoload :StyleCaCfRule,
+                 "metanorma/iso/validation/rules/style_ca_cf_rule"
+        autoload :StyleComplianceRule,
+                 "metanorma/iso/validation/rules/style_compliance_rule"
+        autoload :StyleContractionsRule,
+                 "metanorma/iso/validation/rules/style_contractions_rule"
+        autoload :StyleCountryNamesRule,
+                 "metanorma/iso/validation/rules/style_country_names_rule"
+        autoload :StyleCvNotRsdRule,
+                 "metanorma/iso/validation/rules/style_cv_not_rsd_rule"
+        autoload :StyleEgEtcRule,
+                 "metanorma/iso/validation/rules/style_eg_etc_rule"
+        autoload :StyleFamilySuiteRule,
+                 "metanorma/iso/validation/rules/style_family_suite_rule"
+        autoload :StyleImpersonalRule,
+                 "metanorma/iso/validation/rules/style_impersonal_rule"
+        autoload :StyleImpreciseRefsRule,
+                 "metanorma/iso/validation/rules/style_imprecise_refs_rule"
+        autoload :StyleInterlabRule,
+                 "metanorma/iso/validation/rules/style_interlab_rule"
+        autoload :StyleOrdinalsRule,
+                 "metanorma/iso/validation/rules/style_ordinals_rule"
+        autoload :StyleOxfordSpellingRule,
+                 "metanorma/iso/validation/rules/style_oxford_spelling_rule"
+        autoload :StylePerCentRule,
+                 "metanorma/iso/validation/rules/style_per_cent_rule"
+        autoload :StylePluralSTermRule,
+                 "metanorma/iso/validation/rules/style_plural_s_term_rule"
+        autoload :StyleSelfReferenceRule,
+                 "metanorma/iso/validation/rules/style_self_reference_rule"
+        autoload :StyleWikipediaRule,
+                 "metanorma/iso/validation/rules/style_wikipedia_rule"
       end
     end
   end
