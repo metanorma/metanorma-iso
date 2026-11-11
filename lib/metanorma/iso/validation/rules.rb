@@ -117,6 +117,24 @@ module Metanorma
                  "metanorma/iso/validation/rules/style_self_reference_rule"
         autoload :StyleWikipediaRule,
                  "metanorma/iso/validation/rules/style_wikipedia_rule"
+        # ISO House Style (2026-08) structural batch (issue #1701), in
+        # alphabetical order:
+        autoload :StyleBoxedValuesRule,
+                 "metanorma/iso/validation/rules/style_boxed_values_rule"
+        autoload :StyleDateDurationRule,
+                 "metanorma/iso/validation/rules/style_date_duration_rule"
+        autoload :StyleDateFormatsRule,
+                 "metanorma/iso/validation/rules/style_date_formats_rule"
+        autoload :StyleDirectivesRefsRule,
+                 "metanorma/iso/validation/rules/style_directives_refs_rule"
+        autoload :StyleEmptyClauseRule,
+                 "metanorma/iso/validation/rules/style_empty_clause_rule"
+        autoload :StyleMixedListsRule,
+                 "metanorma/iso/validation/rules/style_mixed_lists_rule"
+        autoload :StyleNestedParensRule,
+                 "metanorma/iso/validation/rules/style_nested_parens_rule"
+        autoload :StylePenultimateListRule,
+                 "metanorma/iso/validation/rules/style_penultimate_list_rule"
       end
     end
   end
