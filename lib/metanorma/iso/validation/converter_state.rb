@@ -9,7 +9,7 @@ module Metanorma
       # converter internals via +instance_variable_get+.
       ConverterState = Struct.new(
         :lang, :script, :doctype, :vocab, :amd, :i18n, :novalid, :document,
-        keyword_init: true
+        :flavor, keyword_init: true
       )
     end
   end

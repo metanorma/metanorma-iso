@@ -326,11 +326,19 @@ module Metanorma
         @doc_anchor_seq << elem["anchor"]
       end
 
+      # The flavor identity of this validator, declared by each flavor
+      # subclass (metanorma-bsi declares "bsi"). Validation rules consult
+      # it to defer concerns the flavor owns (e.g. decimal conventions).
+      def validation_flavor
+        "iso"
+      end
+
       def model_validate(doc)
         state = Metanorma::Iso::Validation::ConverterState.new(
           lang: @lang, script: @script, doctype: @doctype,
           vocab: @vocab, amd: @amd, i18n: @i18n,
-          novalid: @novalid, document: @localdir
+          novalid: @novalid, document: @localdir,
+          flavor: validation_flavor
         )
         # ModelValidator deserializes the full document into a typed model
         # tree — for large documents that tree is gigabytes on top of the
