@@ -3,7 +3,8 @@ require "spec_helper"
 RSpec.describe Metanorma::Iso::Validation::ConverterState do
   it "is a Struct with the expected fields" do
     expect(described_class.members).to contain_exactly(
-      :lang, :script, :doctype, :vocab, :amd, :i18n, :novalid, :document
+      :lang, :script, :doctype, :vocab, :amd, :i18n, :novalid, :document,
+      :flavor
     )
   end
 

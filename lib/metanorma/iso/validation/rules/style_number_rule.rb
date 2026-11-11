@@ -17,11 +17,28 @@ module Metanorma
           DECIMAL_POINT_REGEX = /(?:^|\p{Zs})([0-9]+\.[0-9]+)(?!\.[0-9])/i.freeze
           HYPHEN_MINUS_REGEX = /(?:^|\p{Zs})(-[0-9][0-9,.]*)/i.freeze
 
+          # Flavors whose structure rules govern decimal conventions
+          # themselves (metanorma-bsi's 27.x euro-annex regimes) own this
+          # concern; the ISO-generic scan would double-report and contradict
+          # the flavor's own verdicts.
+          DECIMAL_POINT_FLAVOR_OWNERS = %w(bsi).freeze
+
+          def check(context)
+            @validation_flavor = context.state&.flavor
+            super
+          end
+
           def scan_text(node, text)
-            findings_for_matches(node, text, DECIMAL_POINT_REGEX,
-                                 "possible decimal point: mark up numbers with stem:[]: %s") +
-              findings_for_matches(node, text, HYPHEN_MINUS_REGEX,
-                                   "hyphen instead of minus sign U+2212: %s")
+            decimal = flavor_owns_decimal? ? [] : findings_for_matches(
+              node, text, DECIMAL_POINT_REGEX,
+              "possible decimal point: mark up numbers with stem:[]: %s",
+            )
+            decimal + findings_for_matches(node, text, HYPHEN_MINUS_REGEX,
+                                           "hyphen instead of minus sign U+2212: %s")
+          end
+
+          def flavor_owns_decimal?
+            DECIMAL_POINT_FLAVOR_OWNERS.include?(@validation_flavor)
           end
         end
       end

@@ -4,9 +4,9 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleNumberRule do
   let(:state) { Metanorma::Iso::Validation::ConverterState.new(document: "spec") }
   let(:rule) { described_class.new }
 
-  def context_with(text)
+  def context_with(text, flavor: "iso")
     xml = <<~XML
-      <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="iso">
+      <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="#{flavor}">
         <bibdata><docidentifier>ISO 1</docidentifier></bibdata>
         <sections>
           <clause id="c1"><title>One</title>
@@ -16,6 +16,9 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleNumberRule do
       </metanorma>
     XML
     root = Metanorma::IsoDocument::Root.from_xml(xml)
+    state = Metanorma::Iso::Validation::ConverterState.new(
+      document: "spec", flavor: flavor
+    )
     Metanorma::Iso::Validation::Context.new(root: root, log: nil,
                                             state: state, shared: nil)
   end
@@ -29,6 +32,15 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleNumberRule do
 
   it "flags hyphen-minus before digits" do
     issues = rule.check(context_with("value is -42 here"))
+    expect(issues.size).to eq(1)
+    expect(issues.first.message).to include("minus sign")
+  end
+
+  it "defers the decimal-point scan to flavors that own decimal conventions" do
+    # metanorma-bsi's Structure 27.x regimes govern decimals; the ISO-generic
+    # scan would contradict the flavor's own verdicts. The hyphen-minus scan
+    # stays universal.
+    issues = rule.check(context_with("value 8.1 and -42 here", flavor: "bsi"))
     expect(issues.size).to eq(1)
     expect(issues.first.message).to include("minus sign")
   end
