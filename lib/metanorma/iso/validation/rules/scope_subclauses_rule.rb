@@ -9,6 +9,11 @@ module Metanorma
         class ScopeSubclausesRule < Base
           code "ISO_39"
 
+          policy category: "Document structure",
+                 rule: "the Scope must not contain subclauses",
+                 source: :directives, directives: "14.4",
+                 mn_category: :structure
+
           def applicable?(context)
             !context.root.nil?
           end

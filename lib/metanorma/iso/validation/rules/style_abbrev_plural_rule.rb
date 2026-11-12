@@ -11,6 +11,10 @@ module Metanorma
         # abbreviated-term pluralization is a high-false-positive
         # context-sensitive check and is out of scope here.
         class StyleAbbrevPluralRule < StyleRule
+          policy category: "Abbreviated terms",
+                 rule: "abbreviated terms are invariant — do not pluralize by appending 's'",
+                 source: :house_style, mn_category: :style
+
           # Case-sensitive: the doubled-s plural form of "MSS".
           MSSS_REGEX = /\bMSSs\b/.freeze
 

@@ -9,6 +9,10 @@ module Metanorma
         # not flagged: symbol usage is governed by the unit-spacing rules
         # (StyleUnitsRule).
         class StylePerCentRule < StyleRule
+          policy category: "Numbers, values and dates > Numbers",
+                 rule: "use 'per cent' (two words) in text, not 'percent'",
+                 source: :house_style, mn_category: :style
+
           PERCENT_WORD_REGEX = /\b(percent)\b/i.freeze
 
           def scan_text(node, text)

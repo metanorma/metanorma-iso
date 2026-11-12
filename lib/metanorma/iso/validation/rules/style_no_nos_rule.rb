@@ -15,6 +15,10 @@ module Metanorma
         # sentence end are not flagged, and requires the full stop to
         # be followed by whitespace or end of text.
         class StyleNoNosRule < StyleRule
+          policy category: "Abbreviated terms > Abbreviations and contractions",
+                 rule: "the plural of 'no.' is 'nos', without a full stop",
+                 source: :house_style, mn_category: :style
+
           NOS_DOT_REGEX = /\b[Nn]os\.(?=\s|$)/.freeze
 
           def scan_text(node, text)

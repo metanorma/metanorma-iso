@@ -10,6 +10,11 @@ module Metanorma
         class SymbolsSectionContentRule < Base
           code "ISO_26"
 
+          policy category: "Document structure",
+                 rule: "a Symbols and Abbreviated Terms section may only contain a definition list",
+                 source: :directives, directives: "17.5",
+                 mn_category: :structure
+
           def applicable?(context)
             !context.root.nil?
           end

@@ -11,6 +11,10 @@ module Metanorma
         class StylePenultimateListRule < Base
           code "STANDOC_48"
 
+          policy category: "Lists",
+                 rule: "the penultimate list item omits 'and'/'or', except to avoid ambiguity",
+                 source: :house_style, mn_category: :style
+
           # Word-boundary "and"/"or" at the end of the item text,
           # tolerating terminal punctuation after the conjunction.
           TRAILING_AND_OR_REGEX = /(?:\s|\A)(and|or)\s*[.,;:]?\s*\z/i.freeze

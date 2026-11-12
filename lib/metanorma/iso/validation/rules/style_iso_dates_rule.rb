@@ -15,6 +15,10 @@ module Metanorma
         # the paragraph-based style rules, so this rule is the only
         # checker that reaches it.
         class StyleIsoDatesRule < StyleRule
+          policy category: "Numbers, values and dates > Dates",
+                 rule: "use YYYY-MM-DD in table and figure cells",
+                 source: :house_style, mn_category: :style
+
           def self.month_alternative
             StyleDateFormatsRule.month_alternative
           end

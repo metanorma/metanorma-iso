@@ -16,6 +16,11 @@ module Metanorma
         class Base < Lutaml::Model::Validation::Rule
           include TreeTraversal
 
+          # Policy documentation metadata vocabulary (issue #1709).
+          POLICY_KEYS = %i[category rule source directives mn_category].freeze
+          POLICY_SOURCES = %i[house_style directives].freeze
+          POLICY_MN_CATEGORIES = %i[style structure references].freeze
+
           class << self
             # Mark a class as abstract — RuleRegistry skips abstract
             # classes when discovering runnable rules. Used by StyleRule
@@ -43,6 +48,81 @@ module Metanorma
             # Declare the ISO_N log key on the class.
             def code(value)
               @code_value = value.to_s
+            end
+
+            # Policy documentation metadata (issue #1709). Declared per rule
+            # class; consumed by the validation-policy-page generator.
+            #
+            #   policy category: "Punctuation > Lists",
+            #                    rule: "no more than one numbered list per clause",
+            #                    source: :house_style, mn_category: :style
+            #   directives "24.3" # when the rule restates a DIR 2 clause
+            #
+            # +category+ is the rule's path in the policy-document tree
+            # (a String, or an Array of Strings when one rule spans several
+            # sections). +source+ is :house_style ("ISO House Style",
+            # www.iso.org/ISO-house-style.html), :directives ("ISO/IEC
+            # Directives Part 2:2021"), or an Array of both when the rule
+            # cites both. +mn_category+ is the metanorma functional view:
+            # :style, :structure or :references. Declarations accumulate
+            # across calls; +directives+ widens a :house_style-only source
+            # to cite both sources. Rules without declarations carry nil
+            # metadata; the coverage spec (policy_metadata_spec) enforces
+            # completeness.
+            def policy(**opts)
+              unknown = opts.keys - POLICY_KEYS
+              unless unknown.empty?
+                raise ArgumentError,
+                      "unknown policy metadata keys: #{unknown.inspect}"
+              end
+
+              @policy_metadata = (policy_metadata || {}).merge(opts)
+              normalize_policy_metadata!
+            end
+
+            # Declare the ISO/IEC Directives Part 2 clause the rule
+            # restates ("24.3"). Marks the rule as citing the Directives:
+            # a :house_style-only source widens to cite both sources.
+            def directives(clause)
+              policy(directives: clause.to_s)
+            end
+
+            # Accumulated policy metadata hash, or nil when the rule class
+            # declares none.
+            def policy_metadata
+              @policy_metadata
+            end
+
+            private
+
+            # Keep the metadata coherent: declared values must come from the
+            # policy vocabulary, and a declared Directives clause implies the
+            # :directives source (widening a scalar :house_style into the
+            # both-sources Array). Deterministic and order-independent.
+            def normalize_policy_metadata!
+              meta = @policy_metadata
+              validate_policy_values!(meta)
+
+              source = meta[:source]
+              return unless meta[:directives]
+              return if source && Array(source).include?(:directives)
+
+              meta[:source] = source.nil? ? :directives : Array(source) + [:directives]
+            end
+
+            def validate_policy_values!(meta)
+              invalid_sources = Array(meta[:source]).reject do |s|
+                POLICY_SOURCES.include?(s)
+              end
+              unless invalid_sources.empty?
+                raise ArgumentError,
+                      "unknown policy sources: #{invalid_sources.inspect}"
+              end
+
+              mn = meta[:mn_category]
+              return unless mn && !POLICY_MN_CATEGORIES.include?(mn)
+
+              raise ArgumentError, "unknown mn_category: #{mn.inspect}"
             end
           end
 

@@ -9,6 +9,11 @@ module Metanorma
         class SymbolsSectionCountRule < Base
           code "ISO_25"
 
+          policy category: "Document structure",
+                 rule: "at most one Symbols and Abbreviated Terms section (vocabulary documents excepted)",
+                 source: :directives, directives: "17",
+                 mn_category: :structure
+
           def applicable?(context)
             !context.root.nil?
           end

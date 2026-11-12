@@ -17,6 +17,10 @@ module Metanorma
         class UniqueIdRule < Base
           code "STANDOC_36"
 
+          policy category: "Referencing > References within the document",
+                 rule: "identifiers must be unique so that cross-references are unambiguous",
+                 source: :house_style, mn_category: :references
+
           # Nodes whose +id+ is bibliographic *content* (docidentifier text,
           # ORCID, …), not an XML identity attribute. UniqueIdRule only cares
           # about the latter; Relaton repeats the same identifier across

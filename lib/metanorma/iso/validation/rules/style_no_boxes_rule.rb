@@ -14,6 +14,10 @@ module Metanorma
         # is "note" is exempt as well. This rule flags the admonition
         # element only — wherever it appears in the document.
         class StyleNoBoxesRule < StyleRule
+          policy category: "Additional elements > Boxes",
+                 rule: "boxes are discouraged — they cannot be cross-referenced; use a figure, a table or a separate subclause",
+                 source: :house_style, mn_category: :style
+
           ADMONITION_CLASS =
             Metanorma::Document::Components::MultiParagraph::AdmonitionBlock
 

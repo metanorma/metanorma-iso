@@ -11,6 +11,11 @@ module Metanorma
         class UnreferencedAssetsRule < Base
           code "ISO_21"
 
+          policy category: "Referencing",
+                 rule: "every numbered annex, table, figure and formula must be cross-referenced in the text",
+                 source: :directives, directives: "20.5, 27.4, 28.4, 29.4",
+                 mn_category: :references
+
           ASSET_TYPES = {
             "Annex" => :annex,
             "Table" => :table,

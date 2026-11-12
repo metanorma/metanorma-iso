@@ -8,6 +8,10 @@ module Metanorma
         # "formula" is "formulae" for all mathematical forms).
         # The singular "formula" is correct and is not flagged.
         class StyleFormulaeRule < StyleRule
+          policy category: "Spelling and wording > Formula(e)",
+                 rule: "use 'formulae' (plural) for all mathematical forms",
+                 source: :house_style, mn_category: :style
+
           FORMULAS_REGEX = /\bformulas\b/i.freeze
 
           def scan_text(node, text)

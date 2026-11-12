@@ -10,6 +10,10 @@ module Metanorma
         # flag possessives ("the system's") -- so only recognized
         # contraction forms are matched.
         class StyleContractionsRule < StyleRule
+          policy category: "Grammar > It's and other contractions",
+                 rule: "contractions create an informal tone; use the full forms",
+                 source: :house_style, mn_category: :style
+
           CONTRACTIONS_REGEX = /
             \b(it's|that's|there's|here's|what's|who's|let's|he's|she's
               |i'm|you're|we're|they're

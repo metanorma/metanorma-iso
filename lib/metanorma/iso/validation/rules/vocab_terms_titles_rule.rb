@@ -17,6 +17,10 @@ module Metanorma
         class VocabTermsTitlesRule < Base
           code "ISO_44" # default; ISO_45 emitted explicitly for multi-case.
 
+          policy category: "Vocabulary documents > Structure",
+                 rule: "a single terms clause is titled 'Terms and definitions'; multiple terms clauses are titled 'Terms related to ...'",
+                 source: :house_style, mn_category: :structure
+
           def applicable?(context)
             !context.root.nil? && context.state.vocab
           end

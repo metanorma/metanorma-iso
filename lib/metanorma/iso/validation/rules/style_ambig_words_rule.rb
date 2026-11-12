@@ -12,6 +12,13 @@ module Metanorma
         #   - "on-line", "cyber_security", "cyber-security" are misspellings.
         #   - "need to", "might", "could" are ambiguous modal verbs.
         class StyleAmbigWordsRule < StyleRule
+          policy category: ["Punctuation > Use of /",
+                            "Spelling and wording > IT terms",
+                            "Spelling and wording > Need to",
+                            "Spelling and wording > Might and could"],
+                 rule: "avoid 'and/or', the misspellings 'on-line' and 'cyber-security', and the undefined verbal forms 'need to', 'might' and 'could'",
+                 source: :house_style, mn_category: :style
+
           AND_OR_REGEX = /\band\/or\b/i.freeze
           MISSPELLED = {
             /\bon-line\b/i => "on-line (use 'online')",

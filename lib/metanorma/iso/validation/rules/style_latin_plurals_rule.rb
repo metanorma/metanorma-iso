@@ -17,6 +17,10 @@ module Metanorma
         # Possessive forms ("criteria's", "data's") are not flagged: the
         # apostrophe-s forms are grammatical and out of scope.
         class StyleLatinPluralsRule < StyleRule
+          policy category: "Spelling and wording > Latin and Greek wording",
+                 rule: "use the Latin/Greek plurals ('criteria', 'phenomena'); 'data' is plural",
+                 source: :house_style, mn_category: :style
+
           LATIN_PLURALS = {
             /\bcriterias\b/i => "criterias (use 'criteria')",
             /\bphenomenons\b/i => "phenomenons (use 'phenomena')",

@@ -17,6 +17,11 @@ module Metanorma
         class SectionSequenceRule < Base
           code "ISO_28"
 
+          policy category: "Document structure",
+                 rule: "sections follow the DIR 2 arrangement (Foreword, Introduction, Scope, Terms, Clauses, Annexes, Normative References, Bibliography)",
+                 source: :directives, directives: "6.4",
+                 mn_category: :structure
+
           SectionItem = Struct.new(:kind, :node, keyword_init: true)
 
           def applicable?(context)

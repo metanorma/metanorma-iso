@@ -10,6 +10,10 @@ module Metanorma
         class ListDepthRule < Base
           code "STANDOC_48"
 
+          policy category: "Lists",
+                 rule: "a list can be subdivided up to four levels",
+                 source: :house_style, mn_category: :style
+
           MAX_DEPTH = 4
 
           def applicable?(context)

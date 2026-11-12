@@ -16,6 +16,10 @@ module Metanorma
         # ("an RFC", "an SAP" read as a word) and acronyms pronounced
         # as words (RAM, NATO) are intentionally out of scope.
         class StyleAbbrevArticlesRule < StyleRule
+          policy category: "Grammar > A or an",
+                 rule: "use 'an' before an abbreviated term beginning with a vowel sound ('an ISO standard', 'an XML file')",
+                 source: :house_style, mn_category: :style
+
           LETTER_PRONOUNCED = %w[
             GPS UN URN ERP HR SQL API ISO HTML XML RGB RPG SAP PDF
             JPG RPM RSA SLA UML URL

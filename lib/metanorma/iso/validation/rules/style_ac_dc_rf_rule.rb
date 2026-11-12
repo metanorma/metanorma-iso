@@ -11,6 +11,10 @@ module Metanorma
         # flagged (the patterns are case-sensitive) to keep national
         # usage such as "Washington, D.C." out of scope.
         class StyleAcDcRfRule < StyleRule
+          policy category: "Abbreviated terms > Alternating current, direct current and radio frequency",
+                 rule: "use 'AC'/'DC' as adjectives; 'r.f.' is obsolete — use 'RF' or 'radio-frequency'",
+                 source: :house_style, mn_category: :style
+
           AC_DC_RF = {
             /\ba\.c\./ =>
               "style: 'a.c.' (use 'AC' as an adjective, or 'alternating " \

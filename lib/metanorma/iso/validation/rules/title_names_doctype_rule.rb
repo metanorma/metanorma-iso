@@ -13,6 +13,11 @@ module Metanorma
         class TitleNamesDoctypeRule < Base
           code "ISO_17" # default; ISO_18 emitted explicitly.
 
+          policy category: "Document structure",
+                 rule: "titles must not name the document type",
+                 source: :directives, directives: "11.5.2",
+                 mn_category: :structure
+
           DOCTYPE_WORDS_REGEX = /International\sStandard | Technical\sSpecification |
             Publicly\sAvailable\sSpecification | Technical\sReport | Guide /xi.freeze
 

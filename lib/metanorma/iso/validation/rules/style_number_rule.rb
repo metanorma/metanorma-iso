@@ -14,6 +14,11 @@ module Metanorma
         # Subscript depth remains in legacy form pending TODO 33 SubElement
         # extension (the model currently drops nested <sub> children).
         class StyleNumberRule < StyleRule
+          policy category: "Numbers, values and dates > Numbers",
+                 rule: "mark up decimal-point numbers with stem:[]; do not use a hyphen instead of a minus sign",
+                 source: %i[house_style directives], directives: "9.1",
+                 mn_category: :style
+
           DECIMAL_POINT_REGEX = /(?:^|\p{Zs})([0-9]+\.[0-9]+)(?!\.[0-9])/i.freeze
           HYPHEN_MINUS_REGEX = /(?:^|\p{Zs})(-[0-9][0-9,.]*)/i.freeze
 

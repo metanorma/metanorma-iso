@@ -14,6 +14,10 @@ module Metanorma
         class BrokenXrefRule < Base
           code "STANDOC_38"
 
+          policy category: "Referencing > References within the document",
+                 rule: "every cross-reference must resolve to an existing element identifier",
+                 source: :house_style, mn_category: :references
+
           def applicable?(context)
             !context.root.nil?
           end

@@ -13,6 +13,10 @@ module Metanorma
         # and only reports when no sentence break ([.!?] + whitespace)
         # lies between them.
         class StyleEgEtcRule < StyleRule
+          policy category: "e.g., etc. family",
+                 rule: "'e.g.' and 'etc.' never appear in the same sentence; no comma follows 'e.g.'/'i.e.'",
+                 source: :house_style, mn_category: :style
+
           EG_REGEX = /\be\.g\./i.freeze
           ETC_REGEX = /\betc\./i.freeze
           COMMA_AFTER_EG_IE_REGEX = /\b(e\.g\.|i\.e\.),/i.freeze

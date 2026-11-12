@@ -8,6 +8,10 @@ module Metanorma
         # Style: use "interlaboratory comparison", not "round robin" or
         # "ring test").
         class StyleInterlabRule < StyleRule
+          policy category: "Spelling and wording > Interlaboratory or intralaboratory",
+                 rule: "use 'interlaboratory comparison', not 'round robin' or 'ring test'",
+                 source: :house_style, mn_category: :style
+
           INTERLAB_REGEX = /\b(round robins?|ring tests?)\b/i.freeze
 
           def scan_text(node, text)

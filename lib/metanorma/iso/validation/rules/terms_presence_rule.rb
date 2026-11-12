@@ -9,6 +9,11 @@ module Metanorma
         class TermsPresenceRule < Base
           code "ISO_31"
 
+          policy category: "Document structure",
+                 rule: "the document must contain a Terms and definitions clause",
+                 source: :directives, directives: "16.3",
+                 mn_category: :structure
+
           def applicable?(context)
             !context.root.nil? && !context.state.amd
           end
