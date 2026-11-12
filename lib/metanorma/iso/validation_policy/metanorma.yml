@@ -88,6 +88,8 @@ rules:
     severity: error
   ISO_75:
     severity: error
+  ISO_145:
+    severity: error
   ISO_76:
     severity: error
   ISO_77:
@@ -148,6 +150,8 @@ rules:
     severity: error
   ISO_104:
     severity: error
+  ISO_146:
+    severity: error
   ISO_105:
     severity: error
   ISO_106:
@@ -167,6 +171,8 @@ rules:
   ISO_113:
     severity: error
   ISO_114:
+    severity: error
+  ISO_144:
     severity: error
   ISO_115:
     severity: error
