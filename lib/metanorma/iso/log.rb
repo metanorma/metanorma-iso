@@ -140,6 +140,15 @@ module Metanorma
         ISO_52: { category: "Style",
                   error: "non-terms clauses cannot cross-reference terms clause (%s)",
                   severity: 0 },
+        ISO_53: { category: "Abbreviated terms",
+                  error: "abbreviated term %s used without prior expansion (%s)",
+                  severity: 1 },
+        ISO_54: { category: "Referencing",
+                  error: "%s %s is cited in the text only after it appears: cite it before the place where it appears",
+                  severity: 1 },
+        ISO_55: { category: "Referencing",
+                  error: "term %s: %s",
+                  severity: 1 },
       }.freeze
       # rubocop:enable Naming/VariableNumber
 
