@@ -104,6 +104,8 @@ rules:
     severity: error
   ISO_83:
     severity: error
+  ISO_143:
+    severity: error
   ISO_84:
     severity: error
   ISO_85:
