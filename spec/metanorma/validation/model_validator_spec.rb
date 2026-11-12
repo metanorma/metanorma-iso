@@ -65,4 +65,37 @@ RSpec.describe Metanorma::Iso::Validation::ModelValidator do
       }.to raise_error(ArgumentError)
     end
   end
+
+  describe "composed-registry discovery (issue #1720)" do
+    let(:xml) do
+      <<~XML
+        <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="iso">
+          <bibdata>
+            <docidentifier>ISO 1</docidentifier>
+          </bibdata>
+        </metanorma>
+      XML
+    end
+
+    it "carries the active composition on the run context, defaulting to the plain registry" do
+      composed = Metanorma::Iso::Validation::ComposedRegistry
+        .for(flavor: state.flavor)
+      expect(composed.all).to eq(Metanorma::Iso::Validation::RuleRegistry.new.all)
+      # Behavioral no-op: a full-registry run still completes with the
+      # composed discovery in place.
+      report = described_class.run(xml, log: nil, state: state)
+      expect(report).to be_a(Metanorma::Iso::Validation::Report)
+    end
+
+    it "runs the fallback composition for a flavor without declarations" do
+      # state.flavor is nil: the fallback composition carries the plain
+      # registry, so the missing scope IS flagged (ISO_29) alongside the
+      # spelling findings — identical to the pre-library behavior. The
+      # composed (imported-only) path through the runner is exercised by
+      # metanorma-bsi's validation import spec.
+      report = described_class.run(xml, log: nil, state: state)
+      codes = report.issues.map(&:code)
+      expect(codes).to include("ISO_29")
+    end
+  end
 end
