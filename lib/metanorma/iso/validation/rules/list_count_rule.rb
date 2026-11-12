@@ -10,6 +10,10 @@ module Metanorma
         class ListCountRule < Base
           code "STANDOC_48"
 
+          policy category: "Lists",
+                 rule: "avoid more than one numbered list in a clause/subclause",
+                 source: :house_style, mn_category: :style
+
           MAX_OL_PER_CLAUSE = 1
 
           def applicable?(context)

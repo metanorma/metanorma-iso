@@ -11,6 +11,11 @@ module Metanorma
         class TitleFirstLevelRule < Base
           code "ISO_19"
 
+          policy category: "Document structure",
+                 rule: "every first-level subclause must have a title",
+                 source: :directives, directives: "22.2",
+                 mn_category: :structure
+
           def applicable?(context)
             !context.root.nil?
           end

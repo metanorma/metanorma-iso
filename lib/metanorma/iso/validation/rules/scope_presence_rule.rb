@@ -9,6 +9,11 @@ module Metanorma
         class ScopePresenceRule < Base
           code "ISO_29"
 
+          policy category: "Document structure",
+                 rule: "the document must contain a Scope clause",
+                 source: :directives, directives: "14.3",
+                 mn_category: :structure
+
           def applicable?(context)
             !context.root.nil?
           end

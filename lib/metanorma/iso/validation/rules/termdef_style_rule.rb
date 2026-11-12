@@ -17,6 +17,11 @@ module Metanorma
         class TermdefStyleRule < Base
           code "ISO_4" # default; ISO_35 emitted explicitly for period-ending.
 
+          policy category: "Document structure",
+                 rule: "a definition must not start with an article or end with a full stop",
+                 source: :directives, directives: "16.5.6",
+                 mn_category: :style
+
           ARTICLE_REGEX = /\A(the|a)\b/i.freeze
           PERIOD_REGEX = /\.\Z/.freeze
           PERIOD_SCRIPTS = %w[Cyrl Latn].freeze

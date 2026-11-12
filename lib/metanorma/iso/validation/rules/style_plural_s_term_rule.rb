@@ -10,6 +10,10 @@ module Metanorma
         # to suffixed occurrences (a word character directly before the
         # parenthesis), so a standalone "(s)" in text is not flagged.
         class StylePluralSTermRule < StyleRule
+          policy category: "Grammar > Use of (s)",
+                 rule: "avoid the '(s)' pluralization; use the plural or 'one or more'",
+                 source: :house_style, mn_category: :style
+
           PLURAL_S_REGEX = /(?<=\w)(\(\s*s\s*\))/.freeze
 
           def scan_text(node, text)

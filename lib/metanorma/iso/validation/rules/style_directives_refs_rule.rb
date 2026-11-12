@@ -10,6 +10,10 @@ module Metanorma
         class StyleDirectivesRefsRule < Base
           code "STANDOC_48"
 
+          policy category: "Relationship with the ISO/IEC Directives, Parts 1 and 2",
+                 rule: "do not list the ISO/IEC Directives in Clause 2 or the Bibliography, or reproduce their text",
+                 source: :house_style, mn_category: :references
+
           # The extracted bibitem text concatenates attributes without
           # separators (id then docidentifier), so the left boundary
           # accepts any non-letter, not only a word boundary.

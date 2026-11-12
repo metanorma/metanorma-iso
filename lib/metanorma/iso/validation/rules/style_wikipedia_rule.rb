@@ -12,6 +12,10 @@ module Metanorma
         # scanned text. <eref> elements carry bibliographic item
         # identifiers rather than URLs, so they need no separate walk.
         class StyleWikipediaRule < StyleRule
+          policy category: "Referencing > References to websites",
+                 rule: "do not reference unstable websites such as Wikipedia; cite a stable source",
+                 source: :house_style, mn_category: :references
+
           WIKIPEDIA_REGEX = /\bwikipedia\.org\b/i.freeze
 
           def scan_text(node, text)

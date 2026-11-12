@@ -9,6 +9,11 @@ module Metanorma
         class ForewordStructureRule < Base
           code "ISO_23"
 
+          policy category: "Document structure",
+                 rule: "the Foreword must not contain subclauses",
+                 source: :directives, directives: "12.4",
+                 mn_category: :structure
+
           def applicable?(context)
             !context.root.nil? && !context.root.preface.nil?
           end

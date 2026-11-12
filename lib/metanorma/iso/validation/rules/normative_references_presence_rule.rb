@@ -9,6 +9,11 @@ module Metanorma
         class NormativeReferencesPresenceRule < Base
           code "ISO_30"
 
+          policy category: "Document structure",
+                 rule: "the document must contain a Normative references clause",
+                 source: :directives, directives: "15.3",
+                 mn_category: :structure
+
           def applicable?(context)
             !context.root.nil?
           end

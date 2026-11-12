@@ -11,6 +11,10 @@ module Metanorma
         class StyleMixedListsRule < Base
           code "STANDOC_48"
 
+          policy category: "Lists",
+                 rule: "mixed lists (numbered nested in unnumbered or vice versa) are not permitted",
+                 source: :house_style, mn_category: :style
+
           def applicable?(context)
             !context.root.nil?
           end

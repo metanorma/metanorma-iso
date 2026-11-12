@@ -11,6 +11,11 @@ module Metanorma
         class OnlyChildClauseRule < Base
           code "ISO_43"
 
+          policy category: "Document structure",
+                 rule: "a subclause must not be the only child at its level",
+                 source: :directives, directives: "22.3.2",
+                 mn_category: :structure
+
           def applicable?(context)
             !context.root.nil?
           end

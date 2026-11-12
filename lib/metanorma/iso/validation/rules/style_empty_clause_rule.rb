@@ -12,6 +12,10 @@ module Metanorma
         class StyleEmptyClauseRule < Base
           code "STANDOC_48"
 
+          policy category: "Document structure",
+                 rule: "no clause or annex without content beyond its title; note-only clauses are forbidden",
+                 source: :house_style, mn_category: :structure
+
           # Attribute names whose presence makes a clause non-empty.
           # Layout-only children (pagebreak, bookmark, columnbreak,
           # toc placeholders) do not count as content.

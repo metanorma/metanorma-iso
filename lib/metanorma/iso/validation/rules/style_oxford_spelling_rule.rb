@@ -34,6 +34,10 @@ module Metanorma
         # <sourcecode> blocks are never paragraph children, so they are
         # excluded structurally.
         class StyleOxfordSpellingRule < StyleRule
+          policy category: "Spelling and wording > Spelling",
+                 rule: "use Oxford English spelling ('-ize', '-re', '-our', '-ogue'; e.g. 'organize', 'centre', 'colour')",
+                 source: :house_style, mn_category: :style
+
           # -ize verbs. advertise/advise/arise/comprise/compromise/
           # enterprise/exercise/franchise/revise/supervise are correct as
           # -ise in Oxford spelling and are deliberately not matched.

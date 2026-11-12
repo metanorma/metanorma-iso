@@ -11,6 +11,11 @@ module Metanorma
         class TechnicalCommitteeTypeRule < Base
           code "ISO_2"
 
+          policy category: "Document structure",
+                 rule: "technical committee subdivisions use subtypes TC, PC, JTC, JPC",
+                 source: :directives, directives: "12.5.2",
+                 mn_category: :structure
+
           ALLOWED_SUBTYPES = %w[TC PC JTC JPC].freeze
 
           def applicable?(context)

@@ -17,6 +17,11 @@ module Metanorma
         class SeeXrefsRule < Base
           code "ISO_46" # default; ISO_47, ISO_48 emitted explicitly.
 
+          policy category: "Referencing",
+                 rule: "'see' and 'refer to' introduce informative references only",
+                 source: :directives, directives: "15.5.3",
+                 mn_category: :references
+
           SEE_PREFIX = /\b(see|refer\s+to)\p{Zs}*\z/i.freeze
 
           def applicable?(context)

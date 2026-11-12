@@ -12,6 +12,11 @@ module Metanorma
         # SI unit spacing and degree symbol checks remain in legacy form
         # pending inline-text-walking helpers.
         class StyleUnitsRule < StyleRule
+          policy category: "Numbers, values and dates > Numbers",
+                 rule: "there is a space between the numerical value and the unit symbol ('10 %')",
+                 source: %i[house_style directives], directives: "9.4",
+                 mn_category: :style
+
           # Match a digit immediately followed by % (no space).
           # "50 %" is correct; "50%" is flagged.
           PERCENT_NO_SPACE_REGEX = /([0-9])%/.freeze

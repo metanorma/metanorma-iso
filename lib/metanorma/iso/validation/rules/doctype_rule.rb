@@ -11,6 +11,11 @@ module Metanorma
         class DoctypeRule < Base
           code "ISO_5"
 
+          policy category: "Document structure",
+                 rule: "doctype must be a recognised ISO document type",
+                 source: :directives, directives: "3.1",
+                 mn_category: :structure
+
           ALLOWED_DOCTYPES = %w[
             international-standard
             technical-specification

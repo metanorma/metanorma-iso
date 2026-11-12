@@ -13,6 +13,10 @@ module Metanorma
         # identifier noise. As with every style warning, the noise level
         # of a quoted string is accepted (severity is a warning).
         class StyleImpersonalRule < StyleRule
+          policy category: "Plain language",
+                 rule: "use an impersonal tone; avoid 'I', 'we', 'you' and other personal pronouns",
+                 source: :house_style, mn_category: :style
+
           PRONOUN_I_REGEX = /\b(I)\b/.freeze
           PRONOUN_WE_YOU_REGEX = /\b(we|our|you|your|yours)\b/i.freeze
 

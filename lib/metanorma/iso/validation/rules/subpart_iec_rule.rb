@@ -10,6 +10,11 @@ module Metanorma
         class SubpartIecRule < Base
           code "ISO_16"
 
+          policy category: "Document structure",
+                 rule: "subpart numbering is valid only on IEC documents",
+                 source: :directives, directives: "11.4",
+                 mn_category: :structure
+
           SUBPART_PATTERN = /-\d+-\d+/.freeze
 
           def applicable?(context)

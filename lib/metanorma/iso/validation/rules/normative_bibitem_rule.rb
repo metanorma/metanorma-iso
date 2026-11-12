@@ -14,6 +14,11 @@ module Metanorma
         class NormativeBibitemRule < Base
           code "ISO_42"
 
+          policy category: "Referencing",
+                 rule: "normative references must be ISO or IEC publications (others only under DIR 2 10.2 conditions)",
+                 source: :directives, directives: "10.2",
+                 mn_category: :references
+
           ISO_ABBR = "ISO".freeze
           IEC_ABBR = "IEC".freeze
           ISO_NAME = "International Organization for Standardization".freeze

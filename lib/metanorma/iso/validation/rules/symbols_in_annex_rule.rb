@@ -9,6 +9,10 @@ module Metanorma
         class SymbolsInAnnexRule < Base
           code "ISO_27"
 
+          policy category: "Vocabulary documents",
+                 rule: "in vocabulary documents, Symbols and Abbreviated Terms sections are permitted in annexes only",
+                 source: :house_style, mn_category: :structure
+
           def applicable?(context)
             !context.root.nil? && context.state.vocab
           end

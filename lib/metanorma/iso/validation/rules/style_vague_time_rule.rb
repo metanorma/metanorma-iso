@@ -9,6 +9,10 @@ module Metanorma
         # relative to the moment of reading, and publications outlive
         # that reference frame. State the actual date instead.
         class StyleVagueTimeRule < StyleRule
+          policy category: "Numbers, values and dates > Dates",
+                 rule: "avoid ambiguous phrases such as 'last year' or 'recently'; state the actual date",
+                 source: :house_style, mn_category: :style
+
           VAGUE_TIME_REGEXES = {
             /\blast\s+year\b/i => "last year",
             /\brecently\b/i => "recently",

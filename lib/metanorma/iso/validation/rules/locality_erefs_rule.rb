@@ -11,6 +11,11 @@ module Metanorma
         class LocalityErefsRule < Base
           code "ISO_49"
 
+          policy category: "Referencing",
+                 rule: "undated references must not cite specific elements",
+                 source: :directives, directives: "10.5",
+                 mn_category: :references
+
           ISO_IEC_PREFIX = /\A(ISO|IEC)/.freeze
           DATED_SUFFIX = /: ?(\d{4}|–)\z/.freeze
 

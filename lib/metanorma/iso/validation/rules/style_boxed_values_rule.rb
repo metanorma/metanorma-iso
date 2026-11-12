@@ -13,6 +13,10 @@ module Metanorma
         # a number with a decimal part, a unit or a percent sign. Stem,
         # formula and sourcecode blocks are exempt.
         class StyleBoxedValuesRule < StyleRule
+          policy category: "Additional elements > Boxed values",
+                 rule: "avoid boxed values in body text; state the plain value",
+                 source: :house_style, mn_category: :style
+
           # Bracketed number with a decimal part, a unit or a percent
           # sign. A bare integer ("[1]") is a citation callout, not a
           # boxed value.

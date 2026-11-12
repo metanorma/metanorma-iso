@@ -20,6 +20,10 @@ module Metanorma
         class ListPunctuationRule < Base
           code "STANDOC_48"
 
+          policy category: "Lists",
+                 rule: "a list is preceded by an introductory sentence ending in a colon or full stop",
+                 source: :house_style, mn_category: :style
+
           ACCEPTABLE_PREFIXES = %w[: .].freeze
           ACCEPTABLE_SCRIPTS = %w[Cyrl Latn Grek].freeze
 

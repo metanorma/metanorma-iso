@@ -20,6 +20,11 @@ module Metanorma
         class TitlePairingRule < Base
           code "ISO_10" # default; other codes emitted explicitly.
 
+          policy category: "Document structure",
+                 rule: "EN and FR title components must be symmetric",
+                 source: :directives, directives: "11",
+                 mn_category: :structure
+
           COMPONENTS = %w[title-intro title-main title-part].freeze
           MISSING_CODE_BY_COMPONENT_AND_LANG = {
             ["title-intro", "en"] => "ISO_10",

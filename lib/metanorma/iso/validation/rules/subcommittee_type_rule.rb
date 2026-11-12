@@ -11,6 +11,11 @@ module Metanorma
         class SubcommitteeTypeRule < Base
           code "ISO_3"
 
+          policy category: "Document structure",
+                 rule: "subcommittee subdivisions use subtypes SC, JSC",
+                 source: :directives, directives: "12.5.2",
+                 mn_category: :structure
+
           ALLOWED_SUBTYPES = %w[SC JSC].freeze
 
           def applicable?(context)

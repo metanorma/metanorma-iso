@@ -11,6 +11,10 @@ module Metanorma
         #   - month-first (US) date order is not used: "October 31, 2026"
         #     becomes "31 October 2026" (day-month-year).
         class StyleDateFormatsRule < StyleRule
+          policy category: "Numbers, values and dates > Dates",
+                 rule: "write dates as '31 October 2026' (day month year, no ordinal suffixes)",
+                 source: :house_style, mn_category: :style
+
           MONTH_NAMES = %w[
             January February March April May June July August September
             October November December

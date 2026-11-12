@@ -17,6 +17,10 @@ module Metanorma
         class TermXrefsRule < Base
           code "ISO_50" # default; ISO_51 emitted explicitly.
 
+          policy category: "Referencing > References in Clause 3 (Terms and definitions)",
+                 rule: "cross-references to terms clauses come only from within terms clauses",
+                 source: :house_style, mn_category: :references
+
           def applicable?(context)
             !context.root.nil?
           end

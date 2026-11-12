@@ -11,6 +11,11 @@ module Metanorma
         class TitleSiblingsConsistencyRule < Base
           code "ISO_20"
 
+          policy category: "Document structure",
+                 rule: "sibling subclauses must be uniformly titled or uniformly untitled",
+                 source: :directives, directives: "22.2",
+                 mn_category: :structure
+
           def applicable?(context)
             !context.root.nil?
           end

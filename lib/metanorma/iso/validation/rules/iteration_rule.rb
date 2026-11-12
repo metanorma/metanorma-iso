@@ -14,6 +14,10 @@ module Metanorma
         class IterationRule < Base
           code "ISO_6"
 
+          policy category: "Document structure",
+                 rule: "bibdata/status/iteration must be a number",
+                 source: :directives, mn_category: :structure
+
           def applicable?(context)
             !context.root.nil? && context.state&.document
           end

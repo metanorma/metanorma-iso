@@ -15,6 +15,10 @@ module Metanorma
         #   - "and/or" is exempt here: StyleAmbigWordsRule already
         #     flags it, and double-flagging the same span is noise.
         class StyleBareSlashRule < StyleRule
+          policy category: "Punctuation > Use of /",
+                 rule: "avoid the forward slash between words; reword with 'or', 'and' or a hyphen",
+                 source: :house_style, mn_category: :style
+
           SLASH_REGEX = /\b([a-z]+)\s+\/\s+([a-z]+)\b/.freeze
 
           # "and/or" (in either order around the slash) is reported by
