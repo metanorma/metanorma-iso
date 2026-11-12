@@ -223,16 +223,19 @@ RSpec.describe Metanorma::Iso::Validation::PolicyDoc do
       expect(row_count).to eq(entries.sum { |e| e[:category].size })
     end
 
-    it "orders sections by the canonical House Style section order" do
+    it "keeps known sections in canonical order and appends unknown ones" do
       headings = adoc.lines.select { |l| l.start_with?("== ") }
       tops = headings.map { |h| h.sub("== ", "").chomp.split(" > ").first }
-      known, unknown = tops.partition do |t|
-        described_class::CANONICAL_SECTIONS.include?(t)
-      end
-      expect(unknown).to(eq([]),
-                         "unrecorded top-level sections: #{unknown.uniq}")
-      known_indices = known.map { |t| described_class::CANONICAL_SECTIONS.index(t) }
+                      .uniq
+      sections = described_class::CANONICAL_SECTIONS
+      known = tops.select { |t| sections.include?(t) }
+      known_indices = known.map { |t| sections.index(t) }
       expect(known_indices).to eq(known_indices.sort)
+      # Per the owner ruling, unknown top-level sections append after all
+      # known ones (the generator sorts them among themselves).
+      last_known = tops.rindex { |t| sections.include?(t) }
+      first_unknown = tops.index { |t| !sections.include?(t) }
+      expect(first_unknown).to(be_nil.or(be > last_known.to_i))
     end
 
     it "shows the citation sources separately per row" do
