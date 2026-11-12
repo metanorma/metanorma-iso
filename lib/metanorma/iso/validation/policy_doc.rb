@@ -21,6 +21,16 @@ module Metanorma
       # ISO/IEC DIR 2). The ADOC page groups by policy category and shows the
       # metanorma tag and the citation sources per row.
       #
+      # The third artifact is the flavour validation baseline
+      # (+lib/metanorma/iso/validation_policy/metanorma.yml+, schema
+      # +metanorma-validation-suppression/1+): the per-rule-code DEFAULT
+      # severity map that the declarative suppression resolution chain reads
+      # as the flavour layer (metanorma/metanorma-standoc#1369). v1 is
+      # TYPE-ONLY — the only per-rule action is +severity+ — and the flavour
+      # baseline suppresses nothing: every code sits at its natural severity
+      # from the log registries, so documents and tastes have a declared
+      # layer to override rather than an implicit engine default.
+      #
       # Layers: model rules come from {RuleRegistry} (rule classes carrying
       # +policy_metadata+); legacy entries come from {LEGACY_POLICY}, keyed
       # by the LegacyChecks method name. Both render into the same tables,
@@ -30,6 +40,20 @@ module Metanorma
         FLAVOR = "iso"
         ADOC_FILENAME = "validation-policy.adoc"
         JSON_FILENAME = "validation-policy.json"
+
+        # The suppression-config schema the baseline speaks
+        # (metanorma/metanorma-standoc#1369, frozen for v1).
+        BASELINE_SCHEMA = "metanorma-validation-suppression/1"
+        BASELINE_FILENAME = "metanorma.yml"
+
+        # The severity actions the v1 (type-only) vocabulary allows per rule
+        # code. +exclude:/scope+ keys are filed for the coradoc era.
+        BASELINE_ACTIONS = %w[off info warning error].freeze
+
+        # Severity assumed for a rule code that neither log registry knows:
+        # the engine treats unknown codes as errors (fail loud, never
+        # silently weaken). Documented in the baseline file header.
+        BASELINE_DEFAULT_SEVERITY = "error"
 
         # Canonical order of the ISO House Style 2026-08 top-level sections.
         # ADOC sections are ordered by the category's top-level segment
@@ -102,6 +126,73 @@ module Metanorma
         # class name) followed by legacy-layer entries (sidecar order).
         def policy_entries
           model_entries + legacy_entries
+        end
+
+        # The flavour validation baseline YAML ({BASELINE_SCHEMA}), one
+        # entry per rule code the flavour emits, each at its natural
+        # severity (nothing suppressed by default). The header documents
+        # the regeneration command and the {BASELINE_DEFAULT_SEVERITY}
+        # fallback for codes the log registries do not know.
+        def baseline_yaml
+          "#{baseline_header}#{Psych.dump(baseline_data)}"
+        end
+
+        # The +rules+ map of the baseline: the flavour's rule codes in
+        # {policy_entries} canonical order (model layer sorted by rule
+        # class, then the legacy sidecar order), deduplicated by code,
+        # each mapped to its single type-only action.
+        def baseline_rules
+          policy_entries.each_with_object({}) do |entry, rules|
+            code = entry[:code]
+            next if rules.key?(code)
+
+            rules[code] = { "severity" => baseline_severity(code) }
+          end
+        end
+
+        # Natural severity of a code as a baseline action name
+        # ({SEVERITY_NAMES} over the log registries' numeric severities);
+        # codes neither registry knows fall back to
+        # {BASELINE_DEFAULT_SEVERITY}.
+        def baseline_severity(code)
+          SEVERITY_NAMES[severity_for(code)] || BASELINE_DEFAULT_SEVERITY
+        end
+
+        # Baseline document as a plain data tree (Psych-dumped into
+        # {baseline_yaml}; the committed order is the insertion order).
+        def baseline_data
+          {
+            "schema" => BASELINE_SCHEMA,
+            "flavor" => FLAVOR,
+            "rules" => baseline_rules,
+          }
+        end
+
+        # Comment banner of {baseline_yaml}: provenance, the regeneration
+        # command, the type-only scoping and the unknown-code default.
+        def baseline_header
+          <<~HEADER
+            # ISO flavour validation baseline (#{BASELINE_SCHEMA}).
+            #
+            # Generated from the metanorma-iso rule metadata: model-layer
+            # rule classes (Metanorma::Iso::Validation::RuleRegistry) and
+            # the legacy check sidecar (LEGACY_POLICY). Do not edit by
+            # hand; regenerate with:
+            #
+            #   bundle exec ruby -I lib -r metanorma-iso \\
+            #     -e 'puts Metanorma::Iso::Validation::PolicyDoc.baseline_yaml' \\
+            #     > lib/metanorma/iso/validation_policy/metanorma.yml
+            #
+            # v1 is type-only: each rule code carries a single default
+            # severity (#{BASELINE_ACTIONS.join(", ")}), at its natural
+            # value from the ISO and standoc log registries. The flavour
+            # suppresses nothing by default; documents and tastes override
+            # this layer. A code that neither registry knows takes the
+            # registry default, severity: #{BASELINE_DEFAULT_SEVERITY}.
+            # Per-line, element-scoped and message-regex suppression is
+            # filed for the coradoc era
+            # (metanorma/metanorma-standoc#1369).
+          HEADER
         end
 
         def model_entries

@@ -1,0 +1,86 @@
+# ISO flavour validation baseline (metanorma-validation-suppression/1).
+#
+# Generated from the metanorma-iso rule metadata: model-layer
+# rule classes (Metanorma::Iso::Validation::RuleRegistry) and
+# the legacy check sidecar (LEGACY_POLICY). Do not edit by
+# hand; regenerate with:
+#
+#   bundle exec ruby -I lib -r metanorma-iso \
+#     -e 'puts Metanorma::Iso::Validation::PolicyDoc.baseline_yaml' \
+#     > lib/metanorma/iso/validation_policy/metanorma.yml
+#
+# v1 is type-only: each rule code carries a single default
+# severity (off, info, warning, error), at its natural
+# value from the ISO and standoc log registries. The flavour
+# suppresses nothing by default; documents and tastes override
+# this layer. A code that neither registry knows takes the
+# registry default, severity: error.
+# Per-line, element-scoped and message-regex suppression is
+# filed for the coradoc era
+# (metanorma/metanorma-standoc#1369).
+---
+schema: metanorma-validation-suppression/1
+flavor: iso
+rules:
+  STANDOC_38:
+    severity: warning
+  ISO_5:
+    severity: error
+  STANDOC_7:
+    severity: error
+  ISO_23:
+    severity: error
+  ISO_6:
+    severity: error
+  STANDOC_48:
+    severity: error
+  ISO_49:
+    severity: error
+  ISO_42:
+    severity: error
+  ISO_30:
+    severity: error
+  ISO_43:
+    severity: error
+  ISO_29:
+    severity: error
+  ISO_39:
+    severity: error
+  ISO_28:
+    severity: error
+  ISO_46:
+    severity: error
+  ISO_3:
+    severity: error
+  ISO_16:
+    severity: error
+  ISO_27:
+    severity: error
+  ISO_26:
+    severity: error
+  ISO_25:
+    severity: error
+  ISO_2:
+    severity: error
+  ISO_50:
+    severity: error
+  ISO_4:
+    severity: error
+  ISO_31:
+    severity: error
+  ISO_19:
+    severity: error
+  ISO_17:
+    severity: error
+  ISO_10:
+    severity: error
+  ISO_20:
+    severity: error
+  STANDOC_36:
+    severity: error
+  ISO_21:
+    severity: warning
+  ISO_44:
+    severity: error
+  ISO_24:
+    severity: error
