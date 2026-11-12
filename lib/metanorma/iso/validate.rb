@@ -49,13 +49,13 @@ module Metanorma
         nil
       end
 
-      def style_no_guidance(node, text, docpart)
+      def style_no_guidance(node, text, docpart, code:)
         @lang == "en" or return
-        r = requirement_check(text) and style_warning(node, "#{docpart} may contain requirement", r, display: false)
+        r = requirement_check(text) and style_warning(node, "#{docpart} may contain requirement", r, display: false, code: code)
         re_perm = str_to_regexp(PERMISSION_RE_STR)
-        text.gsub(/\s+/, " ").split(/\.\s+/).each { |t| (re_perm.match(t)) and (style_warning(node, "#{docpart} may contain permission", t, display: false); break) }
+        text.gsub(/\s+/, " ").split(/\.\s+/).each { |t| (re_perm.match(t)) and (style_warning(node, "#{docpart} may contain permission", t, display: false, code: code); break) }
         re_rec = str_to_regexp(RECOMMENDATION_RE_STR)
-        text.gsub(/\s+/, " ").split(/\.\s+/).each { |t| (re_rec.match(t)) and (style_warning(node, "#{docpart} may contain recommendation", t, display: false); break) }
+        text.gsub(/\s+/, " ").split(/\.\s+/).each { |t| (re_rec.match(t)) and (style_warning(node, "#{docpart} may contain recommendation", t, display: false, code: code); break) }
       end
 
       def extract_text(node)
@@ -67,22 +67,29 @@ module Metanorma
         HTMLEntities.new.decode(ret)
       end
 
-      def style_warning(node, msg, text = nil, display: true)
+      # Single legacy emission sink. +code:+ is the emitting check's own
+      # ISO log code (one per check; LEGACY_POLICY_BY_CODE resolves it).
+      # The standardized policy citation suffix is appended from the
+      # check's LEGACY_POLICY metadata.
+      def style_warning(node, msg, text = nil, display: true, code:)
         w = msg; w += ": #{text}" if text
-        @log.add("STANDOC_48", node, params: [w], display:)
+        entry = Validation::LEGACY_POLICY_BY_CODE[code]
+        citation = entry && Validation::Citation.suffix(entry)
+        w += " #{citation}" if citation
+        @log.add(code, node, params: [w], display:)
       end
 
-      def style_regex(regex, warning, node, text)
-        (m = regex.match(text)) && style_warning(node, warning, m[:num])
+      def style_regex(regex, warning, node, text, code:)
+        (m = regex.match(text)) && style_warning(node, warning, m[:num], code: code)
       end
 
-      def style_two_regex_not_prev(n, text, regex, re_prev, warning)
+      def style_two_regex_not_prev(n, text, regex, re_prev, warning, code:)
         return if text.nil?
         arr = Tokenizer::WhitespaceTokenizer.new.tokenize(text)
         arr.each_index do |i|
           m = regex.match arr[i]
           m_prev = i.zero? ? nil : re_prev.match(arr[i - 1])
-          style_warning(n, warning, m[:num]) if !m.nil? && m_prev.nil?
+          style_warning(n, warning, m[:num], code: code) if !m.nil? && m_prev.nil?
         end
       end
 
@@ -97,20 +104,20 @@ module Metanorma
       end
 
       def style_problem_words(node, text)
-        style_regex(/\b(?<num>billions?)\b/i, "ambiguous number", node, text)
+        style_regex(/\b(?<num>billions?)\b/i, "ambiguous number", node, text, code: "ISO_130")
       end
 
       def foreword_style(_node); end
-      def scope_style(node); style_no_guidance(node, extract_text(node), "Scope"); end
-      def introduction_style(node); (r = requirement_check(extract_text(node))) and style_warning(node, "Introduction may contain requirement", r, display: false); end
-      def definition_style(node); (r = requirement_check(extract_text(node))) and style_warning(node, "Definition may contain requirement", r, display: false); end
-      def example_style(node); style_no_guidance(node, extract_text(node), "Example"); style(node, extract_text(node)); end
-      def note_style(node); style_no_guidance(node, extract_text(node), "Note"); style(node, extract_text(node)); end
-      def footnote_style(node); style_no_guidance(node, extract_text(node), "Footnote"); style(node, extract_text(node)); end
+      def scope_style(node); style_no_guidance(node, extract_text(node), "Scope", code: "ISO_123"); end
+      def introduction_style(node); (r = requirement_check(extract_text(node))) and style_warning(node, "Introduction may contain requirement", r, display: false, code: "ISO_124"); end
+      def definition_style(node); (r = requirement_check(extract_text(node))) and style_warning(node, "Definition may contain requirement", r, display: false, code: "ISO_125"); end
+      def example_style(node); style_no_guidance(node, extract_text(node), "Example", code: "ISO_126"); style(node, extract_text(node)); end
+      def note_style(node); style_no_guidance(node, extract_text(node), "Note", code: "ISO_127"); style(node, extract_text(node)); end
+      def footnote_style(node); style_no_guidance(node, extract_text(node), "Footnote", code: "ISO_128"); style(node, extract_text(node)); end
 
       def style_abbrev(node, text)
-        style_regex(/(?:\A|\p{Zs})(?!e\.g\.|i\.e\.) (?<num>[a-z]{1,2}\.(?:[a-z]{1,2}|\.))\b/ix, "no dots in abbreviations", node, text)
-        style_regex(/\d\s*(?<num>ppm)\b/i, "language-specific abbreviation of unit (ppm)", node, text)
+        style_regex(/(?:\A|\p{Zs})(?!e\.g\.|i\.e\.) (?<num>[a-z]{1,2}\.(?:[a-z]{1,2}|\.))\b/ix, "no dots in abbreviations", node, text, code: "ISO_131")
+        style_regex(/\d\s*(?<num>ppm)\b/i, "language-specific abbreviation of unit (ppm)", node, text, code: "ISO_131")
       end
 
       # ISO House Style 2026-08, Referencing > Cross-references to an
@@ -128,11 +135,11 @@ module Metanorma
         "or semi-colon if it relates to an entire sentence or list item".freeze
 
       def style_punct(node, text)
-        @lang == "en" and style_regex(/\b(?<num>and\/?or)\b/i, "Use 'either x or y, or both'", node, text)
-        style_regex(/\p{Zs}(?<num>&)\p{Zs}/i, "Avoid ampersand in ordinary text'", node, text)
+        @lang == "en" and style_regex(/\b(?<num>and\/?or)\b/i, "Use 'either x or y, or both'", node, text, code: "ISO_132")
+        style_regex(/\p{Zs}(?<num>&)\p{Zs}/i, "Avoid ampersand in ordinary text'", node, text, code: "ISO_132")
         node.xpath(".//eref[@type='footnote']").each do |e|
           /^(?![.;])\p{P}/.match?(e.next&.text) and
-            style_warning(node, SUPERSRIPT_CALLOUT_PLACEMENT_MSG, node.to_xml)
+            style_warning(node, SUPERSRIPT_CALLOUT_PLACEMENT_MSG, node.to_xml, code: "ISO_132")
         end
       end
 
@@ -155,32 +162,32 @@ module Metanorma
         node.xpath(".//sub[not(ancestor::sub)]").each do |x|
           depth = calculate_subscript_depth(x)
           next if depth < 2
-          style_warning(node, depth >= 3 ? "no more than 3 levels of subscript nesting allowed" : "may contain nested subscripts", x.to_xml)
+          style_warning(node, depth >= 3 ? "no more than 3 levels of subscript nesting allowed" : "may contain nested subscripts", x.to_xml, code: "ISO_133")
         end
       end
 
       def style_number(node, text)
-        style_number_grouping(node, text)
-        style_regex(/(?:^|\p{Zs})(?<num>[0-9]+\.[0-9]+)(?!\.[0-9])/i, "possible decimal point: mark up numbers with stem:[]", node, text)
-        @lang == "en" and style_regex(/\b(?<num>billions?)\b/i, "ambiguous number", node, text)
-        style_regex(/(?:^|\p{Zs})(?<num>-[0-9][0-9,.]*)/i, "hyphen instead of minus sign U+2212", node, text)
+        style_number_grouping(node, text, code: "ISO_135")
+        style_regex(/(?:^|\p{Zs})(?<num>[0-9]+\.[0-9]+)(?!\.[0-9])/i, "possible decimal point: mark up numbers with stem:[]", node, text, code: "ISO_134")
+        @lang == "en" and style_regex(/\b(?<num>billions?)\b/i, "ambiguous number", node, text, code: "ISO_134")
+        style_regex(/(?:^|\p{Zs})(?<num>-[0-9][0-9,.]*)/i, "hyphen instead of minus sign U+2212", node, text, code: "ISO_134")
         @novalid_number = true
       end
 
-      def style_number_grouping(node, text)
+      def style_number_grouping(node, text, code:)
         regex = @validate_year ? /^(?<num>-?[0-9]{4,}[,0-9]*)\Z/ : /^(?<num>-?(?:[0-9]{5,}[,0-9]*|[03-9]\d\d\d|1[0-8]\d\d|2[1-9]\d\d|20[5-9]\d))\Z/
         prev = @validate_year ? %r{\b(ISO|IEC|IEEE|(in|January|February|March|April|May|June|August|September|October|November|December)\b)\Z} : %r{\b(ISO|IEC|IEEE|\b)\Z}
-        style_two_regex_not_prev(node, text, regex, prev, "number not broken up in threes: mark up numbers with stem:[]")
+        style_two_regex_not_prev(node, text, regex, prev, "number not broken up in threes: mark up numbers with stem:[]", code: code)
       end
 
       def style_percent(node, text)
-        style_regex(/\b(?<num>[0-9.,]+%)/, "no space before percent sign", node, text)
+        style_regex(/\b(?<num>[0-9.,]+%)/, "no space before percent sign", node, text, code: "ISO_136")
       end
 
       def style_units(node, text)
-        style_regex(/\b(?<num>[0-9][0-9,]*\p{Zs}+[°′″])/, "space between number and degrees/minutes/seconds", node, text)
-        style_regex(/(?<![A-Za-z0-9])(?<num>[1-9][0-9,]*#{SI_UNIT})\b/o, "no space between number and SI unit", node, text)
-        NONSTD_UNITS.each { |k, v| style_regex(/\b(?<num>[0-9][0-9,]*\p{Zs}+#{k})\b/, "non-standard unit (should be #{v})", node, text) }
+        style_regex(/\b(?<num>[0-9][0-9,]*\p{Zs}+[°′″])/, "space between number and degrees/minutes/seconds", node, text, code: "ISO_137")
+        style_regex(/(?<![A-Za-z0-9])(?<num>[1-9][0-9,]*#{SI_UNIT})\b/o, "no space between number and SI unit", node, text, code: "ISO_137")
+        NONSTD_UNITS.each { |k, v| style_regex(/\b(?<num>[0-9][0-9,]*\p{Zs}+#{k})\b/, "non-standard unit (should be #{v})", node, text, code: "ISO_137") }
       end
 
       def calculate_subscript_depth(sub)
@@ -212,7 +219,7 @@ module Metanorma
         case prectext.strip[-1]
         when ":", "" then list_after_colon_punctuation(list, entries)
         when "." then entries.each { |li| list_full_sentence(li) }
-        else style_warning(list, "All lists must be preceded by colon or full stop", prectext, display: false)
+        else style_warning(list, "All lists must be preceded by colon or full stop", prectext, display: false, code: "ISO_138")
         end
       end
 
@@ -223,17 +230,17 @@ module Metanorma
 
       def list_semicolon_phrase(elem, last)
         text = elem.text.strip
-        starts_lowercase?(text) or style_warning(elem, "List entry of broken up sentence must start with lowercase letter", text, display: false)
+        starts_lowercase?(text) or style_warning(elem, "List entry of broken up sentence must start with lowercase letter", text, display: false, code: "ISO_139")
         punct = text.strip.sub(/^.*?(\S)\z/m, "\\1")
-        if last; punct == "." or style_warning(elem, "Final list entry must end with full stop", text, display: false)
-        else; punct == ";" or style_warning(elem, "List entry must end with semicolon", text, display: false); end
+        if last; punct == "." or style_warning(elem, "Final list entry must end with full stop", text, display: false, code: "ISO_139")
+        else; punct == ";" or style_warning(elem, "List entry must end with semicolon", text, display: false, code: "ISO_139"); end
       end
 
       def list_full_sentence(elem)
         return unless %w[Cyrl Latn Grek].include?(@script)
         text = elem.text.strip
-        starts_uppercase?(text) || starts_numeric?(elem) or style_warning(elem, "List entry must start with uppercase letter", text, display: false)
-        text.strip.sub(/^.*?(\S)\z/m, "\\1") == "." or style_warning(elem, "List entry must end with full stop", text, display: false)
+        starts_uppercase?(text) || starts_numeric?(elem) or style_warning(elem, "List entry must start with uppercase letter", text, display: false, code: "ISO_140")
+        text.strip.sub(/^.*?(\S)\z/m, "\\1") == "." or style_warning(elem, "List entry must end with full stop", text, display: false, code: "ISO_140")
       end
 
       def starts_lowercase?(text)
@@ -259,7 +266,7 @@ module Metanorma
 
       def title_no_full_stop_validate(root)
         root.xpath("//preface//title | //sections//title | //annex//title | //references/title | //preface//name | //sections//name | //annex//name").each do |t|
-          style_regex(/\A(?<num>.+\.\Z)/i, "No full stop at end of title or caption", t, t.text.strip)
+          style_regex(/\A(?<num>.+\.\Z)/i, "No full stop at end of title or caption", t, t.text.strip, code: "ISO_141")
         end
       end
 
@@ -267,7 +274,8 @@ module Metanorma
 
       def normref_validate(root)
         f = root.at("//references[@normative = 'true']") || return
-        f.at("./references | ./clause") && @log.add("ISO_24", f)
+        f.at("./references | ./clause") and
+          style_warning(f, "normative references contains subclauses", nil, code: "ISO_24")
       end
 
       def section_style(root)
@@ -276,13 +284,13 @@ module Metanorma
         scope_style(root.at("//clause[@type = 'scope']"))
         @doctype == "technical-report" and
           root.xpath("//sections/clause[not(@type = 'scope')] | //annex").each do |s|
-            (r = requirement_check(extract_text(s))) and style_warning(s, "Technical Report clause may contain requirement", r)
+            (r = requirement_check(extract_text(s))) and style_warning(s, "Technical Report clause may contain requirement", r, code: "ISO_129")
           end
       end
 
       def subclause_validate(root)
         root.xpath("//clause/clause/clause/clause/clause/clause/clause/clause")
-          .each { |c| style_warning(c, "Exceeds the maximum clause depth of 7", nil) }
+          .each { |c| style_warning(c, "Exceeds the maximum clause depth of 7", nil, code: "ISO_142") }
       end
     end
 
@@ -325,7 +333,7 @@ module Metanorma
       end
 
       def xref_validate_exists(_doc)
-        # Migrated: BrokenXrefRule (STANDOC_38).
+        # Migrated: BrokenXrefRule (ISO_56).
       end
 
       def norm_ref_validate(_doc)

@@ -78,10 +78,38 @@ module Metanorma
         # All rules run; warnings are treated as errors (non-zero exit).
         STRICT = new(name: "strict", strict_warnings: true)
 
+        # Model-layer rule classes outside the StyleRule hierarchy that
+        # belong to the style-warning family.
+        STYLE_LINT_CLASSES = %w[
+          ListCountRule
+          ListDepthRule
+          ListPunctuationRule
+          StyleDirectivesRefsRule
+          StyleEmptyClauseRule
+          StyleMixedListsRule
+          StylePenultimateListRule
+        ].freeze
+
+        # The style-warning codes the PUBLICATION profile suppresses:
+        # every StyleRule descendant's code (the ISO House Style text
+        # lints), the explicit style-lint family codes, and the standoc
+        # generic style sink the flavour inherits. One code per rule
+        # (ISO-codes audit), so the family is enumerated; a new style
+        # rule stays publication-suppressed by descending from StyleRule
+        # or joining {STYLE_LINT_CLASSES}.
+        STYLE_WARNING_CODES = (
+          descendants = RuleRegistry.new.all
+            .select { |cls| cls < Rules::StyleRule }
+            .map(&:code_value)
+          family = STYLE_LINT_CLASSES
+            .filter_map { |name| Rules.const_get(name).code_value }
+          (descendants + family + ["STANDOC_48"]).uniq.sort.freeze
+        ).freeze
+
         # Style warnings suppressed; useful for publication-ready
         # documents where style lints have already been addressed.
         PUBLICATION = new(name: "publication",
-                          except_codes: ["STANDOC_48"])
+                          except_codes: STYLE_WARNING_CODES)
 
         # Filter a list of rule instances. Returns only the instances
         # whose +#code+ matches the profile's filter criteria.

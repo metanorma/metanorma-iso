@@ -16,6 +16,8 @@ module Metanorma
         # unit reading cannot be resolved from flat text without
         # value+unit parsing.
         class StyleBarKnotFootnoteRule < StyleRule
+          code "ISO_72"
+
           policy category: "Quantities and units > bar and kn",
                  rule: "the units 'bar' and 'kn' carry the footnotes '1 bar = 0,1 MPa' and '1 kn = 1,852 km/h'",
                  source: :house_style, mn_category: :style

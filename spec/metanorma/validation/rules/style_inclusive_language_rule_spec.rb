@@ -37,7 +37,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleInclusiveLanguageRule do
     term_to_alternative.each do |term, alternative|
       issues = rule.check(context_with("the #{term} applies here"))
       expect(issues.size).to eq(1), "expected '#{term}' to be flagged"
-      expect(issues.first.code).to eq("STANDOC_48")
+      expect(issues.first.code).to eq("ISO_96")
       expect(issues.first.message).to include(alternative)
     end
   end

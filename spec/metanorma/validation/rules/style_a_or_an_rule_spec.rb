@@ -24,7 +24,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleAOrAnRule do
     %w[hour hourly honest honesty honor honour heir].each do |word|
       issues = rule.check(context_with("It takes a #{word} to finish."))
       expect(issues.size).to eq(1), "expected 'a #{word}' flagged"
-      expect(issues.first.code).to eq("STANDOC_48")
+      expect(issues.first.code).to eq("ISO_62")
       expect(issues.first.message).to include("'an'")
     end
   end

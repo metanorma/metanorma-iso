@@ -25,7 +25,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleImpreciseRefsRule do
       "see the following clause and the preceding section"
     ))
     expect(issues.size).to eq(2)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_94")
     expect(issues.first.message).to include("cite the element")
   end
 

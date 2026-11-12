@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleContractionsRule do
   it "flags contractions with their full-form suggestion" do
     issues = rule.check(context_with("it's fine; don't wait; won't help"))
     expect(issues.size).to eq(3)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_77")
     expect(issues.first.message).to include("use the full form")
     expect(issues.map(&:message)).to include(
       /it's/, /don't/, /won't/

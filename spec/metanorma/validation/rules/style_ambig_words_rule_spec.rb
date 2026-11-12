@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleAmbigWordsRule do
   it "flags 'and/or' usage" do
     issues = rule.check(context_with("cats and/or dogs"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_69")
   end
 
   it "flags 'on-line' misspelling" do

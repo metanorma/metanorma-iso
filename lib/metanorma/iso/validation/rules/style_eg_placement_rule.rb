@@ -13,6 +13,8 @@ module Metanorma
         # comma in running text ("... devices, e.g. sensors") is the
         # flagged violation.
         class StyleEgPlacementRule < StyleRule
+          code "ISO_86"
+
           policy category: "Abbreviated terms > e.g., etc. and i.e.",
                  rule: "'e.g.' and 'i.e.' are used only in parentheses — running text writes 'for example' and 'that is'",
                  source: :house_style, mn_category: :style

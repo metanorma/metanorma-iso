@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleNoNosRule do
   it "flags the plural contraction 'nos.'" do
     issues = rule.check(context_with("see nos. 3 and 4"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_104")
     expect(issues.first.message).to include("without the full stop")
   end
 

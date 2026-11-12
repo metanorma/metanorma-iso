@@ -19,6 +19,8 @@ module Metanorma
         # The legitimate verbal use "to effect changes" (bring about)
         # and noun phrases like "side effects" are not matched.
         class StyleAffectEffectRule < StyleRule
+          code "ISO_68"
+
           policy category: "Grammar",
                  rule: "use 'affect' as the verb of influence and 'effect' " \
                        "as the noun ('X affects Y', 'the effect of X on Y')",

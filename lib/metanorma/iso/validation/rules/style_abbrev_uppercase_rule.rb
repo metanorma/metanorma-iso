@@ -19,6 +19,8 @@ module Metanorma
         # "etc", "e.g." and "i.e." are exempt (single letters fall
         # below the token length; the words are stoplisted).
         class StyleAbbrevUppercaseRule < StyleRule
+          code "ISO_66"
+
           policy category: "Abbreviated terms",
                  rule: "abbreviated terms are written consistently in one casing throughout the document",
                  source: :house_style, mn_category: :style

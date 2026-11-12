@@ -8,6 +8,8 @@ module Metanorma
         # use "conformity"/"conforming"; "compliance" is reserved for
         # legislation and regulatory instruments).
         class StyleComplianceRule < StyleRule
+          code "ISO_76"
+
           policy category: "Spelling and wording > Conformity and conformity-related terms",
                  rule: "use 'conformity'/'conforming'; 'compliance' is reserved for legislation",
                  source: :house_style, mn_category: :style

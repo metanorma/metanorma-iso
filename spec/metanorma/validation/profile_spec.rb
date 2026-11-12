@@ -23,10 +23,26 @@ RSpec.describe Metanorma::Iso::Validation::Profile do
   end
 
   describe "PUBLICATION" do
-    it "excludes STANDOC_48 (style warnings)" do
-      rules = [Struct.new(:code).new("ISO_5"), Struct.new(:code).new("STANDOC_48")]
+    it "excludes the flavour style codes and the standoc style sink" do
+      style_code = Metanorma::Iso::Validation::Rules::StyleAOrAnRule.code_value
+      expect(style_code).to include("ISO_")
+      expect(described_class::PUBLICATION.except_codes)
+        .to include(style_code, "STANDOC_48")
+      rules = [Struct.new(:code).new("ISO_5"),
+               Struct.new(:code).new(style_code),
+               Struct.new(:code).new("STANDOC_48")]
       selected = described_class::PUBLICATION.select_rules(rules)
       expect(selected.map(&:code)).to eq(["ISO_5"])
+    end
+
+    it "covers every StyleRule descendant and style-lint class" do
+      suppressed = described_class::PUBLICATION.except_codes
+      rules = Metanorma::Iso::Validation::RuleRegistry.new.all
+        .select do |cls|
+          cls < Metanorma::Iso::Validation::Rules::StyleRule ||
+            described_class::STYLE_LINT_CLASSES.include?(cls.name.split("::").last)
+        end
+      expect(rules.map(&:code_value) - suppressed).to eq([])
     end
   end
 
@@ -81,7 +97,8 @@ RSpec.describe Metanorma::Iso::API do
 
     it "accepts :publication symbol (no style warnings)" do
       report = described_class.validate(xml, profile: :publication)
-      expect(report.issues.none? { |i| i.code == "STANDOC_48" }).to be(true)
+      suppressed = Metanorma::Iso::Validation::Profile::PUBLICATION.except_codes
+      expect(report.issues.none? { |i| suppressed.include?(i.code) }).to be(true)
     end
 
     it "accepts a Profile instance" do

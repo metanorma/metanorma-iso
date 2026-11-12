@@ -24,7 +24,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleFewerLessRule do
     %w[samples tests results measurements items products].each do |noun|
       issues = rule.check(context_with("The batch has less #{noun} today."))
       expect(issues.size).to eq(1), "expected 'less #{noun}' flagged"
-      expect(issues.first.code).to eq("STANDOC_48")
+      expect(issues.first.code).to eq("ISO_90")
       expect(issues.first.message).to include("fewer")
     end
   end

@@ -15,6 +15,8 @@ module Metanorma
         # outside the person-word list. "Assure the user" and friends
         # pass.
         class StyleAssureEnsureRule < StyleRule
+          code "ISO_71"
+
           policy category: "Grammar",
                  rule: "use 'ensure' (not 'assure') when the object is a " \
                        "thing or a that-clause; 'assure' is reserved for " \

@@ -16,11 +16,13 @@ module Metanorma
     module Validation
       autoload :Context, "metanorma/iso/validation/context"
       autoload :ConverterState, "metanorma/iso/validation/converter_state"
+      autoload :Citation, "metanorma/iso/validation/citation"
       autoload :SharedState, "metanorma/iso/validation/shared_state"
       autoload :Issue, "metanorma/iso/validation/issue"
       autoload :Report, "metanorma/iso/validation/report"
       autoload :IssueTranslator, "metanorma/iso/validation/issue_translator"
       autoload :LEGACY_POLICY, "metanorma/iso/validation/legacy_policy"
+      autoload :LEGACY_POLICY_BY_CODE, "metanorma/iso/validation/legacy_policy"
       autoload :RuleRegistry, "metanorma/iso/validation/rule_registry"
       autoload :ComposedRegistry, "metanorma/iso/validation/composed_registry"
       autoload :SentenceScan, "metanorma/iso/validation/sentence_scan"

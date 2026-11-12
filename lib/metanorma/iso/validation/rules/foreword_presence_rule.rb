@@ -14,7 +14,7 @@ module Metanorma
         # the foreword has subsections. This rule fires when the foreword
         # is entirely absent.
         class ForewordPresenceRule < Base
-          code "STANDOC_7"
+          code "ISO_57"
 
           policy category: "Document structure",
                  rule: "the Foreword is a mandatory element",

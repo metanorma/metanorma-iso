@@ -34,11 +34,11 @@ RSpec.describe Metanorma::Iso::Validation::Rules::ListPunctuationRule do
     expect(rule.check(context_with(body))).to eq([])
   end
 
-  it "flags STANDOC_48 when list is preceded by other text" do
+  it "flags ISO_60 when list is preceded by other text" do
     body = "<p>Items are; here</p><ul><li>a</li><li>b</li></ul>"
     issues = rule.check(context_with(body))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_60")
     expect(issues.first.message).to include("preceded by colon or full stop")
   end
 end

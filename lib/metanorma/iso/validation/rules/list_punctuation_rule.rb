@@ -15,10 +15,10 @@ module Metanorma
         #                  list_after_colon_punctuation for now)
         #   "."          → full-sentence rules (handled by legacy
         #                  list_full_sentence for now)
-        #   other        → STANDOC_48 "All lists must be preceded by
+        #   other        → ISO_60 "All lists must be preceded by
         #                  colon or full stop"
         class ListPunctuationRule < Base
-          code "STANDOC_48"
+          code "ISO_60"
 
           policy category: "Lists",
                  rule: "a list is preceded by an introductory sentence ending in a colon or full stop",

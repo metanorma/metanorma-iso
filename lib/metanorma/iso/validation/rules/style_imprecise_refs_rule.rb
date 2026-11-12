@@ -9,6 +9,8 @@ module Metanorma
         # "see Figure 3" -- not "the following clause", "the figure
         # above", "the table below", "the preceding section").
         class StyleImpreciseRefsRule < StyleRule
+          code "ISO_94"
+
           policy category: "Referencing > References within the document",
                  rule: "cite the element by its identifier, not 'the following clause' or 'the figure above'",
                  source: :house_style, mn_category: :references

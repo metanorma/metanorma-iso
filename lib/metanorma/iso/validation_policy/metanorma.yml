@@ -26,19 +26,25 @@ rules:
     severity: warning
   ISO_54:
     severity: warning
-  STANDOC_38:
+  ISO_56:
     severity: warning
   ISO_5:
     severity: error
-  STANDOC_7:
+  ISO_57:
     severity: error
   ISO_23:
     severity: error
   ISO_6:
     severity: error
-  STANDOC_48:
+  ISO_58:
+    severity: error
+  ISO_59:
+    severity: error
+  ISO_60:
     severity: error
   ISO_49:
+    severity: error
+  ISO_61:
     severity: error
   ISO_42:
     severity: error
@@ -53,6 +59,126 @@ rules:
   ISO_28:
     severity: error
   ISO_46:
+    severity: error
+  ISO_62:
+    severity: error
+  ISO_63:
+    severity: error
+  ISO_64:
+    severity: error
+  ISO_65:
+    severity: error
+  ISO_66:
+    severity: error
+  ISO_67:
+    severity: error
+  ISO_68:
+    severity: error
+  ISO_69:
+    severity: error
+  ISO_70:
+    severity: error
+  ISO_71:
+    severity: error
+  ISO_72:
+    severity: error
+  ISO_73:
+    severity: error
+  ISO_74:
+    severity: error
+  ISO_75:
+    severity: error
+  ISO_76:
+    severity: error
+  ISO_77:
+    severity: error
+  ISO_78:
+    severity: error
+  ISO_79:
+    severity: error
+  ISO_80:
+    severity: error
+  ISO_81:
+    severity: error
+  ISO_82:
+    severity: error
+  ISO_83:
+    severity: error
+  ISO_84:
+    severity: error
+  ISO_85:
+    severity: error
+  ISO_86:
+    severity: error
+  ISO_87:
+    severity: error
+  ISO_88:
+    severity: error
+  ISO_89:
+    severity: error
+  ISO_90:
+    severity: error
+  ISO_91:
+    severity: error
+  ISO_92:
+    severity: error
+  ISO_93:
+    severity: error
+  ISO_94:
+    severity: error
+  ISO_95:
+    severity: error
+  ISO_96:
+    severity: error
+  ISO_97:
+    severity: error
+  ISO_98:
+    severity: error
+  ISO_99:
+    severity: error
+  ISO_100:
+    severity: error
+  ISO_101:
+    severity: error
+  ISO_102:
+    severity: error
+  ISO_103:
+    severity: error
+  ISO_104:
+    severity: error
+  ISO_105:
+    severity: error
+  ISO_106:
+    severity: error
+  ISO_107:
+    severity: error
+  ISO_108:
+    severity: error
+  ISO_109:
+    severity: error
+  ISO_110:
+    severity: error
+  ISO_111:
+    severity: error
+  ISO_112:
+    severity: error
+  ISO_113:
+    severity: error
+  ISO_114:
+    severity: error
+  ISO_115:
+    severity: error
+  ISO_116:
+    severity: error
+  ISO_117:
+    severity: error
+  ISO_118:
+    severity: error
+  ISO_119:
+    severity: error
+  ISO_120:
+    severity: error
+  ISO_121:
     severity: error
   ISO_3:
     severity: error
@@ -82,11 +208,51 @@ rules:
     severity: error
   ISO_20:
     severity: error
-  STANDOC_36:
+  ISO_122:
     severity: error
   ISO_21:
     severity: warning
   ISO_44:
     severity: error
+  ISO_123:
+    severity: error
+  ISO_124:
+    severity: error
+  ISO_125:
+    severity: error
+  ISO_126:
+    severity: error
+  ISO_127:
+    severity: error
+  ISO_128:
+    severity: error
+  ISO_129:
+    severity: error
+  ISO_130:
+    severity: error
+  ISO_131:
+    severity: error
+  ISO_132:
+    severity: error
+  ISO_133:
+    severity: error
+  ISO_134:
+    severity: error
+  ISO_135:
+    severity: error
+  ISO_136:
+    severity: error
+  ISO_137:
+    severity: error
+  ISO_138:
+    severity: error
+  ISO_139:
+    severity: error
+  ISO_140:
+    severity: error
+  ISO_141:
+    severity: error
   ISO_24:
+    severity: error
+  ISO_142:
     severity: error

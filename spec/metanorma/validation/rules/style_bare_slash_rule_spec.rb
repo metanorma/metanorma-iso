@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleBareSlashRule do
   it "flags a lowercase word/word slash with spaces" do
     issues = rule.check(context_with("the input / output values differ"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_73")
     expect(issues.first.message).to include("input / output")
     expect(issues.first.message).to include("reword")
   end

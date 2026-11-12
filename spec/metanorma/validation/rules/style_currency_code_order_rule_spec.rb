@@ -24,7 +24,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleCurrencyCodeOrderRule do
   it "flags an amount written before its ISO 4217 code" do
     issues = rule.check(context_with("a fee of 100 USD applies"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_79")
     expect(issues.first.message).to include("USD 100")
     expect(issues.first.message).not_to include("not 'USD 100'")
   end

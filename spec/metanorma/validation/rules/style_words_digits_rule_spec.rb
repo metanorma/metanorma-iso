@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleWordsDigitsRule do
   it "flags standalone digits one to nine in prose" do
     issues = rule.check(context_with("The batch has 3 samples."))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_121")
     expect(issues.first.message).to include("'3'")
     expect(issues.first.message).to include("words")
   end

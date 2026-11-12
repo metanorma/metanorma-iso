@@ -25,7 +25,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StylePenultimateListRule do
       <ol id="ol1"><li>first item</li><li>second item and</li><li>third item</li></ol>
     BODY
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_108")
     expect(issues.first.message).to include("penultimate list item ends with 'and'")
     expect(issues.first.message).to include("avoid ambiguity")
   end

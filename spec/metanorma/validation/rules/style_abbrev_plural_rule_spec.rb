@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleAbbrevPluralRule do
   it "flags the doubled-s plural 'MSSs'" do
     issues = rule.check(context_with("all MSSs are listed"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_64")
     expect(issues.first.message).to include("invariant")
   end
 

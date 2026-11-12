@@ -20,13 +20,14 @@ module Metanorma
       #   rule via the House Style.
       #
       # One entry per emitting check method, keyed by the LegacyChecks method
-      # name; +code:+ is the log code the method emits (most legacy checks
-      # share the generic STANDOC_48 style-warning sink via +style_warning+).
-      # Coverage of this table against the legacy source is enforced by
+      # name; +code:+ is the ISO log code the method emits — one code per
+      # check, never shared (the code is the suppression key; ISO-flavour
+      # policy checks do not carry STANDOC codes). Coverage of this table
+      # against the legacy source is enforced by
       # spec/metanorma/validation/legacy_policy_spec.rb.
       LEGACY_POLICY = {
         "scope_style" => {
-          code: "STANDOC_48",
+          code: "ISO_123",
           category: "Plain language",
           rule: "the Scope is worded as statements of fact and contains no " \
                 "requirements, permissions or recommendations",
@@ -34,14 +35,14 @@ module Metanorma
           mn_category: :style,
         },
         "introduction_style" => {
-          code: "STANDOC_48",
+          code: "ISO_124",
           category: "Plain language",
           rule: "the Introduction is informative and contains no requirements",
           source: [:directives], directives: "13.2",
           mn_category: :style,
         },
         "definition_style" => {
-          code: "STANDOC_48",
+          code: "ISO_125",
           category: "Formatting > Vocabulary documents",
           rule: "a definition does not take the form of, or contain, a " \
                 "requirement",
@@ -49,7 +50,7 @@ module Metanorma
           mn_category: :style,
         },
         "example_style" => {
-          code: "STANDOC_48",
+          code: "ISO_126",
           category: "Plain language",
           rule: "examples only illustrate the text: no requirements and no " \
                 "information indispensable for the use of the document",
@@ -57,7 +58,7 @@ module Metanorma
           mn_category: :style,
         },
         "note_style" => {
-          code: "STANDOC_48",
+          code: "ISO_127",
           category: "Plain language",
           rule: "notes only assist the understanding of the text: no " \
                 "requirements, recommendations or permissions",
@@ -65,7 +66,7 @@ module Metanorma
           mn_category: :style,
         },
         "footnote_style" => {
-          code: "STANDOC_48",
+          code: "ISO_128",
           category: "Plain language",
           rule: "footnotes only assist the understanding of the text: no " \
                 "requirements, recommendations or permissions",
@@ -73,7 +74,7 @@ module Metanorma
           mn_category: :style,
         },
         "section_style" => {
-          code: "STANDOC_48",
+          code: "ISO_129",
           category: "Plain language",
           rule: "Technical Report clauses contain collected data, not " \
                 "provisions, and state no requirements",
@@ -81,7 +82,7 @@ module Metanorma
           mn_category: :style,
         },
         "style_problem_words" => {
-          code: "STANDOC_48",
+          code: "ISO_130",
           category: "Numbers, values and dates > Numbers",
           section: "Numbers, values and dates > Numbers",
           rule: "'billion' is ambiguous: use 'one billion' for " \
@@ -90,7 +91,7 @@ module Metanorma
           mn_category: :style,
         },
         "style_abbrev" => {
-          code: "STANDOC_48",
+          code: "ISO_131",
           category: "Abbreviated terms, abbreviations and contractions > " \
                     "Abbreviated terms",
           section: "Abbreviated terms, abbreviations and contractions > " \
@@ -102,7 +103,7 @@ module Metanorma
           mn_category: :style,
         },
         "style_punct" => {
-          code: "STANDOC_48",
+          code: "ISO_132",
           category: "Punctuation",
           section: "Punctuation",
           rule: "no 'and/or' (write 'either x or y, or both'), no ampersand " \
@@ -118,7 +119,7 @@ module Metanorma
           mn_category: :style,
         },
         "style_subscript" => {
-          code: "STANDOC_48",
+          code: "ISO_133",
           category: "Symbols > Quantities and units",
           section: "Symbols > Quantities and units",
           rule: "avoid more than one level of subscript; the maximum is " \
@@ -127,7 +128,7 @@ module Metanorma
           mn_category: :style,
         },
         "style_number" => {
-          code: "STANDOC_48",
+          code: "ISO_134",
           category: "Numbers, values and dates > Numbers",
           section: "Numbers, values and dates > Numbers",
           rule: "the decimal sign is a comma on the line (mark up decimal " \
@@ -137,7 +138,7 @@ module Metanorma
           mn_category: :style,
         },
         "style_number_grouping" => {
-          code: "STANDOC_48",
+          code: "ISO_135",
           category: "Numbers, values and dates > Numbers",
           section: "Symbols > Mathematical symbols",
           rule: "group digits by three to facilitate reading (e.g. 1 234, " \
@@ -146,7 +147,7 @@ module Metanorma
           mn_category: :style,
         },
         "style_percent" => {
-          code: "STANDOC_48",
+          code: "ISO_136",
           category: "Numbers, values and dates > Numbers",
           section: "Numbers, values and dates > Numbers",
           rule: "always use digits with the percentage symbol, preceded by " \
@@ -155,7 +156,7 @@ module Metanorma
           mn_category: :style,
         },
         "style_units" => {
-          code: "STANDOC_48",
+          code: "ISO_137",
           category: "Symbols > Quantities and units",
           section: "Symbols > Quantities and units",
           rule: "a space separates value and unit symbol; no space between " \
@@ -166,7 +167,7 @@ module Metanorma
           mn_category: :style,
         },
         "list_punctuation" => {
-          code: "STANDOC_48",
+          code: "ISO_138",
           category: "Punctuation > Lists",
           section: "Punctuation > Lists",
           rule: "every list is introduced by a sentence ending with a colon " \
@@ -175,7 +176,7 @@ module Metanorma
           mn_category: :style,
         },
         "list_semicolon_phrase" => {
-          code: "STANDOC_48",
+          code: "ISO_139",
           category: "Punctuation > Lists",
           section: "Punctuation > Lists",
           rule: "items of one sentence broken into a list start in lower " \
@@ -185,7 +186,7 @@ module Metanorma
           mn_category: :style,
         },
         "list_full_sentence" => {
-          code: "STANDOC_48",
+          code: "ISO_140",
           category: "Punctuation > Lists",
           section: "Punctuation > Lists",
           rule: "items comprising several sentences start with a capital " \
@@ -194,7 +195,7 @@ module Metanorma
           mn_category: :style,
         },
         "title_no_full_stop_validate" => {
-          code: "STANDOC_48",
+          code: "ISO_141",
           category: "Punctuation > Full stops",
           section: "Punctuation > Full stops",
           rule: "no full stop at the end of clause/subclause headings, " \
@@ -212,7 +213,7 @@ module Metanorma
           mn_category: :references,
         },
         "subclause_validate" => {
-          code: "STANDOC_48",
+          code: "ISO_142",
           category: "Formatting > Document set-up > Numbering",
           section: "Formatting > Document set-up > Numbering",
           rule: "clauses are subdivided into subclauses only as far as the " \
@@ -222,6 +223,15 @@ module Metanorma
           mn_category: :structure,
         },
       }.freeze
+
+      # Reverse index of {LEGACY_POLICY} by log code. The legacy emission
+      # path (+LegacyChecks#style_warning+) resolves the emitting check's
+      # entry from the code it passes, for both the code→registry wiring
+      # and the citation suffix. Codes are unique across the table
+      # (one code per check), so the index is total.
+      LEGACY_POLICY_BY_CODE = LEGACY_POLICY
+        .each_with_object({}) { |(_check, entry), index| index[entry[:code]] = entry }
+        .freeze
     end
   end
 end

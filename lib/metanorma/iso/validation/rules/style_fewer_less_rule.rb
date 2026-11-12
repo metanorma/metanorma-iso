@@ -15,6 +15,8 @@ module Metanorma
         # <count noun>" ("less than 10 samples") on the "fewer than"
         # pattern instead of double-flagging it.
         class StyleFewerLessRule < StyleRule
+          code "ISO_90"
+
           policy category: "Grammar",
                  rule: "use 'fewer' for countable nouns ('fewer samples'); " \
                        "'less' is for uncountables ('less time') and " \

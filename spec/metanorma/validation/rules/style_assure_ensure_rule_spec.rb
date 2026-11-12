@@ -26,7 +26,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleAssureEnsureRule do
         "The checks #{verb} that the measurement is traceable."
       ))
       expect(issues.size).to eq(1), "expected '#{verb} that' flagged"
-      expect(issues.first.code).to eq("STANDOC_48")
+      expect(issues.first.code).to eq("ISO_71")
       expect(issues.first.message).to include("ensure")
     end
   end

@@ -23,6 +23,8 @@ module Metanorma
         #     ("provided that", "so that", "and that", ...) are
         #     exempted by a closed whitelist.
         class StyleThatWhichRule < StyleRule
+          code "ISO_115"
+
           policy category: "Grammar > Defining and non-defining relative clauses",
                  rule: "use 'that' in defining relative clauses without " \
                        "commas ('products that comply'); a comma marks a " \

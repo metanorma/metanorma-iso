@@ -26,7 +26,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleThatWhichRule do
         "All #{noun} which comply are listed in Table 2."
       ))
       expect(issues.size).to eq(1), "expected '#{noun} which' flagged"
-      expect(issues.first.code).to eq("STANDOC_48")
+      expect(issues.first.code).to eq("ISO_115")
       expect(issues.first.message).to include("that")
     end
   end

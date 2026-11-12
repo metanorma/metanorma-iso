@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleCountryNamesRule do
   it "flags North Korea" do
     issues = rule.check(context_with("delegation from North Korea"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_78")
     expect(issues.first.message)
       .to include("Democratic People's Republic of Korea")
   end

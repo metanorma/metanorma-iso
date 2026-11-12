@@ -14,6 +14,8 @@ module Metanorma
         # Subscript depth remains in legacy form pending TODO 33 SubElement
         # extension (the model currently drops nested <sub> children).
         class StyleNumberRule < StyleRule
+          code "ISO_105"
+
           policy category: "Numbers, values and dates > Numbers",
                  rule: "mark up decimal-point numbers with stem:[]; do not use a hyphen instead of a minus sign",
                  source: %i[house_style directives], directives: "9.1",

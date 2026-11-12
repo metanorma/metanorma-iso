@@ -8,6 +8,8 @@ module Metanorma
         # standalone acronym "RSD" (ISO House Style: use "coefficient of
         # variation" (Cv)).
         class StyleCvNotRsdRule < StyleRule
+          code "ISO_81"
+
           policy category: "Symbols > Statistical symbols",
                  rule: "use 'coefficient of variation' (Cv), not 'relative standard deviation' (RSD)",
                  source: :house_style, mn_category: :style

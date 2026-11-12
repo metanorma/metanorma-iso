@@ -22,6 +22,8 @@ module Metanorma
         # ("ISO 10303-11", "3166-1 alpha-2") unflagged. Digit-grouped
         # amounts ("1 000-2 000 mm") are not matched, by design.
         class StyleEnDashRangesRule < StyleRule
+          code "ISO_88"
+
           policy category: "Numbers, values and dates > Numbers",
                  rule: "use 'to' between digits in quantity ranges ('5 mm to 10 mm')",
                  source: :house_style, mn_category: :style

@@ -24,7 +24,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::ModalInClauseRule do
     body = "<preface><foreword id='fw'><p>The system shall comply.</p></foreword></preface>"
     issues = rule.check(context_with(body))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_61")
     expect(issues.first.message).to include("foreword")
     expect(issues.first.message).to include("requirement")
   end

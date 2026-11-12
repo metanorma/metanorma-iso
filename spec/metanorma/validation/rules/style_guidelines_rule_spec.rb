@@ -24,7 +24,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleGuidelinesRule do
       "<p>body prose may mention guidelines freely</p></clause>"
     ))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_92")
     expect(issues.first.location).to eq("IsoClauseSection#c1")
     expect(issues.first.message).to include("guidance")
   end

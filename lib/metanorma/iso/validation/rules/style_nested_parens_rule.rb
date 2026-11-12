@@ -11,6 +11,8 @@ module Metanorma
         #   - more than two parenthetical sets in one sentence: use at
         #     most two (advisory).
         class StyleNestedParensRule < StyleRule
+          code "ISO_102"
+
           policy category: "Punctuation > Parentheses",
                  rule: "avoid nested parentheses; at most two parenthetical sets per sentence",
                  source: :house_style, mn_category: :style

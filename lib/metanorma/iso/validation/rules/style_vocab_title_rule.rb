@@ -21,6 +21,8 @@ module Metanorma
         # not appear in vocabulary documents: the vocabulary
         # introduction replaces it.
         class StyleVocabTitleRule < StyleRule
+          code "ISO_119"
+
           policy category: "Vocabulary documents > Title",
                  rule: "vocabulary documents are titled 'Vocabulary', not 'Terminology' or 'Terms and definitions'; the Clause 3 fixed lead-in is not used",
                  source: :house_style, mn_category: :style

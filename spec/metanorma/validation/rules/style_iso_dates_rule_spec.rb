@@ -28,7 +28,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleIsoDatesRule do
   it "flags a day month-name year date inside a table cell" do
     issues = rule.check(context_with(table_with("31 October 2026")))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_99")
     expect(issues.first.message).to include("YYYY-MM-DD")
   end
 

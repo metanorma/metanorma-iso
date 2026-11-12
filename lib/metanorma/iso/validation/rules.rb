@@ -3,8 +3,9 @@
 module Metanorma
   module Iso
     module Validation
-      # Rule namespace. Each ISO_N / STANDOC_N log key gets its own class
-      # (one file per rule). New rule = new file + one autoload line here.
+      # Rule namespace. Each ISO_N log key gets its own class
+      # (one file per rule; one code per rule, never shared). New rule =
+      # new file + one autoload line here.
       module Rules
         autoload :Base, "metanorma/iso/validation/rules/base"
         autoload :TreeTraversal, "metanorma/iso/validation/rules/tree_traversal"

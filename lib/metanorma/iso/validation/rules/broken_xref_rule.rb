@@ -4,15 +4,15 @@ module Metanorma
   module Iso
     module Validation
       module Rules
-        # STANDOC_38: every xref/@target must resolve to an existing
-        # element with @id or @anchor in the document. Flags broken
-        # cross-references.
+        # ISO_56: every xref/@target must resolve to an existing element
+        # with @id or @anchor in the document. Flags broken cross-references
+        # (ISO House Style, Referencing).
         #
         # Self-contained: builds its own target index via
         # each_node_with_id_or_anchor rather than depending on
         # SharedState ordering (which varies by rule discovery order).
         class BrokenXrefRule < Base
-          code "STANDOC_38"
+          code "ISO_56"
 
           policy category: "Referencing > References within the document",
                  rule: "every cross-reference must resolve to an existing element identifier",

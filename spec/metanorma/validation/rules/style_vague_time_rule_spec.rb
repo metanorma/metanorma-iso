@@ -29,7 +29,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleVagueTimeRule do
     }.each do |phrase, label|
       issues = rule.check(context_with("the method was revised #{phrase}"))
       expect(issues.size).to eq(1), "expected '#{phrase}' to be flagged"
-      expect(issues.first.code).to eq("STANDOC_48")
+      expect(issues.first.code).to eq("ISO_117")
       expect(issues.first.message).to include(label)
       expect(issues.first.message).to include("actual date")
     end

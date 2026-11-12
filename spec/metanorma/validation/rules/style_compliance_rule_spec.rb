@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleComplianceRule do
   it "flags compliance with the legislation reservation in the message" do
     issues = rule.check(context_with("the compliance of the sample"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_76")
     expect(issues.first.message).to include("reserves 'compliance'")
     expect(issues.first.message).to include("conformity")
   end

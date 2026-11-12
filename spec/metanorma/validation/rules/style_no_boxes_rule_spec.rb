@@ -25,7 +25,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleNoBoxesRule do
       '<admonition id="box1" type="box"><p>boxed content</p></admonition>'
     ))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_103")
     expect(issues.first.location).to eq("AdmonitionBlock#box1")
     expect(issues.first.message).to include("cannot be cross-referenced")
   end

@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleNestedParensRule do
   it "flags nested parentheses" do
     issues = rule.check(context_with("the value (first (second) inner) matters"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_102")
     expect(issues.first.message).to include("nested parentheses")
     expect(issues.first.message).to include("square brackets")
   end

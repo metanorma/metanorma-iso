@@ -14,13 +14,15 @@ RSpec.describe "Metanorma::Iso::Validation::LEGACY_POLICY" do
     %w[lib/metanorma/iso/validate.rb].map { |rel| File.join(gem_root, rel) }
   end
 
-  # Static scan: every literal log code the legacy layer can emit, via
-  # @log.add(...) (style_warning's own STANDOC_48 sink included — indirect
-  # emitters like style_regex and style_two_regex_not_prev route through it).
+  # Static scan: every literal log code the legacy layer can emit — both
+  # direct @log.add(...) calls and the code: literals passed to the
+  # style_warning sink (indirect emitters like style_regex and
+  # style_two_regex_not_prev route through it).
   let(:legacy_codes) do
     legacy_sources.flat_map do |path|
       File.readlines(path).filter_map do |line|
-        line[/@log\.add\(\s*["']([A-Z]+_\d+)["']/, 1]
+        line[/@log\.add\(\s*["']([A-Z]+_\d+)["']/, 1] ||
+          line[/code:\s*["']([A-Z]+_\d+)["']/, 1]
       end
     end.uniq.sort
   end

@@ -10,7 +10,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::BrokenXrefRule do
                                             state: state, shared: nil)
   end
 
-  it "flags STANDOC_38 when xref target does not exist" do
+  it "flags ISO_56 when xref target does not exist" do
     xml = <<~XML
       <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="iso">
         <bibdata><docidentifier>ISO 1</docidentifier></bibdata>
@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::BrokenXrefRule do
     XML
     issues = rule.check(context_with(xml))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_38")
+    expect(issues.first.code).to eq("ISO_56")
     expect(issues.first.message).to include("nonexistent")
   end
 

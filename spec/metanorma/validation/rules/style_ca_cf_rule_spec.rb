@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleCaCfRule do
   it "flags ca. with the approximately suggestion" do
     issues = rule.check(context_with("a temperature of ca. 20 degrees"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_75")
     expect(issues.first.message).to include("approximately")
   end
 
