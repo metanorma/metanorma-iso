@@ -106,8 +106,14 @@ module Metanorma
           category: "Punctuation",
           section: "Punctuation",
           rule: "no 'and/or' (write 'either x or y, or both'), no ampersand " \
-                "in ordinary text; a superscript cross-reference is not " \
-                "followed by terminal punctuation",
+                "in ordinary text; the superscript callout of a reference " \
+                "relating to part of a sentence or a specific document " \
+                "within a sentence is placed immediately after that " \
+                "element, before any punctuation, and the superscript " \
+                "callout of a reference relating to an entire sentence or " \
+                "list item is placed after the final full stop or " \
+                "semi-colon (ISO House Style 2026-08, Referencing > " \
+                "Cross-references to an unnumbered document)",
           source: [:house_style],
           mn_category: :style,
         },

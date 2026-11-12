@@ -113,10 +113,27 @@ module Metanorma
         style_regex(/\d\s*(?<num>ppm)\b/i, "language-specific abbreviation of unit (ppm)", node, text)
       end
 
+      # ISO House Style 2026-08, Referencing > Cross-references to an
+      # unnumbered document: a superscript callout relating to part of a
+      # sentence or a specific document within a sentence is placed
+      # immediately after that element, before any punctuation; a callout
+      # relating to an entire sentence or list item is placed after the
+      # final full stop or semi-colon. Both placements are valid, so only
+      # a callout followed by other punctuation is misplaced.
+      SUPERSRIPT_CALLOUT_PLACEMENT_MSG = "superscript cross-reference " \
+        "misplaced: place the superscript callout immediately after the " \
+        "element it relates to (before any punctuation, if present) if " \
+        "the reference relates to part of a sentence or a specific " \
+        "document within a sentence; place it after the final full stop " \
+        "or semi-colon if it relates to an entire sentence or list item".freeze
+
       def style_punct(node, text)
         @lang == "en" and style_regex(/\b(?<num>and\/?or)\b/i, "Use 'either x or y, or both'", node, text)
         style_regex(/\p{Zs}(?<num>&)\p{Zs}/i, "Avoid ampersand in ordinary text'", node, text)
-        node.xpath(".//eref[@type='footnote']").each { |e| /^\p{P}/.match?(e.next&.text) and style_warning(node, "superscript cross-reference followed by punctuation", node.to_xml) }
+        node.xpath(".//eref[@type='footnote']").each do |e|
+          /^(?![.;])\p{P}/.match?(e.next&.text) and
+            style_warning(node, SUPERSRIPT_CALLOUT_PLACEMENT_MSG, node.to_xml)
+        end
       end
 
       def asset_style(root)
