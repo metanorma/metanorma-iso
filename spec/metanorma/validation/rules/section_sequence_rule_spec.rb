@@ -54,6 +54,58 @@ RSpec.describe Metanorma::Iso::Validation::Rules::SectionSequenceRule do
     end
   end
 
+  describe "#check with a BSI-shaped document" do
+    # metanorma-bsi#664: BSI bibliographies nest the bibliography clause
+    # (carrying its references) inside <bibliography>. The standoc
+    # BibliographySection mapping is not `ordered`, so XML adapters that
+    # only record element_order for ordered mappings (leptris, the
+    # lutaml-model default) parse that node with element_order == nil.
+    # The walk used to call `nil.filter_map` there and crash the whole
+    # validation run; a missing order must skip the subtree instead.
+    let(:bsi_shaped) do
+      <<~XML
+        <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="bsi">
+          <bibdata>
+            <docidentifier>BS 0</docidentifier>
+            <ext><doctype>bsi</doctype></ext>
+          </bibdata>
+          <preface>
+            <foreword id="fw"><p>fw</p></foreword>
+          </preface>
+          <sections>
+            <clause type="scope" id="scope"><title>Scope</title></clause>
+            <terms id="terms"><title>Terms</title></terms>
+            <clause id="c1"><title>Body</title></clause>
+          </sections>
+          <bibliography>
+            <references normative="true" id="nr"><title>Normative references</title></references>
+            <clause id="bibl"><title>Bibliography</title>
+              <references normative="false" id="b1"><title>Bibliography</title></references>
+            </clause>
+          </bibliography>
+        </metanorma>
+      XML
+    end
+
+    it "parses with a nil bibliography element_order under the leptris adapter" do
+      root = Lutaml::Model::AdapterScope.with(xml: :leptris) do
+        Metanorma::IsoDocument::Root.from_xml(bsi_shaped)
+      end
+      expect(root.bibliography.element_order).to be_nil
+    end
+
+    it "does not raise; the unordered bibliography subtree is skipped" do
+      ctx = Lutaml::Model::AdapterScope.with(xml: :leptris) do
+        context_with(bsi_shaped)
+      end
+      issues = rule.check(ctx)
+      # The bibliography contributes no sequenced items, so the walk ends
+      # after the body clauses and ISO_36 flags the missing annex/refs
+      # tail: a finding, never a crash.
+      expect(issues.map(&:code)).to eq(["ISO_36"])
+    end
+  end
+
   describe "code" do
     it "declares ISO_28 as default" do
       expect(described_class.new.code).to eq("ISO_28")

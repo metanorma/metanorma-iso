@@ -111,7 +111,16 @@ module Metanorma
           def document_order_of(node)
             return [] unless node.class.method_defined?(:element_order)
 
-            node.element_order.filter_map { |e| name_of(e) }
+            # Non-ordered model mappings (e.g. the standoc BibliographySection,
+            # or any flavor-specific section container) carry no element_order:
+            # some XML adapters (leptris) leave it nil where Nokogiri records
+            # one. A nil order means the traversal cannot sequence that
+            # subtree — skip it (metanorma-bsi#664: the walk raised
+            # NoMethodError on `nil.filter_map` for non-ISO documents).
+            order = node.element_order
+            return [] unless order
+
+            order.filter_map { |e| name_of(e) }
           end
 
           def name_of(entry)
