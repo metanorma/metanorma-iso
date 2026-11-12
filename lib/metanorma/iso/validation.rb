@@ -25,6 +25,7 @@ module Metanorma
       autoload :Profile, "metanorma/iso/validation/profile"
       autoload :StateExtractor, "metanorma/iso/validation/state_extractor"
       autoload :Rules, "metanorma/iso/validation/rules"
+      autoload :PolicyDoc, "metanorma/iso/validation/policy_doc"
       autoload :Reporter, "metanorma/iso/validation/reporter"
       autoload :ModelValidator, "metanorma/iso/validation/model_validator"
     end
