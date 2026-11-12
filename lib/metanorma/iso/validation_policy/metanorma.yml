@@ -22,6 +22,10 @@
 schema: metanorma-validation-suppression/1
 flavor: iso
 rules:
+  ISO_53:
+    severity: warning
+  ISO_54:
+    severity: warning
   STANDOC_38:
     severity: warning
   ISO_5:
@@ -62,6 +66,8 @@ rules:
     severity: error
   ISO_2:
     severity: error
+  ISO_55:
+    severity: warning
   ISO_50:
     severity: error
   ISO_4:
