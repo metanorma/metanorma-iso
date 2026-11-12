@@ -220,7 +220,20 @@ module Metanorma
         autoload :DocumentOrderWalk,
                  "metanorma/iso/validation/rules/document_order_walk"
         autoload :TermSourceCompleteRule,
-                 "metanorma/iso/validation/rules/term_source_complete_rule"      end
+                 "metanorma/iso/validation/rules/term_source_complete_rule"
+
+        # ISO House Style stem rules: plurimath-inspected math content.
+        # Stems are stripped from prose by StyleRule's prose_exclusions,
+        # so these rules walk the stem elements and parse their content
+        # themselves (StemMath), in alphabetical order:
+        autoload :StemMath, "metanorma/iso/validation/rules/stem_math"
+        autoload :StyleChemPrefixRule,
+                 "metanorma/iso/validation/rules/style_chem_prefix_rule"
+        autoload :StyleNonSiOrderRule,
+                 "metanorma/iso/validation/rules/style_non_si_order_rule"
+        autoload :StyleStemSymbolRule,
+                 "metanorma/iso/validation/rules/style_stem_symbol_rule"
+      end
     end
   end
 end
