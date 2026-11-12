@@ -728,7 +728,14 @@ RSpec.describe Metanorma::Iso, type: :validation do
     expect(errors3).not_to include("dispreferred spelling")
   end
 
-  it "warns of cross-references before punctuation" do
+  # ISO House Style 2026-08, Referencing > Cross-references to an unnumbered
+  # document: a superscript callout relating to part of a sentence or a
+  # specific document within a sentence is placed immediately after that
+  # element, before any punctuation; a callout relating to an entire sentence
+  # or list item is placed after the final full stop or semi-colon. Both
+  # placements are valid; other punctuation after the callout is flagged.
+  it "warns of superscript cross-references followed by punctuation other " \
+     "than the full stop and semicolon" do
     errors1 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
@@ -739,9 +746,21 @@ RSpec.describe Metanorma::Iso, type: :validation do
       == Bibliography
       * [[[a, b]]]
     INPUT
-    expect(errors1).to include("superscript cross-reference followed by punctuation")
+    expect(errors1).not_to include("superscript cross-reference misplaced")
 
     errors2 = convert_and_capture_errors(<<~"INPUT")
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      <<a,fn:>>;
+
+      [bibliography]
+      == Bibliography
+      * [[[a, b]]]
+    INPUT
+    expect(errors2).not_to include("superscript cross-reference misplaced")
+
+    errors3 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -751,21 +770,21 @@ RSpec.describe Metanorma::Iso, type: :validation do
       == Bibliography
       * [[[a, b]]]
     INPUT
-    expect(errors2).to include("superscript cross-reference followed by punctuation")
+    expect(errors3).to include("superscript cross-reference misplaced")
 
-    errors3 = convert_and_capture_errors(<<~"INPUT")
+    errors4 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
-      <<a>>.
+      <<a,fn:>>?
 
       [bibliography]
       == Bibliography
       * [[[a, b]]]
     INPUT
-    expect(errors3).not_to include("superscript cross-reference followed by punctuation")
+    expect(errors4).to include("superscript cross-reference misplaced")
 
-    errors4 = convert_and_capture_errors(<<~"INPUT")
+    errors5 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -775,9 +794,21 @@ RSpec.describe Metanorma::Iso, type: :validation do
       == Bibliography
       * [[[a, b]]]
     INPUT
-    expect(errors4).not_to include("superscript cross-reference followed by punctuation")
+    expect(errors5).not_to include("superscript cross-reference misplaced")
 
-    errors5 = convert_and_capture_errors(<<~"INPUT")
+    errors6 = convert_and_capture_errors(<<~"INPUT")
+      #{VALIDATING_BLANK_HDR}
+
+      == Clause
+      <<a>>.
+
+      [bibliography]
+      == Bibliography
+      * [[[a, b]]]
+    INPUT
+    expect(errors6).not_to include("superscript cross-reference misplaced")
+
+    errors7 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
       == Clause
@@ -787,7 +818,7 @@ RSpec.describe Metanorma::Iso, type: :validation do
       == Bibliography
       * [[[a, b]]]
     INPUT
-    expect(errors5).not_to include("superscript cross-reference followed by punctuation")
+    expect(errors7).not_to include("superscript cross-reference misplaced")
   end
 
   it "warns of failures to cross-reference assets" do
