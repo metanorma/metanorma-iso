@@ -165,6 +165,27 @@ module Metanorma
                  "metanorma/iso/validation/rules/style_no_nos_rule"
         autoload :StyleVagueTimeRule,
                  "metanorma/iso/validation/rules/style_vague_time_rule"
+        # ISO House Style context-dependent rules (issue #1705, tranche
+        # A): sentence-level analysis via Validation::SentenceScan, in
+        # alphabetical order.
+        autoload :StyleAffectEffectRule,
+                 "metanorma/iso/validation/rules/style_affect_effect_rule"
+        autoload :StyleAOrAnRule,
+                 "metanorma/iso/validation/rules/style_a_or_an_rule"
+        autoload :StyleAssureEnsureRule,
+                 "metanorma/iso/validation/rules/style_assure_ensure_rule"
+        autoload :StyleFewerLessRule,
+                 "metanorma/iso/validation/rules/style_fewer_less_rule"
+        autoload :StyleInAccordanceRule,
+                 "metanorma/iso/validation/rules/style_in_accordance_rule"
+        autoload :StyleRespectivelyRule,
+                 "metanorma/iso/validation/rules/style_respectively_rule"
+        autoload :StyleSentenceStartNumberRule,
+                 "metanorma/iso/validation/rules/style_sentence_start_number_rule"
+        autoload :StyleThatWhichRule,
+                 "metanorma/iso/validation/rules/style_that_which_rule"
+        autoload :StyleWordsDigitsRule,
+                 "metanorma/iso/validation/rules/style_words_digits_rule"
       end
     end
   end
