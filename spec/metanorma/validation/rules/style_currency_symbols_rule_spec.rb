@@ -43,12 +43,13 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleCurrencySymbolsRule do
     expect(rule.check(context_with(text))).to eq([])
   end
 
-  it "does not flag a bare dollar sign" do
-    # Unitsdb records no bare "$" symbol presentation for USD (its
-    # recorded presentation is "US$"); currencies without a recorded
-    # symbol presentation flag nothing here — the currency CODE rules
-    # cover the code-first policy.
-    expect(rule.check(context_with("a fee of $100 applies"))).to eq([])
+  it "flags a bare dollar sign with an amount" do
+    # unitsdb#140 ruling: ambiguity is explicit data — USD carries bare
+    # "$" (ambiguous: true) alongside "US$", and prose style-enforcement
+    # matches the full set including ambiguous presentations.
+    findings = rule.check(context_with("a fee of $100 applies"))
+    expect(findings).not_to be_empty
+    expect(findings.first.message).to match(/USD|4217/i)
   end
 
   it "does not flag ISO 4217 codes" do
@@ -80,7 +81,11 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleCurrencySymbolsRule do
     expect(described_class::CURRENCY_SYMBOLS).to match_array(expected)
     expect(described_class::CURRENCY_SYMBOLS)
       .to include("€", "£", "¥", "US$", "A$")
-    expect(described_class::CURRENCY_SYMBOLS).not_to include("$")
+    # The ambiguous presentations from the unitsdb#140 ruling are in
+    # the prose-enforcement set: bare "$" (USD), bare "¥" (CNY/JPY),
+    # "Fr." (CHF).
+    expect(described_class::CURRENCY_SYMBOLS)
+      .to include("$", "CN¥", "Fr.")
   end
 
   it "produces identical findings across repeated scans" do
