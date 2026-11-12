@@ -364,6 +364,11 @@ module Metanorma
             end
           end
 
+          # Serialization-only mirrors: carried by the JSON mapping, never
+          # by XML. json_content duplicates the element's text content,
+          # json_type names its type; walk_text skips both.
+          SERIALIZATION_ATTRIBUTE_NAMES = %i(json_type json_content).to_set.freeze
+
           private
 
           def contributor_has_role?(contributor, role_text)
@@ -424,6 +429,44 @@ module Metanorma
             end
           end
 
+          # Ruby attribute names of +klass+ whose values are metadata,
+          # not document text. Memoized: walk_text runs for every node
+          # of a walk. Two exclusion sources:
+          #
+          # 1. every attribute the class maps as an XML attribute. XML
+          #    attributes are metadata by construction: generated
+          #    identifiers (uuid-shaped ids otherwise flow into every
+          #    text-scanning rule, where the date-duration patterns match
+          #    their middle segments -- metanorma/metanorma-pdfa#115),
+          #    alignment, display order, and so on. A name mapped as XML
+          #    element or text content instead carries document text and
+          #    is kept: DocumentIdentifier maps +id+ as content
+          #    (<docidentifier>ISO 17301</docidentifier>), and
+          #    BibliographicItem maps +type+ as an element, so the
+          #    bibitem-extracting rules keep seeing that text;
+          # 2. SERIALIZATION_ATTRIBUTE_NAMES.
+          #
+          # A class with no XML mapping of its own keeps the legacy
+          # behavior: only source 2 applies.
+          def metadata_attribute_names(klass)
+            @metadata_attribute_names ||= {}
+            @metadata_attribute_names[klass] ||= begin
+              names = xml_metadata_attribute_names(klass)
+              names + SERIALIZATION_ATTRIBUTE_NAMES
+            end
+          end
+
+          def xml_metadata_attribute_names(klass)
+            return Set.new unless klass.respond_to?(:mappings_for)
+
+            xml = klass.mappings_for(:xml)
+            return Set.new unless xml
+
+            xml.mapping_attributes_hash.values.filter_map(&:to).to_set(&:to_sym)
+          rescue StandardError
+            Set.new
+          end
+
           def walk_text(node, stripped_types, parts)
             return if node.nil?
 
@@ -433,8 +476,11 @@ module Metanorma
             end
 
             if node.is_a?(Lutaml::Model::Serializable)
+              metadata_names = metadata_attribute_names(node.class)
               node.class.attributes.each_value do |attr_def|
-                next if stripped_types.include?(attr_def.name.to_sym)
+                name = attr_def.name.to_sym
+                next if stripped_types.include?(name)
+                next if metadata_names.include?(name)
 
                 value = node.public_send(attr_def.name)
                 walk_text_value(value, stripped_types, parts)
