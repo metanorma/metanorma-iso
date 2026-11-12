@@ -34,10 +34,10 @@ module Metanorma
             end
 
             # Code value declared via +code "ISO_N"+. Walks up the
-            # inheritance chain so subclasses (e.g. StyleRule < Base)
-            # inherit their parent's code unless overridden. This lets
-            # StyleRule declare +code "STANDOC_48"+ once and have every
-            # StyleRule subclass emit STANDOC_48 without re-declaring.
+            # inheritance chain so a subclass inherits its parent's code
+            # unless it declares its own. Style rules declare their own
+            # code per class: the log code is the suppression key, so one
+            # code per rule and no sharing.
             def code_value
               return @code_value if instance_variable_defined?(:@code_value) && @code_value
 
@@ -175,10 +175,38 @@ module Metanorma
           # params let IssueTranslator hand them to @log.add without
           # re-interpolation; the formatted message lets Reporters render
           # without re-running the template.
+          #
+          # The standardized policy citation suffix is appended from the
+          # rule's policy_metadata — one chokepoint per layer, per the
+          # owner's citation ruling: every rule-emitted validation message
+          # ends with the "(ISO House Style (2026), <category path>)" /
+          # "(ISO/IEC DIR 2:2021, <clause>)" citation. Rules without
+          # metadata emit uncited (the coverage specs enforce metadata
+          # completeness); the decorator never raises.
           def build_issue(location:, params: [])
-            Metanorma::Iso::Validation::Issue.from_finding(
+            suffix = Metanorma::Iso::Validation::Citation
+              .suffix(self.class.policy_metadata)
+            params = cited_params(params, suffix)
+            issue = Metanorma::Iso::Validation::Issue.from_finding(
               code: code, location: location, params: params
             )
+            return issue if suffix.nil? || issue.message.end_with?(suffix)
+
+            issue.message = "#{issue.message} #{suffix}"
+            issue
+          end
+
+          # The @log pipeline renders the registry template over the raw
+          # params: a "%s" template renders its single fully-worded param
+          # verbatim, so the citation rides the param and BOTH pipelines
+          # (log and Report) carry it at the end of the message. Structured
+          # or static templates would land the citation mid-message, so
+          # those are decorated at the Issue-message level only.
+          def cited_params(params, suffix)
+            return params if suffix.nil? || params.empty?
+            return params unless log_spec[:error] == "%s"
+
+            params[0..-2] + ["#{params.last} #{suffix}"]
           end
 
           # Model-based location string for an Issue. Returns nil for nil

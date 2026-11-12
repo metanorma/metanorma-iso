@@ -16,6 +16,8 @@ module Metanorma
         # and standards identifiers opening a sentence still flag: the
         # House Style makes no exception for them.
         class StyleSentenceStartNumberRule < StyleRule
+          code "ISO_114"
+
           policy category: "Numbers, values and dates > Numbers",
                  rule: "do not start a sentence with a numeral; write " \
                        "the number as a word ('Three samples ...')",

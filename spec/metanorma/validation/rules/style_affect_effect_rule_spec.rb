@@ -26,7 +26,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleAffectEffectRule do
         "This #{verb} the result of the test."
       ))
       expect(issues.size).to eq(1), "expected '#{verb} the result' flagged"
-      expect(issues.first.code).to eq("STANDOC_48")
+      expect(issues.first.code).to eq("ISO_68")
       expect(issues.first.message).to include("affect")
     end
   end

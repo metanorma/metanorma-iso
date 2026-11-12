@@ -34,6 +34,8 @@ module Metanorma
         # <sourcecode> blocks are never paragraph children, so they are
         # excluded structurally.
         class StyleOxfordSpellingRule < StyleRule
+          code "ISO_107"
+
           policy category: "Spelling and wording > Spelling",
                  rule: "use Oxford English spelling ('-ize', '-re', '-our', '-ogue'; e.g. 'organize', 'centre', 'colour')",
                  source: :house_style, mn_category: :style

@@ -12,6 +12,8 @@ module Metanorma
         # Walks the clause/annex hierarchy for section titles, and the
         # whole tree for table/figure captions (<name> elements).
         class StyleGuidelinesRule < StyleRule
+          code "ISO_92"
+
           policy category: "Spelling and wording > Guidance or guidelines",
                  rule: "'guidance' is preferred over 'guidelines' in titles and captions",
                  source: :house_style, mn_category: :style

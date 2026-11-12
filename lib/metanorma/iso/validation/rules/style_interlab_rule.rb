@@ -8,6 +8,8 @@ module Metanorma
         # Style: use "interlaboratory comparison", not "round robin" or
         # "ring test").
         class StyleInterlabRule < StyleRule
+          code "ISO_98"
+
           policy category: "Spelling and wording > Interlaboratory or intralaboratory",
                  rule: "use 'interlaboratory comparison', not 'round robin' or 'ring test'",
                  source: :house_style, mn_category: :style

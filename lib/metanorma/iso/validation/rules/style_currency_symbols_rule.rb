@@ -22,6 +22,8 @@ module Metanorma
         # excluded by StyleRule#prose_exclusions, and sourcecode blocks
         # are excluded structurally.
         class StyleCurrencySymbolsRule < StyleRule
+          code "ISO_80"
+
           policy category: "Spelling and wording > Names of countries, territories and currencies",
                  rule: "use ISO 4217 codes rather than currency symbols",
                  source: :house_style, mn_category: :style

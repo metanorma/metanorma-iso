@@ -9,7 +9,7 @@ module Metanorma
         # nested inside a numbered list, must be restructured (ISO House
         # Style). Same-type nesting (ol in ol, ul in ul) is permitted.
         class StyleMixedListsRule < Base
-          code "STANDOC_48"
+          code "ISO_101"
 
           policy category: "Lists",
                  rule: "mixed lists (numbered nested in unnumbered or vice versa) are not permitted",

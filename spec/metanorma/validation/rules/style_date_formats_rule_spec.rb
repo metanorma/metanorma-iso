@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleDateFormatsRule do
   it "flags an ordinal suffix before a month name" do
     issues = rule.check(context_with("adopted on 31st October 2026"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_83")
     expect(issues.first.message).to include("ordinal date suffix")
   end
 
@@ -42,7 +42,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleDateFormatsRule do
   it "flags month-first (US) date order with a comma" do
     issues = rule.check(context_with("published on October 31, 2026"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_83")
     expect(issues.first.message).to include("month-first date order")
   end
 

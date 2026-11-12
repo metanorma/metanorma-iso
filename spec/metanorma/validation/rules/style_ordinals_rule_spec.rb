@@ -25,7 +25,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleOrdinalsRule do
       "firstly measure, secondly record, thirdly report"
     ))
     expect(issues.size).to eq(3)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_106")
     expect(issues.first.message)
       .to include("use 'first', 'second', 'third'")
   end

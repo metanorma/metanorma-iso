@@ -9,6 +9,8 @@ module Metanorma
         # not "this Standard", "this International Standard" or "this
         # part of ISO ...").
         class StyleSelfReferenceRule < StyleRule
+          code "ISO_113"
+
           policy category: "Referencing > References in a document to itself",
                  rule: "refer to the current document as 'this document'",
                  source: :house_style, mn_category: :references

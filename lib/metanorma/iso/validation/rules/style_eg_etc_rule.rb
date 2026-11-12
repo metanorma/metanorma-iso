@@ -13,6 +13,8 @@ module Metanorma
         # and only reports when no sentence break ([.!?] + whitespace)
         # lies between them.
         class StyleEgEtcRule < StyleRule
+          code "ISO_85"
+
           policy category: "e.g., etc. family",
                  rule: "'e.g.' and 'etc.' never appear in the same sentence; no comma follows 'e.g.'/'i.e.'",
                  source: :house_style, mn_category: :style

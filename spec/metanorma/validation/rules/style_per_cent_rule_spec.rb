@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StylePerCentRule do
   it "flags 'percent' as one word" do
     issues = rule.check(context_with("about 50 percent by mass"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_109")
     expect(issues.first.message).to include("per cent")
   end
 

@@ -27,7 +27,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleMixedListsRule do
       </li></ul>
     BODY
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_101")
     expect(issues.first.message).to include("ordered list nested in unordered list")
   end
 

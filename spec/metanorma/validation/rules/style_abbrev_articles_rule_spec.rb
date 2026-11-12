@@ -25,7 +25,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleAbbrevArticlesRule do
        RPM RSA SLA UML URL].each do |initialism|
       issues = rule.check(context_with("uses a #{initialism} reference"))
       expect(issues.size).to eq(1), "expected 'a #{initialism}' to be flagged"
-      expect(issues.first.code).to eq("STANDOC_48")
+      expect(issues.first.code).to eq("ISO_63")
       expect(issues.first.message).to include("an")
     end
   end

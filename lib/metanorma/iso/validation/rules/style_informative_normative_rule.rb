@@ -16,6 +16,8 @@ module Metanorma
         # predicative sentences ("Annex B is informative") are correct
         # and are not matched.
         class StyleInformativeNormativeRule < StyleRule
+          code "ISO_97"
+
           policy category: "Referencing > Normative and informative",
                  rule: "do not name the normative/informative status of a cross-referenced element in text — the verbal form of the requirement states it",
                  source: :house_style, mn_category: :references

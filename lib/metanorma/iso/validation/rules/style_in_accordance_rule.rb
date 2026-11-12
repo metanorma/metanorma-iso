@@ -14,6 +14,8 @@ module Metanorma
         # from a closed list. Declarative sentences ("According to the
         # manufacturer, ...") pass.
         class StyleInAccordanceRule < StyleRule
+          code "ISO_95"
+
           policy category: "Spelling and wording",
                  rule: "in requirement sentences cite sources with " \
                        "'in accordance with', not 'according to'",

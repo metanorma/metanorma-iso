@@ -16,6 +16,8 @@ module Metanorma
         # The short forms "UK" and "US" are permitted exceptions and are
         # deliberately not flagged.
         class StyleCountryNamesRule < StyleRule
+          code "ISO_78"
+
           policy category: "Spelling and wording > Names of countries, territories and currencies",
                  rule: "use the official country names (DPRK, ROK, the Russian Federation, Viet Nam)",
                  source: :house_style, mn_category: :style

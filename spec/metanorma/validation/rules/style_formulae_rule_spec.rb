@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleFormulaeRule do
   it "flags 'formulas'" do
     issues = rule.check(context_with("the formulas are given in Annex A"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_91")
     expect(issues.first.message).to include("formulae")
   end
 

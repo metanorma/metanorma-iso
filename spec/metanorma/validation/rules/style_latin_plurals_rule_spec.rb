@@ -35,7 +35,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleLatinPluralsRule do
     wrong_to_right.each do |wrong, right|
       issues = rule.check(context_with("the listed #{wrong} apply"))
       expect(issues.size).to eq(1), "expected '#{wrong}' to be flagged"
-      expect(issues.first.code).to eq("STANDOC_48")
+      expect(issues.first.code).to eq("ISO_100")
       expect(issues.first.message).to include(right)
     end
   end

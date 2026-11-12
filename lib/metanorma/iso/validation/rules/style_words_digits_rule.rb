@@ -28,6 +28,8 @@ module Metanorma
         # Multi-digit numbers are out of scope by construction: the
         # scan matches only standalone digits 1-9.
         class StyleWordsDigitsRule < StyleRule
+          code "ISO_121"
+
           policy category: "Numbers, values and dates > General",
                  rule: "write the numbers one to nine as words in prose " \
                        "('three samples'); digits are reserved for units, " \

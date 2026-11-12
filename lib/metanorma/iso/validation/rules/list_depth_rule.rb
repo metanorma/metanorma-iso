@@ -6,9 +6,8 @@ module Metanorma
       module Rules
         # Style warning: lists deeper than 4 levels are discouraged.
         # Source: validate_list.rb#li_depth_validate.
-        # Emitted via STANDOC_48 (generic style warning).
         class ListDepthRule < Base
-          code "STANDOC_48"
+          code "ISO_59"
 
           policy category: "Lists",
                  rule: "a list can be subdivided up to four levels",

@@ -27,7 +27,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleOxfordSpellingRule do
   it "flags -ise spellings of -ize verbs" do
     issues = rule.check(context_with(paragraph("we organise the data")))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_107")
     expect(issues.first.message).to include("use '-ize'")
   end
 

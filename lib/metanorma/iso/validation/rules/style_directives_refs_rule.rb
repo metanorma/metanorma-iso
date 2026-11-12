@@ -8,7 +8,7 @@ module Metanorma
         # (normative references) or in the Bibliography, and their text
         # is not reproduced (ISO House Style).
         class StyleDirectivesRefsRule < Base
-          code "STANDOC_48"
+          code "ISO_84"
 
           policy category: "Relationship with the ISO/IEC Directives, Parts 1 and 2",
                  rule: "do not list the ISO/IEC Directives in Clause 2 or the Bibliography, or reproduce their text",

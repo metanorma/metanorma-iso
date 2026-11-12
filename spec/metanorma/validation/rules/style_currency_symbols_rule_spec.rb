@@ -24,7 +24,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleCurrencySymbolsRule do
   it "flags a Unitsdb-recorded symbol before an amount" do
     issues = rule.check(context_with("a fee of €100 applies"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_80")
     expect(issues.first.message).to include("ISO 4217")
     expect(issues.first.message).to include("USD 100")
     expect(issues.first.message).to include("currency symbol '€'")

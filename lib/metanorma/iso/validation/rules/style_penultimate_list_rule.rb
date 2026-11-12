@@ -9,7 +9,7 @@ module Metanorma
         # conjunction is permitted only where its omission would create
         # ambiguity.
         class StylePenultimateListRule < Base
-          code "STANDOC_48"
+          code "ISO_108"
 
           policy category: "Lists",
                  rule: "the penultimate list item omits 'and'/'or', except to avoid ambiguity",

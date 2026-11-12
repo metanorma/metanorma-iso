@@ -30,7 +30,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleDirectivesRefsRule do
                           '<bibitem id="ref2"><docidentifier>ISO 9001</docidentifier></bibitem>'
                         ))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_84")
     expect(issues.first.message).to include("ISO/IEC Directives Part 2")
     expect(issues.first.message).to include("Clause 2 (normative references)")
     expect(issues.first.message).to include("reproduce")

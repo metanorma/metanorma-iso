@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleEnDashRangesRule do
   it "flags a closed-up number range with a unit" do
     issues = rule.check(context_with("a thickness of 5-10 mm is typical"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_88")
     expect(issues.first.message).to include("10 mm to 20 mm")
     expect(issues.first.message).to include("5-10 mm")
   end

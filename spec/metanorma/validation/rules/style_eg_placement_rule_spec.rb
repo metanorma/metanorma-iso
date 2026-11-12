@@ -25,7 +25,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleEgPlacementRule do
       "wireless devices, e.g. radios, are permitted"
     ))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_86")
     expect(issues.first.message).to include("for example")
   end
 

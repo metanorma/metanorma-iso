@@ -18,6 +18,8 @@ module Metanorma
         # en dash rule: only spans whose two sides look like dates, years
         # or centuries are flagged.
         class StyleDateDurationRule < StyleRule
+          code "ISO_82"
+
           policy category: "Numbers, values and dates > Dates",
                  rule: "write date durations with 'to' ('10 to 15 March', '2020 to 2030'); spell centuries out in words",
                  source: :house_style, mn_category: :style

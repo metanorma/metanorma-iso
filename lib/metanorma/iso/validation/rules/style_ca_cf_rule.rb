@@ -9,6 +9,8 @@ module Metanorma
         # or "see"). "cf." without internal periods is correct and is
         # not flagged; nor is "e.g."/"i.e." (StyleEgEtcRule).
         class StyleCaCfRule < StyleRule
+          code "ISO_75"
+
           policy category: ["Abbreviated terms > ca. (approximately)",
                             "Abbreviated terms > c.f. (confer)"],
                  rule: "do not use 'ca.' (write 'approximately'); do not use 'c.f.' (write 'see')",

@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleAcDcRfRule do
   it "flags a.c. and d.c." do
     issues = rule.check(context_with("an a.c. supply and a d.c. motor"))
     expect(issues.size).to eq(2)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_67")
     expect(issues.map(&:message)).to include(
       /'AC' as an adjective/, /'DC' as an adjective/
     )

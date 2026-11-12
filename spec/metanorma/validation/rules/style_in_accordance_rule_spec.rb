@@ -25,7 +25,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleInAccordanceRule do
       "The test shall be carried out according to ISO 12345."
     ))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_95")
     expect(issues.first.message).to include("in accordance with")
   end
 

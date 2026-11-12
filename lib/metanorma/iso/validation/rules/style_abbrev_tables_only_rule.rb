@@ -15,6 +15,8 @@ module Metanorma
         # paragraph holders, so cells are excluded structurally. "ca."
         # is governed by StyleCaCfRule (write "approximately").
         class StyleAbbrevTablesOnlyRule < StyleRule
+          code "ISO_65"
+
           policy category: "Abbreviations and contractions",
                  rule: "write 'minimum', 'maximum' and 'laboratory' in full in text; 'min.', 'max.' and 'lab.' are for tables and figures",
                  source: :house_style, mn_category: :style

@@ -15,6 +15,8 @@ module Metanorma
         # terms") are exempt: a four-digit 18xx/19xx/20xx number
         # followed by a code is read as a year qualifier, not an amount.
         class StyleCurrencyCodeOrderRule < StyleRule
+          code "ISO_79"
+
           policy category: "Numbers, values and dates > Numbers",
                  rule: "put the ISO 4217 currency code in front of the amount ('USD 100 million')",
                  source: :house_style, mn_category: :style

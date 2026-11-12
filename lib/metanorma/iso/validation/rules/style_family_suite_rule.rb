@@ -8,6 +8,8 @@ module Metanorma
         # standards" (ISO House Style: use "documents on [subject]
         # developed by [committee]").
         class StyleFamilySuiteRule < StyleRule
+          code "ISO_89"
+
           policy category: "Spelling and wording > Family or suite of standards",
                  rule: "use 'documents on [subject] developed by [committee]', not 'family of standards'",
                  source: :house_style, mn_category: :style

@@ -26,7 +26,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleNumberRule do
   it "flags decimal points in paragraph text" do
     issues = rule.check(context_with("the value 3.14 is pi"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_105")
     expect(issues.first.message).to include("decimal point")
   end
 
@@ -73,7 +73,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleUnitsRule do
   it "flags missing space before %" do
     issues = rule.check(context_with("concentration is 50% by mass"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_116")
     expect(issues.first.message).to include("space before %")
   end
 

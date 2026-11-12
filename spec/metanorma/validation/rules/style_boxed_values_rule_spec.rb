@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleBoxedValuesRule do
   it "flags a boxed percent value" do
     issues = rule.check(context_with("<p>the content is [13,0 %] by mass</p>"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_74")
     expect(issues.first.message).to include("boxed value")
     expect(issues.first.message).to include("plain value")
   end

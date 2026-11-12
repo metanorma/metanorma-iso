@@ -6,9 +6,8 @@ module Metanorma
       module Rules
         # Style warning: no more than one ordered list per clause/annex
         # (ISO house style). Source: validate_list.rb#ol_count_validate.
-        # Emitted via STANDOC_48 (generic style warning).
         class ListCountRule < Base
-          code "STANDOC_48"
+          code "ISO_58"
 
           policy category: "Lists",
                  rule: "avoid more than one numbered list in a clause/subclause",

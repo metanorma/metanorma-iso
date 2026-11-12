@@ -12,6 +12,8 @@ module Metanorma
         #   - "on-line", "cyber_security", "cyber-security" are misspellings.
         #   - "need to", "might", "could" are ambiguous modal verbs.
         class StyleAmbigWordsRule < StyleRule
+          code "ISO_69"
+
           policy category: ["Punctuation > Use of /",
                             "Spelling and wording > IT terms",
                             "Spelling and wording > Need to",

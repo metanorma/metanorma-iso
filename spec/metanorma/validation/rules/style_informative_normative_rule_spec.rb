@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleInformativeNormativeRule 
   it "flags 'informative Annex B' in text" do
     issues = rule.check(context_with("see the informative Annex B"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_97")
     expect(issues.first.message).to include("informative Annex B")
   end
 

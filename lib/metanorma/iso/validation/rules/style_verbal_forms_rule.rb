@@ -15,6 +15,8 @@ module Metanorma
         # text is not distinguished from requirement phrasing and will
         # be reported too; the finding is a warning for the editor.
         class StyleVerbalFormsRule < StyleRule
+          code "ISO_118"
+
           policy category: "Verbal forms",
                  rule: "requirements are expressed with 'shall' — not 'will' or other verbal forms",
                  source: :house_style, mn_category: :style

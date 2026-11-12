@@ -15,6 +15,8 @@ module Metanorma
         # CPU's registers") stay unflagged: the possessive reading
         # cannot be ruled out from flat text.
         class StyleApostrophePluralsRule < StyleRule
+          code "ISO_70"
+
           policy category: "Punctuation > Apostrophes",
                  rule: "do not form plurals with the apostrophe ('the 1990s', not 'the 1990's')",
                  source: :house_style, mn_category: :style

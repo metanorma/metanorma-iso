@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleCvNotRsdRule do
   it "flags relative standard deviation" do
     issues = rule.check(context_with("the relative standard deviation"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_81")
     expect(issues.first.message).to include("coefficient of variation")
   end
 

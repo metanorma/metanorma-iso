@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleQuotationPunctuationRule 
   it "flags a full stop inside the quotes after a partial quotation" do
     issues = rule.check(context_with("the display shows &quot;standby.&quot;"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_111")
     expect(issues.first.message).to include("outside")
   end
 

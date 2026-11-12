@@ -10,6 +10,7 @@ RSpec.describe "Metanorma::Iso.validate top-level shortcut" do
   it "passes kwargs through" do
     xml = "<metanorma xmlns='https://www.metanorma.org/ns/standoc' type='semantic' flavor='iso'><bibdata><docidentifier>ISO 1</docidentifier></bibdata></metanorma>"
     report = Metanorma::Iso.validate(xml, profile: :publication)
-    expect(report.issues.none? { |i| i.code == "STANDOC_48" }).to be(true)
+    suppressed = Metanorma::Iso::Validation::Profile::PUBLICATION.except_codes
+    expect(report.issues.none? { |i| suppressed.include?(i.code) }).to be(true)
   end
 end

@@ -8,6 +8,8 @@ module Metanorma
         # "first", "second", "third", not "firstly", "secondly",
         # "thirdly").
         class StyleOrdinalsRule < StyleRule
+          code "ISO_106"
+
           policy category: "Numbers, values and dates > Numbers",
                  rule: "write first, second, third rather than firstly, secondly, thirdly",
                  source: :house_style, mn_category: :style

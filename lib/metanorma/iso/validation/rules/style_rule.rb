@@ -12,12 +12,12 @@ module Metanorma
         # of Issues (or [] for no findings). Override +#style_applicable?+
         # for context gating (script, language, doctype).
         #
-        # All style warnings emit STANDOC_48 (generic style warning).
-        # The "billions" / "ambiguous number" check remains in legacy
-        # form because it shares state with style_number_grouping.
+        # Each concrete style rule declares its own ISO log code (one
+        # code per rule: the code is the suppression key). The
+        # "billions" / "ambiguous number" check remains in legacy form
+        # because it shares state with style_number_grouping.
         class StyleRule < Base
           abstract!
-          code "STANDOC_48"
 
           def applicable?(context)
             return false if context.root.nil?

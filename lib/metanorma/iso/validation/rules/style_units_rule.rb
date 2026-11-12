@@ -12,6 +12,8 @@ module Metanorma
         # SI unit spacing and degree symbol checks remain in legacy form
         # pending inline-text-walking helpers.
         class StyleUnitsRule < StyleRule
+          code "ISO_116"
+
           policy category: "Numbers, values and dates > Numbers",
                  rule: "there is a space between the numerical value and the unit symbol ('10 %')",
                  source: %i[house_style directives], directives: "9.4",

@@ -25,7 +25,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::UniqueIdRule do
       expect(rule.check(context_with(xml))).to eq([])
     end
 
-    it "flags STANDOC_36 for duplicate ids" do
+    it "flags ISO_122 for duplicate ids" do
       xml = <<~XML
         <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="iso">
           <bibdata><docidentifier>ISO 1</docidentifier></bibdata>
@@ -37,7 +37,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::UniqueIdRule do
       XML
       issues = rule.check(context_with(xml))
       expect(issues.size).to eq(1)
-      expect(issues.first.code).to eq("STANDOC_36")
+      expect(issues.first.code).to eq("ISO_122")
     end
 
     it "populates SharedState with the id index" do
@@ -90,8 +90,8 @@ RSpec.describe Metanorma::Iso::Validation::Rules::UniqueIdRule do
   end
 
   describe "code" do
-    it "declares STANDOC_36" do
-      expect(described_class.new.code).to eq("STANDOC_36")
+    it "declares ISO_122" do
+      expect(described_class.new.code).to eq("ISO_122")
     end
   end
 end

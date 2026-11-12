@@ -19,6 +19,8 @@ module Metanorma
         # construction; a fragment capitalized at both ends cannot be
         # told apart from a sentence and stays unflagged.
         class StyleQuotationPunctuationRule < StyleRule
+          code "ISO_111"
+
           policy category: "Punctuation > Quotation marks",
                  rule: "the full stop goes inside the quotation marks only for a complete quoted sentence; partial quotations take the stop outside",
                  source: :house_style, mn_category: :style

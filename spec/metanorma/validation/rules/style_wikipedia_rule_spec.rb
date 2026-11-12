@@ -25,7 +25,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleWikipediaRule do
       "<p>see en.wikipedia.org/wiki/ISO for details</p>"
     ))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_120")
     expect(issues.first.message).to include("stable source")
   end
 

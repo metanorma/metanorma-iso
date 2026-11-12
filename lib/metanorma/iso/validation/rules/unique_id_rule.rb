@@ -4,9 +4,10 @@ module Metanorma
   module Iso
     module Validation
       module Rules
-        # STANDOC_36: every @id and @anchor must be unique within the
-        # document. Walks every model node with an :id or :anchor attribute,
-        # detects duplicates, and populates SharedState (doc_ids, doc_anchors,
+        # ISO_122: every @id and @anchor must be unique within the
+        # document (ISO House Style, Referencing). Walks every model node
+        # with an :id or :anchor attribute, detects duplicates, and
+        # populates SharedState (doc_ids, doc_anchors,
         # id_seq, anchor_seq) for downstream xref rules (TODOs 23-26).
         #
         # The legacy Standoc::Validate#repeat_id_validate also populates
@@ -15,7 +16,7 @@ module Metanorma
         # repeat_anchor_validate1 to skip duplicate detection (avoiding
         # double-reporting with this rule).
         class UniqueIdRule < Base
-          code "STANDOC_36"
+          code "ISO_122"
 
           policy category: "Referencing > References within the document",
                  rule: "identifiers must be unique so that cross-references are unambiguous",

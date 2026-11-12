@@ -40,7 +40,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleAbbrevTablesOnlyRule do
   it "flags 'min.' in prose" do
     issues = rule.check(context_with_paragraph("a min. of 5 V applies"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_65")
     expect(issues.first.message).to include("in full")
   end
 

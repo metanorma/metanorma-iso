@@ -13,6 +13,8 @@ module Metanorma
         # classification (+docpart_of+). When the parent is an
         # "inappropriate" context, applies modal-language regexes.
         class ModalInClauseRule < StyleRule
+          code "ISO_61"
+
           policy category: "Plain language",
                  rule: "Foreword, Abstract and Scope must not contain requirement, permission or recommendation language",
                  source: %i[house_style directives], directives: "12.2, 14.5",

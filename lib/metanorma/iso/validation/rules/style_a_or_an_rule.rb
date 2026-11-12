@@ -15,6 +15,8 @@ module Metanorma
         # so this rule skips initialisms entirely to avoid
         # double-flagging.
         class StyleAOrAnRule < StyleRule
+          code "ISO_62"
+
           policy category: "Grammar > A or an",
                  rule: "use 'an' before a vowel sound ('an hour') and 'a' " \
                        "before a consonant sound ('a European', 'a user')",

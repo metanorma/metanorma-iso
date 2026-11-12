@@ -24,7 +24,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::ListCountRule do
     expect(rule.check(context_with(xml))).to eq([])
   end
 
-  it "emits STANDOC_48 when clause has two ordered lists" do
+  it "emits ISO_58 when clause has two ordered lists" do
     xml = <<~XML
       <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="iso">
         <bibdata><docidentifier>ISO 1</docidentifier></bibdata>
@@ -38,7 +38,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::ListCountRule do
     XML
     issues = rule.check(context_with(xml))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_58")
     expect(issues.first.message).to include("More than 1 ordered list")
   end
 end
@@ -67,7 +67,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::ListDepthRule do
     expect(rule.check(context_with(xml))).to eq([])
   end
 
-  it "emits STANDOC_48 for a deeply nested list (>4 levels)" do
+  it "emits ISO_59 for a deeply nested list (>4 levels)" do
     deep_list = "<ul><li><ul><li><ul><li><ul><li><ul><li>deep</li></ul></li></ul></li></ul></li></ul></li></ul>"
     xml = <<~XML
       <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="iso">
@@ -81,7 +81,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::ListDepthRule do
     XML
     issues = rule.check(context_with(xml))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_59")
     expect(issues.first.message).to include("more than 4 levels")
   end
 end

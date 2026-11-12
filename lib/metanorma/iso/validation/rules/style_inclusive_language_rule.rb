@@ -22,6 +22,8 @@ module Metanorma
         # pairing is. Inflected forms of whitelist/blacklist are
         # covered ("whitelisted", "blacklisting").
         class StyleInclusiveLanguageRule < StyleRule
+          code "ISO_96"
+
           policy category: "Spelling and wording > Inclusive language",
                  rule: "use inclusive terminology; replace non-inclusive terms with the published alternatives",
                  source: %i[house_style directives], directives: "8.6",

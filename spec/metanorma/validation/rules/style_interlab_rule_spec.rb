@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleInterlabRule do
   it "flags round robin" do
     issues = rule.check(context_with("run a round robin test"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_98")
     expect(issues.first.message)
       .to include("interlaboratory comparison")
   end

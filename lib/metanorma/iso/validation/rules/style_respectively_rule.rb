@@ -15,6 +15,8 @@ module Metanorma
         # attempt is made to verify that the list positions actually
         # correspond.
         class StyleRespectivelyRule < StyleRule
+          code "ISO_112"
+
           policy category: "Grammar",
                  rule: "'respectively' requires a paired enumeration " \
                        "in the same sentence ('A and B, respectively')",

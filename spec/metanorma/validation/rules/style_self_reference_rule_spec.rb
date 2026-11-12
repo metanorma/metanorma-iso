@@ -25,7 +25,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleSelfReferenceRule do
       "this International Standard applies; this Standard applies"
     ))
     expect(issues.size).to eq(2)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_113")
     expect(issues.map(&:message)).to all(include("this document"))
   end
 

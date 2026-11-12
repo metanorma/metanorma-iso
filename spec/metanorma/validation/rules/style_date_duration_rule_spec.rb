@@ -23,7 +23,7 @@ RSpec.describe Metanorma::Iso::Validation::Rules::StyleDateDurationRule do
   it "flags a hyphenated day range before a month" do
     issues = rule.check(context_with("the session runs 10-15 March"))
     expect(issues.size).to eq(1)
-    expect(issues.first.code).to eq("STANDOC_48")
+    expect(issues.first.code).to eq("ISO_82")
     expect(issues.first.message).to include("use 'to'")
   end
 

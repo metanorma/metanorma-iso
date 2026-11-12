@@ -10,7 +10,7 @@ module Metanorma
         # are both forbidden. A clause containing only subclauses is NOT
         # empty: the subclauses carry the content.
         class StyleEmptyClauseRule < Base
-          code "STANDOC_48"
+          code "ISO_87"
 
           policy category: "Document structure",
                  rule: "no clause or annex without content beyond its title; note-only clauses are forbidden",
