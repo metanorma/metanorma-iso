@@ -322,6 +322,8 @@ module Metanorma
                  severity: 2 },
         ISO_142: { category: "Formatting", error: "%s",
                  severity: 2 },
+        ISO_143: { category: "Numbers, values and dates", error: "%s",
+                 severity: 2 },
       }.freeze
       # rubocop:enable Naming/VariableNumber
 

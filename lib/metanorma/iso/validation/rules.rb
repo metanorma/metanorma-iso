@@ -207,6 +207,9 @@ module Metanorma
                  "metanorma/iso/validation/rules/style_that_which_rule"
         autoload :StyleWordsDigitsRule,
                  "metanorma/iso/validation/rules/style_words_digits_rule"
+        # Ambiguous decimal-comma lint (metanorma/metanorma-standoc#1372).
+        autoload :StyleDecimalCommaRule,
+                 "metanorma/iso/validation/rules/style_decimal_comma_rule"
         # ISO House Style structural rules (issue #1705, tranche B):
         # model-traversal detection over document order, in alphabetical
         # order.
