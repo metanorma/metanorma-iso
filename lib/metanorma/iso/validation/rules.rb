@@ -206,7 +206,17 @@ module Metanorma
                  "metanorma/iso/validation/rules/style_that_which_rule"
         autoload :StyleWordsDigitsRule,
                  "metanorma/iso/validation/rules/style_words_digits_rule"
-      end
+        # ISO House Style structural rules (issue #1705, tranche B):
+        # model-traversal detection over document order, in alphabetical
+        # order.
+        autoload :AbbrevFirstUseRule,
+                 "metanorma/iso/validation/rules/abbrev_first_use_rule"
+        autoload :AssetCitedFirstRule,
+                 "metanorma/iso/validation/rules/asset_cited_first_rule"
+        autoload :DocumentOrderWalk,
+                 "metanorma/iso/validation/rules/document_order_walk"
+        autoload :TermSourceCompleteRule,
+                 "metanorma/iso/validation/rules/term_source_complete_rule"      end
     end
   end
 end
