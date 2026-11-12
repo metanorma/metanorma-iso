@@ -165,7 +165,27 @@ module Metanorma
                  "metanorma/iso/validation/rules/style_no_nos_rule"
         autoload :StyleVagueTimeRule,
                  "metanorma/iso/validation/rules/style_vague_time_rule"
-        # ISO House Style context-dependent rules (issue #1705, tranche
+
+        # ISO House Style heuristic-limited and model-dependent rules
+        # (issue #1705, tranches D+E), in alphabetical order:
+        autoload :StyleAbbrevTablesOnlyRule,
+                 "metanorma/iso/validation/rules/style_abbrev_tables_only_rule"
+        autoload :StyleAbbrevUppercaseRule,
+                 "metanorma/iso/validation/rules/style_abbrev_uppercase_rule"
+        autoload :StyleApostrophePluralsRule,
+                 "metanorma/iso/validation/rules/style_apostrophe_plurals_rule"
+        autoload :StyleBarKnotFootnoteRule,
+                 "metanorma/iso/validation/rules/style_bar_knot_footnote_rule"
+        autoload :StyleEgPlacementRule,
+                 "metanorma/iso/validation/rules/style_eg_placement_rule"
+        autoload :StyleInformativeNormativeRule,
+                 "metanorma/iso/validation/rules/style_informative_normative_rule"
+        autoload :StyleQuotationPunctuationRule,
+                 "metanorma/iso/validation/rules/style_quotation_punctuation_rule"
+        autoload :StyleVerbalFormsRule,
+                 "metanorma/iso/validation/rules/style_verbal_forms_rule"
+        autoload :StyleVocabTitleRule,
+                 "metanorma/iso/validation/rules/style_vocab_title_rule"        # ISO House Style context-dependent rules (issue #1705, tranche
         # A): sentence-level analysis via Validation::SentenceScan, in
         # alphabetical order.
         autoload :StyleAffectEffectRule,
