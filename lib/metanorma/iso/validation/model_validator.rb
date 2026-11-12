@@ -38,13 +38,19 @@ module Metanorma
           #   validation (see TODO 33).
           # @return [Report] when output_format is :log.
           # @return [Array(Report, String)] when output_format is :text/:json/:yaml.
+          #
+          # Rule discovery consults the ACTIVE COMPOSITION:
+          # {ComposedRegistry.for} with the state's flavor identity. For
+          # flavors without import declarations this is the plain
+          # RuleRegistry set — a behavioral no-op.
           def run(xml_string, log:, state: nil, document: nil,
                   output_format: :log,
                   profile: Profile::DEFAULT, enable_layer1: false)
             root = deserialize(xml_string)
             state ||= StateExtractor.extract(root, document: document)
+            registry = ComposedRegistry.for(flavor: state&.flavor)
             context = Context.new(root: root, log: log, state: state,
-                                  shared: SharedState.new)
+                                  shared: SharedState.new, registry: registry)
             report = Report.new(
               document: state.document,
               generated_at: Time.now.utc.iso8601
@@ -75,7 +81,11 @@ module Metanorma
           end
 
           def run_layer3_rules(context, profile)
-            instances = RuleRegistry.new.all.map(&:new)
+            # Rule discovery goes through the ACTIVE COMPOSITION: the
+            # flavor's declared imports composed with flavor-local rules
+            # (ComposedRegistry). For flavors without declarations this
+            # is exactly the plain RuleRegistry set — a behavioral no-op.
+            instances = context.registry.all.map(&:new)
             instances = profile.select_rules(instances)
 
             instances.flat_map do |rule|
