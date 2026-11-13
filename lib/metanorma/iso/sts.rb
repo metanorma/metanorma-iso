@@ -4,17 +4,16 @@ require "sts"
 require "metanorma/document"
 
 module Metanorma
-  autoload :IsoDocument, "metanorma/iso_document"
+  autoload :IsoDocument, "metanorma/iso/document"
 
   module Iso
     # Native metanorma-document ISO-STS transformer (the +:isosts+ output
     # format).
     #
-    # QA GATE: this path is OFF by default. mnconvert
-    # (+IsoDoc::Iso::IsoStsConvert+) remains the +:isosts+ default until the
-    # ISO-STS transformer QA is signed off; only then is the default flipped.
-    # Enable for testing / after sign-off with +METANORMA_ISO_NATIVE_STS=1+ or
-    # +Metanorma::Iso::Sts.enabled = true+.
+    # This path is ON by default: the native document-model driver is the
+    # production +:isosts+ path, with mnconvert
+    # (+IsoDoc::Iso::IsoStsConvert+) retained as the rollback escape
+    # (+METANORMA_ISO_NATIVE_STS=0+ or +Metanorma::Iso::Sts.enabled = false+).
     #
     # NISO +:sts+ has no metanorma-document transformer and always stays on
     # mnconvert; this gate governs +:isosts+ only.
@@ -28,10 +27,10 @@ module Metanorma
         attr_writer :enabled
 
         # @return [Boolean] whether the native ISO-STS transformer is enabled.
-        #   Defaults to true — the native document-model driver is now the
-        #   production path. Set +@enabled = false+ or
-        #   +METANORMA_ISO_NATIVE_STS=0+ to fall back to mnconvert (one
-        #   release cycle's rollback safety).
+        #   Defaults to true — the native document-model driver is the
+        #   production +:isosts+ path. Set +@enabled = false+ or
+        #   +METANORMA_ISO_NATIVE_STS=0+ to fall back to mnconvert (the
+        #   rollback escape for one release cycle).
         def enabled?
           return @enabled unless @enabled.nil?
 
@@ -40,7 +39,7 @@ module Metanorma
 
         # Convert a Metanorma ISO XML input into an ISO-STS XML string.
         #
-        # @param input [String, Pathname, #read, Metanorma::IsoDocument::Root]
+        # @param input [String, Pathname, #read, Metanorma::Iso::Document::Root]
         #   the source. Strings/pathnames/IO are parsed as XML.
         # @return [String] ISO-STS XML.
         def convert(input)

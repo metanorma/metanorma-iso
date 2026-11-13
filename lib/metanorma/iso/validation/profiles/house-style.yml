@@ -1,0 +1,18 @@
+# ISO House Style family (issue #1720).
+#
+# Source-first family: every rule citing the ISO House Style
+# (www.iso.org/ISO-house-style.html) as a policy source. A rule that
+# ALSO cites ISO/IEC Directives Part 2 (dual-source rules, e.g.
+# ModalInClauseRule, StyleInclusiveLanguageRule, StyleNumberRule,
+# StyleUnitsRule) appears here as well as in directives.yml: the two
+# families are independent imports, and a flavor never gets one bundled
+# with the other unless it imports both.
+#
+# Sub-selections of this family are published alongside it
+# (house-style-core, lists, referencing, oxford-spelling) for flavors
+# that want finer-grained imports.
+schema: metanorma-validation-profile/1
+profile: house-style
+flavor: iso
+select:
+  - source: house_style

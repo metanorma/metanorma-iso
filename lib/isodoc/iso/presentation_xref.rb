@@ -56,7 +56,7 @@ module IsoDoc
       def subclause?(target, type, from)
         (from&.include?(".") && type == "clause") ||
           type == "list" ||
-          target&.gsub(/<[^<>]+>/, "")&.match(/^IEV$|^IEC 60050-/)
+          target&.delete("<>")&.match(/^IEV$|^IEC 60050-/)
       end
 
       # ISO has not bothered to communicate to us what most of these
@@ -78,8 +78,16 @@ module IsoDoc
 
       def locality_span_wrap(ret, type)
         type or return ret
-        m = /\A(\s*)(?=\S)(.+?)(\s*)\Z/m.match(ret) or return ret
-        ret = [m[1], m[2], m[3]]
+        # Two-pointer trim: a quantified trim regex over library input is
+        # quadratic on whitespace-heavy strings (CodeQL
+        # rb/polynomial-redos).
+        lead = 0
+        lead += 1 while lead < ret.length && ret[lead].match?(/\s/)
+        trail = ret.length
+        trail -= 1 while trail > lead && ret[trail - 1].match?(/\s/)
+        return ret if lead == trail
+
+        ret = [ret[0...lead], ret[lead...trail], ret[trail..]]
         spanclass = LOCALITY2SPAN[type.to_sym] and
           ret[1] = "<span class='#{spanclass}'>#{ret[1]}</span>"
         ret.join

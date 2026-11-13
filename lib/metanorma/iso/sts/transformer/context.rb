@@ -7,7 +7,7 @@ module Metanorma
         attr_reader :source, :id_generator, :footnote_collector
 
         # Accepts a {Transformer::SourceDocument}, a raw
-        # {Metanorma::IsoDocument::Root}, or +nil+ (legacy test fixtures
+        # {Metanorma::Iso::Document::Root}, or +nil+ (legacy test fixtures
         # build contexts without a source). Internally always stores a
         # {SourceDocument} so transformers have a uniform accessor surface.
         def initialize(source)

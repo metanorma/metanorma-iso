@@ -1,0 +1,89 @@
+# frozen_string_literal: true
+
+module Metanorma
+  module Iso
+    module Validation
+      module Rules
+        # Base class for text-linting style rules. Each style rule walks
+        # every paragraph in the document, extracts its text content,
+        # and applies rule-specific regex/logic via +#scan_text+.
+        #
+        # Subclasses override +#scan_text(node, text)+ to return an Array
+        # of Issues (or [] for no findings). Override +#style_applicable?+
+        # for context gating (script, language, doctype).
+        #
+        # Each concrete style rule declares its own ISO log code (one
+        # code per rule: the code is the suppression key). The
+        # "billions" / "ambiguous number" check remains in legacy form
+        # because it shares state with style_number_grouping.
+        class StyleRule < Base
+          abstract!
+
+          def applicable?(context)
+            return false if context.root.nil?
+
+            style_applicable?(context)
+          end
+
+          def check(context)
+            issues = []
+            each_paragraph_with_parent(context.root) do |paragraph, parent|
+              text = extract_text(paragraph, strip: prose_exclusions).strip
+              next if text.empty?
+
+              issues.concat(scan_text(parent, text))
+            end
+            issues
+          end
+
+          # Model attribute names excluded from the extracted prose text.
+          # Mathematical content (<stem>, <fmt-stem>) is technical, not
+          # prose: word-list rules must not lint formula source. This
+          # reproduces the legacy checks' behavior, which removed <stem>
+          # nodes before text extraction. <sourcecode> needs no entry:
+          # it is a block element and never a paragraph child, so it is
+          # excluded structurally.
+          def prose_exclusions
+            %i(stem fmt_stem)
+          end
+
+          # Hook: return true if this rule should run for the given context.
+          # Default: always applicable when root is present (checked in
+          # +applicable?+). Override for script/language gating.
+          def style_applicable?(_context)
+            true
+          end
+
+          # Hook: scan one paragraph's text and return any findings.
+          # +node+ is the paragraph's immediate container (clause/figure/
+          # etc.); +text+ is the extracted text content, stripped.
+          # Default: no findings. Override in subclasses.
+          def scan_text(_node, _text)
+            []
+          end
+
+          protected
+
+          # Helper for subclasses: emit one finding per regex match.
+          def findings_for_matches(node, text, regex, label_template)
+            matches = text.scan(regex).flatten.compact.uniq
+            matches.map do |match|
+              build_warning(node, format(label_template, match))
+            end
+          end
+
+          # Helper: emit a single finding when regex matches at all.
+          def finding_if_match(node, text, regex, label)
+            return [] unless text.match?(regex)
+
+            [build_warning(node, label)]
+          end
+
+          def build_warning(node, message)
+            build_issue(location: model_location(node), params: [message])
+          end
+        end
+      end
+    end
+  end
+end

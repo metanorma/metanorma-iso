@@ -2,7 +2,7 @@ require_relative "init"
 require "isodoc"
 require_relative "presentation_xref"
 require_relative "presentation_bibdata"
-require_relative "../../relaton/render/general"
+require_relative "../../metanorma/iso/citation_style"
 
 module IsoDoc
   module Iso
@@ -11,7 +11,7 @@ module IsoDoc
         concept_term(docxml)
         (docxml.xpath(ns("//concept")) - docxml.xpath(ns("//term//concept")))
           .each do |node|
-          node.ancestors("definition, source, related").empty? and
+          !in_concept_container?(node) and
             concept_render(node, ital: "false", ref: "false",
                                  linkref: "true", linkmention: "false")
         end
@@ -22,10 +22,30 @@ module IsoDoc
           m = {}
           (f.xpath(ns(".//concept")) - f.xpath(ns(".//term//concept")))
             .each do |c|
-              c.ancestors("definition, source, related").empty? and
+              !in_concept_container?(c) and
                 concept_term1(c, m)
             end
         end
+      end
+
+      # The concepts the ISO pass renders are the ones OUTSIDE the semantic
+      # <definition>/<source>/<related> containers: their display twins under
+      # <fmt-definition>, the body text, and the term notes. Concepts inside
+      # the semantic containers must be left untouched — their xrefs are not
+      # resolved there, and no renderer displays the semantic copy. 81593cc
+      # inverted this polarity (metanorma-iso#1692): every visible mention
+      # came out empty because the pass rendered only the invisible copy.
+      # Node#ancestors(selector) runs an XPath match per ancestor; with
+      # this called per concept on deeply nested terms it is quadratic on
+      # large vocabularies. Walk parents directly instead.
+      def in_concept_container?(node)
+        parent = node.parent
+        while parent.is_a?(Nokogiri::XML::Element)
+          return true if %w[definition source related].include?(parent.name)
+
+          parent = parent.parent
+        end
+        false
       end
 
       def concept_term1(node, seen)

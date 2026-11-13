@@ -1,0 +1,13 @@
+# ISO/IEC Directives Part 2 family (issue #1720).
+#
+# Source-first family: every rule citing ISO/IEC Directives Part 2 as a
+# policy source. A rule that ALSO cites the ISO House Style (dual-source
+# rules, e.g. ModalInClauseRule, StyleInclusiveLanguageRule,
+# StyleNumberRule, StyleUnitsRule) appears here as well as in
+# house-style.yml: the two families are independent imports, and a
+# flavor never gets one bundled with the other unless it imports both.
+schema: metanorma-validation-profile/1
+profile: directives
+flavor: iso
+select:
+  - source: directives

@@ -2,6 +2,7 @@ require "isodoc"
 require_relative "metadata"
 require_relative "xref"
 require_relative "i18n"
+require_relative "../../metanorma/iso/citation_style"
 
 module IsoDoc
   module Iso
@@ -20,7 +21,7 @@ module IsoDoc
                                        i18nyaml: i18nyaml || @i18nyaml)
       end
 
-      def update_i18n(docxml)
+      def update_i18n(_docxml)
         @docscheme ||= "2024"
         %w(1951 1972).include?(@docscheme) and
           i18n_conditional_set("reference_number", "reference_number_abbrev")
@@ -34,7 +35,7 @@ module IsoDoc
       end
 
       def bibrenderer(options = {})
-        ::Relaton::Render::Iso::General.new(options
+        Metanorma::Iso::CitationStyle.new(options
           .merge(language: @lang, script: @script, i18nhash: @i18n.get,
                  config: @relatonrenderconfig))
       end

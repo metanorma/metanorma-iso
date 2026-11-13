@@ -109,9 +109,9 @@ RSpec.describe Metanorma::Iso::Processor do
 
   it "registers output formats against metanorma" do
     output = <<~OUTPUT
-      [[:doc, "doc"], [:html, "html"], [:html_alt, "alt.html"], [:isosts, "iso.sts.xml"], [:pdf, "pdf"], [:presentation, "presentation.xml"], [:rxl, "rxl"], [:sts, "sts.xml"], [:sts_html, "sts.html"], [:xml, "xml"]]
+      [[:doc, "doc"], [:docx, "docx"], [:html, "html"], [:html_alt, "alt.html"], [:isosts, "iso.sts.xml"], [:pdf, "pdf"], [:presentation, "presentation.xml"], [:rxl, "rxl"], [:sts, "sts.xml"], [:sts_html, "sts.html"], [:xml, "xml"]]
     OUTPUT
-    expect(processor.output_formats.sort.to_s).to be_equivalent_to output.chop
+    expect(processor.output_formats.sort.to_s).to be_xml_equivalent_to output.chop
   end
 
   it "registers version against metanorma" do

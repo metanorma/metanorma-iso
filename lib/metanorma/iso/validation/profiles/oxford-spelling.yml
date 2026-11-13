@@ -1,0 +1,11 @@
+# ISO House Style Oxford spelling sub-profile (issue #1720): the
+# British-Oxford spelling rule of the house-style family, selected by
+# its policy category. Useful for flavors that want the spelling check
+# alone rather than the whole style core.
+schema: metanorma-validation-profile/1
+profile: oxford-spelling
+flavor: iso
+select:
+  - mn_category: style
+    source: house_style
+    category: "Spelling and wording > Spelling"

@@ -62,13 +62,13 @@ target_setter:)
             Metanorma::Document::Components::MultiParagraph::QuoteBlock =>
               %i[quote_transformer transform disp_quote],
             # Section-level elements
-            Metanorma::IsoDocument::Sections::IsoClauseSection =>
+            Metanorma::Iso::Document::Sections::IsoClauseSection =>
               %i[section_transformer transform sec],
-            Metanorma::IsoDocument::Sections::IsoTermsSection =>
+            Metanorma::Iso::Document::Sections::IsoTermsSection =>
               %i[term_transformer transform_section term_sec],
-            Metanorma::IsoDocument::Sections::IsoAnnexSection =>
+            Metanorma::Iso::Document::Sections::IsoAnnexSection =>
               %i[section_transformer transform_annex sec],
-            Metanorma::StandardDocument::Sections::StandardReferencesSection =>
+            Metanorma::Standoc::Document::Sections::StandardReferencesSection =>
               %i[reference_transformer transform_list ref_list],
           }
 

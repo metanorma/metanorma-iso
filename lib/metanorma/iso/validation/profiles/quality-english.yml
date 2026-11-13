@@ -1,0 +1,30 @@
+# General tier: flavor-neutral English-quality rules (issue #1720).
+#
+# These rules enforce good-English substance -- English spelling,
+# contractions, a-or-an agreement, confusable word pairs, apostrophe
+# plurals -- rather than ISO policy. The policy metadata axes
+# (mn_category / source) do not carry a general-vs-ISO distinction, so
+# the tier is expressed as an explicit, curated class-name selection.
+#
+# The rule classes stay physically in metanorma-iso for v1 (no
+# premature extraction); the tier is a selection only.
+#
+# OPT-IN ONLY: no flavor runs these rules unless it imports this
+# profile. Importers should declare `cite_as:` so emitted messages
+# attribute the finding to the importing flavor's own specification
+# (the composition defaults the citation to "<FLAVOR> style").
+schema: metanorma-validation-profile/1
+profile: quality-english
+flavor: iso
+select:
+  # Explicit class entries (stable rule class names): English spelling,
+  # contractions, a-or-an, confusable pairs, apostrophe plurals.
+  - class:
+      - StyleOxfordSpellingRule
+      - StyleContractionsRule
+      - StyleAOrAnRule
+      - StyleAffectEffectRule
+      - StyleAssureEnsureRule
+      - StyleFewerLessRule
+      - StyleThatWhichRule
+      - StyleApostrophePluralsRule

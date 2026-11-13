@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{ site_name }} — {{ organization }}</title>
+<meta name="description" content="{{ site_name }} — official document registry published with Metanorma.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Source+Code+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>{{ base_css }}</style>
+<style>{{ theme_css }}</style>
+<script>
+  (function () {
+    // Same key + mode cycle as the documents (metanorma-document reader),
+    // so the theme carries across page navigations.
+    var MODES = ["light", "sepia", "dark", "oled"];
+    var KEY = "metanorma-theme";
+    var t = null;
+    try { t = localStorage.getItem(KEY); } catch (e) {}
+    if (MODES.indexOf(t) === -1) {
+      t = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    document.documentElement.setAttribute("data-theme", t);
+  })();
+</script>
+</head>
+<body>
+
+<header class="doc-header">
+  <div class="header-brand">
+    {% if logo_html %}{{ logo_html }}{% endif %}
+    <span class="header-org">{{ organization }}</span>
+  </div>
+  <div class="header-tools">
+    <span class="build-chip">build {{ generated }}</span>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">◐</button>
+  </div>
+</header>
+
+<section class="cover-band">
+  <div class="wrap">
+    <p class="cover-kicker">Official document registry</p>
+    <h1 class="cover-title">{{ site_name }}</h1>
+    <div class="search-wrap">
+      <svg class="search-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <input type="text" id="doc-search" class="search-input" placeholder="Search by identifier, title, stage or format" autocomplete="off" spellcheck="false">
+      <kbd class="search-kbd">/</kbd>
+    </div>
+    <p class="cover-meta"><span>{{ documents.size }} documents</span><span>{{ format_count }} formats</span><span>aggregated {{ generated }}</span></p>
+  </div>
+</section>
+
+<main class="wrap">
+  {% for doc in documents %}
+  <article class="doc-card" data-search="{{ doc.id }} {{ doc.title }} {{ doc.stage }} {{ doc.doctype }}" style="--i: {{ forloop.index0 }}">
+    <div class="doc-card-main">
+      <div class="doc-card-head">
+        <span class="doc-id">{{ doc.id }}</span>
+        <span class="head-chips">
+          {% if doc.doctype %}<span class="chip chip-doctype">{{ doc.doctype }}</span>{% endif %}
+          {% if doc.stage %}
+            {% assign draft_stage = false %}
+            {% if doc.stage contains "draft" or doc.stage contains "wd" or doc.stage contains "cd" or doc.stage contains "awi" or doc.stage contains "np" or doc.stage contains "fdis" or doc.stage contains "fdam" or doc.stage contains "fdts" or doc.stage contains "fdguide" or doc.stage contains "fdtr" or doc.stage contains "fd" %}{% assign draft_stage = true %}{% endif %}
+            <span class="chip {% if draft_stage %}chip-draft{% else %}chip-published{% endif %}">
+              <span class="chip-dot"></span>{{ doc.stage | replace: '_', ' ' }}
+            </span>
+          {% endif %}
+        </span>
+      </div>
+      <h2 class="doc-title">{{ doc.title }}</h2>
+      <p class="doc-meta">
+        {% if doc.edition %}<span class="meta-item">Edition <strong>{{ doc.edition }}</strong></span>{% endif %}
+        {% if doc.date %}<span class="meta-item">{{ doc.date }}</span>{% endif %}
+      </p>
+    </div>
+    <div class="doc-actions">
+      {% for f in doc.files %}
+        {% assign is_mnd = false %}
+        {% if f.name contains ".mnd." %}{% assign is_mnd = true %}{% endif %}
+        {% if f.format == "html" and is_mnd %}
+          <a class="btn btn-accent" href="docs/{{ f.path }}" title="New reading experience">HTML <span class="btn-note">new</span></a>
+        {% elsif f.format == "html" %}
+          <a class="btn btn-primary" href="docs/{{ f.path }}">HTML</a>
+        {% elsif f.format == "pdf" %}
+          <a class="btn" href="docs/{{ f.path }}">PDF</a>
+        {% elsif f.format == "doc" %}
+          <a class="btn" href="docs/{{ f.path }}">Word</a>
+        {% elsif f.format == "xml" %}
+          <a class="btn" href="docs/{{ f.path }}">XML</a>
+        {% elsif f.format == "rxl" %}
+          <a class="btn" href="docs/{{ f.path }}" title="Relaton XML">RXL</a>
+        {% else %}
+          <a class="btn" href="docs/{{ f.path }}">{{ f.format }}</a>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </article>
+  {% endfor %}
+  <p id="no-results" class="no-results" hidden>No documents match your search.</p>
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <span class="footer-org">{{ organization }}</span>
+    <span class="footer-tooling">aggregated {{ generated }} · metanorma-release + metanorma</span>
+  </div>
+</footer>
+
+<script>
+  (function () {
+    var MODES = ["light", "sepia", "dark", "oled"];
+    var KEY = "metanorma-theme";
+    var toggle = document.getElementById("theme-toggle");
+    toggle.addEventListener("click", function () {
+      var root = document.documentElement;
+      var current = root.getAttribute("data-theme") || "light";
+      var next = MODES[(MODES.indexOf(current) + 1) % MODES.length];
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem(KEY, next); } catch (e) {}
+    });
+    var input = document.getElementById("doc-search");
+    var cards = document.querySelectorAll(".doc-card");
+    var none = document.getElementById("no-results");
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "/" && document.activeElement !== input) { e.preventDefault(); input.focus(); }
+    });
+    input.addEventListener("input", function () {
+      var q = input.value.trim().toLowerCase(), shown = 0;
+      cards.forEach(function (card, i) {
+        var hit = !q || card.getAttribute("data-search").toLowerCase().indexOf(q) !== -1;
+        card.hidden = !hit;
+        card.style.setProperty("--i", hit ? i : -1);
+        if (hit) shown++;
+      });
+      none.hidden = shown !== 0;
+    });
+  })();
+</script>
+</body>
+</html>
