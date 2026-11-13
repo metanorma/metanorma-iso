@@ -66,9 +66,10 @@ module Metanorma
 
       def ol_attrs(node)
         ret = super
-        ret.delete(:type)
-        # test
-        # ret[:display] = node.attr("display")
+        # The depth-based numbering style overrides the semantic type, but
+        # the list-suppression types (nobullet/no-bullet/none) must pass
+        # through to the renderers (metanorma-pdfa#103).
+        ret.delete(:type) unless %w(nobullet no-bullet none).include?(ret[:type].to_s)
         ret
       end
 
