@@ -72,9 +72,18 @@ module Metanorma
           def render_children(node, skip: [])
             return render_inline(node) if mixed_model?(node)
 
+            # lutaml-model records element_order only while parsing element
+            # children. Nodes whose content maps to a plain text attribute
+            # (e.g. NISO <xref> via map_content) carry their text there and
+            # keep element_order nil, so fall back to the mapped text.
+            order = node.element_order
+            if order.nil? || order.empty?
+              return escape(mapped_text_content(node))
+            end
+
             mapping = @mapping_cache[node.class][:elements]
             indices = Hash.new(0)
-            node.element_order.filter_map do |entry|
+            order.filter_map do |entry|
               case entry.node_type
               when :text
                 escape(entry.text_content.to_s)
@@ -112,8 +121,15 @@ module Metanorma
             @mapping_cache[node.class][:mixed]
           end
 
+          # Text content stored through +map_content+ (the XML mapping's
+          # content rule), when the model has one. "" otherwise.
+          def mapped_text_content(node)
+            attr = @mapping_cache[node.class][:content]
+            attr ? node.public_send(attr).to_s : ""
+          end
+
           def build_mapping(klass)
-            return { elements: {}, mixed: false } unless lutaml_model?(klass)
+            return { elements: {}, mixed: false, content: nil } unless lutaml_model?(klass)
 
             instance = klass.allocate
             xml_mapping = klass.mappings_for(:xml, instance.lutaml_register)
@@ -121,9 +137,10 @@ module Metanorma
             xml_mapping.mapping_elements_hash.each_value do |rule_or_array|
               Array(rule_or_array).each { |rule| elements[rule.name.to_s] = rule.to }
             end
-            { elements: elements, mixed: xml_mapping.mixed_content? }
+            { elements: elements, mixed: xml_mapping.mixed_content?,
+              content: xml_mapping.content_mapping&.to }
           rescue Lutaml::Model::Error
-            { elements: {}, mixed: false }
+            { elements: {}, mixed: false, content: nil }
           end
 
           def lutaml_model?(klass)
