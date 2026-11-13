@@ -87,6 +87,18 @@ module IsoDoc
         @excluded_styles
       end
 
+      # The exclusion globs expanded to the concrete styleIds they match
+      # in the era style library; the end-to-end asserter intersects the
+      # used styleIds against this list.
+      def excluded_style_ids(library = IsoDoc::Iso::Docx::StyleLibrary.load_default)
+        globs = @excluded_styles["globs"] || []
+        return [] if globs.empty?
+
+        library.all_style_ids.select do |id|
+          globs.any? { |g| File.fnmatch(g, id.to_s, File::FNM_CASEFOLD) }
+        end
+      end
+
       def paragraph_style(key)
         paragraph_styles[key.to_sym]
       end
