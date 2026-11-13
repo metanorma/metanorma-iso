@@ -32,8 +32,16 @@ module IsoDoc
           id = extract_prop(primary, :value)
           return "" unless id
 
+          # Presentation-XML identifiers already render their year
+          # ("ISO/DIS 17301-1:2026"); appending the copyright year is only
+          # needed when the rendered identifier carries none.
           year = copyright_year(bib)
-          id_with_year = year ? "#{id}:#{year}" : id
+          id_with_year =
+            if year && !id.end_with?(":#{year}")
+              "#{id}:#{year}"
+            else
+              id
+            end
           "#{id_with_year}(#{language_code(bib)})"
         end
 
