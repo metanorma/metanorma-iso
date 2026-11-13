@@ -34,6 +34,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "metanorma-document", "~> 0.4.0"
   spec.add_dependency "metanorma-standoc", "~> 3.4.2"
   spec.add_dependency "mnconvert", "~> 1.14"
+  spec.add_dependency "omml" # plurimath/omml: DOCX formula OMML conversion
+  spec.add_dependency "plurimath" # DOCX formula MathML/OMML source
   spec.add_dependency "pubid"
   spec.add_dependency "tokenizer", "~> 0.3.0"
   spec.add_dependency "uniword", "~> 1.0"

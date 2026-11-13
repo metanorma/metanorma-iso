@@ -10,7 +10,9 @@ module IsoDoc
           include Base
 
           def render(element, para)
-            name = element.id || element.name
+            # metanorma-document 0.4.x Bookmark: id is the base IdElement
+            # attribute, anchor the bookmark's own name.
+            name = element.id || element.anchor
             return unless name
 
             id = context.next_bookmark_id.to_s
