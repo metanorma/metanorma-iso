@@ -1,0 +1,4523 @@
+---
+style_library:
+  name: ISO DIS Template (Era C — late Typefi)
+  version: late_typefi
+  description: Styles extracted from 20250530-ISO_DIS_15926-100.docx
+  template_era: late_typefi
+  reference_doc: 20250530-ISO_DIS_15926-100.docx
+  reference_doc_sha256: 3d500eabc9564a8872edce573a2c1daee39de5e70282d4e061b5d9a53e64954c
+  extracted_at: '2026-06-18T14:43:56Z'
+  paragraph_styles:
+    Normal:
+      id: Normal
+      type: paragraph
+      name: Normal
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '240'
+          line: '240'
+        alignment: both
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+          eastAsia: MS Mincho
+        font_size: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_val: en-GB
+        lang_eastasia: ja-JP
+    Heading1:
+      id: Heading1
+      type: paragraph
+      name: heading 1
+      based_on: BaseHeading
+      next_style: Normal
+      linked_style: Heading1Char
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '4'
+        spacing:
+          before: '270'
+          line: '270'
+        indent:
+          left: '0'
+          firstLine: '0'
+        tabs:
+        - type: left
+          position: '400'
+        - type: left
+          position: '560'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        fonts:
+          eastAsia: MS Mincho
+        font_size: '26'
+        font_size_cs: '20'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_val: nl-NL
+        lang_eastasia: ja-JP
+    Heading2:
+      id: Heading2
+      type: paragraph
+      name: heading 2
+      based_on: Heading1
+      next_style: Normal
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          ilvl: '1'
+        spacing:
+          before: '60'
+          line: '250'
+        indent:
+          left: '0'
+          firstLine: '0'
+        tabs:
+        - type: clear
+          position: '400'
+        - type: clear
+          position: '560'
+        - type: left
+          position: '540'
+        - type: left
+          position: '700'
+        outline_level: '1'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '24'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Heading3:
+      id: Heading3
+      type: paragraph
+      name: heading 3
+      based_on: Heading1
+      next_style: Normal
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          ilvl: '2'
+        spacing:
+          before: '60'
+          line: '230'
+        indent:
+          left: '0'
+          firstLine: '0'
+        tabs:
+        - type: clear
+          position: '400'
+        - type: clear
+          position: '560'
+        - type: left
+          position: '880'
+        outline_level: '2'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Heading4:
+      id: Heading4
+      type: paragraph
+      name: heading 4
+      based_on: Heading3
+      next_style: Normal
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          ilvl: '3'
+        indent:
+          left: '0'
+          firstLine: '0'
+        tabs:
+        - type: clear
+          position: '880'
+        - type: left
+          position: '940'
+        - type: left
+          position: '1140'
+        - type: left
+          position: '1360'
+        outline_level: '3'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    Heading5:
+      id: Heading5
+      type: paragraph
+      name: heading 5
+      based_on: Heading4
+      next_style: Normal
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          ilvl: '4'
+        indent:
+          left: '0'
+          firstLine: '0'
+        tabs:
+        - type: clear
+          position: '940'
+        - type: clear
+          position: '1140'
+        - type: clear
+          position: '1360'
+        outline_level: '4'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    Heading6:
+      id: Heading6
+      type: paragraph
+      name: heading 6
+      based_on: Heading5
+      next_style: Normal
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          ilvl: '5'
+        outline_level: '5'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    Heading7:
+      id: Heading7
+      type: paragraph
+      name: heading 7
+      based_on: Normal
+      next_style: Normal
+      linked_style: Heading7Char
+      ui_priority: '9'
+      quick_format: true
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        numbering:
+          num_id: '4'
+          ilvl: '6'
+        spacing:
+          before: '40'
+          after: '0'
+        outline_level: '6'
+        keep_next: true
+        keep_lines: true
+        page_break_before: false
+      run_properties:
+        fonts:
+          asciiTheme: majorHAnsi
+          hAnsiTheme: majorHAnsi
+          cstheme: majorBidi
+          eastAsiaTheme: majorEastAsia
+        bold: false
+        italic: true
+        color: 1F3763
+        small_caps: false
+        all_caps: false
+    Heading8:
+      id: Heading8
+      type: paragraph
+      name: heading 8
+      based_on: Normal
+      next_style: Normal
+      linked_style: Heading8Char
+      ui_priority: '9'
+      quick_format: true
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        numbering:
+          num_id: '4'
+          ilvl: '7'
+        spacing:
+          before: '40'
+          after: '0'
+        outline_level: '7'
+        keep_next: true
+        keep_lines: true
+        page_break_before: false
+      run_properties:
+        fonts:
+          asciiTheme: majorHAnsi
+          hAnsiTheme: majorHAnsi
+          cstheme: majorBidi
+          eastAsiaTheme: majorEastAsia
+        font_size: '21'
+        font_size_cs: '21'
+        bold: false
+        italic: false
+        color: '272727'
+        small_caps: false
+        all_caps: false
+    Heading9:
+      id: Heading9
+      type: paragraph
+      name: heading 9
+      based_on: Normal
+      next_style: Normal
+      linked_style: Heading9Char
+      ui_priority: '9'
+      quick_format: true
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        numbering:
+          num_id: '4'
+          ilvl: '8'
+        spacing:
+          before: '40'
+          after: '0'
+        outline_level: '8'
+        keep_next: true
+        keep_lines: true
+        page_break_before: false
+      run_properties:
+        fonts:
+          asciiTheme: majorHAnsi
+          hAnsiTheme: majorHAnsi
+          cstheme: majorBidi
+          eastAsiaTheme: majorEastAsia
+        font_size: '21'
+        font_size_cs: '21'
+        bold: false
+        italic: true
+        color: '272727'
+        small_caps: false
+        all_caps: false
+    IntroHeading1:
+      id: IntroHeading1
+      type: paragraph
+      name: IntroHeading1
+      based_on: Heading2
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '8'
+          ilvl: '0'
+        spacing:
+          before: '270'
+          line: '270'
+        indent:
+          left: '0'
+          firstLine: '0'
+        alignment: both
+        tabs:
+        - type: clear
+          position: '540'
+        - type: left
+          position: '400'
+        - type: left
+          position: '560'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '26'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    IntroHeading2:
+      id: IntroHeading2
+      type: paragraph
+      name: IntroHeading2
+      based_on: Heading3
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '8'
+          ilvl: '1'
+        spacing:
+          line: '250'
+        indent:
+          left: '0'
+          firstLine: '0'
+        alignment: both
+        tabs:
+        - type: left
+          position: '540'
+        - type: left
+          position: '700'
+        outline_level: '1'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '24'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    IntroHeading3:
+      id: IntroHeading3
+      type: paragraph
+      name: IntroHeading3
+      based_on: Heading4
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '8'
+          ilvl: '2'
+        indent:
+          left: '0'
+          firstLine: '0'
+        alignment: both
+        tabs:
+        - type: left
+          position: '880'
+        outline_level: '2'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    IntroHeading4:
+      id: IntroHeading4
+      type: paragraph
+      name: IntroHeading4
+      based_on: Heading5
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '8'
+          ilvl: '3'
+        indent:
+          left: '0'
+          firstLine: '0'
+        alignment: both
+        tabs:
+        - type: left
+          position: '940'
+        - type: left
+          position: '1140'
+        - type: left
+          position: '1360'
+        outline_level: '3'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    IntroHeading5:
+      id: IntroHeading5
+      type: paragraph
+      name: IntroHeading5
+      based_on: Heading6
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '8'
+          ilvl: '4'
+        indent:
+          left: '0'
+          firstLine: '0'
+        alignment: both
+        outline_level: '4'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    IntroHeading6:
+      id: IntroHeading6
+      type: paragraph
+      name: IntroHeading6
+      based_on: Heading7
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '8'
+          ilvl: '5'
+        outline_level: '5'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    IntroHeading7:
+      id: IntroHeading7
+      type: paragraph
+      name: IntroHeading7
+      based_on: Heading8
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '8'
+          ilvl: '6'
+        outline_level: '6'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: false
+        italic: true
+        color: 1F3763
+        small_caps: false
+        all_caps: false
+    IntroHeading8:
+      id: IntroHeading8
+      type: paragraph
+      name: IntroHeading8
+      based_on: Heading9
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '8'
+          ilvl: '7'
+        outline_level: '7'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    IntroHeading9:
+      id: IntroHeading9
+      type: paragraph
+      name: IntroHeading9
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '8'
+          ilvl: '8'
+        spacing:
+          before: '40'
+        alignment: both
+        outline_level: '8'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        fonts:
+          asciiTheme: majorHAnsi
+          hAnsiTheme: majorHAnsi
+          cstheme: majorBidi
+          eastAsiaTheme: majorEastAsia
+        font_size: '21'
+        font_size_cs: '21'
+        bold: false
+        italic: true
+        color: '272727'
+        small_caps: false
+        all_caps: false
+    BaseHeading:
+      id: BaseHeading
+      type: paragraph
+      name: Base_Heading
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '240'
+          line: '240'
+        outline_level: '0'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+        font_size: '22'
+        font_size_cs: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_val: en-GB
+        lang_eastasia: en-US
+    BaseText:
+      id: BaseText
+      type: paragraph
+      name: Base_Text
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '240'
+          line: '240'
+        alignment: both
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+        font_size: '22'
+        font_size_cs: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_val: en-GB
+        lang_eastasia: en-US
+    a2:
+      id: a2
+      type: paragraph
+      name: a2
+      based_on: BaseText
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '7'
+          ilvl: '1'
+        spacing:
+          before: '270'
+          line: '270'
+        tabs:
+        - type: clear
+          position: '360'
+        - type: left
+          position: '500'
+        - type: left
+          position: '720'
+        outline_level: '1'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '28'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    a3:
+      id: a3
+      type: paragraph
+      name: a3
+      based_on: BaseText
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '7'
+          ilvl: '2'
+        spacing:
+          line: '250'
+        tabs:
+        - type: clear
+          position: '720'
+        - type: left
+          position: '864'
+        outline_level: '2'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    a4:
+      id: a4
+      type: paragraph
+      name: a4
+      based_on: BaseText
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '7'
+          ilvl: '3'
+        tabs:
+        - type: left
+          position: '880'
+        outline_level: '3'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    a5:
+      id: a5
+      type: paragraph
+      name: a5
+      based_on: BaseText
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '7'
+          ilvl: '4'
+        tabs:
+        - type: left
+          position: '1140'
+        - type: left
+          position: '1360'
+        outline_level: '4'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    a6:
+      id: a6
+      type: paragraph
+      name: a6
+      based_on: BaseText
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '7'
+          ilvl: '5'
+        tabs:
+        - type: left
+          position: '1140'
+        - type: left
+          position: '1360'
+        outline_level: '5'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    ANNEX:
+      id: ANNEX
+      type: paragraph
+      name: ANNEX
+      based_on: BaseHeading
+      next_style: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '7'
+        spacing:
+          after: '760'
+          line: '310'
+        alignment: center
+        keep_next: true
+        keep_lines: false
+        page_break_before: true
+      run_properties:
+        fonts:
+          eastAsia: MS Mincho
+        font_size: '28'
+        font_size_cs: '20'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_eastasia: ja-JP
+    ANNEXHead:
+      id: ANNEXHead
+      type: paragraph
+      name: ANNEX Head
+      based_on: BaseHeading
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        font_size: '28'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    BiblioEntry:
+      id: BiblioEntry
+      type: paragraph
+      name: Biblio Entry
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '662'
+          hanging: '662'
+        alignment: left
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    BiblioTitle:
+      id: BiblioTitle
+      type: paragraph
+      name: Biblio Title
+      based_on: BaseHeading
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '760'
+          line: '280'
+        alignment: center
+        keep_next: false
+        keep_lines: false
+        page_break_before: true
+      run_properties:
+        font_size: '28'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    BodyText-:
+      id: BodyText-
+      type: paragraph
+      name: Body Text (-)
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '220'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '18'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    BodyTextindent1:
+      id: BodyTextindent1
+      type: paragraph
+      name: Body Text indent 1
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '403'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    BodyTextindent1-:
+      id: BodyTextindent1-
+      type: paragraph
+      name: Body Text indent 1 (-)
+      based_on: BodyTextindent1
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '220'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '18'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    BodyTextIndent3:
+      id: BodyTextIndent3
+      type: paragraph
+      name: Body Text Indent 3
+      based_on: BodyTextIndent2
+      linked_style: BodyTextIndent3Char
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        indent:
+          left: '1208'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size_cs: '16'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    BodyTextindent2-:
+      id: BodyTextindent2-
+      type: paragraph
+      name: Body Text indent 2 (-)
+      based_on: BodyTextIndent2
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '220'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '18'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    BodyTextindent3-:
+      id: BodyTextindent3-
+      type: paragraph
+      name: Body Text indent 3 (-)
+      based_on: BodyTextIndent3
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '220'
+        indent:
+          left: '1202'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '18'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    BodyTextindent4:
+      id: BodyTextindent4
+      type: paragraph
+      name: Body Text indent 4
+      based_on: BodyTextIndent3
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '1605'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    BodyTextindent4-:
+      id: BodyTextindent4-
+      type: paragraph
+      name: Body Text indent 4 (-)
+      based_on: BodyTextindent4
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '220'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        fonts:
+          eastAsia: MS Mincho
+        font_size: '18'
+        font_size_cs: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_eastasia: ja-JP
+    BodyTextCenter:
+      id: BodyTextCenter
+      type: paragraph
+      name: Body Text_Center
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        alignment: center
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    BodyTextLeft:
+      id: BodyTextLeft
+      type: paragraph
+      name: Body Text_Left
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '120'
+        alignment: left
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    IndexLetter:
+      id: IndexLetter
+      type: paragraph
+      name: IndexLetter
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '120'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    Code:
+      id: Code
+      type: paragraph
+      name: Code
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '0'
+        alignment: left
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Code-:
+      id: Code-
+      type: paragraph
+      name: Code (-)
+      based_on: Code
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '220'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '18'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Code--:
+      id: Code--
+      type: paragraph
+      name: Code (--)
+      based_on: Code
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '200'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '16'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    CoverTitleA1:
+      id: CoverTitleA1
+      type: paragraph
+      name: Cover Title_A1
+      based_on: BaseHeading
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '1600'
+          line: '360'
+        outline_level: '9'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '32'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    CoverTitleA2:
+      id: CoverTitleA2
+      type: paragraph
+      name: Cover Title_A2
+      based_on: CoverTitleA1
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    CoverTitleA3:
+      id: CoverTitleA3
+      type: paragraph
+      name: Cover Title_A3
+      based_on: CoverTitleA1
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    CoverTitleB:
+      id: CoverTitleB
+      type: paragraph
+      name: Cover Title_B
+      based_on: BaseHeading
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        outline_level: '9'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: false
+        italic: true
+        small_caps: false
+        all_caps: false
+        lang_val: fr-FR
+    Definition:
+      id: Definition
+      type: paragraph
+      name: Definition
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '230'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    Dimension100:
+      id: Dimension100
+      type: paragraph
+      name: Dimension_100
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '60'
+          line: '220'
+        alignment: right
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Dimension50:
+      id: Dimension50
+      type: paragraph
+      name: Dimension_50
+      based_on: Dimension100
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          right: '2434'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    Dimension75:
+      id: Dimension75
+      type: paragraph
+      name: Dimension_75
+      based_on: Dimension100
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          right: '1253'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    dl:
+      id: dl
+      type: paragraph
+      name: dl
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '806'
+          hanging: '403'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    Example:
+      id: Example
+      type: paragraph
+      name: Example
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '220'
+        tabs:
+        - type: left
+          position: '1354'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Examplecontinued:
+      id: Examplecontinued
+      type: paragraph
+      name: Example continued
+      based_on: Example
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    Exampleindent:
+      id: Exampleindent
+      type: paragraph
+      name: Example indent
+      based_on: Example
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '403'
+        tabs:
+        - type: clear
+          position: '1354'
+        - type: left
+          position: '1757'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    Exampleindentcontinued:
+      id: Exampleindentcontinued
+      type: paragraph
+      name: Example indent continued
+      based_on: Exampleindent
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    Figureexample:
+      id: Figureexample
+      type: paragraph
+      name: Figure example
+      based_on: Example
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    FigureGraphic:
+      id: FigureGraphic
+      type: paragraph
+      name: Figure Graphic
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '240'
+          after: '120'
+        alignment: center
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+    Note:
+      id: Note
+      type: paragraph
+      name: Note
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '220'
+        tabs:
+        - type: left
+          position: '965'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Note8:
+      id: Note8
+      type: paragraph
+      name: Note (8)
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '220'
+        tabs:
+        - type: left
+          position: '965'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '18'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Figurenote:
+      id: Figurenote
+      type: paragraph
+      name: Figure note
+      based_on: Note
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    Figuresubtitle:
+      id: Figuresubtitle
+      type: paragraph
+      name: Figure subtitle
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '120'
+          after: '120'
+        alignment: center
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    Figuretitle:
+      id: Figuretitle
+      type: paragraph
+      name: Figure title
+      based_on: BaseHeading
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '240'
+          after: '360'
+        alignment: center
+        outline_level: '9'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    ForewordText:
+      id: ForewordText
+      type: paragraph
+      name: Foreword Text
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    zzForeword:
+      id: zzForeword
+      type: paragraph
+      name: zzForeword
+      based_on: BaseHeading
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '310'
+          after: '310'
+          line: '310'
+        keep_next: true
+        keep_lines: false
+        page_break_before: true
+      run_properties:
+        font_size: '28'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    Formula:
+      id: Formula
+      type: paragraph
+      name: Formula
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '220'
+        indent:
+          left: '403'
+        alignment: left
+        tabs:
+        - type: right
+          position: '9749'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    IntroTitle:
+      id: IntroTitle
+      type: paragraph
+      name: Intro Title
+      based_on: zzForeword
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    KeyText:
+      id: KeyText
+      type: paragraph
+      name: Key Text
+      based_on: BodyText-
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '60'
+        indent:
+          left: '346'
+          hanging: '346'
+        tabs:
+        - type: left
+          position: '346'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    KeyTitle:
+      id: KeyTitle
+      type: paragraph
+      name: Key Title
+      based_on: KeyText
+      next_style: KeyText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        alignment: left
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    FigLegendTitle:
+      id: FigLegendTitle
+      type: paragraph
+      name: Fig Legend_Title
+      based_on: KeyText
+      next_style: KeyText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        alignment: left
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    ListContinue1:
+      id: ListContinue1
+      type: paragraph
+      name: List Continue 1
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        numbering:
+          num_id: '3'
+        indent:
+          left: '357'
+          hanging: '357'
+        tabs:
+        - type: left
+          position: '720'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListContinue1-:
+      id: ListContinue1-
+      type: paragraph
+      name: List Continue 1 (-)
+      based_on: ListContinue1
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '210'
+        indent:
+          left: '403'
+          hanging: '403'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    ListContinue2:
+      id: ListContinue2
+      type: paragraph
+      name: List Continue 2
+      based_on: ListContinue1
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '806'
+          hanging: '403'
+        tabs:
+        - type: left
+          position: '800'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListContinue2-:
+      id: ListContinue2-
+      type: paragraph
+      name: List Continue 2 (-)
+      based_on: ListContinue1-
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '1200'
+          hanging: '810'
+        alignment: left
+        tabs:
+        - type: left
+          position: '806'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListContinue3:
+      id: ListContinue3
+      type: paragraph
+      name: List Continue 3
+      based_on: ListContinue1
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        tabs:
+        - type: left
+          position: '1200'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListContinue3-:
+      id: ListContinue3-
+      type: paragraph
+      name: List Continue 3 (-)
+      based_on: ListContinue1-
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '1209'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListContinue4:
+      id: ListContinue4
+      type: paragraph
+      name: List Continue 4
+      based_on: ListContinue1
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        tabs:
+        - type: left
+          position: '1600'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListContinue4-:
+      id: ListContinue4-
+      type: paragraph
+      name: List Continue 4 (-)
+      based_on: ListContinue1-
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '1598'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListNumber1:
+      id: ListNumber1
+      type: paragraph
+      name: List Number 1
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '403'
+          hanging: '403'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListNumber1-:
+      id: ListNumber1-
+      type: paragraph
+      name: List Number 1 (-)
+      based_on: ListNumber1
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '210'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    ListNumber2:
+      id: ListNumber2
+      type: paragraph
+      name: List Number 2
+      based_on: ListNumber1
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '806'
+        tabs:
+        - type: left
+          position: '800'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListNumber2-:
+      id: ListNumber2-
+      type: paragraph
+      name: List Number 2 (-)
+      based_on: ListNumber1-
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '806'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListNumber3:
+      id: ListNumber3
+      type: paragraph
+      name: List Number 3
+      based_on: ListNumber1
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '1208'
+        tabs:
+        - type: left
+          position: '1200'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListNumber3-:
+      id: ListNumber3-
+      type: paragraph
+      name: List Number 3 (-)
+      based_on: ListNumber1-
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '1209'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListNumber4:
+      id: ListNumber4
+      type: paragraph
+      name: List Number 4
+      based_on: ListNumber1
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '1599'
+        tabs:
+        - type: left
+          position: '1600'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListNumber4-:
+      id: ListNumber4-
+      type: paragraph
+      name: List Number 4 (-)
+      based_on: ListNumber1-
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '1598'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    BodyText2:
+      id: BodyText2
+      type: paragraph
+      name: Body Text 2
+      based_on: Normal
+      linked_style: BodyText2Char
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: true
+      paragraph_properties:
+        spacing:
+          after: '120'
+          line: '480'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    TermNum:
+      id: TermNum
+      type: paragraph
+      name: TermNum
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '0'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    Tabletitle:
+      id: Tabletitle
+      type: paragraph
+      name: Table title
+      based_on: Figuretitle
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '120'
+          after: '120'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+    Tablebody:
+      id: Tablebody
+      type: paragraph
+      name: Table body
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '60'
+          after: '60'
+          line: '210'
+        alignment: left
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Tablebody-:
+      id: Tablebody-
+      type: paragraph
+      name: Table body (-)
+      based_on: Tablebody
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        font_size: '18'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Tablebody--:
+      id: Tablebody--
+      type: paragraph
+      name: Table body (--)
+      based_on: Tablebody
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        font_size: '16'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Tablebody0:
+      id: Tablebody0
+      type: paragraph
+      name: Table body (+)
+      based_on: Tablebody
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '230'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Tablefooter:
+      id: Tablefooter
+      type: paragraph
+      name: Table footer
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '60'
+          after: '60'
+          line: '200'
+        tabs:
+        - type: left
+          position: '346'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '18'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Tableheader:
+      id: Tableheader
+      type: paragraph
+      name: Table header
+      based_on: Tablebody
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    Tableheader-:
+      id: Tableheader-
+      type: paragraph
+      name: Table header (-)
+      based_on: Tablebody-
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    Tableheader--:
+      id: Tableheader--
+      type: paragraph
+      name: Table header (--)
+      based_on: Tablebody--
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    Tableheader0:
+      id: Tableheader0
+      type: paragraph
+      name: Table header (+)
+      based_on: Tablebody0
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    Notice:
+      id: Notice
+      type: paragraph
+      name: Notice
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    p2:
+      id: p2
+      type: paragraph
+      name: p2
+      based_on: Heading2
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        alignment: both
+        tabs:
+        - type: clear
+          position: '540'
+        - type: left
+          position: '562'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+    p3:
+      id: p3
+      type: paragraph
+      name: p3
+      based_on: Heading3
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        alignment: both
+        tabs:
+        - type: left
+          position: '720'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+    p4:
+      id: p4
+      type: paragraph
+      name: p4
+      based_on: Heading4
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        alignment: both
+        tabs:
+        - type: left
+          position: '1094'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+    p5:
+      id: p5
+      type: paragraph
+      name: p5
+      based_on: Heading5
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        alignment: both
+        tabs:
+        - type: left
+          position: '1094'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+    p6:
+      id: p6
+      type: paragraph
+      name: p6
+      based_on: Heading6
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        alignment: both
+        tabs:
+        - type: left
+          position: '1440'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+    TermNum2:
+      id: TermNum2
+      type: paragraph
+      name: TermNum2
+      based_on: p2
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '0'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+    TermNum3:
+      id: TermNum3
+      type: paragraph
+      name: TermNum3
+      based_on: p3
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '0'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+    TermNum4:
+      id: TermNum4
+      type: paragraph
+      name: TermNum4
+      based_on: p4
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '0'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+    TermNum5:
+      id: TermNum5
+      type: paragraph
+      name: TermNum5
+      based_on: p5
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '0'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+    TermNum6:
+      id: TermNum6
+      type: paragraph
+      name: TermNum6
+      based_on: p6
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '0'
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+    RefNorm:
+      id: RefNorm
+      type: paragraph
+      name: RefNorm
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    Notecontinued:
+      id: Notecontinued
+      type: paragraph
+      name: Note continued
+      based_on: Note
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    Noteindent:
+      id: Noteindent
+      type: paragraph
+      name: Note indent
+      based_on: Note
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '403'
+        tabs:
+        - type: clear
+          position: '965'
+        - type: left
+          position: '1368'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    Noteindentcontinued:
+      id: Noteindentcontinued
+      type: paragraph
+      name: Note indent continued
+      based_on: Noteindent
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    MainTitle1:
+      id: MainTitle1
+      type: paragraph
+      name: Main Title 1
+      based_on: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '400'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '32'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    MainTitle2:
+      id: MainTitle2
+      type: paragraph
+      name: Main Title 2
+      based_on: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        outline_level: '1'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '32'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    MainTitle3:
+      id: MainTitle3
+      type: paragraph
+      name: Main Title 3
+      based_on: Normal
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        outline_level: '2'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '32'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    TableGraphic:
+      id: TableGraphic
+      type: paragraph
+      name: Table Graphic
+      based_on: FigureGraphic
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    ListContinue:
+      id: ListContinue
+      type: paragraph
+      name: List Continue
+      based_on: Normal
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        spacing:
+          after: '120'
+        indent:
+          left: '360'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    BiblioDescription:
+      id: BiblioDescription
+      type: paragraph
+      name: Biblio Description
+      based_on: BaseText
+      next_style: BiblioEntry
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    ListNumber5-:
+      id: ListNumber5-
+      type: paragraph
+      name: List Number 5 (-)
+      based_on: ListNumber1-
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '1996'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    ListContinue5-:
+      id: ListContinue5-
+      type: paragraph
+      name: List Continue 5 (-)
+      based_on: ListContinue1-
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '1593'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    BiblioText:
+      id: BiblioText
+      type: paragraph
+      name: Biblio Text
+      based_on: BaseText
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    FigureImage:
+      id: FigureImage
+      type: paragraph
+      name: Figure Image
+      based_on: FigureGraphic
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    Figuredescription:
+      id: Figuredescription
+      type: paragraph
+      name: Figure description
+      based_on: Figuretitle
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size_cs: '24'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Formuladescription:
+      id: Formuladescription
+      type: paragraph
+      name: Formula description
+      based_on: Formula
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size_cs: '24'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Tabledescription:
+      id: Tabledescription
+      type: paragraph
+      name: Table description
+      based_on: Tabletitle
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size_cs: '24'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Box-begin:
+      id: Box-begin
+      type: paragraph
+      name: Box-begin
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        alignment: left
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size_cs: '24'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Box-end:
+      id: Box-end
+      type: paragraph
+      name: Box-end
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        alignment: left
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size_cs: '24'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Box-title:
+      id: Box-title
+      type: paragraph
+      name: Box-title
+      based_on: BaseHeading
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '26'
+        font_size_cs: '24'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    BodyText:
+      id: BodyText
+      type: paragraph
+      name: Body Text
+      based_on: BaseText
+      linked_style: BodyTextChar
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: true
+    FrontHead:
+      id: FrontHead
+      type: paragraph
+      name: Front Head
+      based_on: BaseHeading
+      next_style: BodyText
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '310'
+          after: '310'
+          line: '310'
+        keep_next: true
+        keep_lines: false
+        page_break_before: true
+      run_properties:
+        font_size: '28'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    IndexHead:
+      id: IndexHead
+      type: paragraph
+      name: Index Head
+      based_on: BaseHeading
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '760'
+          line: '280'
+        alignment: center
+        keep_next: false
+        keep_lines: false
+        page_break_before: true
+      run_properties:
+        font_size: '28'
+        font_size_cs: '28'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    Exampleindent2:
+      id: Exampleindent2
+      type: paragraph
+      name: Example indent 2
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '220'
+        indent:
+          left: '805'
+        tabs:
+        - type: left
+          position: '1758'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Exampleindent2continued:
+      id: Exampleindent2continued
+      type: paragraph
+      name: Example indent 2 continued
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '220'
+        indent:
+          left: '805'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Noteindent2continued:
+      id: Noteindent2continued
+      type: paragraph
+      name: Note indent 2 continued
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '220'
+        indent:
+          left: '805'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Noteindent2:
+      id: Noteindent2
+      type: paragraph
+      name: Note indent 2
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '220'
+        indent:
+          left: '805'
+        tabs:
+        - type: left
+          position: '1758'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    AMENDTermsHeading:
+      id: AMENDTermsHeading
+      type: paragraph
+      name: AMEND Terms Heading
+      based_on: Heading1
+      next_style: BodyText
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    zzCopyright:
+      id: zzCopyright
+      type: paragraph
+      name: zzCopyright
+      based_on: Normal
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    boxedText:
+      id: boxedText
+      type: paragraph
+      name: boxedText
+      based_on: Normal
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: true
+        keep_lines: true
+        page_break_before: false
+    zzSTDTitle:
+      id: zzSTDTitle
+      type: paragraph
+      name: zzSTDTitle
+      based_on: MainTitle1
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          eastAsia: Calibri
+        font_size_cs: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_eastasia: en-US
+    zzCover:
+      id: zzCover
+      type: paragraph
+      name: zzCover
+      based_on: Normal
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        alignment: right
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    Terms:
+      id: Terms
+      type: paragraph
+      name: Terms
+      based_on: BaseText
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        alignment: left
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_val: nl-NL
+    zzCoverlarge:
+      id: zzCoverlarge
+      type: paragraph
+      name: zzCover large
+      based_on: zzCover
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        font_size: '28'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    zzCopyrightaddress:
+      id: zzCopyrightaddress
+      type: paragraph
+      name: zzCopyright address
+      based_on: zzCopyright
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          firstLine: '340'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    release-version:
+      id: release-version
+      type: paragraph
+      name: release-version
+      based_on: Normal
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '2000'
+        alignment: center
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '80'
+        font_size_cs: '80'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    Warningtitle:
+      id: Warningtitle
+      type: paragraph
+      name: Warning title
+      based_on: Normal
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '120'
+        indent:
+          left: '85'
+          right: '85'
+        alignment: center
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    Warningtext:
+      id: Warningtext
+      type: paragraph
+      name: Warning text
+      based_on: Normal
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '120'
+        indent:
+          left: '85'
+          right: '85'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    ForewordTitle:
+      id: ForewordTitle
+      type: paragraph
+      name: Foreword Title
+      based_on: BaseHeading
+      next_style: ForewordText
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: true
+      run_properties:
+        font_size: '26'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    Header:
+      id: Header
+      type: paragraph
+      name: header
+      based_on: Normal
+      linked_style: HeaderChar
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: true
+      paragraph_properties:
+        spacing:
+          after: '600'
+          line: '240'
+        alignment: left
+        tabs:
+        - type: center
+          position: '4536'
+        - type: right
+          position: '9072'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    Footer:
+      id: Footer
+      type: paragraph
+      name: footer
+      based_on: Normal
+      linked_style: FooterChar
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: true
+      paragraph_properties:
+        spacing:
+          before: '360'
+          after: '120'
+          line: '240'
+        tabs:
+        - type: center
+          position: '4536'
+        - type: right
+          position: '9072'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    zzContents:
+      id: zzContents
+      type: paragraph
+      name: zzContents
+      based_on: Normal
+      next_style: TOC1
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '960'
+          after: '310'
+          line: '310'
+        alignment: left
+        keep_next: true
+        keep_lines: false
+        page_break_before: true
+      run_properties:
+        font_size: '28'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    Terms0:
+      id: Terms0
+      type: paragraph
+      name: Term(s)
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '0'
+        alignment: left
+        keep_next: true
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    TOC1:
+      id: TOC1
+      type: paragraph
+      name: toc 1
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '39'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '120'
+          after: '0'
+        indent:
+          left: '720'
+          right: '500'
+          hanging: '720'
+        alignment: left
+        tabs:
+        - type: left
+          position: '720'
+        - type: right
+          position: '9752'
+          leader: dot
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    Source:
+      id: Source
+      type: paragraph
+      name: Source
+      based_on: BaseText
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    FootnoteText:
+      id: FootnoteText
+      type: paragraph
+      name: footnote text
+      based_on: BaseText
+      linked_style: FootnoteTextChar
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        spacing:
+          after: '0'
+          line: '240'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    zzIndex:
+      id: zzIndex
+      type: paragraph
+      name: zzIndex
+      based_on: BiblioTitle
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    BodyTextIndent2:
+      id: BodyTextIndent2
+      type: paragraph
+      name: Body Text Indent 2
+      based_on: BodyTextindent1
+      linked_style: BodyTextIndent2Char
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        indent:
+          left: '805'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    BodyTextBold:
+      id: BodyTextBold
+      type: paragraph
+      name: Body Text + Bold
+      based_on: BodyText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    TOCHeading:
+      id: TOCHeading
+      type: paragraph
+      name: TOC Heading
+      based_on: Heading1
+      next_style: Normal
+      ui_priority: '39'
+      quick_format: true
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        numbering:
+          num_id: '0'
+        spacing:
+          before: '240'
+          after: '60'
+          line: '240'
+        alignment: both
+        tabs:
+        - type: clear
+          position: '400'
+        - type: clear
+          position: '560'
+        outline_level: '9'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        fonts:
+          asciiTheme: majorHAnsi
+          hAnsiTheme: majorHAnsi
+          cstheme: majorBidi
+          eastAsiaTheme: majorEastAsia
+        font_size: '32'
+        font_size_cs: '32'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    wherekeep-with-next:
+      id: wherekeep-with-next
+      type: paragraph
+      name: where_keep-with-next
+      based_on: BodyText-
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        font_size: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    UnprocessedElements:
+      id: UnprocessedElements
+      type: paragraph
+      name: UnprocessedElements
+      based_on: BodyText
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        font_size: '32'
+        bold: true
+        italic: false
+        color: FF0000
+        small_caps: false
+        all_caps: false
+    TermsAdmitted:
+      id: TermsAdmitted
+      type: paragraph
+      name: Term(s) Admitted
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '0'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    IndexEntry:
+      id: IndexEntry
+      type: paragraph
+      name: IndexEntry
+      based_on: BaseText
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    BoxedListContinue1:
+      id: BoxedListContinue1
+      type: paragraph
+      name: Boxed List Continue 1
+      based_on: boxedText
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    boxedTitle:
+      id: boxedTitle
+      type: paragraph
+      name: boxedTitle
+      based_on: boxedText
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    Disp-quotepermissions:
+      id: Disp-quotepermissions
+      type: paragraph
+      name: Disp-quote.permissions
+      based_on: BodyText
+      next_style: BodyText
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '340'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    Disp-quotep:
+      id: Disp-quotep
+      type: paragraph
+      name: Disp-quote.p
+      based_on: BodyText
+      next_style: BodyText
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '340'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_val: fr-FR
+    Disp-quoteattrib:
+      id: Disp-quoteattrib
+      type: paragraph
+      name: Disp-quote.attrib
+      based_on: BodyText
+      next_style: BodyText
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        indent:
+          left: '340'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    HorizontalPublication:
+      id: HorizontalPublication
+      type: paragraph
+      name: Horizontal Publication
+      based_on: zzCover
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        font_size: '20'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    HeaderCentered:
+      id: HeaderCentered
+      type: paragraph
+      name: HeaderCentered
+      based_on: Header
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        alignment: center
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    FooterCentered:
+      id: FooterCentered
+      type: paragraph
+      name: FooterCentered
+      based_on: Footer
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          after: '0'
+        alignment: center
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '20'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    FooterPageNumber:
+      id: FooterPageNumber
+      type: paragraph
+      name: FooterPageNumber
+      based_on: FooterCentered
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '0'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '22'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    FooterPageRomanNumber:
+      id: FooterPageRomanNumber
+      type: paragraph
+      name: FooterPageRomanNumber
+      based_on: FooterCentered
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '0'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        font_size: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    FooterCenteredContinued:
+      id: FooterCenteredContinued
+      type: paragraph
+      name: FooterCenteredContinued
+      based_on: FooterCentered
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '0'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    TableFooterList:
+      id: TableFooterList
+      type: paragraph
+      name: Table Footer List
+      based_on: ListContinue2-
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        font_size: '18'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    SECTION-FOOTER:
+      id: SECTION-FOOTER
+      type: paragraph
+      name: SECTION-FOOTER
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    SECTION-HEADER:
+      id: SECTION-HEADER
+      type: paragraph
+      name: SECTION-HEADER
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    SECTIONBREAK:
+      id: SECTIONBREAK
+      type: paragraph
+      name: SECTIONBREAK
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    PAGEBREAK:
+      id: PAGEBREAK
+      type: paragraph
+      name: PAGEBREAK
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    TOC:
+      id: TOC
+      type: paragraph
+      name: TOC
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    metadata:
+      id: metadata
+      type: paragraph
+      name: metadata
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    TPSElement:
+      id: TPSElement
+      type: paragraph
+      name: TPS Element
+      based_on: TPSMarkupBase
+      next_style: Normal
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    TPSMarkupBase:
+      id: TPSMarkupBase
+      type: paragraph
+      name: TPS Markup Base
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          line: '300'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        fonts:
+          ascii: Arial
+          hAnsi: Arial
+          eastAsia: Times New Roman
+        font_size: '18'
+        font_size_cs: '24'
+        bold: false
+        italic: false
+        color: 2F275B
+        small_caps: false
+        all_caps: false
+        lang_val: en-US
+        lang_eastasia: en-US
+    TPSSection:
+      id: TPSSection
+      type: paragraph
+      name: TPS Section
+      based_on: TPSMarkupBase
+      next_style: Normal
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    TPSTable:
+      id: TPSTable
+      type: paragraph
+      name: TPS Table
+      based_on: TPSMarkupBase
+      next_style: Normal
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    TPSElementData:
+      id: TPSElementData
+      type: paragraph
+      name: TPS Element Data
+      based_on: TPSMarkupBase
+      next_style: Normal
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    TPSElementEnd:
+      id: TPSElementEnd
+      type: paragraph
+      name: TPS Element End
+      based_on: TPSMarkupBase
+      next_style: Normal
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    TPSSectionData:
+      id: TPSSectionData
+      type: paragraph
+      name: TPS Section Data
+      based_on: TPSMarkupBase
+      next_style: Normal
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    TPSTOC:
+      id: TPSTOC
+      type: paragraph
+      name: TPS TOC
+      based_on: TPSMarkupBase
+      next_style: Normal
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    TPSTOCEnd:
+      id: TPSTOCEnd
+      type: paragraph
+      name: TPS TOC End
+      based_on: TPSMarkupBase
+      next_style: Normal
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    TOC2:
+      id: TOC2
+      type: paragraph
+      name: toc 2
+      based_on: TOC1
+      next_style: Normal
+      ui_priority: '39'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '0'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    TOC3:
+      id: TOC3
+      type: paragraph
+      name: toc 3
+      based_on: TOC2
+      next_style: Normal
+      ui_priority: '39'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: false
+    TOC4:
+      id: TOC4
+      type: paragraph
+      name: toc 4
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '39'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        indent:
+          left: '660'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    TOC5:
+      id: TOC5
+      type: paragraph
+      name: toc 5
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '39'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        indent:
+          left: '880'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    TOC6:
+      id: TOC6
+      type: paragraph
+      name: toc 6
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '39'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        indent:
+          left: '1100'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    TOC7:
+      id: TOC7
+      type: paragraph
+      name: toc 7
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '39'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        indent:
+          left: '1320'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    TOC8:
+      id: TOC8
+      type: paragraph
+      name: toc 8
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '39'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        indent:
+          left: '1540'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+    TOC9:
+      id: TOC9
+      type: paragraph
+      name: toc 9
+      based_on: Normal
+      next_style: Normal
+      ui_priority: '39'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      paragraph_properties:
+        indent:
+          left: '1760'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
+  character_styles:
+    DefaultParagraphFont:
+      id: DefaultParagraphFont
+      type: character
+      name: Default Paragraph Font
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+    BodyTextIndent3Char:
+      id: BodyTextIndent3Char
+      type: character
+      name: Body Text Indent 3 Char
+      based_on: DefaultParagraphFont
+      linked_style: BodyTextIndent3
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+        font_size: '22'
+        font_size_cs: '16'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_val: en-GB
+        lang_eastasia: en-US
+    Courier:
+      id: Courier
+      type: character
+      name: Courier
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    BodyTextChar:
+      id: BodyTextChar
+      type: character
+      name: Body Text Char
+      linked_style: BodyText
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+        font_size: '22'
+        font_size_cs: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_eastasia: en-US
+    Chinese:
+      id: Chinese
+      type: character
+      name: Chinese
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: MS Gothic
+          hAnsi: MS Gothic
+        bold: false
+        italic: true
+        color: auto
+        small_caps: false
+        all_caps: false
+    Heading7Char:
+      id: Heading7Char
+      type: character
+      name: Heading 7 Char
+      based_on: DefaultParagraphFont
+      linked_style: Heading7
+      ui_priority: '9'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          asciiTheme: majorHAnsi
+          hAnsiTheme: majorHAnsi
+          cstheme: majorBidi
+          eastAsiaTheme: majorEastAsia
+        font_size: '22'
+        bold: false
+        italic: true
+        color: 1F3763
+        small_caps: false
+        all_caps: false
+        lang_val: en-GB
+        lang_eastasia: ja-JP
+    Heading8Char:
+      id: Heading8Char
+      type: character
+      name: Heading 8 Char
+      based_on: DefaultParagraphFont
+      linked_style: Heading8
+      ui_priority: '9'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          asciiTheme: majorHAnsi
+          hAnsiTheme: majorHAnsi
+          cstheme: majorBidi
+          eastAsiaTheme: majorEastAsia
+        font_size: '21'
+        font_size_cs: '21'
+        bold: false
+        italic: false
+        color: '272727'
+        small_caps: false
+        all_caps: false
+        lang_val: en-GB
+        lang_eastasia: ja-JP
+    Heading9Char:
+      id: Heading9Char
+      type: character
+      name: Heading 9 Char
+      based_on: DefaultParagraphFont
+      linked_style: Heading9
+      ui_priority: '9'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          asciiTheme: majorHAnsi
+          hAnsiTheme: majorHAnsi
+          cstheme: majorBidi
+          eastAsiaTheme: majorEastAsia
+        font_size: '21'
+        font_size_cs: '21'
+        bold: false
+        italic: true
+        color: '272727'
+        small_caps: false
+        all_caps: false
+        lang_val: en-GB
+        lang_eastasia: ja-JP
+    BodyText2Char:
+      id: BodyText2Char
+      type: character
+      name: Body Text 2 Char
+      based_on: DefaultParagraphFont
+      linked_style: BodyText2
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+          eastAsia: MS Mincho
+        font_size: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_val: en-GB
+        lang_eastasia: ja-JP
+    Hyperlink:
+      id: Hyperlink
+      type: character
+      name: Hyperlink
+      based_on: DefaultParagraphFont
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: true
+      run_properties:
+        bold: false
+        italic: false
+        color: 0563C1
+        underline: single
+        small_caps: false
+        all_caps: false
+    UnresolvedMention1:
+      id: UnresolvedMention1
+      type: character
+      name: Unresolved Mention1
+      based_on: DefaultParagraphFont
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      run_properties:
+        bold: false
+        italic: false
+        color: '808080'
+        small_caps: false
+        all_caps: false
+    HeaderChar:
+      id: HeaderChar
+      type: character
+      name: Header Char
+      based_on: DefaultParagraphFont
+      linked_style: Header
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+          eastAsia: MS Mincho
+        font_size: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_val: en-GB
+        lang_eastasia: ja-JP
+    FooterChar:
+      id: FooterChar
+      type: character
+      name: Footer Char
+      based_on: DefaultParagraphFont
+      linked_style: Footer
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+          eastAsia: MS Mincho
+        font_size: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_val: en-GB
+        lang_eastasia: ja-JP
+    Heading1Char:
+      id: Heading1Char
+      type: character
+      name: Heading 1 Char
+      linked_style: Heading1
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+          eastAsia: MS Mincho
+        font_size: '26'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_eastasia: ja-JP
+    BoldItalic:
+      id: BoldItalic
+      type: character
+      name: Bold Italic
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+        font_size_cs: '24'
+        bold: true
+        italic: true
+        small_caps: false
+        all_caps: false
+    BoldSub:
+      id: BoldSub
+      type: character
+      name: Bold Sub
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+        font_size_cs: '24'
+        bold: true
+        italic: true
+        small_caps: false
+        all_caps: false
+    BoldItalicSub:
+      id: BoldItalicSub
+      type: character
+      name: Bold Italic Sub
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        bold: false
+        italic: true
+        small_caps: false
+        all_caps: false
+    FootnoteTextChar:
+      id: FootnoteTextChar
+      type: character
+      name: Footnote Text Char
+      based_on: DefaultParagraphFont
+      linked_style: FootnoteText
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+        font_size_cs: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_val: en-GB
+        lang_eastasia: en-US
+    BodyTextIndent2Char:
+      id: BodyTextIndent2Char
+      type: character
+      name: Body Text Indent 2 Char
+      based_on: DefaultParagraphFont
+      linked_style: BodyTextIndent2
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+        font_size: '22'
+        font_size_cs: '22'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+        lang_val: en-GB
+        lang_eastasia: en-US
+    RegularItalic:
+      id: RegularItalic
+      type: character
+      name: Regular Italic
+      based_on: DefaultParagraphFont
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        bold: true
+        italic: true
+        small_caps: false
+        all_caps: false
+    RegularBold:
+      id: RegularBold
+      type: character
+      name: Regular Bold
+      based_on: DefaultParagraphFont
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    RegularBoldSup:
+      id: RegularBoldSup
+      type: character
+      name: Regular Bold Sup
+      based_on: DefaultParagraphFont
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    RegularSub:
+      id: RegularSub
+      type: character
+      name: Regular Sub
+      based_on: RegularItalic
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        bold: true
+        italic: true
+        small_caps: false
+        all_caps: false
+    FootnoteReference:
+      id: FootnoteReference
+      type: character
+      name: footnote reference
+      based_on: DefaultParagraphFont
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true
+      run_properties:
+        fonts:
+          ascii: Cambria
+          hAnsi: Cambria
+        font_size: '20'
+        bold: true
+        italic: true
+        small_caps: false
+        all_caps: false
+    InlineCode:
+      id: InlineCode
+      type: character
+      name: InlineCode
+      based_on: Courier
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    InlineCode-:
+      id: InlineCode-
+      type: character
+      name: InlineCode-
+      based_on: InlineCode
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        font_size: '18'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    InlineCode--:
+      id: InlineCode--
+      type: character
+      name: InlineCode--
+      based_on: InlineCode
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        font_size: '16'
+        bold: false
+        italic: false
+        small_caps: false
+        all_caps: false
+    InlineCodeBold:
+      id: InlineCodeBold
+      type: character
+      name: InlineCodeBold
+      based_on: InlineCode
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    CourierBold:
+      id: CourierBold
+      type: character
+      name: Courier Bold
+      based_on: InlineCodeBold
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    InlineCodeBold-:
+      id: InlineCodeBold-
+      type: character
+      name: InlineCodeBold-
+      based_on: InlineCodeBold
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        font_size: '18'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    InlineCodeBold--:
+      id: InlineCodeBold--
+      type: character
+      name: InlineCodeBold--
+      based_on: InlineCodeBold
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        font_size: '16'
+        bold: true
+        italic: false
+        small_caps: false
+        all_caps: false
+    InlineCodeItalic:
+      id: InlineCodeItalic
+      type: character
+      name: InlineCodeItalic
+      based_on: InlineCode
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        bold: false
+        italic: true
+        small_caps: false
+        all_caps: false
+    InlineCodeItalic-:
+      id: InlineCodeItalic-
+      type: character
+      name: InlineCodeItalic-
+      based_on: InlineCodeItalic
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        font_size: '18'
+        bold: false
+        italic: true
+        small_caps: false
+        all_caps: false
+    InlineCodeItalic--:
+      id: InlineCodeItalic--
+      type: character
+      name: InlineCodeItalic--
+      based_on: InlineCodeItalic
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        font_size: '16'
+        bold: false
+        italic: true
+        small_caps: false
+        all_caps: false
+    InlineCodeBoldItalic:
+      id: InlineCodeBoldItalic
+      type: character
+      name: InlineCodeBoldItalic
+      based_on: InlineCode
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        bold: true
+        italic: true
+        small_caps: false
+        all_caps: false
+    InlineCodeBoldItalic-:
+      id: InlineCodeBoldItalic-
+      type: character
+      name: InlineCodeBoldItalic-
+      based_on: InlineCodeBoldItalic
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        font_size: '18'
+        bold: true
+        italic: true
+        small_caps: false
+        all_caps: false
+    InlineCodeBoldItalic--:
+      id: InlineCodeBoldItalic--
+      type: character
+      name: InlineCodeBoldItalic--
+      based_on: InlineCodeBoldItalic
+      ui_priority: '1'
+      quick_format: true
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Courier New
+          hAnsi: Courier New
+        font_size: '16'
+        bold: true
+        italic: true
+        small_caps: false
+        all_caps: false
+    Regular:
+      id: Regular
+      type: character
+      name: Regular
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    BoldBold:
+      id: BoldBold
+      type: character
+      name: Bold Bold
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    AnnexHeadingLine2:
+      id: AnnexHeadingLine2
+      type: character
+      name: Annex Heading_Line 2
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+    TPSMetaEnd:
+      id: TPSMetaEnd
+      type: character
+      name: TPS Meta End
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Arial
+          hAnsi: Arial
+          cs: Times New Roman
+          eastAsia: Times New Roman
+        font_size: '18'
+        font_size_cs: '24'
+        bold: true
+        italic: false
+        color: 2F275B
+        small_caps: false
+        all_caps: false
+        lang_val: en-US
+    TPSMeta:
+      id: TPSMeta
+      type: character
+      name: TPS Meta
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Arial
+          hAnsi: Arial
+          cs: Times New Roman
+          eastAsia: Times New Roman
+        font_size: '18'
+        font_size_cs: '24'
+        bold: true
+        italic: false
+        color: 2F275B
+        small_caps: false
+        all_caps: false
+        lang_val: en-AU
+    TPSClickField:
+      id: TPSClickField
+      type: character
+      name: TPS Click Field
+      based_on: DefaultParagraphFont
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Arial
+          hAnsi: Arial
+          cs: Arial
+        font_size: '16'
+        bold: false
+        italic: false
+        color: 0000FF
+        small_caps: false
+        all_caps: false
+    TPSCondition:
+      id: TPSCondition
+      type: character
+      name: TPS Condition
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Arial
+          hAnsi: Arial
+          cs: Arial
+        font_size: '18'
+        bold: true
+        italic: false
+        color: 2F275B
+        small_caps: false
+        all_caps: false
+    TPSCrossRef:
+      id: TPSCrossRef
+      type: character
+      name: TPS Cross Ref
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Arial
+          hAnsi: Arial
+          cs: Arial
+        bold: true
+        italic: false
+        color: 2F275B
+        small_caps: false
+        all_caps: false
+    TPSHyperlink:
+      id: TPSHyperlink
+      type: character
+      name: TPS Hyperlink
+      based_on: DefaultParagraphFont
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Arial
+          hAnsi: Arial
+          cs: Arial
+        font_size: '18'
+        font_size_cs: '18'
+        bold: true
+        italic: false
+        color: 2F275B
+        small_caps: false
+        all_caps: false
+    TPSElementRef:
+      id: TPSElementRef
+      type: character
+      name: TPS Element Ref
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Arial
+          hAnsi: Arial
+          cs: Arial
+        font_size: '18'
+        bold: true
+        italic: false
+        color: 2F275B
+        small_caps: false
+        all_caps: false
+    TPSImage:
+      id: TPSImage
+      type: character
+      name: TPS Image
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Arial
+          hAnsi: Arial
+          cs: Arial
+        font_size: '18'
+        bold: true
+        italic: false
+        color: auto
+        small_caps: false
+        all_caps: false
+    TPSFieldInstance:
+      id: TPSFieldInstance
+      type: character
+      name: TPS FieldInstance
+      ui_priority: '1'
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      run_properties:
+        fonts:
+          ascii: Arial
+          hAnsi: Arial
+          cs: Times New Roman
+          eastAsia: Times New Roman
+        font_size: '18'
+        font_size_cs: '24'
+        bold: true
+        italic: false
+        color: '000000'
+        small_caps: false
+        all_caps: false
+        lang_val: en-US
+  table_styles:
+    TableNormal:
+      id: TableNormal
+      type: table
+      name: Normal Table
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: true

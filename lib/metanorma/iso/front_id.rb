@@ -383,7 +383,10 @@ module Metanorma
       end
 
       def pubid_code(value)
-        Pubid::Iso::Components::Code.new(value: value.to_s)
+        # pubid 2.0.x models identifier number/part codes as plain
+        # strings; Iso::Components::Code was removed as a never-exercised
+        # composition.
+        value.to_s
       end
 
       def pubid_date(year)
