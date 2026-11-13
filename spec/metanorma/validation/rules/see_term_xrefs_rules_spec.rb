@@ -41,6 +41,31 @@ RSpec.describe Metanorma::Iso::Validation::Rules::SeeXrefsRule do
     XML
     expect(rule.check(context_with(xml))).to eq([])
   end
+
+  # Under semx the bibitem id is a UUID and the citation anchor moved to
+  # the anchor attribute; a "see" eref cites the anchor (pdfa#111).
+  it "does not flag ISO_47 for a 'see <eref>' whose bibitem carries the anchor" do
+    xml = <<~XML
+      <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="iso">
+        <bibdata><docidentifier>ISO 1</docidentifier></bibdata>
+        <sections>
+          <clause id="c1"><title>Body</title>
+            <p>see <eref bibitemid="ISO32000-2" citeas="ISO 32000-2">[ISO32000-2]</eref> for details.</p>
+          </clause>
+        </sections>
+        <bibliography>
+          <references normative="true">
+            <bibitem id="_2083ca6a-1111-4bbb-8ccc-ddddaaaaaaaa" anchor="ISO32000-2" type="standard">
+              <title>PDF specification</title>
+              <docidentifier type="ISO" primary="true">ISO 32000-2:2020</docidentifier>
+            </bibitem>
+          </references>
+        </bibliography>
+      </metanorma>
+    XML
+    issues = rule.check(context_with(xml))
+    expect(issues.select { |i| i.code == "ISO_47" }).to eq([])
+  end
 end
 
 RSpec.describe Metanorma::Iso::Validation::Rules::TermXrefsRule do

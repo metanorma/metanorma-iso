@@ -96,10 +96,11 @@ module Metanorma
             return index unless root.bibliography
 
             Array(root.bibliography.references).each do |refs|
+              normative = { normative: normative?(refs) }
               Array(refs.references).each do |bib|
-                next unless bib.class.method_defined?(:id) && bib.id
-
-                index[bib.id] = { normative: normative?(refs) }
+                index[bib.id] = normative if bib.class.method_defined?(:id) && bib.id
+                anchor = read_anchor_attr(bib)
+                index[anchor] = normative if anchor
               end
             end
             index
