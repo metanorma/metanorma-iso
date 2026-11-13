@@ -2,6 +2,10 @@
 
 require "spec_helper"
 
+# The flavor relaton-render stack loads lazily at render time
+# (init.rb); the spec exercises it directly, so load it here.
+require "metanorma/iso/relaton_render/general"
+
 RSpec.describe Relaton::Render::Iso do
   it "renders book, five editors with generic class" do
     input = <<~INPUT
