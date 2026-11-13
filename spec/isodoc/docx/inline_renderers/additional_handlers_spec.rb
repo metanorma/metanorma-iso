@@ -49,7 +49,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
 
       run = para.build.runs.first
       expect(run.properties.strike).to be_a(Uniword::Properties::Strike)
-      expect(run.text).to eq("removed")
+      expect(run_text(run)).to eq("removed")
     end
   end
 
@@ -61,7 +61,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
 
       run = para.build.runs.first
       expect(run.properties.underline).to be_a(Uniword::Properties::Underline)
-      expect(run.text).to eq("stressed")
+      expect(run_text(run)).to eq("stressed")
     end
   end
 
@@ -84,7 +84,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
 
       run = para.build.runs.first
       expect(run.properties.small_caps).to be_a(Uniword::Properties::SmallCaps)
-      expect(run.text).to eq("Acronym")
+      expect(run_text(run)).to eq("Acronym")
     end
   end
 
@@ -199,7 +199,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
 
       run = para.build.runs.first
       expect(run.properties.vertical_align.value).to eq("superscript")
-      expect(run.text).to eq("(1)")
+      expect(run_text(run)).to eq("(1)")
     end
   end
 
@@ -214,7 +214,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
       para = build_para
       described_class.new(parent).render(asc, para)
 
-      expect(para.build.runs.first.text).to eq("x^2")
+      expect(run_text(para.build.runs.first)).to eq("x^2")
     end
   end
 

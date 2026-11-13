@@ -143,7 +143,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderer do
       renderer.render(para_node, para)
       built = para.build
 
-      code_run = built.runs.find { |r| r.text.to_s.include?("console.log") }
+      code_run = built.runs.find { |r| run_text(r).include?("console.log") }
       expect(code_run).not_to be_nil
       style_value = para_style_value(code_run)
       expect(style_value).to eq("InlineCode"),
@@ -371,10 +371,10 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderer do
       runs = built.runs
 
       # Should have: "line1" + br + "line2" + br + "line3"
-      text_runs = runs.select { |r| r.text && r.text.to_s.length > 0 }
+      text_runs = runs.select { |r| run_text(r).length > 0 }
       br_runs = runs.select { |r| r.break }
 
-      expect(text_runs.map { |r| r.text.to_s }).to eq(["line1", "line2", "line3"])
+      expect(text_runs.map { |r| run_text(r) }).to eq(["line1", "line2", "line3"])
       expect(br_runs.length).to eq(2)
 
       renderer.preserve_whitespace = false
@@ -408,10 +408,10 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderer do
       renderer.send(:add_text, para, "single line")
 
       built = para.build
-      text_runs = built.runs.select { |r| r.text && r.text.to_s.length > 0 }
+      text_runs = built.runs.select { |r| run_text(r).length > 0 }
       br_runs = built.runs.select { |r| r.break }
 
-      expect(text_runs.map { |r| r.text.to_s }).to eq(["single line"])
+      expect(text_runs.map { |r| run_text(r) }).to eq(["single line"])
       expect(br_runs.length).to eq(0)
 
       renderer.preserve_whitespace = false

@@ -34,7 +34,7 @@ RSpec.describe IsoDoc::Iso::Docx::SourcecodeRenderer do
       callout_run = para.runs.find { |r| r.properties&.vertical_align }
       expect(callout_run).not_to be_nil
       expect(callout_run.properties.vertical_align.value).to eq("superscript")
-      expect(callout_run.text.to_s).to eq("(1)")
+      expect(run_text(callout_run)).to eq("(1)")
     end
 
     it "preserves line breaks within code text" do
@@ -102,6 +102,6 @@ line two</fmt-sourcecode>
   end
 
   def collect_text(para)
-    para.runs.map { |r| r.text.to_s }.join
+    para.runs.map { |r| run_text(r) }.join
   end
 end

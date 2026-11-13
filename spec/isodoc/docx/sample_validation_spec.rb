@@ -153,7 +153,11 @@ RSpec.describe "DOCX sample validation" do
     it "applies paragraph styles" do
       generate_adapter_output(pres_xml) do |output_path, _adapter|
         pkg = Uniword::Docx::Package.from_file(output_path)
-        paras = pkg.document.body.paragraphs
+        # TOC entries duplicate heading texts (Foreword, Contents) with
+        # TOC1 styles; the heading assertions target the section titles.
+        paras = pkg.document.body.paragraphs.reject do |p|
+          para_style_value(p).to_s.start_with?("TOC")
+        end
 
         contents = find_paragraph_by_text(paras, "Contents")
         expect(contents).not_to be_nil

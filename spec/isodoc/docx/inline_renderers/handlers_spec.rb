@@ -84,7 +84,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
       described_class.new(parent).render(element, para)
 
       built = para.build
-      expect(built.runs.first.break).to be_a(Uniword::Wordprocessingml::Break)
+      expect(built.runs.first.break.first).to be_a(Uniword::Wordprocessingml::Break)
     end
   end
 
