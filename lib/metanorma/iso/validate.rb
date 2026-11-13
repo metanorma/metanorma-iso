@@ -71,19 +71,24 @@ module Metanorma
       # ISO log code (one per check; LEGACY_POLICY_BY_CODE resolves it).
       # The standardized policy citation suffix is appended from the
       # check's LEGACY_POLICY metadata.
-      def style_warning(node, msg, text = nil, display: true, code:)
+      # `code:` is optional for backward compatibility: external validators
+      # (metanorma-bsi pre-1.8.2, metanorma-gb) call these helpers without
+      # it. An omitted code emits the uncited generic STANDOC_48.
+      def style_warning(node, msg, text = nil, display: true,
+                        code: "STANDOC_48")
         w = msg; w += ": #{text}" if text
-        entry = Validation::LEGACY_POLICY_BY_CODE[code]
+        entry = code == "STANDOC_48" ? nil : Validation::LEGACY_POLICY_BY_CODE[code]
         citation = entry && Validation::Citation.suffix(entry)
         w += " #{citation}" if citation
         @log.add(code, node, params: [w], display:)
       end
 
-      def style_regex(regex, warning, node, text, code:)
+      def style_regex(regex, warning, node, text, code: "STANDOC_48")
         (m = regex.match(text)) && style_warning(node, warning, m[:num], code: code)
       end
 
-      def style_two_regex_not_prev(n, text, regex, re_prev, warning, code:)
+      def style_two_regex_not_prev(n, text, regex, re_prev, warning,
+                                   code: "STANDOC_48")
         return if text.nil?
         arr = Tokenizer::WhitespaceTokenizer.new.tokenize(text)
         arr.each_index do |i|

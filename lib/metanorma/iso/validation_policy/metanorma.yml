@@ -222,6 +222,8 @@ rules:
     severity: warning
   ISO_44:
     severity: error
+  STANDOC_48:
+    severity: error
   ISO_123:
     severity: error
   ISO_124:

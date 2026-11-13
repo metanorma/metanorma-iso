@@ -26,6 +26,17 @@ module Metanorma
       # against the legacy source is enforced by
       # spec/metanorma/validation/legacy_policy_spec.rb.
       LEGACY_POLICY = {
+        # Backward-compatibility sink: style_warning/style_regex calls
+        # without an explicit code (external validators) emit this,
+        # uncited. Cited generically to the House Style root (this entry
+        # has no specific section — it exists for API compatibility, not
+        # as a policy statement).
+        "style_warning_fallback" => { code: "STANDOC_48",
+                                      category: "Plain language",
+                                      rule: "legacy check without a dedicated code",
+                                      source: [:house_style],
+                                      section: "General",
+                                      mn_category: :style },
         "scope_style" => {
           code: "ISO_123",
           category: "Plain language",
