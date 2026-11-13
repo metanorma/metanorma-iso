@@ -51,6 +51,11 @@ module Metanorma
 
         xml do
           element "terms"
+          # Document-order walk: every sibling section model declares
+          # ordered; without it lutaml-model records no element_order and
+          # each_mixed_content yields nothing, so the STS term transformer
+          # renders an empty term-sec.
+          ordered
 
           Metanorma::Standoc::Document::SectionXmlMapping.apply_content_section_attributes(self)
 

@@ -15,6 +15,12 @@ module Metanorma
           attr_reader :typed_root
 
           def self.parse(input)
+            # An already-typed model (e.g. handed over by the metanorma-core
+            # document_transformers driver, which applies the reader before
+            # the transformer ever runs) wraps directly; XML strings and IO
+            # go through the reader.
+            return new(input) if input.is_a?(Metanorma::Iso::Document::Root)
+
             xml_string = parse_xml(input)
             new(Metanorma::Iso::Document::Root.from_xml(xml_string))
           end

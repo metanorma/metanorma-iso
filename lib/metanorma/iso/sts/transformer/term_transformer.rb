@@ -4,27 +4,27 @@ module Metanorma
   module Iso
     module Sts
       class Transformer::TermTransformer < Transformer::Base
+        # A terms section renders as a <sec sec-type="terms"> carrying its
+        # intro paragraphs/lists, with one nested <term-sec> per term holding
+        # the TBX termEntry — the shape mnconvert emits for ISO-STS.
+        # (sts-ruby's NisoSts::TermSection cannot hold section intro content:
+        # it supports only label/term-display/termEntry, so the wrapper
+        # Section carries the boilerplate.)
         def transform_section(terms)
-          build_ordered(::Sts::NisoSts::TermSection) do |ts|
-            ts.id = id_for(terms)
-            ts.sec_type = "terms"
-
-            if terms.number && !terms.number.empty?
-              ts.label = ::Sts::NisoSts::Label.new(content: [terms.number])
-            end
-
+          Transformer::ModelBuilder.section(
+            id: id_for(terms),
+            sec_type: "terms",
+            label: terms_label(terms),
+            title: terms.title ? transform_title(terms.title) : nil,
+          ) do |sec|
             terms.each_mixed_content do |node|
               next if node.is_a?(String)
               next if node == terms.title
 
-              case node
-              when Metanorma::Document::Components::Paragraphs::ParagraphBlock
-                ts.paragraph paragraph_transformer.transform(node)
-              when Metanorma::Document::Components::Lists::UnorderedList,
-                   Metanorma::Document::Components::Lists::OrderedList
-                ts.list list_transformer.transform(node)
-              when Metanorma::Iso::Document::Terms::IsoTerm
-                ts.term_entry transform_entry(node)
+              if node.is_a?(Metanorma::Iso::Document::Terms::IsoTerm)
+                sec.term_sec build_term_section(node)
+              else
+                block_dispatcher.dispatch(node, sec)
               end
             end
           end
@@ -41,6 +41,19 @@ module Metanorma
         end
 
         private
+
+        def terms_label(terms)
+          terms.number if terms.number && !terms.number.empty?
+        end
+
+        # One nested <term-sec> per term, holding the TBX termEntry.
+        def build_term_section(term)
+          Transformer::ModelBuilder.term_section(
+            id: term.id ? "term_#{term.id.gsub(/^term_/, '')}" : nil,
+          ) do |ts|
+            ts.term_entry transform_entry(term)
+          end
+        end
 
         def build_lang_set(term, lang)
           ls = ::Sts::TbxIsoTml::LangSet.new

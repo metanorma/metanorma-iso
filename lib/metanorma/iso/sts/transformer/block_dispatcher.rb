@@ -65,7 +65,7 @@ target_setter:)
             Metanorma::Iso::Document::Sections::IsoClauseSection =>
               %i[section_transformer transform sec],
             Metanorma::Iso::Document::Sections::IsoTermsSection =>
-              %i[term_transformer transform_section term_sec],
+              %i[term_transformer transform_section sec],
             Metanorma::Iso::Document::Sections::IsoAnnexSection =>
               %i[section_transformer transform_annex sec],
             Metanorma::Standoc::Document::Sections::StandardReferencesSection =>
