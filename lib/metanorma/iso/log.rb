@@ -2,6 +2,7 @@ module Metanorma
   module Iso
     class Converter
       ISO_LOG_MESSAGES = {
+        STANDOC_48: { category: "Style", error: "%s", severity: 2 },
         # rubocop:disable Naming/VariableNumber
         ISO_1: { category: "Style",
                  error: "Style override set for ordered list",
