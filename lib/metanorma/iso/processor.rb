@@ -142,8 +142,9 @@ module Metanorma
 
         # Extract stage from XML bibdata
         xml = isodoc_node.respond_to?(:to_xml) ? isodoc_node.to_xml : isodoc_node.to_s
+        xml = File.read(xml, encoding: "utf-8") if File.file?(xml)
         stage = Nokogiri::XML(xml, &:huge)
-          .at("//bibdata/status/stage")&.text
+          .at("//*[local-name()='bibdata']/*[local-name()='status']/*[local-name()='stage']")&.text
 
         if /^[4569].$/.match?(stage) && wordtemplate != "simple"
           :dis

@@ -1,6 +1,7 @@
 require "spec_helper"
 require "metanorma-core"
 require "fileutils"
+require "tempfile"
 
 # RSpec.describe Asciidoctor::Gb do
 RSpec.describe Metanorma::Iso::Processor do
@@ -105,6 +106,55 @@ RSpec.describe Metanorma::Iso::Processor do
 
   it "registers against metanorma" do
     expect(processor).not_to be nil
+  end
+
+  describe "#resolve_docx_template" do
+    template_cases = [
+      ["00", {}, :simple], ["10", {}, :simple], ["20", {}, :simple],
+      ["30", {}, :simple], ["40", {}, :dis], ["50", {}, :dis],
+      ["60.60", {}, :dis], ["90", {}, :dis], [nil, {}, :dis],
+      ["30", { isowordtemplate: "dis" }, :dis],
+      ["60.60", { isowordtemplate: "simple" }, :simple],
+      [nil, { isowordtemplate: "simple" }, :simple]
+    ]
+
+    %i[string path].product([nil, "", "iso"]).each do |input_type, prefix|
+      template_cases.each do |stage, options, template|
+        context "with #{input_type} input, namespace prefix #{prefix.inspect}, stage #{stage || '(missing)'} and #{options}" do
+          let(:namespace) do
+            "xmlns#{":#{prefix}" unless prefix.empty?}=\"http://riboseinc.com/isoxml\"" if prefix
+          end
+          let(:tag_prefix) { prefix.to_s.empty? ? "" : "#{prefix}:" }
+          let(:xml) do
+            <<~XML
+              <#{tag_prefix}metanorma #{namespace} flavor="iso">
+                <#{tag_prefix}bibdata>
+                  <#{tag_prefix}status>
+                    #{"<#{tag_prefix}stage>#{stage}</#{tag_prefix}stage>" if stage}
+                  </#{tag_prefix}status>
+                </#{tag_prefix}bibdata>
+              </#{tag_prefix}metanorma>
+            XML
+          end
+          let(:xml_file) { Tempfile.new(["iso-stage", ".xml"]) }
+          let(:template_input) { input_type == :path ? xml_file.path : xml }
+
+          before do
+            next unless input_type == :path
+
+            xml_file.write(xml)
+            xml_file.flush
+          end
+
+          after { xml_file.close! if input_type == :path }
+
+          it "selects #{template}" do
+            expect(processor.send(:resolve_docx_template, template_input, options))
+              .to eq(template)
+          end
+        end
+      end
+    end
   end
 
   it "registers output formats against metanorma" do
