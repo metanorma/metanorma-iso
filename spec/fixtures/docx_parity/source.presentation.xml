@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<iso-standard xmlns="https://www.metanorma.org/ns/iso" type="presentation">
+  <bibdata type="standard">
+    <title language="en">Parity fixture</title>
+    <docidentifier type="ISO">ISO 12345:2026</docidentifier>
+    <language>en</language>
+    <status><stage>60</stage><substage>60</substage></status>
+    <ext><doctype>international-standard</doctype></ext>
+  </bibdata>
+  <sections>
+    <clause id="scope"><title>Scope</title><fmt-title>1<tab/>Scope</fmt-title><p id="body">Small parity fixture.</p></clause>
+  </sections>
+</iso-standard>

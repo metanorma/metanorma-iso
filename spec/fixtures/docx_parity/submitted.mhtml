@@ -1,0 +1,39 @@
+MIME-Version: 1.0
+Content-Type: multipart/related;
+ boundary="parity-fixture"
+
+--parity-fixture
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///submitted.htm
+
+<html><head><style>
+h1 { mso-style-name: "Heading 1"; mso-outline-level: 1; }
+p.body { mso-style-name: "Body Text"; }
+p.note { mso-style-name: "Note"; }
+p.example { mso-style-name: "Example"; }
+table.grid { mso-style-name: "Table Grid"; }
+</style></head><body>
+<div class=3D"WordSection1">
+<h1 id=3D"random-heading">Scope</h1>
+<p class=3D"body">Submitted =
+text =C3=A9</p>
+<p class=3D"note">NOTE A note.</p>
+<p class=3D"example">EXAMPLE An example.</p>
+<table class=3D"grid"><tr><td><p>Cell</p></td></tr></table>
+<p class=3D"Dimension100"><img src=3D"cid:random-image" /></p>
+<p class=3D"FigureTitle">Figure 1</p>
+<p class=3D"MsoNormal">Closing text</p>
+</div></body></html>
+--parity-fixture
+Content-Type: text/html; charset="utf-8"
+Content-Location: file:///header.htm
+
+<html><body><p>Header is outside body parity.</p></body></html>
+--parity-fixture
+Content-Type: image/png
+Content-Transfer-Encoding: base64
+Content-ID: <random-image>
+
+aW1hZ2U=
+--parity-fixture--
