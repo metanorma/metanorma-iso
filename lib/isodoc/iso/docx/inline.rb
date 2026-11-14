@@ -293,11 +293,75 @@ module IsoDoc
         # ── Stem / footnote / callout helpers ─────────────────────────
 
         def stem_fallback_text(element)
-          if element.class.attributes.key?(:asciimath)
-            am = element.asciimath
-            return am if am.is_a?(String) && !am.empty?
-          end
+          text = stem_asciimath_text(element)
+          return text if text && !text.empty?
+
+          text = stem_math_text(element)
+          return text if text && !text.empty?
+
           collect_text(element)
+        end
+
+        # AsciiMath is the plain-text form of an inline symbol. The
+        # semantic <stem> maps it as a singular value; the presentation
+        # <fmt-stem> wraps the semantic stem in <semx>, whose asciimath
+        # is a collection. Without the descent both shapes fell through
+        # to collect_text and rendered as empty runs.
+        def stem_asciimath_text(element)
+          direct = stem_asciimath_value(element)
+          return direct if direct && !direct.empty?
+
+          Array(attribute_value(element, :semx)).each do |child|
+            nested = stem_asciimath_value(child)
+            return nested if nested && !nested.empty?
+          end
+          nil
+        end
+
+        def stem_asciimath_value(element)
+          return nil unless element.is_a?(Lutaml::Model::Serializable)
+          return nil unless element.class.attributes.key?(:asciimath)
+
+          Array(element.asciimath).filter_map do |am|
+            stem_asciimath_content(am)
+          end.compact.first
+        end
+
+        # Asciimath content accessors differ per model: the semantic
+        # TextElements::Asciiml carries :value, the presentation
+        # Inline::AsciimathElement carries :text. Prefer whichever the
+        # model declares.
+        def stem_asciimath_content(am)
+          return am if am.is_a?(String)
+
+          return nil unless am.is_a?(Lutaml::Model::Serializable)
+
+          if am.class.attributes.key?(:value)
+            value = attribute_value(am, :value)
+            return value if value.is_a?(String) && !value.empty?
+          end
+          return attribute_value(am, :text) if am.class.attributes.key?(:text)
+
+          nil
+        end
+
+        # Some stems carry only MathML (e.g. table cells whose symbol is a
+        # number with a unit row). Convert through Plurimath to a plain
+        # AsciiMath text so the cell content survives.
+        def stem_math_text(element)
+          math = attribute_value(element, :math)
+          Array(attribute_value(element, :semx)).each do |child|
+            math ||= attribute_value(child, :math)
+            break if math
+          end
+          return nil unless math.is_a?(Lutaml::Model::Serializable)
+
+          xml = math.to_xml
+          return nil if xml.nil? || xml.strip.empty?
+
+          Plurimath::Mathml::Parser.new(xml).parse.to_asciimath
+        rescue StandardError
+          nil
         end
 
         def collect_callout_text(callout)
@@ -329,10 +393,28 @@ module IsoDoc
         def extract_footnote_text(element)
           p_children = element.p
           if p_children && !p_children.empty?
-            return p_children.map { |p| collect_text(p) }.join(" ")
+            return p_children.map { |p| footnote_body_text(p) }.join(" ")
           end
 
           collect_all_text(element)
+        end
+
+        # Footnote bodies are mixed content; collect them in document
+        # order, falling back to the asciimath text for stem segments so
+        # a footnote whose body carries a symbol (e.g. "the time t90")
+        # is not dropped for having no plain text at the paragraph level.
+        def footnote_body_text(paragraph)
+          return collect_all_text(paragraph) unless ordered?(paragraph)
+
+          segments = []
+          each_ordered_element(paragraph) do |type, obj|
+            case type
+            when :text then segments << obj.to_s
+            when :element
+              segments << (stem_asciimath_text(obj) || collect_all_text(obj))
+            end
+          end
+          segments.join
         end
 
         # Create a footnote whose body paragraph carries the

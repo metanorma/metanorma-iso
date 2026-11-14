@@ -29,7 +29,8 @@ module Metanorma
             terms_anchors = collect_terms_anchors(context.root)
             issues = []
 
-            each_paragraph_with_parent(context.root) do |paragraph, parent|
+            context.walk_cache.paragraphs_with_parent(context.root)
+              .each do |paragraph, parent|
               parent_is_terms = terms_container?(parent)
               each_inline_with_preceding_text(paragraph) do |item, _|
                 next unless item.is_a?(Metanorma::Document::Components::Inline::XrefElement)

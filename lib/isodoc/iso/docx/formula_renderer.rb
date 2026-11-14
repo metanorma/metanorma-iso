@@ -53,6 +53,19 @@ module IsoDoc
 
           @walker.walk_attribute(formula, :dl, doc)
           @walker.walk_attribute(formula, :p, doc)
+          walk_key(formula, doc)
+        end
+
+        # Presentation XML wraps the formula's symbol list in <key>
+        # (formula/key/dl); the semantic form keeps a bare <dl> sibling.
+        # Without this walk the where-clause definitions silently
+        # disappear from the rendered document.
+        def walk_key(formula, doc)
+          key = attribute_value(formula, :key)
+          return unless key
+
+          @walker.walk_attribute(key, :dl, doc)
+          @walker.walk_attribute(key, :p, doc)
         end
 
         def render_body(formula, doc)

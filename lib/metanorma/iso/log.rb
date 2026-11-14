@@ -1,6 +1,23 @@
+# frozen_string_literal: true
+
 module Metanorma
   module Iso
     class Converter
+      # Diagnostic-code stability contract (metanorma-iso#1726,
+      # iso-10303#859). The ISO_NN / STANDOC_NN keys below are display
+      # labels only: they may be renumbered, merged, or moved to another
+      # prefix between releases (e.g. STANDOC_38 became ISO_56 when
+      # undefined-cross-reference checking moved to the model validator).
+      # String-grepping a bare code is not a supported consumer interface.
+      #
+      # The stable consumer-facing identity of a finding is
+      # CATEGORY + RULE: every ISO_ entry below declares its category,
+      # and the emitting rule is named either by a model-rule class
+      # declaring `code "ISO_NN"` with `policy` metadata
+      # (lib/metanorma/iso/validation/rules/, discovered by
+      # Validation::RuleRegistry) or by a legacy check keyed in
+      # Validation::LEGACY_POLICY_BY_CODE. Any code migration MUST be
+      # announced in the release notes of the release carrying it.
       ISO_LOG_MESSAGES = {
         STANDOC_48: { category: "Style", error: "%s", severity: 2 },
         # rubocop:disable Naming/VariableNumber

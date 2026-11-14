@@ -62,10 +62,15 @@ module Metanorma
           }xi.freeze
 
           def check(context)
-            tokens = collected_uppercase_tokens(context.root)
+            cache = context.walk_cache
+            boilerplate = boilerplate_paragraphs(context.root)
+            tokens = collected_uppercase_tokens(cache, context.root, boilerplate)
             issues = []
-            each_paragraph(context.root) do |paragraph, parent|
-              text = prose_text(paragraph)
+            boilerplate = boilerplate_paragraphs(context.root)
+            cache.paragraphs_with_parent(context.root).each do |paragraph, parent|
+              next if boilerplate.include?(paragraph)
+
+              text = prose_text(cache, paragraph)
               next if text.empty?
 
               issues.concat(scan_text(parent, text, tokens))
@@ -75,35 +80,37 @@ module Metanorma
 
           private
 
-          # Both passes scan the same text: markup-free prose with
-          # URL/URI payload stripped, over paragraphs outside the
-          # flavor-injected boilerplate.
-          def collected_uppercase_tokens(root)
+          # First pass: every uppercase 2–5 letter token used anywhere
+          # in reader-visible prose.
+          def collected_uppercase_tokens(cache, root, boilerplate)
             tokens = Set.new
-            each_paragraph(root) do |paragraph, _|
-              tokens.merge(prose_text(paragraph).scan(UPPERCASE_TOKEN_REGEX))
+            cache.paragraphs_with_parent(root).each do |(paragraph, _)|
+              next if boilerplate.include?(paragraph)
+
+              tokens.merge(prose_text(cache, paragraph).scan(UPPERCASE_TOKEN_REGEX))
             end
             tokens
           end
 
-          def each_paragraph(root, &block)
-            each_paragraph_with_parent(root,
-                                       boilerplate_subtrees(root),
-                                       &block)
-          end
-
           # The <boilerplate> block (copyright statement, license
           # statement, ...) is publisher text, not author prose.
-          def boilerplate_subtrees(root)
-            return [] unless root&.respond_to?(:boilerplate)
+          def boilerplate_paragraphs(root)
+            paragraphs = Set.new
+            return paragraphs unless root&.respond_to?(:boilerplate)
 
-            Array(root.boilerplate)
+            Array(root.boilerplate).each do |bp|
+              each_paragraph_with_parent(bp) { |p, _| paragraphs << p }
+            end
+            paragraphs
           end
 
-          def prose_text(paragraph)
-            extract_text(paragraph, strip: prose_exclusions)
-              .gsub(URI_TOKEN_REGEX, " ")
-              .strip
+          # Reader-visible prose: markup-free text per the prose
+          # exclusions, with URL/URI payload stripped — link text is
+          # rendered URL text, and URL strings are not prose.
+          def prose_text(cache, paragraph)
+            cache.text_of(paragraph, strip: prose_exclusions)
+                 .gsub(URI_TOKEN_REGEX, " ")
+                 .strip
           end
 
           # Link elements are excluded whole: their content is the

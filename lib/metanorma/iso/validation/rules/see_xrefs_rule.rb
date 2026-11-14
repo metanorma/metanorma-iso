@@ -33,7 +33,8 @@ module Metanorma
             bibitem_index = collect_bibitem_anchors(context.root)
             issues = []
 
-            each_paragraph_with_parent(context.root) do |paragraph, _parent|
+            context.walk_cache.paragraphs_with_parent(context.root)
+              .each do |(paragraph, _parent)|
               each_inline_with_preceding_text(paragraph) do |item, preceding_text|
                 issues.concat(check_xref(item, preceding_text, normative_anchors))
                 issues.concat(check_eref(item, preceding_text, bibitem_index))

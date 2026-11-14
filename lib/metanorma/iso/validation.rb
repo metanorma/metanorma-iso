@@ -18,6 +18,7 @@ module Metanorma
       autoload :ConverterState, "metanorma/iso/validation/converter_state"
       autoload :Citation, "metanorma/iso/validation/citation"
       autoload :SharedState, "metanorma/iso/validation/shared_state"
+      autoload :WalkCache, "metanorma/iso/validation/walk_cache"
       autoload :Issue, "metanorma/iso/validation/issue"
       autoload :Report, "metanorma/iso/validation/report"
       autoload :IssueTranslator, "metanorma/iso/validation/issue_translator"

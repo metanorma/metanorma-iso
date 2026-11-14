@@ -35,7 +35,7 @@ module Metanorma
           end
 
           def check(context)
-            referenced = collect_xref_targets(context.root)
+            referenced = collect_xref_targets(context.walk_cache, context.root)
             issues = []
 
             collect_assets(context.root) do |asset_name, anchor, node|
@@ -50,9 +50,9 @@ module Metanorma
 
           private
 
-          def collect_xref_targets(root)
+          def collect_xref_targets(cache, root)
             targets = Set.new
-            each_xref(root) { |x| targets << x.target.to_s if x.target }
+            cache.xrefs(root).each { |x| targets << x.target.to_s if x.target }
             targets
           end
 

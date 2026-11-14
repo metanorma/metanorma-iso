@@ -48,25 +48,26 @@ module Metanorma
 
           def check(context)
             issues = []
-            each_term(context.root) do |term|
-              issues.concat(check_term(term, context.state))
+            context.walk_cache.terms(context.root).each do |term|
+              issues.concat(check_term(term, context))
             end
             issues
           end
 
           private
 
-          def check_term(term, state)
+          def check_term(term, context)
+            cache = context.walk_cache
             definition = first_verbal_definition(term)
             return [] unless definition
 
-            term_text = preferred_text(term)
+            term_text = preferred_text(term, cache)
             issues = []
 
             # ISO_4 tests the definition's opening as concatenated for the
             # reader (unchanged behavior).
-            article_text = extract_text(definition).strip
-            if state.lang.to_s == "en" && ARTICLE_REGEX.match?(article_text)
+            article_text = cache.text_of(definition).strip
+            if context.state.lang.to_s == "en" && ARTICLE_REGEX.match?(article_text)
               issues << build_issue(code: "ISO_4", location: term_location(term),
                                     params: [term_text])
             end
@@ -74,9 +75,9 @@ module Metanorma
             # ISO_35 tests only the definition's final own text run: footnote
             # text, eref locality digits, and other markup internals are not
             # the end of the definition the reader sees (pdfa#118).
-            text = (last_own_text(definition) || "").strip
-            if PERIOD_SCRIPTS.include?(state.script.to_s) &&
-                !text.empty? && PERIOD_REGEX.match?(text)
+            period_text = (last_own_text(definition) || "").strip
+            if PERIOD_SCRIPTS.include?(context.state.script.to_s) &&
+                !period_text.empty? && PERIOD_REGEX.match?(period_text)
               issues << build_issue(code: "ISO_35", location: term_location(term),
                                     params: [term_text])
             end
@@ -91,11 +92,11 @@ module Metanorma
             definitions.first.verbal_definition
           end
 
-          def preferred_text(term)
+          def preferred_text(term, cache)
             preferreds = Array(term.preferred)
             return "" if preferreds.empty?
 
-            extract_text(preferreds.first).strip
+            cache.text_of(preferreds.first).strip
           end
 
           def term_location(term)
