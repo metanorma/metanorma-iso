@@ -2935,7 +2935,7 @@ style_library:
         keep_lines: false
         page_break_before: false
       run_properties:
-        bold: true
+        bold: false
         italic: false
         small_caps: false
         all_caps: false
@@ -3513,8 +3513,18 @@ style_library:
       semi_hidden: false
       unhide_when_used: false
       paragraph_properties:
+        tabs:
+        - type: left
+          position: '1080'
+        - type: right
+          position: '9752'
+          leader: dot
         spacing:
           before: '0'
+        indent:
+          left: '1080'
+          right: '500'
+          hanging: '360'
         keep_next: false
         keep_lines: false
         page_break_before: false
@@ -3528,6 +3538,20 @@ style_library:
       hidden: false
       semi_hidden: true
       unhide_when_used: false
+      paragraph_properties:
+        tabs:
+        - type: left
+          position: '1440'
+        - type: right
+          position: '9752'
+          leader: dot
+        indent:
+          left: '1440'
+          right: '500'
+          hanging: '360'
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
     TOC4:
       id: TOC4
       type: paragraph
