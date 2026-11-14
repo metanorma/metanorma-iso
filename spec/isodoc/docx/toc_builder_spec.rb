@@ -198,6 +198,13 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       expect(texts).not_to include("Annex sub two")
       expect(texts).not_to include("A.1")
       expect(texts).not_to include("A.2")
+
+      # No entry paragraph is styled below TOC1.
+      deeper = doc.model.body.paragraphs.select do |p|
+        s = para_style_value(p)
+        s && s.match?(/\ATOC[23]\z/)
+      end
+      expect(deeper).to be_empty
     end
   end
 
