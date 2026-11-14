@@ -509,42 +509,46 @@ RSpec.describe "DOCX integration", type: :integration do
       expect(intro_title).not_to be_nil
     end
 
-    it "note uses Era C Box wrappers with Noteindent body" do
+    it "note runs the label inline with the body (XSL contract, no Era C box)" do
       path = generate_docx(<<~INNER)
         <sections>
           <clause id="s1">
             <fmt-title>Scope</fmt-title>
-            <note id="n1"><p>This is a note.</p></note>
+            <note id="n1"><fmt-name>NOTE 1</fmt-name><p>This is a note.</p></note>
           </clause>
         </sections>
       INNER
 
       doc = extract_docx_xml(path, "word/document.xml")
       box_begin = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Box-begin']]", ns)
-      noteindent = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Noteindent']]", ns)
+      note_para = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Noteindent']]", ns)
       box_end = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Box-end']]", ns)
-      expect(box_begin).not_to be_nil
-      expect(noteindent).not_to be_nil
-      expect(box_end).not_to be_nil
+      expect(box_begin).to be_nil, "notes must not be wrapped in Box-begin"
+      expect(box_end).to be_nil, "notes must not be wrapped in Box-end"
+      expect(note_para).not_to be_nil
+      expect(note_para.xpath(".//w:t", ns).map(&:text).join)
+        .to start_with("NOTE"), "the NOTE label should run inline in the body paragraph"
     end
 
-    it "example uses Era C Box wrappers with Exampleindent body" do
+    it "example runs the label inline with the body (XSL contract, no Era C box)" do
       path = generate_docx(<<~INNER)
         <sections>
           <clause id="s1">
             <fmt-title>Scope</fmt-title>
-            <example id="e1"><p>This is an example.</p></example>
+            <example id="e1"><fmt-name>EXAMPLE 1</fmt-name><p>This is an example.</p></example>
           </clause>
         </sections>
       INNER
 
       doc = extract_docx_xml(path, "word/document.xml")
       box_begin = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Box-begin']]", ns)
-      exampleindent = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Exampleindent']]", ns)
+      example_para = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Example']]", ns)
       box_end = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Box-end']]", ns)
-      expect(box_begin).not_to be_nil
-      expect(exampleindent).not_to be_nil
-      expect(box_end).not_to be_nil
+      expect(box_begin).to be_nil, "examples must not be wrapped in Box-begin"
+      expect(box_end).to be_nil, "examples must not be wrapped in Box-end"
+      expect(example_para).not_to be_nil
+      expect(example_para.xpath(".//w:t", ns).map(&:text).join)
+        .to start_with("EXAMPLE"), "the EXAMPLE label should run inline in the body paragraph"
     end
 
     it "body paragraphs use Normal style (no explicit pStyle)" do
