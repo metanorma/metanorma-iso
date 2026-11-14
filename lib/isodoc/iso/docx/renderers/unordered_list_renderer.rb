@@ -13,6 +13,7 @@ module IsoDoc
         # where `ListContinue1` does not carry its own numPr.
         class UnorderedListRenderer
           include Base
+          include ListAttachments
 
           def render(list, doc)
             num_id = @resolver.numbering_id(:dash_list)
@@ -20,6 +21,7 @@ module IsoDoc
             Array(list.listitem).each do |item|
               render_item(item, doc, num_id, style)
             end
+            render_attached_notes(list, doc)
           end
 
           private
