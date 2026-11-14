@@ -27,8 +27,9 @@ module Metanorma
 
           def check(context)
             issues = []
-            each_paragraph_with_parent(context.root) do |paragraph, parent|
-              text = extract_text(paragraph, strip: prose_exclusions).strip
+            cache = context.walk_cache
+            cache.paragraphs_with_parent(context.root).each do |paragraph, parent|
+              text = cache.text_of(paragraph, strip: prose_exclusions).strip
               next if text.empty?
 
               issues.concat(scan_text(parent, text))

@@ -32,30 +32,31 @@ module Metanorma
 
           def check(context)
             issues = []
-            each_term(context.root) do |term|
-              issues.concat(check_term(term, context.state))
+            context.walk_cache.terms(context.root).each do |term|
+              issues.concat(check_term(term, context))
             end
             issues
           end
 
           private
 
-          def check_term(term, state)
+          def check_term(term, context)
+            cache = context.walk_cache
             definition = first_verbal_definition(term)
             return [] unless definition
 
-            text = extract_text(definition).strip
+            text = cache.text_of(definition).strip
             return [] if text.empty?
 
-            term_text = preferred_text(term)
+            term_text = preferred_text(term, cache)
             issues = []
 
-            if state.lang.to_s == "en" && ARTICLE_REGEX.match?(text)
+            if context.state.lang.to_s == "en" && ARTICLE_REGEX.match?(text)
               issues << build_issue(code: "ISO_4", location: term_location(term),
                                     params: [term_text])
             end
 
-            if PERIOD_SCRIPTS.include?(state.script.to_s) && PERIOD_REGEX.match?(text)
+            if PERIOD_SCRIPTS.include?(context.state.script.to_s) && PERIOD_REGEX.match?(text)
               issues << build_issue(code: "ISO_35", location: term_location(term),
                                     params: [term_text])
             end
@@ -70,11 +71,11 @@ module Metanorma
             definitions.first.verbal_definition
           end
 
-          def preferred_text(term)
+          def preferred_text(term, cache)
             preferreds = Array(term.preferred)
             return "" if preferreds.empty?
 
-            extract_text(preferreds.first).strip
+            cache.text_of(preferreds.first).strip
           end
 
           def term_location(term)

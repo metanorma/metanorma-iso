@@ -34,7 +34,8 @@ module Metanorma
           # parenthetical sets in the per-sentence advisory.
           def check(context)
             issues = []
-            each_paragraph_with_parent(context.root) do |paragraph, parent|
+            context.walk_cache.paragraphs_with_parent(context.root)
+              .each do |paragraph, parent|
               text = paragraph_text(paragraph)
               next if text.nil? || text.strip.empty?
 

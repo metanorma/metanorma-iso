@@ -29,7 +29,7 @@ module Metanorma
           end
 
           def check(context)
-            super + link_target_issues(context.root)
+            super + link_target_issues(context)
           end
 
           private
@@ -37,9 +37,10 @@ module Metanorma
           # Flag every link target in every walked paragraph's subtree.
           # Links nest (a <link> may carry inline children), so the walk
           # is by model class, not by paragraph-child position.
-          def link_target_issues(root)
+          def link_target_issues(context)
             issues = []
-            each_paragraph_with_parent(root) do |paragraph, parent|
+            context.walk_cache.paragraphs_with_parent(context.root)
+              .each do |paragraph, parent|
               each_instance_of(paragraph, LINK_ELEMENT) do |link|
                 text = link.target.to_s
                 issues.concat(findings_for_matches(parent, text, WIKIPEDIA_REGEX, FINDING_LABEL))

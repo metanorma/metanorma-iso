@@ -49,8 +49,12 @@ module Metanorma
             root = deserialize(xml_string)
             state ||= StateExtractor.extract(root, document: document)
             registry = ComposedRegistry.for(flavor: state&.flavor)
+            # One WalkCache per validation run: rules ask it for shared
+            # document facts (paragraph pairs, node text, xrefs, terms)
+            # instead of re-deriving them per rule. It dies with this run.
             context = Context.new(root: root, log: log, state: state,
-                                  shared: SharedState.new, registry: registry)
+                                  shared: SharedState.new, registry: registry,
+                                  walk_cache: WalkCache.new)
             report = Report.new(
               document: state.document,
               generated_at: Time.now.utc.iso8601
