@@ -18,8 +18,9 @@ style_library:
       unhide_when_used: false
       paragraph_properties:
         spacing:
-          after: '240'
-          line: '240'
+          after: '160'
+          line: '249'
+          line_rule: 'exact'
         alignment: both
         keep_next: false
         keep_lines: false
@@ -51,8 +52,10 @@ style_library:
         numbering:
           num_id: '4'
         spacing:
-          before: '270'
-          line: '270'
+          before: '360'
+          after: '160'
+          line: '312'
+          line_rule: 'exact'
         indent:
           left: '0'
           firstLine: '0'
@@ -89,8 +92,10 @@ style_library:
         numbering:
           ilvl: '1'
         spacing:
-          before: '60'
-          line: '250'
+          before: '240'
+          after: '160'
+          line: '312'
+          line_rule: 'exact'
         indent:
           left: '0'
           firstLine: '0'
@@ -127,8 +132,10 @@ style_library:
         numbering:
           ilvl: '2'
         spacing:
-          before: '60'
-          line: '230'
+          before: '280'
+          after: '180'
+          line: '288'
+          line_rule: 'exact'
         indent:
           left: '0'
           firstLine: '0'
@@ -160,6 +167,11 @@ style_library:
       semi_hidden: false
       unhide_when_used: false
       paragraph_properties:
+        spacing:
+          before: '60'
+          after: '160'
+          line: '288'
+          line_rule: 'exact'
         numbering:
           ilvl: '3'
         indent:
@@ -189,6 +201,11 @@ style_library:
       semi_hidden: false
       unhide_when_used: false
       paragraph_properties:
+        spacing:
+          before: '60'
+          after: '160'
+          line: '288'
+          line_rule: 'exact'
         numbering:
           ilvl: '4'
         indent:
@@ -216,6 +233,11 @@ style_library:
       semi_hidden: false
       unhide_when_used: false
       paragraph_properties:
+        spacing:
+          before: '60'
+          after: '160'
+          line: '288'
+          line_rule: 'exact'
         numbering:
           ilvl: '5'
         outline_level: '5'
@@ -570,8 +592,9 @@ style_library:
       unhide_when_used: false
       paragraph_properties:
         spacing:
-          after: '240'
-          line: '240'
+          after: '160'
+          line: '312'
+          line_rule: 'exact'
         outline_level: '0'
         keep_next: false
         keep_lines: false
@@ -598,8 +621,9 @@ style_library:
       unhide_when_used: false
       paragraph_properties:
         spacing:
-          after: '240'
-          line: '240'
+          after: '160'
+          line: '249'
+          line_rule: 'exact'
         alignment: both
         keep_next: false
         keep_lines: false
@@ -1256,7 +1280,10 @@ style_library:
       unhide_when_used: false
       paragraph_properties:
         spacing:
-          line: '220'
+          before: '0'
+          after: '160'
+          line: '240'
+          line_rule: 'exact'
         tabs:
         - type: left
           position: '1354'
@@ -1286,8 +1313,14 @@ style_library:
       semi_hidden: false
       unhide_when_used: false
       paragraph_properties:
+        spacing:
+          before: '0'
+          after: '160'
+          line: '240'
+          line_rule: 'exact'
         indent:
-          left: '403'
+          left: '397'
+          right: '397'
         tabs:
         - type: clear
           position: '1354'
@@ -1304,6 +1337,12 @@ style_library:
       hidden: false
       semi_hidden: false
       unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '0'
+          after: '160'
+          line: '240'
+          line_rule: 'exact'
     Figureexample:
       id: Figureexample
       type: paragraph
@@ -1338,7 +1377,10 @@ style_library:
       unhide_when_used: false
       paragraph_properties:
         spacing:
-          line: '220'
+          before: '0'
+          after: '240'
+          line: '240'
+          line_rule: 'exact'
         tabs:
         - type: left
           position: '965'
@@ -2176,8 +2218,11 @@ style_library:
       semi_hidden: false
       unhide_when_used: false
       paragraph_properties:
-        indent:
-          left: '403'
+        spacing:
+          before: '0'
+          after: '240'
+          line: '240'
+          line_rule: 'exact'
         tabs:
         - type: clear
           position: '965'
@@ -2195,6 +2240,12 @@ style_library:
       hidden: false
       semi_hidden: false
       unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '0'
+          after: '240'
+          line: '240'
+          line_rule: 'exact'
     MainTitle1:
       id: MainTitle1
       type: paragraph
@@ -2205,7 +2256,8 @@ style_library:
       unhide_when_used: false
       paragraph_properties:
         spacing:
-          before: '400'
+          line: '240'
+          line_rule: 'auto'
         keep_next: false
         keep_lines: false
         page_break_before: false
@@ -2224,6 +2276,9 @@ style_library:
       semi_hidden: false
       unhide_when_used: false
       paragraph_properties:
+        spacing:
+          line: '240'
+          line_rule: 'auto'
         outline_level: '1'
         keep_next: false
         keep_lines: false
@@ -2243,6 +2298,9 @@ style_library:
       semi_hidden: false
       unhide_when_used: false
       paragraph_properties:
+        spacing:
+          line: '240'
+          line_rule: 'auto'
         outline_level: '2'
         keep_next: false
         keep_lines: false
@@ -2620,6 +2678,9 @@ style_library:
       semi_hidden: false
       unhide_when_used: false
       paragraph_properties:
+        spacing:
+          line: '240'
+          line_rule: 'auto'
         keep_next: false
         keep_lines: false
         page_break_before: false
@@ -2670,6 +2731,9 @@ style_library:
       semi_hidden: false
       unhide_when_used: false
       paragraph_properties:
+        spacing:
+          line: '240'
+          line_rule: 'auto'
         alignment: right
         keep_next: false
         keep_lines: false
@@ -2735,7 +2799,8 @@ style_library:
       unhide_when_used: false
       paragraph_properties:
         spacing:
-          before: '2000'
+          line: '240'
+          line_rule: 'auto'
         alignment: center
         keep_next: false
         keep_lines: false
@@ -2758,7 +2823,8 @@ style_library:
       unhide_when_used: false
       paragraph_properties:
         spacing:
-          after: '120'
+          line: '240'
+          line_rule: 'auto'
         indent:
           left: '85'
           right: '85'
@@ -2783,7 +2849,8 @@ style_library:
       unhide_when_used: false
       paragraph_properties:
         spacing:
-          after: '120'
+          line: '240'
+          line_rule: 'auto'
         indent:
           left: '85'
           right: '85'
