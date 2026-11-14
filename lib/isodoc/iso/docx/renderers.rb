@@ -24,6 +24,7 @@ module IsoDoc
         autoload :TableRenderer,        "isodoc/iso/docx/renderers/table_renderer"
         autoload :TableAttachmentBuffer,
                  "isodoc/iso/docx/renderers/table_attachment_buffer"
+        autoload :ListAttachments, "isodoc/iso/docx/renderers/list_attachments"
         autoload :TableCellElement,    "isodoc/iso/docx/renderers/table_cell_element"
         autoload :ImageRenderer,        "isodoc/iso/docx/renderers/image_renderer"
         autoload :SectionRenderer,      "isodoc/iso/docx/renderers/section_renderer"
