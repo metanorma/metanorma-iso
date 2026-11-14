@@ -84,6 +84,9 @@ module IsoDoc
            Renderers::NullRenderer],
         ].freeze
 
+        # Output extensions routed through the MHTML save path.
+        MHTML_EXTENSIONS = [".doc", ".mht", ".mhtml"].freeze
+
         # @param template [Symbol] :dis or :simple (default :dis)
         # @param template_path [String, nil] explicit template DOCX path
         # @param style_mapping_config [String, nil] explicit YAML config path
@@ -266,10 +269,65 @@ module IsoDoc
         end
 
         def save_document(model, output_path)
-          Uniword::DocumentWriter.new(model).save(output_path)
+          if mhtml_output?(output_path)
+            save_mhtml(model, output_path)
+          else
+            Uniword::DocumentWriter.new(model).save(output_path)
+          end
         rescue StandardError => e
           warn "[metanorma-iso] DOCX save failed: #{e.message}"
           raise
+        end
+
+        # Uniword's DocumentWriter MHTML route converts a bare DocumentRoot
+        # without its relationships part, so every external hyperlink loses
+        # its URL resolution and is dropped whole from the MHTML output —
+        # the cover contact block's email/website lines came out empty.
+        # Route MHTML saves through OoxmlToMhtmlConverter's relationships
+        # parameter instead, preserving the hyperlink relationships that
+        # the DOCX path keeps.
+        def save_mhtml(model, output_path)
+          mhtml_doc = Uniword::Transformation::OoxmlToMhtmlConverter
+            .document_to_mht(model, model.core_properties,
+                             merged_document_relationships(model))
+          Uniword::Infrastructure::MimePackager
+            .from_document(mhtml_doc).package(output_path)
+        end
+
+        # The relationships part for MHTML rendering: the loaded template
+        # rels plus the rels the IdAllocator registered during rendering.
+        # Builder-added relationships (hyperlinks, images) are merged into
+        # the saved rels part only by the DOCX reconciler, so on the MHTML
+        # path the merge happens here (same target-dedup rule as
+        # Docx::Reconciler::PackageStructure#append_allocator_rels).
+        def merged_document_relationships(model)
+          allocated = Array(model.allocator&.all_rels(scope: :document))
+          return model.document_rels if allocated.empty?
+
+          base = model.document_rels
+          rels = Array(base&.relationships).map do |rel|
+            Uniword::Ooxml::Relationships::PackageRelationship.new(
+              id: rel.id,
+              type: rel.type,
+              target: rel.target,
+              target_mode: rel.target_mode,
+            )
+          end
+          targets = rels.filter_map(&:target)
+          allocated.reject { |e| targets.include?(e[:target]) }
+            .each do |entry|
+              rels << Uniword::Ooxml::Relationships::PackageRelationship.new(
+                id: entry[:id],
+                type: entry[:type],
+                target: entry[:target],
+                target_mode: entry[:target_mode],
+              )
+            end
+          Uniword::Ooxml::Relationships::PackageRelationships.new(relationships: rels)
+        end
+
+        def mhtml_output?(path)
+          MHTML_EXTENSIONS.include?(File.extname(path).downcase)
         end
 
         def parse_xml(source)

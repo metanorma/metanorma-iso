@@ -1890,4 +1890,51 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "Simple template" do
       expect(File.size(output_path)).to be > 0
     end
   end
+
+  describe "MHTML (.doc) output" do
+    let(:contact_xml) do
+      minimal_iso_xml(<<~INNER)
+        <boilerplate>
+          <copyright-statement>
+            <clause id="b1">
+              <p id="boilerplate-address">International Organization for Standardization<br/>
+              Internet   <link target="mailto:central@iso.ch" id="_l1"/>
+              <semx element="link" source="_l1"><fmt-link target="mailto:central@iso.ch"/></semx><br/>
+              X.400 c=ch; a=400net</p>
+            </clause>
+          </copyright-statement>
+        </boilerplate>
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <p>Scope text.</p>
+          </clause>
+        </sections>
+      INNER
+    end
+
+    # Render the contact fixture to the given extension and return the
+    # saved bytes (text-decoded for MHTML, raw for the DOCX zip buffer).
+    def render_contact(ext)
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output#{ext}")
+        adapter.convert(contact_xml, path)
+        if ext == ".docx"
+          File.binread(path)
+        else
+          File.read(path, encoding: "utf-8", invalid: :replace)
+        end
+      end
+    end
+
+    it "keeps external hyperlink text in the MHTML output" do
+      expect(render_contact(".doc")).to include("central@iso.ch")
+    end
+
+    it "keeps external hyperlink text in the DOCX output" do
+      Zip::File.open_buffer(render_contact(".docx")) do |zip|
+        expect(zip.read("word/document.xml")).to include("central@iso.ch")
+      end
+    end
+  end
 end
