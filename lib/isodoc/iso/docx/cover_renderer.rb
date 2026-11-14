@@ -6,16 +6,21 @@ module IsoDoc
       # Renders the cover page from the document model's bibdata.
       #
       # The cover page appears as the first page of the DOCX and includes:
-      #   - Document number
       #   - Document identifier (with stage/draft)
-      #   - TC/SC/WG committee reference
-      #   - Edition information
+      #   - Reference number of working document (iso-tc identifier)
       #   - Date
-      #   - Main title
+      #   - Reference number of project (iso-undated identifier + draft)
+      #   - Committee identification (approval group) or TC/SC/WG reference
+      #   - Secretariat
+      #   - Edition information
+      #   - Main title and title part
+      #   - Second-language subtitle
       #   - Stage label
       #
       # All data comes from the model's bibdata attribute — no hardcoded text.
       class CoverRenderer
+        include ModelUtils
+
         STAGE_LABELS = {
           0 => "PWI stage", 10 => "NP stage", 20 => "WD stage",
           30 => "CD stage", 40 => "DIS stage", 50 => "FDIS stage",
@@ -33,13 +38,17 @@ module IsoDoc
           return unless bibdata
 
           render_cover_large(doc, identifier_with_language(bibdata))
-          render_cover_line(doc, doc_number(bibdata))
-          render_cover_line(doc, committee_reference(bibdata))
+          render_cover_line(doc, working_document_number(bibdata))
+          render_cover_line(doc, date_text(bibdata))
+          render_cover_line(doc, project_number(bibdata))
+          render_cover_line(doc, committee_identification(bibdata) ||
+                                   committee_reference(bibdata))
+          render_cover_line(doc, secretariat_line(bibdata))
           render_cover_line(doc, edition_text(bibdata))
           render_cover_line(doc, "")
-          render_cover_line(doc, date_text(bibdata))
           render_cover_title(doc, main_title(bibdata))
           render_cover_subtitle(doc, subtitle(bibdata))
+          render_translated_subtitle(doc, bibdata)
           render_cover_line(doc, "")
           render_cover_line(doc, stage_label(bibdata))
         end
@@ -78,6 +87,243 @@ module IsoDoc
           para.style = @resolver.paragraph_style(:cover_subtitle)
           para << subtitle_text
           doc << para
+        end
+
+        # Second-language subtitle: the classic chain renders the document
+        # title in the other ISO language (FR for EN documents, EN for FR)
+        # as an italic cover line under the main title (docsubtitle).
+        def render_translated_subtitle(doc, bib)
+          text = translated_title(bib)
+          return if text.nil? || text.empty?
+
+          para = Uniword::Builder::ParagraphBuilder.new
+          para.style = @resolver.paragraph_style(:cover_meta)
+          para << Uniword::Builder::RunBuilder.new.text(text).italic
+          doc << para
+        end
+
+        # "Reference number of working document: 29166" — the ISO-tc
+        # docidentifier carried on DIS/FDIS covers (zzCover).
+        def working_document_number(bib)
+          id = docidentifier_of_type(bib, "iso-tc")
+          return nil unless id
+
+          "Reference number of working document: #{id}"
+        end
+
+        # "Reference number of project: ISO/FDTR 29166 (draft 2011-12)" —
+        # the undated project identifier plus the draft suffix. Falls back
+        # to the bare document number for documents without the iso-undated
+        # identifier (early-stage covers).
+        def project_number(bib)
+          id = docidentifier_of_type(bib, "iso-undated")
+          return doc_number(bib) unless id
+
+          "Reference number of project: #{id}#{draft_info(bib)}"
+        end
+
+        # "Committee identification: JTC 1/SC 34" — the full identifiers of
+        # the approval group (authorizer committee subdivisions).
+        def committee_identification(bib)
+          ids = approval_group_identifiers(bib)
+          return nil if ids.empty?
+
+          "Committee identification: #{ids.join(' and ')}"
+        end
+
+        # "Secretariat: SAC" — the name of the secretariat subdivision on
+        # the author/secretariat contributor.
+        def secretariat_line(bib)
+          name = secretariat_name(bib)
+          return nil unless name
+
+          "Secretariat: #{name}"
+        end
+
+        # Unwrap a typed model leaf to its display text. Model leaves in the
+        # bibdata (FormattedString, LocalizedName, …) may carry their text as
+        # a String or as a single-element collection on :value/:content/:text.
+        def typed_text(node)
+          case node
+          when String then node
+          when Array then node.filter_map { |n| typed_text(n) }.first
+          when Lutaml::Model::Serializable
+            leaf = if node.class.attributes.key?(:value)
+                     typed_text(node.value)
+                   end
+            leaf ||= %i(content text).filter_map do |a|
+              next unless node.class.attributes.key?(a)
+
+              typed_text(node.public_send(a))
+            end.first
+            leaf
+          end
+        end
+
+        def docidentifier_of_type(bib, type)
+          return nil unless bib.class.attributes.key?(:doc_identifier)
+
+          identifiers = Array(bib.doc_identifier).find do |d|
+            d.is_a?(Lutaml::Model::Serializable) &&
+              d.class.attributes.key?(:type) &&
+              d.type == type &&
+              !d.value.to_s.empty?
+          end
+          identifiers&.value
+        end
+
+        # Classic draftinfo: " (draft <draft>)". <version> carries either
+        # a <draft> child or its text as the draft value (legacy form).
+        def draft_info(bib)
+          draft = extract_draft(bib)
+          return nil unless draft
+
+          " (draft #{draft})"
+        end
+
+        def extract_draft(bib)
+          return nil unless bib.class.attributes.key?(:version)
+
+          version = bib.version
+          return nil unless version.is_a?(Lutaml::Model::Serializable)
+
+          draft = version.draft if version.class.attributes.key?(:draft)
+          if (draft.nil? || draft.to_s.empty?) &&
+              version.class.attributes.key?(:content)
+            draft = version.content
+          end
+          draft = typed_text(draft)
+          draft && !draft.empty? ? draft : nil
+        end
+
+        def approval_group_identifiers(bib)
+          contributors(bib).filter_map do |contributor|
+            next unless committee_authorizer?(contributor)
+
+            organization = attribute_value(contributor, :organization)
+            next unless organization
+
+            Array(attribute_value(organization, :subdivision)).filter_map do |sub|
+              full_identifiers(sub)
+            end
+          end.flatten
+        end
+
+        def committee_authorizer?(contributor)
+          roles(contributor).any? do |role|
+            attribute_value(role, :type) == "authorizer" &&
+              role_descriptions(role).include?("committee")
+          end
+        end
+
+        def secretariat_name(bib)
+          contributors(bib).each do |contributor|
+            next unless secretariat_contributor?(contributor)
+
+            organization = attribute_value(contributor, :organization)
+            next unless organization
+
+            Array(attribute_value(organization, :subdivision)).each do |sub|
+              next unless attribute_value(sub, :type) == "Secretariat"
+
+              Array(attribute_value(sub, :name)).each do |name|
+                text = typed_text(name)
+                return text unless text.nil? || text.empty?
+              end
+            end
+          end
+          nil
+        end
+
+        def secretariat_contributor?(contributor)
+          roles(contributor).any? do |role|
+            attribute_value(role, :type) == "author" &&
+              role_descriptions(role).include?("secretariat")
+          end
+        end
+
+        def contributors(bib)
+          return [] unless bib.class.attributes.key?(:contributor)
+
+          Array(bib.contributor)
+        end
+
+        def roles(contributor)
+          return [] unless contributor.is_a?(Lutaml::Model::Serializable) &&
+            contributor.class.attributes.key?(:role)
+
+          Array(contributor.role)
+        end
+
+        def role_descriptions(role)
+          return [] unless role.is_a?(Lutaml::Model::Serializable) &&
+            role.class.attributes.key?(:description)
+
+          Array(role.description).map { |d| typed_text(d) }
+        end
+
+        def full_identifiers(subdivision)
+          return [] unless subdivision.is_a?(Lutaml::Model::Serializable) &&
+            subdivision.class.attributes.key?(:identifier)
+
+          Array(subdivision.identifier).filter_map do |identifier|
+            next unless identifier.is_a?(Lutaml::Model::Serializable) &&
+              identifier.class.attributes.key?(:type) &&
+              identifier.type == "full"
+
+            value = typed_text(identifier.value)
+            value unless value.nil? || value.empty?
+          end
+        end
+
+        # The document title in the other ISO language. FR documents take
+        # the EN title; all others take the FR title (falling back to any
+        # other language when that one is absent).
+        def translated_title(bib)
+          doc_lang = language_code(bib)
+          other = doc_lang == "fr" ? "en" : "fr"
+          localized = localized_title_in(bib, other) ||
+            other_language_title(bib, doc_lang)
+          return nil unless localized
+
+          compose_localized_title(localized)
+        end
+
+        def localized_title_in(bib, lang)
+          return nil unless bib.class.attributes.key?(:titles)
+
+          titles = bib.titles
+          return nil unless titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
+
+          localized = titles.for_language(lang)
+          return nil if localized.nil? || localized.to_s.empty?
+
+          localized
+        end
+
+        def other_language_title(bib, doc_lang)
+          return nil unless bib.class.attributes.key?(:titles)
+
+          titles = bib.titles
+          return nil unless titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
+
+          Array(titles.per_language).find do |localized|
+            localized.language != doc_lang
+          end
+        end
+
+        # Compose a localized title as "intro — main — prefix: part",
+        # mirroring the classic chain's compose_title.
+        def compose_localized_title(localized)
+          parts = []
+          parts << typed_text(localized.title_intro.value) if localized.title_intro
+          parts << typed_text(localized.title_main.value) if localized.title_main
+          if localized.title_part && !localized.title_part.value.to_s.empty?
+            prefix = typed_text(localized.title_part_prefix&.value).to_s.strip
+            part = typed_text(localized.title_part.value).to_s
+            parts << (prefix.empty? ? part : "#{prefix}: #{part}")
+          end
+          parts.compact.empty? ? nil : parts.compact.join(" — ")
         end
 
         def doc_number(bib)
