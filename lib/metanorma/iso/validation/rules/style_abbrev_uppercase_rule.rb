@@ -52,10 +52,11 @@ module Metanorma
                   "consistently)".freeze
 
           def check(context)
-            tokens = collected_uppercase_tokens(context.root)
+            cache = context.walk_cache
+            tokens = collected_uppercase_tokens(cache, context.root)
             issues = []
-            each_paragraph_with_parent(context.root) do |paragraph, parent|
-              text = extract_text(paragraph, strip: prose_exclusions).strip
+            cache.paragraphs_with_parent(context.root).each do |paragraph, parent|
+              text = cache.text_of(paragraph, strip: prose_exclusions).strip
               next if text.empty?
 
               issues.concat(scan_text(parent, text, tokens))
@@ -67,10 +68,10 @@ module Metanorma
 
           # First pass: every uppercase 2–5 letter token used anywhere
           # in prose.
-          def collected_uppercase_tokens(root)
+          def collected_uppercase_tokens(cache, root)
             tokens = Set.new
-            each_paragraph_with_parent(root) do |paragraph, _|
-              text = extract_text(paragraph, strip: prose_exclusions)
+            cache.paragraphs_with_parent(root).each do |(paragraph, _)|
+              text = cache.text_of(paragraph, strip: prose_exclusions)
               tokens.merge(text.scan(UPPERCASE_TOKEN_REGEX))
             end
             tokens

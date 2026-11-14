@@ -25,7 +25,7 @@ module Metanorma
           def check(context)
             targets = collect_all_targets(context.root)
             issues = []
-            each_xref(context.root) do |xref|
+            context.walk_cache.xrefs(context.root).each do |xref|
               target = xref.target.to_s
               next if target.empty?
               next if targets.include?(target)

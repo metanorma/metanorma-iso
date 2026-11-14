@@ -30,11 +30,12 @@ module Metanorma
 
           def check(context)
             issues = []
-            each_paragraph_with_parent(context.root) do |paragraph, parent|
+            context.walk_cache.paragraphs_with_parent(context.root)
+              .each do |paragraph, parent|
               next if exempt_container?(parent)
               next if exempt_paragraph_type?(paragraph)
 
-              text = extract_text(paragraph).strip
+              text = context.walk_cache.text_of(paragraph).strip
               next if text.empty?
 
               issues.concat(scan_text(parent, text))
