@@ -99,4 +99,117 @@ RSpec.describe IsoDoc::Iso::Docx::FormulaRenderer do
       expect { renderer.render(formula, doc) }.not_to raise_error
     end
   end
+
+  describe "#render with a walker wired (extras dispatch)" do
+    let(:walker) do
+      IsoDoc::Iso::Docx::Renderers::Walker.new(
+        ->(node, d) { adapter.send(:dispatch, node, d) },
+      )
+    end
+
+    let(:wired_renderer) do
+      described_class.new(resolver, inline, context: context, walker: walker)
+    end
+
+    before do
+      adapter.send(:reset_state, doc)
+    end
+
+    it "renders the where-clause definitions wrapped in <key>" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <formula id="f1">
+              <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>w</mi></math></stem>
+              <key>
+                <dl>
+                  <dt>w</dt>
+                  <dd><p>is the mass fraction of grains with a defect;</p></dd>
+                </dl>
+              </key>
+            </formula>
+          </clause>
+        </sections>
+      INNER
+
+      model = parse_iso_document(xml)
+      formula = model.sections.clause.first.formulas.first
+
+      wired_renderer.render(formula, doc)
+
+      text = doc.model.body.paragraphs.map do |p|
+        p.runs.map { |r| run_text(r) }.join
+      end.join("\n")
+
+      expect(text).to include("is the mass fraction of grains with a defect")
+    end
+
+    it "renders a bare <dl> sibling (semantic form) alongside the key form" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <formula id="f1">
+              <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>a</mi></math></stem>
+              <dl>
+                <dt>a</dt>
+                <dd><p>is the standalone list term;</p></dd>
+              </dl>
+              <key>
+                <dl>
+                  <dt>b</dt>
+                  <dd><p>is the key-wrapped term;</p></dd>
+                </dl>
+              </key>
+            </formula>
+          </clause>
+        </sections>
+      INNER
+
+      model = parse_iso_document(xml)
+      formula = model.sections.clause.first.formulas.first
+
+      wired_renderer.render(formula, doc)
+
+      text = doc.model.body.paragraphs.map do |p|
+        p.runs.map { |r| run_text(r) }.join
+      end.join("\n")
+
+      expect(text).to include("is the standalone list term")
+      expect(text).to include("is the key-wrapped term")
+    end
+
+    it "renders key paragraphs that accompany the symbol list" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <formula id="f1">
+              <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math></stem>
+              <key>
+                <dl>
+                  <dt>x</dt>
+                  <dd><p>is a value;</p></dd>
+                </dl>
+              </key>
+              <p>where the value is dimensionless.</p>
+            </formula>
+          </clause>
+        </sections>
+      INNER
+
+      model = parse_iso_document(xml)
+      formula = model.sections.clause.first.formulas.first
+
+      wired_renderer.render(formula, doc)
+
+      text = doc.model.body.paragraphs.map do |p|
+        p.runs.map { |r| run_text(r) }.join
+      end.join("\n")
+
+      expect(text).to include("is a value")
+      expect(text).to include("where the value is dimensionless")
+    end
+  end
 end
