@@ -58,6 +58,40 @@ RSpec.describe "list-attached note with an inline footnote" do
           "the footnote body must survive in footnotes.xml"
   end
 
+  # A NOTE attached to a sentence parses into the parent paragraph, and
+  # the nested NoteBlock carries no element_order — its body is then only
+  # reachable through the note's content collection. This is the shape the
+  # compile produces for `NOTE:` following a paragraph, so the walker's
+  # unordered fallback must reach the content paragraphs, footnotes
+  # included.
+  it "walks an unordered note's content paragraphs" do
+    fn = Metanorma::Document::Components::Inline::FnElement.new(
+      id: "fn9",
+      reference: "1",
+      p: [Metanorma::Document::Components::Paragraphs::ParagraphBlock.new(
+        text: "Paragraph-note footnote body.",
+      )],
+    )
+    body = Metanorma::Document::Components::Paragraphs::ParagraphBlock.new(
+      text: "Note after a sentence with a footnote.",
+      fn: [fn],
+    )
+    note = Metanorma::Document::Components::Blocks::NoteBlock.new(
+      id: "n4",
+      autonum: "1",
+      content: [body],
+    )
+    expect(note.element_order).to be_nil,
+      "the spec models the nested-note shape: no element_order"
+
+    dispatched = []
+    walker = IsoDoc::Iso::Docx::Renderers::Walker.new(->(node, _doc) { dispatched << node })
+    walker.walk(note, nil)
+
+    expect(dispatched).to include(body),
+      "the unordered note's content paragraph must be dispatched for rendering"
+  end
+
   it "keeps note text, anchor, and footnote body in the MHTML (.doc) output" do
     dir = Dir.mktmpdir
     path = File.join(dir, "output.doc")
