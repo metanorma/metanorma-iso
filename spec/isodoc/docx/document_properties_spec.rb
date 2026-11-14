@@ -105,4 +105,12 @@ RSpec.describe IsoDoc::Iso::Docx::DocumentProperties do
     props = described_class.new(model).build
     expect(find_property(props, "ident-doc-type").value).to eq("IS")
   end
+
+  it "abbreviates stage and doctype from Simple template YAML" do
+    model = build_model(doctype: "technical-specification", stage: 30)
+    props = described_class.new(model, template: :simple).build
+
+    expect(find_property(props, "release-version").value).to eq("CD")
+    expect(find_property(props, "ident-doc-type").value).to eq("TS")
+  end
 end

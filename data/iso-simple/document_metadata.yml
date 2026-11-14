@@ -1,0 +1,33 @@
+# ISO Simple document metadata
+#
+# Values come from data/iso-dis/document_metadata.yml: ISO stage and doctype
+# codes do not depend on the template. The Simple template has no reference
+# DOCX to extract them from.
+#
+# Loaded by: IsoDoc::Iso::Docx::DocumentProperties
+
+doctype_abbreviations:
+  international-standard: IS
+  technical-specification: TS
+  technical-report: TR
+  publicly-available-specification: PAS
+  international-workshop-agreement: IWA
+  guide: Guide
+  amendment: AMD
+  technical-corrigendum: COR
+
+stage_abbreviations:
+  # Note: DocumentProperties.release_version buckets the stage value via
+  # `stage / 10 * 10`, so only decile-bucketed entries (0, 10, ..., 60, 90)
+  # are reachable through lookup. The 95 => "COR" entry is preserved for
+  # documentation — it reflects the ISO stage code for technical
+  # corrigenda, but is unreachable because stage 95 buckets to 90 ("AMD").
+  0: PWI
+  10: NP
+  20: WD
+  30: CD
+  40: DIS
+  50: FDIS
+  60: IS
+  90: AMD
+  95: COR
