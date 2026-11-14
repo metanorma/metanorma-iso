@@ -296,6 +296,9 @@ module IsoDoc
           text = stem_asciimath_text(element)
           return text if text && !text.empty?
 
+          text = stem_math_text(element)
+          return text if text && !text.empty?
+
           collect_text(element)
         end
 
@@ -339,6 +342,25 @@ module IsoDoc
           end
           return attribute_value(am, :text) if am.class.attributes.key?(:text)
 
+          nil
+        end
+
+        # Some stems carry only MathML (e.g. table cells whose symbol is a
+        # number with a unit row). Convert through Plurimath to a plain
+        # AsciiMath text so the cell content survives.
+        def stem_math_text(element)
+          math = attribute_value(element, :math)
+          Array(attribute_value(element, :semx)).each do |child|
+            math ||= attribute_value(child, :math)
+            break if math
+          end
+          return nil unless math.is_a?(Lutaml::Model::Serializable)
+
+          xml = math.to_xml
+          return nil if xml.nil? || xml.strip.empty?
+
+          Plurimath::Mathml::Parser.new(xml).parse.to_asciimath
+        rescue StandardError
           nil
         end
 
