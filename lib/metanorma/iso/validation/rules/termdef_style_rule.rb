@@ -11,6 +11,22 @@ module Metanorma
         # ISO_35 (Cyrillic / Latin scripts): definition must not end with
         # a period.
         #
+        # The ISO_35 test reads only the definition's final OWN text run
+        # (TreeTraversal#last_own_text): footnote text, eref locality
+        # digits, and other markup internals never count as the
+        # definition's end.
+        #   metanorma/metanorma-pdfa#118: "ICC.1 specifications" fired
+        #   ISO_35 although the definition carried no trailing period.
+        #
+        # ISO/IEC DIR 2:2021, 16.5.6 states the no-full-stop rule without
+        # a script qualifier ("It shall not start with an article ('the',
+        # 'a') nor end with a full stop"), so the requirement is in
+        # principle universal; the Cyrl/Latn gating is kept because the
+        # companion article rule is plainly language-dependent and no
+        # evidence supports widening the check to other scripts (CJK and
+        # Arabic traditions punctuate differently). Widening is an owner
+        # decision, not a correction.
+        #
         # Walks every term via TreeTraversal#each_term. Reads the first
         # definition's verbal-definition text and the preferred designation
         # text. The script/language gating mirrors the legacy rule.
@@ -44,18 +60,23 @@ module Metanorma
             definition = first_verbal_definition(term)
             return [] unless definition
 
-            text = extract_text(definition).strip
-            return [] if text.empty?
-
             term_text = preferred_text(term)
             issues = []
 
-            if state.lang.to_s == "en" && ARTICLE_REGEX.match?(text)
+            # ISO_4 tests the definition's opening as concatenated for the
+            # reader (unchanged behavior).
+            article_text = extract_text(definition).strip
+            if state.lang.to_s == "en" && ARTICLE_REGEX.match?(article_text)
               issues << build_issue(code: "ISO_4", location: term_location(term),
                                     params: [term_text])
             end
 
-            if PERIOD_SCRIPTS.include?(state.script.to_s) && PERIOD_REGEX.match?(text)
+            # ISO_35 tests only the definition's final own text run: footnote
+            # text, eref locality digits, and other markup internals are not
+            # the end of the definition the reader sees (pdfa#118).
+            text = (last_own_text(definition) || "").strip
+            if PERIOD_SCRIPTS.include?(state.script.to_s) &&
+                !text.empty? && PERIOD_REGEX.match?(text)
               issues << build_issue(code: "ISO_35", location: term_location(term),
                                     params: [term_text])
             end

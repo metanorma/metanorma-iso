@@ -70,5 +70,32 @@ RSpec.describe Metanorma::Iso::Validation::Rules::TermdefStyleRule do
       issues = rule.check(context_with(xml, script: "Hans"))
       expect(issues.select { |i| i.code == "ISO_35" }).to eq([])
     end
+
+    it "flags a definition whose own final text ends with period after markup" do
+      xml = term_xml(definition_text: "file format defined in " \
+        '<eref type="inline" bibitemid="ISO15076-1" citeas="ISO 15076-1"/> ' \
+        '<fn reference="1"><p>See ISO 15076-1:2010</p></fn>for the profile format.')
+      issues = rule.check(context_with(xml, script: "Latn"))
+      iso35 = issues.select { |i| i.code == "ISO_35" }
+      expect(iso35.size).to eq(1)
+    end
+
+    it "does not flag a mid-text period inside the definition (ICC.1 shape)" do
+      xml = term_xml(definition_text: "file format defined in " \
+        '<eref type="inline" bibitemid="ISO15076-1" citeas="ISO 15076-1"/> ' \
+        "or any of the ICC.1 specifications")
+      issues = rule.check(context_with(xml, script: "Latn"))
+      expect(issues.select { |i| i.code == "ISO_35" }).to eq([])
+    end
+
+    it "does not flag when a footnote supplies the only period " \
+       "(metanorma/metanorma-pdfa#118)" do
+      xml = term_xml(definition_text: "file format defined in " \
+        '<eref type="inline" bibitemid="ISO15076-1" citeas="ISO 15076-1"/>' \
+        '<fn reference="1"><p>Cancelled and replaced by ISO 15076-1:2010.</p></fn> ' \
+        "or any of the ICC.1 specifications")
+      issues = rule.check(context_with(xml, script: "Latn"))
+      expect(issues.select { |i| i.code == "ISO_35" }).to eq([])
+    end
   end
 end

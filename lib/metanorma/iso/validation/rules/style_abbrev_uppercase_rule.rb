@@ -51,11 +51,21 @@ module Metanorma
                   "elsewhere in the document (abbreviations are written " \
                   "consistently)".freeze
 
+          # URL/URI payload is not abbreviation prose: its lowercase
+          # token runs ("www.iso.org") must never enter the casing
+          # comparison. Every ISO document carries https://www.iso.org
+          # in its boilerplate foreword (metanorma/metanorma-pdfa#118).
+          URI_TOKEN_REGEX = %r{
+            (?:https?|ftp|telnet|file)://\S+
+            |(?:mailto|urn|callto|sms):\S+
+            |\bwww\.\S+
+          }xi.freeze
+
           def check(context)
             tokens = collected_uppercase_tokens(context.root)
             issues = []
-            each_paragraph_with_parent(context.root) do |paragraph, parent|
-              text = extract_text(paragraph, strip: prose_exclusions).strip
+            each_paragraph(context.root) do |paragraph, parent|
+              text = prose_text(paragraph)
               next if text.empty?
 
               issues.concat(scan_text(parent, text, tokens))
@@ -65,15 +75,42 @@ module Metanorma
 
           private
 
-          # First pass: every uppercase 2–5 letter token used anywhere
-          # in prose.
+          # Both passes scan the same text: markup-free prose with
+          # URL/URI payload stripped, over paragraphs outside the
+          # flavor-injected boilerplate.
           def collected_uppercase_tokens(root)
             tokens = Set.new
-            each_paragraph_with_parent(root) do |paragraph, _|
-              text = extract_text(paragraph, strip: prose_exclusions)
-              tokens.merge(text.scan(UPPERCASE_TOKEN_REGEX))
+            each_paragraph(root) do |paragraph, _|
+              tokens.merge(prose_text(paragraph).scan(UPPERCASE_TOKEN_REGEX))
             end
             tokens
+          end
+
+          def each_paragraph(root, &block)
+            each_paragraph_with_parent(root,
+                                       boilerplate_subtrees(root),
+                                       &block)
+          end
+
+          # The <boilerplate> block (copyright statement, license
+          # statement, ...) is publisher text, not author prose.
+          def boilerplate_subtrees(root)
+            return [] unless root&.respond_to?(:boilerplate)
+
+            Array(root.boilerplate)
+          end
+
+          def prose_text(paragraph)
+            extract_text(paragraph, strip: prose_exclusions)
+              .gsub(URI_TOKEN_REGEX, " ")
+              .strip
+          end
+
+          # Link elements are excluded whole: their content is the
+          # rendered URL text, and their targets are XML attributes the
+          # extraction never carries.
+          def prose_exclusions
+            super + %i(link fmt_link)
           end
 
           # Second pass: lowercase occurrences of a collected token.
