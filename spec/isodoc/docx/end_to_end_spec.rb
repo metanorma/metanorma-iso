@@ -20,7 +20,7 @@ require "set"
 RSpec.describe "Era C DOCX end-to-end", :slow do
   let(:dis_fixture) do
     File.expand_path(
-      "spec/fixtures/samples/international-standard/document-en.dis.presentation.xml",
+      "spec/fixtures/iso/is/document-en.dis.presentation.xml",
       Dir.pwd,
     )
   end
