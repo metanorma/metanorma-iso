@@ -117,15 +117,16 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ParagraphRenderer do
       expect(joined).to include("Lower mass fractions of moisture"),
         "embedded note body text should be rendered"
 
-      # The note is Box-wrapped: a Box-begin paragraph precedes the
-      # Noteindent body, and a Box-end paragraph follows it.
+      # The embedded note follows the XSL inline-label contract: the
+      # note body lands in a Noteindent paragraph and no Era C box is
+      # drawn around it.
       styles = paragraphs.map { |p| para_style_value(p).to_s }
-      expect(styles).to include("Box-begin"),
-        "embedded note should be wrapped in Box-begin"
+      expect(styles).not_to include("Box-begin"),
+        "embedded note must not be wrapped in Box-begin"
       expect(styles).to include("Noteindent"),
         "embedded note body should use Noteindent style"
-      expect(styles).to include("Box-end"),
-        "embedded note should be wrapped in Box-end"
+      expect(styles).not_to include("Box-end"),
+        "embedded note must not be wrapped in Box-end"
     end
   end
 end
