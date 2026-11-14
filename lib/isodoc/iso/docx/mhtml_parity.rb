@@ -87,6 +87,13 @@ module IsoDoc
         end
 
         class HtmlReader < Reader
+          # Word HTML uses Mso-prefixed class aliases for built-in body styles,
+          # often without declaring mso-style-name. Custom names keep the prefix.
+          BUILTIN_CLASSES = %w[Normal BodyText BodyText2 BodyText3
+                               BodyTextIndent BodyTextIndent2 BodyTextIndent3
+                               BodyTextFirstIndent BodyTextFirstIndent2]
+            .to_h { |name| ["mso#{name.downcase}", name] }.freeze
+
           def read(path)
             package = Uniword::Mhtml::MhtmlPackage.from_file(path)
             part = root_part(package, path)
@@ -152,9 +159,13 @@ module IsoDoc
             level = rules.filter_map { |rule| rule[2] }.last
             name = property(node["style"], "mso-style-name") || name
             level = property(node["style"], "mso-outline-level") || level
-            name ||= classes&.first
+            name ||= class_style(classes&.first)
             name ||= node.name.match?(/\Ah[1-6]\z/) ? "Heading#{node.name[1]}" : "Normal"
             [style_name(name), level]
+          end
+
+          def class_style(name)
+            BUILTIN_CLASSES.fetch(name.to_s.downcase, name)
           end
 
           def visit(node)

@@ -182,6 +182,33 @@ RSpec.describe "IsoDoc::Iso::Docx::MhtmlParity" do
     expect(parity_class.normalize(output)).to eq(["paragraph|box-begin", "paragraph|boxbegin"])
   end
 
+  it "matches MsoBodyText without mso-style-name to the DOCX Body Text style" do
+    submitted_body = mhtml(matching_html.sub('class="BodyText"', 'class="MsoBodyText"'))
+
+    expect(parity_class.new(submitted_body, docx)).to be_match
+  end
+
+  { "MsoBodyText2" => "Body Text 2", "MsoBodyTextIndent2" => "Body Text Indent 2" }.each do |html_class, word_name|
+    it "matches #{html_class} to the DOCX #{word_name} style" do
+      submitted_body = mhtml(matching_html.sub('class="BodyText"', %(class="#{html_class}")))
+      output_styles = styles.sub('w:val="Body Text"', %(w:val="#{word_name}"))
+
+      expect(parity_class.new(submitted_body, docx(document, output_styles))).to be_match
+    end
+  end
+
+  it "preserves custom styles whose names begin with Mso" do
+    output = mhtml('<p class="MsoCustomBody">Custom body</p>')
+
+    expect(parity_class.normalize(output)).to eq(["paragraph|msocustombody"])
+  end
+
+  it "prefers an explicit style name to a built-in class alias" do
+    output = mhtml(%(<p class="MsoBodyText" style='mso-style-name:"Custom Body"'>Body</p>))
+
+    expect(parity_class.normalize(output)).to eq(["paragraph|custombody"])
+  end
+
   it "does not silently treat an invalid package as an empty document" do
     path = File.join(work_dir, "broken.docx")
     Zip::OutputStream.open(path) { |zip| zip.put_next_entry("unrelated.xml") }

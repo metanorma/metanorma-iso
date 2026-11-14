@@ -32,6 +32,9 @@ DOCX style IDs resolve through `word/styles.xml`, including the default paragrap
 style and inherited outline levels. HTML uses Word's tag/class `mso-style-name`
 and `mso-outline-level` rules, inline overrides, then class/tag defaults.
 Style comparison ignores case and whitespace and treats `MsoNormal` as `Normal`.
+When `mso-style-name` is absent, Word's built-in body classes such as `MsoBodyText`
+and `MsoBodyTextIndent2` match the DOCX names `Body Text` and `Body Text Indent 2`.
+Explicit style names take precedence; custom `Mso`-prefixed names stay distinct.
 
 This does not compare prose, numbering values, image pixels, direct formatting,
 page layout, metadata, headers/footers, or separate footnote/endnote parts. It is
