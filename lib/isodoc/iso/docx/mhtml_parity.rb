@@ -17,8 +17,11 @@ module IsoDoc
                        "th" => "cell", "tbl" => "table", "tc" => "cell" }.freeze
 
         def self.normalize(path)
-          File.extname(path).downcase == ".docx" ? DocxReader.new.read(path) :
+          if File.extname(path).downcase == ".docx"
+            DocxReader.new.read(path)
+          else
             HtmlReader.new.read(path)
+          end
         end
 
         def initialize(submitted, output)
@@ -74,7 +77,7 @@ module IsoDoc
 
           def container(node, style = "")
             kind = CONTAINERS.fetch(node.name)
-            ["#{kind}#{style.empty? ? '' : "|#{style}"}",
+            ["#{kind}#{"|#{style}" unless style.empty?}",
              *children(node), "/#{kind}"]
           end
 
