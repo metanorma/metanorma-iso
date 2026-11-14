@@ -371,10 +371,28 @@ module IsoDoc
         def extract_footnote_text(element)
           p_children = element.p
           if p_children && !p_children.empty?
-            return p_children.map { |p| collect_text(p) }.join(" ")
+            return p_children.map { |p| footnote_body_text(p) }.join(" ")
           end
 
           collect_all_text(element)
+        end
+
+        # Footnote bodies are mixed content; collect them in document
+        # order, falling back to the asciimath text for stem segments so
+        # a footnote whose body carries a symbol (e.g. "the time t90")
+        # is not dropped for having no plain text at the paragraph level.
+        def footnote_body_text(paragraph)
+          return collect_all_text(paragraph) unless ordered?(paragraph)
+
+          segments = []
+          each_ordered_element(paragraph) do |type, obj|
+            case type
+            when :text then segments << obj.to_s
+            when :element
+              segments << (stem_asciimath_text(obj) || collect_all_text(obj))
+            end
+          end
+          segments.join
         end
 
         # Create a footnote whose body paragraph carries the
