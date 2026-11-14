@@ -3,7 +3,7 @@
 require_relative "spec_helper"
 require "uniword/ooxml/custom_properties"
 
-RSpec.describe IsoDoc::Iso::Docx::DocumentProperties do
+RSpec.describe IsoDoc::Iso::Docx::DocumentProperties, :aggregate_failures do
   def build_model(doctype:, stage: nil)
     status_xml = stage ? "<status><stage>#{stage}</stage></status>" : ""
     xml = <<~XML
@@ -24,6 +24,13 @@ RSpec.describe IsoDoc::Iso::Docx::DocumentProperties do
 
   def find_property(props, name)
     props.properties.find { |p| p.name == name }
+  end
+
+  def add_doctype(model, language:, value:)
+    model.bibdata.ext.doctype_element <<
+      Metanorma::Iso::Document::Metadata::DoctypeElement.new(
+        language: language, value: value,
+      )
   end
 
   it "abbreviates known doctypes from YAML" do
@@ -117,17 +124,14 @@ RSpec.describe IsoDoc::Iso::Docx::DocumentProperties do
   it "prefers the English doctype over the first entry" do
     model = build_model(doctype: "technical-report")
     model.bibdata.ext.doctype_element.first.language = "fr"
-    model.bibdata.ext.doctype_element <<
-      Metanorma::Iso::Document::Metadata::DoctypeElement.new(
-        language: "en", value: "technical-specification",
-      )
+    add_doctype(model, language: "en", value: "technical-specification")
     props = described_class.new(model).build
 
     expect(find_property(props, "ident-doc-type").value).to eq("TS")
   end
 
-  it "omits ident-doc-type when the doctype value is missing or blank" do
-    [nil, "", "   "].each do |value|
+  [nil, "", "   "].each do |value|
+    it "omits ident-doc-type when the doctype value is #{value.inspect}" do
       model = build_model(doctype: "technical-report")
       model.bibdata.ext.doctype_element.first.value = value
       props = described_class.new(model).build
@@ -139,10 +143,7 @@ RSpec.describe IsoDoc::Iso::Docx::DocumentProperties do
   it "uses the first doctype when no English entry is present" do
     model = build_model(doctype: "technical-report")
     model.bibdata.ext.doctype_element.first.language = "fr"
-    model.bibdata.ext.doctype_element <<
-      Metanorma::Iso::Document::Metadata::DoctypeElement.new(
-        language: "de", value: "technical-specification",
-      )
+    add_doctype(model, language: "de", value: "technical-specification")
     props = described_class.new(model).build
 
     expect(find_property(props, "ident-doc-type").value).to eq("TR")
