@@ -293,11 +293,53 @@ module IsoDoc
         # ── Stem / footnote / callout helpers ─────────────────────────
 
         def stem_fallback_text(element)
-          if element.class.attributes.key?(:asciimath)
-            am = element.asciimath
-            return am if am.is_a?(String) && !am.empty?
-          end
+          text = stem_asciimath_text(element)
+          return text if text && !text.empty?
+
           collect_text(element)
+        end
+
+        # AsciiMath is the plain-text form of an inline symbol. The
+        # semantic <stem> maps it as a singular value; the presentation
+        # <fmt-stem> wraps the semantic stem in <semx>, whose asciimath
+        # is a collection. Without the descent both shapes fell through
+        # to collect_text and rendered as empty runs.
+        def stem_asciimath_text(element)
+          direct = stem_asciimath_value(element)
+          return direct if direct && !direct.empty?
+
+          Array(attribute_value(element, :semx)).each do |child|
+            nested = stem_asciimath_value(child)
+            return nested if nested && !nested.empty?
+          end
+          nil
+        end
+
+        def stem_asciimath_value(element)
+          return nil unless element.is_a?(Lutaml::Model::Serializable)
+          return nil unless element.class.attributes.key?(:asciimath)
+
+          Array(element.asciimath).filter_map do |am|
+            stem_asciimath_content(am)
+          end.compact.first
+        end
+
+        # Asciimath content accessors differ per model: the semantic
+        # TextElements::Asciiml carries :value, the presentation
+        # Inline::AsciimathElement carries :text. Prefer whichever the
+        # model declares.
+        def stem_asciimath_content(am)
+          return am if am.is_a?(String)
+
+          return nil unless am.is_a?(Lutaml::Model::Serializable)
+
+          if am.class.attributes.key?(:value)
+            value = attribute_value(am, :value)
+            return value if value.is_a?(String) && !value.empty?
+          end
+          return attribute_value(am, :text) if am.class.attributes.key?(:text)
+
+          nil
         end
 
         def collect_callout_text(callout)
