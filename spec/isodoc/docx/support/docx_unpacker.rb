@@ -64,12 +64,12 @@ module IsoDoc
 
         def header_names
           Dir.glob("header*.xml", base: File.join(@dir, "word"))
-             .map { |f| File.basename(f, ".xml") }
+            .map { |f| File.basename(f, ".xml") }
         end
 
         def footer_names
           Dir.glob("footer*.xml", base: File.join(@dir, "word"))
-             .map { |f| File.basename(f, ".xml") }
+            .map { |f| File.basename(f, ".xml") }
         end
 
         def cleanup
