@@ -113,4 +113,38 @@ RSpec.describe IsoDoc::Iso::Docx::DocumentProperties do
     expect(find_property(props, "release-version").value).to eq("CD")
     expect(find_property(props, "ident-doc-type").value).to eq("TS")
   end
+
+  it "prefers the English doctype over the first entry" do
+    model = build_model(doctype: "technical-report")
+    model.bibdata.ext.doctype_element.first.language = "fr"
+    model.bibdata.ext.doctype_element <<
+      Metanorma::Iso::Document::Metadata::DoctypeElement.new(
+        language: "en", value: "technical-specification",
+      )
+    props = described_class.new(model).build
+
+    expect(find_property(props, "ident-doc-type").value).to eq("TS")
+  end
+
+  it "omits ident-doc-type when the doctype value is missing or blank" do
+    [nil, "", "   "].each do |value|
+      model = build_model(doctype: "technical-report")
+      model.bibdata.ext.doctype_element.first.value = value
+      props = described_class.new(model).build
+
+      expect(find_property(props, "ident-doc-type")).to be_nil
+    end
+  end
+
+  it "uses the first doctype when no English entry is present" do
+    model = build_model(doctype: "technical-report")
+    model.bibdata.ext.doctype_element.first.language = "fr"
+    model.bibdata.ext.doctype_element <<
+      Metanorma::Iso::Document::Metadata::DoctypeElement.new(
+        language: "de", value: "technical-specification",
+      )
+    props = described_class.new(model).build
+
+    expect(find_property(props, "ident-doc-type").value).to eq("TR")
+  end
 end
