@@ -1,6 +1,7 @@
 require "spec_helper"
 require "metanorma-core"
 require "fileutils"
+require "open3"
 require "tempfile"
 
 RSpec.describe "Metanorma::Iso::Processor" do
@@ -160,6 +161,13 @@ RSpec.describe "Metanorma::Iso::Processor" do
         end
       end
     end
+  end
+
+  it "keeps processor methods within the length limit without exemptions" do
+    output, status = Open3.capture2e("bundle", "exec", "rubocop",
+                                     "--only", "Metrics/MethodLength", "--ignore-disable-comments",
+                                     File.expand_path("../../lib/metanorma/iso/processor.rb", __dir__))
+    expect(status.success?).to be(true), output
   end
 
   it "registers output formats against metanorma" do

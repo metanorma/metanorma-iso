@@ -68,7 +68,6 @@ module Metanorma
         super
       end
 
-      # rubocop:disable-next Metrics/MethodLength
       def output(isodoc_node, inname, outname, format, options = {})
         options_preprocess(options)
         case format
@@ -79,13 +78,7 @@ module Metanorma
           IsoDoc::Iso::HtmlConvert.new(options.merge(alt: true))
             .convert(inname, isodoc_node, nil, outname)
         when :doc, :docx
-          # MHTML and DOCX use the same Uniword adapter.
-          # When use_presentation_xml returns true, isodoc_node is nil
-          # and inname is the presentation XML file path.
-          xml_input = isodoc_node ? isodoc_node.to_xml : inname
-          template = resolve_docx_template(xml_input, options)
-          IsoDoc::Iso::Docx::Adapter.new(template: template)
-            .convert(xml_input, outname)
+          output_word(isodoc_node, inname, outname, options)
         when :pdf
           IsoDoc::Iso::PdfConvert.new(options)
             .convert(inname, isodoc_node, nil, outname)
@@ -93,19 +86,7 @@ module Metanorma
           IsoDoc::Iso::StsConvert.new(options)
             .convert(inname, isodoc_node, nil, outname)
         when :sts_html
-          # PXML → ISO-STS XML → branded HTML. Consumes the presentation
-          # XML (semantic), not the isodoc-rendered node — the native
-          # transformer reads the typed IsoDocument::Root directly.
-          # The compile layer hands the semantic XML over as a String;
-          # isodoc hands off by file path (nil) or parsed node.
-          pxml = case isodoc_node
-                 when String then isodoc_node
-                 when nil then File.read(inname)
-                 else isodoc_node.to_xml
-                 end
-          sts_xml = Metanorma::Iso::Sts.convert(pxml)
-          html = Metanorma::Iso::Sts.render_html(sts_xml)
-          File.write(outname, html)
+          output_sts_html(isodoc_node, inname, outname)
         when :isosts
           if Metanorma::Iso::Sts.enabled?
             # native metanorma-document transformer via the base-class
@@ -125,6 +106,32 @@ module Metanorma
       end
 
       private
+
+      def output_word(isodoc_node, inname, outname, options)
+        # MHTML and DOCX use the same Uniword adapter.
+        # When use_presentation_xml returns true, isodoc_node is nil
+        # and inname is the presentation XML file path.
+        xml_input = isodoc_node ? isodoc_node.to_xml : inname
+        template = resolve_docx_template(xml_input, options)
+        IsoDoc::Iso::Docx::Adapter.new(template: template)
+          .convert(xml_input, outname)
+      end
+
+      def output_sts_html(isodoc_node, inname, outname)
+        # PXML → ISO-STS XML → branded HTML. Consumes the presentation
+        # XML (semantic), not the isodoc-rendered node — the native
+        # transformer reads the typed IsoDocument::Root directly.
+        # The compile layer hands the semantic XML over as a String;
+        # isodoc hands off by file path (nil) or parsed node.
+        pxml = case isodoc_node
+               when String then isodoc_node
+               when nil then File.read(inname)
+               else isodoc_node.to_xml
+               end
+        sts_xml = Metanorma::Iso::Sts.convert(pxml)
+        html = Metanorma::Iso::Sts.render_html(sts_xml)
+        File.write(outname, html)
+      end
 
       # Resolve DOCX template type. Priority:
       #   1. Explicit :isowordtemplate option ("dis" or "simple")
