@@ -3,15 +3,17 @@ require "metanorma-core"
 require "fileutils"
 require "tempfile"
 
-# RSpec.describe Asciidoctor::Gb do
-RSpec.describe Metanorma::Iso::Processor do
-  after { FileUtils.rm_f ".asciidoc.log.txt" }
+RSpec.describe "Metanorma::Iso::Processor" do
+  subject(:processor) do
+    registry = Metanorma::Registry.instance
+    registry.register(described_class)
+    registry.find_processor(:iso)
+  end
 
-  registry = Metanorma::Registry.instance
-  registry.register(Metanorma::Iso::Processor)
-  processor = registry.find_processor(:iso)
-
-  inputxml = <<~INPUT
+  # Keep the established spec path while identifying the concrete processor.
+  let(:described_class) { Metanorma::Iso::Processor }
+  let(:inputxml) do
+    <<~INPUT
     <metanorma xmlns="http://riboseinc.com/isoxml" flavor="iso">
     <bibdata type="standard">
     <title language="en" format="text/plain" type="main">English</title>
@@ -41,7 +43,7 @@ RSpec.describe Metanorma::Iso::Processor do
     <substage>60</substage>
     </status>
     <copyright>
-    <from>#{Time.new.year}</from>
+    <from>#{Time.now.year}</from>
     <owner>
     <organization>
     <name id="_">International Organization for Standardization</name>
@@ -104,10 +106,13 @@ RSpec.describe Metanorma::Iso::Processor do
             </terms>
           </sections>
     </metanorma>
-  INPUT
+    INPUT
+  end
+
+  after { FileUtils.rm_f ".asciidoc.log.txt" }
 
   it "registers against metanorma" do
-    expect(processor).not_to be nil
+    expect(processor).not_to be_nil
   end
 
   describe "#resolve_docx_template" do
@@ -123,11 +128,9 @@ RSpec.describe Metanorma::Iso::Processor do
     %i[string path].product([nil, "", "iso"]).each do |input_type, prefix|
       template_cases.each do |stage, options, template|
         context "with #{input_type} input, namespace prefix #{prefix.inspect}, stage #{stage || '(missing)'} and #{options}" do
-          let(:namespace) do
-            "xmlns#{":#{prefix}" unless prefix.empty?}=\"http://riboseinc.com/isoxml\"" if prefix
-          end
-          let(:tag_prefix) { prefix.to_s.empty? ? "" : "#{prefix}:" }
           let(:xml) do
+            namespace = "xmlns#{":#{prefix}" unless prefix.empty?}=\"http://riboseinc.com/isoxml\"" if prefix
+            tag_prefix = prefix.to_s.empty? ? "" : "#{prefix}:"
             <<~XML
               <#{tag_prefix}metanorma #{namespace} flavor="iso">
                 <#{tag_prefix}bibdata>
@@ -170,27 +173,25 @@ RSpec.describe Metanorma::Iso::Processor do
     expect(processor.version.to_s).to match(%r{^Metanorma::Iso })
   end
 
-  it "generates IsoDoc XML from a blank document" do
-    input = <<~INPUT
-      #{ASCIIDOC_BLANK_HDR}
-    INPUT
-    output = <<~OUTPUT
-        #{BLANK_HDR_2}
-        <sections/>
-      </metanorma>
-    OUTPUT
-    expect(strip_guid(processor.input_to_isodoc(input, nil)))
-      .to be_xml_equivalent_to strip_guid(output)
+  context "with a blank document" do
+    let(:input) { "#{ASCIIDOC_BLANK_HDR}\n" }
+    let(:output) do
+      <<~OUTPUT
+          #{BLANK_HDR_2}
+          <sections/>
+        </metanorma>
+      OUTPUT
+    end
+
+    it "generates IsoDoc XML from a blank document" do
+      expect(strip_guid(processor.input_to_isodoc(input, nil)))
+        .to be_xml_equivalent_to strip_guid(output)
+    end
   end
 
-  it "generates HTML from Metanorma XML" do
-    FileUtils.rm_f "test.xml"
-    FileUtils.rm_f "test.html"
-    processor.output(inputxml, "test.xml", "test.html", :html)
-    expect(strip_guid(File.read("test.html", encoding: "utf-8")
-      .gsub(%r{^.*<main}m, "<main")
-      .gsub(%r{</main>.*}m, "</main>")))
-      .to be_xml_equivalent_to <<~OUTPUT
+  context "when rendering HTML" do
+    let(:expected_html) do
+      <<~OUTPUT
         <main class="main-section">
           <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
           <div class="authority"/>
@@ -209,25 +210,44 @@ RSpec.describe Metanorma::Iso::Processor do
           </div>
         </main>
       OUTPUT
+    end
+
+    before do
+      FileUtils.rm_f "test.xml"
+      FileUtils.rm_f "test.html"
+      processor.output(inputxml, "test.xml", "test.html", :html)
+    end
+
+    it "generates HTML from Metanorma XML" do
+      expect(strip_guid(File.read("test.html", encoding: "utf-8")
+        .gsub(%r{^.*<main}m, "<main")
+        .gsub(%r{</main>.*}m, "</main>")))
+        .to be_xml_equivalent_to expected_html
+    end
   end
 
-  it "generates STS from Metanorma XML via mnconvert (native gate off)" do
-    Metanorma::Iso::Sts.enabled = false
-    FileUtils.rm_f "test.xml"
-    FileUtils.rm_f "test.sts.xml"
-    FileUtils.rm_f "test.iso.sts.xml"
-    File.write("test.xml", inputxml)
-    processor.output(inputxml, "test.xml", "test.sts.xml", :sts)
-    processor.output(inputxml, "test.xml", "test.iso.sts.xml", :isosts)
-    expect(File.exist?("test.sts.xml")).to be true
-    expect(File.exist?("test.iso.sts.xml")).to be true
-  ensure
-    Metanorma::Iso::Sts.enabled = nil
+  context "with the native STS gate disabled" do
+    before do
+      Metanorma::Iso::Sts.enabled = false
+      FileUtils.rm_f "test.xml"
+      FileUtils.rm_f "test.sts.xml"
+      FileUtils.rm_f "test.iso.sts.xml"
+      File.write("test.xml", inputxml)
+      processor.output(inputxml, "test.xml", "test.sts.xml", :sts)
+      processor.output(inputxml, "test.xml", "test.iso.sts.xml", :isosts)
+    end
+
+    after { Metanorma::Iso::Sts.enabled = nil }
+
+    it "generates STS from Metanorma XML via mnconvert (native gate off)", :aggregate_failures do
+      expect(File.exist?("test.sts.xml")).to be true
+      expect(File.exist?("test.iso.sts.xml")).to be true
+    end
   end
 
   # Native document-model routing is the default; the transformer itself is
   # covered end-to-end in spec/sts. Here we assert the routing decision only.
-  it "routes :isosts through the native driver by default (gate on)" do
+  it "routes :isosts through the native driver by default (gate on)", :aggregate_failures do
     expect(Metanorma::Iso::Sts.enabled?).to be(true)
     expect(processor.document_transformers).to have_key(:isosts)
   end

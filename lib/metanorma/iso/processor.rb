@@ -68,6 +68,7 @@ module Metanorma
         super
       end
 
+      # rubocop:disable-next Metrics/MethodLength
       def output(isodoc_node, inname, outname, format, options = {})
         options_preprocess(options)
         case format
@@ -77,14 +78,8 @@ module Metanorma
         when :html_alt
           IsoDoc::Iso::HtmlConvert.new(options.merge(alt: true))
             .convert(inname, isodoc_node, nil, outname)
-        when :doc
-          # MHTML (.doc) via Uniword — same adapter as DOCX, different output format.
-          xml_input = isodoc_node ? isodoc_node.to_xml : inname
-          template = resolve_docx_template(xml_input, options)
-          IsoDoc::Iso::Docx::Adapter.new(template: template)
-            .convert(xml_input, outname)
-        when :docx
-          # DOCX via Uniword (OOXML builders, no HTML intermediate).
+        when :doc, :docx
+          # MHTML and DOCX use the same Uniword adapter.
           # When use_presentation_xml returns true, isodoc_node is nil
           # and inname is the presentation XML file path.
           xml_input = isodoc_node ? isodoc_node.to_xml : inname
@@ -146,11 +141,8 @@ module Metanorma
         stage = Nokogiri::XML(xml, &:huge)
           .at("//*[local-name()='bibdata']/*[local-name()='status']/*[local-name()='stage']")&.text
 
-        if /^[4569].$/.match?(stage) && wordtemplate != "simple"
-          :dis
-        elsif /^[0-3].$/.match?(stage) && wordtemplate != "dis"
-          :simple
-        elsif wordtemplate == "simple"
+        if wordtemplate == "simple" ||
+            (wordtemplate != "dis" && /^[0-3].$/.match?(stage))
           :simple
         else
           :dis
