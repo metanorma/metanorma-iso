@@ -5,6 +5,8 @@ require "tempfile"
 
 # RSpec.describe Asciidoctor::Gb do
 RSpec.describe Metanorma::Iso::Processor do
+  after { FileUtils.rm_f ".asciidoc.log.txt" }
+
   registry = Metanorma::Registry.instance
   registry.register(Metanorma::Iso::Processor)
   processor = registry.find_processor(:iso)
