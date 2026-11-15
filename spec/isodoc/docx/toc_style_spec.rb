@@ -7,9 +7,17 @@ require "zip"
 #
 # The ISO ToC is not all-bold and steps its indent per level: TOC1 keeps
 # its hanging layout (number at the margin, text wrap at 720 twips),
-# TOC2/TOC3 add one 360-twip indent step per level with a matching left
-# tab stop, so the entry number starts one step deeper than the previous
-# level and the title aligns at the wrap point.
+# TOC2/TOC3 add one 360-twip indent step per level.
+#
+# The styles carry a single tab stop: the right-hand page-number stop
+# with a dot leader, positioned inside the paragraph's text area — the
+# page text width (from the template's section page size and margins)
+# minus the style's right indent — so the page number right-aligns at
+# the right edge and the leader fills between the heading text and it.
+# There are deliberately no left tab stops: a left stop that the entry
+# number has already passed is skipped by Word, which then jumps to the
+# page-number stop instead — carrying the entire heading text to the
+# right margin behind the leader (metanorma-pdfa#119).
 #
 # The template DOCX is the operative source (its styles.xml is shipped
 # verbatim into the output); styles.yml is the extracted mirror used by
@@ -23,7 +31,22 @@ RSpec.describe "TOC styles in the DIS template" do
       Nokogiri::XML(zip.find_entry("word/styles.xml").get_input_stream.read)
     end
   end
+  let(:document_xml) do
+    Zip::File.open(template_path) do |zip|
+      Nokogiri::XML(zip.find_entry("word/document.xml").get_input_stream.read)
+    end
+  end
   let(:w_ns) { { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" } }
+
+  # The page text width in twips, derived from the template's section
+  # page size and margins.
+  def page_text_width
+    sect = document_xml.at_xpath("//w:sectPr", w_ns)
+    width = sect.at_xpath("./w:pgSz/@w:w", w_ns).value.to_i
+    left = sect.at_xpath("./w:pgMar/@w:left", w_ns).value.to_i
+    right = sect.at_xpath("./w:pgMar/@w:right", w_ns).value.to_i
+    width - left - right
+  end
 
   def style(style_id)
     styles_xml.at_xpath("//w:style[@w:styleId='#{style_id}']", w_ns)
@@ -33,10 +56,14 @@ RSpec.describe "TOC styles in the DIS template" do
     style(style_id).at_xpath("./w:pPr/w:ind", w_ns)
   end
 
-  def left_tab_pos(style_id)
-    style(style_id).at_xpath(
-      "./w:pPr/w:tabs/w:tab[@w:val='left']/@w:pos", w_ns,
-    )&.to_s
+  def right_tab(style_id)
+    style(style_id).at_xpath("./w:pPr/w:tabs/w:tab[@w:val='right']", w_ns)
+  end
+
+  # The tab stop must sit inside the paragraph's text area: at the
+  # right indent boundary, never beyond it.
+  def expected_right_tab_pos(style_id)
+    page_text_width - indent(style_id)["w:right"].to_i
   end
 
   it "does not bold TOC1" do
@@ -56,7 +83,6 @@ RSpec.describe "TOC styles in the DIS template" do
     expect(ind).not_to be_nil
     expect(ind["w:left"]).to eq("1080")
     expect(ind["w:hanging"]).to eq("360")
-    expect(left_tab_pos("TOC2")).to eq("1080")
   end
 
   it "indents TOC3 one step below TOC2" do
@@ -64,13 +90,40 @@ RSpec.describe "TOC styles in the DIS template" do
     expect(ind).not_to be_nil
     expect(ind["w:left"]).to eq("1440")
     expect(ind["w:hanging"]).to eq("360")
-    expect(left_tab_pos("TOC3")).to eq("1440")
   end
 
   it "carries no bold anywhere in the TOC1-TOC3 style cascade" do
     %w[TOC1 TOC2 TOC3].each do |style_id|
       expect(style(style_id).at_xpath(".//w:b", w_ns)).to be_nil,
         "#{style_id} inherits or defines bold — the ToC must not be all-bold"
+    end
+  end
+
+  describe "page-number tab stop" do
+    %w[TOC1 TOC2 TOC3].each do |style_id|
+      it "#{style_id} carries a single right tab stop with a dot leader" do
+        tabs = style(style_id).xpath("./w:pPr/w:tabs/w:tab", w_ns)
+        expect(tabs.length).to eq(1)
+        expect(right_tab(style_id)["w:leader"]).to eq("dot")
+      end
+
+      it "#{style_id} positions the page-number tab inside the text area" do
+        tab = right_tab(style_id)
+        expect(tab).not_to be_nil
+        pos = tab["w:pos"].to_i
+        expect(pos).to eq(expected_right_tab_pos(style_id)),
+          "#{style_id} page-number tab must sit at the right indent " \
+          "boundary (text width #{page_text_width} minus right indent)"
+        expect(pos).to be_positive
+        expect(pos).to be < page_text_width
+      end
+
+      it "#{style_id} carries no left tab stops" do
+        left = style(style_id).xpath("./w:pPr/w:tabs/w:tab[@w:val='left']", w_ns)
+        expect(left).to be_empty,
+          "#{style_id} left tab stops make Word skip past an overshot " \
+          "number into the page-number stop (metanorma-pdfa#119)"
+      end
     end
   end
 
@@ -100,10 +153,21 @@ RSpec.describe "TOC styles in the DIS template" do
           "styles.yml #{style_id} carries no indent"
         expect(indent["left"]).to eq(left)
         expect(indent["hanging"]).to eq(hanging)
+      end
+    end
+
+    it "mirrors the page-number tab stop of the template" do
+      %w[TOC1 TOC2 TOC3].each do |style_id|
+        props = yaml_style(style_id)["paragraph_properties"]
         tabs = props["tabs"] || []
-        left_tab = tabs.find { |t| t["type"] == "left" }
-        expect(left_tab&.fetch("position")).to eq(left),
-          "styles.yml #{style_id} left tab stop must match the indent"
+        expect(tabs.length).to eq(1),
+          "styles.yml #{style_id} must carry exactly the page-number tab stop"
+        tab = tabs.first
+        expect(tab["type"]).to eq("right")
+        expect(tab["leader"]).to eq("dot")
+        expect(tab["position"].to_s).to eq(expected_right_tab_pos(style_id).to_s),
+          "styles.yml #{style_id} tab position must match the template " \
+          "(text width minus right indent)"
       end
     end
   end

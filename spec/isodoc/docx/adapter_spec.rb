@@ -827,12 +827,15 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
       end
     end
 
-    # BUG 014: Each TOC entry must render the section number, a tab, and
-    # the title text as separate visible runs — not as a single run with
-    # concatenated text like "1Scope". This is achieved by rendering the
-    # source clause's fmt-title via the InlineRenderer so that the
-    # delimiter tab inside the fmt-title becomes a real <w:tab/> run.
-    it "renders TOC entries with separate runs for number, tab, and title" do
+    # BUG 014: Each TOC entry must render the section number and the
+    # title text as separate visible runs — not as a single run with
+    # concatenated text like "1Scope". The label → title separator of
+    # the fmt-title renders as a space: a separator tab here has no tab
+    # stop ahead of the pen and jumps to the page-number stop, carrying
+    # the heading text to the right margin behind the dot leader
+    # (metanorma-pdfa#119). The entry paragraph carries exactly one tab
+    # — the page-number tab before the PAGEREF field.
+    it "renders TOC entries with separate runs for number, separator, and title" do
       xml = minimal_iso_xml(<<~INNER)
         <preface>
           <foreword id="fw">
@@ -865,9 +868,12 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
           # No single run should carry the concatenated number+title.
           expect(text_runs).to all(satisfy { |t| !t.include?("1Scope") })
 
-          # Should have a tab run between the autonum and the title
+          # The autonum and title are separated by a space, and the
+          # paragraph carries exactly one tab: the page-number tab.
           tab_runs = clause_toc.xpath(".//w:tab", ns)
-          expect(tab_runs.length).to be >= 2
+          expect(tab_runs.length).to eq(1)
+          joined = clause_toc.xpath(".//w:t", ns).map(&:text).join
+          expect(joined).to include("1 Scope")
 
           # And the PAGEREF field machinery is present
           expect(clause_toc.xpath(".//w:instrText", ns).text).to include("PAGEREF s1")

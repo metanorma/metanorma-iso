@@ -2993,10 +2993,8 @@ style_library:
           hanging: '720'
         alignment: left
         tabs:
-        - type: left
-          position: '720'
         - type: right
-          position: '9752'
+          position: '9704'
           leader: dot
         keep_next: false
         keep_lines: false
@@ -3581,10 +3579,8 @@ style_library:
       unhide_when_used: false
       paragraph_properties:
         tabs:
-        - type: left
-          position: '1080'
         - type: right
-          position: '9752'
+          position: '9704'
           leader: dot
         spacing:
           before: '0'
@@ -3607,10 +3603,8 @@ style_library:
       unhide_when_used: false
       paragraph_properties:
         tabs:
-        - type: left
-          position: '1440'
         - type: right
-          position: '9752'
+          position: '9704'
           leader: dot
         indent:
           left: '1440'
