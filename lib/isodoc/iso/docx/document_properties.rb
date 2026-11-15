@@ -86,12 +86,12 @@ module IsoDoc
           when :lpwstr
             Uniword::Ooxml::CustomProperty.new(
               fmtid: FMTID, pid: pid, name: name,
-              lpwstr: Uniword::Ooxml::Types::VariantTypes::VtLpwstr.new(value: value.to_s),
+              lpwstr: Uniword::Ooxml::Types::VariantTypes::VtLpwstr.new(value: value.to_s)
             )
           when :i4
             Uniword::Ooxml::CustomProperty.new(
               fmtid: FMTID, pid: pid, name: name,
-              i4: Uniword::Ooxml::Types::VariantTypes::VtI4.new(value: value.to_i),
+              i4: Uniword::Ooxml::Types::VariantTypes::VtI4.new(value: value.to_i)
             )
           end
         end
@@ -124,7 +124,8 @@ module IsoDoc
         end
 
         def project_id
-          ext = @bib&.ext if @bib&.class&.attributes&.key?(:ext)
+          attributes = @bib&.class&.attributes
+          ext = @bib&.ext if attributes&.key?(:ext)
           return nil unless ext
 
           if ext.class.attributes.key?(:proj_id)
@@ -148,7 +149,8 @@ module IsoDoc
             c.owner if c.class.attributes.key?(:owner)
           end
           org = contributors&.first
-          org_name = org&.name if org&.class&.attributes&.key?(:name)
+          attributes = org&.class&.attributes
+          org_name = org&.name if attributes&.key?(:name)
           Array(org_name).first&.content || "ISO"
         end
 
@@ -160,7 +162,8 @@ module IsoDoc
         end
 
         def ident_doc_number
-          @bib&.docnumber&.to_i if @bib&.class&.attributes&.key?(:docnumber)
+          attributes = @bib&.class&.attributes
+          @bib&.docnumber&.to_i if attributes&.key?(:docnumber)
         end
 
         def ident_part_number
@@ -176,25 +179,32 @@ module IsoDoc
         end
 
         def ident_edition
-          edition = @bib&.edition if @bib&.class&.attributes&.key?(:edition)
+          attributes = @bib&.class&.attributes
+          edition = @bib&.edition if attributes&.key?(:edition)
           return nil unless edition
+
           edition_val = edition.is_a?(Array) ? edition.first : edition
           return nil unless edition_val
+
           extract_value(edition_val).to_s.to_i
         end
 
         def ident_version
-          version = @bib&.version if @bib&.class&.attributes&.key?(:version)
+          attributes = @bib&.class&.attributes
+          version = @bib&.version if attributes&.key?(:version)
           return 1 unless version
+
           version = version.first if version.is_a?(Array)
           return 1 unless version
+
           v = extract_value(version)
           v = Array(v).first.to_s if v.is_a?(Array)
-          v.to_i > 0 ? v.to_i : 1
+          v.to_i.positive? ? v.to_i : 1
         end
 
         def content_language
-          langs = Array(@bib&.language) if @bib&.class&.attributes&.key?(:language)
+          attributes = @bib&.class&.attributes
+          langs = Array(@bib&.language) if attributes&.key?(:language)
           lang = langs&.first
           lang ? extract_value(lang) : "en"
         end
@@ -218,6 +228,7 @@ module IsoDoc
           parts = []
           [:committee, :subcommittee, :workgroup].each do |key|
             next unless eg.class.attributes.key?(key)
+
             sub = eg.public_send(key)
             next unless sub
 
@@ -242,16 +253,19 @@ module IsoDoc
         end
 
         def copyright_year
-          copyrights = Array(@bib&.copyright) if @bib&.class&.attributes&.key?(:copyright)
+          attributes = @bib&.class&.attributes
+          copyrights = Array(@bib&.copyright) if attributes&.key?(:copyright)
           return nil unless copyrights&.first
 
           from = copyrights.first.from if copyrights.first.class.attributes.key?(:from)
           return nil unless from
+
           extract_value(from)
         end
 
         def copyright_holder
-          copyrights = Array(@bib&.copyright) if @bib&.class&.attributes&.key?(:copyright)
+          attributes = @bib&.class&.attributes
+          copyrights = Array(@bib&.copyright) if attributes&.key?(:copyright)
           return nil unless copyrights&.first
 
           owner = copyrights.first.owner if copyrights.first.class.attributes.key?(:owner)
@@ -263,7 +277,8 @@ module IsoDoc
         end
 
         def self_uri
-          uris = Array(@bib&.uri) if @bib&.class&.attributes&.key?(:uri)
+          attributes = @bib&.class&.attributes
+          uris = Array(@bib&.uri) if attributes&.key?(:uri)
           uri = uris&.first
           uri ? extract_value(uri) : nil
         end
@@ -307,7 +322,8 @@ module IsoDoc
         end
 
         def en_title(type)
-          return nil unless @bib&.class&.attributes&.key?(:title)
+          attributes = @bib&.class&.attributes
+          return nil unless attributes&.key?(:title)
 
           titles = Array(@bib.title)
           t = titles.find { |title| title_type(title) == type && title_language(title) == "en" }
@@ -387,21 +403,27 @@ module IsoDoc
             @bib.editorialgroup
           elsif @bib.class.attributes.key?(:ext)
             ext = @bib.ext
-            ext.editorialgroup if ext&.class&.attributes&.key?(:editorialgroup)
+            attributes = ext&.class&.attributes
+            ext.editorialgroup if attributes&.key?(:editorialgroup)
           end
         end
 
         def extract_ext_attribute(attr_name)
-          return nil unless @bib&.class&.attributes&.key?(:ext)
+          attributes = @bib&.class&.attributes
+          return nil unless attributes&.key?(:ext)
+
           ext = @bib.ext
           return nil unless ext
 
           return nil unless ext.class.attributes.key?(attr_name)
+
           val = ext.public_send(attr_name)
           return nil unless val
           return val if val.is_a?(String)
+
           val = val.first if val.is_a?(Array)
           return nil unless val
+
           extract_value(val)
         end
 
@@ -413,6 +435,7 @@ module IsoDoc
           texts = []
           [:text, :content, :content_text].each do |attr|
             next unless node.class.attributes.key?(attr)
+
             val = node.public_send(attr)
             case val
             when Array then texts.concat(val.grep(String))
