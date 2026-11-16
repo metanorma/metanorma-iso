@@ -122,12 +122,14 @@ RSpec.describe "Era C DOCX end-to-end", :slow do
       skip "No note/example body paragraphs in fixture" if bodies.empty?
 
       bodies.each do |para|
-        prior_styles = para.xpath("preceding-sibling::w:p/w:pPr/w:pStyle/@w:val", w_ns).map(&:to_s)
-        # Closed boxes and boxes later in the document do not enclose this paragraph.
-        box_depth = prior_styles.count("Box-begin") - prior_styles.count("Box-end")
+        marker = "w:p[w:pPr/w:pStyle[@w:val='Box-begin' or @w:val='Box-end']]"
+        prior_marker = para.at_xpath("preceding-sibling::#{marker}[1]/w:pPr/w:pStyle/@w:val", w_ns)&.value
+        next_marker = para.at_xpath("following-sibling::#{marker}[1]/w:pPr/w:pStyle/@w:val", w_ns)&.value
 
-        expect(box_depth).to eq(0),
-                             "note/example body must not be enclosed by Box-begin/Box-end (inline-label contract)"
+        expect([prior_marker, next_marker]).not_to(
+          eq(%w[Box-begin Box-end]),
+          "note/example body must not be enclosed by Box-begin/Box-end (inline-label contract)",
+        )
       end
     end
 
