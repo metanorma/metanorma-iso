@@ -1,37 +1,20 @@
 # frozen_string_literal: true
-
 module Metanorma
   module Iso
     module Sts
-      class Transformer::BodyTransformer < Transformer::Base
-        def transform(source)
-          sections = source.sections
-          return Transformer::ModelBuilder.body(sec: []) unless sections
+      module Transformer
+        class BodyTransformer < Base
+          def transform(source)
+            sections = []
 
-          body = Transformer::ModelBuilder.body
-          idx = 0
-          sections.each_mixed_content do |node|
-            next if node.is_a?(String)
+            sections += front_transformer.preface_sections(source) if source.front?
 
-            idx += 1
-            dispatch_body_node(node, body, block_dispatcher)
-          end
-          body
-        end
+            source.sections.each do |clause|
+              sec = dispatcher.dispatch(clause)
+              sections << sec if sec
+            end
 
-        private
-
-        def dispatch_body_node(node, body, dispatcher)
-          case node
-          when Metanorma::Standoc::Document::Sections::DefinitionSection
-            sec = Transformer::ModelBuilder.section(
-              id: "sec_symbols",
-              sec_type: "symbols",
-              title: node.title ? transform_title(node.title) : nil,
-            )
-            body.sec sec
-          else
-            dispatcher.dispatch(node, body)
+            ModelBuilder.body(sec: sections)
           end
         end
       end

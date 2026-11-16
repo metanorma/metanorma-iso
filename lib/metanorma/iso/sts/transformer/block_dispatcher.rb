@@ -3,106 +3,142 @@
 module Metanorma
   module Iso
     module Sts
-      class Transformer::BlockDispatcher
-        Handler = Struct.new(:source_type, :transformer_key, :transform_method,
-                             :target_setter, keyword_init: true)
+      module Transformer
+        class BlockDispatcher < Base
+          HANDLERS = {
+            "IsoClauseSection"             => :dispatch_via_section,
+            "ClauseSection"                => :dispatch_via_section,
+            "IsoForewordSection"           => :dispatch_via_section,
+            "IsoIntroductionSection"       => :dispatch_via_section,
+            "IsoTermsSection"              => :dispatch_via_section,
+            "DefinitionSection"            => :dispatch_via_section,
+            "IsoAnnexSection"              => :dispatch_via_section,
+            "ParagraphBlock"               => :dispatch_via_paragraph,
+            "ParagraphWithFootnote"        => :dispatch_via_paragraph,
+            "UnorderedList"                => :dispatch_via_list,
+            "OrderedList"                  => :dispatch_via_list,
+            "DefinitionList"               => :dispatch_via_dl,
+            "TableBlock"                   => :dispatch_via_table,
+            "FigureBlock"                  => :dispatch_via_figure,
+            "FormulaBlock"                 => :dispatch_via_formula,
+            "NoteBlock"                    => :dispatch_via_note,
+            "ExampleBlock"                 => :dispatch_via_note,
+            "AdmonitionBlock"              => :dispatch_via_note,
+            "QuoteBlock"                   => :dispatch_via_note,
+            "SourcecodeBlock"              => :dispatch_via_sourcecode,
+            "StandardReferencesSection"    => :dispatch_via_references,
+            "BibliographySection"          => :dispatch_via_references
+          }.freeze
 
-        def initialize(context)
-          @context = context
-          @transformers = {}
-        end
+          PRESENTATION_CLASSES = %w[
+            FmtTitleElement FmtXrefLabelElement FmtNameElement FmtStemElement
+            FmtFnLabelElement FmtConceptElement SemxElement LocalizedString
+            LocalizedStrings FmtVal AsciiMath BrElement TabElement Bookmark
+            SpanElement
+          ].freeze
 
-        def dispatch(node, target)
-          entry = self.class.registry[node.class]
-          return false unless entry
+          def dispatch(source_obj)
+            return nil if source_obj.nil? || source_obj.is_a?(String)
+            class_name = source_obj.class.name&.split("::")&.last
+            return nil if PRESENTATION_CLASSES.include?(class_name)
 
-          transformer = transformer_for(entry.transformer_key)
-          result = transformer.public_send(entry.transform_method, node)
-          target.public_send(entry.target_setter, result)
-          true
-        end
+            handler = HANDLERS[class_name]
+            return nil unless handler
 
-        def self.register(source_type, transformer_key:, transform_method:,
-target_setter:)
-          registry[source_type] = Handler.new(
-            source_type: source_type,
-            transformer_key: transformer_key,
-            transform_method: transform_method,
-            target_setter: target_setter,
-          )
-        end
-
-        def self.registry
-          @registry ||= build_default_registry
-        end
-
-        def self.build_default_registry
-          entries = {
-            # Block-level elements
-            Metanorma::Document::Components::Paragraphs::ParagraphBlock =>
-              %i[paragraph_transformer transform paragraphs],
-            Metanorma::Document::Components::Lists::UnorderedList =>
-              %i[list_transformer transform list],
-            Metanorma::Document::Components::Lists::OrderedList =>
-              %i[list_transformer transform list],
-            Metanorma::Document::Components::Lists::DefinitionList =>
-              %i[def_list_transformer transform def_list],
-            Metanorma::Document::Components::Tables::TableBlock =>
-              %i[table_transformer transform_wrap table_wrap],
-            Metanorma::Document::Components::AncillaryBlocks::FigureBlock =>
-              %i[figure_transformer transform fig],
-            Metanorma::Document::Components::AncillaryBlocks::FormulaBlock =>
-              %i[formula_transformer transform disp_formula],
-            Metanorma::Document::Components::AncillaryBlocks::ExampleBlock =>
-              %i[example_transformer transform non_normative_example],
-            Metanorma::Document::Components::Blocks::NoteBlock =>
-              %i[note_transformer transform non_normative_note],
-            Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock =>
-              %i[sourcecode_transformer transform preformat],
-            Metanorma::Document::Components::MultiParagraph::QuoteBlock =>
-              %i[quote_transformer transform disp_quote],
-            # Section-level elements
-            Metanorma::Iso::Document::Sections::IsoClauseSection =>
-              %i[section_transformer transform sec],
-            Metanorma::Iso::Document::Sections::IsoTermsSection =>
-              %i[term_transformer transform_section sec],
-            Metanorma::Iso::Document::Sections::IsoAnnexSection =>
-              %i[section_transformer transform_annex sec],
-            Metanorma::Standoc::Document::Sections::StandardReferencesSection =>
-              %i[reference_transformer transform_list ref_list],
-          }
-
-          entries.each_with_object({}) do |(source_type, (key, method, setter)), map|
-            map[source_type] = Handler.new(
-              source_type: source_type,
-              transformer_key: key,
-              transform_method: method,
-              target_setter: setter,
-            )
+            send(handler, source_obj)
           end
+
+          SECTION_CLASS_NAMES = %w[
+            IsoClauseSection ClauseSection IsoForewordSection
+            IsoIntroductionSection IsoTermsSection DefinitionSection
+            IsoAnnexSection AnnexSection
+          ].freeze
+
+          # Typed attribute → handler method mapping for ContentSection.
+          # These are NOT yielded by each_mixed_content; we iterate them
+          # explicitly to dispatch tables, lists, notes, etc.
+          TYPED_ATTR_DISPATCH = {
+            paragraphs: :dispatch_via_paragraph,
+            unordered_lists: :dispatch_via_list,
+            ordered_lists: :dispatch_via_list,
+            tables: :dispatch_via_table,
+            figures: :dispatch_via_figure,
+            formulas: :dispatch_via_formula,
+            notes: :dispatch_via_note,
+            examples: :dispatch_via_note,
+            admonitions: :dispatch_via_note,
+            sourcecode_blocks: :dispatch_via_sourcecode,
+            quote_blocks: :dispatch_via_note,
+            definition_lists: :dispatch_via_dl,
+            definitions: :dispatch_via_section,
+          }.freeze
+
+          def dispatch_section_blocks(section)
+            results = []
+
+            # Walk typed collection attributes for all content types.
+            # each_mixed_content is NOT used because it overlaps with
+            # typed attributes (causing duplication) and misses some
+            # content types (tables, lists, notes).
+            TYPED_ATTR_DISPATCH.each do |attr, handler|
+              next unless section.class.method_defined?(attr)
+              collection = section.public_send(attr)
+              Array(collection).each do |item|
+                result = send(handler, item)
+                results << result if result
+                dispatch_paragraph_siblings(item, results)
+              end
+            end
+
+            results
+          end
+
+          # MN's typed model attaches "block siblings" as attributes on
+          # the preceding block (ParagraphBlock.note holds notes that
+          # semantically follow the paragraph; TableBlock.note holds
+          # table notes, which render right after the table). Walk those
+          # sibling collections and dispatch each, preserving document
+          # order. Restricted to ParagraphBlock and TableBlock to avoid
+          # firing for lists/etc. that have their own note sub-collections
+          # with different semantics.
+          def dispatch_paragraph_siblings(item, results)
+            return unless paragraph_block?(item) || table_block?(item)
+
+            SIBLING_ATTRS.each do |attr, handler|
+              next unless item.class.method_defined?(attr)
+              Array(item.public_send(attr)).each do |sibling|
+                result = send(handler, sibling)
+                results << result if result
+              end
+            end
+          end
+
+          def paragraph_block?(item)
+            item.is_a?(Metanorma::Document::Components::Paragraphs::ParagraphBlock)
+          end
+
+          def table_block?(item)
+            item.is_a?(Metanorma::Document::Components::Tables::TableBlock)
+          end
+
+          SIBLING_ATTRS = {
+            note: :dispatch_via_note,
+            example: :dispatch_via_note,
+          }.freeze
+
+          private
+
+          def dispatch_via_section(obj);   section_transformer.transform(obj);   end
+          def dispatch_via_paragraph(obj); paragraph_transformer.transform(obj); end
+          def dispatch_via_list(obj);     list_transformer.transform(obj);     end
+          def dispatch_via_dl(obj);       dl_transformer.transform(obj);       end
+          def dispatch_via_table(obj);    table_transformer.transform(obj);    end
+          def dispatch_via_figure(obj);   figure_transformer.transform(obj);   end
+          def dispatch_via_formula(obj);  formula_transformer.transform(obj);  end
+          def dispatch_via_note(obj);     note_transformer.transform(obj);     end
+          def dispatch_via_sourcecode(obj); note_transformer.transform_preformat(obj); end
+          def dispatch_via_references(obj); reference_transformer.transform_section(obj); end
         end
-
-        private
-
-        def transformer_for(key)
-          @transformers[key] ||= TRANSFORMER_MAP.fetch(key).new(@context)
-        end
-
-        TRANSFORMER_MAP = {
-          paragraph_transformer: Transformer::ParagraphTransformer,
-          list_transformer: Transformer::ListTransformer,
-          def_list_transformer: Transformer::DefListTransformer,
-          table_transformer: Transformer::TableTransformer,
-          figure_transformer: Transformer::FigureTransformer,
-          formula_transformer: Transformer::FormulaTransformer,
-          example_transformer: Transformer::ExampleTransformer,
-          note_transformer: Transformer::NoteTransformer,
-          sourcecode_transformer: Transformer::SourcecodeTransformer,
-          quote_transformer: Transformer::QuoteTransformer,
-          section_transformer: Transformer::SectionTransformer,
-          term_transformer: Transformer::TermTransformer,
-          reference_transformer: Transformer::ReferenceTransformer,
-        }.freeze
       end
     end
   end

@@ -1,65 +1,80 @@
 # frozen_string_literal: true
-
 module Metanorma
   module Iso
     module Sts
-      class Transformer::ListTransformer < Transformer::Base
-        OL_TYPE_MAP = {
-          "arabic" => "order",
-          "loweralpha" => "alpha-lower",
-          "upperalpha" => "alpha-upper",
-          "lowerroman" => "roman-lower",
-          "upperroman" => "roman-upper",
-        }.freeze
+      module Transformer
+        class ListTransformer < Base
+          def transform(source_list)
+            list_type = source_list.is_a?(Metanorma::Document::Components::Lists::OrderedList) ? "order" : "bullet"
+            items = Array(source_list.listitem).map { |li| build_list_item(li) }
+            ModelBuilder.list(list_type: list_type, list_item: items)
+          end
 
-        def transform(source)
-          build_ordered(::Sts::NisoSts::List) do |list|
-            list.id = source.id if source.id && !source.id.start_with?("_")
-            list.list_type = list_type_for(source)
+          def transform_def_list(source_dl)
+            items = Array(source_dl.dt).zip(Array(source_dl.dd)).map do |dt, dd|
+              build_def_item(dt, dd)
+            end.compact
+            ::Sts::NisoSts::DefList.new(def_item: items)
+          end
 
-            source.listitem&.each do |li|
-              list.list_item transform_list_item(li)
+          private
+
+          def build_list_item(li)
+            nested_lists = build_nested_lists(li)
+
+            ::Sts::NisoSts::ListItem.new do |item|
+              label = item_label(li)
+              item.label ::Sts::NisoSts::Label.new(content: [label]) if label
+              Array(li.paragraphs).each { |p| item.p paragraph_transformer.transform(p) }
+              nested_lists.each { |l| item.list l }
             end
           end
-        end
 
-        private
+          # The item's marker from the presentation XML (its fmt-name /
+          # autonum, e.g. "—" or "1."), nil when absent.
+          def item_label(li)
+            return nil unless li.class.method_defined?(:fmt_name) && li.fmt_name
 
-        def list_type_for(source)
-          case source
-          when Metanorma::Document::Components::Lists::UnorderedList
-            "bullet"
-          when Metanorma::Document::Components::Lists::OrderedList
-            OL_TYPE_MAP[source.type] || "order"
+            text = RenderedTextExtractor.text_of(li.fmt_name).strip
+            text.empty? ? nil : text
           end
-        end
 
-        def transform_list_item(li)
-          build_ordered(::Sts::NisoSts::ListItem) do |item|
-            item.id = li.id if li.id && !li.id.start_with?("_")
-
-            # content_text holds bare text nodes between the item's children;
-            # pretty-printed XML leaves whitespace-only residue there, which
-            # must not shadow the item's real paragraphs.
-            text = Array(li.content_text).join.strip
-            if text.empty?
-              Array(li.paragraphs).each do |para|
-                item.p paragraph_transformer.transform(para)
+          # Recurses into nested <ul>/<ol> children of a list item.
+          # MN stores them as typed collection attrs on ListItem.
+          def build_nested_lists(li)
+            results = []
+            [:unordered_lists, :ordered_lists].each do |attr|
+              next unless li.class.method_defined?(attr)
+              Array(li.public_send(attr)).each do |nested|
+                results << transform(nested)
               end
-            else
-              item.p paragraph_transformer.transform(build_text_paragraph(text))
             end
-
-            li.unordered_lists&.each { |ul| item.list transform(ul) }
-            li.ordered_lists&.each { |ol| item.list transform(ol) }
+            results
           end
-        end
 
-        def build_text_paragraph(text_array)
-          text = text_array.is_a?(Array) ? text_array.join : text_array.to_s
-          para = Metanorma::Document::Components::Paragraphs::ParagraphBlock.new
-          para.text = [text]
-          para
+          def build_def_item(dt, dd)
+            term_text = RenderedTextExtractor.text_of(dt)
+            desc_text = extract_dd_text(dd)
+            return nil unless term_text || desc_text
+
+            attrs = {}
+            attrs[:term] = ::Sts::NisoSts::Term.new(text: [term_text]) if term_text && !term_text.empty?
+            if desc_text && !desc_text.empty?
+              attrs[:def] = ::Sts::NisoSts::Def.new(
+                paragraph: [::Sts::NisoSts::Paragraph.new(content: [desc_text])]
+              )
+            end
+            ::Sts::NisoSts::DefItem.new(attrs)
+          end
+
+          def extract_dd_text(dd)
+            return nil unless dd
+            ps = dd.p if dd.is_a?(Lutaml::Model::Serializable) && dd.class.method_defined?(:p)
+            ps = Array(ps)
+            return RenderedTextExtractor.text_of(dd) if ps.empty?
+            texts = ps.map { |p| RenderedTextExtractor.text_of(p) }.reject(&:empty?)
+            texts.empty? ? nil : texts.join(" ")
+          end
         end
       end
     end
