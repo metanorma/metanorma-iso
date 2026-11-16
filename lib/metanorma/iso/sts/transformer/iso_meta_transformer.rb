@@ -204,11 +204,14 @@ module Metanorma
           ics_list = bibdata.ext&.ics
           return [] unless ics_list
 
+          # MetadataIso carries ics as a plain string collection; emitting
+          # typed models here serializes their #to_s (an object inspect)
+          # as the element content.
           Array(ics_list).filter_map do |ics|
             code = ics.code
             next unless code
 
-            Transformer::ModelBuilder.ics(code: code.to_s)
+            code.to_s
           end
         end
 
