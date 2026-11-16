@@ -2,6 +2,7 @@
 
 require "uniword"
 require "metanorma/document"
+require "plurimath"
 
 module IsoDoc
   module Iso
@@ -294,6 +295,12 @@ module IsoDoc
 
         def stem_fallback_text(element)
           text = stem_asciimath_text(element)
+          # UnitsML macros are source notation; the MathML carries the
+          # rendered unit in both heading and body stems.
+          if text&.include?("unitsml(")
+            rendered = stem_math_text(element)
+            return rendered if rendered && !rendered.empty?
+          end
           return text if text && !text.empty?
 
           text = stem_math_text(element)
@@ -349,9 +356,9 @@ module IsoDoc
         # number with a unit row). Convert through Plurimath to a plain
         # AsciiMath text so the cell content survives.
         def stem_math_text(element)
-          math = attribute_value(element, :math)
+          math = Array(attribute_value(element, :math)).first
           Array(attribute_value(element, :semx)).each do |child|
-            math ||= attribute_value(child, :math)
+            math ||= Array(attribute_value(child, :math)).first
             break if math
           end
           return nil unless math.is_a?(Lutaml::Model::Serializable)
