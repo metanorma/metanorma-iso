@@ -38,4 +38,46 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::IdGenerator do
   it "returns original ID when no mapping exists" do
     expect(generator.remap("unknown")).to eq("unknown")
   end
+
+  it "letters unnumbered annexes in document order" do
+    first = Metanorma::IsoDocument::Sections::IsoAnnexSection.new
+    first.id = "_ann1"
+    second = Metanorma::IsoDocument::Sections::IsoAnnexSection.new
+    second.id = "_ann2"
+
+    expect(generator.id_for(first)).to eq("sec_A")
+    expect(generator.id_for(second)).to eq("sec_B")
+  end
+
+  it "keeps past Z lettering unnumbered annexes NCName-safe" do
+    26.times do |i|
+      annex = Metanorma::IsoDocument::Sections::IsoAnnexSection.new
+      annex.id = "_ann#{i}"
+      generator.id_for(annex)
+    end
+    annex = Metanorma::IsoDocument::Sections::IsoAnnexSection.new
+    annex.id = "_ann27"
+
+    expect(generator.id_for(annex)).to eq("sec_AA")
+  end
+
+  it "uniquifies colliding fallback IDs with numeric suffixes" do
+    first = Metanorma::IsoDocument::Sections::IsoTermsSection.new
+    first.id = "_terms1"
+    second = Metanorma::IsoDocument::Sections::IsoTermsSection.new
+    second.id = "_terms2"
+
+    expect(generator.id_for(first)).to eq("sec_terms")
+    expect(generator.id_for(second)).to eq("sec_terms_1")
+  end
+
+  it "claims a document-unique variant of a taken base id" do
+    expect(generator.claim("sec_x")).to eq("sec_x")
+    expect(generator.claim("sec_x")).to eq("sec_x_1")
+    expect(generator.claim("sec_x")).to eq("sec_x_2")
+  end
+
+  it "returns nil when claiming a nil base id" do
+    expect(generator.claim(nil)).to be_nil
+  end
 end

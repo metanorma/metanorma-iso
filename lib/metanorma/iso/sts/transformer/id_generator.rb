@@ -7,6 +7,8 @@ module Metanorma
         def initialize(context)
           @context = context
           @id_map = {}
+          @issued_ids = {}
+          @annex_count = 0
           @section_counters = {
             table: 0,
             figure: 0,
@@ -23,6 +25,16 @@ module Metanorma
 
         def remap(source_id)
           @id_map[source_id] || source_id
+        end
+
+        # Document-unique variant of +base+: on collision appends _1, _2,
+        # … (xs:ID values must be unique across the whole document).
+        def claim(base)
+          return nil unless base
+
+          seen = @issued_ids[base] || 0
+          @issued_ids[base] = seen + 1
+          seen.zero? ? base : "#{base}_#{seen}"
         end
 
         def id_for(element)
@@ -68,11 +80,11 @@ module Metanorma
 
           number = clause.number
           sts_id = if number && !number.empty?
-                     "sec_#{number}"
+                     claim("sec_#{number}")
                    elsif clause.type == "intro"
-                     "sec_intro"
+                     claim("sec_intro")
                    elsif clause.type == "scope"
-                     "sec_scope"
+                     claim("sec_scope")
                    else
                      clause.id ? remap(clause.id) : nil
                    end
@@ -86,9 +98,15 @@ module Metanorma
 
           number = annex.number
           sts_id = if number && !number.empty?
-                     "sec_#{number}"
+                     claim("sec_#{number}")
                    else
-                     "sec_A"
+                     # The semantic model carries no annex number: letter
+                     # annexes in document order (A, B, …, Z, AA …), the
+                     # ISO convention. The same letter feeds the Annex
+                     # label and app id, so they stay consistent.
+                     letter = alpha_suffix(@annex_count, "A")
+                     @annex_count += 1
+                     claim("sec_#{letter}")
                    end
 
           register(annex.id, sts_id) if annex.id
@@ -100,9 +118,9 @@ module Metanorma
 
           number = terms.number
           sts_id = if number && !number.empty?
-                     "sec_#{number}"
+                     claim("sec_#{number}")
                    else
-                     "sec_terms"
+                     claim("sec_terms")
                    end
 
           register(terms.id, sts_id) if terms.id
@@ -118,18 +136,11 @@ module Metanorma
           if number
             sts_id = "tab_#{number}"
           else
-            # NCName-safe suffix for any count: a..z, aa, ab, ... (a plain
+            # NCName-safe suffix for any count: a..z, aa, ab, … (a plain
             # ("a".ord + n).chr emits lone bytes past 'z', which breaks
             # UTF-8 well-formedness in documents with >26 unnumbered tables).
-            n = @section_counters[:unnumbered_table]
-            suffix = ""
-            loop do
-              suffix = ((n % 26) + "a".ord).chr + suffix
-              n = n / 26 - 1
-              break if n.negative?
-            end
+            sts_id = "tab_#{alpha_suffix(@section_counters[:unnumbered_table], 'a')}"
             @section_counters[:unnumbered_table] += 1
-            sts_id = "tab_#{suffix}"
           end
 
           register(table.id, sts_id) if table.id
@@ -179,10 +190,21 @@ module Metanorma
           return remap(ref_section.id) if ref_section.id && @id_map.key?(ref_section.id)
 
           normative = ref_section.normative.to_s == "true"
-          sts_id = normative ? "sec_normrefs" : "sec_bibl"
+          sts_id = normative ? claim("sec_normrefs") : claim("sec_bibl")
 
           register(ref_section.id, sts_id) if ref_section.id
           sts_id
+        end
+
+        # Letter index in base-26: 0 → +first_letter+, 25 → "Z", 26 → "AA".
+        def alpha_suffix(n, first_letter)
+          suffix = ""
+          loop do
+            suffix = ((n % 26) + first_letter.ord).chr + suffix
+            n = n / 26 - 1
+            break if n.negative?
+          end
+          suffix
         end
       end
     end

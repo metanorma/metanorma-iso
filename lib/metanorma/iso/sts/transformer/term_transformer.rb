@@ -31,8 +31,9 @@ module Metanorma
         end
 
         def transform_entry(term)
+          suffix = term_id_suffix(term)
           entry = ::Sts::TbxIsoTml::TermEntry.new
-          entry.id = "term_#{term.id.gsub(/^term_/, '')}" if term.id
+          entry.id = "term_#{suffix}" unless suffix.empty?
 
           lang = @context.language || "en"
           entry.lang_set build_lang_set(term, lang)
@@ -47,35 +48,51 @@ module Metanorma
         end
 
         # One nested <term-sec> per term, holding the TBX termEntry.
+        # term-sec and termEntry derive from the same source id but must
+        # not share the derived value: xs:ID forbids duplicates, so the
+        # section takes the sec_ prefix and the entry the term_ prefix
+        # (the split mnconvert emits: sec_3.1.2 / term_3.1.2).
         def build_term_section(term)
+          suffix = term_id_suffix(term)
           Transformer::ModelBuilder.term_section(
-            id: term.id ? "term_#{term.id.gsub(/^term_/, '')}" : nil,
+            id: suffix.empty? ? nil : "sec_#{suffix}",
           ) do |ts|
             ts.term_entry transform_entry(term)
           end
         end
 
+        # The semantic <term> id is a uuid, usually "_8b70fb0a-…"; strip
+        # the leading underscore and any legacy term_ prefix so both
+        # derived ids stay valid NCNames.
+        def term_id_suffix(term)
+          term.id.to_s.sub(/\A_?term_?/, "").delete_prefix("_")
+        end
+
         def build_lang_set(term, lang)
-          ls = ::Sts::TbxIsoTml::LangSet.new
-          ls.lang = lang
+          # Built through the block form so lutaml-model's order tracking
+          # records setter-call order: the released LangSet mapping
+          # declares subjectField last, but the tbx:langSet content model
+          # places tig last, so mapping-declaration order emits
+          # subjectField after the tigs and fails XSD validation.
+          ::Sts::TbxIsoTml::LangSet.new do |set|
+            set.lang = lang
 
-          if term.domain&.text
-            sf = ::Sts::TbxIsoTml::SubjectField.new
-            sf.value = term.domain.text
-            ls.subject_field sf
+            if term.domain&.text
+              sf = ::Sts::TbxIsoTml::SubjectField.new
+              sf.value = term.domain.text
+              set.subject_field sf
+            end
+
+            Array(term.definition).each do |defn|
+              set.definition build_definition(defn)
+            end
+            Array(term.termnote).each { |tn| set.note build_note(tn) }
+            Array(term.termexample).each { |te| set.example build_example(te) }
+            Array(term.termsource).each { |ts| set.source build_source_ref(ts) }
+            Array(term.source).each { |s| set.source build_source_ref(s) }
+
+            build_tigs_for(term).each { |tig| set.tig tig }
           end
-
-          Array(term.definition).each do |defn|
-            ls.definition build_definition(defn)
-          end
-          Array(term.termnote).each { |tn| ls.note build_note(tn) }
-          Array(term.termexample).each { |te| ls.example build_example(te) }
-          Array(term.termsource).each { |ts| ls.source build_source_ref(ts) }
-          Array(term.source).each { |s| ls.source build_source_ref(s) }
-
-          build_tigs_for(term).each { |tig| ls.tig tig }
-
-          ls
         end
 
         def build_definition(defn)
