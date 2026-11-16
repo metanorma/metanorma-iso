@@ -56,22 +56,81 @@ RSpec.describe IsoDoc::Iso::Docx::MiddleTitleRenderer do
     end
   end
 
-  it "renders no title paragraphs when bibdata has no English titles" do
-    xml = minimal_iso_xml(<<~INNER)
-      <bibdata>
-        <docidentifier primary="true">ISO 1</docidentifier>
-        <title language="fr" type="main">Titre en français</title>
-      </bibdata>
-      <sections><clause id="c1"><title>Scope</title><p>Body.</p></clause></sections>
-    INNER
-
+  def middle_title_lines(xml)
+    styles = %w[MainTitle1 MainTitle2]
     convert_and_extract(adapter, xml) do |pkg|
-      main_paras = pkg.document.body.paragraphs.select do |p|
-        %w[MainTitle1 MainTitle2].include?(para_style_value(p))
+      paragraphs = pkg.document.body.paragraphs.select do |paragraph|
+        styles.include?(para_style_value(paragraph))
+      end
+      return paragraphs.map do |paragraph|
+        [para_style_value(paragraph), paragraph.runs.map { |run| run_text(run) }.join]
+      end
+    end
+  end
+
+  context "with only French titles" do
+    let(:xml) do
+      minimal_iso_xml(<<~INNER)
+        <bibdata>
+          <docidentifier primary="true">ISO 1</docidentifier>
+          <title language="fr" type="main">Titre en français</title>
+        </bibdata>
+        <sections><clause id="c1"><title>Scope</title><p>Body.</p></clause></sections>
+      INNER
+    end
+
+    it "renders the French title" do
+      expect(middle_title_lines(xml)).to eq([["MainTitle1", "Titre en français"]])
+    end
+  end
+
+  [false, true].each do |amendment|
+    context "with English and French titles#{' and amendment lines' if amendment}" do
+      let(:titles) do
+        <<~XML
+          <title language="en" type="title-intro">Cereals and pulses</title>
+          <title language="en" type="title-main">Rice</title>
+          <title language="en" type="title-part-prefix">Part 1</title>
+          <title language="en" type="title-part">Storage</title>
+          <title language="fr" type="title-intro">Céréales et légumineuses</title>
+          <title language="fr" type="title-main">Riz</title>
+          <title language="fr" type="title-part-prefix">Partie 1</title>
+          <title language="fr" type="title-part">Stockage</title>
+        XML
+      end
+      let(:amendment_titles) do
+        next "" unless amendment
+
+        <<~XML
+          <title language="en" type="title-amendment-prefix">AMENDMENT 1</title>
+          <title language="en" type="title-amd">Storage conditions</title>
+          <title language="fr" type="title-amendment-prefix">AMENDEMENT 1</title>
+          <title language="fr" type="title-amd">Conditions de stockage</title>
+        XML
+      end
+      let(:xml) do
+        minimal_iso_xml(<<~INNER)
+          <bibdata>#{titles}#{amendment_titles}</bibdata>
+          <sections><clause id="c1"><title>Scope</title><p>Body.</p></clause></sections>
+        INNER
+      end
+      let(:expected) do
+        lines = [
+          ["MainTitle1", "Cereals and pulses — Rice"],
+          ["MainTitle2", "Part 1: Storage"],
+        ]
+        lines << ["MainTitle2", "AMENDMENT 1: Storage conditions"] if amendment
+        lines.push(
+          ["MainTitle1", "Céréales et légumineuses — Riz"],
+          ["MainTitle2", "Partie 1: Stockage"],
+        )
+        lines << ["MainTitle2", "AMENDEMENT 1: Conditions de stockage"] if amendment
+        lines
       end
 
-      expect(main_paras).to be_empty,
-        "non-English titles should produce no MainTitle1/MainTitle2 paragraphs"
+      it "renders the complete English block before the French block" do
+        expect(middle_title_lines(xml)).to eq(expected)
+      end
     end
   end
 
