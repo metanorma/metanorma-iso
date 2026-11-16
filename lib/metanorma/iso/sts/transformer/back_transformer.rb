@@ -29,33 +29,40 @@ module Metanorma
         end
 
         def transform_annex(annex)
-          build_ordered(::Sts::NisoSts::App) do |app|
-            app.id = id_for(annex)
+          sts_id = id_for(annex)
 
-            if annex.number && !annex.number.empty?
-              label_text = "Annex #{annex.number}"
-              label_text += " (#{annex.obligation})" if annex.obligation
-              app.label ::Sts::NisoSts::Label.new(content: [label_text])
+          Transformer::ModelBuilder.app(id: sts_id) do |app|
+            label_text = annex_label_text(annex, sts_id)
+            app.label = ::Sts::NisoSts::Label.new(content: [label_text]) if label_text
+            app.annex_type = "(#{annex.obligation})" if annex.obligation
+            app.title = transform_title(annex.title) if annex.title
+
+            # Dispatch the annex body straight into the App: the app-model
+            # carries the block setters the annex content needs, and the
+            # schema's app content model wants label/annex-type/title then
+            # para-level content then child secs — the shape mnconvert
+            # emits. A wrapper <sec> would need its own label/title to be
+            # schema-valid, which the annex structure never provides.
+            dispatcher = block_dispatcher
+            target = Transformer::AppContentAdapter.new(app)
+            annex.each_mixed_content do |node|
+              next if node.is_a?(String)
+              next if node == annex.title
+              next if skip_node?(node)
+
+              dispatcher.dispatch(node, target)
             end
-
-            app.title transform_title(annex.title) if annex.title
-
-            # App's attribute set is narrower than Sec's (no list, table_wrap,
-            # disp_quote, etc.), so dispatch the annex's body into a nested
-            # Sec instead of into the App directly. The Sec holds all the
-            # block-level setters the dispatcher needs.
-            sec = build_ordered(::Sts::NisoSts::Section) do |inner|
-              dispatcher = block_dispatcher
-              annex.each_mixed_content do |node|
-                next if node.is_a?(String)
-                next if node == annex.title
-                next if skip_node?(node)
-
-                dispatcher.dispatch(node, inner)
-              end
-            end
-            app.sec sec
           end
+        end
+
+        # "Annex A" — from the source number when present, else from the
+        # generated annex letter (sec_B → B), keeping label and id
+        # consistent.
+        def annex_label_text(annex, sts_id)
+          return "Annex #{annex.number}" if annex.number && !annex.number.empty?
+
+          letter = sts_id.to_s.delete_prefix("sec_")
+          letter.empty? ? nil : "Annex #{letter}"
         end
 
         def transform_bibliography(source, back)

@@ -21,7 +21,9 @@ module Metanorma
 
           # ---- Document shell --------------------------------------------------
 
-          def standard(lang: "en", dtd_version: "1.2", front: nil, body: nil, back: nil)
+          # The NISO STS XSD pins <standard dtd-version> to the fixed
+          # value "1.0"; anything else fails schema validation.
+          def standard(lang: "en", dtd_version: "1.0", front: nil, body: nil, back: nil)
             NISO::Standard.new(lang: lang, dtd_version: dtd_version) do |std|
               std.front = front if front
               std.body = body if body

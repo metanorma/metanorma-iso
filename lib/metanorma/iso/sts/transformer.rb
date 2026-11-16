@@ -31,6 +31,8 @@ module Metanorma
         autoload :FootnoteCollector, "#{__dir__}/transformer/footnote_collector"
         autoload :ContentText, "#{__dir__}/transformer/content_text"
         autoload :BlockDispatcher, "#{__dir__}/transformer/block_dispatcher"
+        autoload :AppContentAdapter,
+                 "#{__dir__}/transformer/app_content_adapter"
         autoload :TableTransformer, "#{__dir__}/transformer/table_transformer"
         autoload :FigureTransformer, "#{__dir__}/transformer/figure_transformer"
         autoload :FormulaTransformer,
