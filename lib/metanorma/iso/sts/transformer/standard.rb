@@ -4,27 +4,31 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        # Adapter conforming the STS transformer to the metanorma-core
-        # +document_transformers+ contract: +.new(model, options)+ plus
-        # +#transform+ returning a target (+::Sts::NisoSts::Standard+) that
-        # responds to +#to_xml+. It hides the +Context+ construction behind
-        # the (model, options) signature, so the metanorma-core driver treats
-        # STS exactly like any other document-model transformer.
+        # Adapter conforming to the metanorma-core
+        # +Processor#document_transformers+ contract: +.new(model, options)+,
+        # where +model+ is the {SourceDocument} produced by
+        # {SourceDocument.from_xml}; +#transform+ returns a target responding to
+        # +#to_xml+.
+        #
+        # The adapter is its own target: its +#to_xml+ runs the full
+        # {DocumentTransformer#transform_to_xml} pipeline (model build plus the
+        # namespace / processing-meta / lang post-processing on the serialised
+        # string), so the pipeline output matches the standalone
+        # {Metanorma::Iso::Sts::Transformer.convert}. Returning the raw
+        # +#transform+ model instead would drop that post-processing.
         class Standard
-          # @param model [Object] a metanorma-document model
-          #   (+Metanorma::Iso::Document::Root+), as returned by the reader's
-          #   +.from_xml+.
-          # @param options [Hash] processor options (accepted for interface
-          #   conformance; not yet consumed).
           def initialize(model, options = {})
             @model = model
             @options = options
           end
 
-          # @return [::Sts::NisoSts::Standard] the STS output model, which
-          #   responds to +#to_xml+.
           def transform
-            Transformer.transform(@model)
+            @document_transformer = DocumentTransformer.new(Context.new(@model))
+            self
+          end
+
+          def to_xml(**_options)
+            @document_transformer.transform_to_xml(@model)
           end
         end
       end

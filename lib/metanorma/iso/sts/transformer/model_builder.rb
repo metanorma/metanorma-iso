@@ -4,398 +4,316 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        # Factory methods for building sts-ruby NisoSts model instances.
-        # Centralizing construction here keeps "how do I build an X?" in one
-        # place (DRY, MECE) and makes future model-class renames a one-file
-        # change (OCP — adding a new mapped class is a new factory method,
-        # not a scatter of construction sites).
-        #
-        # All output is Sts::NisoSts / Sts::TbxIsoTml — the maintained
-        # NISO STS v1.2 tagset per the IEC/ISO Coding Guidelines ed. 2.1.
-        # The legacy Sts::IsoSts tagset is not used.
+        # Factory methods for building sts-ruby model instances.
+        # Zero Nokogiri — all models are constructed via lutaml-model.
         module ModelBuilder
-          NISO = ::Sts::NisoSts
-          TBX = ::Sts::TbxIsoTml
-
           module_function
 
-          # ---- Document shell --------------------------------------------------
-
-          # The NISO STS XSD pins <standard dtd-version> to the fixed
-          # value "1.0"; anything else fails schema validation.
-          def standard(lang: "en", dtd_version: "1.0", front: nil, body: nil, back: nil)
-            NISO::Standard.new(lang: lang, dtd_version: dtd_version) do |std|
+          def standard(lang:, dtd_version: "1.2", front: nil, body: nil, back: nil)
+            ::Sts::NisoSts::Standard.new(
+              lang: lang,
+              dtd_version: dtd_version
+            ).tap do |std|
               std.front = front if front
               std.body = body if body
               std.back = back if back
             end
           end
 
-          def front(iso_meta: nil, sec: [])
-            NISO::Front.new do |f|
-              f.iso_meta = iso_meta if iso_meta
-              Array(sec).each { |s| f.sec s }
-              yield f if block_given?
-            end
+          def front(std_meta: nil)
+            ::Sts::NisoSts::Front.new.tap { |f| f.std_meta = std_meta if std_meta }
           end
 
           def body(sec: [])
-            NISO::Body.new do |b|
-              Array(sec).each { |s| b.sec s }
-              yield b if block_given?
-            end
+            ::Sts::NisoSts::Body.new(sec: Array(sec))
           end
 
           def back(app_group: nil, ref_list: [])
-            NISO::Back.new do |b|
+            attrs = {}
+            attrs[:ref_list] = Array(ref_list) if ref_list&.any?
+            ::Sts::NisoSts::Back.new(attrs).tap do |b|
               b.app_group = app_group if app_group
-              Array(ref_list).each { |r| b.ref_list r }
-              yield b if block_given?
             end
           end
 
           def app_group(app: [])
-            NISO::AppGroup.new do |g|
-              Array(app).each { |a| g.app a }
-              yield g if block_given?
-            end
+            ::Sts::NisoSts::AppGroup.new(app: Array(app))
           end
 
-          # ---- Sections & blocks ----------------------------------------------
+          def sec(id: nil, label: nil, title: nil, content: [], paragraph: [], sec: [],
+                  list: [], table_wrap: [], fig: [], non_normative_note: [],
+                  non_normative_example: [])
+            all_content = Array(content) + Array(paragraph)
+            distributed = distribute_sec_content(all_content)
 
-          def section(id: nil, sec_type: nil, label: nil, title: nil)
-            NISO::Section.new do |s|
-              s.id = id if id
-              s.type = sec_type if sec_type
-              s.label = label_obj(label) if label
-              s.title = title_obj(title) if title
-              yield s if block_given?
-            end
+            attrs = {}
+            attrs[:id] = id if id
+            attrs[:title] = ::Sts::NisoSts::Title.new(content: [title]) if title
+            attrs[:paragraphs] = distributed[:paragraph] if distributed[:paragraph].any?
+            attrs[:sec] = Array(sec) if sec&.any?
+            attrs[:list] = (Array(list) + distributed[:list]) if (list&.any? || distributed[:list].any?)
+            attrs[:table_wrap] = (Array(table_wrap) + distributed[:table_wrap]) if (table_wrap&.any? || distributed[:table_wrap].any?)
+            attrs[:fig] = (Array(fig) + distributed[:fig]) if (fig&.any? || distributed[:fig].any?)
+            attrs[:non_normative_note] = (Array(non_normative_note) + distributed[:note]) if (non_normative_note&.any? || distributed[:note].any?)
+            attrs[:non_normative_example] = (Array(non_normative_example) + distributed[:example]) if (non_normative_example&.any? || distributed[:example].any?)
+            ::Sts::NisoSts::Section.new(attrs)
           end
 
-          def term_section(id: nil, label: nil, title: nil)
-            NISO::TermSection.new do |s|
-              s.id = id if id
-              s.label = label_obj(label) if label
-              s.title = title_obj(title) if title
-              yield s if block_given?
+          def distribute_sec_content(content)
+            result = Hash.new { |h, k| h[k] = [] }
+            content.each do |item|
+              case item
+              when ::Sts::NisoSts::Paragraph then result[:paragraph] << item
+              when ::Sts::NisoSts::List then result[:list] << item
+              when ::Sts::NisoSts::Figure then result[:fig] << item
+              when ::Sts::TbxIsoTml::TableWrap then result[:table_wrap] << item
+              when ::Sts::NisoSts::NonNormativeNote then result[:note] << item
+              when ::Sts::NisoSts::NonNormativeExample then result[:example] << item
+              when ::Sts::NisoSts::DisplayFormula then result[:formula] << item
+              when ::Sts::NisoSts::DefList then result[:def_list] << item
+              end
             end
+            result
           end
 
-          def app(id: nil, label: nil, title: nil)
-            NISO::App.new do |a|
-              a.id = id if id
-              a.label = label_obj(label) if label
-              a.title = title_obj(title) if title
-              yield a if block_given?
-            end
-          end
-
-          def paragraph(id: nil, content: nil)
-            NISO::Paragraph.new do |p|
+          def paragraph(id: nil)
+            ::Sts::NisoSts::Paragraph.new.tap do |p|
               p.id = id if id
               yield p if block_given?
-              p.content = Array(content) if content
             end
           end
 
-          def list(id: nil, list_type: "bullet")
-            NISO::List.new(id: id, list_type: list_type) { |l| yield l if block_given? }
+          def list(list_type: "bullet", list_item: [])
+            ::Sts::NisoSts::List.new(list_type: list_type, list_item: Array(list_item))
           end
 
-          def list_item
-            NISO::ListItem.new { |i| yield i if block_given? }
-          end
-
-          def def_list(id: nil)
-            NISO::DefList.new do |dl|
+          def def_list(id: nil, def_items: [])
+            items = Array(def_items)
+            ::Sts::NisoSts::DefList.new.tap do |dl|
               dl.id = id if id
-              yield dl if block_given?
+              dl.def_item = items if items.any?
             end
           end
 
-          def table_wrap(id: nil, label: nil, caption: nil)
-            TBX::TableWrap.new do |tw|
+          def def_item(id: nil, term: nil, defn: nil)
+            ::Sts::NisoSts::DefItem.new.tap do |di|
+              di.id = id if id
+              di.term = term if term
+              di.definition = defn if defn
+            end
+          end
+          def term(content: [])
+            ::Sts::NisoSts::Term.new(text: Array(content))
+          end
+
+          def def(paragraph: [])
+            ::Sts::NisoSts::Def.new(paragraph: Array(paragraph))
+          end
+
+          def list_item(paragraph: [])
+            ::Sts::NisoSts::ListItem.new(p: Array(paragraph))
+          end
+
+          def table_wrap(id: nil, caption: nil, table: nil)
+            ::Sts::TbxIsoTml::TableWrap.new.tap do |tw|
               tw.id = id if id
-              tw.label = label_obj(label) if label
               tw.caption = caption if caption
-              yield tw if block_given?
+              tw.table = [table] if table
             end
           end
 
-          def caption(title: nil)
-            NISO::Caption.new do |c|
-              c.title = title_obj(title) if title
-              yield c if block_given?
+          def table(thead: nil, tbody: nil)
+            ::Sts::TbxIsoTml::Table.new.tap do |t|
+              t.thead = thead if thead
+              t.tbody = tbody if tbody
             end
           end
 
-          def figure(id: nil, label: nil, caption: nil, graphic: nil)
-            NISO::Figure.new do |f|
+          def thead(tr: [])
+            ::Sts::TbxIsoTml::Thead.new(tr: Array(tr))
+          end
+
+          def tbody(tr: [])
+            ::Sts::TbxIsoTml::Tbody.new(tr: Array(tr))
+          end
+
+          def tr(th: [], td: [])
+            attrs = {}
+            attrs[:th] = Array(th) if th&.any?
+            attrs[:td] = Array(td) if td&.any?
+            ::Sts::TbxIsoTml::Tr.new(attrs)
+          end
+
+          def th(content: nil)
+            ::Sts::TbxIsoTml::Th.new.tap { |c| c.content = Array(content) if content }
+          end
+
+          def td(content: nil)
+            ::Sts::TbxIsoTml::Td.new.tap { |c| c.content = Array(content) if content }
+          end
+
+          def fig(id: nil, label: nil, caption: nil, graphic: nil)
+            ::Sts::NisoSts::Figure.new.tap do |f|
               f.id = id if id
-              f.label = label_obj(label) if label
+              f.label = ::Sts::NisoSts::Label.new(content: [label]) if label
               f.caption = caption if caption
-              yield f if block_given?
+              f.graphic = [graphic] if graphic
             end
           end
 
           def graphic(href: nil)
-            NISO::Graphic.new(href: href)
+            ::Sts::NisoSts::Graphic.new(href: xlink_href)
           end
 
-          def display_formula(id: nil, label: nil)
-            NISO::DisplayFormula.new do |f|
+          def caption(title: nil)
+            ::Sts::NisoSts::Caption.new.tap do |c|
+              c.title = ::Sts::NisoSts::Title.new(content: [title]) if title
+            end
+          end
+
+          def disp_formula(id: nil, label: nil, math: nil)
+            ::Sts::NisoSts::DisplayFormula.new.tap do |f|
               f.id = id if id
-              f.label = label_obj(label) if label
-              yield f if block_given?
+              f.label = ::Sts::NisoSts::Label.new(content: [label]) if label
+              f.math = math if math
             end
           end
 
-          def inline_formula
-            NISO::InlineFormula.new { |f| yield f if block_given? }
+          def inline_formula(math: nil)
+            ::Sts::NisoSts::InlineFormula.new(math: math)
           end
 
-          def non_normative_note(id: nil, label: nil)
-            NISO::NonNormativeNote.new do |n|
-              n.id = id if id
-              n.label = label_obj(label) if label
-              yield n if block_given?
+          def non_normative_note(paragraph: [], label: nil)
+            ::Sts::NisoSts::NonNormativeNote.new.tap do |n|
+              n.p = Array(paragraph) if paragraph&.any?
+              n.label = ::Sts::NisoSts::Label.new(content: [label]) if label
             end
           end
 
-          def non_normative_example(id: nil, label: nil)
-            NISO::NonNormativeExample.new do |e|
-              e.id = id if id
-              e.label = label_obj(label) if label
-              yield e if block_given?
+          def non_normative_example(paragraph: [], label: nil)
+            ::Sts::NisoSts::NonNormativeExample.new.tap do |e|
+              e.p = Array(paragraph) if paragraph&.any?
+              e.label = ::Sts::NisoSts::Label.new(content: [label]) if label
             end
           end
 
-          def disp_quote
-            NISO::DispQuote.new { |q| yield q if block_given? }
-          end
-
-          def preformat(id: nil)
-            NISO::Preformat.new do |p|
-              p.id = id if id
-              yield p if block_given?
-            end
-          end
-
-          # ---- Bibliography ----------------------------------------------------
-
-          def ref_list(content_type: nil, title: nil)
-            NISO::ReferenceList.new do |rl|
+          def ref_list(content_type: nil, title: nil, ref: [])
+            ::Sts::NisoSts::ReferenceList.new.tap do |rl|
               rl.content_type = content_type if content_type
-              rl.title = title_obj(title) if title
-              yield rl if block_given?
+              rl.title = ::Sts::NisoSts::Title.new(content: [title]) if title
+              rl.ref = Array(ref) if ref&.any?
             end
           end
 
           def ref(label: nil, mixed_citation: nil, std: nil)
-            NISO::Reference.new do |r|
-              r.label = label_obj(label) if label
-              yield r if block_given?
-              r.mixed_citation = mixed_citation if mixed_citation
+            ::Sts::NisoSts::Reference.new.tap do |r|
+              r.label = ::Sts::NisoSts::Label.new(content: [label]) if label
+              r.mixed_citation = ::Sts::NisoSts::MixedCitation.new(content: [mixed_citation]) if mixed_citation
               r.std = std if std
             end
           end
 
-          def mixed_citation(content: nil)
-            NISO::MixedCitation.new do |c|
-              yield c if block_given?
-              c.content = Array(content) if content
+          # Builds the OIML front-matter metadata block. OIML is not
+          # ISO — the NISO-STS-correct container for an OIML publication
+          # is <std-meta> (the generic catch-all for non-ISO / non-
+          # national / non-regional SDOs). MetadataStd ships the same
+          # attribute set as MetadataIso (title_wrap, std_ident,
+          # permissions, pub_date, custom_meta_group), but several
+          # are collections where MetadataIso's were singular.
+          def std_meta(doc_identifier: nil, title: nil, pub_date: nil,
+                       permissions: nil, custom_meta_group: nil)
+            ::Sts::NisoSts::MetadataStd.new.tap do |m|
+              m.title_wrap = [::Sts::NisoSts::TitleWrap.new(main: title)] if title
+              m.std_ident = std_ident_for(doc_identifier) if doc_identifier
+              m.permissions = [permissions] if permissions
+              m.pub_date = pub_date.to_s if pub_date
+              m.custom_meta_group = [custom_meta_group] if custom_meta_group
             end
           end
 
-          def element_citation(content: nil)
-            NISO::ElementCitation.new do |c|
-              yield c if block_given?
-              c.content = Array(content) if content
-            end
+          # <std-ident> per NISO STS (Z39.102-2022): the OIML identifier
+          # decomposed into originator + doc-type + doc-number
+          # (+ part-number). "OIML B 6-2:2024" → OIML / b / 6 / 2. The
+          # publication year is NOT repeated here — pub-date carries it.
+          # Identifiers that don't match the OIML pattern fall back to a
+          # plain originator string rather than being dropped.
+          OIML_ID_PATTERN = /\A(OIML)\s+([A-Z]+)\s+(\d+)(?:-(\d+))?(?::\d{4})?\z/.freeze
+
+          def std_ident_for(doc_identifier)
+            match = OIML_ID_PATTERN.match(doc_identifier.to_s.strip)
+            return plain_std_ident(doc_identifier) unless match
+
+            attrs = {
+              originator: match[1],
+              doc_type: match[2].downcase,
+              doc_number: match[3],
+            }
+            attrs[:part_number] = match[4] if match[4]
+            ::Sts::NisoSts::StandardIdentification.new(attrs)
           end
 
-          def reference_standard
-            NISO::ReferenceStandard.new { |s| yield s if block_given? }
+          def plain_std_ident(doc_identifier)
+            ::Sts::NisoSts::StandardIdentification.new(originator: doc_identifier)
           end
 
-          def standard_ref(type: nil, value: nil)
-            NISO::StandardRef.new do |r|
-              r.type = type if type
-              r.value = value if value
-              yield r if block_given?
-            end
-          end
-
-          # ---- Inline phrase ---------------------------------------------------
-
-          def bold
-            TBX::Bold.new { |b| yield b if block_given? }
-          end
-
-          def italic
-            TBX::Italic.new { |i| yield i if block_given? }
-          end
-
-          def sub
-            NISO::Sub.new { |s| yield s if block_given? }
-          end
-
-          def sup
-            NISO::Sup.new { |s| yield s if block_given? }
-          end
-
-          def monospace
-            NISO::Monospace.new { |m| yield m if block_given? }
-          end
-
-          def sc
-            NISO::Sc.new { |s| yield s if block_given? }
-          end
-
-          def ext_link(href: nil)
-            NISO::ExtLink.new do |l|
-              l.href = href if href
-              yield l if block_given?
-            end
-          end
-
-          def xref(rid: nil, ref_type: nil)
-            TBX::Xref.new do |x|
-              x.rid = rid if rid
-              x.ref_type = ref_type if ref_type
-              yield x if block_given?
-            end
-          end
-
-          def fn(id: nil)
-            TBX::Fn.new do |f|
-              f.id = id if id
-              yield f if block_given?
-            end
-          end
-
-          def break
-            NISO::Break.new
-          end
-
-          def styled_content
-            NISO::StyledContent.new { |s| yield s if block_given? }
-          end
-
-          # ---- ISO metadata (iso-meta, NISO STS v1.2 shape) -------------------
-
-          # NisoSts::MetadataIso is the <iso-meta> container per Coding
-          # Guidelines ed. 2.1. Most children are STRINGS — only
-          # title_wrap, doc_ident, std_ident, std_ref, permissions, ics
-          # remain typed. The block yields the MetadataIso instance so
-          # callers can attach the typed children + set string fields
-          # directly.
-          def metadata_iso
-            NISO::MetadataIso.new { |m| yield m if block_given? }
-          end
-
-          def title_wrap(lang: nil)
-            NISO::TitleWrap.new do |tw|
-              tw.lang = lang if lang
-              yield tw if block_given?
-            end
-          end
-
-          def title_full(content: nil)
-            NISO::TitleFull.new do |t|
-              yield t if block_given?
-              t.content = Array(content) if content
-            end
-          end
-
-          def title_compl(content: nil)
-            NISO::TitleCompl.new do |t|
-              yield t if block_given?
-              t.content = Array(content) if content
-            end
-          end
-
-          def document_identification(sdo: nil, proj_id: nil, language: nil,
-                                      release_version: nil, urn: nil)
-            NISO::DocumentIdentification.new(
-              sdo: sdo,
-              proj_id: proj_id,
-              language: language,
-              release_version: release_version,
-              urn: urn,
-            )
-          end
-
-          def standard_identification(originator: nil, doc_type: nil,
-                                      doc_number: nil, edition: nil,
-                                      version: nil, part_number: nil)
-            NISO::StandardIdentification.new(
-              originator: originator,
-              doc_type: doc_type,
-              doc_number: doc_number,
-              edition: edition,
-              version: version,
-              part_number: part_number,
-            )
-          end
-
-          def permissions(copyright_statement: nil, copyright_year: nil,
-                          copyright_holder: nil)
+          def permissions(holder: nil, year: nil)
             attrs = {}
-            attrs[:copyright_statement] = copyright_statement if copyright_statement
-            attrs[:copyright_year] = copyright_year if copyright_year
-            attrs[:copyright_holder] = Array(copyright_holder) if copyright_holder
-            NISO::Permissions.new(attrs)
+            attrs[:copyright_statement] = "© #{year} #{holder}" if year && holder
+            attrs[:copyright_year] = year.to_s if year
+            attrs[:copyright_holder] = holder.to_s if holder
+            ::Sts::NisoSts::Permissions.new(attrs)
           end
 
-          def ics(code: nil)
-            NISO::Ics.new do |i|
-              i.content = code if code
-              yield i if block_given?
-            end
+          def custom_meta_group(name: nil, value: nil)
+            ::Sts::NisoSts::CustomMetaGroup.new(
+              custom_meta: [::Sts::NisoSts::CustomMeta.new(
+                meta_name: name, meta_value: value
+              )]
+            )
           end
 
-          def fn_group(id: nil)
-            NISO::FnGroup.new do |g|
-              g.id = id if id
-              yield g if block_given?
-            end
+          def bold(content: [])
+            ::Sts::TbxIsoTml::Bold.new(value: Array(content))
           end
 
-          def table_wrap_foot
-            TBX::TableWrapFoot.new { |f| yield f if block_given? }
+          def italic(content: [])
+            ::Sts::TbxIsoTml::Italic.new(value: Array(content))
           end
 
-          # ---- Common leaves ---------------------------------------------------
-
-          def title(content: nil)
-            NISO::Title.new do |t|
-              yield t if block_given?
-              t.content = Array(content) if content
-            end
+          def monospace(content: [])
+            ::Sts::NisoSts::Monospace.new(content: Array(content))
           end
 
-          def label(content: nil)
-            NISO::Label.new(content: (content ? Array(content) : nil))
+          def sub(content: [])
+            ::Sts::NisoSts::Sub.new(content: Array(content))
           end
 
-          # ---- Private helpers -------------------------------------------------
-
-          # Wraps a String in a Title; passes through an existing Title model
-          # unchanged; ignores nil.
-          def title_obj(value)
-            return nil unless value
-            return value if value.is_a?(NISO::Title)
-
-            NISO::Title.new(content: [value])
+          def sup(content: [])
+            ::Sts::NisoSts::Sup.new(content: Array(content))
           end
 
-          def label_obj(value)
-            return nil unless value
-            return value if value.is_a?(NISO::Label)
+          def ext_link(xlink_href: nil, content: [])
+            ::Sts::NisoSts::ExtLink.new(
+              ext_link_type: "uri",
+              xlink_href: xlink_href,
+              content: Array(content)
+            )
+          end
 
-            NISO::Label.new(content: [value])
+          def xref(rid: nil, ref_type: "other", value: nil)
+            ::Sts::TbxIsoTml::Xref.new(rid: rid, ref_type: ref_type, value: value)
+          end
+
+          def fn(id: nil, value: nil)
+            ::Sts::TbxIsoTml::Fn.new(id: id, value: value)
+          end
+
+          def title(content: [])
+            ::Sts::NisoSts::Title.new(content: Array(content))
+          end
+
+          def label(content: [])
+            ::Sts::NisoSts::Label.new(content: Array(content))
           end
         end
       end

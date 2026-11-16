@@ -1,34 +1,43 @@
 # frozen_string_literal: true
-
 module Metanorma
   module Iso
     module Sts
-      class Transformer::FormulaTransformer < Transformer::Base
-        def transform(formula)
-          ::Sts::NisoSts::DisplayFormula.new do |f|
-            f.id = id_for(formula)
+      module Transformer
+        class FormulaTransformer < Base
+          def transform(source_formula)
+            id = source_formula.id if source_formula.class.method_defined?(:id) && source_formula.id
+            label = extract_label(source_formula)
+            math = extract_math(source_formula)
+            ModelBuilder.disp_formula(id: id, label: label, math: math)
+          end
 
-            formula_label = label_for(formula)
-            f.label = formula_label if formula_label
+          private
 
-            if formula.stem
-              stem = formula.stem
-              if stem.class.method_defined?(:math) && stem.math
-                f.math = stem.math
-              elsif stem.content
-                tex = ::Sts::NisoSts::TexMath.new
-                tex.content = [stem.content]
-                f.tex_math = tex
-              end
+          def extract_label(source_formula)
+            return nil unless source_formula.class.method_defined?(:fmt_name)
+            fmt_name = Array(source_formula.fmt_name).first
+            return nil unless fmt_name
+            RenderedTextExtractor.text_of(fmt_name)
+          end
+
+          # MathML passthrough: extract <math> from the formula's stem and
+          # parse into Mml::V3::Math. Delegates to MathmlBuilder so the
+          # math extraction logic lives in one place. Zero Nokogiri.
+          def extract_math(source_formula)
+            stem = first_stem(source_formula)
+            return nil unless stem
+
+            ::Metanorma::Iso::Sts::MathmlBuilder.math_from_stem(stem)
+          end
+
+          def first_stem(source_formula)
+            if source_formula.class.method_defined?(:stem)
+              Array(source_formula.stem).first
+            elsif source_formula.class.method_defined?(:formula)
+              formula_el = Array(source_formula.formula).first
+              Array(formula_el.stem).first if formula_el
             end
           end
-        end
-
-        private
-
-        def label_for(formula)
-          autonum = formula.autonum if formula.class.method_defined?(:autonum)
-          autonum && !autonum.to_s.empty? ? ::Sts::NisoSts::Label.new(content: [autonum.to_s]) : nil
         end
       end
     end
