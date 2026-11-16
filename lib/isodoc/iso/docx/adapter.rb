@@ -522,6 +522,7 @@ module IsoDoc
           children = []
           each_ordered_element(sections) do |type, obj|
             next if type == :text
+
             children << obj
           end
           children.sort_by { |child| display_order_of(child) }.each do |child|

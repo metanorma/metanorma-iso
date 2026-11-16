@@ -2,6 +2,7 @@ require "spec_helper"
 require "metanorma-core"
 require "fileutils"
 require "open3"
+require "tmpdir"
 require "tempfile"
 
 RSpec.describe "Metanorma::Iso::Processor" do
@@ -179,6 +180,62 @@ RSpec.describe "Metanorma::Iso::Processor" do
 
   it "registers version against metanorma" do
     expect(processor.version.to_s).to match(%r{^Metanorma::Iso })
+  end
+
+  describe "DOCX rollout ladder routing (metanorma-iso#1728)" do
+    let(:probe_input) do
+      <<~XML
+        <metanorma xmlns="http://riboseinc.com/isoxml" flavor="iso">
+          <bibdata type="standard">
+            <title language="en" format="text/plain" type="main">Probe</title>
+            <docidentifier type="ISO">ISO 17664-1</docidentifier>
+            <docnumber>17664</docnumber>
+            <language>en</language>
+            <script>Latn</script>
+            <status><stage>20</stage></status>
+            <copyright><from>2026</from>
+              <owner><organization><name>ISO</name></organization></owner>
+            </copyright>
+          </bibdata>
+          <sections>
+            <clause id="c1" inline-header="false" obligation="normative">
+              <title id="_">Scope</title>
+              <p id="_">Test body.</p>
+            </clause>
+          </sections>
+        </metanorma>
+      XML
+    end
+
+    around do |example|
+      Dir.mktmpdir do |dir|
+        @dir = dir
+        File.write(File.join(dir, "in.xml"), probe_input)
+        example.run
+      end
+    end
+
+    it "keeps :doc on the proven isodoc MHTML chain, without the experimental marker" do
+      out = File.join(@dir, "out.doc")
+      expect do
+        processor.output(nil, File.join(@dir, "in.xml"), out, :doc)
+      end.not_to output(/EXPERIMENTAL/).to_stderr
+
+      content = File.binread(out)
+      expect(content).to include("MIME-Version"),
+        ":doc must produce the ISO-proven MHTML output, got: #{content.bytes[0, 16].inspect}"
+    end
+
+    it "routes :docx through the uniword adapter and announces the experimental stage" do
+      out = File.join(@dir, "out.docx")
+      expect do
+        processor.output(nil, File.join(@dir, "in.xml"), out, :docx)
+      end.to output(/EXPERIMENTAL/).to_stderr
+
+      content = File.binread(out)
+      expect(content).to start_with("PK"),
+        ":docx must produce an OPC package, got: #{content.bytes[0, 16].inspect}"
+    end
   end
 
   context "with a blank document" do
