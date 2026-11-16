@@ -55,6 +55,7 @@ module Metanorma
         # only one caller today (this class). Extract when a second
         # caller materialises; until then the lookup belongs here.
         TEXT_ATTR_FOR = {
+          ::Sts::NisoSts::Term => :text,
           ::Sts::NisoSts::Paragraph => :text,
           ::Sts::NisoSts::MixedCitation => :text,
           ::Sts::NisoSts::ElementCitation => :text,
