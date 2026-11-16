@@ -144,11 +144,17 @@ module IsoDoc
               &.gsub(/\A["']|["']\z/, "")
           end
 
+          # A valid CSS class identifier never starts with a digit; Word
+          # still emits such selectors in its stylesheets (e.g. "span.1"),
+          # and handing them to Node#matches? raises a CSS syntax error.
+          VALID_SELECTOR_RE = /\A(?:[A-Za-z_][\w-]*(?:\.[A-Za-z_][\w-]*)?
+                                  |\.[A-Za-z_][\w-]*)\z/x.freeze
+
           def html_style(node)
             # Word's named-style selectors are tags, classes or tag.class.
             # Ignore layout CSS and resolve these by specificity/source order.
             rules = @styles.select do |selector, _name, _level|
-              selector.match?(/\A(?:[\w-]+(?:\.[\w-]+)?|\.[\w-]+)\z/) &&
+              selector.match?(VALID_SELECTOR_RE) &&
                 node.matches?(selector)
             end.sort_by do |selector,|
               [selector.include?(".") ? 1 : 0, selector.start_with?(".") ? 0 : 1]

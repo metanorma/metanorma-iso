@@ -27,6 +27,10 @@ RSpec.describe "Adapter purity" do
     template_extractor.rb
     style_resolver.rb
     document_properties.rb
+    # The MHTML parity harness CONSUMES Word's style vocabulary as data
+    # (mso class aliases, builtin renames, Normal fallbacks) when reading
+    # submitted artifacts; it emits no template styleIds of its own.
+    mhtml_parity.rb
   ].freeze
 
   let(:library) { IsoDoc::Iso::Docx::StyleLibrary.load_default }
