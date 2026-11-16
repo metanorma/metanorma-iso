@@ -2,6 +2,7 @@
 .byebug_history
 .rspec_status
 coverage/
+spec/relatondb/
 spec/examples/.byebug_history
 spec/examples/.tmp.xml
 spec/examples/_images/
