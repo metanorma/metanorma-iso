@@ -118,9 +118,18 @@ module Metanorma
           if number
             sts_id = "tab_#{number}"
           else
-            letter = ("a".ord + @section_counters[:unnumbered_table]).chr
+            # NCName-safe suffix for any count: a..z, aa, ab, ... (a plain
+            # ("a".ord + n).chr emits lone bytes past 'z', which breaks
+            # UTF-8 well-formedness in documents with >26 unnumbered tables).
+            n = @section_counters[:unnumbered_table]
+            suffix = ""
+            loop do
+              suffix = ((n % 26) + "a".ord).chr + suffix
+              n = n / 26 - 1
+              break if n.negative?
+            end
             @section_counters[:unnumbered_table] += 1
-            sts_id = "tab_#{letter}"
+            sts_id = "tab_#{suffix}"
           end
 
           register(table.id, sts_id) if table.id

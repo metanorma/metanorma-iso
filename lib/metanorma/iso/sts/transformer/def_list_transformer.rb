@@ -28,7 +28,7 @@ module Metanorma
         def transform_def_item(dt, dd)
           build_ordered(::Sts::NisoSts::DefItem) do |item|
             item.term transform_term(dt) if dt
-            item.def transform_def(dd) if dd
+            item.definition transform_def(dd) if dd
           end
         end
 
@@ -39,16 +39,19 @@ module Metanorma
           end
         end
 
+        # NISO <def> carries a single <p>; all def-list entry content is
+        # merged into one Paragraph, matching the mnconvert emission shape.
         def transform_def(dd)
           build_ordered(::Sts::NisoSts::Def) do |d|
-            if dd.p && !dd.p.empty?
-              dd.p.each do |para|
-                d.p paragraph_transformer.transform(para)
-              end
+            target = ::Sts::NisoSts::Paragraph.new
+            has_content = false
+            Array(dd.p).each do |para|
+              inline_transformer.apply_inline_content(para, target)
+              has_content = true
             end
-
-            dd.ul&.each { |ul| d.p build_list_paragraph(ul) }
-            dd.ol&.each { |ol| d.p build_list_paragraph(ol) }
+            Array(dd.ul).each { |ul| target.list list_transformer.transform(ul); has_content = true }
+            Array(dd.ol).each { |ol| target.list list_transformer.transform(ol); has_content = true }
+            d.paragraph = target if has_content
           end
         end
       end
