@@ -36,7 +36,7 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::FootnoteCollector do
     collector.register("Footnote B")
 
     group = collector.fn_group
-    expect(group).to be_a(Sts::IsoSts::FnGroup)
+    expect(group).to be_a(Sts::NisoSts::FnGroup)
     xml = group.to_xml
     expect(xml).to include("fn_1")
     expect(xml).to include("fn_2")
@@ -59,8 +59,8 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::FootnoteCollector do
   end
 
   it "stores and reproduces rich paragraph content" do
-    fn_para = Sts::IsoSts::Paragraph.new
-    fn_para.content = ["Rich footnote text"]
+    fn_para = Sts::NisoSts::Paragraph.new
+    fn_para.text = ["Rich footnote text"]
     collector.register("rich text", paragraphs: [fn_para])
 
     group = collector.fn_group

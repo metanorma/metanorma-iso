@@ -5,6 +5,7 @@ require_relative "presentation_bibdata"
 require_relative "presentation_section"
 require_relative "presentation_terms"
 require_relative "presentation_origin"
+require_relative "../../metanorma/iso/citation_style"
 
 module IsoDoc
   module Iso

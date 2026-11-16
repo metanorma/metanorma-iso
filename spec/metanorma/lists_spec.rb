@@ -197,3 +197,31 @@ RSpec.describe Metanorma::Iso do
     OUTPUT
   end
 end
+
+RSpec.describe Metanorma::Iso do
+  # The depth-based numbering style must not swallow the list-suppression
+  # types (metanorma-pdfa#103).
+  it "preserves list suppression types on ordered lists" do
+    output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{ASCIIDOC_BLANK_HDR}
+      [options="no-bullet"]
+      . List C
+      . List D
+
+      [options="none"]
+      . List E
+      . List F
+    INPUT
+    expect(output).to include('<ol type="no-bullet"')
+    expect(output).to include('<ol type="none"')
+  end
+
+  it "does not set a type on ordinary ordered lists" do
+    output = Asciidoctor.convert(<<~"INPUT", *OPTIONS)
+      #{ASCIIDOC_BLANK_HDR}
+      . List A
+      . List B
+    INPUT
+    expect(output).not_to match(/<ol[^>]*type=/)
+  end
+end

@@ -1,0 +1,11 @@
+# ISO House Style core sub-profile (issue #1720): the style rules of
+# the house-style family -- English-language drafting policy over the
+# shared document model. A sub-selection of house-style.yml (conjunctive
+# on mn_category and source); dual-source rules that also cite the
+# Directives are included, since their source covers the House Style.
+schema: metanorma-validation-profile/1
+profile: house-style-core
+flavor: iso
+select:
+  - mn_category: style
+    source: house_style

@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe IsoDoc do
   it "changes i18n of reference_number based on document scheme" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
       <language>fr</language>
@@ -37,9 +37,9 @@ RSpec.describe IsoDoc do
       .new(presxml_options)
       .convert("test", input, true))
     expect(xml.at("//xmlns:localized-string[@key = 'reference_number']").to_xml)
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
     expect(xml.at("//xmlns:edition[@language = 'fr']").to_xml)
-      .to be_equivalent_to edn
+      .to be_xml_equivalent_to edn
 
     output = <<~OUTPUT
       <localized-string key="reference_number" language="fr">Réf. №</localized-string>
@@ -51,13 +51,13 @@ RSpec.describe IsoDoc do
       .new(presxml_options)
       .convert("test", input.sub("2024", "1951"), true))
     expect(xml.at("//xmlns:localized-string[@key = 'reference_number']").to_xml)
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
     expect(xml.at("//xmlns:edition[@language = 'fr']").to_xml)
-      .to be_equivalent_to edn
+      .to be_xml_equivalent_to edn
   end
 
   it "changes i18n of contributor role description" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
            <contributor>
@@ -162,11 +162,11 @@ RSpec.describe IsoDoc do
       .convert("test", input, true))
     expect("<x>#{xml.xpath('//xmlns:bibdata/xmlns:contributor/xmlns:role')
       .to_xml}</x>")
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "add edition replacement text" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
       <language>fr</language>
@@ -198,7 +198,7 @@ RSpec.describe IsoDoc do
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input, true))
-    expect(xml.at("//xmlns:edn-replacement").to_xml).to be_equivalent_to edn
+    expect(xml.at("//xmlns:edn-replacement").to_xml).to be_xml_equivalent_to edn
 
     edn = <<~OUTPUT
       <edn-replacement>Настоящее второе издание заменяет первое издание</edn-replacement>
@@ -208,7 +208,7 @@ RSpec.describe IsoDoc do
       .convert("test", input
         .sub("<language>fr</language>", "<language>ru</language>")
         .sub("<script>Latn</script>", "<script>Cyrl</script>"), true))
-    expect(xml.at("//xmlns:edn-replacement").to_xml).to be_equivalent_to edn
+    expect(xml.at("//xmlns:edn-replacement").to_xml).to be_xml_equivalent_to edn
 
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
@@ -228,11 +228,10 @@ RSpec.describe IsoDoc do
       .sub("<edition>2</edition>", "<edition>2.1</edition>"), true))
     expect(xml.at("//xmlns:edn-replacement"))
       .to be_nil
-
   end
 
   it "add printing number text" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
       <language>en</language>
@@ -260,14 +259,14 @@ RSpec.describe IsoDoc do
       .new(presxml_options)
       .convert("test", input, true))
     expect(xml.at("//xmlns:date-printing").to_xml)
-      .to be_equivalent_to "<date-printing>Date of the second printing</date-printing>"
+      .to be_xml_equivalent_to "<date-printing>Date of the second printing</date-printing>"
 
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
       .convert("test", input
         .sub("<language>en</language>", "<language>fr</language>"), true))
     expect(xml.at("//xmlns:date-printing").to_xml)
-      .to be_equivalent_to "<date-printing>Date de la deuxi&#xE8;me impression</date-printing>"
+      .to be_xml_equivalent_to "<date-printing>Date de la deuxi&#xE8;me impression</date-printing>"
 
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
       .new(presxml_options)
@@ -275,7 +274,7 @@ RSpec.describe IsoDoc do
         .sub("<language>en</language>", "<language>ru</language>")
         .sub("<script>Latn</script>", "<script>Cyrl</script>"), true))
     expect(xml.at("//xmlns:date-printing").to_xml)
-      .to be_equivalent_to "<date-printing>&#x414;&#x430;&#x442;&#x430; &#x432;&#x442;&#x43E;&#x440;&#x43E;&#x439; &#x43F;&#x435;&#x447;&#x430;&#x442;&#x438;</date-printing>"
+      .to be_xml_equivalent_to "<date-printing>&#x414;&#x430;&#x442;&#x430; &#x432;&#x442;&#x43E;&#x440;&#x43E;&#x439; &#x43F;&#x435;&#x447;&#x430;&#x442;&#x438;</date-printing>"
 
     xml = Nokogiri::XML(IsoDoc::Iso::PresentationXMLConvert
      .new(presxml_options)
@@ -286,7 +285,7 @@ RSpec.describe IsoDoc do
   end
 
   it "add draft stage name variants" do
-    input = <<~"INPUT"
+    input = <<~INPUT
       <iso-standard xmlns="http://riboseinc.com/isoxml">
       <bibdata>
       <language>en</language>

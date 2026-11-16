@@ -10,15 +10,26 @@ module IsoDoc
           include Base
 
           def render(element, para)
-            # metanorma-document 0.4.x Bookmark: id is the base IdElement
-            # attribute, anchor the bookmark's own name.
-            name = element.id || element.anchor
+            name = bookmark_name(element)
             return unless name
 
             id = context.next_bookmark_id.to_s
             start = Uniword::Wordprocessingml::BookmarkStart.new(id: id, name: name)
             para << start
             para << Uniword::Wordprocessingml::BookmarkEnd.new(id: id)
+          end
+
+          private
+
+          # Model bookmarks carry their reference in +anchor+; XML
+          # <bookmark> nodes may use the +anchor+ attribute, the +id+,
+          # or neither.
+          def bookmark_name(element)
+            if element.is_a?(Metanorma::Document::Components::IdElements::Bookmark)
+              element.anchor || element.id
+            else
+              element[:anchor] || element.id || element.name
+            end
           end
         end
       end

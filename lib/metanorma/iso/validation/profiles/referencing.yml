@@ -1,0 +1,11 @@
+# ISO House Style referencing sub-profile (issue #1720): the
+# cross-reference and citation rules of the house-style family. A
+# sub-selection of house-style.yml (mn_category references within the
+# House Style source); the Directives-sourced referencing rules live in
+# the directives family, not here.
+schema: metanorma-validation-profile/1
+profile: referencing
+flavor: iso
+select:
+  - mn_category: references
+    source: house_style

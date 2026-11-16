@@ -4,31 +4,27 @@ module Metanorma
   module Iso
     module Sts
       class Transformer::TermTransformer < Transformer::Base
+        # A terms section renders as a <sec sec-type="terms"> carrying its
+        # intro paragraphs/lists, with one nested <term-sec> per term holding
+        # the TBX termEntry — the shape mnconvert emits for ISO-STS.
+        # (sts-ruby's NisoSts::TermSection cannot hold section intro content:
+        # it supports only label/term-display/termEntry, so the wrapper
+        # Section carries the boilerplate.)
         def transform_section(terms)
-          build_ordered(::Sts::IsoSts::TermSec) do |ts|
-            ts.id = id_for(terms)
-
-            if terms.number && !terms.number.empty?
-              ts.label = ::Sts::IsoSts::Label.new(content: [terms.number])
-            end
-
-            if terms.title
-              ts.title transform_title(terms.title)
-            end
-
+          Transformer::ModelBuilder.section(
+            id: id_for(terms),
+            sec_type: "terms",
+            label: terms_label(terms),
+            title: terms.title ? transform_title(terms.title) : nil,
+          ) do |sec|
             terms.each_mixed_content do |node|
               next if node.is_a?(String)
               next if node == terms.title
 
-              case node
-              when Metanorma::Document::Components::Paragraphs::ParagraphBlock,
-                   Metanorma::IsoDocument::RawParagraph
-                ts.p paragraph_transformer.transform(node)
-              when Metanorma::Document::Components::Lists::UnorderedList,
-                   Metanorma::Document::Components::Lists::OrderedList
-                ts.list list_transformer.transform(node)
-              when Metanorma::IsoDocument::Terms::IsoTerm
-                ts.tbz_term_entry transform_entry(node)
+              if node.is_a?(Metanorma::Iso::Document::Terms::IsoTerm)
+                sec.term_sec build_term_section(node)
+              else
+                block_dispatcher.dispatch(node, sec)
               end
             end
           end
@@ -45,6 +41,19 @@ module Metanorma
         end
 
         private
+
+        def terms_label(terms)
+          terms.number if terms.number && !terms.number.empty?
+        end
+
+        # One nested <term-sec> per term, holding the TBX termEntry.
+        def build_term_section(term)
+          Transformer::ModelBuilder.term_section(
+            id: term.id ? "term_#{term.id.gsub(/^term_/, '')}" : nil,
+          ) do |ts|
+            ts.term_entry transform_entry(term)
+          end
+        end
 
         def build_lang_set(term, lang)
           ls = ::Sts::TbxIsoTml::LangSet.new
@@ -75,12 +84,12 @@ module Metanorma
           if defn.verbal_definition
             vd = defn.verbal_definition
             if vd.p && !vd.p.empty?
-              vd.p.each { |para| inline_transformer.apply_tbx_content(para, d) }
+              vd.p.each { |para| inline_transformer.apply_inline_content(para, d) }
             end
           end
 
           if defn.p && !defn.p.empty?
-            defn.p.each { |para| inline_transformer.apply_tbx_content(para, d) }
+            defn.p.each { |para| inline_transformer.apply_inline_content(para, d) }
           end
 
           if defn.ul && !defn.ul.empty?
@@ -95,11 +104,10 @@ module Metanorma
 
         def build_note(tn)
           note = ::Sts::TbxIsoTml::Note.new
-          note.instance_variable_set(:@__order_tracking__, true)
 
           if tn.p && !tn.p.empty?
             tn.p.each do |para|
-              inline_transformer.apply_tbx_content(para, note)
+              inline_transformer.apply_inline_content(para, note)
             end
           end
 
@@ -111,7 +119,7 @@ module Metanorma
 
           if te.p && !te.p.empty?
             te.p.each do |para|
-              inline_transformer.apply_tbx_content(para, ex, text_attr: :value)
+              inline_transformer.apply_inline_content(para, ex)
             end
           end
 

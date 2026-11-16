@@ -28,6 +28,26 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::FootnoteRenderer do
     )
   end
 
+  # Real mixed-content fn body: text segments interleaved with a stem.
+  def fn_with_stem(target:)
+    Metanorma::Document::Components::Inline::FnElement.from_xml(
+      %(<fn reference="1" target="#{target}"><p id="p1">The time ) +
+        '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
+        '<msub><mi>t</mi><mn>90</mn></msub></math><asciimath>t_90</asciimath></stem>' +
+        " was estimated to be 18,2 min.</p></fn>",
+    )
+  end
+
+  def footnote_bodies
+    doc.model.footnotes.footnote_entries
+       .reject { |e| e.type == "separator" || e.type == "continuationSeparator" }
+       .map do |entry|
+         Array(entry.paragraphs).map do |p|
+           p.runs.map { |r| Array(r.text).join }.join
+         end.join(" ")
+       end
+  end
+
   describe "#render" do
     # OOXML invariant: identical footnotes should share ONE footnote
     # definition. The renderer caches by source identity (target/id) and
@@ -60,6 +80,15 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::FootnoteRenderer do
       fn_refs = built_runs.select { |r| r.footnote_reference }
       expect(fn_refs).to be_empty,
         "an empty <fn> must not create a footnoteReference"
+    end
+
+    it "collects mixed-content fn bodies including stem segments" do
+      renderer.render(fn_with_stem(target: "t90"), para)
+
+      bodies = footnote_bodies.join(" ")
+      expect(bodies).to include("The time")
+      expect(bodies).to include("t_90")
+      expect(bodies).to include("18,2 min")
     end
 
     it "appends exactly one footnoteReference per non-empty <fn>" do

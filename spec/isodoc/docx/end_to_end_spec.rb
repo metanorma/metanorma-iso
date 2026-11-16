@@ -109,37 +109,40 @@ RSpec.describe "Era C DOCX end-to-end", :slow do
     end
   end
 
-  describe "Box wrapping" do
-    it "every Noteindent paragraph sits between Box-begin/Box-end" do
+  describe "note/example inline-label layout" do
+    it "wraps no Noteindent/Exampleindent paragraphs in Era C boxes" do
       doc = unpacked.document_xml
-      notes = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='Noteindent']]", w_ns)
-      skip "No Noteindent paragraphs in fixture" if notes.empty?
+      bodies = doc.xpath(
+        "//w:p[w:pPr/w:pStyle[@w:val='Noteindent']]" \
+        "|//w:p[w:pPr/w:pStyle[@w:val='Noteindentcontinued']]" \
+        "|//w:p[w:pPr/w:pStyle[@w:val='Exampleindent']]" \
+        "|//w:p[w:pPr/w:pStyle[@w:val='Exampleindentcontinued']]",
+        w_ns,
+      )
+      skip "No note/example body paragraphs in fixture" if bodies.empty?
 
-      notes.each do |note|
-        prior_styles = note.xpath("preceding-sibling::w:p/w:pPr/w:pStyle/@w:val", w_ns).map(&:to_s)
-        following_styles = note.xpath("following-sibling::w:p/w:pPr/w:pStyle/@w:val", w_ns).map(&:to_s)
+      bodies.each do |para|
+        prior_styles = para.xpath("preceding-sibling::w:p/w:pPr/w:pStyle/@w:val", w_ns).map(&:to_s)
+        following_styles = para.xpath("following-sibling::w:p/w:pPr/w:pStyle/@w:val", w_ns).map(&:to_s)
 
-        expect(prior_styles).to include("Box-begin"),
-          "Noteindent paragraph should follow a Box-begin"
-        expect(following_styles).to include("Box-end"),
-          "Noteindent paragraph should precede a Box-end"
+        expect(prior_styles).not_to include("Box-begin"),
+          "note/example body must not follow a Box-begin (inline-label contract)"
+        expect(following_styles).not_to include("Box-end"),
+          "note/example body must not precede a Box-end"
       end
     end
 
-    it "every Exampleindent paragraph sits between Box-begin/Box-end" do
+    it "carries the NOTE/EXAMPLE label inline in the first body paragraph" do
       doc = unpacked.document_xml
-      examples = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='Exampleindent']]", w_ns)
-      skip "No Exampleindent paragraphs in fixture" if examples.empty?
-
-      examples.each do |example|
-        prior_styles = example.xpath("preceding-sibling::w:p/w:pPr/w:pStyle/@w:val", w_ns).map(&:to_s)
-        following_styles = example.xpath("following-sibling::w:p/w:pPr/w:pStyle/@w:val", w_ns).map(&:to_s)
-
-        expect(prior_styles).to include("Box-begin"),
-          "Exampleindent paragraph should follow a Box-begin"
-        expect(following_styles).to include("Box-end"),
-          "Exampleindent paragraph should precede a Box-end"
+      label_paras = doc.xpath(
+        "//w:p[w:pPr/w:pStyle[@w:val='Noteindent'] or w:pPr/w:pStyle[@w:val='Example']]",
+        w_ns,
+      ).select do |para|
+        para.xpath(".//w:t", w_ns).map(&:text).join.start_with?("NOTE", "EXAMPLE")
       end
+      skip "No label-carrying note/example paragraphs in fixture" if label_paras.empty?
+
+      expect(label_paras).not_to be_empty
     end
   end
 

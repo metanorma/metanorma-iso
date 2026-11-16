@@ -1739,4 +1739,29 @@ RSpec.describe IsoDoc do
       .sub(%r{<metanorma-extension>.*</metanorma-extension>}m, "")))
       .to be_xml_equivalent_to presxml
   end
+
+  it "renders an example whose first block is a note (#3.5.4 corpus crash)" do
+    presxml = <<~OUTPUT
+      <iso-standard xmlns="http://riboseinc.com/isoxml" type="presentation">
+        <preface>
+          <foreword id="_" displayorder="1">
+            <title id="_">Foreword</title>
+            <example id="ex_note_first" autonum="">
+              <fmt-name id="_">
+                <span class="fmt-caption-label">
+                  <span class="fmt-element-name">EXAMPLE</span>
+                </span>
+              </fmt-name>
+              <note id="n1">
+                <p>Note text inside example</p>
+              </note>
+            </example>
+          </foreword>
+        </preface>
+      </iso-standard>
+    OUTPUT
+    output = IsoDoc::Iso::WordConvert.new({}).convert("test", presxml, true)
+    expect(output).to include("Note text inside example")
+  end
 end
+

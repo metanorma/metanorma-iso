@@ -1,0 +1,10 @@
+# ISO House Style lists sub-profile (issue #1720): the list-structure
+# rules of the house-style family. A sub-selection of house-style.yml,
+# narrowed by policy category "Lists".
+schema: metanorma-validation-profile/1
+profile: lists
+flavor: iso
+select:
+  - mn_category: style
+    source: house_style
+    category: Lists

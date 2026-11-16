@@ -2,11 +2,7 @@
 
 require "spec_helper"
 
-# The flavor relaton-render stack loads lazily at render time
-# (init.rb); the spec exercises it directly, so load it here.
-require "metanorma/iso/relaton_render/general"
-
-RSpec.describe Relaton::Render::Iso do
+RSpec.describe Metanorma::Iso::CitationStyle do
   it "renders book, five editors with generic class" do
     input = <<~INPUT
       <bibitem type="book">
@@ -63,7 +59,7 @@ RSpec.describe Relaton::Render::Iso do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders book, five editors with specific class, broken down place" do
@@ -126,7 +122,7 @@ RSpec.describe Relaton::Render::Iso do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders incollection, two authors" do
@@ -203,7 +199,7 @@ RSpec.describe Relaton::Render::Iso do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders journal" do
@@ -218,7 +214,7 @@ RSpec.describe Relaton::Render::Iso do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders article" do
@@ -289,7 +285,7 @@ RSpec.describe Relaton::Render::Iso do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders software" do
@@ -318,7 +314,7 @@ RSpec.describe Relaton::Render::Iso do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders home standard" do
@@ -388,7 +384,7 @@ RSpec.describe Relaton::Render::Iso do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders external standard, IETF" do
@@ -458,7 +454,7 @@ RSpec.describe Relaton::Render::Iso do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders external standard, W3C" do
@@ -518,7 +514,7 @@ RSpec.describe Relaton::Render::Iso do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders dataset" do
@@ -560,7 +556,7 @@ RSpec.describe Relaton::Render::Iso do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders website" do
@@ -595,7 +591,7 @@ RSpec.describe Relaton::Render::Iso do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders unpublished" do
@@ -627,7 +623,7 @@ RSpec.describe Relaton::Render::Iso do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   it "renders month-year dates" do
@@ -659,13 +655,13 @@ RSpec.describe Relaton::Render::Iso do
     OUTPUT
     p = renderer
     expect(p.render(input))
-      .to be_equivalent_to output
+      .to be_xml_equivalent_to output
   end
 
   private
 
   def renderer
-    Relaton::Render::Iso::General
+    Metanorma::Iso::CitationStyle
       .new("language" => "en", "script" => "Latn",
            "i18nhash" => IsoDoc::Iso::PresentationXMLConvert.new({})
       .i18n_init("en", "Latn", nil).get)

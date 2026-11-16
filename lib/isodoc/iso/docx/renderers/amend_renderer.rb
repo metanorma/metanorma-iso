@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require "metanorma/document"
-# Resolves to the vendored copy in lib/metanorma/iso_document.rb (this gem's
+# Resolves to the canonical copy in lib/metanorma/iso/document.rb (this gem's
 # lib precedes metanorma-document's lib in $LOAD_PATH).
-require "metanorma/iso_document"
+require "metanorma/iso/document"
 
 module IsoDoc
   module Iso

@@ -468,6 +468,7 @@ RSpec.describe IsoDoc do
                       <em>
                          <span class="stddocTitle">Cereals and cereal products</span>
                       </em>
+                      .
                    </formattedref>
                    <title format="text/plain">Cereals or cereal products</title>
                    <title type="main" format="text/plain">Cereals and cereal products</title>
@@ -490,7 +491,7 @@ RSpec.describe IsoDoc do
              <div>
                <h1>1&#xA0; Normative References</h1>
                <p>The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
-               <p id="ISO712" class="NormRef"><span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span>, <i><span class="stddocTitle">Cereals and cereal products</span></i></p>
+               <p id="ISO712" class="NormRef"><span class="stdpublisher">ISO</span> <span class="stddocNumber">712</span>, <i><span class="stddocTitle">Cereals and cereal products</span></i>.</p>
              </div>
              <div id="Terms">
                <h1>2</h1>

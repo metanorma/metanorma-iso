@@ -5,7 +5,7 @@ require "pubid"
 module Metanorma
   module Iso
     class Converter < Standoc::Converter
-      def metadata_id_primary_type(node)
+      def metadata_id_primary_type(_node)
         "ISO"
       end
 
@@ -16,10 +16,10 @@ module Metanorma
       end
 
       DOCTYPE2HASHID =
-        { directive: :dir, "technical-report": :tr, "guide": :guide,
+        { directive: :dir, "technical-report": :tr, guide: :guide,
           "technical-specification": :ts,
           "publicly-available-specification": :pas,
-          "committee-document": :tc, "recommendation": :r }.freeze
+          "committee-document": :tc, recommendation: :r }.freeze
 
       # @param type [nil, :tr, :ts, :amd, :cor, :guide, :dir, :tc, Type]
       # document's type, eg. :tr, :ts, :amd, :cor, Type.new(:tr)
@@ -33,7 +33,7 @@ module Metanorma
       end
 
       def metadata_id_primary(node, xml)
-        (!@amd && node.attr("docnumber") || node.attr("adopted-from")) ||
+        ((!@amd && node.attr("docnumber")) || node.attr("adopted-from")) ||
           (@amd && node.attr("updates")) or return
         params = iso_id_params(node)
         iso_id_out(xml, params)
@@ -287,8 +287,31 @@ module Metanorma
 
       def iso_pubid_create(params, lang_form)
         type_code = ISO_TYPE_CODES[params[:type]] || "is"
-        klass = Pubid::Iso.locate_type(type_code)
+        # Use the publisher-specific pubid registry (e.g. Pubid::Iec for
+        # IEC documents) so the rendered identifier matches the new pubid-2
+        # format. Falls back to Pubid::Iso for unknown publishers.
+        registry = pubid_select(params)
+        klass = registry.respond_to?(:locate_type) ?
+                  registry.locate_type(type_code) :
+                  Pubid::Iso.locate_type(type_code)
         klass.new(**iso_pubid_attributes(params, lang_form, type_code))
+      end
+
+      # Allow IEC and other flavors to override base_pubid, then walk the
+      # ancestor chain to find a registry module that exposes locate_type.
+      def iso_pubid_registry(params)
+        mod = pubid_select(params)
+        mod.respond_to?(:locate_type) ? mod :
+          iso_pubid_registry_walk(mod)
+      end
+
+      def iso_pubid_registry_walk(mod)
+        mod.constants.each do |c|
+          m = mod.const_get(c)
+          next unless m.is_a?(Module)
+          return m if m.respond_to?(:locate_type)
+        end
+        Pubid::Iso
       end
 
       def iso_pubid_attributes(params, lang_form, type_code)
@@ -305,7 +328,7 @@ module Metanorma
         attrs[:languages] = langs if langs.any?
         stage = pubid_typed_stage(params[:stage], type_code)
         attrs[:typed_stage] = stage if stage
-        attrs[:base_identifier] = params[:base] if params[:base]
+        attrs[:base] = params[:base] if params[:base]
         if params[:iteration]
           attrs[:stage_iteration] =
             Pubid::Components::Iteration.new(number: params[:iteration].to_s)
@@ -383,9 +406,8 @@ module Metanorma
       end
 
       def pubid_code(value)
-        # pubid 2.0.x models identifier number/part codes as plain
-        # strings; Iso::Components::Code was removed as a never-exercised
-        # composition.
+        # pubid 2 retired Components::Code: number/part are plain :string
+        # attributes that cast on assignment (pubid api/builder).
         value.to_s
       end
 

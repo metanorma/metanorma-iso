@@ -14,12 +14,14 @@ module IsoDoc
         # or numId.
         class OrderedListRenderer
           include Base
+          include ListAttachments
 
           def render(list, doc)
             num_id = @resolver.numbering_id(:decimal_list)
             Array(list.listitem).each do |item|
               render_item(item, doc, num_id)
             end
+            render_attached_notes(list, doc)
           end
 
           private

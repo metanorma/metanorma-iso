@@ -1,10 +1,8 @@
 require "htmlentities"
-require "uri" if /^2\./.match?(RUBY_VERSION)
 
 module Metanorma
   module Iso
     class Converter < Standoc::Converter
-
       def scope_parse(attrs, xml, node)
         attrs = attrs.merge(type: "scope") unless @amd
         clause_parse(attrs, xml, node)

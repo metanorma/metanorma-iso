@@ -2,14 +2,14 @@
 
 require "uniword"
 require "metanorma/document"
-# Resolves to the vendored copy in lib/metanorma/iso_document.rb (this gem's
+# Resolves to the canonical copy in lib/metanorma/iso/document.rb (this gem's
 # lib precedes metanorma-document's lib in $LOAD_PATH).
-require "metanorma/iso_document"
+require "metanorma/iso/document"
 
 module IsoDoc
   module Iso
     module Docx
-      # Converts a Metanorma::IsoDocument::Root model to DOCX/MHTML via Uniword.
+      # Converts a Metanorma::Iso::Document::Root model to DOCX/MHTML via Uniword.
       #
       # Architecture:
       #   metanorma-document model → Adapter → Uniword builders → DOCX/MHTML
@@ -55,21 +55,21 @@ module IsoDoc
         ].freeze
 
         SECTION_RENDERERS = [
-          [Metanorma::IsoDocument::Sections::IsoAnnexSection,
+          [Metanorma::Iso::Document::Sections::IsoAnnexSection,
            Renderers::AnnexRenderer],
-          [Metanorma::IsoDocument::Sections::IsoTermsSection,
+          [Metanorma::Iso::Document::Sections::IsoTermsSection,
            Renderers::TermsSectionRenderer],
-          [Metanorma::IsoDocument::Sections::IsoClauseSection,
+          [Metanorma::Iso::Document::Sections::IsoClauseSection,
            Renderers::ClauseRenderer],
-          [Metanorma::StandardDocument::Sections::StandardReferencesSection,
+          [Metanorma::Standoc::Document::Sections::StandardReferencesSection,
            Renderers::ReferencesRenderer],
           [Metanorma::Document::Components::Sections::ReferencesSection,
            Renderers::ReferencesRenderer],
-          [Metanorma::IsoDocument::Terms::IsoTerm,
+          [Metanorma::Iso::Document::Terms::IsoTerm,
            Renderers::TermRenderer],
           [Metanorma::Document::Components::BibData::BibliographicItem,
            Renderers::BibliographyRenderer],
-          [Metanorma::StandardDocument::Blocks::AmendBlock,
+          [Metanorma::Standoc::Document::Blocks::AmendBlock,
            Renderers::AmendRenderer],
         ].freeze
 
@@ -83,6 +83,9 @@ module IsoDoc
           [Metanorma::Document::Components::IdElements::Bookmark,
            Renderers::NullRenderer],
         ].freeze
+
+        # Output extensions routed through the MHTML save path.
+        MHTML_EXTENSIONS = [".doc", ".mht", ".mhtml"].freeze
 
         # @param template [Symbol] :dis or :simple (default :dis)
         # @param template_path [String, nil] explicit template DOCX path
@@ -266,10 +269,65 @@ module IsoDoc
         end
 
         def save_document(model, output_path)
-          Uniword::DocumentWriter.new(model).save(output_path)
+          if mhtml_output?(output_path)
+            save_mhtml(model, output_path)
+          else
+            Uniword::DocumentWriter.new(model).save(output_path)
+          end
         rescue StandardError => e
           warn "[metanorma-iso] DOCX save failed: #{e.message}"
           raise
+        end
+
+        # Uniword's DocumentWriter MHTML route converts a bare DocumentRoot
+        # without its relationships part, so every external hyperlink loses
+        # its URL resolution and is dropped whole from the MHTML output —
+        # the cover contact block's email/website lines came out empty.
+        # Route MHTML saves through OoxmlToMhtmlConverter's relationships
+        # parameter instead, preserving the hyperlink relationships that
+        # the DOCX path keeps.
+        def save_mhtml(model, output_path)
+          mhtml_doc = Uniword::Transformation::OoxmlToMhtmlConverter
+            .document_to_mht(model, model.core_properties,
+                             merged_document_relationships(model))
+          Uniword::Infrastructure::MimePackager
+            .from_document(mhtml_doc).package(output_path)
+        end
+
+        # The relationships part for MHTML rendering: the loaded template
+        # rels plus the rels the IdAllocator registered during rendering.
+        # Builder-added relationships (hyperlinks, images) are merged into
+        # the saved rels part only by the DOCX reconciler, so on the MHTML
+        # path the merge happens here (same target-dedup rule as
+        # Docx::Reconciler::PackageStructure#append_allocator_rels).
+        def merged_document_relationships(model)
+          allocated = Array(model.allocator&.all_rels(scope: :document))
+          return model.document_rels if allocated.empty?
+
+          base = model.document_rels
+          rels = Array(base&.relationships).map do |rel|
+            Uniword::Ooxml::Relationships::PackageRelationship.new(
+              id: rel.id,
+              type: rel.type,
+              target: rel.target,
+              target_mode: rel.target_mode,
+            )
+          end
+          targets = rels.filter_map(&:target)
+          allocated.reject { |e| targets.include?(e[:target]) }
+            .each do |entry|
+              rels << Uniword::Ooxml::Relationships::PackageRelationship.new(
+                id: entry[:id],
+                type: entry[:type],
+                target: entry[:target],
+                target_mode: entry[:target_mode],
+              )
+            end
+          Uniword::Ooxml::Relationships::PackageRelationships.new(relationships: rels)
+        end
+
+        def mhtml_output?(path)
+          MHTML_EXTENSIONS.include?(File.extname(path).downcase)
         end
 
         def parse_xml(source)
@@ -284,7 +342,7 @@ module IsoDoc
                 else
                   source.to_s
                 end
-          Metanorma::IsoDocument::Root.from_xml(xml)
+          Metanorma::Iso::Document::Root.from_xml(xml)
         end
 
         def create_document

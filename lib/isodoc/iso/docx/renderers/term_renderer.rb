@@ -15,7 +15,6 @@ module IsoDoc
         class TermRenderer
           include Base
           include ModelUtils
-          include BoxWrapper
 
           DEPRECATED_PREFIX = "DEPRECATED: "
           private_constant :DEPRECATED_PREFIX
@@ -211,13 +210,8 @@ prefix: nil)
           def render_term_examples(term, doc)
             Array(attribute_value(term, :termexample)).each do |te|
               @context.with_example do
-                # Era C: term examples are Box-wrapped like block
-                # examples (the end-to-end style contract requires every
-                # Exampleindent paragraph between Box-begin/Box-end).
-                with_box(doc) do
-                  render_example_name(te, doc)
-                  @walker&.walk(te, doc)
-                end
+                render_example_name(te, doc)
+                @walker&.walk(te, doc)
               end
             end
           end

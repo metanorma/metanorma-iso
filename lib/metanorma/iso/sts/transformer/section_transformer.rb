@@ -11,63 +11,45 @@ module Metanorma
         }.freeze
 
         def transform(clause)
-          build_ordered(::Sts::IsoSts::Sec) do |sec|
-            sec.id = id_for(clause)
-            sec.sec_type = sec_type_for(clause)
-
-            label_text = label_for(clause)
-            sec.label = ::Sts::IsoSts::Label.new(content: [label_text]) if label_text
-
-            if title_for(clause)
-              sec.title transform_title(title_for(clause))
-            end
-
-            dispatch_content(clause, sec)
-          end
+          Transformer::ModelBuilder.section(
+            id: id_for(clause),
+            sec_type: sec_type_for(clause),
+            label: label_for(clause),
+            title: title_for(clause) ? transform_title(title_for(clause)) : nil,
+          ) { |sec| dispatch_content(clause, sec) }
         end
 
         def transform_foreword(foreword)
-          build_ordered(::Sts::IsoSts::Sec) do |sec|
-            sec.id = "sec_foreword"
-            sec.sec_type = "foreword"
-            sec.title transform_title(foreword.title) if foreword.title
-
-            dispatch_content(foreword, sec, skip_title: true)
-          end
+          Transformer::ModelBuilder.section(
+            id: "sec_foreword",
+            sec_type: "foreword",
+            title: foreword.title ? transform_title(foreword.title) : nil,
+          ) { |sec| dispatch_content(foreword, sec, skip_title: true) }
         end
 
         def transform_abstract(abstract)
-          build_ordered(::Sts::IsoSts::Sec) do |sec|
-            sec.id = "sec_abstract"
-            sec.sec_type = "abstract"
-            sec.title transform_title(abstract.title) if abstract.title
-
-            dispatch_content(abstract, sec)
-          end
+          Transformer::ModelBuilder.section(
+            id: "sec_abstract",
+            sec_type: "abstract",
+            title: abstract.title ? transform_title(abstract.title) : nil,
+          ) { |sec| dispatch_content(abstract, sec) }
         end
 
         def transform_introduction(intro)
-          build_ordered(::Sts::IsoSts::Sec) do |sec|
-            sec.id = "sec_intro"
-            sec.sec_type = "intro"
-            sec.title transform_title(intro.title) if intro.title
-
-            dispatch_content(intro, sec, skip_title: true)
-          end
+          Transformer::ModelBuilder.section(
+            id: "sec_intro",
+            sec_type: "intro",
+            title: intro.title ? transform_title(intro.title) : nil,
+          ) { |sec| dispatch_content(intro, sec, skip_title: true) }
         end
 
         def transform_annex(annex)
-          build_ordered(::Sts::IsoSts::Sec) do |sec|
-            sec.id = id_for(annex)
-
-            if annex.number && !annex.number.empty?
-              sec.label = ::Sts::IsoSts::Label.new(content: ["Annex #{annex.number}"])
-            end
-
-            sec.title transform_title(annex.title) if annex.title
-
-            dispatch_content(annex, sec, skip_title: true)
-          end
+          label = (annex.number && !annex.number.empty?) ? "Annex #{annex.number}" : nil
+          Transformer::ModelBuilder.section(
+            id: id_for(annex),
+            label: label,
+            title: annex.title ? transform_title(annex.title) : nil,
+          ) { |sec| dispatch_content(annex, sec, skip_title: true) }
         end
 
         private

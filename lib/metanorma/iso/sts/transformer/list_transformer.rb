@@ -13,7 +13,7 @@ module Metanorma
         }.freeze
 
         def transform(source)
-          build_ordered(::Sts::IsoSts::List) do |list|
+          build_ordered(::Sts::NisoSts::List) do |list|
             list.id = source.id if source.id && !source.id.start_with?("_")
             list.list_type = list_type_for(source)
 
@@ -35,17 +35,19 @@ module Metanorma
         end
 
         def transform_list_item(li)
-          build_ordered(::Sts::IsoSts::ListItem) do |item|
+          build_ordered(::Sts::NisoSts::ListItem) do |item|
             item.id = li.id if li.id && !li.id.start_with?("_")
 
-            if li.content_text && !li.content_text.empty?
-              item.p paragraph_transformer.transform(
-                build_text_paragraph(li.content_text),
-              )
-            elsif li.paragraphs && !li.paragraphs.empty?
-              li.paragraphs.each do |para|
+            # content_text holds bare text nodes between the item's children;
+            # pretty-printed XML leaves whitespace-only residue there, which
+            # must not shadow the item's real paragraphs.
+            text = Array(li.content_text).join.strip
+            if text.empty?
+              Array(li.paragraphs).each do |para|
                 item.p paragraph_transformer.transform(para)
               end
+            else
+              item.p paragraph_transformer.transform(build_text_paragraph(text))
             end
 
             li.unordered_lists&.each { |ul| item.list transform(ul) }

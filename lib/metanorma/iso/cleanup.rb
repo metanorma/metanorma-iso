@@ -21,7 +21,7 @@ module Metanorma
 
       NORM_REF =
         "//bibliography/references[@normative = 'true'][not(@hidden)] | " \
-        "//bibliography/clause[.//references[@normative = 'true']] | "\
+        "//bibliography/clause[.//references[@normative = 'true']] | " \
         "//sections//references[@normative = 'true'][not(@hidden)]"
           .freeze
 

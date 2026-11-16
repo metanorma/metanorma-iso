@@ -10,15 +10,14 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::BlockDispatcher do
     source = Metanorma::Document::Components::Paragraphs::ParagraphBlock.new
     source.text = ["Hello"]
 
-    target = Sts::IsoSts::Sec.new
-    target.instance_variable_set(:@__order_tracking__, true)
+    target = Sts::NisoSts::Section.new
 
     result = dispatcher.dispatch(source, target)
     expect(result).to be true
   end
 
   it "returns false for unregistered node types" do
-    target = Sts::IsoSts::Sec.new
+    target = Sts::NisoSts::Section.new
     result = dispatcher.dispatch("a string", target)
     expect(result).to be false
   end

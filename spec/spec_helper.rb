@@ -7,7 +7,7 @@ require "bundler/setup"
 require "asciidoctor"
 require "metanorma-iso"
 require "rspec/matchers"
-require "equivalent-xml"
+require "canon/rspec_matchers"
 require "metanorma-core"
 require "metanorma/iso"
 # require "iev"
@@ -405,8 +405,6 @@ def mock_sts
     FileUtils.cp(url.delete('"'), output.delete('"'))
   end
 end
-
-private
 
 def get_xml(search, code, opts)
   c = code.gsub(%r{[/\s:-]}, "_").sub(%r{_+$}, "").downcase

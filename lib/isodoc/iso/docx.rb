@@ -1,49 +1,55 @@
 # frozen_string_literal: true
 
-# Entry point for the Uniword-based ISO DOCX/MHTML output tree
-# (lib/isodoc/iso/docx/). Loads the tree in dependency order; the
-# per-content-type subdirectories (renderers/, inline_renderers/) are
-# autoloaded from their namespace files.
-
-require "uniword"
-require "metanorma/document"
-require "metanorma/iso_document"
-
 module IsoDoc
   module Iso
+    # Tight coupling to Docx module — autoload from parent namespace.
+    autoload :DocxStyleMapping, "isodoc/iso/docx_style_mapping"
+    autoload :DocxTemplates, "isodoc/iso/docx_style_mapping"
+    # ISO DOCX generation via Uniword.
+    #
+    # Architecture:
+    #   metanorma-document model → Adapter → Uniword builders → DOCX/MHTML
+    #
+    # The Adapter orchestrates a team of renderer objects, each responsible
+    # for one concern (cover page, boilerplate, sections, TOC, etc.).
+    # Style resolution is delegated to StyleResolver; inline element
+    # rendering to InlineRenderer.
+    #
+    # New document sections are added by extending the adapter's visit_root
+    # flow. New element types are handled by extending visit_block.
+    # New styles are added to style_mapping.yml (OCP).
     module Docx
+      autoload :Adapter, "isodoc/iso/docx/adapter"
+      autoload :BibDataText, "isodoc/iso/docx/bibdata_text"
+      autoload :BoilerplateRenderer, "isodoc/iso/docx/boilerplate_renderer"
+      autoload :BoxWrapper, "isodoc/iso/docx/box_wrapper"
+      autoload :ColophonRenderer, "isodoc/iso/docx/colophon_renderer"
+      autoload :CommentRenderer, "isodoc/iso/docx/comment_renderer"
+      autoload :Context, "isodoc/iso/docx/context"
+      autoload :Counter, "isodoc/iso/docx/context"
+      autoload :CorePropertiesBuilder, "isodoc/iso/docx/core_properties_builder"
+      autoload :CoverRenderer, "isodoc/iso/docx/cover_renderer"
+      autoload :DocumentProperties, "isodoc/iso/docx/document_properties"
+      autoload :FormulaRenderer, "isodoc/iso/docx/formula_renderer"
+      autoload :HeaderFooterRenderer, "isodoc/iso/docx/header_footer_renderer"
+      autoload :IndexsectRenderer, "isodoc/iso/docx/indexsect_renderer"
+      autoload :InlineRenderers, "isodoc/iso/docx/inline_renderers"
+      autoload :InlineRenderer, "isodoc/iso/docx/inline"
+      autoload :MiddleTitleRenderer, "isodoc/iso/docx/middle_title_renderer"
+      autoload :ModelUtils, "isodoc/iso/docx/model_utils"
+      autoload :PageScheme, "isodoc/iso/docx/page_scheme"
+      autoload :PrefaceRenderer, "isodoc/iso/docx/preface_renderer"
+      autoload :Renderers, "isodoc/iso/docx/renderers"
+      autoload :SectionManager, "isodoc/iso/docx/section_manager"
+      autoload :SourcecodeRenderer, "isodoc/iso/docx/sourcecode_renderer"
+      autoload :StyleResolver, "isodoc/iso/docx/style_resolver"
+      autoload :StyleLibrary, "isodoc/iso/docx/style_library"
+      autoload :StyleMappingValidator, "isodoc/iso/docx/style_mapping_validator"
+      autoload :TemplateExtractor, "isodoc/iso/docx/template_extractor"
+      autoload :TemplateProvenance, "isodoc/iso/docx/template_provenance"
+      autoload :UnknownStyleError, "isodoc/iso/docx/errors"
+      autoload :NumberingLibrary, "isodoc/iso/docx/errors"
+      autoload :TocBuilder, "isodoc/iso/docx/toc_builder"
     end
   end
 end
-
-require "isodoc/iso/docx/errors"
-require "isodoc/iso/docx_templates"
-require "isodoc/iso/docx/model_utils"
-require "isodoc/iso/docx/context"
-require "isodoc/iso/docx/document_properties"
-require "isodoc/iso/docx/bibdata_text"
-require "isodoc/iso/docx/page_scheme"
-require "isodoc/iso/docx/style_resolver"
-require "isodoc/iso/docx/style_library"
-require "isodoc/iso/docx/style_mapping_validator"
-require "isodoc/iso/docx/template_extractor"
-require "isodoc/iso/docx/template_provenance"
-require "isodoc/iso/docx/inline_renderers"
-require "isodoc/iso/docx/inline"
-require "isodoc/iso/docx/renderers"
-require "isodoc/iso/docx/box_wrapper"
-require "isodoc/iso/docx/section_manager"
-require "isodoc/iso/docx/toc_builder"
-require "isodoc/iso/docx/boilerplate_renderer"
-require "isodoc/iso/docx/comment_renderer"
-require "isodoc/iso/docx/core_properties_builder"
-require "isodoc/iso/docx/cover_renderer"
-require "isodoc/iso/docx/definition_list_renderer"
-require "isodoc/iso/docx/formula_renderer"
-require "isodoc/iso/docx/header_footer_renderer"
-require "isodoc/iso/docx/indexsect_renderer"
-require "isodoc/iso/docx/middle_title_renderer"
-require "isodoc/iso/docx/preface_renderer"
-require "isodoc/iso/docx/sourcecode_renderer"
-require "isodoc/iso/docx/colophon_renderer"
-require "isodoc/iso/docx/adapter"

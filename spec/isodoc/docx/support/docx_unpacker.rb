@@ -20,12 +20,9 @@ module IsoDoc
             zip.each do |entry|
               next unless entry.name.start_with?("word/")
 
-              # rubyzip 3.x: the first argument is the entry path relative
-              # to destination_directory (an absolute target is resolved
-              # against Dir.pwd); create_parent_directories does the
-              # recursive mkdir.
-              entry.extract(entry.name, destination_directory: dir,
-                                        create_parent_directories: true)
+              target = File.join(dir, entry.name)
+              FileUtils.mkdir_p(File.dirname(target))
+              entry.extract(target)
             end
           end
           new(dir)
