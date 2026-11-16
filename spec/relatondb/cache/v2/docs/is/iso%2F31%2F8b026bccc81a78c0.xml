@@ -1,0 +1,201 @@
+<bibdata type="standard" schema-version="v1.5.6">
+  <fetched>2026-11-16</fetched>
+  <title language="en" script="Latn" type="title-main">Quantities and units</title>
+  <title language="en" script="Latn" type="title-part">Part 0: General principles</title>
+  <title language="en" script="Latn" type="main">Quantities and units - Part 0: General principles</title>
+  <title language="fr" script="Latn" type="title-main">Grandeurs et unités</title>
+  <title language="fr" script="Latn" type="title-part">Partie 0: Principes généraux</title>
+  <title language="fr" script="Latn" type="main">Grandeurs et unités - Partie 0: Principes généraux</title>
+  <uri type="src">https://www.iso.org/standard/3621.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:3621:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/00/36/3621.detail.rss</uri>
+  <docidentifier type="ISO" primary="true">ISO 31-0</docidentifier>
+  <docidentifier type="iso-reference">ISO 31-0(E)</docidentifier>
+  <docidentifier type="URN">urn:iso:std:iso:31:-0:stage-95.99</docidentifier>
+  <docnumber>31</docnumber>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      <name>International Organization for Standardization</name>
+      <subdivision type="technical-committee" subtype="TC">
+        <name>Quantities and units</name>
+        <identifier>ISO/TC 12</identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>3</edition>
+  <language>en</language>
+  <language>fr</language>
+  <script>Latn</script>
+  <status>
+    <stage>95</stage>
+    <substage>99</substage>
+  </status>
+  <copyright>
+    <from>1992</from>
+    <owner>
+      <organization>
+        <name>ISO</name>
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletes">
+    <bibitem>
+      <formattedref>ISO 31-0:1981</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 31-0:1981</docidentifier>
+      <date type="published">
+        <on>1981-07-01</on>
+      </date>
+    </bibitem>
+  </relation>
+  <relation type="obsoletedBy">
+    <bibitem>
+      <formattedref>ISO 80000-1:2009</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 80000-1:2009</docidentifier>
+      <date type="published">
+        <on>2009-11-17</on>
+      </date>
+    </bibitem>
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO 31-0:1992/Amd 1:1998</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 31-0:1992/Amd 1:1998</docidentifier>
+      <date type="published">
+        <on>1998-12-20</on>
+      </date>
+    </bibitem>
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO 31-0:1992/Amd 2:2005</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 31-0:1992/Amd 2:2005</docidentifier>
+      <date type="published">
+        <on>2005-10-05</on>
+      </date>
+    </bibitem>
+  </relation>
+  <relation type="instanceOf">
+    <bibitem type="standard">
+      <title language="en" script="Latn" type="title-main">Quantities and units</title>
+      <title language="en" script="Latn" type="title-part">Part 0: General principles</title>
+      <title language="en" script="Latn" type="main">Quantities and units - Part 0: General principles</title>
+      <title language="fr" script="Latn" type="title-main">Grandeurs et unités</title>
+      <title language="fr" script="Latn" type="title-part">Partie 0: Principes généraux</title>
+      <title language="fr" script="Latn" type="main">Grandeurs et unités - Partie 0: Principes généraux</title>
+      <uri type="src">https://www.iso.org/standard/3621.html</uri>
+      <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:3621:en</uri>
+      <uri type="rss">https://www.iso.org/contents/data/standard/00/36/3621.detail.rss</uri>
+      <docidentifier type="ISO" primary="true">ISO 31-0:1992</docidentifier>
+      <docidentifier type="iso-undated">ISO 31-0</docidentifier>
+      <docidentifier type="iso-reference">ISO 31-0:1992(E)</docidentifier>
+      <docidentifier type="URN">urn:iso:std:iso:31:-0:stage-95.99</docidentifier>
+      <docnumber>31</docnumber>
+      <date type="published">
+        <on>1992-07-23</on>
+      </date>
+      <contributor>
+        <role type="publisher"/>
+        <organization>
+          <name>International Organization for Standardization</name>
+          <abbreviation>ISO</abbreviation>
+          <uri>www.iso.org</uri>
+        </organization>
+      </contributor>
+      <contributor>
+        <role type="author">
+          <description>committee</description>
+        </role>
+        <organization>
+          <name>International Organization for Standardization</name>
+          <subdivision type="technical-committee" subtype="TC">
+            <name>Quantities and units</name>
+            <identifier>ISO/TC 12</identifier>
+          </subdivision>
+          <abbreviation>ISO</abbreviation>
+        </organization>
+      </contributor>
+      <edition>3</edition>
+      <language>en</language>
+      <language>fr</language>
+      <script>Latn</script>
+      <abstract language="en" script="Latn">Gives general information about principles concerning physical quantities, equations, quantity and unit symbols, and coherent unit systems, especially the International System of Units, SI, including recommendations for printing symbols and numbers. Annex A includes a guide to terms used in names for physical quantities, Annex B a guide to the rounding of numbers, Annex C international organizations in the field of quantities and units.</abstract>
+      <status>
+        <stage>95</stage>
+        <substage>99</substage>
+      </status>
+      <copyright>
+        <from>1992</from>
+        <owner>
+          <organization>
+            <name>ISO</name>
+          </organization>
+        </owner>
+      </copyright>
+      <relation type="obsoletes">
+        <bibitem>
+          <formattedref>ISO 31-0:1981</formattedref>
+          <docidentifier type="ISO" primary="true">ISO 31-0:1981</docidentifier>
+          <date type="published">
+            <on>1981-07-01</on>
+          </date>
+        </bibitem>
+      </relation>
+      <relation type="obsoletedBy">
+        <bibitem>
+          <formattedref>ISO 80000-1:2009</formattedref>
+          <docidentifier type="ISO" primary="true">ISO 80000-1:2009</docidentifier>
+          <date type="published">
+            <on>2009-11-17</on>
+          </date>
+        </bibitem>
+      </relation>
+      <relation type="updatedBy">
+        <bibitem>
+          <formattedref>ISO 31-0:1992/Amd 1:1998</formattedref>
+          <docidentifier type="ISO" primary="true">ISO 31-0:1992/Amd 1:1998</docidentifier>
+          <date type="published">
+            <on>1998-12-20</on>
+          </date>
+        </bibitem>
+      </relation>
+      <relation type="updatedBy">
+        <bibitem>
+          <formattedref>ISO 31-0:1992/Amd 2:2005</formattedref>
+          <docidentifier type="ISO" primary="true">ISO 31-0:1992/Amd 2:2005</docidentifier>
+          <date type="published">
+            <on>2005-10-05</on>
+          </date>
+        </bibitem>
+      </relation>
+      <place>
+        <city>Geneva</city>
+      </place>
+    </bibitem>
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+  <ext schema-version="v1.1.2">
+    <doctype>international-standard</doctype>
+    <flavor>iso</flavor>
+    <ics>
+      <code>01.060</code>
+      <text>Quantities and units</text>
+    </ics>
+    <structuredidentifier type="ISO">
+      <project-number>3621</project-number>
+    </structuredidentifier>
+  </ext>
+</bibdata>
