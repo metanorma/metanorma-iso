@@ -1,4 +1,5 @@
 require "metanorma/processor"
+require_relative "../../isodoc/iso/word_convert"
 
 module Metanorma
   module Iso
