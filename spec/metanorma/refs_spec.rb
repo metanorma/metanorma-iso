@@ -2,8 +2,33 @@ require "spec_helper"
 require "relaton/iso"
 require "relaton/iec"
 require "relaton/ietf"
+require "tmpdir"
 
 RSpec.describe Metanorma::Iso do
+  let(:cache_dir) { Dir.mktmpdir("iso-refs-") }
+  let(:local_cached_header) do
+    LOCAL_CACHED_ISOBIB_BLANK_HDR.sub("spec/relatondb", cache_dir)
+  end
+  let(:cached_reference_input) do
+    <<~INPUT
+      #{local_cached_header.sub(':local-cache:', ':local-cache-only:')}
+
+      [bibliography]
+      == Bibliography
+
+      * [[[fdis,ISO/FDIS 17664-1:2020]]] Title
+    INPUT
+  end
+
+  after { FileUtils.remove_entry(cache_dir) }
+
+  it "keeps fetched reference caches out of the spec tree", :aggregate_failures do
+    mock_fdis_iso
+    Asciidoctor.convert(cached_reference_input, *OPTIONS)
+    expect(File).to exist(File.join(cache_dir, "cache"))
+    expect(File).not_to exist(File.expand_path("../relatondb/cache", __dir__))
+  end
+
   it "processes draft ISO reference" do
     mock_fdis_iso
     mock_fdis_iec
@@ -363,7 +388,7 @@ RSpec.describe Metanorma::Iso do
 
   it "renders withdrawn and cancelled ISO references" do
     input = <<~INPUT
-      #{LOCAL_CACHED_ISOBIB_BLANK_HDR}
+      #{local_cached_header}
 
       <<iso1,clause=1>>
       <<iso2,clause=1>>
@@ -698,7 +723,7 @@ RSpec.describe Metanorma::Iso do
   # it as withdrawn; a document published in 2015 must.
   it "suppresses a withdrawn-reference note when the withdrawal postdates publication" do
     input = <<~INPUT
-      #{LOCAL_CACHED_ISOBIB_BLANK_HDR.sub(':nodoc:', ":nodoc:\n:copyright-year: 2005")}
+      #{local_cached_header.sub(':nodoc:', ":nodoc:\n:copyright-year: 2005")}
 
       [bibliography]
       == Bibliography
@@ -713,7 +738,7 @@ RSpec.describe Metanorma::Iso do
 
   it "keeps a withdrawn-reference note when the withdrawal predates publication" do
     input = <<~INPUT
-      #{LOCAL_CACHED_ISOBIB_BLANK_HDR.sub(':nodoc:', ":nodoc:\n:copyright-year: 2015")}
+      #{local_cached_header.sub(':nodoc:', ":nodoc:\n:copyright-year: 2015")}
 
       [bibliography]
       == Bibliography
