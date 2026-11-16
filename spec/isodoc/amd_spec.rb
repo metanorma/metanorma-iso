@@ -1420,7 +1420,7 @@ RSpec.describe IsoDoc do
             </organization>
           </contributor>
           <edition>2</edition>
-          <version>0.3.4</version>
+          <version><draft>0.3.4</draft></version>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -1515,7 +1515,7 @@ RSpec.describe IsoDoc do
         unpublished: true,
         updateddate: "2000-01-01" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
-      .to be_xml_equivalent_to output
+      .to eq output
   end
 
   it "processes IsoXML metadata for extract" do
@@ -1573,7 +1573,7 @@ RSpec.describe IsoDoc do
             </organization>
           </contributor>
           <edition>2</edition>
-          <version>0.3.4</version>
+          <version><draft>0.3.4</draft></version>
           <language>en</language>
           <script>Latn</script>
           <status>
@@ -1668,7 +1668,7 @@ RSpec.describe IsoDoc do
         unpublished: true,
         updateddate: "2000-01-01" }
     expect(metadata(c.info(Nokogiri::XML(input), nil)))
-      .to be_xml_equivalent_to output
+      .to eq output
   end
 
   it "processes middle title" do

@@ -129,7 +129,7 @@ RSpec.describe Metanorma::Iso do
                    </contributor>
                    <edition>1</edition>
                    <note type="Unpublished-Status">
-                      <p id="_">Under preparation. Stage at the time of publication: IEC/PWI 100-44:#{Date.today.year} ED1.</p>
+                      <p id="_">Under preparation. Stage at the time of publication: IEC PWI 100-44:#{Date.today.year} ED1.</p>
                    </note>
                    <language>en</language>
                    <language>fr</language>
@@ -510,6 +510,7 @@ RSpec.describe Metanorma::Iso do
                    <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:3621:en</uri>
                    <uri type="rss">https://www.iso.org/contents/data/standard/00/36/3621.detail.rss</uri>
                    <docidentifier type="ISO" primary="true">ISO 31-0:1992</docidentifier>
+                   <docidentifier type="iso-undated">ISO 31-0</docidentifier>
                    <docidentifier type="iso-reference">ISO 31-0:1992(E)</docidentifier>
                    <docidentifier type="URN">urn:iso:std:iso:31:-0:stage-95.99</docidentifier>
                    <docnumber>31</docnumber>
@@ -614,6 +615,7 @@ RSpec.describe Metanorma::Iso do
                <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:76389:en</uri>
                <uri type="rss">https://www.iso.org/contents/data/standard/07/63/76389.detail.rss</uri>
                <docidentifier type="ISO" primary="true">ISO 683-3:2019</docidentifier>
+               <docidentifier type="iso-undated">ISO 683-3</docidentifier>
                <docidentifier type="iso-reference">ISO 683-3:2019(E)</docidentifier>
                <docidentifier type="URN">urn:iso:std:iso:683:-3:stage-95.99</docidentifier>
                <docnumber>683</docnumber>
@@ -728,7 +730,7 @@ RSpec.describe Metanorma::Iso do
 
   def mock_fdis_iso
     expect(Relaton::Iso::Bibliography).to receive(:get)
-      .with("ISO/FDIS 17664-1", "2020", anything) do
+      .with(Pubid::Iso::Identifier.parse("ISO/FDIS 17664-1"), "2020", anything) do
       Relaton::Bib::Bibitem.from_xml(<<~"OUTPUT")
         <bibitem id="_" anchor="x" type="standard">
           <fetched>#{Date.today}</fetched>
@@ -772,7 +774,7 @@ RSpec.describe Metanorma::Iso do
 
     def mock_fdis_iec
       expect(Relaton::Iec::Bibliography).to receive(:get)
-        .with("IEC PWI 100-44 ED1", nil, anything) do
+        .with(Pubid::Iec::Identifier.parse("IEC PWI 100-44 ED1"), nil, anything) do
         Relaton::Bib::Bibitem.from_xml(<<~"OUTPUT")
           <bibitem id="_" anchor="x" type="standard">
             <fetched>#{Date.today}</fetched>
