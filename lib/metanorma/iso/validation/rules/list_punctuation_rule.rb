@@ -100,7 +100,10 @@ module Metanorma
           def last_char_of(block)
             return nil if block.nil?
 
-            text = extract_text(block).strip
+            # The paragraph's final own text run: an eref-terminated
+            # paragraph yields its trailing colon, not the locality
+            # digits inside the eref (metanorma/metanorma-pdfa#118).
+            text = (last_own_text(block) || "").strip
             text.empty? ? nil : text[-1]
           end
 

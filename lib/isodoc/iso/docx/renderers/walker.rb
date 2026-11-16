@@ -70,6 +70,8 @@ module IsoDoc
 
           # Attribute-based fallback for nodes without element_order.
           # Visits any collection-valued attribute that holds block content.
+          # Plain strings are skipped: some models (e.g. TextElement) carry
+          # their text in an attribute of the same name.
           def fallback_walk(node, doc)
             return unless node.is_a?(Lutaml::Model::Serializable)
 
@@ -79,16 +81,24 @@ module IsoDoc
               val = node.public_send(attr)
               next if val.nil?
 
-              Array(val).each { |b| @dispatcher.call(b, doc) }
+              Array(val).each do |b|
+                next if b.is_a?(String)
+
+                @dispatcher.call(b, doc)
+              end
             end
           end
 
+          # `content` is the note body: NoteBlock maps <p> to :content
+          # (Metanorma::Document::Components::Blocks::NoteBlock), and a
+          # note nested inside a paragraph parses without element_order,
+          # so the note body is only reachable through this fallback.
           BLOCK_ATTRS = %i[
             paragraphs tables figures formulas examples notes
             admonitions sourcecode_blocks quote_blocks
             definition_lists unordered_lists ordered_lists
             clause terms definitions references term
-            p annex
+            p annex content
           ].freeze
           private_constant :BLOCK_ATTRS
         end

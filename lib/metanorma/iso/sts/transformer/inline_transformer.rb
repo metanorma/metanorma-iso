@@ -55,6 +55,7 @@ module Metanorma
         # only one caller today (this class). Extract when a second
         # caller materialises; until then the lookup belongs here.
         TEXT_ATTR_FOR = {
+          ::Sts::NisoSts::Term => :text,
           ::Sts::NisoSts::Paragraph => :text,
           ::Sts::NisoSts::MixedCitation => :text,
           ::Sts::NisoSts::ElementCitation => :text,
@@ -119,16 +120,21 @@ module Metanorma
         end
 
         def transform_monospace(node)
-          content = node.content || extract_text(node)
+          # TtElement carries its content as the `text` collection (like
+          # SupElement), not `content` — read it through the guarded
+          # extract_text, which handles both attribute names.
+          content = extract_text(node)
           ::Sts::NisoSts::Monospace.new do |m|
-            m.content content if content
+            m.content content unless content.empty?
           end
         end
 
         def transform_smallcap(node)
-          content = node.content || extract_text(node)
+          # SmallCapElement exposes its content as the singular `text`
+          # attribute, not `content`.
+          content = extract_text(node)
           ::Sts::NisoSts::Sc.new do |s|
-            s.content content if content
+            s.content content unless content.empty?
           end
         end
 

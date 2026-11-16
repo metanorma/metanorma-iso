@@ -41,4 +41,38 @@ RSpec.describe Metanorma::Iso::Validation::Rules::ListPunctuationRule do
     expect(issues.first.code).to eq("ISO_60")
     expect(issues.first.message).to include("preceded by colon or full stop")
   end
+
+  # metanorma/metanorma-pdfa#118: the reporter's paragraph ends with an
+  # eref whose localityStack carries <referenceFrom>69</referenceFrom>,
+  # followed by the colon. The rule must read the paragraph's trailing
+  # own text (the colon), never the locality digits inside the eref.
+  it "passes when the colon follows an eref with a localityStack" do
+    body = "<p>When a rendering intent is specified, its value shall be " \
+      "one of the four values defined in " \
+      '<eref type="inline" bibitemid="ISO32000-2" citeas="ISO 32000-2">' \
+      "<localityStack><locality type=\"table\">" \
+      "<referenceFrom>69</referenceFrom>" \
+      "</locality></localityStack></eref>:</p>" \
+      "<ul><li><p>RelativeColorimetric;</p></li><li><p>Saturation.</p></li></ul>"
+    expect(rule.check(context_with(body))).to eq([])
+  end
+
+  it "passes when the full stop follows a footnote" do
+    body = "<p>The list follows" \
+      '<fn reference="1"><p>See the annex.</p></fn>.</p>' \
+      "<ul><li>a</li><li>b</li></ul>"
+    expect(rule.check(context_with(body))).to eq([])
+  end
+
+  it "still flags a genuinely unterminated paragraph before a list" do
+    body = "<p>The values are defined in " \
+      '<eref type="inline" bibitemid="ISO32000-2" citeas="ISO 32000-2">' \
+      "<localityStack><locality type=\"table\">" \
+      "<referenceFrom>69</referenceFrom>" \
+      "</locality></localityStack></eref></p>" \
+      "<ul><li>a</li><li>b</li></ul>"
+    issues = rule.check(context_with(body))
+    expect(issues.size).to eq(1)
+    expect(issues.first.code).to eq("ISO_60")
+  end
 end

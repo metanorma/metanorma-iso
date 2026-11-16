@@ -39,7 +39,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "sts", ">= 0.5.6" # relaxed until glossarist supports 0.6
   spec.add_dependency "tokenizer", "~> 0.3.0"
   spec.add_dependency "unitsdb", "~> 2.2.14"
-  spec.add_dependency "uniword", "~> 1.0"
+  spec.add_dependency "uniword", "~> 1.7.6"
 
   # Bundled-gem successor required directly by lib code: docx/model_utils.rb
   # uses base64. Ruby 4 warns on undeclared bundled gems and pruned bundles

@@ -95,6 +95,34 @@ module Metanorma
             parts.join
           end
 
+          # The node's final OWN text run: the trailing text the reader
+          # actually reads at the end of the node. Own = the node's
+          # mixed-content text collection, delegating through the final
+          # paragraph container when the node holds no direct text.
+          # Markup internals are never traversed: footnote text, eref
+          # locality digits, and link targets are not the trailing
+          # character the reader sees.
+          #
+          #   metanorma/metanorma-pdfa#118: "ICC.1 specifications" must
+          #   never read as a period-terminated definition, and a
+          #   paragraph ending in an eref must yield its trailing colon,
+          #   not the locality reference digits.
+          #
+          # Returns nil when the node carries no own text.
+          def last_own_text(node)
+            return nil if node.nil?
+            return node if node.is_a?(String)
+            return nil unless node.is_a?(Lutaml::Model::Serializable)
+
+            runs = node.respond_to?(:text) ? Array(node.text) : []
+            runs = runs.compact.reject { |run| run.strip.empty? }
+            return runs.last unless runs.empty?
+
+            return nil unless node.respond_to?(:p)
+
+            last_own_text(Array(node.p).last)
+          end
+
           # Find the first docidentifier with the given +type+ on the
           # document's bibdata. Returns nil when absent.
           def find_docidentifier(bibdata, type)
@@ -290,17 +318,24 @@ module Metanorma
 
           # Walk every paragraph and yield (paragraph, parent_container).
           # Used by rules that need paragraph-level access (TODOs 24, 26, 29).
-          def each_paragraph_with_parent(root)
-            return enum_for(__method__, root) unless block_given?
+          #
+          # +skip_subtrees+ takes model nodes whose entire subtree is
+          # excluded from the walk — e.g. the flavor-injected document
+          # boilerplate, which is publisher boilerplate rather than
+          # author prose (metanorma/metanorma-pdfa#118).
+          def each_paragraph_with_parent(root, skip_subtrees = [])
+            return enum_for(__method__, root, skip_subtrees) unless block_given?
 
             visited = Set.new
-            walk_paragraph_with_parent(root, visited, nil) { |p, parent| yield(p, parent) }
+            skip = Array(skip_subtrees).filter_map(&:object_id).to_set
+            walk_paragraph_with_parent(root, visited, nil, skip) { |p, parent| yield(p, parent) }
           end
 
-          def walk_paragraph_with_parent(node, visited, parent, &block)
+          def walk_paragraph_with_parent(node, visited, parent, skip = nil, &block)
             return unless node
             return unless node.is_a?(Lutaml::Model::Serializable)
             return if visited.include?(node.object_id)
+            return if skip&.include?(node.object_id)
 
             visited << node.object_id
 
@@ -308,7 +343,7 @@ module Metanorma
 
             node.class.attributes.each_value do |attr_def|
               value = node.public_send(attr_def.name)
-              walk_paragraph_children_with_parent(value, visited, node, &block)
+              walk_paragraph_children_with_parent(value, visited, node, skip, &block)
             end
           end
 
@@ -322,15 +357,15 @@ module Metanorma
             Array(node.paragraphs).each { |p| yield(p, node) }
           end
 
-          def walk_paragraph_children_with_parent(value, visited, parent, &block)
+          def walk_paragraph_children_with_parent(value, visited, parent, skip = nil, &block)
             case value
             when Array
               value.each do |v|
                 next unless v.is_a?(Lutaml::Model::Serializable)
-                walk_paragraph_with_parent(v, visited, parent, &block)
+                walk_paragraph_with_parent(v, visited, parent, skip, &block)
               end
             when Lutaml::Model::Serializable
-              walk_paragraph_with_parent(value, visited, parent, &block)
+              walk_paragraph_with_parent(value, visited, parent, skip, &block)
             end
           end
 

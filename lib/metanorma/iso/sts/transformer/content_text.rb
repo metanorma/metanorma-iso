@@ -9,6 +9,11 @@ module Metanorma
           return node if node.is_a?(String)
 
           c = node.content if node.class.method_defined?(:content)
+          # Inline elements disagree on their text-attribute name: most
+          # metanorma-document inline models (TtElement, SmallCapElement,
+          # Bcp14Element, XrefElement, ParagraphBlock) map mixed content to
+          # `text`; only SubElement and LinkElement use `content`.
+          c = node.text if c.nil? && node.class.method_defined?(:text)
           return "" unless c
 
           c.is_a?(Array) ? c.join : c.to_s

@@ -37,15 +37,33 @@ module IsoDoc
 
           # Bibitem <note> children (e.g. availability remarks) render as
           # BiblioDescription paragraphs directly after the entry.
+          #
+          # Unpublished-Status notes are NOT body content: the presentation
+          # layer (IsoDoc::PresentationXMLConvert#date_note_process) already
+          # lifts them into an <fn> attached to the biblio-tag, which the
+          # inline renderer turns into a real footnote reference. Rendering
+          # them again here duplicated the footnote body as a plain body
+          # paragraph (metanorma-pdfa#120). The PDF path's XSL applies the
+          # same exclusion (note[not(@type='Unpublished-Status')]).
           def render_notes(bibitem, doc)
             return unless bibitem.class.attributes.key?(:note)
 
             Array(bibitem.note).each do |note|
+              next if footnote_carrier_note?(note)
+
               para = build_unstyled_paragraph
               para.style = @resolver.paragraph_style(:biblio_description)
               @inline_renderer.render(note, para)
               doc << para
             end
+          end
+
+          def footnote_carrier_note?(note)
+            type = attribute_value(note, :type)
+            return false unless type
+
+            # note/@type may carry a comma-separated type list.
+            type.to_s.split(",").map(&:strip).include?("Unpublished-Status")
           end
 
           def bib_item_style

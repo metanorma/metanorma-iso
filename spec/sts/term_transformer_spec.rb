@@ -82,4 +82,47 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::TermTransformer do
       expect(xml).to include("test term")
     end
   end
+
+  describe "term definition with monospace text" do
+    # metanorma-pdfa#121: a `+monospace+` phrase in a term definition
+    # serializes as <tt> in the semantic XML; the definition's inline
+    # content walks TtElement, whose content accessor is `text`
+    # (collection), like its SupElement sibling — not `content`.
+    let(:tt_xml) do
+      <<~XML
+        <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic">
+          <bibdata type="standard">
+            <title language="en" type="main">Test</title>
+            <docidentifier>ISO 9999</docidentifier>
+            <language>en</language>
+          </bibdata>
+          <sections>
+            <terms id="terms1" obligation="normative">
+              <title>Terms and definitions</title>
+              <term id="term1">
+                <preferred>
+                  <expression><name>calibration</name></expression>
+                </preferred>
+                <definition id="def1">
+                  <verbal-definition id="vd1">
+                    <p id="p1">definition with <tt>monospace</tt> inside</p>
+                  </verbal-definition>
+                </definition>
+              </term>
+            </terms>
+          </sections>
+        </metanorma>
+      XML
+    end
+
+    it "transforms the definition to STS without error" do
+      expect { Metanorma::Iso::Sts.convert(tt_xml) }.not_to raise_error
+    end
+
+    it "carries the monospace phrase in the STS definition" do
+      sts = Metanorma::Iso::Sts.convert(tt_xml)
+      expect(sts).to match(%r{<(?:tbx:)?definition[^>]*>.*monospace.*</(?:tbx:)?definition}m)
+      expect(sts).to match(%r{<(?:tbx:)?monospace>})
+    end
+  end
 end

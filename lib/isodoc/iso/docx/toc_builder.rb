@@ -185,7 +185,13 @@ module IsoDoc
         end
 
         def add_bibliography_entry(entries, bib)
-          entries << build_entry(bib, 1)
+          # The <bibliography> wrapper (BibliographySection) carries no
+          # title attributes — emitting it renders an entry paragraph
+          # with no heading text and a PAGEREF to a bookmark that no
+          # body heading carries (the empty bar before "Bibliography"
+          # in the ToC). The titled <references> child provides the
+          # entry; skip the wrapper when it cannot render a title.
+          entries << build_entry(bib, 1) if has_title?(bib)
 
           if bib.class.attributes.key?(:references)
             Array(bib.references).each do |refs|
@@ -212,8 +218,13 @@ module IsoDoc
         end
 
         def toc_clause?(clause)
-          type = clause.type_attr if clause.class.attributes.key?(:type_attr)
-          type == "toc"
+          # The model maps the XML @type attribute to +type+; there is no
+          # +type_attr+ attribute, so testing for it silently disabled
+          # the exclusion and leaked the auto-generated Contents clause
+          # into the ToC as a spurious self-entry.
+          return false unless clause.class.attributes.key?(:type)
+
+          clause.type == "toc"
         end
 
         # Render the TOC entry: heading text (with autonum + tab + title
@@ -236,10 +247,15 @@ module IsoDoc
           render_toc_heading_text(entry.source, para)
           append_tab(para)
 
+          # PAGEREF field with a placeholder result: the static result
+          # shows the leader's landing value until Word refreshes the
+          # fields, when the entry's bookmark yields the real page
+          # number. The classic isodoc DOCX ToC carries the same "1"
+          # placeholder in every field result.
           para << field_char_run("begin")
           para << instr_text_run(" PAGEREF #{entry.bookmark_name} \\h ")
           para << field_char_run("separate")
-          para << Uniword::Wordprocessingml::Run.new(text: "")
+          para << Uniword::Wordprocessingml::Run.new(text: "1")
           para << field_char_run("end")
 
           para << field_char_run("end") if close_field
@@ -255,13 +271,48 @@ module IsoDoc
         # <br/> breaks and the obligation line, which would render the
         # ToC entry as a multi-line paragraph — so it is only a fallback
         # for nodes that carry no ToC variant title.
+        #
+        # The composition is rendered through a HeadingTextSink: the
+        # label → title separator must not reach Word as a tab. The ToC
+        # styles carry a single tab stop (the right-hand page-number
+        # stop), and a tab with no stop ahead of the pen jumps to the
+        # next one in order — carrying the entire heading text to the
+        # right margin behind a dot leader (metanorma-pdfa#119). The
+        # separator is therefore flattened to a space, matching the
+        # inline flow the PDF ToC composes.
         def render_toc_heading_text(node, para)
+          sink = HeadingTextSink.new(para)
           if (variant = toc_variant_title(node))
-            @inline.render(variant, para)
+            @inline.render(variant, sink)
           elsif node.class.attributes.key?(:fmt_title) && node.fmt_title
-            @inline.render(node.fmt_title, para)
+            @inline.render(node.fmt_title, sink)
           elsif node.class.attributes.key?(:title) && node.title
-            @inline.render(node.title, para)
+            @inline.render(node.title, sink)
+          end
+        end
+
+        # Inline renderer sink for ToC entry headings. Forwards runs to
+        # the entry paragraph, rewriting tab runs into a single space:
+        # the only tab in a ToC entry paragraph is the page-number tab.
+        class HeadingTextSink
+          SPACE = " "
+
+          def initialize(para)
+            @para = para
+          end
+
+          def <<(element)
+            @para << flatten_tab(element)
+            self
+          end
+
+          private
+
+          def flatten_tab(element)
+            return element unless element.is_a?(Uniword::Wordprocessingml::Run)
+            return element unless element.tab
+
+            Uniword::Wordprocessingml::Run.new(text: SPACE)
           end
         end
 

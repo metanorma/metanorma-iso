@@ -41,10 +41,11 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       toc_builder.render(model, doc)
 
       texts = doc.model.body.paragraphs.map { |p| p.runs.map { |r| r.text || "" }.join }
-      expect(texts).to include("Foreword")
-      expect(texts).to include("Scope")
-      expect(texts).to include("Terms and definitions")
-      expect(texts).to include("Annex A")
+      # Each entry trails the PAGEREF placeholder page number.
+      expect(texts).to include(a_string_including("Foreword"))
+      expect(texts).to include(a_string_including("Scope"))
+      expect(texts).to include(a_string_including("Terms and definitions"))
+      expect(texts).to include(a_string_including("Annex A"))
     end
 
     it "uses TOC1/TOC2/TOC3 styles based on heading depth" do
@@ -127,6 +128,32 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
         p.runs.any? { |r| run_text(r).include?("Scope") }
       end
       expect(scope_entries.length).to be >= 1
+    end
+
+    it "excludes the auto-generated ToC clause from the entries" do
+      # The presentation XML carries the Contents clause as
+      # <clause type="toc"> in the preface; the ToC title paragraph is
+      # rendered separately, so the clause must not also appear as a
+      # TOC-styled entry (the PDF ToC has no "Contents" line).
+      xml = minimal_iso_xml(<<~INNER)
+        <preface>
+          <clause type="toc" id="toc1"><fmt-title depth="1">Contents</fmt-title></clause>
+        </preface>
+        <sections>
+          <clause id="scope"><fmt-title>Scope</fmt-title><p>Test.</p></clause>
+        </sections>
+      INNER
+
+      model = parse_iso_document(xml)
+      toc_builder.render(model, doc)
+
+      entry_texts = doc.model.body.paragraphs.select do |p|
+        para_style_value(p)&.start_with?("TOC")
+      end.map do |p|
+        p.runs.map { |r| Array(r.text).join }.join
+      end
+      expect(entry_texts).not_to include(a_string_including("Contents")),
+        "the type=toc Contents clause must not appear as a ToC entry"
     end
 
     it "renders annex entries from the single-line toc variant-title" do
@@ -256,6 +283,209 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
         end
       end
       expect(docx).not_to be_nil
+    end
+  end
+
+  describe "TOC entry run order" do
+    # A ToC entry paragraph must read: heading text, then the
+    # page-number tab, then the PAGEREF field (metanorma-pdfa#119). The
+    # heading's label → title separator is flattened to a space — a tab
+    # at that position has no stop ahead of the pen and jumps to the
+    # page-number stop, carrying the heading text to the right margin
+    # behind a dot leader.
+
+    def toc_entry_xml
+      minimal_iso_xml(<<~INNER)
+        <preface>
+          <foreword id="fw"><fmt-title>Foreword</fmt-title><p>FW.</p></foreword>
+        </preface>
+        <sections>
+          <clause id="s1">
+            <fmt-title><span class="fmt-caption-label"><semx element="autonum" source="s1">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="s1t">Scope</semx></fmt-title>
+            <variant-title type="toc"><span class="fmt-caption-label"><semx element="autonum" source="s1">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="s1t">Scope</semx></variant-title>
+            <p>Scope text.</p>
+            <clause id="s1-1">
+              <fmt-title><span class="fmt-caption-label"><semx element="autonum" source="s1-1">1.1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="s1-1t">Requirements</semx></fmt-title>
+              <variant-title type="toc"><span class="fmt-caption-label"><semx element="autonum" source="s1-1">1.1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="s1-1t">Requirements</semx></variant-title>
+              <p>Text.</p>
+              <clause id="s1-1-1">
+                <fmt-title><span class="fmt-caption-label"><semx element="autonum" source="s1-1-1">1.1.1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="s1-1-1t">Handling of JavaScript actions</semx></fmt-title>
+                <variant-title type="toc"><span class="fmt-caption-label"><semx element="autonum" source="s1-1-1">1.1.1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="s1-1-1t">Handling of JavaScript actions</semx></variant-title>
+                <p>Text.</p>
+              </clause>
+            </clause>
+          </clause>
+        </sections>
+        <annex id="a1" obligation="normative">
+          <fmt-title><span class="fmt-caption-label"><semx element="autonum" source="a1">A</semx></span><br/><span class="fmt-obligation">(normative)</span><br/><br/><semx element="title" source="a1t">Annex text</semx></fmt-title>
+          <variant-title type="toc"><span class="fmt-caption-label"><semx element="autonum" source="a1">A</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="a1t">Annex text</semx></variant-title>
+          <p>Annex.</p>
+        </annex>
+        <bibliography>
+          <references>
+            <title>Bibliography</title>
+            <p>Intro.</p>
+          </references>
+        </bibliography>
+      INNER
+    end
+
+    def toc_paras(doc)
+      doc.model.body.paragraphs.select do |p|
+        para_style_value(p)&.start_with?("TOC")
+      end
+    end
+
+    def run_kind(run)
+      return :instr if run.instr_text
+      return :"field_#{run.field_char.fldCharType}" if run.field_char
+      return :tab if run.tab
+      return :text unless Array(run.text).join.empty?
+
+      :other
+    end
+
+    def run_kinds(para)
+      para.runs.map { |r| run_kind(r) }
+    end
+
+    def pageref_position(runs)
+      runs.index do |r|
+        r.instr_text && Array(r.instr_text.text).join.include?("PAGEREF")
+      end
+    end
+
+    # A ToC entry paragraph must read: heading text runs, exactly one
+    # tab (the page-number tab), then the PAGEREF field machinery with
+    # a non-empty placeholder result — and no heading text past the
+    # tab. The TOC field opening that precedes the first entry's text
+    # is skipped before the check.
+    def assert_entry_run_order(para)
+      runs = para.runs
+      kinds = run_kinds(para)
+      start = kinds.index(:text)
+      expect(start).not_to be_nil,
+        "entry paragraph carries no heading text: #{kinds.inspect}"
+
+      entry = kinds[start..]
+      tab_at = start + entry.index(:tab)
+      expect(entry.count(:tab)).to eq(1),
+        "entry paragraph must carry exactly one tab (the page-number tab)"
+
+      pageref_at = pageref_position(runs)
+      expect(pageref_at).not_to be_nil
+      expect(pageref_at).to be > tab_at,
+        "PAGEREF field must follow the page-number tab"
+      expect(runs[tab_at + 1...pageref_at].any? { |r| run_kind(r) == :field_begin })
+        .to be(true), "PAGEREF field must open after the page-number tab"
+
+      # Heading text runs sit before the tab; the only text after it is
+      # the field result.
+      heading_text = kinds.each_index.select do |i|
+        kinds[i] == :text && i < pageref_at
+      end
+      expect(heading_text).not_to be_empty
+      expect(heading_text.max).to be < tab_at,
+        "heading text found after the page-number tab: #{kinds.inspect}"
+
+      # The field result is the placeholder page number: non-empty text
+      # between the field separate and the field end.
+      result = runs[(pageref_at + 2)...-1].find do |r|
+        run_kind(r) == :text
+      end
+      expect(Array(result&.text).join).not_to be_empty,
+        "PAGEREF field must carry a placeholder page-number result"
+    end
+
+    it "renders heading text, tab, page field per level" do
+      model = parse_iso_document(toc_entry_xml)
+      toc_builder.render(model, doc)
+
+      paras = toc_paras(doc)
+      expect(paras.length).to be >= 5
+      paras.each { |p| assert_entry_run_order(p) }
+    end
+
+    it "styles the level-3 entry TOC3 and the annex entry TOC1" do
+      model = parse_iso_document(toc_entry_xml)
+      toc_builder.render(model, doc)
+
+      styles = toc_paras(doc).map { |p| para_style_value(p) }
+      expect(styles).to include("TOC1", "TOC2", "TOC3")
+    end
+
+    it "emits no empty entry for the untitled bibliography wrapper" do
+      model = parse_iso_document(toc_entry_xml)
+      toc_builder.render(model, doc)
+
+      texts = toc_paras(doc).map do |p|
+        p.runs.map { |r| Array(r.text).join }.join
+      end
+      # Each entry trails the PAGEREF placeholder page number.
+      expect(texts).to include(a_string_including("Bibliography"))
+      expect(texts).not_to include(""),
+        "the bibliography wrapper must not emit an empty ToC entry " \
+        "with a PAGEREF to a nonexistent bookmark"
+    end
+
+    it "emits heading text, one tab, then the PAGEREF field in document.xml" do
+      adapter = build_adapter
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "toc.docx")
+        adapter.convert(toc_entry_xml, path)
+        extract_docx(path) do |xml_doc, ns|
+          paras = xml_doc.xpath(
+            "//w:p[w:pPr/w:pStyle[starts-with(@w:val, 'TOC')]]", ns,
+          )
+          expect(paras.length).to be >= 5
+
+          paras.each do |p|
+            runs = p.xpath("./w:r", ns)
+            kinds = runs.map do |r|
+              if r.at_xpath("./w:instrText", ns)
+                :instr
+              elsif (fc = r.at_xpath("./w:fldChar/@w:fldCharType", ns))
+                :"field_#{fc.value}"
+              elsif r.at_xpath("./w:tab", ns)
+                :tab
+              elsif r.at_xpath("./w:t", ns) && !r.at_xpath("./w:t", ns).text.empty?
+                :text
+              else
+                :other
+              end
+            end
+
+            start = kinds.index(:text)
+            expect(start).not_to be_nil,
+              "document.xml entry carries no heading text"
+            entry = kinds[start..]
+            tab_at = start + entry.index(:tab)
+            expect(entry.count(:tab)).to eq(1)
+
+            pageref_at = start + entry.index(:instr)
+            heading_text = kinds.each_index.select do |i|
+              kinds[i] == :text && i < pageref_at
+            end
+            expect(heading_text.max).to be < tab_at,
+              "heading text found after the page-number tab"
+
+            begin_at = start + entry.index(:field_begin)
+            expect(begin_at).to be > tab_at,
+              "PAGEREF field must open after the page-number tab"
+
+            # Placeholder page number: non-empty result between the
+            # field separate and the field end.
+            separate_at = start + entry.index(:field_separate)
+            end_at = start + entry.rindex(:field_end)
+            result = runs[(separate_at + 1)...end_at].find do |r|
+              t = r.at_xpath("./w:t", ns)
+              t && !t.text.empty?
+            end
+            expect(result).not_to be_nil,
+              "PAGEREF field must carry a placeholder page-number result"
+          end
+        end
+      end
     end
   end
 end

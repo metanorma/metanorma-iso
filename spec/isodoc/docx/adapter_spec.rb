@@ -827,12 +827,15 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
       end
     end
 
-    # BUG 014: Each TOC entry must render the section number, a tab, and
-    # the title text as separate visible runs — not as a single run with
-    # concatenated text like "1Scope". This is achieved by rendering the
-    # source clause's fmt-title via the InlineRenderer so that the
-    # delimiter tab inside the fmt-title becomes a real <w:tab/> run.
-    it "renders TOC entries with separate runs for number, tab, and title" do
+    # BUG 014: Each TOC entry must render the section number and the
+    # title text as separate visible runs — not as a single run with
+    # concatenated text like "1Scope". The label → title separator of
+    # the fmt-title renders as a space: a separator tab here has no tab
+    # stop ahead of the pen and jumps to the page-number stop, carrying
+    # the heading text to the right margin behind the dot leader
+    # (metanorma-pdfa#119). The entry paragraph carries exactly one tab
+    # — the page-number tab before the PAGEREF field.
+    it "renders TOC entries with separate runs for number, separator, and title" do
       xml = minimal_iso_xml(<<~INNER)
         <preface>
           <foreword id="fw">
@@ -865,9 +868,12 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
           # No single run should carry the concatenated number+title.
           expect(text_runs).to all(satisfy { |t| !t.include?("1Scope") })
 
-          # Should have a tab run between the autonum and the title
+          # The autonum and title are separated by a space, and the
+          # paragraph carries exactly one tab: the page-number tab.
           tab_runs = clause_toc.xpath(".//w:tab", ns)
-          expect(tab_runs.length).to be >= 2
+          expect(tab_runs.length).to eq(1)
+          joined = clause_toc.xpath(".//w:t", ns).map(&:text).join
+          expect(joined).to include("1 Scope")
 
           # And the PAGEREF field machinery is present
           expect(clause_toc.xpath(".//w:instrText", ns).text).to include("PAGEREF s1")
@@ -1888,6 +1894,53 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "Simple template" do
       adapter.convert(xml, output_path)
       expect(File.exist?(output_path)).to be(true)
       expect(File.size(output_path)).to be > 0
+    end
+  end
+
+  describe "MHTML (.doc) output" do
+    let(:contact_xml) do
+      minimal_iso_xml(<<~INNER)
+        <boilerplate>
+          <copyright-statement>
+            <clause id="b1">
+              <p id="boilerplate-address">International Organization for Standardization<br/>
+              Internet   <link target="mailto:central@iso.ch" id="_l1"/>
+              <semx element="link" source="_l1"><fmt-link target="mailto:central@iso.ch"/></semx><br/>
+              X.400 c=ch; a=400net</p>
+            </clause>
+          </copyright-statement>
+        </boilerplate>
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <p>Scope text.</p>
+          </clause>
+        </sections>
+      INNER
+    end
+
+    # Render the contact fixture to the given extension and return the
+    # saved bytes (text-decoded for MHTML, raw for the DOCX zip buffer).
+    def render_contact(ext)
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output#{ext}")
+        adapter.convert(contact_xml, path)
+        if ext == ".docx"
+          File.binread(path)
+        else
+          File.read(path, encoding: "utf-8", invalid: :replace)
+        end
+      end
+    end
+
+    it "keeps external hyperlink text in the MHTML output" do
+      expect(render_contact(".doc")).to include("central@iso.ch")
+    end
+
+    it "keeps external hyperlink text in the DOCX output" do
+      Zip::File.open_buffer(render_contact(".docx")) do |zip|
+        expect(zip.read("word/document.xml")).to include("central@iso.ch")
+      end
     end
   end
 end

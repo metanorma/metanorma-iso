@@ -18,6 +18,7 @@ module IsoDoc
         # block's render) and picks the appropriate pattern.
         class DefinitionListRenderer
           include Base
+          include ListAttachments
 
           KEY_LIST_ZONES = %i[formula figure].freeze
 
@@ -27,6 +28,7 @@ module IsoDoc
             else
               render_general(definition_list, doc)
             end
+            render_attached_notes(definition_list, doc)
           end
 
           private
