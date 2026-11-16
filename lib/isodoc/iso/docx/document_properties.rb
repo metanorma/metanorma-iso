@@ -371,7 +371,12 @@ module IsoDoc
             dt ? extract_value(dt) : nil
           elsif @bib.class.attributes.key?(:ext)
             ext = @bib.ext
-            extract_ext_attribute(:doctype) if ext
+            return nil unless ext && ext.class.attributes.key?(:doctype_element)
+
+            doctypes = Array(ext.doctype_element)
+            dt = doctypes.find { |d| d.language == "en" } || doctypes.first
+            value = dt&.value
+            value unless value.to_s.strip.empty?
           end
         end
 
