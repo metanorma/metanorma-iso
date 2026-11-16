@@ -13,9 +13,10 @@ module IsoDoc
         @suffix = "isosts.xml"
       end
 
-      def get_input_fname(input_fname)
+      def get_input_fname(input_fname, file)
         /\.xml$/.match(input_fname) or
-          input_fname = Tempfile.open([fname, ".xml"], encoding: "utf-8") do |f|
+          input_fname = Tempfile.open([@format.to_s, ".xml"],
+                                      encoding: "utf-8") do |f|
             f.write file
             f.path
           end
@@ -25,7 +26,7 @@ module IsoDoc
       def convert(input_fname, file = nil, debug = false, output_fname = nil)
         file = File.read(input_fname, encoding: "utf-8") if file.nil?
         _, fname, dir = convert_init(file, input_fname, debug)
-        input_fname = get_input_fname(input_fname)
+        input_fname = get_input_fname(input_fname, file)
         FileUtils.rm_rf dir
         MnConvert.convert(input_fname,
                           {

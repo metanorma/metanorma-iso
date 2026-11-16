@@ -20,6 +20,7 @@ module Metanorma
     module Sts
       autoload :Transformer, "metanorma/iso/sts/transformer"
       autoload :HtmlRenderer, "metanorma/iso/sts/html_renderer"
+      autoload :OutputSanitizer, "metanorma/iso/sts/output_sanitizer"
 
       class << self
         # Explicit override (true/false). When nil, falls back to the
