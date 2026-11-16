@@ -27,6 +27,7 @@ module IsoDoc
 
           render_main(bib, doc)
           render_part(bib, doc)
+          render_amd(bib, doc)
         end
 
         private
@@ -51,6 +52,29 @@ module IsoDoc
           text = part_text(bib)
           return if text.nil? || text.empty?
 
+          para = Uniword::Builder::ParagraphBuilder.new
+          para.style = @resolver.paragraph_style(:main_title2)
+          para << text
+          doc << para
+        end
+
+        # Amendment title block: "AMENDMENT 1: <description>" as the
+        # middle-title line following the part title. Mirrors the
+        # ISO-proven amendment surface (submitted artifacts carry the
+        # label + description as a single title line; the classic chain
+        # emitted it as the zzSTDTitle2 paragraph from doctitleamdlabel
+        # + doctitleamd). MainTitle2 keeps the title family formatting —
+        # neither vendored template defines a zzSTDTitle2 style, so the
+        # line must reuse a defined styleId (metanorma-iso#1728).
+        def render_amd(bib, doc)
+          localized = english_title(bib)
+          return unless localized
+
+          label = localized.title_amendment_prefix&.value.to_s.strip
+          description = localized.title_amd&.value.to_s.strip
+          return if label.empty? && description.empty?
+
+          text = label.empty? ? description : "#{label}: #{description}"
           para = Uniword::Builder::ParagraphBuilder.new
           para.style = @resolver.paragraph_style(:main_title2)
           para << text
