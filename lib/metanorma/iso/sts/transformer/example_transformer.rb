@@ -14,25 +14,21 @@ module Metanorma
 
         private
 
+        # The example body lives on typed attributes (paragraphs holds the
+        # paragraphs; ul/ol the block lists; sourcecode the literal
+        # blocks), not on mixed content — walking each_mixed_content
+        # yields nothing and emits an empty <non-normative-example/>.
+        # ExampleBlock's dl/quote/table/figure/requirement have no
+        # counterpart on Sts::NisoSts::NonNormativeExample and are
+        # skipped.
         def transform_example_content(source, example)
-          source.each_mixed_content do |node|
-            next if node.is_a?(String)
-
-            dispatch_block(node, example)
+          Array(source.paragraphs).each do |para|
+            example.p paragraph_transformer.transform(para)
           end
-        end
-
-        def dispatch_block(node, target)
-          case node
-          when Metanorma::Document::Components::Paragraphs::ParagraphBlock
-            target.paragraph paragraph_transformer.transform(node)
-          when Metanorma::Document::Components::Lists::UnorderedList,
-               Metanorma::Document::Components::Lists::OrderedList
-            target.list list_transformer.transform(node)
-          when Metanorma::Document::Components::Lists::DefinitionList
-            target.def_list def_list_transformer.transform(node)
-          when Metanorma::Document::Components::Blocks::NoteBlock
-            target.non_normative_note note_transformer.transform(node)
+          Array(source.ul).each { |ul| example.list list_transformer.transform(ul) }
+          Array(source.ol).each { |ol| example.list list_transformer.transform(ol) }
+          Array(source.sourcecode).each do |sc|
+            example.preformat sourcecode_transformer.transform(sc)
           end
         end
       end

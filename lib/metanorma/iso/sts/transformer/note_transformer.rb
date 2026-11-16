@@ -14,28 +14,17 @@ module Metanorma
 
         private
 
+        # The note body lives on typed attributes (content holds the
+        # paragraphs; ul/ol the block lists), not on mixed content —
+        # walking each_mixed_content yields nothing and emits an empty
+        # <non-normative-note/>. NoteBlock's dl/formula/quote have no
+        # counterpart on Sts::NisoSts::NonNormativeNote and are skipped.
         def transform_note_content(source, note)
-          source.each_mixed_content do |node|
-            next if node.is_a?(String)
-
-            dispatch_block(node, note)
+          Array(source.content).each do |para|
+            note.p paragraph_transformer.transform(para)
           end
-        end
-
-        def dispatch_block(node, target)
-          case node
-          when Metanorma::Document::Components::Paragraphs::ParagraphBlock
-            target.paragraph paragraph_transformer.transform(node)
-          when Metanorma::Document::Components::Lists::UnorderedList,
-               Metanorma::Document::Components::Lists::OrderedList
-            target.list list_transformer.transform(node)
-          when Metanorma::Document::Components::Lists::DefinitionList
-            target.def_list def_list_transformer.transform(node)
-          when Metanorma::Document::Components::Blocks::NoteBlock
-            target.non_normative_note note_transformer.transform(node)
-          when Metanorma::Document::Components::AncillaryBlocks::ExampleBlock
-            target.non_normative_example example_transformer.transform(node)
-          end
+          Array(source.ul).each { |ul| note.list list_transformer.transform(ul) }
+          Array(source.ol).each { |ol| note.list list_transformer.transform(ol) }
         end
       end
     end
