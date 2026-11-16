@@ -72,13 +72,19 @@ module Metanorma
 
         def apply_inline_content(source, target)
           source.each_mixed_content do |node|
+            # An inline walk can yield a whole block (e.g. <dt><p>…</p></dt>);
+            # recurse instead of dropping it.
+            if node.is_a?(Metanorma::Document::Components::Paragraphs::ParagraphBlock)
+              apply_inline_content(node, target)
+              next
+            end
+
             result = transform_inline(node)
             next unless result
 
             type, value = result
             if type == :content
-              text_attr = TEXT_ATTR_FOR[target.class] || :content
-              target.public_send(text_attr, value)
+              append_text(target, value)
             else
               target.public_send(type, value)
             end
@@ -91,6 +97,22 @@ module Metanorma
           text_attr = TEXT_ATTR_FOR[target.class] || :content
           target.public_send(text_attr, text) if text && !text.empty?
           target
+        end
+
+        private
+
+        # lutaml-model serializes built (never-parsed) mixed-content models
+        # by keeping at most one text entry per element boundary; consecutive
+        # text entries after the first are dropped on to_xml. Merging
+        # consecutive strings preserves the full content.
+        def append_text(target, value)
+          text_attr = TEXT_ATTR_FOR[target.class] || :content
+          existing = target.public_send(text_attr)
+          if existing.is_a?(Array) && existing.last.is_a?(String)
+            existing[-1] = existing.last + value
+          else
+            target.public_send(text_attr, value)
+          end
         end
 
         private
