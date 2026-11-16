@@ -19,8 +19,23 @@ RSpec.configure do |config|
   config.disable_monkey_patching!
 end
 
+# Parse under an adapter that populates lutaml's mixed-content metadata
+# (element_order, map_all_content). lutaml-model 0.8.x's leptris adapter
+# populates neither, which makes spec results depend on whether some
+# earlier example happened to flip the engine; nokogiri is deterministic.
+# Mirrors ModelUtils#parse_model_with_ordering in lib code.
+def parse_model_with_ordering(model_class, xml)
+  if defined?(Lutaml::Model::AdapterScope)
+    Lutaml::Model::AdapterScope.with(xml: :nokogiri) do
+      model_class.from_xml(xml)
+    end
+  else
+    model_class.from_xml(xml)
+  end
+end
+
 def parse_iso_document(xml)
-  Metanorma::IsoDocument::Root.from_xml(xml)
+  parse_model_with_ordering(Metanorma::IsoDocument::Root, xml)
 end
 
 def minimal_iso_xml(body = "")

@@ -334,7 +334,7 @@ module IsoDoc
           xml = case source
                 when String
                   if File.exist?(source)
-                    File.read(source, 
+                    File.read(source,
                               encoding: "utf-8")
                   else
                     source
@@ -342,7 +342,7 @@ module IsoDoc
                 else
                   source.to_s
                 end
-          Metanorma::Iso::Document::Root.from_xml(xml)
+          parse_model_with_ordering(Metanorma::Iso::Document::Root, xml)
         end
 
         def create_document

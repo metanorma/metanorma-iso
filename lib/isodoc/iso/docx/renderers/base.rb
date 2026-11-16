@@ -17,6 +17,8 @@ module IsoDoc
         #
         # Subclasses MUST implement +render(node, doc)+.
         module Base
+          include ModelUtils
+
           attr_reader :resolver, :context, :inline_renderer, :walker
 
           def initialize(resolver:, context:, inline_renderer:, walker:)

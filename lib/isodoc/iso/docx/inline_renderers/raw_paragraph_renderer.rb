@@ -24,7 +24,10 @@ module IsoDoc
             return if content.nil? || content.to_s.empty?
 
             wrapped = wrap_for_parse(content)
-            parsed = Metanorma::Document::Components::Paragraphs::ParagraphBlock.from_xml(wrapped)
+            parsed = parse_model_with_ordering(
+              Metanorma::Document::Components::Paragraphs::ParagraphBlock,
+              wrapped,
+            )
             parent.render_mixed_inline_fallback(parsed, para)
           end
 
