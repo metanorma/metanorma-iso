@@ -296,14 +296,40 @@ module Metanorma
             )
           end
 
-          # ---- ISO front matter (<iso-meta>) ----------------------------------
+          # ---- ISO front matter (<std-meta>) ----------------------------------
 
-          # Builds a <iso-meta> block (NisoSts::MetadataIso) per the
-          # IEC/ISO Coding Guidelines. Most children are bare strings on
-          # the model; only title_wrap, doc_ident, std_ident, std_ref,
-          # permissions, ics remain typed. The block yields the
-          # MetadataIso instance so callers can attach the typed children
-          # and set string fields directly.
+          # Builds a <std-meta> block (NisoSts::MetadataStd) per the
+          # IEC/ISO Coding Guidelines ed. 2.1 §4.3.2 ISO profile. The
+          # block yields the instance so the ISO meta transformer can
+          # attach the typed children in the XSD sequence order (the
+          # model's mapping is ordered — setter call order is the
+          # serialization order).
+          def metadata_std
+            ::Sts::NisoSts::MetadataStd.new { |m| yield m if block_given? }
+          end
+
+          def std_org(std_org_type: nil, abbrev: nil)
+            ::Sts::NisoSts::StdOrg.new do |so|
+              so.std_org_type = std_org_type if std_org_type
+              so.std_org_abbrev = [::Sts::NisoSts::StdOrgAbbrev.new(content: [abbrev])] if abbrev
+            end
+          end
+
+          def release_date(content: nil, date_type: nil)
+            ::Sts::NisoSts::ReleaseDate.new do |rd|
+              rd.content = Array(content) if content
+              rd.date_type = date_type if date_type
+            end
+          end
+
+          def proj_id(content: nil)
+            ::Sts::NisoSts::ProjId.new(content: Array(content))
+          end
+
+          def release_version(content: nil)
+            ::Sts::NisoSts::ReleaseVersion.new(content: Array(content))
+          end
+
           def metadata_iso
             ::Sts::NisoSts::MetadataIso.new { |m| yield m if block_given? }
           end

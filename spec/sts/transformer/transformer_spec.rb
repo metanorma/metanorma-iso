@@ -22,20 +22,22 @@ RSpec.describe Metanorma::Iso::Sts::Transformer do
       expect(output).to include('xml:lang="en"')
     end
 
-    it "emits <processing-meta> with OIML defaults" do
+    it "emits <processing-meta> with the guidelines ed 2.1 attributes" do
       expect(output).to include('tagset-family="sts"')
       expect(output).to include('table-model="xhtml"')
-      expect(output).to include('mathml="MathML 3.0"')
+      expect(output).to include('mathml-version="3.0"')
+      expect(output).to include('math-representation="mathml"')
+      expect(output).to include("iec_iso_coding_guidelines_edition")
     end
 
-    it "emits the identifier as a decomposed NISO STS <std-ident> on iso-meta" do
-      expect(output).to include("<iso-meta>")
+    it "emits the identifier as a decomposed NISO STS <std-ident> on std-meta" do
+      expect(output).to include("<std-meta>")
       expect(output).to include("<std-ident>")
       expect(output).to include("<originator>ISO</originator>")
       expect(output).to include("<doc-number>7</doc-number>")
     end
 
-    it "records the publisher copyright on iso-meta" do
+    it "records the publisher copyright on std-meta" do
       expect(output).to include("<copyright-holder>International " \
                                 "Organization of Legal Metrology</copyright-holder>")
     end

@@ -6,7 +6,7 @@ module Metanorma
         class FrontTransformer < Base
           def transform(source)
             iso_meta = build_iso_meta(source)
-            ModelBuilder.front(iso_meta: iso_meta)
+            ModelBuilder.front(std_meta: iso_meta)
           end
 
           def preface_sections(source)
@@ -19,9 +19,9 @@ module Metanorma
 
           private
 
-          # ISO flavor front matter: <iso-meta> per the IEC/ISO Coding
-          # Guidelines, with <ics> codes as plain string content. The OIML
-          # flavor keeps <std-meta>.
+          # ISO flavor front matter: <std-meta> per the IEC/ISO Coding
+          # Guidelines ed. 2.1 §4.3.2 ISO profile (title-wrap, std-ident,
+          # std-org, content-language, std-ref, doc-ref, permissions).
           def build_iso_meta(source)
             Transformer::IsoMetaTransformer.new(context).transform(source.bibdata)
           end

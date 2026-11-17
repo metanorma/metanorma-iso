@@ -53,6 +53,10 @@ module Metanorma
             @note_transformer ||= NoteTransformer.new(context)
           end
 
+          def requirement_transformer
+            @requirement_transformer ||= RequirementTransformer.new(context)
+          end
+
           def reference_transformer
             @reference_transformer ||= ReferenceTransformer.new(context)
           end

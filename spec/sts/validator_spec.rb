@@ -28,48 +28,34 @@ RSpec.describe Metanorma::Iso::Sts::Validator do
     expect(report.errors.map(&:rule_id)).to include("oiml-x999-processing-meta")
   end
 
-  it "fails when <std> lacks <title>" do
-    xml = sts_xml(<<~X)
-      <back>
-        <ref-list content-type="bibliography">
-          <ref><std type="dated">
-            <std-ref type="dated">ISO 123:2024</std-ref>
-          </std></ref>
-        </ref-list>
-      </back>
-    X
-    report = validator.validate(xml)
-    expect(report.errors.map(&:rule_id)).to include("oiml-x999-std-title-and-date")
-  end
-
+  # ISO profile: a <std> needs its <std-ref> dated; the OIML X 999
+  # <title> requirement does not apply to ISO coding.
   it "fails when <std-ref> does not declare datedness" do
     xml = sts_xml(<<~X)
       <back>
         <ref-list content-type="bibliography">
           <ref><std>
             <std-ref>ISO 123</std-ref>
-            <title>A title</title>
           </std></ref>
         </ref-list>
       </back>
     X
     report = validator.validate(xml)
-    expect(report.errors.map(&:rule_id)).to include("oiml-x999-std-title-and-date")
+    expect(report.errors.map(&:rule_id)).to include("iso-gdg-std-ref-dated")
   end
 
-  it "passes when <std> has <title> and a typed <std-ref>" do
+  it "passes when <std-ref> is typed, with or without <title>" do
     xml = sts_xml(<<~X)
       <back>
         <ref-list content-type="bibliography">
           <ref><std type="dated">
             <std-ref type="dated">ISO 123:2024</std-ref>
-            <title>A title</title>
           </std></ref>
         </ref-list>
       </back>
     X
     report = validator.validate(xml)
-    expect(report.errors.map(&:rule_id)).not_to include("oiml-x999-std-title-and-date")
+    expect(report.errors.map(&:rule_id)).not_to include("iso-gdg-std-ref-dated")
   end
 
   it "fails when <self-uri> appears inside <self-xref>" do

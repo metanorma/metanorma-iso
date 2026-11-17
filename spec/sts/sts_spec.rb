@@ -10,14 +10,15 @@ RSpec.describe Metanorma::Iso::Sts do
       # The NISO STS XSD pins the root dtd-version to the fixed "1.0".
       expect(output).to include('dtd-version="1.0"')
       expect(output).to include("<processing-meta")
-      # ISO flavor front matter is <iso-meta>; its <std-ident>
-      # decomposes the identifier into originator / doc-number.
-      expect(output).to include("<iso-meta>")
+      # ISO flavor front matter is <std-meta> (guidelines ed 2.1
+      # §4.3.2); its <std-ident> decomposes the identifier into
+      # originator / doc-number.
+      expect(output).to include("<std-meta>")
       expect(output).to include("<originator>ISO</originator>")
       expect(output).to include("<doc-number>7</doc-number>")
     end
 
-    it "records the publisher copyright on iso-meta" do
+    it "records the publisher copyright on std-meta" do
       output = described_class.convert(input)
       expect(output).to include("<copyright-holder>International " \
                                 "Organization of Legal Metrology</copyright-holder>")

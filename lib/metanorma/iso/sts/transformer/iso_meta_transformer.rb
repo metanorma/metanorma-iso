@@ -21,18 +21,26 @@ module Metanorma
           "recommendation" => "R",
         }.freeze
 
-        # Emits a <iso-meta> block (NisoSts::MetadataIso) per Coding
-        # Guidelines ed. 2.1. Most children are bare strings on the model;
-        # only title_wrap, doc_ident, std_ident, std_ref, permissions, ics
-        # remain typed. ISO-flavor front matter — the OIML flavor keeps
-        # <std-meta>.
+        # Emits a <std-meta> block (NisoSts::MetadataStd) per the IEC/ISO
+        # Coding Guidelines ed. 2.1 §4.3.2 ISO profile: title-wrap per
+        # language, proj-id, release-version, std-ident, std-org
+        # (std-org-abbrev), content-language, std-ref dated/undated,
+        # doc-ref, release-date, comm-ref, secretariat, ics, permissions.
+        # Children attach in the XSD sequence order (the model's mapping
+        # is ordered — setter call order is the serialization order).
         def transform(bibdata)
-          return Transformer::ModelBuilder.metadata_iso unless bibdata
+          return Transformer::ModelBuilder.metadata_std unless bibdata
 
-          Transformer::ModelBuilder.metadata_iso do |m|
+          Transformer::ModelBuilder.metadata_std do |m|
             title_wraps_for(bibdata).each { |tw| m.title_wrap tw }
-            m.doc_ident = doc_ident_for(bibdata) if doc_ident_for(bibdata)
+            pid = proj_id_for(bibdata)
+            m.proj_id = pid if pid
+            rv = release_version_for(bibdata)
+            m.release_version = rv if rv
             m.std_ident = std_ident_for(bibdata) if std_ident_for(bibdata)
+            org = std_org_for(bibdata)
+            m.std_org = [org] if org
+            m.content_language = [primary_language(bibdata)].compact
             std_refs_for(bibdata).each { |sr| m.std_ref sr }
             m.doc_ref = doc_ref_for(bibdata) if doc_ref_for(bibdata)
             release_dates_for(bibdata).each { |rd| m.release_date rd }
@@ -88,21 +96,21 @@ module Metanorma
           text.empty? ? nil : text
         end
 
-        # <doc-ident> in NISO STS v1.2: all children are bare strings.
-        def doc_ident_for(bibdata)
-          sdo = publisher_for(bibdata)
-          proj_id = project_number_for(bibdata)
-          language = primary_language(bibdata)
-          release_version = release_version_for(bibdata)
+        # <proj-id> — the project number ("ISO 19135"), typed ProjId.
+        def proj_id_for(bibdata)
+          pn = project_number_for(bibdata)
+          return nil unless pn
 
-          return nil if sdo.nil? && proj_id.nil? && language.nil? && release_version.nil?
+          Transformer::ModelBuilder.proj_id(content: pn)
+        end
 
-          Transformer::ModelBuilder.document_identification(
-            sdo: sdo,
-            proj_id: proj_id,
-            language: language,
-            release_version: release_version,
-          )
+        # <std-org std-org-type="sdo"><std-org-abbrev>ISO</std-org-abbrev>
+        # per the guidelines ed. 2.1 §4.3.2 example.
+        def std_org_for(bibdata)
+          abbrev = publisher_for(bibdata)
+          return nil unless abbrev
+
+          Transformer::ModelBuilder.std_org(std_org_type: "sdo", abbrev: abbrev)
         end
 
         # <std-ident> in NISO STS v1.2: all children are bare strings.
@@ -147,20 +155,21 @@ module Metanorma
           refs
         end
 
-        # <doc-ref> is a bare STRING on MetadataIso in NISO STS v1.2.
+        # <doc-ref> per the guidelines ed. 2.1 §4.3.2 example — the dated
+        # identifier with the language code, e.g. "ISO/FDIS 19135:2025(E)"
+        # ("ISO/DIS 9512(E)"). Bare STRING on MetadataStd.
         def doc_ref_for(bibdata)
-          pub = publisher_for(bibdata)
-          num = bibdata.docnumber
-          return nil unless pub && num
+          primary = doc_identifiers(bibdata).first
+          return nil unless primary
+
+          ref_text = extract_text_value(primary)
+          return nil unless ref_text && !ref_text.empty?
 
           lang = primary_language(bibdata)
-          ref_text = "#{pub} #{num}"
-          ref_text += " (#{lang})" if lang && lang != "en"
-          ref_text
+          "#{ref_text}(#{lang.to_s[0].upcase})"
         end
 
-        # <release-date> is a bare STRING on MetadataIso. One per
-        # released date.
+        # <release-date> is typed on MetadataStd. One per released date.
         def release_dates_for(bibdata)
           dates = []
           return dates unless bibdata.date
@@ -169,7 +178,7 @@ module Metanorma
             next unless d.type == "released"
 
             date_val = d.on&.content || extract_text_value(d)
-            dates << date_val.to_s if date_val
+            dates << Transformer::ModelBuilder.release_date(content: date_val.to_s) if date_val
           end
 
           dates

@@ -33,6 +33,8 @@ module Metanorma::Iso::Sts::Transformer
   autoload :FigureTransformer, "metanorma/iso/sts/transformer/figure_transformer"
   autoload :FormulaTransformer, "metanorma/iso/sts/transformer/formula_transformer"
   autoload :NoteTransformer, "metanorma/iso/sts/transformer/note_transformer"
+  autoload :RequirementTransformer, "metanorma/iso/sts/transformer/requirement_transformer"
+  autoload :ProvisionIndex, "metanorma/iso/sts/transformer/provision_index"
   autoload :ReferenceTransformer, "metanorma/iso/sts/transformer/reference_transformer"
   autoload :TermTransformer, "metanorma/iso/sts/transformer/term_transformer"
   autoload :DlTransformer, "metanorma/iso/sts/transformer/dl_transformer"

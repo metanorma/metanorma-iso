@@ -26,6 +26,9 @@ module Metanorma
             "AdmonitionBlock"              => :dispatch_via_note,
             "QuoteBlock"                   => :dispatch_via_note,
             "SourcecodeBlock"              => :dispatch_via_sourcecode,
+            "RequirementModel"             => :dispatch_via_requirement,
+            "RecommendationModel"          => :dispatch_via_requirement,
+            "PermissionModel"              => :dispatch_via_requirement,
             "StandardReferencesSection"    => :dispatch_via_references,
             "BibliographySection"          => :dispatch_via_references
           }.freeze
@@ -62,6 +65,9 @@ module Metanorma
             unordered_lists: :dispatch_via_list,
             ordered_lists: :dispatch_via_list,
             tables: :dispatch_via_table,
+            requirement: :dispatch_via_requirement,
+            recommendation: :dispatch_via_requirement,
+            permission: :dispatch_via_requirement,
             figures: :dispatch_via_figure,
             formulas: :dispatch_via_formula,
             notes: :dispatch_via_note,
@@ -85,7 +91,7 @@ module Metanorma
               collection = section.public_send(attr)
               Array(collection).each do |item|
                 result = send(handler, item)
-                results << result if result
+                Array(result).each { |r| results << r } if result
                 dispatch_paragraph_siblings(item, results)
               end
             end
@@ -95,22 +101,27 @@ module Metanorma
 
           # MN's typed model attaches "block siblings" as attributes on
           # the preceding block (ParagraphBlock.note holds notes that
-          # semantically follow the paragraph; TableBlock.note holds
-          # table notes, which render right after the table). Walk those
-          # sibling collections and dispatch each, preserving document
-          # order. Restricted to ParagraphBlock and TableBlock to avoid
-          # firing for lists/etc. that have their own note sub-collections
-          # with different semantics.
+          # semantically follow the paragraph; TableBlock.note and
+          # List#note hold the same kind of trailing notes for their
+          # carriers). Walk those sibling collections and dispatch each,
+          # preserving document order. Restricted to the block carriers
+          # whose note/example sub-collections have that semantics —
+          # lists that carry their own note sub-collections with
+          # different semantics are excluded case by case.
           def dispatch_paragraph_siblings(item, results)
-            return unless paragraph_block?(item) || table_block?(item)
+            return unless sibling_block?(item)
 
             SIBLING_ATTRS.each do |attr, handler|
               next unless item.class.method_defined?(attr)
               Array(item.public_send(attr)).each do |sibling|
                 result = send(handler, sibling)
-                results << result if result
+                Array(result).each { |r| results << r } if result
               end
             end
+          end
+
+          def sibling_block?(item)
+            paragraph_block?(item) || table_block?(item) || list_block?(item)
           end
 
           def paragraph_block?(item)
@@ -119,6 +130,10 @@ module Metanorma
 
           def table_block?(item)
             item.is_a?(Metanorma::Document::Components::Tables::TableBlock)
+          end
+
+          def list_block?(item)
+            item.is_a?(Metanorma::Document::Components::Lists::UnorderedList)
           end
 
           SIBLING_ATTRS = {
@@ -136,6 +151,7 @@ module Metanorma
           def dispatch_via_figure(obj);   figure_transformer.transform(obj);   end
           def dispatch_via_formula(obj);  formula_transformer.transform(obj);  end
           def dispatch_via_note(obj);     note_transformer.transform(obj);     end
+          def dispatch_via_requirement(obj); requirement_transformer.transform(obj); end
           def dispatch_via_sourcecode(obj); note_transformer.transform_preformat(obj); end
           def dispatch_via_references(obj); reference_transformer.transform_section(obj); end
         end

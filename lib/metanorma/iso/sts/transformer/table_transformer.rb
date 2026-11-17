@@ -4,19 +4,33 @@ module Metanorma
     module Sts
       module Transformer
         class TableTransformer < Base
-          def transform(source_table)
+          # +opts+: provision-table overrides passed by
+          # RequirementTransformer — the table-wrap id (the requirement's
+          # anchor, what xrefs target), the mnconvert content-type /
+          # specific-use vocabulary, and header-row bolding per the
+          # guidelines' table-cell styling.
+          def transform(source_table, id: nil, content_type: nil,
+                        specific_use: nil, bold_header: false)
             attrs = {}
-            attrs[:id] = source_table.id if source_table.class.method_defined?(:id) && source_table.id
+            attrs[:id] = id || source_id_of(source_table)
+            attrs[:content_type] = content_type if content_type
+            attrs[:specific_use] = specific_use if specific_use
             label = table_label(source_table)
             attrs[:label] = label if label
             caption = table_caption(source_table)
             attrs[:caption] = caption if caption
-            table = build_table(source_table)
+            table = build_table(source_table, bold_header: bold_header)
             attrs[:table] = [table] if table
             ::Sts::TbxIsoTml::TableWrap.new(attrs)
           end
 
           private
+
+          def source_id_of(source_table)
+            return nil unless source_table.class.method_defined?(:id) && source_table.id
+
+            source_table.id
+          end
 
           # "Table 2" from the presentation XML autonum attribute.
           def table_label(source_table)
@@ -25,35 +39,42 @@ module Metanorma
             "Table #{source_table.autonum}"
           end
 
+          # Provision-table captions prefer the fully-rendered fmt-name
+          # (it carries the "Table N — Requirement M: …" composition);
+          # data tables use the semantic <name>.
           def table_caption(source_table)
-            return nil unless source_table.class.method_defined?(:name) && source_table.name
-
-            text = RenderedTextExtractor.text_of(source_table.name).strip
-            return nil if text.empty?
+            text = nil
+            if source_table.class.method_defined?(:fmt_name) && source_table.fmt_name
+              text = RenderedTextExtractor.text_of(source_table.fmt_name)
+            end
+            if (text.nil? || text.empty?) && source_table.class.method_defined?(:name) && source_table.name
+              text = RenderedTextExtractor.text_of(source_table.name)
+            end
+            return nil if text.nil? || text.empty?
 
             ::Sts::NisoSts::Caption.new(
-              title: ::Sts::NisoSts::Title.new(content: [text])
+              title: ::Sts::NisoSts::Title.new(content: [text.strip])
             )
           end
 
-          def build_table(source_table)
+          def build_table(source_table, bold_header: false)
             attrs = {}
             if source_table.class.method_defined?(:thead) && source_table.thead
-              attrs[:thead] = build_section(source_table.thead, ::Sts::TbxIsoTml::Thead)
+              attrs[:thead] = build_section(source_table.thead, ::Sts::TbxIsoTml::Thead, bold_header: bold_header)
             end
             if source_table.class.method_defined?(:tbody) && source_table.tbody
-              attrs[:tbody] = build_section(source_table.tbody, ::Sts::TbxIsoTml::Tbody)
+              attrs[:tbody] = build_section(source_table.tbody, ::Sts::TbxIsoTml::Tbody, bold_header: bold_header)
             end
             ::Sts::TbxIsoTml::Table.new(attrs)
           end
 
-          def build_section(source_section, klass)
-            trs = Array(source_section.tr).map { |tr| build_tr(tr) }
+          def build_section(source_section, klass, bold_header: false)
+            trs = Array(source_section.tr).map { |tr| build_tr(tr, bold_header: bold_header) }
             klass.new(tr: trs)
           end
 
-          def build_tr(tr)
-            th_cells = Array(tr.th).map { |c| build_cell(c, ::Sts::TbxIsoTml::Th) }
+          def build_tr(tr, bold_header: false)
+            th_cells = Array(tr.th).map { |c| build_cell(c, ::Sts::TbxIsoTml::Th, bold: bold_header) }
             td_cells = Array(tr.td).map { |c| build_cell(c, ::Sts::TbxIsoTml::Td) }
             attrs = {}
             attrs[:th] = th_cells if th_cells.any?
@@ -61,21 +82,45 @@ module Metanorma
             ::Sts::TbxIsoTml::Tr.new(attrs)
           end
 
-          def build_cell(cell, klass)
+          def build_cell(cell, klass, bold: false)
             entries = cell_entries(cell)
             fns = cell_footnotes(cell)
+            notes = cell_notes(cell)
             klass.new do |c|
+              bold_text = ""
               entries.each do |kind, value|
                 case kind
-                when :text then c.content value
+                when :text
+                  # Header cells carry their text as <bold> (guidelines
+                  # 6.3 table-cell styling); body cells keep bare text.
+                  if bold
+                    bold_text += value
+                  else
+                    c.content value
+                  end
                 when :inline_formula then c.inline_formula value
                 when :monospace then c.monospace value
                 when :bold then c.bold value
                 when :italic then c.italic value
                 end
               end
+              c.bold ::Sts::TbxIsoTml::Bold.new(value: [bold_text]) if bold && !bold_text.empty?
               fns.each { |fn| c.fn fn }
+              notes.each do |kind, model|
+                case kind
+                when :note then c.non_normative_note model
+                when :example then c.non_normative_example model
+                end
+              end
             end
+          end
+
+          # Cell-level notes and examples (MN <td>/<th> children) carry
+          # over as the STS all-notes.class members of the cell.
+          def cell_notes(cell)
+            notes = Array(cell.note).filter_map { |n| note_transformer.transform(n) }
+            examples = Array(cell.example).filter_map { |e| note_transformer.transform(e) }
+            notes.map { |n| [:note, n] } + examples.map { |e| [:example, e] }
           end
 
           # Extracts <fn> footnotes from the cell. MN table cells with
