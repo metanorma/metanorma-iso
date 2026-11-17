@@ -24,7 +24,6 @@ module Metanorma
     # = false+). NISO +:sts+ stays on mnconvert (+IsoDoc::Iso::StsConvert+,
     # whose emission the OutputSanitizer repairs to schema-valid NISO STS).
     module Sts
-      autoload :VERSION, "metanorma/iso/sts/version"
       autoload :Transformer, "metanorma/iso/sts/transformer"
       autoload :MathmlBuilder, "metanorma/iso/sts/mathml_builder"
       autoload :HtmlRenderer, "metanorma/iso/sts/html_renderer"

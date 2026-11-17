@@ -821,7 +821,7 @@ module Metanorma
                             "publisher_name" => @publisher_name || PUBLISHER_NAME,
                             "publisher_address" => @publisher_address || PUBLISHER_ADDRESS,
                             "license" => @license_text,
-                            "version" => ::Metanorma::Iso::Sts::VERSION,
+                            "version" => ::Metanorma::Iso::VERSION,
                             "mn_icon_light" => metanorma_icon_light,
                             "mn_icon_dark" => metanorma_icon_dark,
                           })
