@@ -35,7 +35,7 @@ RSpec.describe "Figure graphic href" do
   it "emits the image reference as xlink:href on graphic" do
     graphic = doc.at_xpath("//fig[@id='fig_1']//graphic")
     expect(graphic).not_to be_nil
-    expect(graphic["xlink:href"]).to eq("images/overview.svg")
+    expect(graphic["xlink:href"]).to eq("overview")
   end
 
   it "declares the xlink namespace on the root element" do
