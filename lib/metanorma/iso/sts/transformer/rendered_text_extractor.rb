@@ -51,6 +51,47 @@ module Metanorma
           end
           public_class_method :walkable?
 
+          # Section number from the presentation XML: the autonum
+          # attribute (annexes, term notes) or the fmt-title/fmt-name
+          # caption-label's autonum semx ("1", "8.1", "3.1"). The delim
+          # between number and title is a <tab/>, which text extraction
+          # drops, so the caption-label span must be isolated —
+          # splitting the whole fmt-title text would glue number and
+          # title together ("1Scope"). Single source of truth for both
+          # the label extraction and the id derivation.
+          def self.autonum_of(source_clause)
+            if source_clause.class.method_defined?(:autonum) && source_clause.autonum
+              return source_clause.autonum.to_s
+            end
+
+            title_wrapper = %i[fmt_title fmt_name].filter_map do |method|
+              source_clause.public_send(method) if source_clause.class.method_defined?(method)
+            end.first
+            title_wrapper = Array(title_wrapper).first
+            return nil unless title_wrapper
+
+            caption_label_text(title_wrapper)
+          end
+
+          # Text of the <span class="fmt-caption-label"> inside a
+          # fmt-title — the bare section number.
+          def self.caption_label_text(fmt_title)
+            return nil unless fmt_title.class.method_defined?(:each_mixed_content)
+
+            label_span = nil
+            fmt_title.each_mixed_content do |child|
+              if child.is_a?(Metanorma::Document::Components::Inline::SpanElement) &&
+                  child.class_attr == "fmt-caption-label"
+                label_span = child
+                break
+              end
+            end
+            return nil unless label_span
+
+            text = text_of(label_span).strip
+            text.empty? ? nil : text
+          end
+
           def initialize
             @parts = []
             @seen = {}

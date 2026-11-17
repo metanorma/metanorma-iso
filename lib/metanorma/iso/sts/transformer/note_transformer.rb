@@ -16,13 +16,15 @@ module Metanorma
         class NoteTransformer < Base
           def transform(source_note)
             paragraphs = extract_paragraphs(source_note)
-            return nil if paragraphs.empty?
+            lists = extract_lists(source_note)
+            preformats = extract_preformats(source_note)
+            return nil if paragraphs.empty? && lists.empty? && preformats.empty?
 
             if example?(source_note)
               label = example_label(source_note)
-              ModelBuilder.non_normative_example(paragraph: paragraphs, label: label)
+              ModelBuilder.non_normative_example(paragraph: paragraphs, list: lists, preformat: preformats, label: label)
             else
-              ModelBuilder.non_normative_note(paragraph: paragraphs)
+              ModelBuilder.non_normative_note(paragraph: paragraphs, list: lists)
             end
           end
 
@@ -69,16 +71,54 @@ module Metanorma
             end
           end
 
+          # The note/example body lives on typed attributes (content /
+          # paragraphs hold the paragraphs; ul / ol the block lists;
+          # sourcecode the literal blocks) — walking mixed content yields
+          # nothing and emits an empty shell. The dl/quote/table/figure/
+          # requirement carriers have no counterpart on the NisoSts
+          # note/example models and are skipped.
+          def extract_lists(source_note)
+            %i[ul ol].flat_map do |attr|
+              next [] unless source_note.class.method_defined?(attr)
+
+              Array(source_note.public_send(attr)).map { |l| list_transformer.transform(l) }
+            end
+          end
+
+          def extract_preformats(source_note)
+            return [] unless source_note.class.method_defined?(:sourcecode)
+
+            Array(source_note.sourcecode).filter_map { |sc| transform_preformat(sc) }
+          end
+
           def preformat_text(source_code)
             return unless source_code.is_a?(sourcecode_block_class)
 
             body = source_code.body
-            return source_code.text unless body
+            return decoded_sourcecode_text(source_code) unless body
 
             content = body.content if body.is_a?(Lutaml::Model::Serializable)
             return CGI.unescapeHTML(Array(content).join) if content && !content.to_s.empty?
 
-            source_code.text
+            decoded_sourcecode_text(source_code)
+          end
+
+          # SourcecodeBlock keeps its literal on the plain +content+
+          # attribute (map_content); decoded_content unwraps the markup
+          # encoding on metanorma-document >= 0.3.1, with a local decode
+          # as the fallback for older releases.
+          def decoded_sourcecode_text(source_code)
+            return nil unless source_code.class.method_defined?(:content)
+
+            raw = if source_code.class.method_defined?(:decoded_content) && source_code.decoded_content
+                    source_code.decoded_content
+                  else
+                    source_code.content
+                  end
+            return nil if raw.nil?
+
+            text = CGI.unescapeHTML(Array(raw).join)
+            text.empty? ? nil : text
           end
 
           def note_block_class

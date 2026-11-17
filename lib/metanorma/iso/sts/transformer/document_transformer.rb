@@ -12,7 +12,7 @@ module Metanorma
 
             std = ModelBuilder.standard(
               lang: context.language,
-              dtd_version: "1.2",
+              dtd_version: "1.0",
               front: front_model,
               body: body_model,
               back: back_model
@@ -26,9 +26,16 @@ module Metanorma
             inject_namespaces(xml)
               .then { |x| inject_processing_meta(x) }
               .then { |x| fix_lang_attribute(x) }
+              .then { |x| apply_nbsp(x) }
           end
 
           private
+
+          # NBSP typography between reference markers and numbers
+          # ("ISO 8601", "Table 3") — text nodes only, never attributes.
+          def apply_nbsp(xml)
+            Transformer::NbspProcessor.apply_to_text(xml)
+          end
 
           def build_front(source)
             return nil unless source.has_metadata?

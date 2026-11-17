@@ -28,15 +28,16 @@ RSpec.describe Metanorma::Iso::Sts::Transformer do
       expect(output).to include('mathml="MathML 3.0"')
     end
 
-    it "emits the OIML identifier as a decomposed NISO STS <std-ident>" do
+    it "emits the identifier as a decomposed NISO STS <std-ident> on iso-meta" do
+      expect(output).to include("<iso-meta>")
       expect(output).to include("<std-ident>")
-      expect(output).to include("<originator>OIML</originator>")
-      expect(output).to include("<doc-type>r</doc-type>")
+      expect(output).to include("<originator>ISO</originator>")
       expect(output).to include("<doc-number>7</doc-number>")
     end
 
-    it "records the OIML series letter" do
-      expect(output).to include("<meta-value>R</meta-value>")
+    it "records the publisher copyright on iso-meta" do
+      expect(output).to include("<copyright-holder>International " \
+                                "Organization of Legal Metrology</copyright-holder>")
     end
 
     it "transforms <clause> → <sec> with title" do
@@ -82,8 +83,9 @@ RSpec.describe Metanorma::Iso::Sts::Transformer do
     end
 
     it "keeps only the presentation mirror of a semantic xref" do
-      expect(output).to include('<xref ref-type="sec" rid="s_one">Clause 1</xref>')
-      expect(output.scan("Clause 1").size).to eq(1)
+      nbsp = [0xC2, 0xA0].pack("C*").force_encoding("UTF-8")
+      expect(output).to include(%(<xref ref-type="sec" rid="s_one">Clause#{nbsp}1</xref>))
+      expect(output.scan("Clause#{nbsp}1").size).to eq(1)
     end
   end
 

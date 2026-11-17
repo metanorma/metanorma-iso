@@ -9,7 +9,9 @@ module Metanorma
         module ModelBuilder
           module_function
 
-          def standard(lang:, dtd_version: "1.2", front: nil, body: nil, back: nil)
+          # The NISO STS XSD pins <standard dtd-version> to the fixed
+          # value "1.0"; anything else fails schema validation.
+          def standard(lang:, dtd_version: "1.0", front: nil, body: nil, back: nil)
             ::Sts::NisoSts::Standard.new(
               lang: lang,
               dtd_version: dtd_version
@@ -20,8 +22,11 @@ module Metanorma
             end
           end
 
-          def front(std_meta: nil)
-            ::Sts::NisoSts::Front.new.tap { |f| f.std_meta = std_meta if std_meta }
+          def front(std_meta: nil, iso_meta: nil)
+            ::Sts::NisoSts::Front.new.tap do |f|
+              f.std_meta = std_meta if std_meta
+              f.iso_meta = iso_meta if iso_meta
+            end
           end
 
           def body(sec: [])
@@ -74,6 +79,13 @@ module Metanorma
               end
             end
             result
+          end
+
+          def term_section(id: nil)
+            ::Sts::NisoSts::TermSection.new do |ts|
+              ts.id = id if id
+              yield ts if block_given?
+            end
           end
 
           def paragraph(id: nil)
@@ -162,7 +174,7 @@ module Metanorma
           end
 
           def graphic(href: nil)
-            ::Sts::NisoSts::Graphic.new(href: xlink_href)
+            ::Sts::NisoSts::Graphic.new(href: href)
           end
 
           def caption(title: nil)
@@ -183,16 +195,19 @@ module Metanorma
             ::Sts::NisoSts::InlineFormula.new(math: math)
           end
 
-          def non_normative_note(paragraph: [], label: nil)
+          def non_normative_note(paragraph: [], list: [], label: nil)
             ::Sts::NisoSts::NonNormativeNote.new.tap do |n|
               n.p = Array(paragraph) if paragraph&.any?
+              n.list = Array(list) if list&.any?
               n.label = ::Sts::NisoSts::Label.new(content: [label]) if label
             end
           end
 
-          def non_normative_example(paragraph: [], label: nil)
+          def non_normative_example(paragraph: [], list: [], preformat: [], label: nil)
             ::Sts::NisoSts::NonNormativeExample.new.tap do |e|
               e.p = Array(paragraph) if paragraph&.any?
+              e.list = Array(list) if list&.any?
+              e.preformat = Array(preformat) if preformat&.any?
               e.label = ::Sts::NisoSts::Label.new(content: [label]) if label
             end
           end
@@ -202,6 +217,13 @@ module Metanorma
               rl.content_type = content_type if content_type
               rl.title = ::Sts::NisoSts::Title.new(content: [title]) if title
               rl.ref = Array(ref) if ref&.any?
+            end
+          end
+
+          def standard_ref(type: nil, value: nil)
+            ::Sts::NisoSts::StandardRef.new do |sr|
+              sr.type = type if type
+              sr.value = value if value
             end
           end
 
@@ -256,11 +278,13 @@ module Metanorma
             ::Sts::NisoSts::StandardIdentification.new(originator: doc_identifier)
           end
 
-          def permissions(holder: nil, year: nil)
+          def permissions(holder: nil, year: nil, copyright_statement: nil)
+            holders = Array(holder).compact
             attrs = {}
-            attrs[:copyright_statement] = "© #{year} #{holder}" if year && holder
+            attrs[:copyright_statement] = copyright_statement ||
+              (year && holders.any? ? "© #{year} #{holders.first}" : nil)
             attrs[:copyright_year] = year.to_s if year
-            attrs[:copyright_holder] = holder.to_s if holder
+            attrs[:copyright_holder] = holders if holders.any?
             ::Sts::NisoSts::Permissions.new(attrs)
           end
 
@@ -269,6 +293,63 @@ module Metanorma
               custom_meta: [::Sts::NisoSts::CustomMeta.new(
                 meta_name: name, meta_value: value
               )]
+            )
+          end
+
+          # ---- ISO front matter (<iso-meta>) ----------------------------------
+
+          # Builds a <iso-meta> block (NisoSts::MetadataIso) per the
+          # IEC/ISO Coding Guidelines. Most children are bare strings on
+          # the model; only title_wrap, doc_ident, std_ident, std_ref,
+          # permissions, ics remain typed. The block yields the
+          # MetadataIso instance so callers can attach the typed children
+          # and set string fields directly.
+          def metadata_iso
+            ::Sts::NisoSts::MetadataIso.new { |m| yield m if block_given? }
+          end
+
+          def title_wrap(lang: nil)
+            ::Sts::NisoSts::TitleWrap.new do |tw|
+              tw.lang = lang if lang
+              yield tw if block_given?
+            end
+          end
+
+          def title_full(content: nil)
+            ::Sts::NisoSts::TitleFull.new do |t|
+              yield t if block_given?
+              t.content = Array(content) if content
+            end
+          end
+
+          def title_compl(content: nil)
+            ::Sts::NisoSts::TitleCompl.new do |t|
+              yield t if block_given?
+              t.content = Array(content) if content
+            end
+          end
+
+          def document_identification(sdo: nil, proj_id: nil, language: nil,
+                                      release_version: nil, urn: nil)
+            ::Sts::NisoSts::DocumentIdentification.new(
+              sdo: sdo,
+              proj_id: proj_id,
+              language: language,
+              release_version: release_version,
+              urn: urn,
+            )
+          end
+
+          def standard_identification(originator: nil, doc_type: nil,
+                                      doc_number: nil, edition: nil,
+                                      version: nil, part_number: nil)
+            ::Sts::NisoSts::StandardIdentification.new(
+              originator: originator,
+              doc_type: doc_type,
+              doc_number: doc_number,
+              edition: edition,
+              version: version,
+              part_number: part_number,
             )
           end
 

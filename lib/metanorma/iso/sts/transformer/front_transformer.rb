@@ -5,8 +5,8 @@ module Metanorma
       module Transformer
         class FrontTransformer < Base
           def transform(source)
-            std_meta = build_std_meta(source)
-            ModelBuilder.front(std_meta: std_meta)
+            iso_meta = build_iso_meta(source)
+            ModelBuilder.front(iso_meta: iso_meta)
           end
 
           def preface_sections(source)
@@ -19,24 +19,11 @@ module Metanorma
 
           private
 
-          def build_std_meta(source)
-            title = source.formatted_title || source.title(type: "main") || source.title
-            ModelBuilder.std_meta(
-              doc_identifier: source.docidentifier,
-              title: title,
-              pub_date: source.pub_date,
-              permissions: ModelBuilder.permissions(
-                holder: source.copyright_holder || source.publisher || "OIML",
-                year: source.copyright_year || source.pub_date
-              ),
-              custom_meta_group: build_custom_meta(source)
-            )
-          end
-
-          def build_custom_meta(source)
-            series = source.docidentifier.to_s.match(/OIML\s+([A-Z])\s/) { |m| m[1] }
-            return nil unless series
-            ModelBuilder.custom_meta_group(name: "oiml-doc-series", value: series)
+          # ISO flavor front matter: <iso-meta> per the IEC/ISO Coding
+          # Guidelines, with <ics> codes as plain string content. The OIML
+          # flavor keeps <std-meta>.
+          def build_iso_meta(source)
+            Transformer::IsoMetaTransformer.new(context).transform(source.bibdata)
           end
 
           def build_boilerplate(source)

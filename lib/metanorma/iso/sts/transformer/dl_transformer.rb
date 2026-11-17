@@ -5,9 +5,12 @@ module Metanorma
     module Sts
       module Transformer
         # Converts MN `<dl>`/`<dt>`/`<dd>` to STS `<def-list>`/`<def-item>`.
-        # Follows mnconvert's pattern (mn2xml.xsl lines 5327-5528): each
-        # dt/dd pair becomes a def-item with term + def children. Notes
-        # inside dl are extracted as siblings after the def-list.
+        # Follows mnconvert's shape: each dt/dd pair becomes a def-item with
+        # term + def children, and the whole dd body (paragraphs, lists,
+        # notes, examples, preformats) merges into the def's SINGLE <p> as
+        # mixed content — the NISO STS def model wants one paragraph that
+        # carries the run-in blocks (e.g. "The main document number of the
+        # standard.<non-normative-example>…</non-normative-example>").
         class DlTransformer < Base
           def transform(source_dl)
             def_items = pair_dt_dd(source_dl)
@@ -38,9 +41,66 @@ module Metanorma
             ModelBuilder.def_item(**attrs)
           end
 
+          # One <p> per def: the dd's paragraphs contribute their inline
+          # entries (text runs merged across the paragraph boundary), and
+          # the block siblings (lists, notes, examples, preformats) nest
+          # inside the same p at their document position. The merged p
+          # takes the first source paragraph's id.
           def build_def(dd)
-            paragraphs = Array(dd.p).map { |p| paragraph_transformer.transform(p) }
-            ModelBuilder.def(paragraph: paragraphs)
+            ModelBuilder.def(paragraph: [build_merged_paragraph(dd)])
+          end
+
+          def build_merged_paragraph(dd)
+            paragraphs = Array(dd.p)
+            first_id = paragraphs.first&.id if paragraphs.first&.class&.method_defined?(:id)
+
+            ::Sts::NisoSts::Paragraph.new(id: first_id) do |p|
+              paragraphs.each do |para|
+                paragraph_transformer.entries_for(para).each do |kind, value|
+                  append_inline(p, kind, value)
+                end
+              end
+
+              Array(dd.ul).each { |ul| p.list list_transformer.transform(ul) }
+              Array(dd.ol).each { |ol| p.list list_transformer.transform(ol) }
+              Array(dd.example).each do |ex|
+                example = note_transformer.transform(ex)
+                p.non_normative_example example if example
+              end
+              Array(dd.note).each do |nt|
+                note = note_transformer.transform(nt)
+                p.non_normative_note note if note
+              end
+              Array(dd.sourcecode).each do |sc|
+                pre = note_transformer.transform_preformat(sc)
+                p.preformat pre if pre
+              end
+            end
+          end
+
+          # Consecutive text entries merge into the last string so the
+          # built (never-parsed) mixed-content model serializes every
+          # run — lutaml-model#1164 drops consecutive map_content text
+          # entries beyond the first.
+          def append_inline(target, kind, value)
+            case kind
+            when :text
+              existing = target.text
+              if existing.is_a?(Array) && existing.last.is_a?(String)
+                existing[-1] = existing.last + value
+              else
+                target.text value
+              end
+            when :bold then target.bold value
+            when :italic then target.italic value
+            when :sub then target.sub value
+            when :sup then target.sup value
+            when :monospace then target.monospace value
+            when :inline_formula then target.inline_formula value
+            when :xref then target.xref value
+            when :ext_link then target.ext_link value
+            when :fn then target.fn value
+            end
           end
         end
       end
