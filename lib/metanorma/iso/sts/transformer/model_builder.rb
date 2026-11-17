@@ -213,7 +213,6 @@ module Metanorma
               e.p = Array(paragraph) if paragraph&.any?
               e.list = Array(list) if list&.any?
               e.preformat = Array(preformat) if preformat&.any?
-              e.label = ::Sts::NisoSts::Label.new(content: [label]) if label
             end
           end
 
