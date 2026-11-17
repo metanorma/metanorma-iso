@@ -27,6 +27,7 @@ module Metanorma
         class IdGenerator
           def initialize
             @registry = {}
+            @kinds = {}
             @entry_ids = {}
             @issued_ids = {}
             @annex_count = 0
@@ -34,8 +35,15 @@ module Metanorma
             @counter = 0
           end
 
-          def register(source_id, sts_id)
+          def register(source_id, sts_id, kind = nil)
             @registry[source_id] = sts_id
+            @kinds[source_id] = kind if kind
+          end
+
+          # Emission kind registered for the source id ("ref", "annex",
+          # "table", "figure", "formula", "clause"); nil when unknown.
+          def kind_for(source_id)
+            @kinds[source_id]
           end
 
           def remap(source_id)

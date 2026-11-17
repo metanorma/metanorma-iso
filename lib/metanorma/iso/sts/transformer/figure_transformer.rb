@@ -56,7 +56,11 @@ module Metanorma
               next unless img.class.method_defined?(attr)
 
               href = img.public_send(attr)
-              return href if href
+              next unless href
+
+              # Guidelines 5.10: the reference carries no asset-folder
+              # prefix (ISO) and no file extension.
+              return href.sub(%r{\Aimages/}, "").sub(/\.[A-Za-z0-9]+\z/, "")
             end
             nil
           end

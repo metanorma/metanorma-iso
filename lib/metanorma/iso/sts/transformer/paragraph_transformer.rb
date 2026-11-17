@@ -523,7 +523,19 @@ module Metanorma
           # requirement tables (r-/rc-/cc-/ct-/action- prefixes, clause
           # anchors) map by inspecting the remapped rid.
           def ref_type_for(node, rid)
+            kind = id_generator.kind_for(rid)
+            mapped = case kind
+                     when "ref" then "bibr"
+                     when "annex" then "app"
+                     when "table" then "table"
+                     when "figure" then "fig"
+                     when "formula" then "disp-formula"
+                     when "clause", "terms" then "sec"
+                     end
+            return mapped if mapped
+
             case rid
+            when /\Asec_[A-Z]+\z/ then "app"
             when /\Asec_/ then "sec"
             when /\Atab_/ then "table"
             when /\Afig_/ then "fig"

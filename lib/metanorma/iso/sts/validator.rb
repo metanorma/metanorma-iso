@@ -65,7 +65,10 @@ module Metanorma
         # -- check helpers -------------------------------------------------
 
         def nbsp_strip(text)
-          text.to_s.tr(" ", " ").strip
+          case text
+          when Nokogiri::XML::Node then text.text.to_s.tr(" ", " ").strip
+          else text.to_s.tr(" ", " ").strip
+          end
         end
 
         def enum_check(attr, allowed, label:)
@@ -610,6 +613,7 @@ module Metanorma
           r.call("iso-gdg-5.10-2", "Guidelines 5.10", "graphic | inline-graphic",
                  lambda do |node, *_|
                    href = node["xlink:href"].to_s
+                   return nil if href.start_with?("data:")
                    return nil unless href.match?(/\.(png|gif|jpe?g|svg|tiff?|eps|pdf)\z/i)
 
                    "@xlink:href carries the graphic reference without the " \
@@ -618,6 +622,7 @@ module Metanorma
           r.call("iso-gdg-5.10-3", "Guidelines 5.10", "graphic | inline-graphic",
                  lambda do |node, doc|
                    href = node["xlink:href"].to_s
+                   return nil if href.start_with?("data:")
                    if doc.xpath("//std-meta//originator[normalize-space()='ISO']").any? &&
                      href.include?("/")
                      "ISO graphic references carry no asset-folder prefix: '#{href}'"
@@ -934,7 +939,7 @@ module Metanorma
                  end)
           r.call("iso-gdg-9.2.9-1", "Guidelines 9.2.9", "tbx:subjectField",
                  lambda do |node, *_|
-                   node.parent&.name == "tbx:langSet" ||
+                   node.parent&.name == "langSet" ||
                      "subject fields are tagged <tbx:subjectField> within " \
                      "<tbx:langSet>"
                  end)

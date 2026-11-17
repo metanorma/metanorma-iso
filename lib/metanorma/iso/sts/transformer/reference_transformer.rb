@@ -17,14 +17,15 @@ module Metanorma
 
             unless normative
               # Back-matter bibliography: a bare ref-list.
-              return ModelBuilder.ref_list(content_type: "bibliography", title: title_text, ref: refs)
+              return ModelBuilder.ref_list(content_type: "bibl", title: title_text, ref: refs)
             end
 
             # In-body normative references: a numbered <sec> whose intro
             # paragraphs precede the (untitled) ref-list.
-            ref_list = ModelBuilder.ref_list(content_type: "normative-refs", title: nil, ref: refs)
+            ref_list = ModelBuilder.ref_list(content_type: "norm-refs", title: nil, ref: refs)
             attrs = {}
             attrs[:id] = ref_section.id if ref_section.class.method_defined?(:id) && ref_section.id
+            attrs[:type] = "norm-refs"
             attrs[:label] = ::Sts::NisoSts::Label.new(content: [label]) if label
             attrs[:title] = ::Sts::NisoSts::Title.new(content: [title_text]) if title_text && !title_text.empty?
             attrs[:paragraphs] = paragraphs if paragraphs.any?
@@ -41,7 +42,10 @@ module Metanorma
             content_parts << identifier if identifier
             content_parts << formattedref if formattedref
 
+            rid = bibitem.class.method_defined?(:id) ? bibitem.id : nil
+            id_generator.register(rid, rid, "ref") if rid
             ModelBuilder.ref(
+              id: rid,
               label: label_text,
               mixed_citation: content_parts.join(", "),
               std: build_std(identifier, formattedref)

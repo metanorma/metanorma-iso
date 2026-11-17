@@ -32,12 +32,6 @@ module Metanorma
           # fmt-name caption label; synthesize from the kind + autonum
           # when the source carries none.
           def designation_label(source, kind)
-            name = source.class.method_defined?(:fmt_name) ? source.fmt_name : nil
-            wrapper = Array(name).first if name
-            text = wrapper ? RenderedTextExtractor.text_of(wrapper).strip : ""
-            text = text.gsub(/<[^>]+>/, " ").squeeze(" ").strip
-            return text unless text.empty?
-
             number = source.class.method_defined?(:autonum) ? source.autonum.to_s.strip : ""
             number.empty? ? kind : "#{kind} #{number}"
           end
@@ -51,7 +45,7 @@ module Metanorma
             return nil unless source_example.is_a?(example_block_class)
 
             number = source_example.autonum if source_example.class.method_defined?(:autonum)
-            number && !number.to_s.empty? ? "Example #{number}" : "Example"
+            number && !number.to_s.empty? ? "EXAMPLE #{number}" : "EXAMPLE"
           end
 
           # SourcecodeBlock stores its text in body.content (the bare

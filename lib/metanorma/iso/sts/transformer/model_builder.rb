@@ -231,8 +231,9 @@ module Metanorma
             end
           end
 
-          def ref(label: nil, mixed_citation: nil, std: nil)
-            ::Sts::NisoSts::Reference.new.tap do |r|
+          def ref(id: nil, label: nil, mixed_citation: nil, std: nil)
+            ::Sts::NisoSts::Reference.new do |r|
+              r.id = id if id
               r.label = ::Sts::NisoSts::Label.new(content: [label]) if label
               r.mixed_citation = ::Sts::NisoSts::MixedCitation.new(content: [mixed_citation]) if mixed_citation
               r.std = std if std
