@@ -27,14 +27,14 @@ module Metanorma
           private
 
           def source_id_of(source_table)
-            return nil unless source_table.class.method_defined?(:id) && source_table.id
+            return nil unless source_table.id
 
             source_table.id
           end
 
           # "Table 2" from the presentation XML autonum attribute.
           def table_label(source_table)
-            return nil unless source_table.class.method_defined?(:autonum) && source_table.autonum
+            return nil unless source_table.autonum
 
             "Table #{source_table.autonum}"
           end
@@ -44,10 +44,10 @@ module Metanorma
           # data tables use the semantic <name>.
           def table_caption(source_table)
             text = nil
-            if source_table.class.method_defined?(:fmt_name) && source_table.fmt_name
+            if source_table.fmt_name
               text = RenderedTextExtractor.text_of(source_table.fmt_name)
             end
-            if (text.nil? || text.empty?) && source_table.class.method_defined?(:name) && source_table.name
+            if (text.nil? || text.empty?) && source_table.name
               text = RenderedTextExtractor.text_of(source_table.name)
             end
             return nil if text.nil? || text.empty?
@@ -59,10 +59,10 @@ module Metanorma
 
           def build_table(source_table, bold_header: false)
             attrs = {}
-            if source_table.class.method_defined?(:thead) && source_table.thead
+            if source_table.thead
               attrs[:thead] = build_section(source_table.thead, ::Sts::TbxIsoTml::Thead, bold_header: bold_header)
             end
-            if source_table.class.method_defined?(:tbody) && source_table.tbody
+            if source_table.tbody
               attrs[:tbody] = build_section(source_table.tbody, ::Sts::TbxIsoTml::Tbody, bold_header: bold_header)
             end
             ::Sts::TbxIsoTml::Table.new(attrs)
@@ -129,7 +129,7 @@ module Metanorma
           # the footnote as a sibling <fn> element inside the cell so
           # the renderer can show its content.
           def cell_footnotes(cell)
-            return [] unless cell.class.method_defined?(:each_mixed_content)
+            
 
             cell.each_mixed_content.filter_map do |node|
               next if node.is_a?(String)
@@ -264,7 +264,7 @@ module Metanorma
           end
 
           def walk_cell(cell)
-            return unless cell.class.method_defined?(:each_mixed_content)
+            
 
             @cell_stem_mirrors = build_cell_stem_mirrors(cell)
 
@@ -305,7 +305,7 @@ module Metanorma
 
           def build_cell_stem_mirrors(cell)
             map = {}
-            return map unless cell.class.method_defined?(:each_mixed_content)
+            
 
             cell.each_mixed_content do |node|
               next unless node.is_a?(Metanorma::Document::Components::Inline::FmtStemElement)

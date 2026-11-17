@@ -111,13 +111,10 @@ module Metanorma
           private
 
           def id_val_of(source_para)
-            return nil unless source_para.is_a?(Lutaml::Model::Serializable) && source_para.class.method_defined?(:id)
             source_para.id
           end
 
           def walk_inline(obj, &block)
-            return unless obj.class.method_defined?(:each_mixed_content)
-
             nodes = obj.each_mixed_content.to_a
             nodes.each_with_index do |node, index|
               following = nodes[index + 1]
@@ -139,9 +136,9 @@ module Metanorma
           def semantic_with_mirror?(node, following)
             return false if node.is_a?(String)
             return false unless following.is_a?(Metanorma::Document::Components::Inline::SemxElement)
-            return false unless following.class.method_defined?(:source) && following.source
+            return false if following.source.nil? || following.source.empty?
 
-            node.class.method_defined?(:id) && node.id && node.id == following.source
+            !node.id.nil? && !node.id.empty? && node.id == following.source
           end
 
           def emit_mirror(node, mirror, &block)
@@ -153,7 +150,7 @@ module Metanorma
 
           def node_style(node)
             %i[style type].each do |attr|
-              next unless node.class.method_defined?(attr)
+              next unless node.class.attributes.key?(attr)
 
               val = node.public_send(attr).to_s
               return val unless val.empty?
@@ -244,7 +241,7 @@ module Metanorma
 
           def walk_semx_named_children(semx, &block)
             SEMX_NAMED_CHILDREN.each do |attr|
-              next unless semx.class.method_defined?(attr)
+              next unless semx.class.attributes.key?(attr)
               val = semx.public_send(attr)
               next if val.nil?
               Array(val).each { |v| walk_node(v, &block) }
@@ -338,7 +335,7 @@ module Metanorma
           # become InlineFormula via MathML passthrough; nested strong/
           # em become nested Bold/Italic.
           def build_inline_children(node)
-            return [] unless node.class.method_defined?(:each_mixed_content)
+
 
             entries = []
             current_text = nil
@@ -427,12 +424,12 @@ module Metanorma
           # inner semx carries a `source` matching the original stem's id.
           def build_stem_mirror_map(paragraph)
             map = {}
-            return map unless paragraph.class.method_defined?(:each_mixed_content)
+
 
             walk_all(paragraph) do |node|
               next unless node.is_a?(Metanorma::Document::Components::Inline::FmtStemElement)
               Array(node.semx).each do |semx|
-                source = semx.source if semx.class.method_defined?(:source)
+                source = semx.source
                 map[source] = node if source && !source.empty?
               end
             end
@@ -440,7 +437,7 @@ module Metanorma
           end
 
           def lookup_stem_mirror(stem_node)
-            return nil unless stem_node.class.method_defined?(:id)
+
             return nil unless stem_node.id
 
             @stem_mirrors ? @stem_mirrors[stem_node.id] : nil
@@ -477,7 +474,7 @@ module Metanorma
               end
               block.call(node)
               node.class.attributes.each do |attr_name, _|
-                next unless node.class.method_defined?(attr_name)
+                next unless node.class.attributes.key?(attr_name)
                 val = node.public_send(attr_name) rescue next
                 next if val.nil?
                 Array(val).each { |v| queue << v if v.is_a?(Lutaml::Model::Serializable) }
@@ -488,7 +485,7 @@ module Metanorma
           def build_xref(node)
             rid = nil
             [:target, :refid, :to].each do |attr|
-              next unless node.class.method_defined?(attr)
+              next unless node.class.attributes.key?(attr)
               val = node.public_send(attr)
               rid = val if val.is_a?(String) && !val.empty?
               break if rid
@@ -508,7 +505,7 @@ module Metanorma
           def xref_visible_text(node, rid)
             explicit = text_of(node)
             return explicit unless explicit.empty?
-            raw = node.class.method_defined?(:target) ? node.target.to_s : rid
+            raw = node.target.to_s
             case raw
             when /\Asec-(.+)\z/, /\Afig-(.+)\z/, /\Atable-(.+)\z/, /\Afn-(.+)\z/
               "#{Regexp.last_match(1)} "
@@ -546,9 +543,18 @@ module Metanorma
           end
 
           def requirement_anchor_ref_type(node, rid)
-            style = node.style if node.class.method_defined?(:style)
-            style = style.to_s if style
-            style = @mirror_style if (style.nil? || style.empty?) && @mirror_style
+            # FmtXrefElement#type is the DISPLAY form ("inline"), not the
+            # reference kind — mirrors always take the semantic original's
+            # style via @mirror_style.
+            style =
+              if node.is_a?(Metanorma::Document::Components::Inline::FmtXrefElement)
+                ""
+              else
+                node.style.to_s
+              end
+            # The presentation mirror carries no kind of its own: the
+            # semantic original (the emit_mirror pair) lends its style.
+            style = @mirror_style.to_s if style.empty? && @mirror_style
             case style
             when "clause", "section" then "sec"
             when "table" then "table"
@@ -561,7 +567,7 @@ module Metanorma
           def build_link(node)
             href = nil
             [:target, :href].each do |attr|
-              next unless node.class.method_defined?(attr)
+              next unless node.class.attributes.key?(attr)
               val = node.public_send(attr)
               href = val if val.is_a?(String) && !val.empty?
               break if href
@@ -579,24 +585,24 @@ module Metanorma
           end
 
           def link_text(node)
-            c = node.content if node.class.method_defined?(:content)
+            c = node.content
             c = Array(c) unless c.is_a?(Array)
             joined = c.map(&:to_s).join.strip
             joined.empty? ? text_of(node) : joined
           end
 
           def eref_text(node)
-            citeas = node.citeas if node.class.method_defined?(:citeas)
+            citeas = node.citeas
             return citeas.to_s if citeas && !citeas.to_s.empty?
             text_of(node)
           end
 
           def concept_text(node)
-            renderterm = Array(node.renderterm).first.to_s if node.class.method_defined?(:renderterm)
-            xref_node = Array(node.xref).first if node.class.method_defined?(:xref)
+            renderterm = Array(node.renderterm).first.to_s
+            xref_node = Array(node.xref).first
             return renderterm unless xref_node
 
-            rid = xref_node.target if xref_node.class.method_defined?(:target)
+            rid = xref_node.target
             autonum = source.term_autonum_for(rid) if rid
             return "#{renderterm} (#{autonum})" if autonum && !autonum.empty?
             "#{renderterm} (#{rid})"

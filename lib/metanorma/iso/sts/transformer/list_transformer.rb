@@ -60,7 +60,7 @@ module Metanorma
           # The item's marker from the presentation XML (its fmt-name /
           # autonum, e.g. "—" or "1."), nil when absent.
           def item_label(li)
-            return nil unless li.class.method_defined?(:fmt_name) && li.fmt_name
+            return nil unless li.fmt_name
 
             text = RenderedTextExtractor.text_of(li.fmt_name).strip
             text.empty? ? nil : text
@@ -71,7 +71,7 @@ module Metanorma
           def build_nested_lists(li)
             results = []
             [:unordered_lists, :ordered_lists].each do |attr|
-              next unless li.class.method_defined?(attr)
+              next unless li.class.attributes.key?(attr)
               Array(li.public_send(attr)).each do |nested|
                 results << transform(nested)
               end
@@ -96,7 +96,7 @@ module Metanorma
 
           def extract_dd_text(dd)
             return nil unless dd
-            ps = dd.p if dd.is_a?(Lutaml::Model::Serializable) && dd.class.method_defined?(:p)
+            ps = dd.p
             ps = Array(ps)
             return RenderedTextExtractor.text_of(dd) if ps.empty?
             texts = ps.map { |p| RenderedTextExtractor.text_of(p) }.reject(&:empty?)

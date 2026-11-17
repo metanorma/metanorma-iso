@@ -29,7 +29,7 @@ module Metanorma
 
           def build_def_item(dt, dd)
             attrs = {}
-            attrs[:id] = dt.id if dt.class.method_defined?(:id) && dt.id
+            attrs[:id] = dt.id if dt.id
 
             term_text = RenderedTextExtractor.text_of(dt)
             term = term_text.nil? || term_text.empty? ? nil : ModelBuilder.term(content: [term_text])
@@ -52,7 +52,7 @@ module Metanorma
 
           def build_merged_paragraph(dd)
             paragraphs = Array(dd.p)
-            first_id = paragraphs.first&.id if paragraphs.first&.class&.method_defined?(:id)
+            first_id = paragraphs.first&.id
 
             ::Sts::NisoSts::Paragraph.new(id: first_id) do |p|
               paragraphs.each do |para|

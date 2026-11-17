@@ -5,7 +5,7 @@ module Metanorma
       module Transformer
         class FormulaTransformer < Base
           def transform(source_formula)
-            id = source_formula.id if source_formula.class.method_defined?(:id) && source_formula.id
+            id = source_formula.id if source_formula.id
             label = extract_label(source_formula)
             math = extract_math(source_formula)
             ModelBuilder.disp_formula(id: id, label: label, math: math)
@@ -14,7 +14,7 @@ module Metanorma
           private
 
           def extract_label(source_formula)
-            return nil unless source_formula.class.method_defined?(:fmt_name)
+            
             fmt_name = Array(source_formula.fmt_name).first
             return nil unless fmt_name
             RenderedTextExtractor.text_of(fmt_name)
@@ -31,9 +31,9 @@ module Metanorma
           end
 
           def first_stem(source_formula)
-            if source_formula.class.method_defined?(:stem)
+            if source_formula.stem
               Array(source_formula.stem).first
-            elsif source_formula.class.method_defined?(:formula)
+            elsif source_formula.formula
               formula_el = Array(source_formula.formula).first
               Array(formula_el.stem).first if formula_el
             end

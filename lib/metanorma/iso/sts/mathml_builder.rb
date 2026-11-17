@@ -83,7 +83,7 @@ module Metanorma
         def first_math_element(stem_node)
           if stem_node.is_a?(Metanorma::Document::Components::Inline::FmtStemElement)
             Array(stem_node.semx).flat_map { |semx| Array(semx.math) }.first
-          elsif stem_node.class.method_defined?(:math)
+          elsif stem_node.respond_to?(:math)
             Array(stem_node.math).first
           end
         end

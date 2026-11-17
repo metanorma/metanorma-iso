@@ -147,7 +147,8 @@ module Metanorma
           private
 
           def read_id(obj)
-            return nil unless obj.is_a?(Lutaml::Model::Serializable) && obj.class.method_defined?(:id)
+            return nil unless obj.is_a?(Lutaml::Model::Serializable)
+
             obj.id
           end
 
@@ -243,7 +244,7 @@ module Metanorma
 
             def walk_blocks(section)
               WALK_ATTRS.each do |attr|
-                next unless section.class.method_defined?(attr)
+                next unless section.class.attributes.key?(attr)
 
                 Array(try(section, attr)).each do |item|
                   walk_item(item)
@@ -261,7 +262,7 @@ module Metanorma
 
             def walk_siblings(item)
               %i[note example].each do |attr|
-                next unless item.class.method_defined?(attr)
+                next unless item.class.attributes.key?(attr)
 
                 Array(try(item, attr))
               end
@@ -272,13 +273,13 @@ module Metanorma
             end
 
             def try(obj, attr)
-              obj.public_send(attr) if obj.class.method_defined?(attr)
+              obj.public_send(attr) if obj.class.attributes.key?(attr)
             rescue StandardError
               nil
             end
 
             def read_id(obj)
-              return nil unless obj.is_a?(Lutaml::Model::Serializable) && obj.class.method_defined?(:id)
+              return nil unless obj.is_a?(Lutaml::Model::Serializable)
               obj.id
             end
 

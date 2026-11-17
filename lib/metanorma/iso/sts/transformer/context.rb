@@ -54,7 +54,7 @@ module Metanorma
           # presentation trees by their +anchor+; the bare id is a uuid
           # that differs between the two.
           def requirement_anchor(requirement)
-            return nil unless requirement.class.method_defined?(:anchor)
+            
 
             anchor = requirement.anchor
             anchor.nil? || anchor.empty? ? nil : anchor
