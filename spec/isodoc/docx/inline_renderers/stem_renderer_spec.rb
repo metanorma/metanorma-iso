@@ -48,4 +48,60 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
 
     expect(render_to_text(stem)).to eq("M")
   end
+
+  def presentation_unit_stem
+    Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
+      '<fmt-stem type="MathML"><semx element="stem" source="s1">' \
+      '<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>80</mn>' \
+      '<mo rspace="thickmathspace">⁢</mo><mrow xref="U_km">' \
+      '<mstyle mathvariant="normal"><mi>km</mi></mstyle></mrow></mrow></math>' \
+      '<asciimath>80 "unitsml(km)"</asciimath></semx></fmt-stem>',
+    )
+  end
+
+  it "uses rendered MathML instead of the presentation source macro" do
+    expect(render_to_text(presentation_unit_stem)).to eq("80 km")
+  end
+
+  def structured_unit_stem(mathml)
+    Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
+      '<fmt-stem type="MathML"><semx element="stem" source="s1">' \
+      "<math xmlns=\"http://www.w3.org/1998/Math/MathML\">#{mathml}</math>" \
+      '<asciimath>"unitsml(unit)"</asciimath></semx></fmt-stem>',
+    )
+  end
+
+  {
+    "<msup><mi>m</mi><mn>2</mn></msup>" => "m²",
+    "<mrow><mi>m</mi><mo>⋅</mo><msup><mi>s</mi><mrow><mo>−</mo>" \
+    "<mn>1</mn></mrow></msup></mrow>" => "m⋅s⁻¹",
+    "<msub><mi>m</mi><mn>0</mn></msub>" => "m₀",
+    "<mfrac><mi>m</mi><mi>s</mi></mfrac>" => "(m/s)",
+    "<msup><mfrac><mi>m</mi><mi>s</mi></mfrac><mn>2</mn></msup>" => "(m/s)²",
+    "<msup><mi>s</mi><mn>-1</mn></msup>" => "s⁻¹",
+    "<msubsup><mi>m</mi><mn>0</mn><mn>2</mn></msubsup>" => "m₀²",
+    "<msup><mrow><mi>m</mi><mo>⋅</mo><mi>s</mi></mrow><mn>2</mn></msup>" => "(m⋅s)²",
+    "<msup><mi>m</mi><mi>n</mi></msup>" => "m^(n)",
+  }.each do |mathml, expected|
+    it "preserves unit structure as #{expected}" do
+      expect(render_to_text(structured_unit_stem(mathml))).to eq(expected)
+    end
+  end
+
+  it "uses rendered MathML instead of the semantic source macro" do
+    stem = Metanorma::Document::Components::TextElements::StemElement.from_xml(
+      '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
+      '<mi>km</mi></math><asciimath>"unitsml(km)"</asciimath></stem>',
+    )
+
+    expect(render_to_text(stem)).to eq("km")
+  end
+
+  it "preserves the source text when rendered MathML is unavailable" do
+    stem = Metanorma::Document::Components::TextElements::StemElement.from_xml(
+      '<stem type="AsciiMath"><asciimath>"unitsml(km)"</asciimath></stem>',
+    )
+
+    expect(render_to_text(stem)).to eq('"unitsml(km)"')
+  end
 end
