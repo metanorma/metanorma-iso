@@ -8,11 +8,9 @@ module Metanorma
       module Transformer
         # Converts MN <note> / <example> blocks (outside term entries)
         # to STS <non-normative-note> / <non-normative-example>.
-        # Body notes carry NO label — the renderer prepends the kind
-        # label ("NOTE" / "EXAMPLE") outside the first paragraph, the
-        # way Metanorma marks up body notes ("<span class='note-label'>
-        # NOTE</span>&nbsp;<p>…"). Term entries use "Note N to entry:"
-        # via TermTransformer.
+        # Guidelines 5.6: the designation (NOTE / EXAMPLE, with any
+        # number) is captured in <label>. Term entries use "Note N to
+        # entry:" via TermTransformer.
         class NoteTransformer < Base
           def transform(source_note)
             paragraphs = extract_paragraphs(source_note)
@@ -24,8 +22,23 @@ module Metanorma
               label = example_label(source_note)
               ModelBuilder.non_normative_example(paragraph: paragraphs, list: lists, preformat: preformats, label: label)
             else
-              ModelBuilder.non_normative_note(paragraph: paragraphs, list: lists)
+              ModelBuilder.non_normative_note(paragraph: paragraphs, list: lists,
+                                              label: designation_label(source_note, "NOTE"))
             end
+          end
+
+          # Guidelines 5.6: the designation text (NOTE / EXAMPLE, with
+          # any number) is captured in <label>. Prefer the presentation
+          # fmt-name caption label; synthesize from the kind + autonum
+          # when the source carries none.
+          def designation_label(source, kind)
+            name = source.class.method_defined?(:fmt_name) ? source.fmt_name : nil
+            wrapper = Array(name).first if name
+            text = wrapper ? RenderedTextExtractor.text_of(wrapper).strip : ""
+            return text unless text.empty?
+
+            number = source.class.method_defined?(:autonum) ? source.autonum.to_s.strip : ""
+            number.empty? ? kind : "#{kind} #{number}"
           end
 
           # MN renders body examples as "<span class='example-label'>
@@ -37,7 +50,7 @@ module Metanorma
             return nil unless source_example.is_a?(example_block_class)
 
             number = source_example.autonum if source_example.class.method_defined?(:autonum)
-            number && !number.to_s.empty? ? "Example #{number}" : nil
+            number && !number.to_s.empty? ? "Example #{number}" : "Example"
           end
 
           # SourcecodeBlock stores its text in body.content (the bare

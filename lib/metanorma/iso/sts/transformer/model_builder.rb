@@ -22,10 +22,11 @@ module Metanorma
             end
           end
 
-          def front(std_meta: nil, iso_meta: nil)
+          def front(std_meta: nil, iso_meta: nil, sec: [])
             ::Sts::NisoSts::Front.new.tap do |f|
               f.std_meta = std_meta if std_meta
               f.iso_meta = iso_meta if iso_meta
+              Array(sec).each { |s| f.sec s }
             end
           end
 
@@ -45,14 +46,15 @@ module Metanorma
             ::Sts::NisoSts::AppGroup.new(app: Array(app))
           end
 
-          def sec(id: nil, label: nil, title: nil, content: [], paragraph: [], sec: [],
-                  list: [], table_wrap: [], fig: [], non_normative_note: [],
-                  non_normative_example: [])
+          def sec(id: nil, label: nil, title: nil, sec_type: nil, content: [],
+                  paragraph: [], sec: [], list: [], table_wrap: [], fig: [],
+                  non_normative_note: [], non_normative_example: [])
             all_content = Array(content) + Array(paragraph)
             distributed = distribute_sec_content(all_content)
 
             attrs = {}
             attrs[:id] = id if id
+            attrs[:type] = sec_type if sec_type
             attrs[:title] = ::Sts::NisoSts::Title.new(content: [title]) if title
             attrs[:paragraphs] = distributed[:paragraph] if distributed[:paragraph].any?
             attrs[:sec] = Array(sec) if sec&.any?

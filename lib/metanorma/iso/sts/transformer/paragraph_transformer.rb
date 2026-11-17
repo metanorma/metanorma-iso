@@ -502,7 +502,7 @@ module Metanorma
             rid = id_generator.remap(rid)
 
             visible = xref_visible_text(node, rid)
-            ModelBuilder.xref(rid: rid, ref_type: ref_type_for(node), value: visible)
+            ModelBuilder.xref(rid: rid, ref_type: ref_type_for(node, rid), value: visible)
           end
 
           def xref_visible_text(node, rid)
@@ -517,7 +517,23 @@ module Metanorma
             end
           end
 
-          def ref_type_for(node)
+          # @ref-type per the guidelines 10.1.1 enumeration, derived from
+          # the target: the engine's own id scheme prefixes (sec_/tab_/fig_/
+          # formula_) and the requirement-model anchors preserved inside
+          # requirement tables (r-/rc-/cc-/ct-/action- prefixes, clause
+          # anchors) map by inspecting the remapped rid.
+          def ref_type_for(node, rid)
+            case rid
+            when /\Asec_/ then "sec"
+            when /\Atab_/ then "table"
+            when /\Afig_/ then "fig"
+            when /\Aformula_/ then "disp-formula"
+            when /\Afn_/ then "fn"
+            else requirement_anchor_ref_type(node, rid)
+            end
+          end
+
+          def requirement_anchor_ref_type(node, rid)
             style = node.style if node.class.method_defined?(:style)
             style = style.to_s if style
             style = @mirror_style if (style.nil? || style.empty?) && @mirror_style
@@ -526,7 +542,7 @@ module Metanorma
             when "table" then "table"
             when "figure", "fig" then "fig"
             when "fn", "footnote" then "fn"
-            else "other"
+            else "table"
             end
           end
 

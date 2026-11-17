@@ -50,6 +50,8 @@ module Metanorma
             transformer: Metanorma::Iso::Sts::Transformer::Standard,
             strip_default_namespace: true,
             post_process: lambda do |xml, _transformer, _options|
+              # processing-meta is valid per the delivery-gate schema
+              # (NISO STS extended-1.2 MathML3).
               Metanorma::Iso::Sts.inject_namespaces(xml)
                 .then { |x| Metanorma::Iso::Sts.inject_processing_meta(x) }
                 .then { |x| Metanorma::Iso::Sts.fix_lang_attribute(x) }
