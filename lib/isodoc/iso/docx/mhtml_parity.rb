@@ -3,7 +3,6 @@
 require "nokogiri"
 require "zip"
 require "uniword"
-require "diff/lcs"
 
 module IsoDoc
   module Iso
@@ -42,18 +41,110 @@ module IsoDoc
           if match?
             lines << "MATCH (#{@expected.length} structure/style tokens)"
           else
-            Diff::LCS.sdiff(@expected, @actual).each do |change|
-              next if change.unchanged?
-
-              if change.old_element
-                lines << "- #{change.old_position + 1}: #{change.old_element}"
-              end
-              if change.new_element
-                lines << "+ #{change.new_position + 1}: #{change.new_element}"
-              end
-            end
+            lines.concat(difference_lines)
           end
           lines.join("\n")
+        end
+
+        private
+
+        def difference_lines
+          lines = []
+          old_position = new_position = 0
+          matches = Alignment.new(@expected, @actual).matches
+          matches[@expected.length] = @actual.length
+          matches.each_with_index do |new_match, old_match|
+            next if new_match.nil?
+
+            while old_position < old_match || new_position < new_match
+              if old_position < old_match
+                lines << "- #{old_position + 1}: #{@expected[old_position]}"
+                old_position += 1
+              end
+              if new_position < new_match
+                lines << "+ #{new_position + 1}: #{@actual[new_position]}"
+                new_position += 1
+              end
+            end
+            old_position = old_match + 1
+            new_position = new_match + 1
+          end
+          lines
+        end
+
+        # Bitset LCS thresholds avoid enumerating every pair of equal tokens
+        # (quadratic for repeated table cells). Keep the same earliest-endpoint
+        # thresholds and predecessor links as diff-lcs, including its prefix and
+        # suffix trimming, so ambiguous alignments retain their report positions.
+        class Alignment
+          def initialize(expected, actual)
+            @expected = expected
+            @actual = actual
+            @matches = []
+            @links = {}
+          end
+
+          def matches
+            first, last_expected, last_actual = trim
+            masks = Hash.new(0)
+            (first..last_actual).each do |position|
+              masks[@actual[position]] |= 1 << (position - first)
+            end
+            row = 0
+            (first..last_expected).each do |position|
+              # Set bits mark the smallest actual endpoint for each LCS length.
+              # Subtraction propagates each threshold to its next matching bit;
+              # unchanged thresholds retain their original predecessor links.
+              union = row | masks[@expected[position]]
+              next_row = union & ~(union - ((row << 1) | 1))
+              update_links(row, next_row, position, first)
+              row = next_row
+            end
+            link = @links[row.bit_length - 1]
+            while link
+              @matches[link[1]] = link[2]
+              link = link[0]
+            end
+            @matches
+          end
+
+          private
+
+          def trim
+            first = 0
+            last_expected = @expected.length - 1
+            last_actual = @actual.length - 1
+            while first <= last_expected && first <= last_actual &&
+                @expected[first] == @actual[first]
+              @matches[first] = first
+              first += 1
+            end
+            while first <= last_expected && first <= last_actual &&
+                @expected[last_expected] == @actual[last_actual]
+              @matches[last_expected] = last_actual
+              last_expected -= 1
+              last_actual -= 1
+            end
+            [first, last_expected, last_actual]
+          end
+
+          def update_links(row, next_row, position, offset)
+            # Descending order leaves each predecessor on the previous row.
+            each_bit(next_row & ~row) do |index, bit|
+              previous = (row & (bit - 1)).bit_length - 1
+              @links[index] = [@links[previous], position, index + offset]
+            end
+            each_bit(row & ~next_row) { |index, _bit| @links.delete(index) }
+          end
+
+          def each_bit(bits)
+            until bits.zero?
+              index = bits.bit_length - 1
+              bit = 1 << index
+              yield index, bit
+              bits ^= bit
+            end
+          end
         end
 
         # Word uses both "Heading 1" and "Heading1", and MsoNormal/Normal.
@@ -153,13 +244,12 @@ module IsoDoc
           def html_style(node)
             # Word's named-style selectors are tags, classes or tag.class.
             # Ignore layout CSS and resolve these by specificity/source order.
+            classes = node["class"]&.split
             rules = @styles.select do |selector, _name, _level|
-              selector.match?(VALID_SELECTOR_RE) &&
-                node.matches?(selector)
+              selector_matches?(node, classes, selector)
             end.sort_by do |selector,|
               [selector.include?(".") ? 1 : 0, selector.start_with?(".") ? 0 : 1]
             end
-            classes = node["class"]&.split
             named_rules = classes&.any? ? rules.select { |rule| rule[0].include?(".") } : rules
             name = named_rules.filter_map { |rule| rule[1] }.last
             level = rules.filter_map { |rule| rule[2] }.last
@@ -168,6 +258,16 @@ module IsoDoc
             name ||= class_style(classes&.first)
             name ||= node.name.match?(/\Ah[1-6]\z/) ? "Heading#{node.name[1]}" : "Normal"
             [style_name(name), level]
+          end
+
+          def selector_matches?(node, classes, selector)
+            return false unless selector.match?(VALID_SELECTOR_RE)
+
+            # Node#matches? searches the entire document for every paragraph.
+            # These simple selectors depend only on the current element.
+            tag, klass = selector.split(".", 2)
+            (tag.empty? || tag == node.name) &&
+              (klass.nil? || classes&.include?(klass))
           end
 
           def class_style(name)
