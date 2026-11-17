@@ -162,9 +162,11 @@ module Metanorma
         xml = File.read(xml, encoding: "utf-8") if File.file?(xml)
         stage = Nokogiri::XML(xml, &:huge)
           .at("//*[local-name()='bibdata']/*[local-name()='status']/*[local-name()='stage']")&.text
+        # "20.20" or " 30 " -> "20" / "30": drop whitespace and the substage
+        stage = stage.to_s.strip.split(".").first.to_s.strip
 
         if wordtemplate == "simple" ||
-            (wordtemplate != "dis" && /^[0-3].$/.match?(stage))
+            (wordtemplate != "dis" && /\A[0-3]\d\z/.match?(stage))
           :simple
         else
           :dis
