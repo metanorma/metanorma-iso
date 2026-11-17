@@ -67,6 +67,11 @@ module Metanorma
                   flush_text.call
                   entries << [:ext_link, l]
                 end
+              when :ext_link
+                # An already-built ExtLink model (the eref+fmt-link mirror
+                # pair emits the whole link with the semantic citeas).
+                flush_text.call
+                entries << [:ext_link, node]
               when :eref
                 if text && !text.empty?
                   current_text = (current_text || "") + text
@@ -135,6 +140,11 @@ module Metanorma
           # @ref-type maps from Metanorma's @type/@style).
           def semantic_with_mirror?(node, following)
             return false if node.is_a?(String)
+            # <identifier> + <fmt-identifier> mirrors render as ONE
+            # monospace run (Guidelines: requirement paths in <tt>).
+            if node.is_a?(Metanorma::Document::Components::Inline::IdentifierElement)
+              return following.is_a?(Metanorma::Document::Components::Inline::FmtIdentifierElement)
+            end
             return false unless following.is_a?(Metanorma::Document::Components::Inline::SemxElement)
             return false if following.source.nil? || following.source.empty?
 
@@ -142,6 +152,28 @@ module Metanorma
           end
 
           def emit_mirror(node, mirror, &block)
+            # Eref + fmt-link mirror: the LinkElement reader loses the
+            # span texts (delimiter fragments only) — the reference text
+            # lives in the semantic eref's citeas, the URL in the mirror
+            # link's target. Emit the pair as ONE ext-link.
+            if node.is_a?(Metanorma::Document::Components::Inline::ErefElement) &&
+                (link = Array(mirror.fmt_link).first) && link.target
+              ext = ModelBuilder.ext_link(xlink_href: link.target,
+                                          content: [node.citeas])
+              @seen_nodes[mirror.object_id] = true
+              yield(:ext_link, ext, nil)
+              return
+            end
+
+            # Identifier + fmt-identifier: emit the mirror's <tt> runs as
+            # monospace (matches ISO HTML's tt rendering of /req/ paths).
+            if node.is_a?(Metanorma::Document::Components::Inline::IdentifierElement) &&
+                mirror.is_a?(Metanorma::Document::Components::Inline::FmtIdentifierElement)
+              @seen_nodes[mirror.object_id] = true
+              Array(mirror.tt).each { |tt| walk_node(tt, &block) }
+              return
+            end
+
             @mirror_style = node_style(node)
             walk_node(mirror, &block)
           ensure

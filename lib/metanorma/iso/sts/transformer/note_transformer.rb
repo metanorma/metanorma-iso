@@ -19,7 +19,7 @@ module Metanorma
             return nil if paragraphs.empty? && lists.empty? && preformats.empty?
 
             if example?(source_note)
-              label = example_label(source_note)
+              label = designation_label(source_note, "EXAMPLE")
               ModelBuilder.non_normative_example(paragraph: paragraphs, list: lists, preformat: preformats, label: label)
             else
               ModelBuilder.non_normative_note(paragraph: paragraphs, list: lists,
@@ -30,23 +30,24 @@ module Metanorma
           # Guidelines 5.6: the designation text (NOTE / EXAMPLE, with
           # any number) is captured in <label>. Prefer the presentation
           # fmt-name caption label; synthesize from the kind + autonum
-          # when the source carries none.
+          # when the source carries none. The number can live only in
+          # the rendered caption ("EXAMPLE <autonum>1</autonum>") —
+          # recover it there when the element carries no @autonum.
           def designation_label(source, kind)
             number = source.autonum.to_s.strip
+            number = caption_number(source) if number.empty?
             number.empty? ? kind : "#{kind} #{number}"
+          end
+
+          def caption_number(source)
+            return "" unless source.class.attributes.key?(:fmt_name) && source.fmt_name
+
+            text = RenderedTextExtractor.text_of(source.fmt_name).to_s.strip
+            text[/\d+\z/] || ""
           end
 
           # MN renders body examples as "<span class='example-label'>
           # EXAMPLE N</span>" — "Example" plus the autonum, even when
-          # the source carries no explicit name. The label ends up
-          # inside the first paragraph so parity text comparison sees
-          # it on both sides.
-          def example_label(source_example)
-            return nil unless source_example.is_a?(example_block_class)
-
-            number = source_example.autonum
-            number && !number.to_s.empty? ? "EXAMPLE #{number}" : "EXAMPLE"
-          end
 
           # SourcecodeBlock stores its text in body.content (the bare
           # `content` attribute is nil for parsed documents). The body's

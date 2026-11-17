@@ -413,9 +413,11 @@ module Metanorma
               text = Array(content).join.strip
               href = text if text.match?(/\A(https?:\/\/|www\.)/i)
             end
+            # The typed attribute is `href` (type :xlink_href) — the old
+            # xlink_href: kwarg was silently dropped by hash-init.
             ::Sts::NisoSts::ExtLink.new(
               ext_link_type: "uri",
-              xlink_href: href,
+              href: href,
               content: Array(content)
             )
           end

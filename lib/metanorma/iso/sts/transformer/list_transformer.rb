@@ -4,10 +4,30 @@ module Metanorma
     module Sts
       module Transformer
         class ListTransformer < Base
+          # MN ol @type → NISO STS list-type + the item marker the ISO
+          # renderer would paint (Guidelines 5.7.2: list-type reflects the
+          # actual numbering — "alphabet" renders "a)", "arabic" "1)").
+          ORDERED_SCHEMES = {
+            "arabic" => { list_type: "arabic", marker: ->(i) { "#{i + 1})" } },
+            "alphabet" => {
+              list_type: "alpha-lower",
+              marker: lambda { |i|
+                letter = ("a".."z").to_a[i]
+                letter ? "#{letter})" : "#{i + 1})"
+              },
+            },
+            "roman" => { list_type: "roman-lower", marker: ->(i) { "#{ROMAN[i + 1] || i + 1})" } },
+          }.freeze
+          ROMAN = { 1 => "i", 2 => "ii", 3 => "iii", 4 => "iv", 5 => "v", 6 => "vi",
+                    7 => "vii", 8 => "viii", 9 => "ix", 10 => "x" }.freeze
+
           def transform(source_list)
             ordered = source_list.is_a?(Metanorma::Document::Components::Lists::OrderedList)
-            list_type = ordered ? "arabic" : "bullet"
-            items = Array(source_list.listitem).map { |li| build_list_item(li, ordered) }
+            scheme = ordered ? ORDERED_SCHEMES[ordered_type_of(source_list)] : nil
+            list_type = scheme ? scheme[:list_type] : (ordered ? "arabic" : "bullet")
+            items = Array(source_list.listitem).map.with_index do |li, i|
+              build_list_item(li, ordered, scheme && scheme[:marker].call(i))
+            end
             ModelBuilder.list(list_type: list_type, list_item: items)
           end
 
@@ -20,13 +40,21 @@ module Metanorma
 
           private
 
-          def build_list_item(li, ordered)
+          def ordered_type_of(source_list)
+            return nil unless source_list.class.attributes.key?(:type)
+
+            source_list.type
+          end
+
+          def build_list_item(li, ordered, fallback_marker = nil)
             nested_lists = build_nested_lists(li)
 
             ::Sts::NisoSts::ListItem.new do |item|
               # Guidelines 5.7.1/5.7.2: ordered items capture their marker
               # in <label>; unordered items carry none (derived on render).
-              label = ordered ? item_label(li) : nil
+              # The presentation's requirement-subtree lists carry no
+              # fmt-name marks, so the marker falls back to type + index.
+              label = ordered ? (item_label(li) || fallback_marker) : nil
               item.label ::Sts::NisoSts::Label.new(content: [label]) if label
               Array(li.paragraphs).each do |p|
                 item.p paragraph_transformer.transform(p)

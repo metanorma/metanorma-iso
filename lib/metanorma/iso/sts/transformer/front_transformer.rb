@@ -66,9 +66,15 @@ module Metanorma
           end
 
           def build_introduction(source)
-            content = dispatcher.dispatch_section_blocks(source.introduction)
-            [ModelBuilder.sec(title: "Introduction", paragraph: content,
-                              sec_type: "intro")]
+            # The introduction parses as a clause whose content sits in
+            # nested clause children — the section path recurses into
+            # them; dispatch_section_blocks would drop the sub-clauses.
+            sec = section_transformer.transform(source.introduction)
+            return [] unless sec
+
+            sec.type = "intro"
+            sec.title ||= ::Sts::NisoSts::Title.new(content: ["Introduction"])
+            [sec]
           end
         end
       end

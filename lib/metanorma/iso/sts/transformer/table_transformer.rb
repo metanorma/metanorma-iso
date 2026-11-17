@@ -102,6 +102,34 @@ module Metanorma
                 when :monospace then c.monospace value
                 when :bold then c.bold value
                 when :italic then c.italic value
+                when :paragraph
+                  paragraph = paragraph_transformer.transform(value)
+                  c.paragraph paragraph if paragraph
+                  # MN nests trailing notes/examples inside the cell
+                  # paragraph's last <p>; the cell carries them as
+                  # all-notes.class members.
+                  if value.class.attributes.key?(:note)
+                    Array(value.note).each do |n|
+                      model = note_transformer.transform(n)
+                      c.non_normative_note model if model
+                    end
+                  end
+                  if value.class.attributes.key?(:example)
+                    Array(value.example).each do |e|
+                      model = note_transformer.transform(e)
+                      c.non_normative_example model if model
+                    end
+                  end
+                when :list
+                  c.list list_transformer.transform(value)
+                when :dl
+                  c.def_list dl_transformer.transform(value)
+                when :example
+                  model = note_transformer.transform(value)
+                  c.non_normative_example model if model
+                when :note
+                  model = note_transformer.transform(value)
+                  c.non_normative_note model if model
                 end
               end
               c.bold ::Sts::TbxIsoTml::Bold.new(value: [bold_text]) if bold && !bold_text.empty?
@@ -257,14 +285,64 @@ module Metanorma
               when :italic
                 flush.call
                 entries << [:italic, ::Sts::TbxIsoTml::Italic.new(value: [text])]
+              when :paragraph, :list, :dl
+                flush.call
+                entries << [kind, node]
+              when :example, :note
+                flush.call
+                entries << [kind, node]
               end
             end
             flush.call
             entries
           end
 
+          # Ordered block children of a whole-cell <semx> wrapper:
+          # paragraphs, lists, then trailing notes/examples. Plain
+          # attribute reads keep a fixed emission order — the rendered
+          # cells sequence p*, list, example.
+          def semx_block_entries(semx)
+            entries = []
+            %i[p ul ol].each do |attr|
+              next unless semx.class.attributes.key?(attr)
+              Array(semx.public_send(attr)).each do |block|
+                entries << (attr == :p ? [:paragraph, block] : [:list, block])
+              end
+            end
+            %i[example_child note_child].each do |attr|
+              next unless semx.class.attributes.key?(attr)
+              Array(semx.public_send(attr)).each do |block|
+                entries << [attr == :example_child ? :example : :note, block]
+              end
+            end
+            entries
+          end
+
+          # Notes/examples of a requirement tree nested inside a cell:
+          # the requirement's direct examples plus its components'.
+          def nested_requirement_extras(source_req)
+            extras = []
+            %i[example note].each do |attr|
+              next unless source_req.class.attributes.key?(attr)
+              Array(source_req.public_send(attr)).each do |block|
+                extras << [attr == :example ? :example : :note, block]
+              end
+            end
+            return extras unless source_req.class.attributes.key?(:component)
+
+            Array(source_req.component).each do |comp|
+              next unless comp.is_a?(Lutaml::Model::Serializable)
+              %i[example note].each do |attr|
+                next unless comp.class.attributes.key?(attr)
+                Array(comp.public_send(attr)).each do |block|
+                  extras << [attr == :example ? :example : :note, block]
+                end
+              end
+            end
+            extras
+          end
+
           def walk_cell(cell)
-            
 
             @cell_stem_mirrors = build_cell_stem_mirrors(cell)
 
@@ -287,6 +365,32 @@ module Metanorma
                 yield(:bold, node, RenderedTextExtractor.text_of(node))
               when "EmRawElement", "EmElement"
                 yield(:italic, node, RenderedTextExtractor.text_of(node))
+              # Block children (provision-table cells carry paragraphs,
+              # lists, definition lists): dispatched to typed slots, not
+              # flattened to text. Notes/examples stay with cell_notes.
+              when "ParagraphBlock", "ParagraphWithFootnote"
+                yield(:paragraph, node, nil)
+              when "UnorderedList", "OrderedList"
+                yield(:list, node, nil)
+              when "DefinitionList"
+                yield(:dl, node, nil)
+              # Provision-table cells wrap their whole content in one
+              # <semx>; its block children dispatch through the same slots.
+              when "SemxElement"
+                blocks = semx_block_entries(node)
+                if blocks.any?
+                  blocks.each { |kind, child| yield(kind, child, nil) }
+                else
+                  text = RenderedTextExtractor.text_of(node)
+                  yield(:text, node, text) if text && !text.empty?
+                end
+              # Rendered cells may carry a nested requirement tree; its
+              # components' notes/examples become cell-level notes/examples
+              # (the STS cell model has no nested-table slot).
+              when "RequirementModel", "RecommendationModel", "PermissionModel"
+                nested_requirement_extras(node).each do |kind, child|
+                  yield(kind, child, nil)
+                end
               else
                 text = RenderedTextExtractor.text_of(node)
                 yield(:text, node, text) if text && !text.empty?

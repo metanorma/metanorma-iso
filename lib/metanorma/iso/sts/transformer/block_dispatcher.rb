@@ -150,10 +150,26 @@ module Metanorma
           def dispatch_via_table(obj);    table_transformer.transform(obj);    end
           def dispatch_via_figure(obj);   figure_transformer.transform(obj);   end
           def dispatch_via_formula(obj);  formula_transformer.transform(obj);  end
-          def dispatch_via_note(obj);     note_transformer.transform(obj);     end
+          # MN binds a note following a list's last item as List.note; the
+          # STS note/example models have no nested-note slot, so those
+          # notes surface as siblings after their carrier.
+          def dispatch_via_note(obj)
+            model = note_transformer.transform(obj)
+            [model, *list_trailing_notes(obj)].compact
+          end
           def dispatch_via_requirement(obj); requirement_transformer.transform(obj); end
           def dispatch_via_sourcecode(obj); note_transformer.transform_preformat(obj); end
           def dispatch_via_references(obj); reference_transformer.transform_section(obj); end
+
+          def list_trailing_notes(obj)
+            %i[ul ol].flat_map do |attr|
+              next [] unless obj.class.attributes.key?(attr)
+              Array(obj.public_send(attr)).flat_map do |list|
+                next [] unless list.class.attributes.key?(:note)
+                Array(list.note).filter_map { |n| note_transformer.transform(n) }
+              end
+            end
+          end
         end
       end
     end

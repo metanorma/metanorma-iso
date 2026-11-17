@@ -75,18 +75,18 @@ module Metanorma
           # in document order when unnumbered. The letter also feeds the
           # Annex label, so label and id stay consistent.
           def id_for_annex(annex, autonum)
-            return registered_or_claim(annex) { claim("sec_#{autonum}") } if autonum
+            return registered_or_claim(annex, "annex") { claim("sec_#{autonum}") } if autonum
 
             letter = alpha_suffix(@annex_count, "A")
             @annex_count += 1
-            registered_or_claim(annex) { claim("sec_#{letter}") }
+            registered_or_claim(annex, "annex") { claim("sec_#{letter}") }
           end
 
           # Terms sections: sec_<number> when numbered, else the fallback
           # sec_terms uniquified per terms section.
           def id_for_terms(terms, autonum)
             base = autonum ? "sec_#{autonum}" : "sec_terms"
-            registered_or_claim(terms) { claim(base) }
+            registered_or_claim(terms, "clause") { claim(base) }
           end
 
           # Clauses keep their source id (identity-claimed so generated
@@ -95,7 +95,7 @@ module Metanorma
             source_id = read_id(clause)
             return nil unless source_id
 
-            registered_or_claim_by_source(source_id) { claim(source_id) }
+            registered_or_claim_by_source(source_id, "clause") { claim(source_id) }
           end
 
           # One nested <term-sec> per term with the sec_ prefix, and the
@@ -113,7 +113,7 @@ module Metanorma
 
             sec_id = claim("sec_#{suffix}")
             entry_id = claim("term_#{suffix}")
-            register(term.id, sec_id) if term.id
+            register(term.id, sec_id, "clause") if term.id
             @entry_ids[term.id] = entry_id if term.id
             [sec_id, entry_id]
           end
@@ -154,22 +154,22 @@ module Metanorma
 
           # A pre-registered id wins; otherwise compute + register now.
           # Keyed by source id so the transform and the pre-pass agree.
-          def registered_or_claim(element, &block)
+          def registered_or_claim(element, kind = nil, &block)
             source_id = read_id(element)
             if source_id && @registry.key?(source_id)
               @registry[source_id]
             else
               id = block.call
-              register(source_id, id) if source_id
+              register(source_id, id, kind) if source_id
               id
             end
           end
 
-          def registered_or_claim_by_source(source_id, &block)
+          def registered_or_claim_by_source(source_id, kind = nil, &block)
             return @registry[source_id] if @registry.key?(source_id)
 
             id = block.call
-            register(source_id, id)
+            register(source_id, id, kind)
             id
           end
 
