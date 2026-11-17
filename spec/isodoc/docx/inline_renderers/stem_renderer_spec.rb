@@ -2,11 +2,12 @@
 
 require_relative "../spec_helper"
 
-# Inline stem symbols used to render as empty runs: stem_fallback_text
-# read the :asciimath attribute but the models return an Asciiml object
-# (semantic <stem>) or a collection nested inside <semx> (presentation
-# <fmt-stem>), so the String check always missed and every stem-only
-# table cell and prose symbol fell through to an empty collect_text.
+# Inline stems carry MathML in the presentation XML. They render as an
+# inline OMML equation (oMath) via the shared MathConversion pipeline —
+# the same Plurimath path block formulas use — so the equation appears
+# in Word exactly once as a native formula (isodoc#898: the LaTeX source
+# used to be emitted as text, twice for semantic+fmt stem pairs). Stems
+# without MathML fall back to their AsciiMath textual representation.
 RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
   let(:mapping) { IsoDoc::Iso::DocxStyleMapping.new }
   let(:context) { IsoDoc::Iso::Docx::Context.new }
@@ -15,37 +16,43 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
   let(:inline) { IsoDoc::Iso::Docx::InlineRenderer.new(context, resolver, doc) }
   let(:renderer) { described_class.new(inline) }
 
-  def render_to_text(element)
+  def render_built(element)
     para = Uniword::Builder::ParagraphBuilder.new
     renderer.render(element, para)
-    built = para.build
-    built ? built.text : ""
+    para.build
   end
 
-  it "renders a semantic stem via its asciimath value" do
+  it "renders a semantic stem with MathML as an inline OMML equation" do
     stem = Metanorma::Document::Components::TextElements::StemElement.from_xml(
       '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
       '<msub><mi>g</mi><mi>n</mi></msub></math><asciimath>g_n</asciimath></stem>',
     )
 
-    expect(render_to_text(stem)).to eq("g_n")
+    built = render_built(stem)
+    expect(built.o_maths.length).to eq(1)
+    # The AsciiMath source must not leak as text next to the equation.
+    expect(built.text).to eq("")
   end
 
-  it "renders a presentation fmt-stem via the semx-wrapped asciimath" do
+  it "renders a presentation fmt-stem via the semx-wrapped MathML as OMML" do
     stem = Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
       '<fmt-stem type="MathML"><semx element="stem" source="s1">' \
       '<math xmlns="http://www.w3.org/1998/Math/MathML">' \
       '<msub><mi>g</mi><mi>n</mi></msub></math><asciimath>g_n</asciimath></semx></fmt-stem>',
     )
 
-    expect(render_to_text(stem)).to eq("g_n")
+    built = render_built(stem)
+    expect(built.o_maths.length).to eq(1)
+    expect(built.text).to eq("")
   end
 
-  it "renders a bare-string asciimath stem unchanged" do
+  it "falls back to the asciimath text run when the stem carries no MathML" do
     stem = Metanorma::Document::Components::TextElements::StemElement.from_xml(
       '<stem type="AsciiMath"><asciimath>M</asciimath></stem>',
     )
 
-    expect(render_to_text(stem)).to eq("M")
+    built = render_built(stem)
+    expect(built.o_maths).to be_empty
+    expect(built.text).to eq("M")
   end
 end

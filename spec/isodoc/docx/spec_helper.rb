@@ -17,6 +17,20 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
   config.disable_monkey_patching!
+
+  # Isolate the global lutaml-model XML adapter from spec-file side
+  # effects. Plurimath's mml load writes Lutaml::Model::Config.xml_adapter_type
+  # (the process-wide adapter), so examples parsed after the first math
+  # conversion see a different engine than examples parsed before it:
+  # under :ox whitespace-only text nodes vanish from element_order
+  # ("bold" + "italic" rendered without the separating space), and under
+  # the unset/leptris state lutaml-model's map_all_content drops
+  # SourcecodeBody content entirely. Pin :nokogiri — the engine that
+  # preserves both — and restore it before every example so every spec
+  # parses under the same adapter regardless of file order.
+  config.before do
+    Lutaml::Model::Config.xml_adapter_type = SPEC_XML_ADAPTER
+  end
 end
 
 def parse_iso_document(xml)
@@ -34,6 +48,10 @@ end
 # Cache adapters across examples to avoid reloading the DOCX template each time.
 # The template is immutable so sharing the adapter is safe.
 ADAPTER_CACHE = {}
+
+# The lutaml-model XML adapter every docx example parses under; see the
+# RSpec.configure block for why the pin is required.
+SPEC_XML_ADAPTER = :nokogiri
 
 def build_adapter(**opts)
   key = opts.hash

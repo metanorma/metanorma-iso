@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "plurimath"
-require "omml"
-
 module IsoDoc
   module Iso
     module Docx
@@ -23,6 +20,7 @@ module IsoDoc
       # StyleResolver (e.g., KeyTitle / KeyText for the dl's items).
       class FormulaRenderer
         include ModelUtils
+        include MathConversion
 
         def initialize(resolver, inline_renderer, context: nil, walker: nil)
           @resolver = resolver
@@ -83,63 +81,7 @@ module IsoDoc
           # the semantic stem. fmt_stem wraps the math in a <semx>
           # element so the math appears under semx[].math; stem carries
           # it directly as stem.math.
-          extract_mathml_from_stem(formula.fmt_stem) ||
-            extract_mathml_from_stem(formula.stem)
-        end
-
-        def extract_mathml_from_stem(stem)
-          return nil unless stem
-
-          # Direct :math attribute (Mml::V3::Math or array of them).
-          if stem.class.attributes.key?(:math)
-            mathml = mathml_from_value(stem.math)
-            return mathml if mathml
-          end
-
-          # Wrapped in semx children (presentation-layer fmt_stem).
-          if stem.class.attributes.key?(:semx)
-            Array(stem.semx).each do |child|
-              next unless child.class.attributes.key?(:math)
-
-              mathml = mathml_from_value(child.math)
-              return mathml if mathml
-            end
-          end
-
-          extract_mathml_from_content(stem)
-        end
-
-        # Convert a single Mml::V3::Math, an array of them, or a raw
-        # MathML string into a single MathML string. Returns nil when
-        # the input is empty or unrecognised.
-        def mathml_from_value(value)
-          return nil if value.nil?
-
-          case value
-          when Array
-            value.map { |v| mathml_string_from_object(v) }.compact.first
-          else
-            mathml_string_from_object(value)
-          end
-        end
-
-        def mathml_string_from_object(obj)
-          return obj.to_s if obj.is_a?(String)
-          return nil unless obj.is_a?(Lutaml::Model::Serializable)
-
-          xml = obj.to_xml
-          xml&.strip&.empty? ? nil : xml
-        rescue StandardError
-          nil
-        end
-
-        def extract_mathml_from_content(node)
-          [:content, :text, :value].each do |attr|
-            next unless node.class.attributes.key?(attr)
-            val = node.public_send(attr)
-            return val if val.is_a?(String) && val.include?("<math")
-          end
-          nil
+          stem_mathml(formula.fmt_stem) || stem_mathml(formula.stem)
         end
 
         # Build the formula paragraph with OMML math content.
@@ -166,13 +108,7 @@ module IsoDoc
         end
 
         def convert_to_omml_para(mathml_string)
-          plurimath_formula = Plurimath::Mathml::Parser.new(mathml_string).parse
-          omml_xml = plurimath_formula.to_omml
-          return nil if omml_xml.nil? || omml_xml.empty?
-
-          Omml.parse(omml_xml)
-        rescue StandardError
-          nil
+          omml_para_from_mathml(mathml_string)
         end
 
         # Render formula as plain text when OMML conversion fails.
