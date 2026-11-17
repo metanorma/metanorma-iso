@@ -405,9 +405,17 @@ module Metanorma
           end
 
           def ext_link(xlink_href: nil, content: [])
+            # Guidelines 10.1.9: an ext-link carries @xlink:href. When the
+            # presentation mirror lost the target, the visible URL is the
+            # href (the common boilerplate form "see www.iso.org/...").
+            href = xlink_href
+            if href.nil? || href.empty?
+              text = Array(content).join.strip
+              href = text if text.match?(/\A(https?:\/\/|www\.)/i)
+            end
             ::Sts::NisoSts::ExtLink.new(
               ext_link_type: "uri",
-              xlink_href: xlink_href,
+              xlink_href: href,
               content: Array(content)
             )
           end

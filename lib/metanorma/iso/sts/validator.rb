@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "nokogiri"
+require "moxml"
 require "set"
 
 module Metanorma
@@ -56,17 +56,22 @@ module Metanorma
 
         def parse(xml)
           case xml
-          when Pathname then Nokogiri::XML(xml.read)
-          when ->(x) { x.respond_to?(:read) } then Nokogiri::XML(x.read)
-          else Nokogiri::XML(xml.to_s)
+          when Pathname then Moxml.parse(xml.read)
+          when ->(x) { x.respond_to?(:read) } then Moxml.parse(x.read)
+          else Moxml.parse(xml.to_s)
           end
         end
 
         # -- check helpers -------------------------------------------------
+        # Moxml has no at_xpath; first-match helper over #xpath.
+        def at(node, selector)
+          node.xpath(selector).first
+        end
+
 
         def nbsp_strip(text)
           case text
-          when Nokogiri::XML::Node then text.text.to_s.tr(" ", " ").strip
+          when Moxml::Node then text.text.to_s.tr(" ", " ").strip
           else text.to_s.tr(" ", " ").strip
           end
         end
@@ -83,7 +88,7 @@ module Metanorma
 
         def presence_check(selector, what)
           ->(node, *) do
-            node.at_xpath(selector, TBX_NS) ? nil : "#{what} is required"
+            at(node, selector) ? nil : "#{what} is required"
           end
         end
 
@@ -97,13 +102,13 @@ module Metanorma
 
         def legend_check(word)
           lambda do |node, *_|
-            title = nbsp_strip(node.at_xpath("./title"))
+            title = nbsp_strip(at(node, "./title"))
             return "The <legend> <title> carries '#{word}'" unless
               title.match?(/\A#{word}\b/i)
-            return "The <legend> carries a <def-list>" unless node.at_xpath("./def-list")
+            return "The <legend> carries a <def-list>" unless at(node, "./def-list")
 
             bad = node.xpath("./def-list/def-item").find do |d|
-              !d.at_xpath("./term") || !d.at_xpath("./def")
+              !at(d, "./term") || !at(d, "./def")
             end
             return "Each <def-item> pairs <term> and <def>" if bad
 
@@ -191,7 +196,7 @@ module Metanorma
                  presence_check("./body", "<body>"))
           r.call("iso-gdg-4.3.2-6", "Guidelines 4.3.2", "standard",
                  lambda do |node, *_|
-                   pm = node.at_xpath("./processing-meta")
+                   pm = at(node, "./processing-meta")
                    if pm.nil?
                      return "<processing-meta> shall be a child of <standard> " \
                        "declaring the coding profile: tagset-family=sts, " \
@@ -213,11 +218,11 @@ module Metanorma
                  end)
           r.call("iso-gdg-4.3.2-7", "Guidelines 4.3.2", "standard",
                  lambda do |node, *_|
-                   pm = node.at_xpath("./processing-meta") or return nil
-                   cm = pm.at_xpath("./custom-meta-group/custom-meta" \
+                   pm = at(node, "./processing-meta") or return nil
+                   cm = at(pm, "./custom-meta-group/custom-meta" \
                                     "[meta-name='iec_iso_coding_guidelines_edition']")
                    return nil if cm &&
-                     !cm.at_xpath("./meta-value").to_s.strip.empty?
+                     !at(cm, "./meta-value").to_s.strip.empty?
 
                    "<processing-meta> shall carry a <custom-meta> with " \
                      "meta-name iec_iso_coding_guidelines_edition and the " \
@@ -256,7 +261,7 @@ module Metanorma
           r.call("iso-gdg-4.3.4-1", "Guidelines 4.3.4", "standard",
                  lambda do |node, *_|
                    bad = node.xpath("./front/sec").find do |s|
-                     nbsp_strip(s.at_xpath("./title")).match?(/\Aintroduction\z/i) &&
+                     nbsp_strip(at(s, "./title")).match?(/\Aintroduction\z/i) &&
                        s["sec-type"] != "intro"
                    end
                    bad && "the introduction shall be coded as <sec> with " \
@@ -277,7 +282,7 @@ module Metanorma
                  lambda do |node, *_|
                    terms = node.xpath("./body/sec[@sec-type='terms']")
                    return nil if terms.any? do |s|
-                     s.at_xpath(".//tbx:termEntry", TBX_NS) || s.at_xpath(".//p")
+                     at(s, ".//tbx:termEntry") || at(s, ".//p")
                    end
 
                    "the terms and definitions clause is required with " \
@@ -287,7 +292,7 @@ module Metanorma
           r.call("iso-gdg-4.2-1", "Guidelines 4.2", "standard",
                  lambda do |node, *_|
                    node.xpath("//sec[title]").each do |s|
-                     t = nbsp_strip(s.at_xpath("./title"))
+                     t = nbsp_strip(at(s, "./title"))
                      expected = case t
                                 when /\Aforeword\z/i then "foreword"
                                 when /\Aintroduction\z/i then "intro"
@@ -307,8 +312,8 @@ module Metanorma
                  end)
           r.call("iso-gdg-4.5.2-1", "Guidelines 4.5.2", "standard",
                  lambda do |node, *_|
-                   back = node.at_xpath("./back") or return nil
-                   bibl = back.at_xpath("./ref-list[@content-type='bibl']")
+                   back = at(node, "./back") or return nil
+                   bibl = at(back, "./ref-list[@content-type='bibl']")
                    return nil unless bibl
 
                    bibl.xpath("./following-sibling::*").empty? ||
@@ -323,7 +328,7 @@ module Metanorma
                                 "<standard>"))
           r.call("iso-gdg-A.3.1-3", "Annex A.3.1", "adoption",
                  lambda do |node, *_|
-                   return nil if node.at_xpath(".//adoption-front") ||
+                   return nil if at(node, ".//adoption-front") ||
                      node.xpath(".//std-meta").size <= 1
 
                    "metadata of the adopting organisation belong in " \
@@ -334,7 +339,7 @@ module Metanorma
                    iec = node.xpath("./standard//std-ident/originator" \
                                     "[normalize-space()='IEC']").any?
                    return nil if !iec ||
-                     node.at_xpath("./standard//std-meta/permissions")
+                     at(node, "./standard//std-meta/permissions")
 
                    "in adoptions of IEC documents the individual IEC " \
                      "copyright <permissions> shall be preserved"
@@ -343,15 +348,15 @@ module Metanorma
           r.call("iso-gdg-4.4.2-1", "Guidelines 4.4.2", "sec",
                  lambda do |node, *_|
                    return nil if !node.xpath("./sec").any? ||
-                     node.at_xpath("./label")
+                     at(node, "./label")
 
                    "a clause containing subclauses carries its number in <label>"
                  end)
           r.call("iso-gdg-4.4.2-9", "Guidelines 4.4.2",
                  "sec[@sec-type='numbered-paragraph']",
                  lambda do |node, *_|
-                   return nil if node.at_xpath("./label") &&
-                     !node.at_xpath("./title")
+                   return nil if at(node, "./label") &&
+                     !at(node, "./title")
 
                    "numbered paragraphs carry <label> and no <title>"
                  end)
@@ -365,15 +370,15 @@ module Metanorma
           r.call("iso-gdg-4.5.1-2", "Guidelines 4.5.1, B.2.6", "app",
                  lambda do |node, *_|
                    problems = []
-                   problems << "missing <label>" unless node.at_xpath("./label")
-                   problems << "missing <title>" unless node.at_xpath("./title")
+                   problems << "missing <label>" unless at(node, "./label")
+                   problems << "missing <title>" unless at(node, "./title")
                    problems << "<annex-type> is not coded (derived from " \
-                     "@content-type on rendering)" if node.at_xpath("./annex-type")
+                     "@content-type on rendering)" if at(node, "./annex-type")
                    problems.empty? || "annex coding: #{problems.join('; ')}"
                  end)
           r.call("iso-gdg-4.5.1-3", "Guidelines 4.5.1", "app",
                  lambda do |node, *_|
-                   label = nbsp_strip(node.at_xpath("./label"))
+                   label = nbsp_strip(at(node, "./label"))
                    return nil unless label.start_with?("Annex ")
 
                    letter = label[6, 1]
@@ -497,7 +502,7 @@ module Metanorma
           r.call("iso-gdg-10.1.7-1", "Guidelines 10.1.7, 10.2",
                  "std[not(ancestor::ref-list)]",
                  lambda do |node, doc|
-                   sid = nbsp_strip(node.at_xpath("./std-id"))
+                   sid = nbsp_strip(at(node, "./std-id"))
                    return nil if sid.empty?
                    return nil if doc.xpath("//ref-list[@content-type='norm-refs' or " \
                                            "@content-type='bibl']//std-id" \
@@ -517,7 +522,7 @@ module Metanorma
           r.call("iso-gdg-10.1.9-1", "Guidelines 10.1.9", "//ext-link",
                  lambda do |node, *_|
                    return nil if node["ext-link-type"] == "uri" &&
-                     node.at_xpath("@xlink:href")
+                     at(node, "@xlink:href")
 
                    "a URL is coded as <ext-link @ext-link-type='uri'> with " \
                      "@xlink:href"
@@ -540,8 +545,8 @@ module Metanorma
                  "list[@list-type='alpha-lower' or @list-type='arabic' or @list-type='roman-lower']/list-item",
                  lambda do |node, *_|
                    problems = []
-                   problems << "<label>" unless node.at_xpath("./label")
-                   problems << "<p>" unless node.at_xpath("./p")
+                   problems << "<label>" unless at(node, "./label")
+                   problems << "<p>" unless at(node, "./p")
                    problems.empty? || "ordered <list-item> carries the number " \
                      "in <label> and the text in <p>: missing " \
                      "#{problems.join(' and ')}"
@@ -549,7 +554,7 @@ module Metanorma
           r.call("iso-gdg-5.7.2-1", "Guidelines 5.7.2",
                  "list[@list-type='dash' or @list-type='bullet']/list-item",
                  lambda do |node, *_|
-                   node.at_xpath("./label") &&
+                   at(node, "./label") &&
                      "unordered <list-item> carries no <label> (derived from " \
                      "@list-type on rendering)"
                  end)
@@ -568,7 +573,7 @@ module Metanorma
           r.call("iso-gdg-5.6-2", "Guidelines 5.6",
                  "non-normative-note | non-normative-example",
                  lambda do |node, *_|
-                   label = nbsp_strip(node.at_xpath("./label"))
+                   label = nbsp_strip(at(node, "./label"))
                    return nil if label.match?(/\A(NOTE|EXAMPLES?|WARNING)/)
 
                    "the designation text (NOTE, EXAMPLE, WARNING, with " \
@@ -578,7 +583,7 @@ module Metanorma
           r.call("iso-gdg-5.6-3", "Guidelines 5.6",
                  "non-normative-note | non-normative-example",
                  lambda do |node, *_|
-                   return nil if node.at_xpath("./p") || node.at_xpath("./list")
+                   return nil if at(node, "./p") || at(node, "./list")
 
                    "the note/example text is coded with <p> or <list>"
                  end)
@@ -690,17 +695,17 @@ module Metanorma
           r.call("iso-gdg-6.2.2-5", "Guidelines 6.2.2",
                  "//table//non-normative-note",
                  lambda do |node, *_|
-                   return nil if node.at_xpath("./ancestor::td") ||
-                     node.at_xpath("./ancestor::table-wrap-foot")
+                   return nil if at(node, "./ancestor::td") ||
+                     at(node, "./ancestor::table-wrap-foot")
 
                    "notes in tables appear inside a cell (<td>) or in " \
                      "<table-wrap-foot>"
                  end)
           r.call("iso-gdg-6.2.2-1", "Guidelines 6.2.2", "//table-wrap",
                  lambda do |node, *_|
-                   label = nbsp_strip(node.at_xpath("./label"))
+                   label = nbsp_strip(at(node, "./label"))
                    return "a formal table carries a <label>" if label.empty?
-                   unless node.at_xpath("./caption/title")
+                   unless at(node, "./caption/title")
                      return "a formal table carries its designation in " \
                        "<caption>/<title>"
                    end
@@ -732,16 +737,16 @@ module Metanorma
                  lambda do |node, *_|
                    return "text aligned in columns without borders is an " \
                      "<array> with a <table>, not inside <table-wrap>" if
-                     node.at_xpath("./ancestor::table-wrap")
+                     at(node, "./ancestor::table-wrap")
                    return "<array> carries no caption/title/label" if
-                     node.at_xpath("./caption | ./title | ./label")
-                   return "<array> contains a <table>" unless node.at_xpath("./table")
+                     at(node, "./caption | ./title | ./label")
+                   return "<array> contains a <table>" unless at(node, "./table")
 
                    nil
                  end)
           r.call("iso-gdg-6.2.1-1", "Guidelines 6.2.1, 7.3", "//array",
                  lambda do |node, *_|
-                   node.at_xpath("./ancestor::disp-formula") &&
+                   at(node, "./ancestor::disp-formula") &&
                      "formula keys are coded as <legend>, not as an informal " \
                      "table in <array>"
                  end)
@@ -786,7 +791,7 @@ module Metanorma
                  end)
           r.call("iso-gdg-7.1-1", "Guidelines 7.1", "inline-formula",
                  lambda do |node, *_|
-                   node.at_xpath("./label") &&
+                   at(node, "./label") &&
                      "a formula embedded in the flow of text carries no " \
                      "formula-number <label>"
                  end)
@@ -810,8 +815,8 @@ module Metanorma
                      problems << "<std-id @std-id-link-type='urn'> with " \
                        "@std-id-type dated/undated"
                    end
-                   problems << "<std-ref>" unless node.at_xpath("./std-ref")
-                   problems << "<title>" unless node.at_xpath("./title")
+                   problems << "<std-ref>" unless at(node, "./std-ref")
+                   problems << "<title>" unless at(node, "./title")
                    problems.empty? || "each normative-reference <std> carries " \
                      "#{problems.join(' and ')}"
                  end)
@@ -826,11 +831,11 @@ module Metanorma
           r.call("iso-gdg-8.1-2", "Guidelines 8.1", "fig",
                  lambda do |node, *_|
                    problems = []
-                   problems << "<label>" unless node.at_xpath("./label")
-                   unless node.at_xpath("./caption/title")
+                   problems << "<label>" unless at(node, "./label")
+                   unless at(node, "./caption/title")
                      problems << "<caption>/<title>"
                    end
-                   problems << "<graphic>" unless node.at_xpath("./graphic")
+                   problems << "<graphic>" unless at(node, "./graphic")
                    bad_note = node.xpath("./non-normative-note").find do |n|
                      n.xpath("./preceding-sibling::graphic").empty?
                    end
@@ -915,7 +920,7 @@ module Metanorma
           r.call("iso-gdg-9.2.6-1", "Guidelines 9.2.6", "tbx:entailedTerm",
                  lambda do |node, doc|
                    target = node["target"]
-                   if !node.at_xpath("./ancestor::tbx:termEntry", TBX_NS)
+                   if !at(node, "./ancestor::tbx:termEntry")
                      return "<tbx:entailedTerm> is only used inside " \
                        "<tbx:termEntry>"
                    end
@@ -950,7 +955,7 @@ module Metanorma
                  end)
           r.call("iso-gdg-A.3.2-2", "Annex A.3.2", "term-sec",
                  lambda do |node, *_|
-                   nbsp_strip(node.at_xpath("./label")).empty? &&
+                   nbsp_strip(at(node, "./label")).empty? &&
                      "the terminological entry is numbered via <label>; the " \
                      "original numbering is preserved"
                  end)

@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "nokogiri"
 
 module Metanorma
   module Iso
