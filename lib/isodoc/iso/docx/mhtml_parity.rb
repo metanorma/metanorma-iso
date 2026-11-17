@@ -142,8 +142,15 @@ module IsoDoc
             actual_end = [first + WINDOW_TOKENS, last_actual + 1].min
             window = self.class.new(@expected[first...expected_end],
                                     @actual[first...actual_end]).matches
+            # An indel can move matching tokens across the fixed window edge.
+            # Resume both tails immediately after the last aligned pair.
+            expected_end = actual_end = first
             window.each_with_index do |match, position|
-              @matches[first + position] = first + match if match
+              next unless match
+
+              @matches[first + position] = first + match
+              expected_end = first + position + 1
+              actual_end = first + match + 1
             end
             multiset_matches(expected_end, actual_end, last_expected, last_actual)
             @matches

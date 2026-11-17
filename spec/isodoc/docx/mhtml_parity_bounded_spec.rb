@@ -12,8 +12,8 @@ RSpec.describe "IsoDoc::Iso::Docx::MhtmlParity" do
       +++ output
       - 3: b
       + 4: b
-      - 6: x
-      + 6: y
+      - 10: x
+      + 10: y
       - 11: old
       + 11: new
     REPORT
@@ -50,6 +50,22 @@ RSpec.describe "IsoDoc::Iso::Docx::MhtmlParity" do
     comparison = compare(shared + %w[a b c], shared + %w[b a c])
 
     expect(comparison.report).to eq("--- submitted\n+++ output\n- 100001: a\n+ 100002: a")
+  end
+
+  it "keeps boundary tokens matched after an insertion inside the window" do
+    comparison = compare(%w[p a b c d e f g h Y s],
+                         %w[p X a b c d e f g h Z s])
+
+    expect(comparison.report.lines.grep(/^[+-] /).map(&:strip))
+      .to eq(["+ 2: X", "- 10: Y", "+ 11: Z"])
+  end
+
+  it "keeps boundary tokens matched after a deletion inside the window" do
+    comparison = compare(%w[p X a b c d e f g h Y s],
+                         %w[p a b c d e f g h Z s])
+
+    expect(comparison.report.lines.grep(/^[+-] /).map(&:strip))
+      .to eq(["- 2: X", "- 11: Y", "+ 10: Z"])
   end
 
   it "handles an empty side after trimming a large insertion" do
