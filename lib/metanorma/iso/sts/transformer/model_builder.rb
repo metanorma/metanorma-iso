@@ -198,7 +198,9 @@ module Metanorma
           end
 
           def non_normative_note(paragraph: [], list: [], label: nil)
-            ::Sts::NisoSts::NonNormativeNote.new.tap do |n|
+            # Block form: lutaml-model records setter-call order, so the
+            # label lands before the content (the XSD's label? position).
+            ::Sts::NisoSts::NonNormativeNote.new do |n|
               n.label = ::Sts::NisoSts::Label.new(content: [label]) if label
               n.p = Array(paragraph) if paragraph&.any?
               n.list = Array(list) if list&.any?
@@ -206,7 +208,7 @@ module Metanorma
           end
 
           def non_normative_example(paragraph: [], list: [], preformat: [], label: nil)
-            ::Sts::NisoSts::NonNormativeExample.new.tap do |e|
+            ::Sts::NisoSts::NonNormativeExample.new do |e|
               e.label = ::Sts::NisoSts::Label.new(content: [label]) if label
               e.p = Array(paragraph) if paragraph&.any?
               e.list = Array(list) if list&.any?
