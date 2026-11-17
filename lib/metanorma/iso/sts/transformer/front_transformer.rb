@@ -6,12 +6,16 @@ module Metanorma
         class FrontTransformer < Base
           def transform(source)
             iso_meta = build_iso_meta(source)
-            ModelBuilder.front(std_meta: iso_meta)
+            ModelBuilder.front(std_meta: iso_meta, sec: front_sections(source))
           end
 
-          def preface_sections(source)
+          # The foreword and introduction are front <sec> elements
+          # (Guidelines 4.3.3/4.3.4: foreword unnumbered with
+          # @sec-type='foreword', introduction with @sec-type='intro').
+          # Boilerplate copyright is NOT emitted as body text: it lives in
+          # <std-meta>/<permissions> (Guidelines B.2.1-2).
+          def front_sections(source)
             sections = []
-            sections += build_boilerplate(source)
             sections += build_foreword(source) if source.foreword
             sections += build_introduction(source) if source.introduction
             sections
@@ -57,12 +61,14 @@ module Metanorma
 
           def build_foreword(source)
             content = dispatcher.dispatch_section_blocks(source.foreword)
-            [ModelBuilder.sec(title: "Foreword", paragraph: content)]
+            [ModelBuilder.sec(title: "Foreword", paragraph: content,
+                              sec_type: "foreword")]
           end
 
           def build_introduction(source)
             content = dispatcher.dispatch_section_blocks(source.introduction)
-            [ModelBuilder.sec(title: "Introduction", paragraph: content)]
+            [ModelBuilder.sec(title: "Introduction", paragraph: content,
+                              sec_type: "intro")]
           end
         end
       end

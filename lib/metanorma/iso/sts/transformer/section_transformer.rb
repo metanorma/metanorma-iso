@@ -19,7 +19,8 @@ module Metanorma
               sec.id = id_val if id_val
               sec.label = ::Sts::NisoSts::Label.new(content: [autonum]) if autonum
               sec.title = ::Sts::NisoSts::Title.new(content: [title_text]) if title_text && !title_text.empty?
-              sec.type = "terms" if terms_section?(source_clause)
+              sec_type = section_type(source_clause)
+              sec.type = sec_type if sec_type
               append_section_content(sec, content)
             end
           end
@@ -117,6 +118,20 @@ module Metanorma
               id_generator.id_for_terms(section, extract_autonum(section))
             else
               id_generator.id_for_clause(section)
+            end
+          end
+
+          # Clause-type marker per Guidelines 4.2/4.4.2: scope, norm-refs,
+          # intro and terms flag @sec-type; Foreword/introduction are front
+          # secs (FrontTransformer).
+          def section_type(clause)
+            return "terms" if terms_section?(clause)
+
+            t = clause.type if clause.class.method_defined?(:type)
+            case t
+            when "scope" then "scope"
+            when "norm-ref", "norm-refs" then "norm-refs"
+            when "intro" then "intro"
             end
           end
 

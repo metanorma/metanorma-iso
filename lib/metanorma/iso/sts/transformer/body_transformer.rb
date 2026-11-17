@@ -7,8 +7,9 @@ module Metanorma
           def transform(source)
             sections = []
 
-            sections += front_transformer.preface_sections(source) if source.front?
-
+            # The foreword/introduction are front secs (FrontTransformer);
+            # boilerplate copyright is std-meta content only. The body
+            # carries the document's own sections (Guidelines 4.3/4.4).
             source.sections.each do |clause|
               sec = dispatcher.dispatch(clause)
               sections << sec if sec

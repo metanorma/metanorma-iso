@@ -5,7 +5,11 @@ module Metanorma
       module Transformer
         class ListTransformer < Base
           def transform(source_list)
-            list_type = source_list.is_a?(Metanorma::Document::Components::Lists::OrderedList) ? "order" : "bullet"
+            list_type = if source_list.is_a?(Metanorma::Document::Components::Lists::OrderedList)
+                          "arabic"
+                        else
+                          "bullet"
+                        end
             items = Array(source_list.listitem).map { |li| build_list_item(li) }
             ModelBuilder.list(list_type: list_type, list_item: items)
           end

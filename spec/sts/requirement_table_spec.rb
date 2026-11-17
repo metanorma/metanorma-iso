@@ -146,7 +146,7 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::RequirementTransformer do
     it "carries description paragraphs, specification lists, and monospace inheritance" do
       wrap = wraps(doc).first
       expect(wrap.at("./table/tbody/tr[1]/td/p").text).to eq("Desc text.")
-      expect(wrap.at("./table/tbody/tr[2]/td/list[@list-type='order']")).not_to be_nil
+      expect(wrap.at("./table/tbody/tr[2]/td/list[@list-type='arabic']")).not_to be_nil
       expect(wrap.at("./table/tbody/tr[3]/td/monospace").text).to eq("/req/base")
       expect(wrap.at("./table/tbody/tr[4]/td").text).to eq("target-type register")
     end

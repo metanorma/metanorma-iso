@@ -56,6 +56,9 @@ module Metanorma
       def self.convert(input)
         model = convert_to_model(input)
         xml = model.to_xml
+        # processing-meta is valid per the delivery-gate schema (NISO STS
+        # extended-1.2 MathML3); the older extended-1 package had no slot
+        # for it. See sts-specs reference-docs.
         inject_namespaces(xml)
           .then { |x| inject_processing_meta(x) }
           .then { |x| fix_lang_attribute(x) }
