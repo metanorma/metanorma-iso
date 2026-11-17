@@ -61,6 +61,8 @@ module IsoDoc
            Renderers::TermsSectionRenderer],
           [Metanorma::Iso::Document::Sections::IsoClauseSection,
            Renderers::ClauseRenderer],
+          [Metanorma::Standoc::Document::Sections::DefinitionSection,
+           Renderers::DefinitionSectionRenderer],
           [Metanorma::Standoc::Document::Sections::StandardReferencesSection,
            Renderers::ReferencesRenderer],
           [Metanorma::Document::Components::Sections::ReferencesSection,
