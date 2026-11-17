@@ -25,7 +25,16 @@ module Metanorma
             ::Sts::NisoSts::ListItem.new do |item|
               label = item_label(li)
               item.label ::Sts::NisoSts::Label.new(content: [label]) if label
-              Array(li.paragraphs).each { |p| item.p paragraph_transformer.transform(p) }
+              Array(li.paragraphs).each do |p|
+                item.p paragraph_transformer.transform(p)
+                # MN nests the trailing note INSIDE the item's <p>
+                # (<p>text<note>…</note></p>); the STS list-item carries
+                # it as an all-notes.class member.
+                Array(p.note).each do |n|
+                  note = note_transformer.transform(n)
+                  item.non_normative_note note if note
+                end
+              end
               nested_lists.each { |l| item.list l }
               append_item_siblings(li, item)
             end

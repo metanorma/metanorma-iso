@@ -133,7 +133,7 @@ module Metanorma
           end
 
           def list_block?(item)
-            item.is_a?(Metanorma::Document::Components::Lists::UnorderedList)
+            item.is_a?(Metanorma::Document::Components::Lists::List)
           end
 
           SIBLING_ATTRS = {
