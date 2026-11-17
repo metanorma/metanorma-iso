@@ -2,8 +2,48 @@ require "spec_helper"
 require "relaton/iso"
 require "relaton/iec"
 require "relaton/ietf"
+require "tmpdir"
+require "webmock/rspec"
 
 RSpec.describe Metanorma::Iso do
+  let(:cache_dir) { Dir.mktmpdir("iso-refs-") }
+  let(:local_cached_header) do
+    LOCAL_CACHED_ISOBIB_BLANK_HDR.sub("spec/relatondb", cache_dir)
+      .sub(":local-cache:", ":local-cache-only:")
+  end
+
+  let(:withdrawn_fixture) do
+    File.expand_path(
+      "../relatondb/cache/v2/docs/is/iso%2F31%2F8b026bccc81a78c0.xml", __dir__
+    )
+  end
+  let(:withdrawn_input) do
+    <<~INPUT
+      #{local_cached_header}
+
+      [bibliography]
+      == Bibliography
+
+      * [[[iso2,ISO 31-0]]]
+    INPUT
+  end
+  let(:withdrawn_xml) do
+    Nokogiri::XML(Asciidoctor.convert(withdrawn_input, *OPTIONS))
+      .tap(&:remove_namespaces!)
+  end
+
+  after { FileUtils.remove_entry(cache_dir) }
+
+  before(:each, :withdrawn_reference) { mock_withdrawn_references }
+
+  it "renders withdrawn references offline with an existing source cache",
+     :aggregate_failures, :withdrawn_reference do
+    expect { withdrawn_xml }.not_to(change { File.binread(withdrawn_fixture) })
+    expect(withdrawn_xml.at("//note[@type='Unpublished-Status']")&.text)
+      .to include("Withdrawn")
+    expect(File).to exist(File.join(cache_dir, "cache"))
+  end
+
   it "processes draft ISO reference" do
     mock_fdis_iso
     mock_fdis_iec
@@ -362,8 +402,9 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "renders withdrawn and cancelled ISO references" do
+    mock_withdrawn_references
     input = <<~INPUT
-      #{LOCAL_CACHED_ISOBIB_BLANK_HDR}
+      #{local_cached_header}
 
       <<iso1,clause=1>>
       <<iso2,clause=1>>
@@ -697,8 +738,9 @@ RSpec.describe Metanorma::Iso do
   # (obsoletedBy ISO 80000-1:2009). A document published in 2005 must not show
   # it as withdrawn; a document published in 2015 must.
   it "suppresses a withdrawn-reference note when the withdrawal postdates publication" do
+    mock_withdrawn_references
     input = <<~INPUT
-      #{LOCAL_CACHED_ISOBIB_BLANK_HDR.sub(':nodoc:', ":nodoc:\n:copyright-year: 2005")}
+      #{local_cached_header.sub(':nodoc:', ":nodoc:\n:copyright-year: 2005")}
 
       [bibliography]
       == Bibliography
@@ -712,8 +754,9 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "keeps a withdrawn-reference note when the withdrawal predates publication" do
+    mock_withdrawn_references
     input = <<~INPUT
-      #{LOCAL_CACHED_ISOBIB_BLANK_HDR.sub(':nodoc:', ":nodoc:\n:copyright-year: 2015")}
+      #{local_cached_header.sub(':nodoc:', ":nodoc:\n:copyright-year: 2015")}
 
       [bibliography]
       == Bibliography
@@ -727,6 +770,19 @@ RSpec.describe Metanorma::Iso do
   end
 
   private
+
+  def mock_withdrawn_references
+    stub_request(:any, /.*/).to_raise("Unexpected HTTP request")
+    fixtures = File.expand_path("../relatondb/cache/v2/docs/is", __dir__)
+    allow(Relaton::Iso::Bibliography).to receive(:get) do |id, _year, _opts|
+      filename = case id.to_s
+                 when /\AISO 31-0/ then "iso%2F31%2F8b026bccc81a78c0.xml"
+                 when /\AISO 683-3/ then "iso%2F683%2F17fa7275475e8674.xml"
+                 else raise "Unexpected reference: #{id}"
+                 end
+      Relaton::Bib::Bibitem.from_xml(File.read(File.join(fixtures, filename)))
+    end
+  end
 
   # relaton#205: the flavor's `get` receives the parsed pubid object when
   # the reference parses as one, else the raw String. Match on the rendered

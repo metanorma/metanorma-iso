@@ -171,8 +171,8 @@ module Metanorma
         # (metanorma-iso#1696).
         unless id.is_a?(Pubid::Iso::SupplementIdentifier) ||
             id.is_a?(Pubid::Iec::SupplementIdentifier)
+          # pubid derives stage from typed_stage; stage has no writer.
           id.typed_stage = nil
-          id.stage = nil
         end
         id.date = Pubid::Components::Date.new(year: 123456789)
         docid.children = id.to_s.sub("123456789", "—")
