@@ -2,6 +2,8 @@
 
 require "uniword"
 require "metanorma/document"
+require "plurimath"
+require "nokogiri"
 
 module IsoDoc
   module Iso
@@ -294,6 +296,12 @@ module IsoDoc
 
         def stem_fallback_text(element)
           text = stem_asciimath_text(element)
+          # UnitsML macros are source notation; the MathML carries the
+          # rendered unit in both heading and body stems.
+          if text&.include?("unitsml(")
+            rendered = stem_math_text(element, rendered_unit: true)
+            return rendered if rendered && !rendered.empty?
+          end
           return text if text && !text.empty?
 
           text = stem_math_text(element)
@@ -348,10 +356,10 @@ module IsoDoc
         # Some stems carry only MathML (e.g. table cells whose symbol is a
         # number with a unit row). Convert through Plurimath to a plain
         # AsciiMath text so the cell content survives.
-        def stem_math_text(element)
-          math = attribute_value(element, :math)
+        def stem_math_text(element, rendered_unit: false)
+          math = Array(attribute_value(element, :math)).first
           Array(attribute_value(element, :semx)).each do |child|
-            math ||= attribute_value(child, :math)
+            math ||= Array(attribute_value(child, :math)).first
             break if math
           end
           return nil unless math.is_a?(Lutaml::Model::Serializable)
@@ -359,9 +367,51 @@ module IsoDoc
           xml = math.to_xml
           return nil if xml.nil? || xml.strip.empty?
 
+          return unit_mathml_text(xml) if rendered_unit
+
           Plurimath::Mathml::Parser.new(xml).parse.to_asciimath
         rescue StandardError
           nil
+        end
+
+        # Keep unit scripts and fraction grouping while omitting style markup.
+        # Invisible multiplication separates the value from its unit.
+        def unit_mathml_text(xml)
+          unit_mathml_node_text(Nokogiri::XML(xml).root)
+            .tr("\u2062", " ").gsub(/[[:space:]]+/, " ").strip
+        end
+
+        def unit_mathml_node_text(node)
+          children = node.element_children
+          case node.name
+          when "mi", "mn", "mo", "mtext" then node.text
+          when "mspace" then " "
+          when "annotation", "annotation-xml" then ""
+          when "semantics" then unit_mathml_node_text(children.first)
+          when "msup", "msub", "msubsup" then unit_mathml_script_text(node)
+          when "mfrac"
+            "(#{children.map { |child| unit_mathml_node_text(child) }.join('/')})"
+          else children.map { |child| unit_mathml_node_text(child) }.join
+          end
+        end
+
+        def unit_mathml_script_text(node)
+          base, *scripts = node.element_children
+          text = unit_mathml_node_text(base)
+          text = "(#{text})" if base.name == "mrow" && base.element_children.size > 1
+          scripts.each_with_index do |script, index|
+            subscript = node.name == "msub" || (node.name == "msubsup" && index.zero?)
+            text += unit_mathml_script(unit_mathml_node_text(script), subscript)
+          end
+          text
+        end
+
+        def unit_mathml_script(text, subscript)
+          source = "0123456789+−=()-"
+          target = subscript ? "₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎₋" : "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾⁻"
+          return text.tr(source, target) if text.each_char.all? { |char| source.include?(char) }
+
+          "#{subscript ? '_' : '^'}(#{text})"
         end
 
         def collect_callout_text(callout)

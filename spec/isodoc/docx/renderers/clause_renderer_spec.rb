@@ -5,6 +5,68 @@ require_relative "../spec_helper"
 RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
   let(:adapter) { build_adapter }
 
+  context "with a unit in presentation heading and body text" do
+    def stem_xml
+      <<~XML.strip
+        <stem type="MathML">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mrow><mn>80</mn><mo rspace="thickmathspace">⁢</mo>
+              <mrow xref="U_km"><mstyle mathvariant="normal"><mi>km</mi></mstyle></mrow>
+            </mrow>
+          </math><asciimath>80 "unitsml(km)"</asciimath>
+        </stem>
+      XML
+    end
+    let(:xml) do
+      minimal_iso_xml(<<~INNER)
+        <sections><clause id="c1">
+          <fmt-title><semx element="title" source="t1">Altitude #{stem_xml}</semx></fmt-title>
+          <p>Altitude #{stem_xml}</p>
+        </clause></sections>
+      INNER
+    end
+    let(:paragraphs) do
+      convert_and_extract(adapter, xml) { |pkg| pkg.document.body.paragraphs }
+    end
+    let(:heading_text) do
+      heading = paragraphs.find { |p| para_style_value(p) == "Heading1" }
+      heading.runs.map { |run| run_text(run) }.join
+    end
+    let(:body_texts) do
+      body = paragraphs.reject { |p| para_style_value(p).to_s.start_with?("Heading") }
+      body.map { |p| p.runs.map { |run| run_text(run) }.join }
+    end
+
+    it "renders the value and unit in heading runs" do
+      expect(heading_text).to eq("Altitude 80 km")
+    end
+
+    it "omits the source unit macro from heading runs" do
+      expect(heading_text).not_to include("unitsml(")
+    end
+
+    it "renders the same text in body paragraphs" do
+      expect(body_texts).to include(heading_text)
+    end
+
+    context "with a power and quotient in the unit" do
+      def stem_xml
+        '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
+          '<mrow><mn>80</mn><mo>⁢</mo><mstyle mathvariant="normal">' \
+          "<mfrac><msup><mi>m</mi><mn>2</mn></msup><mi>s</mi></mfrac>" \
+          '</mstyle></mrow></math><asciimath>80 "unitsml(m^2/s)"</asciimath></stem>'
+      end
+
+      it "preserves unit structure in the heading" do
+        expect(heading_text).to eq("Altitude 80 (m²/s)")
+      end
+
+      it "preserves unit structure in body paragraphs" do
+        expect(body_texts).to include("Altitude 80 (m²/s)")
+      end
+    end
+  end
+
   it "renders clause title with Heading1 at depth 1" do
     xml = minimal_iso_xml(<<~INNER)
       <sections>
