@@ -44,9 +44,9 @@ module IsoDoc
       def default_file_locations(options)
         {
           htmlstylesheet: (if options[:alt]
-                             html_doc_path("style-human.scss")
+                             html_doc_path("style-human.css")
                            else
-                             html_doc_path("style-iso.scss")
+                             html_doc_path("style-iso.css")
                            end),
           htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
           htmlintropage: html_doc_path("html_iso_intro.html"),

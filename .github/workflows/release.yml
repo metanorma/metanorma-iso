@@ -50,6 +50,12 @@ jobs:
     uses: metanorma/ci/.github/workflows/rubygems-release.yml@main
     with:
       next_version: ${{ github.event.inputs.next_version }}
+      # Compile lib/isodoc/iso/html/*.scss to sibling .css before packaging:
+      # without this the released gem ships scss-only and gem consumers hit
+      # the runtime sassc-embedded require (the 983c2786 template sync
+      # dropped this line; releases 3.5.12-3.5.22 shipped without css and
+      # were yanked — see metanorma/isodoc#862, #1763).
+      pre_build_command: bundle exec rake build_scss
       # Opt out of the auto-generated GitHub Release notes floor added in
       # metanorma/ci#354. Notes are written by hand at release time; the
       # workflow skips the ensure-release step entirely and the maintainer

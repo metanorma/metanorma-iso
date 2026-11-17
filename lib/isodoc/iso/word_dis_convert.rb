@@ -14,8 +14,8 @@ module IsoDoc
       end
 
       def default_file_locations(_options)
-        { wordstylesheet: html_doc_path("wordstyle-dis.scss"),
-          standardstylesheet: html_doc_path("isodoc-dis.scss"),
+        { wordstylesheet: html_doc_path("wordstyle-dis.css"),
+          standardstylesheet: html_doc_path("isodoc-dis.css"),
           header: html_doc_path("header-dis.html"),
           wordcoverpage: html_doc_path("word_iso_titlepage-dis.html"),
           wordintropage: html_doc_path("word_iso_intro-dis.html"),
