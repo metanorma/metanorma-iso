@@ -43,7 +43,9 @@ module Metanorma
             return "" unless source.class.attributes.key?(:fmt_name) && source.fmt_name
 
             text = RenderedTextExtractor.text_of(source.fmt_name).to_s.strip
-            text[/\d+\z/] || ""
+            # Anchored-prefix match on the reversed string stays linear —
+            # an end-anchored \d+\z scan backtracks quadratically.
+            text.reverse[/\A\d+/]&.reverse || ""
           end
 
           # MN renders body examples as "<span class='example-label'>
