@@ -81,6 +81,49 @@ RSpec.describe IsoDoc::Iso::Docx::FormulaRenderer do
       expect(text).to include("(1)")
     end
 
+    # The presentation XML carries the formula number as a span tree
+    # (fmt-caption-label / fmt-autonum-delim wrappers), not flat text.
+    # A flat-text-only collection returns "" for that shape and the
+    # ISO formula number silently disappears (metanorma/isodoc#898).
+    it "renders the formula number from the presentation span-tree fmt-name" do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <formula id="f1" autonum="1">
+              <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>r</mi></math></stem>
+              <fmt-name id="n1"><span class="fmt-caption-label"><span class="fmt-autonum-delim">(</span>1<span class="fmt-autonum-delim">)</span></span></fmt-name>
+            </formula>
+          </clause>
+        </sections>
+      INNER
+
+      model = parse_iso_document(xml)
+      formula = model.sections.clause.first.formulas.first
+
+      renderer.render(formula, doc)
+
+      paragraphs = doc.model.body.paragraphs
+      formula_para = paragraphs.find { |p| para_style_value(p) == "Formula" }
+      expect(formula_para).not_to be_nil
+      expect(formula_para.o_math_paras.length).to be >= 1
+
+      # The tab separates equation and number; the number follows it.
+      text = formula_para.runs.map { |r| run_text(r) }.join
+      expect(text).to include("(1)")
+
+      # ISO layout: the equation comes first, then the tab, then the
+      # number. element_order must carry that sequence, or both the
+      # DOCX serializer and the MHTML writer drop the number to the
+      # front of the paragraph.
+      order = formula_para.element_order.map(&:name)
+      omp_pos = order.index("oMathPara")
+      run_positions = order.each_index.select { |i| order[i] == "r" }
+      expect(omp_pos).not_to be_nil
+      expect(run_positions).not_to be_empty
+      expect(run_positions.last).to be > omp_pos
+    end
+
     it "handles formula without stem element gracefully" do
       xml = minimal_iso_xml(<<~INNER)
         <sections>
