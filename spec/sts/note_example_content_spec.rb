@@ -55,3 +55,33 @@ RSpec.describe "Note and example content" do
     end
   end
 end
+
+# Guidelines 5.6: the designation label serializes before the note
+# content (the XSD's label? position); lutaml-model only records setter
+# order in the block form, so this locks the builder shape.
+RSpec.describe "note designation label position" do
+  let(:xml) do
+    <<~XML
+      <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="presentation">
+        <bibdata type="standard">
+          <title language="en" type="main">Test</title>
+          <docidentifier>ISO 9999</docidentifier>
+          <language>en</language>
+        </bibdata>
+        <sections>
+          <clause id="c1"><title>Scope</title>
+            <note id="n1"><p id="p1">Note text.</p></note>
+          </clause>
+        </sections>
+      </metanorma>
+    XML
+  end
+
+  it "places the NOTE label before the paragraphs" do
+    sts = Metanorma::Iso::Sts.convert(xml)
+    note = Nokogiri::XML(sts).at_xpath("//non-normative-note")
+    expect(note).not_to be_nil
+    expect(note.element_children.first.name).to eq("label")
+    expect(note.at_xpath("./label")&.text).to eq("NOTE")
+  end
+end
