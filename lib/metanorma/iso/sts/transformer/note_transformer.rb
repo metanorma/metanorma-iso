@@ -32,7 +32,7 @@ module Metanorma
           # fmt-name caption label; synthesize from the kind + autonum
           # when the source carries none.
           def designation_label(source, kind)
-            number = source.class.method_defined?(:autonum) ? source.autonum.to_s.strip : ""
+            number = source.autonum.to_s.strip
             number.empty? ? kind : "#{kind} #{number}"
           end
 
@@ -44,7 +44,7 @@ module Metanorma
           def example_label(source_example)
             return nil unless source_example.is_a?(example_block_class)
 
-            number = source_example.autonum if source_example.class.method_defined?(:autonum)
+            number = source_example.autonum
             number && !number.to_s.empty? ? "EXAMPLE #{number}" : "EXAMPLE"
           end
 
@@ -87,14 +87,14 @@ module Metanorma
           # note/example models and are skipped.
           def extract_lists(source_note)
             %i[ul ol].flat_map do |attr|
-              next [] unless source_note.class.method_defined?(attr)
-
               Array(source_note.public_send(attr)).map { |l| list_transformer.transform(l) }
             end
           end
 
+          # Only ExampleBlock carries sourcecode children (NoteBlock has
+          # none — the typed interface, not a probe).
           def extract_preformats(source_note)
-            return [] unless source_note.class.method_defined?(:sourcecode)
+            return [] unless source_note.is_a?(example_block_class)
 
             Array(source_note.sourcecode).filter_map { |sc| transform_preformat(sc) }
           end
@@ -116,13 +116,9 @@ module Metanorma
           # encoding on metanorma-document >= 0.3.1, with a local decode
           # as the fallback for older releases.
           def decoded_sourcecode_text(source_code)
-            return nil unless source_code.class.method_defined?(:content)
-
-            raw = if source_code.class.method_defined?(:decoded_content) && source_code.decoded_content
-                    source_code.decoded_content
-                  else
-                    source_code.content
-                  end
+            # SourcecodeBlock#body carries the markup-encoded code text;
+            # the markup entities decode locally (CGI.unescapeHTML).
+            raw = source_code.body || source_code.content
             return nil if raw.nil?
 
             text = CGI.unescapeHTML(Array(raw).join)

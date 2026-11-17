@@ -332,7 +332,7 @@ module Metanorma
           return nil unless si_struct.is_a?(Metanorma::Iso::Document::Metadata::StructuredIdentifier)
 
           pn = si_struct.project_number
-          return nil unless pn && pn.class.method_defined?(:part)
+          return nil unless pn&.part
 
           pn.part
         end

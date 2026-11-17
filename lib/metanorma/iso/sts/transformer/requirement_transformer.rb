@@ -75,7 +75,7 @@ module Metanorma
 
           def nested_transforms(source_req)
             %i[requirement recommendation permission].flat_map do |attr|
-              next [] unless source_req.class.method_defined?(attr)
+              next [] unless source_req.class.attributes.key?(attr)
 
               Array(source_req.public_send(attr)).flat_map { |child| transform(child) }
             end
@@ -126,7 +126,7 @@ module Metanorma
           def component_rows(source_req)
             rows = []
             REQ_COMPONENTS.each do |attr, row_label|
-              next unless source_req.class.method_defined?(attr)
+              next unless source_req.class.attributes.key?(attr)
 
               value = source_req.public_send(attr)
               cell = component_cell(attr, value)
@@ -195,7 +195,7 @@ module Metanorma
           end
 
           def classification_cell(source_req)
-            return nil unless source_req.class.method_defined?(:classification)
+            
 
             cls = Array(source_req.classification).filter_map do |c|
               next unless c.respond_to?(:value)
@@ -219,7 +219,7 @@ module Metanorma
           end
 
           def requirement_identifier(source_req)
-            return "" unless source_req.class.method_defined?(:identifier)
+            
 
             RenderedTextExtractor.text_of(source_req.identifier).to_s.strip
           end
@@ -234,11 +234,11 @@ module Metanorma
           end
 
           def title_text_of(source_req)
-            return nil unless source_req.class.method_defined?(:title)
+            
 
             title = source_req.title
             text = if title.is_a?(Lutaml::Model::Serializable) &&
-                title.class.method_defined?(:value) && !title.class.method_defined?(:each_mixed_content)
+                title.respond_to?(:value) && !title.respond_to?(:each_mixed_content)
                      Array(title.value).join
                    else
                      RenderedTextExtractor.text_of(title)
@@ -247,7 +247,7 @@ module Metanorma
           end
 
           def reqt_label(source_req)
-            type = source_req.class.method_defined?(:type) ? source_req.type.to_s : ""
+            type = source_req.type.to_s
             vocabulary = reqt_labels
             key = TYPE_TO_LABEL_KEY[type] || type
             vocabulary[key] ||
@@ -276,20 +276,20 @@ module Metanorma
           # xs:ID for the requirement's table: its anchor (what xrefs
           # target — "rc-…", "cc-…", "r-…"), else the source id.
           def requirement_sts_id(source_req)
-            return nil unless source_req.class.method_defined?(:id)
+            
 
-            anchor = source_req.anchor if source_req.class.method_defined?(:anchor)
+            anchor = source_req.anchor
             anchor.nil? || anchor.empty? ? source_req.id : anchor
           end
 
           def content_type_for(source_req)
-            type = source_req.class.method_defined?(:type) ? source_req.type.to_s : ""
+            type = source_req.type.to_s
             TYPE_TO_CONTENT_TYPE[type] || "recommend"
           end
 
           # modspec-model requirements render under specific-use="modspec".
           def specific_use_for(source_req)
-            model = source_req.class.method_defined?(:model) ? source_req.model.to_s : ""
+            model = source_req.model.to_s
             model.empty? ? nil : "modspec"
           end
         end

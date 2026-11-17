@@ -64,7 +64,7 @@ module Metanorma
           end
 
           def domain_text(term)
-            return nil unless term.class.method_defined?(:domain)
+            
 
             domain = Array(term.domain).first
             return nil unless domain
@@ -188,7 +188,7 @@ module Metanorma
           # The semantic name carries no part-of-speech; the presentation
           # grammar annotation (fmt-name semx grammar attr) does.
           def detect_grammar(name_element, designation = nil)
-            grammar = designation.grammar if designation&.class&.method_defined?(:grammar)
+            grammar = designation.class.attributes.key?(:grammar) ? designation.grammar : nil
             grammar = Array(grammar).first if grammar.is_a?(Array)
             return grammar_value(grammar) if grammar
 
@@ -197,7 +197,7 @@ module Metanorma
 
           def grammar_value(grammar)
             %i[value is_abbreviation?].each do |attr|
-              next unless grammar.class.method_defined?(attr)
+              next unless grammar.class.attributes.key?(attr)
               next if attr == :is_abbreviation?
 
               val = grammar.public_send(attr)

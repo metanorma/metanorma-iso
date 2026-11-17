@@ -24,7 +24,7 @@ module Metanorma
             # paragraphs precede the (untitled) ref-list.
             ref_list = ModelBuilder.ref_list(content_type: "norm-refs", title: nil, ref: refs)
             attrs = {}
-            attrs[:id] = ref_section.id if ref_section.class.method_defined?(:id) && ref_section.id
+            attrs[:id] = ref_section.id if ref_section.id
             attrs[:type] = "norm-refs"
             attrs[:label] = ::Sts::NisoSts::Label.new(content: [label]) if label
             attrs[:title] = ::Sts::NisoSts::Title.new(content: [title_text]) if title_text && !title_text.empty?
@@ -42,7 +42,7 @@ module Metanorma
             content_parts << identifier if identifier
             content_parts << formattedref if formattedref
 
-            rid = bibitem.class.method_defined?(:id) ? bibitem.id : nil
+            rid = bibitem.id
             id_generator.register(rid, rid, "ref") if rid
             ModelBuilder.ref(
               id: rid,
@@ -71,7 +71,7 @@ module Metanorma
           end
 
           def extract_bibitems(ref_section)
-            refs = ref_section.class.method_defined?(:references) ? ref_section.references : nil
+            refs = ref_section.references
             return Array(refs) if refs
             []
           end
@@ -79,27 +79,27 @@ module Metanorma
           # Boilerplate paragraphs of an in-body references section
           # ("The following documents are referred to ...").
           def intro_paragraphs(ref_section)
-            return [] unless ref_section.class.method_defined?(:p)
+            
 
             Array(ref_section.p).map { |p| paragraph_transformer.transform(p) }
           end
 
           def extract_title(ref_section)
-            return nil unless ref_section.class.method_defined?(:title) && ref_section.title
+            return nil unless ref_section.title
             RenderedTextExtractor.text_of(ref_section.title)
           end
 
           def extract_docidentifier(bibitem)
-            return nil unless bibitem.class.method_defined?(:docidentifier)
+            
             ids = Array(bibitem.docidentifier)
-            primary = ids.find { |i| !(i.class.method_defined?(:type) && i.type) } || ids.first
+            primary = ids.find { |i| !i.type } || ids.first
             return nil unless primary
-            val = primary.class.method_defined?(:id) ? primary.id : primary.to_s
+            val = primary.id || primary.to_s
             val.to_s.strip
           end
 
           def extract_formattedref(bibitem)
-            fr = bibitem.class.method_defined?(:formatted_ref) ? bibitem.formatted_ref : nil
+            fr = bibitem.formatted_ref
             return nil unless fr
             text = RenderedTextExtractor.text_of(fr)
             text.empty? ? nil : text

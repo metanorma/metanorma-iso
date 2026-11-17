@@ -61,11 +61,11 @@ module Metanorma
           end
 
           def annex_title_text(annex)
-            RenderedTextExtractor.text_of(annex.title) if annex.class.method_defined?(:title) && annex.title
+            RenderedTextExtractor.text_of(annex.title) if annex.title
           end
 
           def annex_content_type(annex)
-            return nil unless annex.class.method_defined?(:obligation)
+            
 
             case annex.obligation
             when "normative" then "normative"

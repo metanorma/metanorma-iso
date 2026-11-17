@@ -11,7 +11,7 @@ module Metanorma
           attr_reader :typed_root
 
           def self.parse(input)
-            xml_string = input.class.method_defined?(:read) ? input.read : input.to_s
+            xml_string = input.respond_to?(:read) ? input.read : input.to_s
             typed = Metanorma::Iso::Document::Root.from_xml(xml_string)
             new(typed)
           end
@@ -146,7 +146,7 @@ module Metanorma
 
             SECTION_COLLECTIONS.flat_map { |attr| Array(secs.public_send(attr)) }
               .sort_by do |s|
-                s.class.method_defined?(:displayorder) && s.displayorder ? s.displayorder : Float::INFINITY
+                s.displayorder || Float::INFINITY
               end
           end
 
@@ -186,7 +186,7 @@ module Metanorma
               autonum = extract_term_autonum(term)
               next unless autonum && !autonum.empty?
               cache[term.id] = autonum if term.id
-              anchor = term.anchor if term.class.method_defined?(:anchor)
+              anchor = term.anchor
               cache[anchor] = autonum if anchor && !cache.key?(anchor)
             end
             cache
@@ -200,7 +200,7 @@ module Metanorma
             attrs = node.class.instance_variable_get(:@attributes) rescue nil
             return unless attrs
             attrs.each do |name, _|
-              next unless node.class.method_defined?(name)
+              next unless node.class.attributes.key?(name)
               val = node.public_send(name) rescue next
               next if val.nil?
               Array(val).each { |v| walk_for_terms(v, seen, &blk) if v.is_a?(Object) && !v.is_a?(String) && !v.is_a?(Array) }
@@ -211,7 +211,7 @@ module Metanorma
             label_arr = Array(term.fmt_xref_label)
             label = label_arr.first
             return nil unless label
-            return nil unless label.class.method_defined?(:each_mixed_content)
+            return nil unless label.respond_to?(:each_mixed_content)
             parts = []
             label.each_mixed_content do |n|
               if n.is_a?(String) && !n.strip.empty?
@@ -227,14 +227,14 @@ module Metanorma
           end
 
           def semx_text(semx)
-            return "" unless semx.class.method_defined?(:each_mixed_content)
+            return "" unless semx.respond_to?(:each_mixed_content)
             parts = []
             semx.each_mixed_content { |n| parts << n if n.is_a?(String) }
             parts.join
           end
 
           def span_text(span)
-            return "" unless span.class.method_defined?(:each_mixed_content)
+            return "" unless span.respond_to?(:each_mixed_content)
             parts = []
             span.each_mixed_content { |n| parts << n if n.is_a?(String) }
             parts.join

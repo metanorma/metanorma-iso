@@ -87,7 +87,7 @@ module Metanorma
             # typed attributes (causing duplication) and misses some
             # content types (tables, lists, notes).
             TYPED_ATTR_DISPATCH.each do |attr, handler|
-              next unless section.class.method_defined?(attr)
+              next unless section.class.attributes.key?(attr)
               collection = section.public_send(attr)
               Array(collection).each do |item|
                 result = send(handler, item)
@@ -112,7 +112,7 @@ module Metanorma
             return unless sibling_block?(item)
 
             SIBLING_ATTRS.each do |attr, handler|
-              next unless item.class.method_defined?(attr)
+              next unless item.class.attributes.key?(attr)
               Array(item.public_send(attr)).each do |sibling|
                 result = send(handler, sibling)
                 Array(result).each { |r| results << r } if result

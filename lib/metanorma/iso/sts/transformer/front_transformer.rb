@@ -40,7 +40,7 @@ module Metanorma
               paragraphs = []
               cs.each_mixed_content do |inner|
                 next if inner.is_a?(String)
-                next unless inner.class.method_defined?(:paragraphs)
+                
                 Array(inner.paragraphs).each { |p| paragraphs << paragraph_transformer.transform(p) }
               end
               next if paragraphs.empty?
@@ -50,7 +50,7 @@ module Metanorma
               paragraphs = []
               fs.each_mixed_content do |inner|
                 next if inner.is_a?(String)
-                next unless inner.class.method_defined?(:paragraphs)
+                
                 Array(inner.paragraphs).each { |p| paragraphs << paragraph_transformer.transform(p) }
               end
               next if paragraphs.empty?

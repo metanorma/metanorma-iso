@@ -54,7 +54,7 @@ module Metanorma
             # Dispatch nested clauses for any section type carrying a
             # clause collection (IsoClauseSection AND IsoAnnexSection —
             # annex subsections like the Examples annex's entries).
-            if source_clause.is_a?(Lutaml::Model::Serializable) && source_clause.class.method_defined?(:clause)
+            if source_clause.respond_to?(:clause) && source_clause.class.attributes.key?(:clause)
               Array(source_clause.clause).each do |sub|
                 sec = transform(sub)
                 content << sec if sec
@@ -67,13 +67,13 @@ module Metanorma
             # "3.1 General definitions") is preserved as its own Sec so
             # its heading renders for parity; only the top-level section
             # whose .term collection we're flattening skips the wrapper.
-            if source_clause.class.method_defined?(:term) && Array(source_clause.term).any?
+            if source_clause.class.attributes.key?(:term) && Array(source_clause.term).any?
               Array(source_clause.term).each do |term|
                 term_sec = term_transformer.transform(term)
                 content << term_sec if term_sec
               end
             end
-            if source_clause.class.method_defined?(:terms)
+            if source_clause.class.attributes.key?(:terms) && source_clause.terms
               Array(source_clause.terms).each do |terms_section|
                 terms_sec = transform_terms_section(terms_section)
                 content << terms_sec if terms_sec
@@ -127,7 +127,7 @@ module Metanorma
           def section_type(clause)
             return "terms" if terms_section?(clause)
 
-            t = clause.type if clause.class.method_defined?(:type)
+            t = clause.type
             marked = case t
                      when "scope" then "scope"
                      when "norm-ref", "norm-refs" then "norm-refs"
@@ -161,7 +161,7 @@ module Metanorma
           private
 
           def extract_title(source_clause)
-            return nil unless source_clause.class.method_defined?(:title) && source_clause.title
+            return nil unless source_clause.title
             title = source_clause.title
             return extract_with_stems(title) if title_is_mixed_with_stems?(title)
             RenderedTextExtractor.text_of(title)
@@ -180,12 +180,12 @@ module Metanorma
           end
 
           def title_is_mixed_with_stems?(title)
-            title.class.method_defined?(:each_mixed_content)
+            title.respond_to?(:each_mixed_content)
           end
 
           def collect_title_parts(node, parts)
             return parts unless node.is_a?(Lutaml::Model::Serializable)
-            return parts unless node.class.method_defined?(:each_mixed_content)
+            return parts unless node.respond_to?(:each_mixed_content)
 
             node.each_mixed_content do |child|
               if child.is_a?(String)

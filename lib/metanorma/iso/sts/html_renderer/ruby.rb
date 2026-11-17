@@ -239,7 +239,7 @@ module Metanorma
           # The section's/list item's own <label> child model (nil when
           # absent or a bare string, e.g. TableWrap#label).
           def own_label(node)
-            return nil unless node.class.method_defined?(:label)
+            return nil unless node.class.attributes.key?(:label)
 
             label = node.label
             label if label.is_a?(Lutaml::Model::Serializable)
@@ -302,7 +302,7 @@ module Metanorma
           # get a slug from their title so they are linkable and can
           # appear in the TOC.
           def section_id(node)
-            return node.id if node.class.method_defined?(:id) && node.id
+            return node.id if node.id
 
             title_node = find_child(node, "Title")
             return nil unless title_node
@@ -400,7 +400,7 @@ module Metanorma
           end
 
           def labeled_list?(node)
-            return false unless node.class.method_defined?(:list_item)
+            return false unless node.class.attributes.key?(:list_item)
 
             Array(node.list_item).any? { |item| own_label(item) }
           end
@@ -431,9 +431,9 @@ module Metanorma
           end
 
           def table_caption_line(node)
-            label_text = node.class.method_defined?(:label) ? node.label.to_s.strip : ""
-            caption_node = node.caption if node.class.method_defined?(:caption)
-            title_node = caption_node.title if caption_node&.class&.method_defined?(:title)
+            label_text = node.class.attributes.key?(:label) ? node.label.to_s.strip : ""
+            caption_node = node.caption if node.class.attributes.key?(:caption)
+            title_node = caption_node.title if caption_node && caption_node.class.attributes.key?(:title)
             title_html = title_node ? render_inline(title_node) : ""
             return "" if label_text.empty? && title_html.empty?
 
@@ -588,7 +588,7 @@ module Metanorma
             parts = []
             ref_node = find_model(node, "StandardRef")
             parts << render_element("span", render_inline(ref_node), css: "std-ref") if ref_node
-            title_str = node.title if node.class.method_defined?(:title)
+            title_str = node.title if node.class.attributes.key?(:title)
             parts << render_element("em", escape(title_str.to_s)) if title_str && !title_str.to_s.empty?
             render_element("span", parts.join(", "), css: "std")
           ensure
@@ -624,9 +624,9 @@ module Metanorma
             # NisoSts::Fn stores paragraphs in #paragraph; TbxIsoTml::Fn
             # stores them in #p. Accept either so the renderer handles
             # footnotes from paragraphs and table cells uniformly.
-            fn_paragraphs = if node.class.method_defined?(:paragraph)
+            fn_paragraphs = if node.class.attributes.key?(:paragraph)
                                Array(node.paragraph)
-                             elsif node.class.method_defined?(:p)
+                             elsif node.class.attributes.key?(:p)
                                Array(node.p)
                              else
                                []
@@ -872,7 +872,7 @@ module Metanorma
             return find_text(meta_node, ["Title"]) unless wrap
 
             %i[main compl full intro].each do |attr|
-              next unless wrap.class.method_defined?(attr)
+              next unless wrap.class.attributes.key?(attr)
               val = wrap.public_send(attr)
               val = val.text if val.respond_to?(:text) && !val.text.nil?
               return val.to_s.strip unless val.to_s.strip.empty?
@@ -910,8 +910,8 @@ module Metanorma
             walk_models(meta_node) do |model|
               next unless model.instance_of?(::Sts::NisoSts::CustomMeta)
 
-              name = model.class.method_defined?(:meta_name) ? model.meta_name.to_s : ""
-              value = model.class.method_defined?(:meta_value) ? model.meta_value.to_s : ""
+              name = model.class.attributes.key?(:meta_name) ? model.meta_name.to_s : ""
+              value = model.class.attributes.key?(:meta_value) ? model.meta_value.to_s : ""
               series = value if name == "oiml-doc-series" && !value.empty?
             end
             series
