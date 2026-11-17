@@ -11,7 +11,7 @@ module IsoDoc
       #   - MainTitle2 paragraph for title part (with optional prefix)
       #
       # Title text is sourced from bibdata.titles (TitleCollection)
-      # for the document's primary language. No hardcoded strings.
+      # for English followed by French. No hardcoded title strings.
       class MiddleTitleRenderer
         TITLE_SEPARATOR = " — "
         private_constant :TITLE_SEPARATOR
@@ -25,9 +25,14 @@ module IsoDoc
           bib = bibdata(model)
           return unless bib
 
-          render_main(bib, doc)
-          render_part(bib, doc)
-          render_amd(bib, doc)
+          %w[en fr].each do |language|
+            localized = localized_title(bib, language)
+            next unless localized
+
+            render_main(localized, doc)
+            render_part(localized, doc)
+            render_amd(localized, doc)
+          end
         end
 
         private
@@ -38,8 +43,8 @@ module IsoDoc
           model.bibdata
         end
 
-        def render_main(bib, doc)
-          text = main_text(bib)
+        def render_main(localized, doc)
+          text = main_text(localized)
           return if text.nil? || text.empty?
 
           para = Uniword::Builder::ParagraphBuilder.new
@@ -48,8 +53,8 @@ module IsoDoc
           doc << para
         end
 
-        def render_part(bib, doc)
-          text = part_text(bib)
+        def render_part(localized, doc)
+          text = part_text(localized)
           return if text.nil? || text.empty?
 
           para = Uniword::Builder::ParagraphBuilder.new
@@ -66,10 +71,7 @@ module IsoDoc
         # + doctitleamd). MainTitle2 keeps the title family formatting —
         # neither vendored template defines a zzSTDTitle2 style, so the
         # line must reuse a defined styleId (metanorma-iso#1728).
-        def render_amd(bib, doc)
-          localized = english_title(bib)
-          return unless localized
-
+        def render_amd(localized, doc)
           label = localized.title_amendment_prefix&.value.to_s.strip
           description = localized.title_amd&.value.to_s.strip
           return if label.empty? && description.empty?
@@ -81,10 +83,7 @@ module IsoDoc
           doc << para
         end
 
-        def main_text(bib)
-          localized = english_title(bib)
-          return nil unless localized
-
+        def main_text(localized)
           parts = []
           parts << localized.title_intro.value if localized.title_intro
           parts << localized.title_main.value if localized.title_main
@@ -92,9 +91,8 @@ module IsoDoc
           parts.empty? ? nil : parts.join(TITLE_SEPARATOR)
         end
 
-        def part_text(bib)
-          localized = english_title(bib)
-          return nil unless localized&.title_part
+        def part_text(localized)
+          return nil unless localized.title_part
 
           prefix = localized.title_part_prefix&.value.to_s.strip
           part_val = localized.title_part.value
@@ -108,13 +106,13 @@ module IsoDoc
           end
         end
 
-        def english_title(bib)
+        def localized_title(bib, language)
           return nil unless bib.class.attributes.key?(:titles)
 
           titles = bib.titles
           return nil unless titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
 
-          titles.for_language("en")
+          titles.for_language(language)
         rescue StandardError
           nil
         end
