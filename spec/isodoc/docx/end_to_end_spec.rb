@@ -20,7 +20,7 @@ require "set"
 RSpec.describe "Era C DOCX end-to-end", :slow do
   let(:dis_fixture) do
     File.expand_path(
-      "spec/fixtures/samples/international-standard/document-en.dis.presentation.xml",
+      "spec/fixtures/iso/is/document-en.dis.presentation.xml",
       Dir.pwd,
     )
   end
@@ -122,13 +122,14 @@ RSpec.describe "Era C DOCX end-to-end", :slow do
       skip "No note/example body paragraphs in fixture" if bodies.empty?
 
       bodies.each do |para|
-        prior_styles = para.xpath("preceding-sibling::w:p/w:pPr/w:pStyle/@w:val", w_ns).map(&:to_s)
-        following_styles = para.xpath("following-sibling::w:p/w:pPr/w:pStyle/@w:val", w_ns).map(&:to_s)
+        marker = "w:p[w:pPr/w:pStyle[@w:val='Box-begin' or @w:val='Box-end']]"
+        prior_marker = para.at_xpath("preceding-sibling::#{marker}[1]/w:pPr/w:pStyle/@w:val", w_ns)&.value
+        next_marker = para.at_xpath("following-sibling::#{marker}[1]/w:pPr/w:pStyle/@w:val", w_ns)&.value
 
-        expect(prior_styles).not_to include("Box-begin"),
-          "note/example body must not follow a Box-begin (inline-label contract)"
-        expect(following_styles).not_to include("Box-end"),
-          "note/example body must not precede a Box-end"
+        expect([prior_marker, next_marker]).not_to(
+          eq(%w[Box-begin Box-end]),
+          "note/example body must not be enclosed by Box-begin/Box-end (inline-label contract)",
+        )
       end
     end
 

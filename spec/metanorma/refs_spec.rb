@@ -34,18 +34,7 @@ RSpec.describe Metanorma::Iso do
 
   after { FileUtils.remove_entry(cache_dir) }
 
-  before(:each, :withdrawn_reference) do
-    stub_request(:any, /.*/).to_raise("Unexpected HTTP request")
-    fixtures = File.expand_path("../relatondb/cache/v2/docs/is", __dir__)
-    allow(Relaton::Iso::Bibliography).to receive(:get) do |id, _year, _opts|
-      filename = case id.to_s
-                 when /\AISO 31-0/ then "iso%2F31%2F8b026bccc81a78c0.xml"
-                 when /\AISO 683-3/ then "iso%2F683%2F17fa7275475e8674.xml"
-                 else raise "Unexpected reference: #{id}"
-                 end
-      Relaton::Bib::Bibitem.from_xml(File.read(File.join(fixtures, filename)))
-    end
-  end
+  before(:each, :withdrawn_reference) { mock_withdrawn_references }
 
   it "renders withdrawn references offline with an existing source cache",
      :aggregate_failures, :withdrawn_reference do
@@ -412,7 +401,8 @@ RSpec.describe Metanorma::Iso do
       .to be_xml_equivalent_to ["IEC 60050", "ISO 9"]
   end
 
-  it "renders withdrawn and cancelled ISO references", :withdrawn_reference do
+  it "renders withdrawn and cancelled ISO references" do
+    mock_withdrawn_references
     input = <<~INPUT
       #{local_cached_header}
 
@@ -747,7 +737,8 @@ RSpec.describe Metanorma::Iso do
   # metanorma/metanorma-standoc#941: ISO 31-0 was withdrawn on 2009-11-17
   # (obsoletedBy ISO 80000-1:2009). A document published in 2005 must not show
   # it as withdrawn; a document published in 2015 must.
-  it "suppresses a withdrawn-reference note when the withdrawal postdates publication", :withdrawn_reference do
+  it "suppresses a withdrawn-reference note when the withdrawal postdates publication" do
+    mock_withdrawn_references
     input = <<~INPUT
       #{local_cached_header.sub(':nodoc:', ":nodoc:\n:copyright-year: 2005")}
 
@@ -762,7 +753,8 @@ RSpec.describe Metanorma::Iso do
     expect(note).to be_nil
   end
 
-  it "keeps a withdrawn-reference note when the withdrawal predates publication", :withdrawn_reference do
+  it "keeps a withdrawn-reference note when the withdrawal predates publication" do
+    mock_withdrawn_references
     input = <<~INPUT
       #{local_cached_header.sub(':nodoc:', ":nodoc:\n:copyright-year: 2015")}
 
@@ -779,9 +771,29 @@ RSpec.describe Metanorma::Iso do
 
   private
 
+  def mock_withdrawn_references
+    stub_request(:any, /.*/).to_raise("Unexpected HTTP request")
+    fixtures = File.expand_path("../relatondb/cache/v2/docs/is", __dir__)
+    allow(Relaton::Iso::Bibliography).to receive(:get) do |id, _year, _opts|
+      filename = case id.to_s
+                 when /\AISO 31-0/ then "iso%2F31%2F8b026bccc81a78c0.xml"
+                 when /\AISO 683-3/ then "iso%2F683%2F17fa7275475e8674.xml"
+                 else raise "Unexpected reference: #{id}"
+                 end
+      Relaton::Bib::Bibitem.from_xml(File.read(File.join(fixtures, filename)))
+    end
+  end
+
+  # relaton#205: the flavor's `get` receives the parsed pubid object when
+  # the reference parses as one, else the raw String. Match on the rendered
+  # reference so the stub binds on either relaton generation.
+  def relaton_ref(code)
+    satisfy("a reference rendering as #{code.inspect}") { |ref| ref.to_s == code }
+  end
+
   def mock_fdis_iso
     expect(Relaton::Iso::Bibliography).to receive(:get)
-      .with(Pubid::Iso::Identifier.parse("ISO/FDIS 17664-1"), "2020", anything) do
+      .with(relaton_ref("ISO/FDIS 17664-1"), "2020", anything) do
       Relaton::Bib::Bibitem.from_xml(<<~"OUTPUT")
         <bibitem id="_" anchor="x" type="standard">
           <fetched>#{Date.today}</fetched>
@@ -825,7 +837,7 @@ RSpec.describe Metanorma::Iso do
 
     def mock_fdis_iec
       expect(Relaton::Iec::Bibliography).to receive(:get)
-        .with(Pubid::Iec::Identifier.parse("IEC PWI 100-44 ED1"), nil, anything) do
+        .with(relaton_ref("IEC PWI 100-44 ED1"), nil, anything) do
         Relaton::Bib::Bibitem.from_xml(<<~"OUTPUT")
           <bibitem id="_" anchor="x" type="standard">
             <fetched>#{Date.today}</fetched>
