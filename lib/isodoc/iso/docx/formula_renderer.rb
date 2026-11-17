@@ -143,16 +143,21 @@ module IsoDoc
         end
 
         # Build the formula paragraph with OMML math content.
+        #
+        # The equation, tab, and number all go through the
+        # ParagraphBuilder `<<` API: direct collection writes bypass
+        # element_order tracking, and both the DOCX serializer and the
+        # MHTML writer then fall back to runs-before-math order, which
+        # puts the ISO formula number ahead of its equation.
         def render_formula_with_omml(formula, mathml_string, doc)
           para = Uniword::Builder::ParagraphBuilder.new
           para.style = @resolver.paragraph_style(:formula)
 
           omml_para = convert_to_omml_para(mathml_string)
           if omml_para
-            built = para.build
-            built.o_math_paras << omml_para
-            append_formula_name(formula, built)
-            doc << built
+            para << omml_para
+            append_formula_name(formula, para)
+            doc << para.build
           else
             render_formula_as_text(formula, doc)
           end
@@ -184,24 +189,20 @@ module IsoDoc
           doc << para
         end
 
-        # Append the formula name/label to a built paragraph model.
-        def append_formula_name(formula, built_para)
-          name = attribute_value(formula, :fmt_name)
-          return unless name
-
-          name_text = collect_text(name)
+        # Append the formula name/label to a paragraph builder.
+        def append_formula_name(formula, builder)
+          name_text = formula_name_text(formula)
           return if name_text.nil? || name_text.empty?
 
           tab_run = Uniword::Wordprocessingml::Run.new
           tab_run.tab = Uniword::Wordprocessingml::Tab.new
-          built_para.runs << tab_run
+          builder << tab_run
 
-          name_run = build_styled_run(name_text)
-          built_para.runs << name_run
+          builder << build_styled_run(name_text)
         end
 
         def append_formula_name_to_builder(name, para)
-          name_text = collect_text(name)
+          name_text = formula_name_text_value(name)
           return if name_text.nil? || name_text.empty?
 
           tab_run = Uniword::Wordprocessingml::Run.new
@@ -212,6 +213,30 @@ module IsoDoc
             @inline.add_text_with_char_style(para, name_text, :stem)
           else
             para << name_text
+          end
+        end
+
+        # The formula's <fmt-name> label, e.g. "(1)". The presentation
+        # XML wraps the autonum in a span tree (fmt-caption-label /
+        # fmt-autonum-delim), so the flat-text-only collect_text returns
+        # "" for it and the ISO formula number silently disappears.
+        # Route the label through the InlineRenderer — the same walk the
+        # figure captions use — and take the produced run text; fall
+        # back to collect_text for flat shapes.
+        def formula_name_text(formula)
+          name = attribute_value(formula, :fmt_name)
+          return unless name
+
+          formula_name_text_value(name)
+        end
+
+        def formula_name_text_value(name)
+          if @inline.is_a?(InlineRenderer) && ordered?(name)
+            temp = Uniword::Builder::ParagraphBuilder.new
+            @inline.render(name, temp)
+            temp.model.text
+          else
+            collect_text(name)
           end
         end
 
