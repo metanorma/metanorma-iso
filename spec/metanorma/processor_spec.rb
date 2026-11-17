@@ -122,9 +122,19 @@ RSpec.describe "Metanorma::Iso::Processor" do
       ["00", {}, :simple], ["10", {}, :simple], ["20", {}, :simple],
       ["30", {}, :simple], ["40", {}, :dis], ["50", {}, :dis],
       ["60.60", {}, :dis], ["90", {}, :dis], [nil, {}, :dis],
+      ["20.20", {}, :simple], ["30.60", {}, :simple],
+      ["\n  30 \n", {}, :simple], ["40", {}, :dis],
+      ["90.93", {}, :dis],
       ["30", { isowordtemplate: "dis" }, :dis],
+      ["20.20", { isowordtemplate: "dis" }, :dis],
+      ["30.60", { isowordtemplate: "dis" }, :dis],
+      ["\n  30 \n", { isowordtemplate: "dis" }, :dis],
+      ["40", { isowordtemplate: "dis" }, :dis],
       ["60.60", { isowordtemplate: "simple" }, :simple],
-      [nil, { isowordtemplate: "simple" }, :simple]
+      ["90.93", { isowordtemplate: "simple" }, :simple],
+      ["40", { isowordtemplate: "simple" }, :simple],
+      [nil, { isowordtemplate: "simple" }, :simple],
+      [nil, { isowordtemplate: "dis" }, :dis]
     ]
 
     %i[string path].product([nil, "", "iso"]).each do |input_type, prefix|
