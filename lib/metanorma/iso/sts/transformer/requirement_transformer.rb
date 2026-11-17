@@ -44,6 +44,16 @@ module Metanorma
             "test" => "recommendtest",
           }.freeze
 
+          # Requirement type → mn-requirements vocabulary key, for the
+          # synthesized label ("Requirements class", "Conformance class",
+          # "Requirement test", …).
+          TYPE_TO_LABEL_KEY = {
+            "class" => "requirementclass",
+            "abstractclass" => "requirementclass",
+            "verification" => "requirementtest",
+            "test" => "requirementtest",
+          }.freeze
+
           # @return [Array<::Sts::TbxIsoTml::TableWrap>] the requirement's
           #   table first, then one per nested requirement.
           def transform(source_req)
@@ -100,7 +110,7 @@ module Metanorma
 
           def table_from_rows(rows)
             trs = rows.map do |row_label, cell|
-              table_transformer.tr(th: [bold_cell(row_label)], td: [cell])
+              ModelBuilder.tr(th: [bold_cell(row_label)], td: [cell])
             end
             ModelBuilder.table(tbody: ModelBuilder.tbody(tr: trs))
           end
@@ -239,10 +249,10 @@ module Metanorma
           def reqt_label(source_req)
             type = source_req.class.method_defined?(:type) ? source_req.type.to_s : ""
             vocabulary = reqt_labels
-            base = vocabulary[type] ||
+            key = TYPE_TO_LABEL_KEY[type] || type
+            vocabulary[key] ||
               vocabulary[source_req.class.name.split("::").last.delete_suffix("Model").downcase] ||
               source_req.class.name.split("::").last.delete_suffix("Model").capitalize
-            base
           end
 
           # mn-requirements' vocabulary (the strings the native isodoc
