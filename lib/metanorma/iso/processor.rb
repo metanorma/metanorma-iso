@@ -59,10 +59,6 @@ module Metanorma
       end
 
       def use_presentation_xml(ext)
-        # When the native ISO-STS transformer is enabled it consumes semantic
-        # XML (matching mnconvert's input_format: MN); while gated off, keep
-        # the historical presentation-XML routing so mnconvert is unchanged.
-        return false if ext == :isosts && Metanorma::Iso::Sts.enabled?
         return false if ext == :sts_html
         return true if %i[html_alt sts isosts doc docx].include?(ext)
 
