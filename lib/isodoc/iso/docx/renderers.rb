@@ -16,6 +16,8 @@ module IsoDoc
         autoload :QuoteRenderer,         "isodoc/iso/docx/renderers/quote_renderer"
         autoload :DefinitionListRenderer,
                  "isodoc/iso/docx/renderers/definition_list_renderer"
+        autoload :DefinitionSectionRenderer,
+                 "isodoc/iso/docx/renderers/definition_section_renderer"
         autoload :FigureRenderer,        "isodoc/iso/docx/renderers/figure_renderer"
         autoload :ParagraphRenderer,    "isodoc/iso/docx/renderers/paragraph_renderer"
         autoload :OrderedListRenderer,  "isodoc/iso/docx/renderers/ordered_list_renderer"
