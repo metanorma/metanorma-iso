@@ -35,6 +35,7 @@ module Metanorma
             name = source.class.method_defined?(:fmt_name) ? source.fmt_name : nil
             wrapper = Array(name).first if name
             text = wrapper ? RenderedTextExtractor.text_of(wrapper).strip : ""
+            text = text.gsub(/<[^>]+>/, " ").squeeze(" ").strip
             return text unless text.empty?
 
             number = source.class.method_defined?(:autonum) ? source.autonum.to_s.strip : ""

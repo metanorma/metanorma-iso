@@ -128,10 +128,22 @@ module Metanorma
             return "terms" if terms_section?(clause)
 
             t = clause.type if clause.class.method_defined?(:type)
-            case t
-            when "scope" then "scope"
-            when "norm-ref", "norm-refs" then "norm-refs"
-            when "intro" then "intro"
+            marked = case t
+                     when "scope" then "scope"
+                     when "norm-ref", "norm-refs" then "norm-refs"
+                     when "intro" then "intro"
+                     end
+            return marked if marked
+
+            # Title fallback: the known clause titles flag @sec-type even
+            # when the presentation clause carries no type attribute
+            # (Guidelines 4.2).
+            title = extract_title(clause).to_s
+            case title
+            when /\Ascope\z/i then "scope"
+            when /\Anormative references\z/i then "norm-refs"
+            when /\Aintroduction\z/i then "intro"
+            when /\Aterms and definitions\z/i, /\Aterms, definitions/i then "terms"
             end
           end
 
