@@ -63,6 +63,31 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     expect(render_to_text(presentation_unit_stem)).to eq("80 km")
   end
 
+  def structured_unit_stem(mathml)
+    Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
+      '<fmt-stem type="MathML"><semx element="stem" source="s1">' \
+      "<math xmlns=\"http://www.w3.org/1998/Math/MathML\">#{mathml}</math>" \
+      '<asciimath>"unitsml(unit)"</asciimath></semx></fmt-stem>',
+    )
+  end
+
+  {
+    "<msup><mi>m</mi><mn>2</mn></msup>" => "m²",
+    "<mrow><mi>m</mi><mo>⋅</mo><msup><mi>s</mi><mrow><mo>−</mo>" \
+    "<mn>1</mn></mrow></msup></mrow>" => "m⋅s⁻¹",
+    "<msub><mi>m</mi><mn>0</mn></msub>" => "m₀",
+    "<mfrac><mi>m</mi><mi>s</mi></mfrac>" => "(m/s)",
+    "<msup><mfrac><mi>m</mi><mi>s</mi></mfrac><mn>2</mn></msup>" => "(m/s)²",
+    "<msup><mi>s</mi><mn>-1</mn></msup>" => "s⁻¹",
+    "<msubsup><mi>m</mi><mn>0</mn><mn>2</mn></msubsup>" => "m₀²",
+    "<msup><mrow><mi>m</mi><mo>⋅</mo><mi>s</mi></mrow><mn>2</mn></msup>" => "(m⋅s)²",
+    "<msup><mi>m</mi><mi>n</mi></msup>" => "m^(n)",
+  }.each do |mathml, expected|
+    it "preserves unit structure as #{expected}" do
+      expect(render_to_text(structured_unit_stem(mathml))).to eq(expected)
+    end
+  end
+
   it "uses rendered MathML instead of the semantic source macro" do
     stem = Metanorma::Document::Components::TextElements::StemElement.from_xml(
       '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
