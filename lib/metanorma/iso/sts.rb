@@ -72,10 +72,20 @@ module Metanorma
       #
       # @param input [String, Pathname, #read] the source XML.
       # @return [Sts::NisoSts::Standard] the typed STS model.
-      def self.convert_to_model(input)
-        source = Transformer::SourceDocument.parse(input)
-        context = Transformer::Context.new(source)
+      def self.convert_to_model(input, presentation_xml: nil)
+        xml_string = input.respond_to?(:read) ? input.read : input.to_s
+        source = Transformer::SourceDocument.parse(xml_string)
+        pres = presentation_xml || (presentation_input?(xml_string) ? xml_string : nil)
+        context = Transformer::Context.new(source, presentation_xml: pres)
         Transformer::DocumentTransformer.new(context).transform(source)
+      end
+
+      # A presentation-typed document carries the rendered requirement
+      # provision tables (<fmt-provision>); wiring them into the context
+      # makes requirement tables emit 1:1 with the rendered output.
+      PRESENTATION_TYPE_RE = /<metanorma\b[^>]*\btype="presentation"/.freeze
+      def self.presentation_input?(xml_string)
+        PRESENTATION_TYPE_RE.match?(xml_string)
       end
 
       def self.inject_namespaces(xml)

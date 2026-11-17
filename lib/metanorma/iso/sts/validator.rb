@@ -347,6 +347,10 @@ module Metanorma
 
           r.call("iso-gdg-4.4.2-1", "Guidelines 4.4.2", "sec",
                  lambda do |node, *_|
+                   # Unnumbered front sections (foreword, introduction)
+                   # carry no clause number — the rule targets numbered
+                   # clauses.
+                   return nil if %w[intro foreword].include?(node["sec-type"])
                    return nil if !node.xpath("./sec").any? ||
                      at(node, "./label")
 
