@@ -36,12 +36,12 @@ module IsoDoc
       end
 
       def default_file_locations(options)
-        a = options[:alt] ? "style-human.scss" : "style-iso.scss"
+        a = options[:alt] ? "style-human.css" : "style-iso.css"
         { htmlstylesheet: html_doc_path(a),
           htmlcoverpage: html_doc_path("html_iso_titlepage.html"),
           htmlintropage: html_doc_path("html_iso_intro.html"),
-          wordstylesheet: html_doc_path("wordstyle.scss"),
-          standardstylesheet: html_doc_path("isodoc.scss"),
+          wordstylesheet: html_doc_path("wordstyle.css"),
+          standardstylesheet: html_doc_path("isodoc.css"),
           header: html_doc_path("header.html"),
           wordcoverpage: html_doc_path("word_iso_titlepage.html"),
           wordintropage: html_doc_path("word_iso_intro.html"),
