@@ -27,7 +27,7 @@ module Metanorma
           doc = parse(xml)
           report = ValidationReport.new
           rules.each do |rule|
-            doc.xpath(rule.context, TBX_NS).each do |node|
+            doc.xpath(absolute_context(rule.context), TBX_NS).each do |node|
               msg = rule.check.call(node, doc)
               next unless msg.is_a?(String) && !msg.empty?
 
@@ -40,6 +40,19 @@ module Metanorma
         end
 
         private
+
+        # Rule contexts are written document-relative ("sec", "app",
+        # "tbx:termEntry"); evaluate them document-wide. Absolute
+        # contexts ("/", "//x") pass through; union alternatives are
+        # each absolutized.
+        def absolute_context(context)
+          return context if context.start_with?("/")
+
+          context.split("|").map do |part|
+            part = part.strip
+            part.start_with?("/") ? part : "//#{part}"
+          end.join(" | ")
+        end
 
         def parse(xml)
           case xml
@@ -862,9 +875,8 @@ module Metanorma
                  ))
           r.call("iso-gdg-9.2.2-1", "Guidelines 9.2.2", "tbx:definition",
                  lambda do |node, *_|
-                   node.parent&.name == "tbx:langSet" ||
-                     "a definition is coded in <tbx:definition> inside " \
-                     "<tbx:langSet>"
+                   node.parent&.name == "langSet" ||
+                     "a definition is coded in <tbx:definition> inside "                      "<tbx:langSet>"
                  end)
           r.call("iso-gdg-9.2.3-1", "Guidelines 9.2.3", "tbx:tig",
                  lambda do |node, *_|
@@ -912,7 +924,7 @@ module Metanorma
           r.call("iso-gdg-9.2.8-1", "Guidelines 9.2.8", "tbx:source",
                  lambda do |node, *_|
                    return "a stated source is included in <tbx:source> " \
-                     "within <tbx:langSet>" unless node.parent&.name == "tbx:langSet"
+                     "within <tbx:langSet>" unless node.parent&.name == "langSet"
                    return 'the word "SOURCE" is added at rendering; remove it ' \
                      "from <tbx:source> content" if node.text.match?(/SOURCE/)
                    return "square brackets are added at rendering; remove them " \

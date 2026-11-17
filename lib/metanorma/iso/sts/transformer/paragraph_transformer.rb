@@ -554,9 +554,15 @@ module Metanorma
               href = val if val.is_a?(String) && !val.empty?
               break if href
             end
+            visible = link_text(node)
+            if href.nil? || href.empty?
+              # The presentation mirror carries no target: the visible URL
+              # is the link (Guidelines 10.1.9 requires @xlink:href).
+              href = visible.to_s.empty? ? nil : visible
+            end
             return nil unless href
 
-            visible = href.start_with?("mailto:") ? href.sub("mailto:", "") : link_text(node)
+            visible = href.start_with?("mailto:") ? href.sub("mailto:", "") : visible
             ModelBuilder.ext_link(xlink_href: href, content: [visible])
           end
 

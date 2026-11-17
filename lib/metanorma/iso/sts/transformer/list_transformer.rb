@@ -5,12 +5,9 @@ module Metanorma
       module Transformer
         class ListTransformer < Base
           def transform(source_list)
-            list_type = if source_list.is_a?(Metanorma::Document::Components::Lists::OrderedList)
-                          "arabic"
-                        else
-                          "bullet"
-                        end
-            items = Array(source_list.listitem).map { |li| build_list_item(li) }
+            ordered = source_list.is_a?(Metanorma::Document::Components::Lists::OrderedList)
+            list_type = ordered ? "arabic" : "bullet"
+            items = Array(source_list.listitem).map { |li| build_list_item(li, ordered) }
             ModelBuilder.list(list_type: list_type, list_item: items)
           end
 
@@ -23,11 +20,13 @@ module Metanorma
 
           private
 
-          def build_list_item(li)
+          def build_list_item(li, ordered)
             nested_lists = build_nested_lists(li)
 
             ::Sts::NisoSts::ListItem.new do |item|
-              label = item_label(li)
+              # Guidelines 5.7.1/5.7.2: ordered items capture their marker
+              # in <label>; unordered items carry none (derived on render).
+              label = ordered ? item_label(li) : nil
               item.label ::Sts::NisoSts::Label.new(content: [label]) if label
               Array(li.paragraphs).each do |p|
                 item.p paragraph_transformer.transform(p)

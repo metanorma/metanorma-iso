@@ -35,7 +35,6 @@ module Metanorma
 
               label_text = annex_label_text(annex, sts_id)
               app.label = ::Sts::NisoSts::Label.new(content: [label_text]) if label_text
-              app.annex_type = "(#{annex.obligation})" if annex.class.method_defined?(:obligation) && annex.obligation
               title_text = annex_title_text(annex)
               app.title = ::Sts::NisoSts::Title.new(content: [title_text]) if title_text && !title_text.empty?
 
@@ -69,8 +68,8 @@ module Metanorma
             return nil unless annex.class.method_defined?(:obligation)
 
             case annex.obligation
-            when "normative" then "normative-annex"
-            when "informative" then "informative-annex"
+            when "normative" then "normative"
+            when "informative" then "informative"
             end
           end
 

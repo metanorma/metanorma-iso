@@ -199,14 +199,15 @@ module Metanorma
 
           def non_normative_note(paragraph: [], list: [], label: nil)
             ::Sts::NisoSts::NonNormativeNote.new.tap do |n|
+              n.label = ::Sts::NisoSts::Label.new(content: [label]) if label
               n.p = Array(paragraph) if paragraph&.any?
               n.list = Array(list) if list&.any?
-              n.label = ::Sts::NisoSts::Label.new(content: [label]) if label
             end
           end
 
           def non_normative_example(paragraph: [], list: [], preformat: [], label: nil)
             ::Sts::NisoSts::NonNormativeExample.new.tap do |e|
+              e.label = ::Sts::NisoSts::Label.new(content: [label]) if label
               e.p = Array(paragraph) if paragraph&.any?
               e.list = Array(list) if list&.any?
               e.preformat = Array(preformat) if preformat&.any?

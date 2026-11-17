@@ -40,12 +40,16 @@ RSpec.describe "Annex to app conversion" do
     expect(apps.map { |a| a["id"] }).to eq(%w[sec_A sec_B])
   end
 
-  it "labels each annex and emits the obligation as annex-type" do
+  # Guidelines 4.5.1: the annex number is the <label>; the obligation is
+  # NOT coded as <annex-type> text (derived from @content-type on render).
+  it "labels each annex and codes the obligation as @content-type" do
     first, second = doc.xpath("//app").to_a
     expect(first.at_xpath("./label")&.text).to eq("Annex\u00A0A")
-    expect(first.at_xpath("./annex-type")&.text).to eq("(normative)")
+    expect(first["content-type"]).to eq("normative")
+    expect(first.at_xpath("./annex-type")).to be_nil
     expect(second.at_xpath("./label")&.text).to eq("Annex\u00A0B")
-    expect(second.at_xpath("./annex-type")&.text).to eq("(informative)")
+    expect(second["content-type"]).to eq("informative")
+    expect(second.at_xpath("./annex-type")).to be_nil
   end
 
   it "dispatches annex content directly into the app" do
