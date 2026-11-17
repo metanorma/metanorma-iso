@@ -61,7 +61,8 @@ module Metanorma
 
               reader = Nokogiri::XML::Reader(xml)
               reader.each do |node|
-                if node.element?
+                type = node.node_type
+                if type == Nokogiri::XML::Reader::TYPE_ELEMENT
                   name = node.local_name
                   if REQ_ELEMENTS.include?(name)
                     anchor = node.attribute("anchor")
@@ -69,10 +70,10 @@ module Metanorma
                   elsif name == "fmt-provision"
                     capture_anchor = current_anchor(anchor_stack)
                     capture_depth = node.depth
-                    table = parse_provision_table(node.outer_string)
+                    table = parse_provision_table(node.outer_xml)
                     tables[capture_anchor] = table if capture_anchor && table
                   end
-                elsif node.end_element?
+                elsif type == Nokogiri::XML::Reader::TYPE_END_ELEMENT
                   name = node.local_name
                   anchor_stack.pop if REQ_ELEMENTS.include?(name)
                   capture_anchor = nil if name == "fmt-provision"
