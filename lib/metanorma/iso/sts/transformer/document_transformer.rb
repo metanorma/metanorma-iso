@@ -52,14 +52,11 @@ module Metanorma
           end
 
           def inject_namespaces(xml)
-            return xml if xml.include?("xmlns:xlink")
-            xml.sub("<standard", '<standard xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mml="http://www.w3.org/1998/Math/MathML"')
+            Metanorma::Iso::Sts.inject_namespaces(xml)
           end
 
           def inject_processing_meta(xml)
-            return xml if xml.include?("<processing-meta")
-            meta = '<processing-meta tagset-family="sts" base-tagset="interchange" table-model="xhtml" mathml="MathML 3.0" terminology-model="tbx"/>'
-            xml.sub(/(<standard[^>]*>)/, "\\1\n  #{meta}")
+            Metanorma::Iso::Sts.inject_processing_meta(xml)
           end
 
           def fix_lang_attribute(xml)

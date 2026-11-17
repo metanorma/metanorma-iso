@@ -4,7 +4,7 @@ require_relative "spec_helper"
 
 # Document shell conformance: the NISO STS schema pins
 # <standard dtd-version> to the fixed value "1.0", and <ics> is a plain
-# string element on iso-meta — typed models there would serialize their
+# string element on std-meta — typed models there would serialize their
 # #to_s as content.
 RSpec.describe "Document shell" do
   let(:xml) do
@@ -33,7 +33,7 @@ RSpec.describe "Document shell" do
   end
 
   it "emits ics codes as plain string content" do
-    ics = doc.at_xpath("//iso-meta/ics")
+    ics = doc.at_xpath("//std-meta/ics")
     expect(ics).not_to be_nil
     expect(ics.text).to eq("35.240.70")
     expect(ics.text).not_to include("#<")

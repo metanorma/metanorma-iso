@@ -66,13 +66,17 @@ module Metanorma
                 end
               }
             ),
+            # ISO profile: a <std> in the normative references carries
+            # <std-ref> with datedness (@type) per the IEC/ISO Coding
+            # Guidelines — the OIML X 999 <title> requirement is an OIML
+            # flavor constraint and does not apply to ISO coding (the
+            # ISO-published artifacts carry std-ref without title).
             RuleImplementation.new(
-              id: "oiml-x999-std-title-and-date",
-              message: "Every <std> shall carry <title>, and every <std-ref> shall declare datedness via @type.",
+              id: "iso-gdg-std-ref-dated",
+              message: "Every <std-ref> shall declare datedness via @type.",
               apply: ->(doc, report, rule) {
                 doc.xpath("//std").each do |node|
                   problems = []
-                  problems << "missing required <title>" unless node.at_xpath("./title")
                   node.xpath("./std-ref").each do |std_ref|
                     type = std_ref["type"]
                     if type.nil? || type.empty?
@@ -82,7 +86,7 @@ module Metanorma
                   next if problems.empty?
 
                   report.add(rule_id: rule.id,
-                             message: "<std>: #{problems.join('; ')} (OIML X 999 Clause 5.4).",
+                             message: "<std>: #{problems.join('; ')} (IEC/ISO Coding Guidelines, normative references).",
                              xpath: node.path)
                 end
               }

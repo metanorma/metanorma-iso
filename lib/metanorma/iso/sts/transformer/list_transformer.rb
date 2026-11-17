@@ -27,6 +27,21 @@ module Metanorma
               item.label ::Sts::NisoSts::Label.new(content: [label]) if label
               Array(li.paragraphs).each { |p| item.p paragraph_transformer.transform(p) }
               nested_lists.each { |l| item.list l }
+              append_item_siblings(li, item)
+            end
+          end
+
+          # MN attaches trailing notes/examples to the list item as typed
+          # siblings; the STS list-item model carries them as
+          # all-notes.class members.
+          def append_item_siblings(li, item)
+            Array(li.note).each do |n|
+              note = note_transformer.transform(n)
+              item.non_normative_note note if note
+            end
+            Array(li.example).each do |ex|
+              example = note_transformer.transform(ex)
+              item.non_normative_example example if example
             end
           end
 

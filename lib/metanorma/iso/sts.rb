@@ -76,13 +76,23 @@ module Metanorma
       end
 
       def self.inject_namespaces(xml)
-        return xml if xml.include?("xmlns:xlink")
-        xml.sub("<standard", '<standard xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mml="http://www.w3.org/1998/Math/MathML"')
+        missing = []
+        missing << 'xmlns:mml="http://www.w3.org/1998/Math/MathML"' unless xml.include?("xmlns:mml")
+        missing << 'xmlns:xlink="http://www.w3.org/1999/xlink"' unless xml.include?("xmlns:xlink")
+        return xml if missing.empty?
+
+        xml.sub("<standard", "<standard #{missing.join(' ')}")
       end
 
+      # <processing-meta> per the IEC/ISO Coding Guidelines ed. 2.1
+      # §4.3.2: a child of <standard> declaring the coding profile
+      # (tagset-family, base-tagset, table-model, mathml-version,
+      # math-representation, terminology-model) plus the
+      # custom-meta-group naming the guidelines edition.
       def self.inject_processing_meta(xml)
         return xml if xml.include?("<processing-meta")
-        meta = '<processing-meta tagset-family="sts" base-tagset="interchange" table-model="xhtml" mathml="MathML 3.0" terminology-model="tbx"/>'
+
+        meta = processing_meta_element
         # Linear scan for the end of the first <standard ...> opening tag.
         # Avoids the polynomial regex previously flagged by CodeQL.
         open_start = xml.index("<standard")
@@ -90,6 +100,12 @@ module Metanorma
         open_end = xml.index(">", open_start)
         return xml unless open_end
         xml.dup.insert(open_end + 1, "\n  #{meta}")
+      end
+
+      def self.processing_meta_element
+        <<~XML.chomp
+          <processing-meta tagset-family="sts" base-tagset="interchange" table-model="xhtml" mathml-version="3.0" math-representation="mathml" terminology-model="tbx"><custom-meta-group><custom-meta><meta-name>iec_iso_coding_guidelines_edition</meta-name><meta-value>2.1</meta-value></custom-meta></custom-meta-group></processing-meta>
+        XML
       end
 
       def self.fix_lang_attribute(xml)
