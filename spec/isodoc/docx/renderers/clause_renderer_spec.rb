@@ -7,7 +7,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
 
   context "with a unit in presentation heading and body text" do
     def stem_xml
-      <<~XML
+      <<~XML.strip
         <stem type="MathML">
           <math xmlns="http://www.w3.org/1998/Math/MathML">
             <mrow><mn>80</mn><mo rspace="thickmathspace">⁢</mo>
@@ -38,7 +38,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
     end
 
     it "renders the value and unit in heading runs" do
-      expect(heading_text).to include("80", "km")
+      expect(heading_text).to eq("Altitude 80 km")
     end
 
     it "omits the source unit macro from heading runs" do

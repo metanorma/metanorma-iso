@@ -3,6 +3,7 @@
 require "uniword"
 require "metanorma/document"
 require "plurimath"
+require "nokogiri"
 
 module IsoDoc
   module Iso
@@ -298,7 +299,7 @@ module IsoDoc
           # UnitsML macros are source notation; the MathML carries the
           # rendered unit in both heading and body stems.
           if text&.include?("unitsml(")
-            rendered = stem_math_text(element)
+            rendered = stem_math_text(element, rendered_unit: true)
             return rendered if rendered && !rendered.empty?
           end
           return text if text && !text.empty?
@@ -355,7 +356,7 @@ module IsoDoc
         # Some stems carry only MathML (e.g. table cells whose symbol is a
         # number with a unit row). Convert through Plurimath to a plain
         # AsciiMath text so the cell content survives.
-        def stem_math_text(element)
+        def stem_math_text(element, rendered_unit: false)
           math = Array(attribute_value(element, :math)).first
           Array(attribute_value(element, :semx)).each do |child|
             math ||= Array(attribute_value(child, :math)).first
@@ -366,9 +367,24 @@ module IsoDoc
           xml = math.to_xml
           return nil if xml.nil? || xml.strip.empty?
 
+          return unit_mathml_text(xml) if rendered_unit
+
           Plurimath::Mathml::Parser.new(xml).parse.to_asciimath
         rescue StandardError
           nil
+        end
+
+        # Read visible MathML tokens without turning upright unit styling
+        # back into AsciiMath rm(...) notation. Ignore XML indentation and
+        # use a space for the invisible multiplication between value and unit.
+        def unit_mathml_text(xml)
+          math = Nokogiri::XML(xml)
+          tokens = math.xpath(
+            "//m:mi | //m:mn | //m:mo | //m:mtext | //m:mspace",
+            "m" => "http://www.w3.org/1998/Math/MathML",
+          )
+          tokens.map { |token| token.name == "mspace" ? " " : token.text }
+            .join.tr("\u2062", " ").gsub(/[[:space:]]+/, " ").strip
         end
 
         def collect_callout_text(callout)

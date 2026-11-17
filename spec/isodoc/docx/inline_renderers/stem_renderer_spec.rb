@@ -52,13 +52,15 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
   def presentation_unit_stem
     Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
       '<fmt-stem type="MathML"><semx element="stem" source="s1">' \
-      '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>km</mi></math>' \
-      '<asciimath>"unitsml(km)"</asciimath></semx></fmt-stem>',
+      '<math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>80</mn>' \
+      '<mo rspace="thickmathspace">⁢</mo><mrow xref="U_km">' \
+      '<mstyle mathvariant="normal"><mi>km</mi></mstyle></mrow></mrow></math>' \
+      '<asciimath>80 "unitsml(km)"</asciimath></semx></fmt-stem>',
     )
   end
 
   it "uses rendered MathML instead of the presentation source macro" do
-    expect(render_to_text(presentation_unit_stem)).to eq("km")
+    expect(render_to_text(presentation_unit_stem)).to eq("80 km")
   end
 
   it "uses rendered MathML instead of the semantic source macro" do
