@@ -52,6 +52,8 @@ module IsoDoc
           lines = []
           old_position = new_position = 0
           matches = Alignment.new(@expected, @actual).matches
+          return delta_lines(matches) unless matches.compact.each_cons(2).all? { |a, b| a < b }
+
           matches[@expected.length] = @actual.length
           matches.each_with_index do |new_match, old_match|
             next if new_match.nil?
@@ -72,11 +74,32 @@ module IsoDoc
           lines
         end
 
+        # Multiset matches need not be ordered. Report only the unmatched
+        # occurrences, retaining their original one-based positions.
+        def delta_lines(matches)
+          matched_actual = matches.compact.to_h { |position| [position, true] }
+          removed = @expected.each_index.filter_map do |position|
+            "- #{position + 1}: #{@expected[position]}" if matches[position].nil?
+          end
+          added = @actual.each_index.filter_map do |position|
+            "+ #{position + 1}: #{@actual[position]}" unless matched_actual[position]
+          end
+          Array.new([removed.size, added.size].max) do |index|
+            [removed[index], added[index]]
+          end.flatten.compact
+        end
+
         # Bitset LCS thresholds avoid enumerating every pair of equal tokens
         # (quadratic for repeated table cells). Keep the same earliest-endpoint
         # thresholds and predecessor links as diff-lcs, including its prefix and
         # suffix trimming, so ambiguous alignments retain their report positions.
         class Alignment
+          # Keep ordinary artifacts' exact alignment and tie-breaking. Large
+          # artifacts align a bounded leading window after prefix/suffix trim;
+          # the rest is a multiset delta (ordering there is not compared).
+          MAX_EXACT_TOKENS = 100_000
+          WINDOW_TOKENS = 2_048
+
           def initialize(expected, actual)
             @expected = expected
             @actual = actual
@@ -86,6 +109,10 @@ module IsoDoc
 
           def matches
             first, last_expected, last_actual = trim
+            if [last_expected, last_actual].max - first + 1 > MAX_EXACT_TOKENS
+              return bounded_matches(first, last_expected, last_actual)
+            end
+
             masks = Hash.new(0)
             (first..last_actual).each do |position|
               masks[@actual[position]] |= 1 << (position - first)
@@ -109,6 +136,28 @@ module IsoDoc
           end
 
           private
+
+          def bounded_matches(first, last_expected, last_actual)
+            expected_end = [first + WINDOW_TOKENS, last_expected + 1].min
+            actual_end = [first + WINDOW_TOKENS, last_actual + 1].min
+            window = self.class.new(@expected[first...expected_end],
+                                    @actual[first...actual_end]).matches
+            window.each_with_index do |match, position|
+              @matches[first + position] = first + match if match
+            end
+            multiset_matches(expected_end, actual_end, last_expected, last_actual)
+            @matches
+          end
+
+          def multiset_matches(first_expected, first_actual, last_expected, last_actual)
+            positions = Hash.new { |hash, token| hash[token] = [] }
+            last_actual.downto(first_actual) do |position|
+              positions[@actual[position]] << position
+            end
+            (first_expected..last_expected).each do |position|
+              @matches[position] = positions[@expected[position]].pop
+            end
+          end
 
           def trim
             first = 0
