@@ -36,6 +36,9 @@ module Metanorma::Iso::Sts::Transformer
   autoload :ReferenceTransformer, "metanorma/iso/sts/transformer/reference_transformer"
   autoload :TermTransformer, "metanorma/iso/sts/transformer/term_transformer"
   autoload :DlTransformer, "metanorma/iso/sts/transformer/dl_transformer"
+  autoload :IsoMetaTransformer, "metanorma/iso/sts/transformer/iso_meta_transformer"
+  autoload :ContentText, "metanorma/iso/sts/transformer/content_text"
+  autoload :NbspProcessor, "metanorma/iso/sts/transformer/nbsp_processor"
   autoload :BlockDispatcher, "metanorma/iso/sts/transformer/block_dispatcher"
   autoload :RenderedTextExtractor, "metanorma/iso/sts/transformer/rendered_text_extractor"
 

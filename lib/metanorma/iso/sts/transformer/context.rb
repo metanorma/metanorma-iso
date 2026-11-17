@@ -9,7 +9,10 @@ module Metanorma
 
           def initialize(source)
             @source = source
-            @id_generator = IdGenerator.new
+            # Claim the renamed ids (annex apps, terms sections, terms,
+            # figures) in document order before any transform runs, so
+            # xref rid values pointing forward resolve.
+            @id_generator = IdGenerator.new.pre_register(source)
             @footnote_collector = FootnoteCollector.new
           end
 

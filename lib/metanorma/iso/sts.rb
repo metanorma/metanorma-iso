@@ -59,6 +59,7 @@ module Metanorma
         inject_namespaces(xml)
           .then { |x| inject_processing_meta(x) }
           .then { |x| fix_lang_attribute(x) }
+          .then { |x| Transformer::NbspProcessor.apply_to_text(x) }
       end
 
       # Convert input to the typed Sts::NisoSts::Standard model.

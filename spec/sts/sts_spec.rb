@@ -4,22 +4,23 @@ RSpec.describe Metanorma::Iso::Sts do
   let(:input) { File.read(FIXTURES_ROOT.join("sample.xml")) }
 
   describe ".convert" do
-    it "returns an OIML NISO STS XML string" do
+    it "returns an ISO NISO STS XML string" do
       output = described_class.convert(input)
       expect(output).to include("<standard")
-      expect(output).to include('dtd-version="1.2"')
+      # The NISO STS XSD pins the root dtd-version to the fixed "1.0".
+      expect(output).to include('dtd-version="1.0"')
       expect(output).to include("<processing-meta")
-      # NISO STS <std-ident>: the OIML identifier decomposed into
-      # originator / doc-type / doc-number.
-      expect(output).to include("<originator>OIML</originator>")
-      expect(output).to include("<doc-type>r</doc-type>")
+      # ISO flavor front matter is <iso-meta>; its <std-ident>
+      # decomposes the identifier into originator / doc-number.
+      expect(output).to include("<iso-meta>")
+      expect(output).to include("<originator>ISO</originator>")
       expect(output).to include("<doc-number>7</doc-number>")
     end
 
-    it "records the OIML series letter in <custom-meta>" do
+    it "records the publisher copyright on iso-meta" do
       output = described_class.convert(input)
-      expect(output).to include("oiml-doc-series")
-      expect(output).to include("<meta-value>R</meta-value>")
+      expect(output).to include("<copyright-holder>International " \
+                                "Organization of Legal Metrology</copyright-holder>")
     end
 
     it "transforms <clause> → <sec> with title" do

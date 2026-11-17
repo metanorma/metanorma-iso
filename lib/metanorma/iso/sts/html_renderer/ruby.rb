@@ -82,8 +82,8 @@ module Metanorma
                              StandardRef
                              DocumentIdentification].freeze
 
-          PUBLISHER_NAME = "International Organization of Legal Metrology"
-          PUBLISHER_ADDRESS = "Bureau International de Métrologie Légale · 11 rue Turgot, 75009 Paris, France"
+          PUBLISHER_NAME = "International Organization for Standardization (ISO)"
+          PUBLISHER_ADDRESS = "ISO Central Secretariat · Chemin de Blandonnet 4, CP 401, 1214 Vernier, Geneva, Switzerland"
 
           def initialize(templates_dir: nil, assets_dir: nil, publisher_name: nil, publisher_address: nil, license_text: nil)
             @templates_dir = templates_dir || TEMPLATES_DIR
@@ -960,13 +960,13 @@ module Metanorma
           end
 
           # Light- and dark-mode logo variants (theme picks visibility).
-          # Uses the OIML SMART logos (distinct from the legacy OIML logo).
+          # Uses the Metanorma brand icons for the ISO flavor.
           def logo_svg_light
-            @logo_svg_light ||= read_asset("oiml-smart-logo.svg")
+            @logo_svg_light ||= read_asset("metanorma-icon-light.svg")
           end
 
           def logo_svg_dark
-            @logo_svg_dark ||= read_asset("oiml-smart-logo-dark.svg")
+            @logo_svg_dark ||= read_asset("metanorma-icon-dark.svg")
           end
 
           def read_asset(name)

@@ -12,12 +12,11 @@ module Metanorma
             BrElement TabElement Bookmark
           ].freeze
 
-          def transform(source_para)
-            id_val = nil
-            if source_para.is_a?(Lutaml::Model::Serializable) && source_para.class.method_defined?(:id)
-              id_val = source_para.id
-            end
-
+          # Collects the paragraph's inline content as [kind, value]
+          # entries, consecutive text runs already merged. Shared by the
+          # paragraph path and the TBX/def appenders
+          # (InlineTransformer#apply_inline_content).
+          def entries_for(source_para)
             @seen_nodes = {}
             @stem_mirrors = build_stem_mirror_map(source_para)
             entries = []
@@ -85,8 +84,13 @@ module Metanorma
               end
             end
             flush_text.call
+            entries
+          end
 
-            ::Sts::NisoSts::Paragraph.new(id: id_val) do |p|
+          def transform(source_para)
+            entries = entries_for(source_para)
+
+            ::Sts::NisoSts::Paragraph.new(id: id_val_of(source_para)) do |p|
               entries.each do |kind, value|
                 case kind
                 when :text then p.text value
@@ -105,6 +109,11 @@ module Metanorma
           end
 
           private
+
+          def id_val_of(source_para)
+            return nil unless source_para.is_a?(Lutaml::Model::Serializable) && source_para.class.method_defined?(:id)
+            source_para.id
+          end
 
           def walk_inline(obj, &block)
             return unless obj.class.method_defined?(:each_mixed_content)
@@ -486,6 +495,12 @@ module Metanorma
             end
             return nil unless rid
 
+            # rid is xs:IDREF: remap through the id registry so targets
+            # renamed by the id derivation (annex apps, terms sections,
+            # terms, figures) stay resolvable. Unregistered ids pass
+            # through unchanged.
+            rid = id_generator.remap(rid)
+
             visible = xref_visible_text(node, rid)
             ModelBuilder.xref(rid: rid, ref_type: ref_type_for(node), value: visible)
           end
@@ -493,11 +508,12 @@ module Metanorma
           def xref_visible_text(node, rid)
             explicit = text_of(node)
             return explicit unless explicit.empty?
-            case rid
+            raw = node.class.method_defined?(:target) ? node.target.to_s : rid
+            case raw
             when /\Asec-(.+)\z/, /\Afig-(.+)\z/, /\Atable-(.+)\z/, /\Afn-(.+)\z/
-              Regexp.last_match(1)
+              "#{Regexp.last_match(1)} "
             else
-              rid
+              explicit.empty? ? rid : explicit
             end
           end
 

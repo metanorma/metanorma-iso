@@ -4,47 +4,26 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
+        # A term becomes one nested <term-sec> holding the TBX
+        # <tbx:termEntry> — the shape mnconvert emits for ISO-STS
+        # terminology sections. term-sec and termEntry derive from the
+        # same source id but must not share the derived value: xs:ID
+        # forbids duplicates, so the section takes the sec_ prefix and
+        # the entry the term_ prefix (the split mnconvert emits:
+        # sec_3.1.2 / term_3.1.2).
         class TermTransformer < Base
           def transform(source_term)
-            content = []
+            sec_id, entry_id = id_generator.term_ids(source_term)
 
-            term_number = extract_term_number(source_term)
-            add_preferred_name(content, source_term)
-            add_definition(content, source_term)
-            add_standalone_paragraphs(content, source_term)
-            add_lists(content, source_term)
-            add_term_notes(content, source_term)
-            add_term_examples(content, source_term)
-            add_sources(content, source_term)
+            Transformer::ModelBuilder.term_section(id: sec_id) do |ts|
+              number = extract_term_number(source_term)
+              ts.label = ::Sts::NisoSts::Label.new(content: [number]) if number
 
-            attrs = {}
-            attrs[:id] = source_term.id if source_term.id
-            # The term number ("3.1") becomes the section's <title>,
-            # which the renderer emits as a TermNum heading matching
-            # MN's "<h3 class='TermNum'>3.5.12</h3>" layout. Previously
-            # it was emitted as a leading <p>, which the parity check
-            # did not see as a heading.
-            attrs[:title] = ::Sts::NisoSts::Title.new(content: [term_number]) if term_number
-            paragraphs, lists, notes = partition_content(content)
-            attrs[:paragraphs] = paragraphs if paragraphs.any?
-            attrs[:list] = lists if lists.any?
-            attrs[:non_normative_note] = notes if notes.any?
-
-            nested = Array(source_term.term).map { |sub| transform(sub) }
-            attrs[:sec] = nested if nested.any?
-
-            ::Sts::NisoSts::Section.new(attrs)
-          end
-
-          def partition_content(content)
-            paragraphs = content.grep(::Sts::NisoSts::Paragraph)
-            lists = content.grep(::Sts::NisoSts::List)
-            notes = content.grep(::Sts::NisoSts::NonNormativeNote)
-            others = content.reject do |c|
-              [::Sts::NisoSts::Paragraph, ::Sts::NisoSts::List,
-               ::Sts::NisoSts::NonNormativeNote].any? { |k| c.is_a?(k) }
+              entry = ::Sts::TbxIsoTml::TermEntry.new
+              entry.id = entry_id if entry_id
+              entry.lang_set = build_lang_set(source_term)
+              ts.term_entry = entry
             end
-            [paragraphs + others, lists, notes]
           end
 
           private
@@ -54,180 +33,187 @@ module Metanorma
             section_transformer.extract_autonum(source_term)
           end
 
-          def add_preferred_name(content, source_term)
-            para = preferred_name_paragraph(source_term)
-            content << para if para
-          end
+          # Built through the block form so lutaml-model's order tracking
+          # records setter-call order: the released LangSet mapping
+          # declares subject_field last, but the tbx:langSet content model
+          # places tig last, so mapping-declaration order emits
+          # subjectField after the tigs and fails XSD validation. Gem-level
+          # defect — the workaround pins the schema's order here.
+          def build_lang_set(term)
+            lang = context.language || "en"
 
-          # Preferred names often contain math (e.g. "maximum capacity
-          # (E_max)"). The typed TermNameElement drops stems, so we prefer
-          # the rendered fmt_preferred tree and route it through the
-          # paragraph transformer so MathML passes through verbatim.
-          # Falls back to text-only paragraph when no rendered tree exists.
-          def preferred_name_paragraph(source_term)
-            fmt = Array(source_term.fmt_preferred).first if source_term.class.method_defined?(:fmt_preferred)
-            if fmt && fmt.class.method_defined?(:p)
-              p = Array(fmt.p).first
-              return paragraph_transformer.transform(p) if p
-            end
+            ::Sts::TbxIsoTml::LangSet.new do |set|
+              set.lang = lang
 
-            text = preferred_name_text(source_term)
-            return nil if text.nil? || text.empty?
-
-            ::Sts::NisoSts::Paragraph.new(text: [text])
-          end
-
-          def preferred_name_text(source_term)
-            preferred = Array(source_term.preferred).first
-            return nil unless preferred
-
-            expression = preferred.expression
-            return RenderedTextExtractor.text_of(preferred) unless expression
-
-            names = Array(expression.name)
-            return RenderedTextExtractor.text_of(preferred) if names.empty?
-
-            RenderedTextExtractor.text_of(names.first)
-          end
-
-          def add_definition(content, source_term)
-            definition = Array(source_term.definition).first
-            return unless definition
-
-            vd = definition.verbal_definition
-            return unless vd
-
-            Array(vd.p).each { |p| content << paragraph_transformer.transform(p) }
-          end
-
-          def add_standalone_paragraphs(content, source_term)
-            Array(source_term.p).each { |p| content << paragraph_transformer.transform(p) }
-          end
-
-          def add_lists(content, source_term)
-            definition = Array(source_term.definition).first
-            return unless definition
-
-            vd = definition.verbal_definition
-            return unless vd
-
-            Array(vd.ul).each { |ul| content << list_transformer.transform(ul) }
-            Array(vd.ol).each { |ol| content << list_transformer.transform(ol) }
-          end
-
-          def add_list_items(content, list)
-            Array(list.listitem).each do |li|
-              Array(li.paragraphs).each { |p| content << paragraph_transformer.transform(p) }
-            end
-          end
-
-          # Term notes become <non-normative-note> carrying their own
-          # label ("Note 1 to entry:") — plain "Note" notes leave the
-          # kind label to the renderer. Nested <ul>/<ol> inside the
-          # termnote become sibling <list> children of the note so the
-          # renderer emits them after the paragraphs.
-          def add_term_notes(content, source_term)
-            Array(source_term.termnote).each do |tn|
-              paragraphs = Array(tn.p).map { |p| paragraph_transformer.transform(p) }
-              lists = Array(tn.ul).map { |ul| list_transformer.transform(ul) } +
-                      Array(tn.ol).map { |ol| list_transformer.transform(ol) }
-              next if paragraphs.empty? && lists.empty?
-
-              attrs = { p: paragraphs }
-              attrs[:list] = lists if lists.any?
-              label = term_note_label(tn)
-              attrs[:label] = ::Sts::NisoSts::Label.new(content: [label]) if label
-              content << ::Sts::NisoSts::NonNormativeNote.new(attrs)
-            end
-          end
-
-          # MN renders term notes "<span class='term-note-label'>
-          # Term notes become <non-normative-note> with a "Note:" label
-          # — matching MN's "<span class='termnote_label'>Note: </span>"
-          # prefix inside the note paragraph. The entity's autonum
-          # ("Note 1 to entry:") isn't surfaced in MN's term notes, so
-          # we mirror that here.
-          def term_note_label(_note_obj)
-            "Note:"
-          end
-
-          def add_term_examples(content, source_term)
-            Array(source_term.termexample).each { |te| add_typed_note_paragraphs(content, te, "Example", colon: true) }
-          end
-
-          def add_typed_note_paragraphs(content, note_obj, label, colon: false)
-            suffix = colon ? ": " : "  "
-            Array(note_obj.p).each_with_index do |p, i|
-              para = paragraph_transformer.transform(p)
-              if i.zero?
-                existing = para.content.to_a
-                para.content = ["#{label}#{suffix}#{existing.first || ''}"] + existing[1..]
+              if domain_text(term)
+                sf = ::Sts::TbxIsoTml::SubjectField.new
+                sf.value = [domain_text(term)]
+                set.subject_field sf
               end
-              content << para
+
+              Array(term.definition).each do |defn|
+                set.definition build_definition(defn)
+              end
+              Array(term.termnote).each { |tn| set.note build_note(tn) }
+              Array(term.termexample).each { |te| set.example build_example(te) }
+              Array(term.termsource).each { |ts| set.source build_source_ref(ts) }
+              Array(term.source).each { |s| set.source build_source_ref(s) }
+
+              build_tigs_for(term).each { |tig| set.tig tig }
             end
-            Array(note_obj.ul).each { |ul| content << list_transformer.transform(ul) }
-            Array(note_obj.ol).each { |ol| content << list_transformer.transform(ol) }
           end
 
-          def build_list(list, list_type)
-            list_transformer.transform_with_type(list, list_type)
+          def domain_text(term)
+            return nil unless term.class.method_defined?(:domain)
+
+            domain = Array(term.domain).first
+            return nil unless domain
+
+            text = RenderedTextExtractor.text_of(domain).strip
+            text.empty? ? nil : text
           end
 
-          def add_sources(content, source_term)
-            Array(source_term.source).each { |s| content << build_source(s) }
+          def build_definition(defn)
+            d = ::Sts::TbxIsoTml::Definition.new
+
+            if defn.verbal_definition
+              vd = defn.verbal_definition
+              Array(vd.p).each { |para| inline_transformer.apply_inline_content(para, d) }
+            end
+
+            Array(defn.p).each { |para| inline_transformer.apply_inline_content(para, d) }
+
+            Array(defn.ul).each { |ul| d.list list_transformer.transform(ul) }
+            Array(defn.ol).each { |ol| d.list list_transformer.transform(ol) }
+
+            d
           end
 
-          def build_source(source)
-            origin = source.origin
-            return nil unless origin
+          def build_note(tn)
+            note = ::Sts::TbxIsoTml::Note.new
+            Array(tn.p).each { |para| inline_transformer.apply_inline_content(para, note) }
+            note
+          end
+
+          def build_example(te)
+            ex = ::Sts::TbxIsoTml::Example.new
+            Array(te.p).each { |para| inline_transformer.apply_inline_content(para, ex) }
+            ex
+          end
+
+          def build_source_ref(ts)
+            src = ::Sts::TbxIsoTml::Source.new
+            origin = ts.origin
+            return src unless origin
 
             citeas = origin.citeas
-            locality = extract_locality(origin)
-            ordinal = bib_ordinal(origin)
-
-            text = "[SOURCE: #{citeas}"
-            if locality
-              text << ", #{locality}"
-              text << "[#{ordinal}]" if ordinal
-              text << " "
-            end
-            text << "]"
-            ::Sts::NisoSts::Paragraph.new(text: [text])
+            src.value = [citeas] if citeas
+            src
           end
 
-          def extract_locality(origin)
-            ls_arr = origin.locality_stack
-            return nil unless ls_arr.is_a?(Array) && ls_arr.any?
+          def build_tigs_for(term)
+            has_multiple = Array(term.admitted).any? || Array(term.deprecates).any?
 
-            parts = []
-            ls_arr.each do |ls|
-              Array(ls.bib_locality).each do |loc|
-                from = loc.reference_from
-                val = case from
-                      when String then from
-                      when nil then ""
-                      else
-                        cv = from.content rescue nil
-                        cv ? Array(cv).first.to_s : from.to_s
-                      end
-                parts << val if val && !val.empty?
+            tigs = Array(term.preferred).map do |pref|
+              build_tig(pref, "preferredTerm", has_multiple)
+            end
+            Array(term.admitted).each do |adm|
+              tigs << build_tig(adm, "admittedTerm", true)
+            end
+            Array(term.deprecates).each do |dep|
+              tigs << build_tig(dep, "deprecatedTerm", true)
+            end
+
+            tigs
+          end
+
+          def build_tig(designation, norm_status, has_multiple)
+            tig = ::Sts::TbxIsoTml::TermInformationGroup.new
+
+            term_text = extract_designation_text(designation)
+            t = ::Sts::TbxIsoTml::Term.new
+            t.value = [term_text] if term_text
+            tig.term = t
+
+            if designation.expression
+              expr = designation.expression
+              name = Array(expr.name).first
+              if name
+                term_content = Array(name.text).join
+                t.value = [term_content] if term_content && !term_content.empty?
+
+                pos_value = detect_grammar(name, designation)
+                if pos_value
+                  pos = ::Sts::TbxIsoTml::PartOfSpeech.new
+                  pos.value = pos_value
+                  tig.pos = pos
+                end
+              end
+
+              abbrev_type = expr.abbreviation_type
+              if abbrev_type && !abbrev_type.empty?
+                tt = ::Sts::TbxIsoTml::TermType.new
+                tt.value = abbrev_type_map(abbrev_type)
+                tig.term_type = tt
               end
             end
-            parts.empty? ? nil : parts.join(", ")
+
+            if has_multiple
+              na = ::Sts::TbxIsoTml::NormativeAuthorization.new
+              na.value = norm_status
+              tig.normative_authorization = na
+            end
+
+            tig
           end
 
-          def bib_ordinal(origin)
-            bibitemid = origin.bibitemid
-            return nil unless bibitemid
+          def extract_designation_text(designation)
+            texts = Array(designation.text)
+            return texts.join if texts.any?
 
-            bib = context.source.typed_root.bibliography
-            return nil unless bib
+            if designation.expression
+              expr = designation.expression
+              Array(expr.name).each do |n|
+                t = Array(n.text).join
+                return t unless t.empty?
 
-            items = Array(bib.references).flat_map { |rs| Array(rs.references) }
-            items.each_with_index do |item, i|
-              return (i + 1).to_s if item.id == bibitemid || item.anchor == bibitemid
+                rendered = RenderedTextExtractor.text_of(n)
+                return rendered unless rendered.nil? || rendered.empty?
+              end
+            end
+
+            nil
+          end
+
+          # The semantic name carries no part-of-speech; the presentation
+          # grammar annotation (fmt-name semx grammar attr) does.
+          def detect_grammar(name_element, designation = nil)
+            grammar = designation.grammar if designation&.class&.method_defined?(:grammar)
+            grammar = Array(grammar).first if grammar.is_a?(Array)
+            return grammar_value(grammar) if grammar
+
+            nil
+          end
+
+          def grammar_value(grammar)
+            %i[value is_abbreviation?].each do |attr|
+              next unless grammar.class.method_defined?(attr)
+              next if attr == :is_abbreviation?
+
+              val = grammar.public_send(attr)
+              return val.to_s unless val.nil? || val.to_s.empty?
             end
             nil
+          rescue StandardError
+            nil
+          end
+
+          def abbrev_type_map(type)
+            case type
+            when "acronym" then "acronym"
+            when "abbreviation" then "abbreviation"
+            else "variant"
+            end
           end
         end
       end
