@@ -15,13 +15,24 @@ module IsoDoc
           end
 
           def title_style_for(_section)
-            if @context.in_introduction && @context.section_depth == 1
-              style = @resolver.paragraph_style(:annex_heading2)
-              return style if style
-            end
-
             depth = [@context.section_depth, 6].min
-            @resolver.heading_style(depth)
+            introduction_clause_style || @resolver.heading_style(depth)
+          end
+
+          private
+
+          def introduction_clause_style
+            return unless @context.in_introduction && @context.section_depth == 1
+
+            @resolver.paragraph_style(:annex_heading2)
+          end
+
+          def render_title_content(title, para)
+            return super unless introduction_clause_style
+
+            # numId 0 cancels the annex numbering inherited from a2.
+            para.numbering(0)
+            @inline_renderer.render(title, para)
           end
         end
       end

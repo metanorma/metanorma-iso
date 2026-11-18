@@ -103,11 +103,22 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
       convert_and_extract(adapter, xml) { |pkg| pkg.document.body.paragraphs }
     end
 
-    it "renders the introduction clause with the a2 style" do
-      heading = paragraphs.find do |para|
+    let(:heading) do
+      paragraphs.find do |para|
         para.runs.map { |run| run_text(run) }.join.include?("Background")
       end
+    end
+
+    it "renders the introduction clause with the a2 style" do
       expect(para_style_value(heading)).to eq("a2")
+    end
+
+    it "keeps the introduction clause number in the heading text" do
+      expect(heading.runs.map { |run| run_text(run) }.join).to start_with("0.1")
+    end
+
+    it "cancels the numbering inherited from the annex style" do
+      expect(heading.properties.numbering_properties&.num_id&.value).to eq(0)
     end
   end
 

@@ -50,9 +50,13 @@ module IsoDoc
             para = build_unstyled_paragraph
             para.style = title_style_for(section)
             with_bookmark(section, para) do
-              @inline_renderer.render_heading(title, para)
+              render_title_content(title, para)
             end
             doc << para
+          end
+
+          def render_title_content(title, para)
+            @inline_renderer.render_heading(title, para)
           end
 
           def section_title(section)
