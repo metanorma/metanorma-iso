@@ -47,6 +47,60 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::BibliographyRenderer do
     end
   end
 
+  def normative_footnote_xml
+    entries = (1..2).map do |index|
+      <<~ENTRY
+        <bibitem id="b#{index}">
+          <biblio-tag>ISO 123#{index}:2009<fn reference="1" target="withdrawn"><p>Withdrawn.</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum">1</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>
+        , </biblio-tag>
+          <formattedref>Sample reference.</formattedref>
+        </bibitem>
+      ENTRY
+    end
+    minimal_iso_xml(<<~INNER)
+      <bibliography>
+        <references normative="true">#{entries.join}</references>
+      </bibliography>
+    INNER
+  end
+
+  def normative_footnote_runs
+    Dir.mktmpdir do |dir|
+      path = File.join(dir, "output.docx")
+      adapter.convert(normative_footnote_xml, path)
+      extract_docx(path) do |doc, ns|
+        refs = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='RefNorm']]/w:r[w:footnoteReference]", ns)
+        refs.map { |ref| footnote_run_details(ref, ns) }
+      end
+    end
+  end
+
+  def footnote_run_details(ref, namespaces)
+    suffix, separator = ref.xpath("following-sibling::w:r", namespaces).first(2)
+    {
+      identifier: ref.xpath("preceding-sibling::w:r/w:t", namespaces).map(&:text).join,
+      footnote_id: ref.xpath("w:footnoteReference/@w:id", namespaces).text,
+      anchor_style: ref.xpath("w:rPr/w:rStyle/@w:val", namespaces).text,
+      suffix: suffix.xpath("w:t", namespaces).text,
+      suffix_style: suffix.xpath("w:rPr/w:rStyle/@w:val", namespaces).text,
+      suffix_align: suffix.xpath("w:rPr/w:vertAlign/@w:val", namespaces).text,
+      separator: separator.xpath("w:t", namespaces).text,
+    }
+  end
+
+  def expected_footnote_run(identifier, footnote_id)
+    { identifier: identifier, footnote_id: footnote_id, anchor_style: "FootnoteReference",
+      suffix: ")", suffix_style: "FootnoteReference", suffix_align: "superscript", separator: " , " }
+  end
+
+  it "keeps the footnote marker and separator after the year in normative references", :aggregate_failures do
+    runs = normative_footnote_runs
+    footnote_id = runs.first&.fetch(:footnote_id)
+    expect(footnote_id).to match(/\A\d+\z/)
+    expect(runs).to eq([expected_footnote_run("ISO 1231:2009", footnote_id),
+                        expected_footnote_run("ISO 1232:2009", footnote_id)])
+  end
+
   it "embeds a bookmark with the bibitem id" do
     xml = minimal_iso_xml(<<~INNER)
       <bibliography>
