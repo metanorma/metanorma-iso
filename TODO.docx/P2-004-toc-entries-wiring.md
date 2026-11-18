@@ -1,11 +1,15 @@
 ---
 title: 108-005 - Add TOC entries
 priority: P1
-status: open
+status: partial
 depends_on: [108-001]
 ---
 
 # 108-005: Add TOC Entries
+
+`6b771179` already supplies TOC entries with a tab and a complete PAGEREF field. Verification through `Processor#output(..., :docx)` on `spec/fixtures/iso/is/document-en.dis.presentation.xml` produces 28 entries (17 TOC1, 7 TOC2, 4 TOC3). `spec/isodoc/docx/toc_entries_spec.rb` checks the packaged fields and their heading bookmarks; six targets remain missing: Foreword, Introduction, Normative references, untitled clauses 4.2.1 and 4.2.2, and Bibliography. The titled sections need bookmarks in their current renderers; the untitled clauses have no rendered headings. Completing these targets needs a scope decision before changing the renderers or TOC selection.
+
+Measurement-only conversions of the submitted ISO 5878 (20260429-fdis) and ISO 2533 (20260907, en) presentation XML through the same processor produced 41 and 30 TOC entries respectively, each with four missing bookmark targets. Their tab and PAGEREF field structures pass; no submitted content was copied into this repository.
 
 ## Problem
 
