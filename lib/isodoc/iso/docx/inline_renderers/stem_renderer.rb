@@ -16,12 +16,25 @@ module IsoDoc
           include Base
 
           def render(element, para)
+            return if render_number_as_text(element, para)
             return if render_as_omml(element, para)
 
             render_as_text(element, para)
           end
 
           private
+
+          # 1.17.0 parity: a stem consisting of a bare number renders as
+          # a plain text run — an OMML object for a bare digit reads as
+          # math styling inside prose and table cells (metanorma-iso#1764).
+          # Returns true when the paragraph received the number.
+          def render_number_as_text(element, para)
+            digits = parent.number_only_stem_text(element)
+            return false unless digits
+
+            parent.add_text(para, digits)
+            true
+          end
 
           # Append the stem's MathML as inline OMML equation models.
           # Returns true when the paragraph received the equation.

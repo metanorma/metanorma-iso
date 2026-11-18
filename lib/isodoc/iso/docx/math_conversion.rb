@@ -67,6 +67,24 @@ module IsoDoc
           nil
         end
 
+        # 1.17.0 parity: a stem whose MathML is a bare number renders as
+        # plain text, not as an equation object. Returns the digits when
+        # the MathML carries only <mn> elements with a digits-only text
+        # payload, nil otherwise.
+        def number_only_stem_text(stem)
+          mathml = stem_mathml(stem)
+          return nil unless mathml.to_s.include?("<mn")
+
+          stripped = mathml.gsub(/<mn[^>]*>|<\/mn>/, "")
+                           .gsub(/<[^>]+>/, "").strip
+          return nil unless stripped.empty?
+
+          digits = mathml.scan(/<mn[^>]*>([^<]*)<\/mn>/).flatten.join.strip
+          digits.match?(/\A\d+\z/) ? digits : nil
+        rescue StandardError
+          nil
+        end
+
         private
 
         # Direct :math attribute (semantic stem), then <semx>-wrapped
