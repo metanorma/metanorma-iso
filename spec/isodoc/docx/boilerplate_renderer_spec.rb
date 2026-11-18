@@ -116,3 +116,69 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer do
     end
   end
 end
+
+RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer, "#render_copyright in the saved DOCX" do
+  let(:additional_statements) { "" }
+  let(:copyright_xml) do
+    minimal_iso_xml(<<~INNER)
+      <boilerplate>
+        <copyright-statement>
+          <clause>
+            <p>All rights reserved.</p>
+            <p>ISO copyright office</p>
+            <p>Published in Switzerland</p>
+          </clause>
+        </copyright-statement>
+        #{additional_statements}
+      </boilerplate>
+      <preface>
+        <clause type="toc" id="toc">
+          <fmt-title depth="1">Contents</fmt-title>
+        </clause>
+      </preface>
+      <sections/>
+    INNER
+  end
+  let(:copyright_block) do
+    ["All rights reserved.", "ISO copyright office",
+     "Published in Switzerland", "ISO copyright office"]
+  end
+
+  it "preserves the copyright page when legal and feedback statements are absent" do
+    expect(copyright_page(copyright_xml)).to eq([*copyright_block, :page_break, "Contents"])
+  end
+
+  context "with legal and feedback statements" do
+    let(:additional_statements) do
+      <<~XML
+        <legal-statement>
+          <clause><title>Legal notice</title><p>Model legal paragraph.</p></clause>
+        </legal-statement>
+        <feedback-statement>
+          <clause><title>Feedback</title><p>Model feedback paragraph.</p></clause>
+        </feedback-statement>
+      XML
+    end
+
+    it "prints both statements between the copyright address and the break before Contents" do
+      expect(copyright_page(copyright_xml)).to eq([
+                                                    *copyright_block, "Legal notice", "Model legal paragraph.",
+                                                    "Feedback", "Model feedback paragraph.", :page_break, "Contents"
+                                                  ])
+    end
+  end
+
+  def copyright_page(xml)
+    Dir.mktmpdir do |dir|
+      path = File.join(dir, "output.docx")
+      build_adapter.convert(xml, path)
+      extract_docx(path) do |document, ns|
+        cover_break = document.at_xpath("(//w:body/w:p[w:pPr/w:sectPr])[1]", ns)
+        paragraphs = cover_break.xpath("following-sibling::w:p", ns).map do |p|
+          p.at_xpath(".//w:br[@w:type = 'page']", ns) ? :page_break : p.xpath(".//w:t", ns).map(&:text).join
+        end
+        paragraphs.take_while { |text| text != "Contents" } + paragraphs.grep("Contents").first(1)
+      end
+    end
+  end
+end

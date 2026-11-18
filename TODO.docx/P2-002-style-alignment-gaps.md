@@ -1,10 +1,16 @@
 ---
 title: 108-007 - Align paragraph styles with reference
 priority: P2
-status: open
+status: partial
 ---
 
 # 108-007: Align Paragraph Styles with Reference
+
+Simple bibliography entries now use `ListParagraph`, covered by
+`bibliography_renderer_spec.rb`. DIS retains `BiblioEntry`, `Warningtext`,
+`Warningtitle`, `Figuretitle`, and `Tabletitle` because its template lacks
+the older reference styles. Simple already defines and maps its annex
+caption styles. Note and example counts remain tracked in P2-010.
 
 ## Problem
 
