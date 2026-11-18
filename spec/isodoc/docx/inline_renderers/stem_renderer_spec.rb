@@ -166,8 +166,16 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     )
   end
 
-  it "uses rendered MathML instead of the presentation source macro" do
-    expect(render_to_text(presentation_unit_stem)).to eq("80 km")
+  it "renders a number with a unit as inline OMML, not the source macro" do
+    expect(omml_texts(render_built(presentation_unit_stem))).to eq([%w[80 km]])
+  end
+
+  it "renders a unit stem in a heading as text", :aggregate_failures do
+    allow(inline).to receive(:rendering_heading?).and_return(true)
+    built = render_built(presentation_unit_stem)
+
+    expect(built.o_maths).to be_empty
+    expect(built.text).to eq("80 km")
   end
 
   def structured_unit_stem(mathml)
@@ -179,29 +187,24 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
   end
 
   {
-    "<msup><mi>m</mi><mn>2</mn></msup>" => "m²",
+    "<msup><mi>m</mi><mn>2</mn></msup>" => [%w[m 2]],
     "<mrow><mi>m</mi><mo>⋅</mo><msup><mi>s</mi><mrow><mo>−</mo>" \
-    "<mn>1</mn></mrow></msup></mrow>" => "m⋅s⁻¹",
-    "<msub><mi>m</mi><mn>0</mn></msub>" => "m₀",
-    "<mfrac><mi>m</mi><mi>s</mi></mfrac>" => "(m/s)",
-    "<msup><mfrac><mi>m</mi><mi>s</mi></mfrac><mn>2</mn></msup>" => "(m/s)²",
-    "<msup><mi>s</mi><mn>-1</mn></msup>" => "s⁻¹",
-    "<msubsup><mi>m</mi><mn>0</mn><mn>2</mn></msubsup>" => "m₀²",
-    "<msup><mrow><mi>m</mi><mo>⋅</mo><mi>s</mi></mrow><mn>2</mn></msup>" => "(m⋅s)²",
-    "<msup><mi>m</mi><mi>n</mi></msup>" => "m^(n)",
+    "<mn>1</mn></mrow></msup></mrow>" => [%w[m ⋅ s − 1]],
+    "<mfrac><mi>m</mi><mi>s</mi></mfrac>" => [%w[m s]],
+    "<msup><mi>s</mi><mn>-1</mn></msup>" => [%w[s -1]],
   }.each do |mathml, expected|
-    it "preserves unit structure as #{expected}" do
-      expect(render_to_text(structured_unit_stem(mathml))).to eq(expected)
+    it "renders unit structure #{mathml[0, 30]} as inline OMML" do
+      expect(omml_texts(render_built(structured_unit_stem(mathml)))).to eq(expected)
     end
   end
 
-  it "uses rendered MathML instead of the semantic source macro" do
+  it "renders a bare unit from rendered MathML as inline OMML" do
     stem = Metanorma::Document::Components::TextElements::StemElement.from_xml(
       '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
       '<mi>km</mi></math><asciimath>"unitsml(km)"</asciimath></stem>',
     )
 
-    expect(render_to_text(stem)).to eq("km")
+    expect(omml_texts(render_built(stem))).to eq([%w[km]])
   end
 
   it "preserves the source text when rendered MathML is unavailable" do

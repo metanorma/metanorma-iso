@@ -12,8 +12,8 @@ module IsoDoc
         # ISO Word output uses text, or OMML is unavailable:
         # - number-only MathML (<mn> tokens): plain text in the reference;
         # - MathML with no visible text (an empty <mi/>): no blank oMath;
-        # - UnitsML stems: the rendered unit text (#1765);
-        # - headings: title text, see InlineRenderer#rendering_heading?;
+        # - headings (UnitsML stems included): title text, see
+        #   InlineRenderer#rendering_heading?;
         # - no MathML, or Plurimath cannot convert it.
         class StemRenderer
           include Base
@@ -53,17 +53,11 @@ module IsoDoc
 
           def omml_candidate(element)
             return nil if parent.rendering_heading?
-            return nil if units_stem?(element)
 
             mathml = extract_mathml_from_stem(element)
             return nil if blank?(mathml) || numeric_only?(mathml)
 
             mathml
-          end
-
-          def units_stem?(element)
-            text = parent.stem_asciimath_text(element)
-            text ? text.include?("unitsml(") : false
           end
 
           def blank?(mathml)
