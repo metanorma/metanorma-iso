@@ -415,6 +415,10 @@ module IsoDoc
 
         def clear_stale_template_content(root)
           root.image_parts = nil
+          variables = root.settings&.doc_vars&.doc_var
+          variables&.reject! do |variable|
+            variable.name.to_s.start_with?("TPS_Field_ISO ")
+          end
           remove_relationships_by_type(root.document_rels, "/image")
           remove_relationships_by_type(root.document_rels, "/customXml")
         end
@@ -558,7 +562,10 @@ module IsoDoc
           if title
             para = Uniword::Builder::ParagraphBuilder.new
             para.style = @resolver.paragraph_style(:bibliography)
-            @inline_renderer.render_heading(title, para)
+            renderer = @registry.lookup(refs_sect.class)
+            renderer.with_bookmark(refs_sect, para) do
+              @inline_renderer.render_heading(title, para)
+            end
             doc << para
           end
 

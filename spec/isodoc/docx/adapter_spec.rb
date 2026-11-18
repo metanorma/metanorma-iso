@@ -881,11 +881,8 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
       end
     end
 
-    # BUG 014: Untitled inline-header sub-clauses (whose fmt-title carries
-    # only autonum carriers and no title text) must still appear in the TOC
-    # with just their autonum — preserving what the source actually says.
-    it "renders TOC entries for inline-header sub-clauses with autonum only" do
-      xml = minimal_iso_xml(<<~INNER)
+    def untitled_inline_header_xml
+      minimal_iso_xml(<<~INNER)
         <sections>
           <clause id="s1">
             <fmt-title>Scope</fmt-title>
@@ -897,16 +894,34 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
           </clause>
         </sections>
       INNER
+    end
+
+    # BUG 014: An untitled sub-clause has no heading paragraph or bookmark
+    # in the body, so it gets no TOC entry (2026-11-18 decision).
+    it "omits untitled inline-header sub-clauses from the TOC" do
       Dir.mktmpdir do |dir|
         path = File.join(dir, "output.docx")
-        adapter.convert(xml, path)
-        extract_docx(path) do |doc, ns|
-          toc_paras = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='TOC2']]", ns)
-          expect(toc_paras.length).to be >= 1
-          text_runs = toc_paras.first.xpath(".//w:t", ns).map(&:text).join
-          expect(text_runs).to include("1.1")
-        end
+        adapter.convert(untitled_inline_header_xml, path)
+        extract_docx(path) { |doc, ns| expect_untitled_clause_omitted(doc, ns) }
       end
+    end
+
+    def expect_untitled_clause_omitted(doc, namespaces)
+      toc_paras = doc.xpath("//w:p[w:pPr/w:pStyle[starts-with(@w:val, 'TOC')]]", namespaces)
+      targets = toc_paras.xpath(".//w:instrText", namespaces).filter_map do |field|
+        field.text[/\bPAGEREF\s+(\S+)/, 1]
+      end
+      expect(targets).not_to include("s1-1")
+
+      toc2 = toc_paras.xpath("self::w:p[w:pPr/w:pStyle[@w:val='TOC2']]", namespaces)
+      expect(toc2.map { |para| para.xpath(".//w:t", namespaces).text })
+        .not_to include(a_string_including("1.1"))
+
+      scope = toc_paras.find do |para|
+        para.xpath(".//w:t", namespaces).text.include?("Scope") &&
+          para.xpath(".//w:instrText", namespaces).any? { |field| field.text.match?(/\bPAGEREF\s+s1\s/) }
+      end
+      expect(scope).not_to be_nil
     end
   end
 
@@ -1004,6 +1019,47 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
         # Title paragraph
         title_para = paras.find { |p| p.runs.any? { |r| run_text(r).include?("Specifications") } }
         expect(title_para).not_to be_nil
+      end
+    end
+
+    it "writes the DIS cover from bibdata and omits template cover variables" do
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(dis_cover_fixture, path)
+        expect_dis_cover_without_template_identity(path)
+      end
+    end
+
+    def dis_cover_fixture
+      File.expand_path("../../fixtures/iso/is/document-en.dis.presentation.xml", __dir__)
+    end
+
+    def expect_dis_cover_without_template_identity(path)
+      aggregate_failures do
+        expect_dis_cover(path)
+        Zip::File.open(path) do |zip|
+          settings = Nokogiri::XML(zip.read("word/settings.xml"))
+          variables = settings.xpath("//w:docVar[starts-with(@w:name, 'TPS_Field_ISO ')]")
+          expect(variables).to be_empty
+        end
+      end
+    end
+
+    def expect_dis_cover(path)
+      extract_docx(path) do |doc, ns|
+        cover = doc.xpath("/w:document/w:body/w:p", ns).take_while do |para|
+          !para.at_xpath("w:pPr/w:sectPr", ns)
+        end
+        texts = cover.map { |para| para.xpath(".//w:t", ns).map(&:text).join }
+        expect(texts).to include(
+          "ISO/DIS 17301-1:2016(en)",
+          "Committee identification: TC 34/SC 4/WG 4",
+          "Cereals and pulses — Specifications and test methods",
+          "Date: 2020-02-19",
+          "Second edition",
+          "DIS stage",
+        )
+        expect(texts.join("\n")).not_to match(/15926|Integration of life-cycle data/)
       end
     end
 

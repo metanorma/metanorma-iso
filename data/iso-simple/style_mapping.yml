@@ -73,8 +73,9 @@ paragraph_styles:
   # Body text
   body_text: BodyText
 
-  # Bibliography entries — Simple has no BiblioEntry, use BodyText
-  biblio_entry: BodyText
+  # The accepted output uses ListParagraph for bibliography entries.
+  # Simple defines ListParagraph and has no BiblioEntry.
+  biblio_entry: ListParagraph
 
 character_styles:
   hyperlink: Hyperlink

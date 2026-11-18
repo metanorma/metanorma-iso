@@ -364,6 +364,11 @@ module IsoDoc
           end
           return nil unless math.is_a?(Lutaml::Model::Serializable)
 
+          unless rendered_unit
+            number = standalone_math_number(math)
+            return number if number
+          end
+
           xml = math.to_xml
           return nil if xml.nil? || xml.strip.empty?
 
@@ -372,6 +377,25 @@ module IsoDoc
           Plurimath::Mathml::Parser.new(xml).parse.to_asciimath
         rescue StandardError
           nil
+        end
+
+        # Plurimath emits a lone numeric <mn> verbatim. Avoid serializing
+        # and reparsing MathML for each number in large data tables.
+        def standalone_math_number(math)
+          return unless math.is_a?(Mml::V3::Math)
+
+          order = math.element_order
+          return unless order&.one? && order.first.element? && order.first.name == "mn"
+
+          token = math.mn_value.first
+          token_order = token&.element_order
+          return unless token_order&.one? && token_order.first.text?
+
+          values = token.value
+          return unless values&.one?
+
+          value = values.first
+          value if /\A[+\-−]?\d+(?:[.,]\d+)?(?:[eE][+-]?\d+)?\z/.match?(value)
         end
 
         # Keep unit scripts and fraction grouping while omitting style markup.

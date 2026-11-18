@@ -165,7 +165,8 @@ module IsoDoc
         def add_clause_entries(entries, clause, level)
           return if level > 3
 
-          entries << build_entry(clause, level)
+          title = section_heading(clause)
+          entries << build_entry(clause, level) if title && !@inline.heading_body_empty?(title)
 
           # Recurse into sub-clauses
           if clause.class.attributes.key?(:clause)
@@ -173,6 +174,12 @@ module IsoDoc
               add_clause_entries(entries, sub, level + 1)
             end
           end
+        end
+
+        def section_heading(node)
+          fmt = node.fmt_title if node.class.attributes.key?(:fmt_title)
+          title = node.title if node.class.attributes.key?(:title)
+          fmt || title
         end
 
         # The ToC lists the annex entry alone. Annex sub-clauses are

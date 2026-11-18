@@ -49,6 +49,31 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     expect(render_to_text(stem)).to eq("M")
   end
 
+  def numeric_stem(value)
+    Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
+      '<fmt-stem type="MathML"><semx element="stem" source="s1">' \
+      '<math xmlns="http://www.w3.org/1998/Math/MathML">' \
+      "<mn>#{value}</mn></math></semx></fmt-stem>",
+    )
+  end
+
+  ["−12,50", "1.250E-6"].each do |value|
+    it "renders #{value} from MathML without reparsing it", :aggregate_failures do
+      allow(Plurimath::Mathml::Parser).to receive(:new).and_call_original
+      expect(render_to_text(numeric_stem(value))).to eq(value)
+      expect(Plurimath::Mathml::Parser).not_to have_received(:new)
+    end
+  end
+
+  it "preserves operators when MathML contains more than one token" do
+    stem = Metanorma::Document::Components::TextElements::StemElement.from_xml(
+      '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
+      "<mn>12</mn><mo>+</mo><mi>x</mi></math></stem>",
+    )
+
+    expect(render_to_text(stem)).to eq("12 + x")
+  end
+
   def presentation_unit_stem
     Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
       '<fmt-stem type="MathML"><semx element="stem" source="s1">' \

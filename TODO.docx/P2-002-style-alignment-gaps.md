@@ -1,10 +1,31 @@
 ---
 title: 108-007 - Align paragraph styles with reference
 priority: P2
-status: open
+status: partial
 ---
 
 # 108-007: Align Paragraph Styles with Reference
+
+Simple bibliography entries now use `ListParagraph`, covered by
+`bibliography_renderer_spec.rb`. DIS retains `BiblioEntry`, `Warningtext`,
+`Warningtitle`, `Figuretitle`, and `Tabletitle` because its template lacks
+the older reference styles. Simple already defines and maps its annex
+caption styles. Note and example counts remain tracked in P2-010.
+
+Parity now treats `Tablebody`/`Tableheader` paragraphs inside table cells
+as equivalent to unstyled/Normal cell paragraphs. Literal heading numbers
+and style-supplied numbering already produce the same structure/style
+tokens. Both equivalences are covered by `spec/isodoc/docx/mhtml_parity_spec.rb`,
+which also preserves heading-level differences and other cell styles.
+Status remains partial: the other style/count items below are outside this
+parity change.
+
+Measured against submitted `iso-wd-5878-2024.doc` (20241129 submission):
+the 26,977 `Tablebody` paragraphs in `/tmp/5878.docx` no longer produce
+style-only deltas. The report has 466 remaining deltas and completed in
+29.6 seconds. A fresh Processor DOCX conversion of the same submission
+has 467 remaining deltas (55.7 seconds). Private source content remains
+outside the repository.
 
 ## Problem
 
@@ -45,7 +66,7 @@ Many style assignments differ between latest output and reference:
 2. **Warningtext → zzwarning**: Update style mapping for warning paragraphs
 3. **Warningtitle → zzwarninghdr**: Update style mapping for warning title
 4. **Figuretitle → AnnexFigureTitle**: When in annex context, use AnnexFigureTitle
-5. **Tablebody/Tableheader**: Remove or keep (reference may not need explicit styles)
+5. **Tablebody/Tableheader**: Done — keep template styles; normalize equivalent cell paragraphs in MhtmlParity.
 6. **Note count**: Investigate why only 6 notes vs 15
 7. **Example count**: Investigate why only 2 vs 4
 8. **a3 over-use**: Check if a3 is being used as fallback style
