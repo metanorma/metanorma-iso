@@ -1007,6 +1007,47 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
       end
     end
 
+    it "writes the DIS cover from bibdata and omits template cover variables" do
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(dis_cover_fixture, path)
+        expect_dis_cover_without_template_identity(path)
+      end
+    end
+
+    def dis_cover_fixture
+      File.expand_path("../../fixtures/iso/is/document-en.dis.presentation.xml", __dir__)
+    end
+
+    def expect_dis_cover_without_template_identity(path)
+      aggregate_failures do
+        expect_dis_cover(path)
+        Zip::File.open(path) do |zip|
+          settings = Nokogiri::XML(zip.read("word/settings.xml"))
+          variables = settings.xpath("//w:docVar[starts-with(@w:name, 'TPS_Field_ISO ')]")
+          expect(variables).to be_empty
+        end
+      end
+    end
+
+    def expect_dis_cover(path)
+      extract_docx(path) do |doc, ns|
+        cover = doc.xpath("/w:document/w:body/w:p", ns).take_while do |para|
+          !para.at_xpath("w:pPr/w:sectPr", ns)
+        end
+        texts = cover.map { |para| para.xpath(".//w:t", ns).map(&:text).join }
+        expect(texts).to include(
+          "ISO/DIS 17301-1:2016(en)",
+          "Committee identification: TC 34/SC 4/WG 4",
+          "Cereals and pulses — Specifications and test methods",
+          "Date: 2020-02-19",
+          "Second edition",
+          "DIS stage",
+        )
+        expect(texts.join("\n")).not_to match(/15926|Integration of life-cycle data/)
+      end
+    end
+
     it "renders warning from boilerplate" do
       xml = minimal_iso_xml(<<~INNER)
         <boilerplate>

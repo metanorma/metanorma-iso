@@ -415,6 +415,10 @@ module IsoDoc
 
         def clear_stale_template_content(root)
           root.image_parts = nil
+          variables = root.settings&.doc_vars&.doc_var
+          variables&.reject! do |variable|
+            variable.name.to_s.start_with?("TPS_Field_ISO ")
+          end
           remove_relationships_by_type(root.document_rels, "/image")
           remove_relationships_by_type(root.document_rels, "/customXml")
         end
