@@ -16,7 +16,6 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
   it "serializes the DIS front matter page numbering as w:fmt" do
     with_dis_package do |zip|
       format = dis_front_matter_format(zip)
-      pending "needs uniword fix: pgNumType fmt is serialized without the w: prefix; see Uniword card"
       expect(format).to eq("lowerRoman")
     end
   end
@@ -154,7 +153,7 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
       sect_para = doc.model.body.paragraphs.last
       sec = sect_para.properties.section_properties
       expect(sec.page_numbering).not_to be_nil
-      expect(sec.page_numbering.format).to eq("lowerRoman")
+      expect(sec.page_numbering.fmt).to eq("lowerRoman")
     end
 
     it "includes header and footer references" do
@@ -248,7 +247,7 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
       )
 
       sec = doc.model.body.paragraphs.last.properties.section_properties
-      expect(sec.page_numbering.format).to eq(section_mgr.front_matter_scheme.format)
+      expect(sec.page_numbering.fmt).to eq(section_mgr.front_matter_scheme.format)
     end
   end
 

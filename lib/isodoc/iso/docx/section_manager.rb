@@ -144,7 +144,7 @@ module IsoDoc
           if page_numbering
             sec.page_numbering = Uniword::Wordprocessingml::PageNumbering.new
             sec.page_numbering.start = page_numbering[:start] if page_numbering[:start]
-            sec.page_numbering.format = page_numbering[:format] if page_numbering[:format]
+            sec.page_numbering.fmt = page_numbering[:format] if page_numbering[:format]
           end
 
           sec
