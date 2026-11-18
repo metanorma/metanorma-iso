@@ -1,10 +1,16 @@
 ---
 title: 108-010 - Add missing run styles (rStyles)
 priority: P2
-status: open
+status: partial
 ---
 
 # 108-010: Add Missing Run Styles (rStyles)
+
+The current DIS fixture emits `Hyperlink` and `FootnoteReference` run
+styles, covered by `adapter_spec.rb` and `bibliography_renderer_spec.rb`.
+The reference uses `Source` and `normref` as paragraph styles. DIS uses
+`Source` and `RefNorm`, covered by the term and bibliography renderer
+specs. Bold, italic, and math run style parity remains outside this fix.
 
 ## Problem
 

@@ -27,6 +27,38 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::BibliographyRenderer do
     end
   end
 
+  def simple_references_xml
+    minimal_iso_xml(<<~INNER)
+      <bibliography>
+        <references normative="true">
+          <bibitem id="normative">
+            <formattedref>Required reference.</formattedref>
+          </bibitem>
+        </references>
+        <references>
+          <bibitem id="informative">
+            <formattedref>Further reading.</formattedref>
+          </bibitem>
+        </references>
+      </bibliography>
+    INNER
+  end
+
+  def simple_reference_styles
+    convert_and_extract(build_adapter(template: :simple), simple_references_xml) do |pkg|
+      pkg.document.body.paragraphs.to_h do |para|
+        [para.runs.map { |run| run_text(run) }.join, para_style_value(para)]
+      end
+    end
+  end
+
+  it "uses ListParagraph only for the bibliography entry in Simple output" do
+    expect(simple_reference_styles).to include(
+      "Further reading." => "ListParagraph",
+      "Required reference." => satisfy { |style| style != "ListParagraph" },
+    )
+  end
+
   it "renders normative references items with RefNorm style" do
     xml = minimal_iso_xml(<<~INNER)
       <bibliography>
