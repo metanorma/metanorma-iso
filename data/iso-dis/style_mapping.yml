@@ -140,6 +140,13 @@ paragraph_styles:
 
   # ── Lists ──
   list_continue1: ListContinue1
+  list_continue2: ListContinue2
+  list_continue3: ListContinue3
+  list_continue4: ListContinue4
+  list_number1: ListNumber1
+  list_number2: ListNumber2
+  list_number3: ListNumber3
+  list_number4: ListNumber4
   list_paragraph: BodyText
 
   # ── Section breaks ──
