@@ -1,11 +1,13 @@
 ---
 title: 108-015 - Fix cover page rendering from model
 priority: P0
-status: open
+status: done
 depends_on: [108-001]
 ---
 
 # 108-015: Render Cover Page from Model (Not Template)
+
+Verified on 2026-11-18: `bda2b3f3` renders the cover from bibdata and `d2ba3106` restores its committee/project identity fields; `spec/isodoc/docx/cover_renderer_spec.rb` covers the metadata, and `Processor#output(..., :docx)` conversions of `spec/fixtures/iso/is/document-en.dis.presentation.xml` and the submitted ISO 2533/5878 sources carry their own cover metadata with no ISO 15926 template text (ISO 5878 has no bibdata date).
 
 ## Problem
 
