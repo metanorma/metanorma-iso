@@ -44,7 +44,9 @@ module IsoDoc
             para = build_unstyled_paragraph
             style = @resolver.heading_style(1)
             para.style = style if style
-            @inline_renderer.render_heading(title, para)
+            with_bookmark(section, para) do
+              @inline_renderer.render_heading(title, para)
+            end
             doc << para
           end
 

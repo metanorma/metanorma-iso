@@ -562,7 +562,10 @@ module IsoDoc
           if title
             para = Uniword::Builder::ParagraphBuilder.new
             para.style = @resolver.paragraph_style(:bibliography)
-            @inline_renderer.render_heading(title, para)
+            renderer = @registry.lookup(refs_sect.class)
+            renderer.with_bookmark(refs_sect, para) do
+              @inline_renderer.render_heading(title, para)
+            end
             doc << para
           end
 

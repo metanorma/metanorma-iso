@@ -1,11 +1,15 @@
 ---
 title: 108-005 - Add TOC entries
 priority: P1
-status: open
+status: done
 depends_on: [108-001]
 ---
 
 # 108-005: Add TOC Entries
+
+`6b771179` supplies TOC entries with a tab and a complete PAGEREF field. The DIS regression in `spec/isodoc/docx/toc_entries_spec.rb` checks the packaged fields and heading bookmarks through `Processor#output(..., :docx)`. Untitled clauses such as 4.2.1 and 4.2.2 are deliberately omitted because they have no heading. Foreword, Introduction, Normative references and Bibliography now have heading bookmarks. The Bibliography bookmark is on the `BiblioTitle` paragraph.
+
+Before the bookmark fix, measurement-only conversions of the submitted ISO 5878 (20260429-fdis) and ISO 2533 (20260907, en) presentation XML produced 41 and 30 TOC entries respectively, each with four missing bookmark targets.
 
 ## Problem
 
@@ -50,4 +54,7 @@ Use Option A for accuracy — generate actual TOC entries matching the reference
 
 ## Files to Change
 
-- `lib/isodoc/iso/docx/adapter.rb` — add visit_toc method
+- `lib/isodoc/iso/docx/toc_builder.rb` — omit entries for clauses without a heading
+- `lib/isodoc/iso/docx/preface_renderer.rb` — bookmark the Foreword and Introduction headings
+- `lib/isodoc/iso/docx/renderers/references_renderer.rb` — bookmark the Normative references heading
+- `lib/isodoc/iso/docx/adapter.rb` — bookmark the Bibliography heading in `visit_references_section`
