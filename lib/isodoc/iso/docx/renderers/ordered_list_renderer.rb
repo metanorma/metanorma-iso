@@ -4,36 +4,40 @@ module IsoDoc
   module Iso
     module Docx
       module Renderers
-        # Renders an OrderedList as a sequence of numbering-applied
-        # paragraphs (ListNumber1..4 by nesting depth) using the Era C
-        # decimal_list numId (1, 2, 3, ...).
-        #
-        # Era C's 7-abstractNum scheme exposes decimal ordered-list
-        # numbering as numId 1 (and 2 as an alt referencing the same
-        # abstractNum). The numbering ID flows from `style_mapping.yml`
-        # via StyleResolver — this renderer holds no literal styleId
-        # or numId.
+        # Renders an OrderedList as ListNumber1..4 paragraphs (by nesting
+        # depth) whose label ("a)", "1)", "i)", "A.", ...) is literal text
+        # followed by a tab, exactly as ISO's own Word output does. The
+        # label comes from the Presentation XML `li/fmt-name`, which
+        # already encodes the list `type` (arabic, alphabet, roman,
+        # alphabet_upper, roman_upper), the depth default and the per-list
+        # restart. No numPr is emitted: the template numbering.xml has no
+        # lettered list definitions, and literal labels restart for free.
         class OrderedListRenderer
           include Base
           include ListAttachments
           include ListItemContent
 
           def render(list, doc)
-            num_id = @resolver.numbering_id(:decimal_list)
             style = @resolver.paragraph_style(:"list_number#{style_level}")
-            Array(list.listitem).each do |item|
-              render_item(item, doc, num_id, style)
-            end
+            Array(list.listitem).each { |item| render_item(item, doc, style) }
             render_attached_notes(list, doc)
           end
 
           private
 
-          def render_item(item, doc, num_id, style_id)
+          def render_item(item, doc, style_id)
             para = Uniword::Builder::ParagraphBuilder.new
             para.style = style_id if style_id
-            para.numbering(num_id, list_level) if num_id
+            append_label(item, para)
             render_item_content(item, doc, para)
+          end
+
+          def append_label(item, para)
+            label = collect_all_text(item.fmt_name)
+            para << Uniword::Wordprocessingml::Run.new(text: label)
+            para << Uniword::Wordprocessingml::Run.new(
+              tab: Uniword::Wordprocessingml::Tab.new,
+            )
           end
         end
       end

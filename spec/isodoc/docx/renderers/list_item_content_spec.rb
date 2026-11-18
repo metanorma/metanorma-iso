@@ -21,7 +21,7 @@ RSpec.describe "List item content and depth styles" do
     X
   end
 
-  it "renders a nested ordered list with level 2 style and ilvl" do
+  it "renders a nested ordered list with level 2 style and no numPr" do
     rows = body_paragraphs(clause(<<~X))
       <ol id="o1"><li><p>Outer.</p>
         <ol id="o2"><li><p>Inner.</p></li></ol></li></ol>
@@ -29,9 +29,9 @@ RSpec.describe "List item content and depth styles" do
     outer = rows.find { |r| r[1] == "Outer." }
     inner = rows.find { |r| r[1] == "Inner." }
     expect(outer[0]).to eq("ListNumber1")
-    expect(outer[3].to_i).to eq(0)
+    expect(outer[3]).to be_nil
     expect(inner[0]).to eq("ListNumber2")
-    expect(inner[3].to_i).to eq(1)
+    expect(inner[3]).to be_nil
   end
 
   it "renders a bullet list nested in an ordered item at depth 2" do
