@@ -24,6 +24,7 @@ module IsoDoc
                 render_heading(section, doc)
                 render_intro(section, doc)
                 render_bibitems(section, doc)
+                render_admonitions(section, doc)
               end
             end
           end
@@ -63,6 +64,19 @@ module IsoDoc
 
             Array(section.references).each do |bib|
               @walker.dispatch(bib, doc)
+            end
+          end
+
+          # Admonition children of the references section (e.g. an
+          # `[EDITOR]` editorial note following the reference list) render
+          # after the entries — 1.17.0 carried them ("EDITORIAL NOTE — …");
+          # the model dropped them at ingest until the section gained the
+          # admonition mapping (metanorma-iso#1764).
+          def render_admonitions(section, doc)
+            return unless section.class.attributes.key?(:admonition)
+
+            Array(section.admonition).each do |admonition|
+              @walker.dispatch(admonition, doc)
             end
           end
         end
