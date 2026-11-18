@@ -7,7 +7,7 @@ depends_on: [108-001]
 
 # 108-015: Render Cover Page from Model (Not Template)
 
-Verified on 2026-11-18: `bda2b3f3` renders the cover from bibdata and `d2ba3106` restores its committee/project identity fields; `spec/isodoc/docx/cover_renderer_spec.rb` covers the metadata, and `Processor#output(..., :docx)` conversions of `spec/fixtures/iso/is/document-en.dis.presentation.xml` and the submitted ISO 2533/5878 sources carry their own cover metadata with no ISO 15926 template text (ISO 5878 has no bibdata date).
+The DIS fixture regression in `spec/isodoc/docx/adapter_spec.rb` verifies that the cover shows the document's own metadata, including “Second edition”, and that the generated DOCX omits the template's ISO 15926 cover text and ISO document variables.
 
 ## Problem
 

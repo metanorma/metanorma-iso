@@ -444,11 +444,15 @@ module IsoDoc
         end
 
         def edition_text(bib)
-          edition = bib.edition if bib.class.attributes.key?(:edition)
-          return nil unless edition
+          return nil unless bib.class.attributes.key?(:edition)
 
-          edition_val = edition.is_a?(Array) ? edition.first : edition
-          num = extract_value(edition_val).to_s.to_i
+          editions = Array(bib.edition)
+          language = language_code(bib) || "en"
+          localized = editions.find { |entry| entry.language == language }
+          text = extract_value(localized).to_s.strip
+          return text.capitalize unless text.empty?
+
+          num = extract_value(editions.first).to_s.to_i
           return nil if num.zero?
 
           suffix = ORDINAL_SUFFIXES[num % 100] || ORDINAL_SUFFIXES[num % 10] || "th"
