@@ -1,30 +1,24 @@
 ---
 title: 108-018 - Fix note/example count mismatch
 priority: P2
-status: partial
+status: done
 ---
 
 # 108-018: Fix Note/Example Count Mismatch
 
-## Measured paragraph styles
+Reference source: `spec/fixtures/iso/is/document-en.dis.presentation.xml`.
 
-| Artifact | Note | Noteindent | Figurenote | Example | Exampleindent | Definition |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Historical reference (`spec/examples/rice.docx`) | 15 | 0 | 0 | 4 | 0 | 16 |
-| Current render of `spec/examples/rice.presentation.xml` | 5 | 6 | 1 | 2 | 1 | 17 |
-| Current render of `spec/fixtures/iso/is/document-en.dis.presentation.xml` | 5 | 4 | 1 | 2 | 1 | 15 |
+- 9 notes with `Note` or `Noteindent`: one clause note, three table notes,
+  and five term notes. The three table notes render inside table cells.
+- 1 figure note with `Figurenote`.
+- 2 examples with `Example` or `Exampleindent`: one term example and the
+  annex example titled “Sample Code”.
+- 15 definitions with `Definition`, all inside terms.
 
-Counts use exact paragraph style IDs in `word/document.xml`. The historical
-reference counts table footnotes as `Note` and the source code callout
-label and annotation as `Example`. Its definition text and paragraph
-boundaries differ from the current presentation XML.
+`spec/isodoc/docx/dis_note_example_spec.rb` matches each source element
+to a separate styled paragraph using text from its first paragraph
+or the Sample Code label. Bibliography status notes, footnotes, code
+callouts, and definition lists are outside these counts.
 
-The DIS fixture contains five content notes, five term notes, one
-block example, one term example, and 15 term definitions. Its note
-paragraphs use `Note`, `Noteindent`, and `Figurenote`. The source code
-annotation is present in the generated DOCX.
-
-## Remaining work
-
-Agree on a reference generated from the same DIS source, or define the
-expected paragraph roles for this fixture, before asserting count parity.
+The historical `spec/examples/rice.docx` includes table footnotes and
+code callouts in its style totals and has different definition content.
