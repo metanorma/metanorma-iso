@@ -25,8 +25,14 @@ RSpec.describe "DOCX DIS table of contents", type: :feature do
   it "writes TOC1/TOC2/TOC3 entries with a tab and PAGEREF to each heading bookmark" do
     aggregate_failures do
       expect_toc_levels
+      expect_no_untitled_clauses
       entries.each { |entry| expect_heading_pageref(entry) }
     end
+  end
+
+  def expect_no_untitled_clauses
+    labels = entries.map { |entry| entry.xpath("w:r[w:tab]/preceding-sibling::w:r/w:t", ns).text.strip }
+    expect(labels).not_to include("4.2.1", "4.2.2")
   end
 
   def expect_toc_levels

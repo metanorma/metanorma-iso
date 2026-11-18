@@ -15,6 +15,8 @@ module IsoDoc
       #
       # Extracted from Adapter so Adapter stays a thin orchestrator.
       class PrefaceRenderer
+        include Renderers::Base
+
         TOC_CLAUSE_TYPE = "toc"
         private_constant :TOC_CLAUSE_TYPE
 
@@ -69,7 +71,9 @@ module IsoDoc
           if title
             para = Uniword::Builder::ParagraphBuilder.new
             para.style = @resolver.paragraph_style(style_key)
-            @inline_renderer.render(title, para)
+            with_bookmark(section, para) do
+              @inline_renderer.render(title, para)
+            end
             doc << para
           end
           @walker.walk(section, doc)
