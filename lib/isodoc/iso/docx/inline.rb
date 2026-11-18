@@ -24,7 +24,10 @@ module IsoDoc
       class InlineRenderer
         include ModelUtils
 
-        SEMANTIC_STEM = Metanorma::Document::Components::TextElements::StemElement
+        SEMANTIC_STEMS = [
+          Metanorma::Document::Components::TextElements::StemElement,
+          Metanorma::Document::Components::Inline::StemInlineElement,
+        ].freeze
         FMT_STEM = Metanorma::Document::Components::Inline::FmtStemElement
 
         # Public state: handlers and SourcecodeRenderer read/write these.
@@ -512,6 +515,18 @@ module IsoDoc
           @comment_id_lookup.call(annotation_target_id)
         end
 
+        # Presentation XML keeps the semantic <stem> next to the
+        # <fmt-stem> that renders it; drawing both prints the symbol
+        # twice. The ISO XSL drops the same stem.
+        def rendered_by_next?(entries, index)
+          return false unless SEMANTIC_STEMS.any? { |k| entries[index][1].is_a?(k) }
+
+          following = entries[(index + 1)..].find do |type, obj|
+            type == :element || !obj.strip.empty?
+          end
+          following&.last.is_a?(FMT_STEM)
+        end
+
         private
 
         # ── Ordered-content walking ───────────────────────────────────
@@ -532,18 +547,6 @@ module IsoDoc
             else dispatch_inline(child, para)
             end
           end
-        end
-
-        # Presentation XML keeps the semantic <stem> next to the
-        # <fmt-stem> that renders it; drawing both prints the symbol
-        # twice. The ISO XSL drops the same stem.
-        def rendered_by_next?(entries, index)
-          return false unless entries[index][1].is_a?(SEMANTIC_STEM)
-
-          following = entries[(index + 1)..].find do |type, obj|
-            type == :element || !obj.strip.empty?
-          end
-          following&.last.is_a?(FMT_STEM)
         end
 
         # Fallback: render typed attribute collections when no ordering

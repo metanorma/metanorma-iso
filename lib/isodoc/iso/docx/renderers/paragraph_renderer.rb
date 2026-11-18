@@ -66,7 +66,10 @@ module IsoDoc
           # same paragraph style and alignment as the original <p>.
           def render_split(paragraph, doc)
             state = { current: nil, paragraph: paragraph }
-            each_ordered_element(paragraph) do |type, obj|
+            entries = each_ordered_element(paragraph).to_a
+            entries.each_with_index do |(type, obj), index|
+              next if @inline_renderer.rendered_by_next?(entries, index)
+
               dispatch_split_element(type, obj, state, doc)
             end
             flush_split(state, doc)
