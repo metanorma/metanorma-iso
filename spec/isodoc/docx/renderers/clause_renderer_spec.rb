@@ -87,6 +87,41 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
     end
   end
 
+  context "with a numbered introduction clause" do
+    let(:xml) do
+      minimal_iso_xml(<<~INNER)
+        <preface><introduction id="intro">
+          <title>Introduction</title>
+          <clause id="intro-1">
+            <fmt-title depth="2"><span class="fmt-caption-label"><semx element="autonum">0</semx>.<semx element="autonum">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title">Background</semx></fmt-title>
+          </clause>
+        </introduction></preface>
+      INNER
+    end
+
+    let(:paragraphs) do
+      convert_and_extract(adapter, xml) { |pkg| pkg.document.body.paragraphs }
+    end
+
+    let(:heading) do
+      paragraphs.find do |para|
+        para.runs.map { |run| run_text(run) }.join.include?("Background")
+      end
+    end
+
+    it "renders the introduction clause with the a2 style" do
+      expect(para_style_value(heading)).to eq("a2")
+    end
+
+    it "keeps the introduction clause number in the heading text" do
+      expect(heading.runs.map { |run| run_text(run) }.join).to start_with("0.1")
+    end
+
+    it "cancels the numbering inherited from the annex style" do
+      expect(heading.properties.numbering_properties&.num_id&.value).to eq(0)
+    end
+  end
+
   it "nests clause depth (Heading2 under Heading1)" do
     xml = minimal_iso_xml(<<~INNER)
       <sections>
