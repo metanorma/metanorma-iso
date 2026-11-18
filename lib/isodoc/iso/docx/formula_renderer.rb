@@ -20,7 +20,7 @@ module IsoDoc
       # through the walker so they render via DefinitionListRenderer and
       # ParagraphRenderer respectively. All dispatch happens inside
       # +Context#with_formula+ so children pick up the formula zone via
-      # StyleResolver (e.g., KeyTitle / KeyText for the dl's items).
+      # StyleResolver and render symbol keys as formula_dl tables.
       class FormulaRenderer
         include ModelUtils
 
@@ -36,7 +36,8 @@ module IsoDoc
         # inside the formula zone.
         def render(formula, doc)
           if @context
-            @context.with_formula do
+            containers = Array(attribute_value(formula, :fmt_footnote_container))
+            @context.with_formula(containers.flat_map(&:fmt_fn_body)) do
               render_body(formula, doc)
               walk_extras(formula, doc)
             end

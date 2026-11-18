@@ -9,7 +9,8 @@ module IsoDoc
       # tree is walked. Passed through the visitor chain to avoid global
       # mutable state on the adapter.
       class Context
-        attr_reader :footnote_counter, :bookmark_counter, :comment_counter
+        attr_reader :footnote_counter, :bookmark_counter, :comment_counter,
+                    :formula_footnote_bodies, :formula_key_footnote_handler
         attr_accessor :in_note, :in_example, :in_table, :in_annex,
                       :in_normative, :in_foreword, :in_introduction,
                       :in_bibliography, :in_definition_dd, :in_formula,
@@ -150,12 +151,23 @@ module IsoDoc
           @in_bibliography = old
         end
 
-        def with_formula
+        def with_formula(footnote_bodies = nil)
           old = @in_formula
+          old_bodies = @formula_footnote_bodies
           @in_formula = true
+          @formula_footnote_bodies = footnote_bodies
           yield
         ensure
           @in_formula = old
+          @formula_footnote_bodies = old_bodies
+        end
+
+        def with_formula_key_footnotes(handler)
+          old = @formula_key_footnote_handler
+          @formula_key_footnote_handler = handler
+          yield
+        ensure
+          @formula_key_footnote_handler = old
         end
 
         def with_figure

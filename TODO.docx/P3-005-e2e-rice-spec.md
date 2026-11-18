@@ -35,9 +35,10 @@ the resulting `word/document.xml`, `word/styles.xml`,
 4. **Box wrapping**. Every `<note>`, `<example>`, `<warning>` in the
    source has corresponding `Box-begin` / `Box-end` paragraphs in the
    output.
-5. **Formula key lists**. Every formula `<dl>` renders as
-   `KeyTitle` + `KeyText` paragraphs (TODO 011 closes the pending
-   task #49).
+5. **Formula key lists**. Every formula `<dl>` renders as a bordered
+   `formula_dl` table with separate term and definition cells. Its
+   footnotes appear in a final row spanning the two columns.
+   The synthetic regression spec covers this structure.
 6. **Dimension styles**. Every figure with an image renders inside a
    paragraph whose style is one of `Dimension50`, `Dimension75`,
    `Dimension100`.
@@ -170,17 +171,8 @@ module IsoDoc
           end
         end
 
-        describe "formula key lists" do
-          it "every formula dl has KeyTitle entries" do
-            key_titles = unpacked.document_xml.css(
-              "p[pStyle[val='KeyTitle']]"
-            )
-            key_texts = unpacked.document_xml.css(
-              "p[pStyle[val='KeyText']]"
-            )
-            expect(key_titles.size).to eq(key_texts.size)
-          end
-        end
+        # Formula symbol tables have synthetic coverage in
+        # spec/isodoc/docx/renderers/definition_list_renderer_spec.rb.
 
         describe "image dimensions" do
           it "every figure paragraph uses Dimension*" do

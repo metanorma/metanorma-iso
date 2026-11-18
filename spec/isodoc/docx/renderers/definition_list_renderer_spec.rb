@@ -6,33 +6,63 @@ require "cgi"
 RSpec.describe IsoDoc::Iso::Docx::Renderers::DefinitionListRenderer do
   let(:adapter) { build_adapter }
 
-  describe "formula-zone dl rendering (KeyTitle + KeyText)" do
-    it "renders dt as KeyTitle and dd as KeyText inside <formula>" do
-      xml = minimal_iso_xml(<<~INNER)
+  describe "formula key tables" do
+    def formula_key_xml
+      minimal_iso_xml(<<~INNER)
         <sections>
           <clause id="c1">
             <title>Scope</title>
             <formula id="f1">
               <stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi><mo>=</mo><mi>y</mi></math></stem>
-              <dl>
-                <dt>X</dt>
-                <dd>The X coordinate</dd>
-                <dt>Y</dt>
-                <dd>The Y coordinate</dd>
-              </dl>
+              <key class="formula_dl">
+                <dl>
+                  <dt>X</dt>
+                  <dd><p>The X coordinate<fn reference="a" target="fn-a"/></p></dd>
+                  <dt>Y</dt>
+                  <dd><p>The Y coordinate<fn reference="a" target="fn-a"/></p></dd>
+                </dl>
+              </key>
+              <fmt-footnote-container>
+                <fmt-fn-body id="fn-a" reference="a">
+                  <semx element="fn"><p>Measured from the origin.</p></semx>
+                </fmt-fn-body>
+              </fmt-footnote-container>
             </formula>
           </clause>
         </sections>
       INNER
+    end
 
-      convert_and_extract(adapter, xml) do |pkg|
-        body = pkg.document.body
-        styles = body.paragraphs.map { |p| para_style_value(p) }
+    def formula_key_properties(doc, namespaces)
+      table = doc.at_xpath("//w:body/w:tbl[w:tblPr/w:tblBorders]", namespaces)
+      rows = table.xpath("w:tr", namespaces)
+      {
+        cells: rows.map do |row|
+          row.xpath("w:tc", namespaces).map { |cell| cell.xpath(".//w:t", namespaces).text }
+        end,
+        borders: table.xpath("w:tblPr/w:tblBorders/*/@w:val", namespaces).map(&:value),
+        indent: table.at_xpath("w:tblPr/w:tblInd/@w:w", namespaces)&.value,
+        span: rows.last.at_xpath("w:tc/w:tcPr/w:gridSpan/@w:val", namespaces)&.value,
+        markers: table.xpath(".//w:vertAlign[@w:val='superscript']", namespaces).size,
+        document_notes: doc.xpath("//w:footnoteReference", namespaces).size,
+        key_paragraphs: doc.xpath("//w:pStyle[@w:val='KeyTitle' or @w:val='KeyText']", namespaces).size,
+      }
+    end
 
-        expect(styles).to include("KeyTitle"),
-          "expected at least one KeyTitle paragraph, got: #{styles.inspect}"
-        expect(styles).to include("KeyText"),
-          "expected at least one KeyText paragraph, got: #{styles.inspect}"
+    let(:expected_formula_key) do
+      {
+        cells: [["X", "The X coordinatea"], ["Y", "The Y coordinatea"],
+                ["a Measured from the origin."]],
+        borders: Array.new(6, "single"), indent: "403", span: "2", markers: 3,
+        document_notes: 0, key_paragraphs: 0
+      }
+    end
+
+    it "renders two bordered columns with table-local footnotes" do
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "formula.docx")
+        adapter.convert(formula_key_xml, path)
+        extract_docx(path) { |doc, ns| expect(formula_key_properties(doc, ns)).to eq(expected_formula_key) }
       end
     end
   end

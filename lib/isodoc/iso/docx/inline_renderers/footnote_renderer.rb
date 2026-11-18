@@ -16,6 +16,9 @@ module IsoDoc
           include Base
 
           def render(element, para)
+            handler = context.formula_key_footnote_handler
+            return handler.call(element, para) if handler
+
             cache_key = parent.footnote_cache_key(element)
             if cache_key && parent.cached_footnote_id(cache_key)
               append_cached_reference(para, cache_key)

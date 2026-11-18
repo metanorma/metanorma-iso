@@ -6,25 +6,18 @@ module IsoDoc
       module Renderers
         # Renders <dl> definition lists with context-aware styling.
         #
-        # Era C template provides two patterns:
-        #   1. Key lists (formula or figure zone) — <dt> as KeyTitle,
-        #      <dd> as KeyText. Used to define symbols in formulas and
-        #      figure keys.
-        #   2. General definition lists — both <dt> and <dd> as Definition
-        #      (used in terms sections and elsewhere)
-        #
-        # The renderer detects the zone via Context#zone (set by
-        # Context#with_formula / Context#with_figure around the parent
-        # block's render) and picks the appropriate pattern.
+        # Formula keys use bordered tables. Figure keys use KeyTitle and
+        # KeyText; other definition lists use Definition paragraphs.
         class DefinitionListRenderer
           include Base
           include ListAttachments
 
-          KEY_LIST_ZONES = %i[formula figure].freeze
-
           def render(definition_list, doc)
-            if KEY_LIST_ZONES.include?(@context.zone)
+            case @context.zone
+            when :formula
               render_formula_key(definition_list, doc)
+            when :figure
+              render_figure_key(definition_list, doc)
             else
               render_general(definition_list, doc)
             end
@@ -34,6 +27,97 @@ module IsoDoc
           private
 
           def render_formula_key(definition_list, doc)
+            terms = Array(definition_list.dt)
+            return if terms.empty?
+
+            table = formula_key_table
+            definitions = Array(definition_list.dd)
+            footnotes = {}
+            handler = ->(note, para) { collect_table_footnote(note, para, footnotes) }
+            @context.with_formula_key_footnotes(handler) do
+              terms.each_with_index do |term, index|
+                table.row do |row|
+                  formula_cell(row, term)
+                  formula_cell(row, definitions[index])
+                end
+              end
+            end
+            append_table_footnotes(table, footnotes) unless footnotes.empty?
+            doc << table
+          end
+
+          def formula_key_table
+            table = Uniword::Builder::TableBuilder.new
+            # The submitted formula_dl table starts 20.15 points from the margin.
+            table.model.properties.table_indent =
+              Uniword::Properties::TableIndent.new(value: 403, type: "dxa")
+            line = Uniword::Wordprocessingml::Border.new(val: "single", sz: 4)
+            table.model.properties.table_borders =
+              Uniword::Wordprocessingml::TableBorders.new(
+                top: line, bottom: line, left: line, right: line,
+                inside_h: line, inside_v: line
+              )
+            table
+          end
+
+          def formula_cell(row, node)
+            row.cell do |cell|
+              formula_cell_content(node).each do |part|
+                para = build_paragraph(:table_body)
+                @inline_renderer.render(part, para) if part
+                cell << para
+              end
+            end
+          end
+
+          def formula_cell_content(node)
+            paragraphs = attribute_value(node, :p)
+            return [node] if paragraphs.nil? || paragraphs.empty?
+            return [node] unless Array(node.element_order).all? do |entry|
+              entry.element? ? entry.name == "p" : entry.text_content.to_s.strip.empty?
+            end
+
+            paragraphs
+          end
+
+          def collect_table_footnote(note, para, footnotes)
+            label = note.reference
+            return if label.nil? || label.empty?
+
+            append_footnote_label(para, label) unless note.hiddenref
+            body = Array(@context.formula_footnote_bodies).find { |entry| entry.id == note.target }
+            paragraphs = body ? Array(body.semx&.p) : Array(note.p)
+            footnotes[note.target || label] ||= [label, paragraphs] unless paragraphs.empty?
+          end
+
+          def append_footnote_label(para, label)
+            properties = Uniword::Wordprocessingml::RunProperties.new(
+              vertical_align: Uniword::Properties::VerticalAlign.new(value: "superscript"),
+            )
+            para << Uniword::Wordprocessingml::Run.new(text: label, properties: properties)
+          end
+
+          def append_table_footnotes(table, footnotes)
+            table.row do |row|
+              row.cell do |cell|
+                cell.column_span(2)
+                footnotes.each_value do |label, paragraphs|
+                  paragraphs.each_with_index do |part, index|
+                    # The ISO templates have no tablefootnote paragraph style.
+                    para = build_paragraph(:footnote_text)
+                    if index.zero?
+                      append_footnote_label(para, label)
+                      para << " "
+                    end
+                    @inline_renderer.render(part, para)
+                    cell << para
+                  end
+                end
+              end
+            end
+          end
+
+          def render_figure_key(definition_list, doc)
             render_pairs(definition_list, doc,
                          term_key: :key_title,
                          definition_key: :key_text)
