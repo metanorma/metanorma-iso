@@ -22,12 +22,25 @@ RSpec.describe "DOCX DIS table of contents", type: :feature do
     )
   end
 
-  it "writes TOC1/TOC2/TOC3 entries with a tab and PAGEREF to each heading bookmark" do
-    aggregate_failures do
-      expect_toc_levels
-      expect_no_untitled_clauses
-      entries.each { |entry| expect_heading_pageref(entry) }
+  it "writes TOC1/TOC2/TOC3 entries with a tab and PAGEREF to each heading bookmark",
+     :aggregate_failures do
+    expect_toc_levels
+    expect_no_untitled_clauses
+    entries.each { |entry| expect_heading_pageref(entry) }
+    expect_bibliography_heading
+  end
+
+  def expect_bibliography_heading
+    entry = entries.find do |para|
+      para.xpath("w:r[w:tab]/preceding-sibling::w:r/w:t", ns).text.strip == "Bibliography"
     end
+    field = entry&.at_xpath("w:r/w:instrText[contains(., 'PAGEREF')]", ns)
+    target = field&.text.to_s.split[1]
+    heading = document.at_xpath(
+      "//w:p[w:pPr/w:pStyle[@w:val='BiblioTitle']][w:bookmarkStart[@w:name=$name]]",
+      ns, name: target.to_s
+    )
+    expect(heading&.xpath(".//w:t", ns)&.text.to_s.strip).to eq("Bibliography")
   end
 
   def expect_no_untitled_clauses
