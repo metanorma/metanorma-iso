@@ -881,11 +881,8 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
       end
     end
 
-    # BUG 014: Untitled inline-header sub-clauses (whose fmt-title carries
-    # only autonum carriers and no title text) must still appear in the TOC
-    # with just their autonum — preserving what the source actually says.
-    it "renders TOC entries for inline-header sub-clauses with autonum only" do
-      xml = minimal_iso_xml(<<~INNER)
+    def untitled_inline_header_xml
+      minimal_iso_xml(<<~INNER)
         <sections>
           <clause id="s1">
             <fmt-title>Scope</fmt-title>
@@ -897,16 +894,34 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
           </clause>
         </sections>
       INNER
+    end
+
+    # BUG 014: An untitled sub-clause has no heading paragraph or bookmark
+    # in the body, so it gets no TOC entry (2026-11-18 decision).
+    it "omits untitled inline-header sub-clauses from the TOC" do
       Dir.mktmpdir do |dir|
         path = File.join(dir, "output.docx")
-        adapter.convert(xml, path)
-        extract_docx(path) do |doc, ns|
-          toc_paras = doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='TOC2']]", ns)
-          expect(toc_paras.length).to be >= 1
-          text_runs = toc_paras.first.xpath(".//w:t", ns).map(&:text).join
-          expect(text_runs).to include("1.1")
-        end
+        adapter.convert(untitled_inline_header_xml, path)
+        extract_docx(path) { |doc, ns| expect_untitled_clause_omitted(doc, ns) }
       end
+    end
+
+    def expect_untitled_clause_omitted(doc, namespaces)
+      toc_paras = doc.xpath("//w:p[w:pPr/w:pStyle[starts-with(@w:val, 'TOC')]]", namespaces)
+      targets = toc_paras.xpath(".//w:instrText", namespaces).filter_map do |field|
+        field.text[/\bPAGEREF\s+(\S+)/, 1]
+      end
+      expect(targets).not_to include("s1-1")
+
+      toc2 = toc_paras.xpath("self::w:p[w:pPr/w:pStyle[@w:val='TOC2']]", namespaces)
+      expect(toc2.map { |para| para.xpath(".//w:t", namespaces).text })
+        .not_to include(a_string_including("1.1"))
+
+      scope = toc_paras.find do |para|
+        para.xpath(".//w:t", namespaces).text.include?("Scope") &&
+          para.xpath(".//w:instrText", namespaces).any? { |field| field.text.match?(/\bPAGEREF\s+s1\s/) }
+      end
+      expect(scope).not_to be_nil
     end
   end
 
