@@ -1,11 +1,25 @@
 ---
 title: 108-004 - Move copyright block to separate page after cover
 priority: P1
-status: open
+status: done
 depends_on: [108-001]
 ---
 
 # 108-004: Move Copyright Block to Separate Page After Cover
+
+## Resolution
+
+Already fixed: `spec/isodoc/docx/section_manager_spec.rb:12`, added in
+`62faf403`, verifies the cover section break precedes copyright and a page
+break separates copyright from Contents.
+
+Verified through `Metanorma::Iso::Processor#output(..., :docx)` on
+2026-11-18 using `spec/fixtures/iso/is/document-en.dis.presentation.xml`,
+the ISO 5878 submission dated 20260429, and the ISO 2533 English submission
+dated 20260907. All three follow the expected ordering below: every
+copyright paragraph follows the cover section break, with a page break
+before Contents. Submitted content was used only for measurement and was
+not added to the repo. No production-code change is needed for this item.
 
 ## Problem
 

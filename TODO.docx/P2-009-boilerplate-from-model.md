@@ -1,11 +1,28 @@
 ---
 title: 108-016 - Render boilerplate from model (copyright, license, address)
 priority: P0
-status: open
+status: partial
 depends_on: [108-001, 108-015]
 ---
 
 # 108-016: Render Boilerplate from Model
+
+## Current status
+
+`Adapter#visit_root` already calls `BoilerplateRenderer#render_license` before
+the cover section break and `#render_copyright` after it. The model-backed
+license and copyright paragraphs are covered by
+`spec/isodoc/docx/boilerplate_renderer_spec.rb`; the page ordering is covered
+by `spec/isodoc/docx/section_manager_spec.rb:12` (commit `62faf403`).
+
+Legal and feedback statements are still omitted: neither method visits
+`model.boilerplate.legal_statement` or `model.boilerplate.feedback_statement`.
+Confirmed on 2026-11-18 through `Metanorma::Iso::Processor#output(..., :docx)`
+with a synthetic document containing one paragraph in each of the four
+statement types: license and copyright appear; legal and feedback do not.
+Completing this item needs the existing renderer in
+`lib/isodoc/iso/docx/boilerplate_renderer.rb`, which is absent from the
+historical file list below.
 
 ## Problem
 
