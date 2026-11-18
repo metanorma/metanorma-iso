@@ -28,6 +28,8 @@ module IsoDoc
       #
       # Output format is determined by file extension (.docx or .doc).
       class Adapter
+        NUMBER_STEM_WRAPPERS = %w[stem fmt-stem semx math mstyle mrow].freeze
+
         include ModelUtils
 
         attr_reader :context, :resolver
@@ -349,7 +351,7 @@ module IsoDoc
         # Numeric table cells need a Stem run, not a tree of MathML models.
         # Keep block formulas intact: their renderer emits OMML, not text.
         def flatten_number_stems(xml)
-          document = Nokogiri::XML(xml) { |config| config.huge }
+          document = Nokogiri::XML(xml, &:huge)
           document.xpath("//*[local-name()='stem' or local-name()='fmt-stem']" \
                          "[not(ancestor::*[local-name()='formula'])]").each do |stem|
             number = number_stem_text(stem)
@@ -369,7 +371,7 @@ module IsoDoc
 
         def number_stem_text(stem)
           node = stem
-          while %w[stem fmt-stem semx math mstyle mrow].include?(node.name)
+          while NUMBER_STEM_WRAPPERS.include?(node.name)
             return unless node.element_children.one?
             return if node.children.any? { |child| child.text? && !child.text.strip.empty? }
 
