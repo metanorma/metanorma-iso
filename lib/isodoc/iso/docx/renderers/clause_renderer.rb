@@ -15,6 +15,11 @@ module IsoDoc
           end
 
           def title_style_for(_section)
+            if @context.in_introduction && @context.section_depth == 1
+              style = @resolver.paragraph_style(:annex_heading2)
+              return style if style
+            end
+
             depth = [@context.section_depth, 6].min
             @resolver.heading_style(depth)
           end
