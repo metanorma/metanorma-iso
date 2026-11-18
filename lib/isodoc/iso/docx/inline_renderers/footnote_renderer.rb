@@ -17,7 +17,7 @@ module IsoDoc
 
           def render(element, para)
             handler = context.formula_key_footnote_handler
-            return handler.call(element, para) if handler
+            return handler.call(element, para) if handler && !element.reference.to_s.strip.empty?
 
             cache_key = parent.footnote_cache_key(element)
             if cache_key && parent.cached_footnote_id(cache_key)

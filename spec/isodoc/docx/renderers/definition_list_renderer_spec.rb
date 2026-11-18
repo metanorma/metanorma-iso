@@ -58,12 +58,43 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::DefinitionListRenderer do
       }
     end
 
+    let(:unlabelled_formula_key_xml) do
+      formula_key_xml.sub('<fn reference="a" target="fn-a"/>',
+                          '<fn target="fn-z"><p>Lost body.</p></fn>')
+    end
     it "renders two bordered columns with table-local footnotes" do
       Dir.mktmpdir do |dir|
         path = File.join(dir, "formula.docx")
         adapter.convert(formula_key_xml, path)
         extract_docx(path) { |doc, ns| expect(formula_key_properties(doc, ns)).to eq(expected_formula_key) }
       end
+    end
+
+    def unlabelled_note_bodies(path)
+      extract_docx(path) do |doc, namespaces|
+        references = doc.xpath("//w:tbl//w:footnoteReference/@w:id", namespaces)
+        notes = Zip::File.open(path) { |zip| zip.find_entry("word/footnotes.xml")&.get_input_stream&.read }
+        footnotes = Nokogiri::XML(notes).xpath("//w:footnote", namespaces)
+        references.map do |id|
+          body = footnotes.find { |footnote| footnote["w:id"] == id.value }
+          body&.xpath(".//w:t", namespaces)&.text
+        end
+      end
+    end
+
+
+    it "preserves an unlabelled formula key footnote as a Word footnote" do
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "formula.docx")
+        adapter.convert(unlabelled_formula_key_xml, path)
+        expect(unlabelled_note_bodies(path)).to eq(["Lost body."])
+      end
+    end
+
+    it "records the formula key work status in the rice TODO" do
+      todo = File.read(File.expand_path("../../../../TODO.docx/P3-005-e2e-rice-spec.md", __dir__))
+      metadata = todo[/\A---\n(.*?)^---$/m, 1]
+      expect(metadata).to match(/^status: (?:done|partial)$/)
     end
   end
 

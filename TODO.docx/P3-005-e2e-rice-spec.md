@@ -1,4 +1,11 @@
+---
+status: partial
+---
+
 # 023 — Spec: End-to-end rice DOCX output
+
+The formula key work in item 5 is complete and covered by synthetic specs.
+Full rice end-to-end coverage remains open.
 
 ## Goal
 
@@ -37,7 +44,8 @@ the resulting `word/document.xml`, `word/styles.xml`,
    output.
 5. **Formula key lists**. Every formula `<dl>` renders as a bordered
    `formula_dl` table with separate term and definition cells. Its
-   footnotes appear in a final row spanning the two columns.
+   labelled footnotes appear in a final row spanning the two columns.
+   Footnotes without a label use Word's automatic footnote numbering.
    The synthetic regression spec covers this structure.
 6. **Dimension styles**. Every figure with an image renders inside a
    paragraph whose style is one of `Dimension50`, `Dimension75`,

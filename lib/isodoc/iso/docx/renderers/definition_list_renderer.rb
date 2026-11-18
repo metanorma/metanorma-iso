@@ -82,7 +82,6 @@ module IsoDoc
 
           def collect_table_footnote(note, para, footnotes)
             label = note.reference
-            return if label.nil? || label.empty?
 
             append_footnote_label(para, label) unless note.hiddenref
             body = Array(@context.formula_footnote_bodies).find { |entry| entry.id == note.target }
