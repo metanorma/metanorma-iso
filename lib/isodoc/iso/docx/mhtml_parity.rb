@@ -213,7 +213,13 @@ module IsoDoc
               .sub(/\Amsonormal\z/, "normal")
           end
 
-          def paragraph(style, level = nil)
+          def paragraph(style, level = nil, node = nil)
+            # Template cell styles and unstyled cell paragraphs are equivalent.
+            # Keep these names significant outside cells and for headings.
+            if !level && %w[tablebody tableheader].include?(style) &&
+                node&.ancestors&.any? { |ancestor| %w[td th tc].include?(ancestor.name) }
+              style = "normal"
+            end
             kind = if level then "heading#{level}"
                    elsif style.start_with?("note") then "note"
                    elsif style.start_with?("example") then "example"
@@ -336,7 +342,7 @@ module IsoDoc
               style, level = html_style(node)
               level ||= style[/\Aheading([1-9])\z/, 1]
               level ||= node.name[/\Ah([1-6])\z/, 1]
-              paragraph(style, level) + node.css("img, imagedata").map { "figure" }
+              paragraph(style, level, node) + node.css("img, imagedata").map { "figure" }
             when "table"
               style, = html_style(node)
               container(node, style == "normal" ? "" : style)
@@ -413,7 +419,7 @@ module IsoDoc
                       elsif level.to_i < 9
                         (level.to_i + 1).to_s
                       end
-              paragraph(style, level) + node.xpath(".//w:drawing | .//w:pict", W).map { "figure" }
+              paragraph(style, level, node) + node.xpath(".//w:drawing | .//w:pict", W).map { "figure" }
             when "tbl"
               id = node.at_xpath("w:tblPr/w:tblStyle/@w:val", W)&.value
               container(node, id ? word_style(id) : "")
