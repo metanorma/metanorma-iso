@@ -24,6 +24,9 @@ module IsoDoc
       class InlineRenderer
         include ModelUtils
 
+        SEMANTIC_STEM = Metanorma::Document::Components::TextElements::StemElement
+        FMT_STEM = Metanorma::Document::Components::Inline::FmtStemElement
+
         # Public state: handlers and SourcecodeRenderer read/write these.
         attr_accessor :preserve_whitespace
         attr_reader :resolver, :context, :doc, :footnote_cache
@@ -514,21 +517,33 @@ module IsoDoc
         # ── Ordered-content walking ───────────────────────────────────
 
         def render_ordered_inline(node, para)
-          walked = false
-          each_ordered_element(node) do |type, obj|
-            walked = true
+          entries = each_ordered_element(node).to_a
+          entries.each_with_index do |(type, obj), index|
             case type
             when :text then add_text(para, obj)
-            when :element then dispatch_inline(obj, para)
+            when :element
+              dispatch_inline(obj, para) unless rendered_by_next?(entries, index)
             end
           end
-          return if walked
+          return unless entries.empty?
 
           node.each_mixed_content do |child|
             case child when String then add_text(para, child)
             else dispatch_inline(child, para)
             end
           end
+        end
+
+        # Presentation XML keeps the semantic <stem> next to the
+        # <fmt-stem> that renders it; drawing both prints the symbol
+        # twice. The ISO XSL drops the same stem.
+        def rendered_by_next?(entries, index)
+          return false unless entries[index][1].is_a?(SEMANTIC_STEM)
+
+          following = entries[(index + 1)..].find do |type, obj|
+            type == :element || !obj.strip.empty?
+          end
+          following&.last.is_a?(FMT_STEM)
         end
 
         # Fallback: render typed attribute collections when no ordering

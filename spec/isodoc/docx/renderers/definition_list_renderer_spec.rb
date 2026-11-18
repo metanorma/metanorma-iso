@@ -124,6 +124,40 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::DefinitionListRenderer do
     end
   end
 
+  # Presentation XML keeps the semantic <stem> next to the <fmt-stem>
+  # that renders it, so a term walked in document order printed the
+  # symbol twice ("ww" for w in the ISO 2533 figure keys).
+  describe "a term holding a stem and its fmt-stem" do
+    it "renders the symbol once" do
+      math = '<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>w</mi></math>'
+      xml = minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="c1">
+            <title>Scope</title>
+            <dl>
+              <dt><stem type="MathML" id="s1">#{math}<asciimath>w</asciimath></stem><fmt-stem type="MathML"><semx element="stem" source="s1">#{math}<asciimath>w</asciimath></semx></fmt-stem></dt>
+              <dd><p>wind speed</p></dd>
+            </dl>
+          </clause>
+        </sections>
+      INNER
+
+      Dir.mktmpdir("dt-stem-") do |dir|
+        path = File.join(dir, "stem.docx")
+        adapter.convert(xml, path)
+        raw = Zip::File.open(path) do |zip|
+          zip.find_entry("word/document.xml").get_input_stream.read
+        end
+        doc = Nokogiri::XML(raw)
+        ns = doc.collect_namespaces.transform_keys { |k| k.sub("xmlns:", "") }
+        term = doc.at_xpath("//w:p[following-sibling::w:p[1][contains(., 'wind speed')]]", ns)
+        symbols = term.xpath(".//m:t | .//w:t", ns).map(&:text).join
+
+        expect(symbols).to eq("w")
+      end
+    end
+  end
+
   # Definition-list terms that are plain text carrying XML-hostile
   # characters must survive into the DOCX output. The isodoc Word
   # (MHTML) path dropped such terms: WordFunction::Body#dt_parse

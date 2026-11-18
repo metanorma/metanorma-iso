@@ -138,7 +138,7 @@ module IsoDoc
         # [:text, String] for text nodes and [:element, Object] for
         # mapped model objects.
         def each_ordered_element(node, allow_filter: nil)
-          return enum_for(__method__, node, allow_filter) unless block_given?
+          return enum_for(__method__, node, allow_filter: allow_filter) unless block_given?
           return unless ordered?(node)
 
           element_to_attr = build_element_mapping(node)
