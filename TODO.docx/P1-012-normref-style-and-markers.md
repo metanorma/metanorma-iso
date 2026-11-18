@@ -1,10 +1,12 @@
 ---
 title: 108-019 - Fix normative reference formatting
 priority: P2
-status: open
+status: done
 ---
 
 # 108-019: Fix Normative Reference Formatting
+
+The normative reference regression in `spec/isodoc/docx/renderers/bibliography_renderer_spec.rb` verifies the footnote marker after the year, the following separator, and the `RefNorm` style.
 
 ## Problem
 
@@ -40,7 +42,6 @@ The inline renderer may not be rendering footnote markers inside bibliographic i
 2. Render footnote markers as proper `<w:footnoteReference>` elements
 3. Ensure the `)` is part of the footnote marker rendering
 
-## Files to Change
+## Location
 
-- `lib/isodoc/iso/docx/adapter.rb` — render_bib_item_content
-- `lib/isodoc/iso/docx/inline.rb` — footnote reference rendering
+- `lib/isodoc/iso/docx/inline_renderers/footnote_renderer.rb` — `InlineRenderers::FootnoteRenderer`

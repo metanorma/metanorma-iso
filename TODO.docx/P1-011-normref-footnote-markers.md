@@ -1,4 +1,10 @@
+---
+status: done
+---
+
 # 078: Normative references missing `)` footnote markers
+
+The normative reference regression in `spec/isodoc/docx/renderers/bibliography_renderer_spec.rb` verifies the superscript closing parenthesis and separator for both fresh and cached footnotes.
 
 ## Problem
 Reference normref entries have `)` markers after some ISO identifiers to indicate footnotes. Output is missing these markers.
@@ -24,5 +30,4 @@ The `render_bib_item_content` method renders the biblio_tag text but may not inc
 Check how the presentation XML formats the biblio-tag with footnote markers. The `)` should appear as superscript text in the bib entry, with a footnote reference linking to the footnote content. The inline renderer needs to handle `fn` elements inside biblio-tag elements.
 
 ## Location
-- `lib/isodoc/iso/docx/adapter.rb` — `render_bib_item_content`
-- `lib/isodoc/iso/docx/inline.rb` — footnote rendering in bib context
+- `lib/isodoc/iso/docx/inline_renderers/footnote_renderer.rb` — `InlineRenderers::FootnoteRenderer`

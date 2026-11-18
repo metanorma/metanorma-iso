@@ -19,6 +19,7 @@ module IsoDoc
             cache_key = parent.footnote_cache_key(element)
             if cache_key && parent.cached_footnote_id(cache_key)
               append_cached_reference(para, cache_key)
+              append_marker_suffix(element, para)
               return
             end
 
@@ -30,9 +31,24 @@ module IsoDoc
             parent.store_footnote_id(cache_key, fn_id) if cache_key && fn_id
             parent.apply_run_char_style(fn_run, :footnote_reference)
             para << fn_run
+            append_marker_suffix(element, para)
           end
 
           private
+
+          def append_marker_suffix(element, para)
+            return unless context.in_normative && element.fmt_fn_label
+            return unless parent.collect_all_text(element.fmt_fn_label).rstrip.end_with?(")")
+
+            # Word supplies the number. Add the presentation label's closing
+            # parenthesis before the separator that follows the fn element.
+            properties = Uniword::Wordprocessingml::RunProperties.new(
+              vertical_align: Uniword::Properties::VerticalAlign.new(value: "superscript"),
+            )
+            run = Uniword::Wordprocessingml::Run.new(text: ")", properties: properties)
+            parent.apply_run_char_style(run, :footnote_reference)
+            para << run
+          end
 
           def append_cached_reference(para, cache_key)
             id = parent.cached_footnote_id(cache_key)
