@@ -352,6 +352,8 @@ module IsoDoc
         # Keep block formulas intact: their renderer emits OMML, not text.
         def flatten_number_stems(xml)
           document = Nokogiri::XML(xml, &:huge)
+          return xml if document.errors.any? { |e| e.error? || e.fatal? }
+
           document.xpath("//*[local-name()='stem' or local-name()='fmt-stem']" \
                          "[not(ancestor::*[local-name()='formula'])]").each do |stem|
             number = number_stem_text(stem)
@@ -373,6 +375,7 @@ module IsoDoc
           node = stem
           while NUMBER_STEM_WRAPPERS.include?(node.name)
             return unless node.element_children.one?
+            return if styled_wrapper?(node)
             return if node.children.any? { |child| child.text? && !child.text.strip.empty? }
 
             node = node.element_children.first
@@ -382,7 +385,14 @@ module IsoDoc
           return unless node.children.one? && node.children.first.text?
 
           value = node.text
-          value if /\A[+\-−]?\d+(?:[.,]\d+)?(?:[eE][+-]?\d+)?\z/.match?(value)
+          value if NUMBER_PATTERN.match?(value)
+        end
+
+        # mathcolor, scriptlevel etc. change rendering; only displaystyle is
+        # invisible to the text path.
+        def styled_wrapper?(node)
+          %w[mstyle mrow].include?(node.name) &&
+            node.attribute_nodes.any? { |attr| attr.name != "displaystyle" }
         end
 
         def create_document

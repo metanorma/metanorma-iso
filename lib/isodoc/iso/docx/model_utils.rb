@@ -12,6 +12,7 @@ module IsoDoc
       # of attribute access, text extraction, dimension parsing, and
       # ordered-content traversal.
       module ModelUtils
+        NUMBER_PATTERN = /\A[+\-−]?\d+(?:[.,]\d+)?(?:[eE][+-]?\d+)?\z/
         # Parse +xml+ into +model_class+ under an adapter that populates
         # lutaml's mixed-content metadata (element_order and
         # map_all_content targets). The conversion pipeline depends on
