@@ -1,11 +1,13 @@
 ---
 title: 108-001 - Fix cover page sectPr position and header/footer refs
 priority: P0
-status: open
+status: done
 depends_on: []
 ---
 
 # 108-001: Fix Cover Page Section Break Position and Header/Footer Refs
+
+The DIS regression in `spec/isodoc/docx/section_manager_spec.rb` verifies the break position, page break before Contents, and references to dedicated blank cover parts. The package allocates its own relationship IDs and part names.
 
 ## Problem
 
