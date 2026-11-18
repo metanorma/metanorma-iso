@@ -36,6 +36,7 @@ module IsoDoc
       autoload :InlineRenderers, "isodoc/iso/docx/inline_renderers"
       autoload :InlineRenderer, "isodoc/iso/docx/inline"
       autoload :MiddleTitleRenderer, "isodoc/iso/docx/middle_title_renderer"
+      autoload :MathmlOmml, "isodoc/iso/docx/mathml_omml"
       autoload :ModelUtils, "isodoc/iso/docx/model_utils"
       autoload :PageScheme, "isodoc/iso/docx/page_scheme"
       autoload :PrefaceRenderer, "isodoc/iso/docx/preface_renderer"

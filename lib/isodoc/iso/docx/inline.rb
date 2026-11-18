@@ -65,6 +65,21 @@ module IsoDoc
         # Stripping applies recursively — autonum carriers wrapped inside
         # other inline elements (e.g. <strong>) are also skipped.
         def render_heading(node, para)
+          was_heading = @in_heading
+          @in_heading = true
+          render_heading_body(node, para)
+        ensure
+          @in_heading = was_heading
+        end
+
+        # Whether the renderer is inside a heading render. Inline math in
+        # headings stays text: heading styles carry the title font, and
+        # units in titles render as text (#1765).
+        def rendering_heading?
+          @in_heading ? true : false
+        end
+
+        def render_heading_body(node, para)
           unless strip_autonum_for?(para)
             render(node, para)
             return

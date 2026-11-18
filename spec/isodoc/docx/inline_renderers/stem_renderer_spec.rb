@@ -22,23 +22,78 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     built ? built.text : ""
   end
 
-  it "renders a semantic stem via its asciimath value" do
-    stem = Metanorma::Document::Components::TextElements::StemElement.from_xml(
-      '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
-      '<msub><mi>g</mi><mi>n</mi></msub></math><asciimath>g_n</asciimath></stem>',
-    )
-
-    expect(render_to_text(stem)).to eq("g_n")
+  def render_built(element)
+    para = Uniword::Builder::ParagraphBuilder.new
+    renderer.render(element, para)
+    para.build
   end
 
-  it "renders a presentation fmt-stem via the semx-wrapped asciimath" do
+  def omml_texts(built)
+    built.o_maths.map { |m| m.to_xml.scan(%r{<m:t[^>]*>([^<]*)</m:t>}).flatten }
+  end
+
+  def g_n_mathml
+    '<math xmlns="http://www.w3.org/1998/Math/MathML">' \
+      "<msub><mi>g</mi><mi>n</mi></msub></math>"
+  end
+
+  def g_n_stem
+    Metanorma::Document::Components::TextElements::StemElement.from_xml(
+      "<stem type=\"MathML\">#{g_n_mathml}<asciimath>g_n</asciimath></stem>",
+    )
+  end
+
+  # P1-013: the submitted ISO Word output carries inline math as
+  # <m:oMath> inside the paragraph (not <m:oMathPara>, not text).
+  describe "a semantic MathML stem" do
+    def built
+      @built ||= render_built(g_n_stem)
+    end
+
+    it "becomes one inline m:oMath holding the subscript" do
+      expect(omml_texts(built)).to eq([%w[g n]])
+    end
+
+    it "uses m:sSub for the subscript" do
+      expect(built.o_maths.first.to_xml).to include("sSub")
+    end
+
+    it "emits no m:oMathPara and no text run", :aggregate_failures do
+      expect(built.o_math_paras).to be_empty
+      expect(built.runs).to be_empty
+    end
+  end
+
+  it "keeps the oMath between the surrounding prose runs" do
+    para = Uniword::Builder::ParagraphBuilder.new
+    para << "where "
+    renderer.render(g_n_stem, para)
+    para << " is gravity"
+
+    expect(para.build.to_xml.scan(/<(w:r|m:oMath)\b/).flatten).to eq(%w[w:r m:oMath w:r])
+  end
+
+  it "renders a presentation fmt-stem as inline OMML via its semx" do
     stem = Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
       '<fmt-stem type="MathML"><semx element="stem" source="s1">' \
-      '<math xmlns="http://www.w3.org/1998/Math/MathML">' \
-      '<msub><mi>g</mi><mi>n</mi></msub></math><asciimath>g_n</asciimath></semx></fmt-stem>',
+      "#{g_n_mathml}<asciimath>g_n</asciimath></semx></fmt-stem>",
     )
 
-    expect(render_to_text(stem)).to eq("g_n")
+    expect(omml_texts(render_built(stem))).to eq([%w[g n]])
+  end
+
+  it "renders heading stems as text, not OMML", :aggregate_failures do
+    allow(inline).to receive(:rendering_heading?).and_return(true)
+    built = render_built(g_n_stem)
+
+    expect(built.o_maths).to be_empty
+    expect(built.text).to eq("g_n")
+  end
+
+  it "falls back to text when Plurimath cannot convert the MathML" do
+    allow(Plurimath::Mathml::Parser).to receive(:new).and_raise(StandardError)
+
+    expect(render_to_text(g_n_stem)).to eq("g_n")
   end
 
   it "renders a bare-string asciimath stem unchanged" do
@@ -65,13 +120,13 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     end
   end
 
-  it "preserves operators when MathML contains more than one token" do
+  it "renders a number with an operator as OMML, keeping every token" do
     stem = Metanorma::Document::Components::TextElements::StemElement.from_xml(
       '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
       "<mn>12</mn><mo>+</mo><mi>x</mi></math></stem>",
     )
 
-    expect(render_to_text(stem)).to eq("12 + x")
+    expect(omml_texts(render_built(stem))).to eq([%w[12 + x]])
   end
 
   def presentation_unit_stem
