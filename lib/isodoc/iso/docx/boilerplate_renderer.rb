@@ -3,7 +3,7 @@
 module IsoDoc
   module Iso
     module Docx
-      # Renders boilerplate sections (copyright, license, legal) from the
+      # Renders copyright, license, legal, and feedback statements from the
       # document model's structured boilerplate attribute.
       #
       # Metanorma::Standoc::Document::Boilerplate holds each statement as a
@@ -31,7 +31,7 @@ module IsoDoc
                           :warning_header, :warning)
         end
 
-        # Render copyright statements on the copyright page.
+        # Render copyright, legal, and feedback statements on the copyright page.
         def render_copyright(boilerplate, doc)
           return unless boilerplate
 
@@ -40,6 +40,11 @@ module IsoDoc
 
           address = find_address_block(boilerplate)
           render_address(doc, address) if address
+
+          walk_statements(boilerplate.legal_statement, doc,
+                          :copyright_hdr, :copyright)
+          walk_statements(boilerplate.feedback_statement, doc,
+                          :copyright_hdr, :copyright)
         end
 
         private
