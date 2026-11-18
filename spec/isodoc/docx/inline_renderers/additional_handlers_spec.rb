@@ -126,13 +126,20 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
   end
 
   describe IsoDoc::Iso::Docx::InlineRenderers::ErefRenderer do
-    it "renders an ErefElement as a hyperlink whose URL is the cite key" do
+    it "renders an ErefElement as an internal-anchor hyperlink to the bibitem" do
+      eref = parse_first_inline('<eref bibitemid="ISO712">[1]</eref>')
+      para = build_para
+      described_class.new(parent).render(eref, para)
+
+      expect(para.build.hyperlinks.map(&:anchor)).to eq(["ISO712"])
+    end
+
+    it "renders an ErefElement without bibitemid as plain text" do
       eref = parse_first_inline('<eref citeas="ISO1234">[1]</eref>')
       para = build_para
       described_class.new(parent).render(eref, para)
 
-      link_model = para.build.hyperlinks.first
-      expect(link_model.runs.map(&:text).join).to eq("[1]")
+      expect(para.build.hyperlinks).to be_empty
     end
   end
 
