@@ -78,7 +78,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ExampleRenderer do
     end
   end
 
-  it "keeps the note style for a table note inside an example" do
+  it "uses Noteindent for a table note inside an example" do
     expect(nested_example_and_note_text).to match(
       [include("EXAMPLE 1"), include("Nested table note.")],
     )
