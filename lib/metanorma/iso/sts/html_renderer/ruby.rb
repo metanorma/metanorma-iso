@@ -482,9 +482,15 @@ module Metanorma
           def caption(node) = render_element("figcaption", render_children(node))
 
           def graphic(node)
+            # NISO STS carries a graphic's accessibility text as the
+            # <alt-text> child element (access.class); the element has
+            # no @alttext attribute (metanorma-iso#1793).
+            alt = Array(node.alt_text)
+              .flat_map { |a| Array(a.content) }
+              .compact.join(" ")
             render_liquid("_img.html.liquid", {
                             "src" => node.href.to_s,
-                            "alt" => node.alttext.to_s,
+                            "alt" => alt,
                           })
           end
 
@@ -694,7 +700,11 @@ module Metanorma
 
             mapping = @mapping_cache[node.class][:elements]
             indices = Hash.new(0)
-            node.element_order.filter_map do |entry|
+            # Parsed models of non-mixed elements carry no element_order
+            # (lutaml-model fills it only under mixed_content); fall back
+            # to the mapped elements in declaration order.
+            entries = node.element_order || declared_element_order(node, mapping)
+            entries.filter_map do |entry|
               case entry.node_type
               when :text
                 escape(entry.text_content.to_s)
@@ -1016,7 +1026,8 @@ module Metanorma
           def ordered_content_parts(node)
             mapping = @mapping_cache[node.class][:elements]
             indices = Hash.new(0)
-            node.element_order.filter_map do |entry|
+            entries = node.element_order || declared_element_order(node, mapping)
+            entries.filter_map do |entry|
               if entry.node_type == :text
                 entry.text_content.to_s
               else
@@ -1026,6 +1037,16 @@ module Metanorma
                 collection_item_at(node, attr, indices)
               end
             end
+          end
+
+          # Declaration-order entries for models whose parse produced no
+          # element_order: one entry per mapped element name.
+          DeclaredEntry = Struct.new(:node_type, :name, :text_content)
+
+          def declared_element_order(node, mapping)
+            return [] if node.nil?
+
+            mapping.keys.map { |name| DeclaredEntry.new(:element, name, nil) }
           end
 
           def inline_or_content(node)
