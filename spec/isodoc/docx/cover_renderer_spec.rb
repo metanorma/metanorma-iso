@@ -120,6 +120,37 @@ RSpec.describe IsoDoc::Iso::Docx::CoverRenderer do
       expect(texts).to include("2nd edition")
     end
 
+    def localized_edition_cover(language, edition, unlocalized: 2)
+      xml = minimal_iso_xml(<<~INNER)
+        <bibdata type="standard">
+          <language>#{language}</language>
+          #{%(<edition language="">#{unlocalized}</edition>) if unlocalized}
+          <edition language="#{language}">#{edition}</edition>
+        </bibdata>
+        <sections/>
+      INNER
+      doc = adapter.send(:create_document)
+      renderer.render(parse_iso_document(xml).bibdata, doc)
+      doc.model.body.paragraphs.map do |paragraph|
+        paragraph.runs.map { |run| Array(run.text).join }.join
+      end
+    end
+
+    it "formats a numeric English edition as an ordinal" do
+      expect(localized_edition_cover("en", "2", unlocalized: nil))
+        .to include("2nd edition")
+    end
+
+    it "preserves capitalization of nouns in German edition labels" do
+      expect(localized_edition_cover("de", "zweite Ausgabe"))
+        .to include("Zweite Ausgabe")
+    end
+
+    it "preserves mixed case in localized English edition labels" do
+      expect(localized_edition_cover("en", "Second Edition"))
+        .to include("Second Edition")
+    end
+
     it "renders committee reference from ext model" do
       xml = minimal_iso_xml(<<~INNER)
         <bibdata type="standard">
