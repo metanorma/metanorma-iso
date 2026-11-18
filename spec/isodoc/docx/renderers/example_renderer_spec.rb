@@ -5,6 +5,26 @@ require_relative "../spec_helper"
 RSpec.describe IsoDoc::Iso::Docx::Renderers::ExampleRenderer do
   let(:adapter) { build_adapter }
 
+  let(:nested_note_xml) do
+    minimal_iso_xml(<<~INNER)
+      <sections>
+        <clause id="scope">
+          <title>Scope</title>
+          <example id="ex1">
+            <fmt-name>EXAMPLE 1</fmt-name>
+            <table id="t1">
+              <tbody><tr><td>Cell content.</td></tr></tbody>
+              <note id="n1">
+                <fmt-name>NOTE</fmt-name>
+                <p>Nested table note.</p>
+              </note>
+            </table>
+          </example>
+        </clause>
+      </sections>
+    INNER
+  end
+
   it "runs the EXAMPLE label inline at the head of the first body paragraph" do
     xml = minimal_iso_xml(<<~INNER)
       <sections>
@@ -55,6 +75,24 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ExampleRenderer do
         "examples must not carry a Box-title paragraph (label runs inline)"
       expect(styles).not_to include("Box-end"),
         "examples must not be wrapped in Box-end"
+    end
+  end
+
+  it "keeps the note style for a table note inside an example" do
+    expect(nested_example_and_note_text).to match(
+      [include("EXAMPLE 1"), include("Nested table note.")],
+    )
+  end
+
+  def nested_example_and_note_text
+    Dir.mktmpdir do |dir|
+      path = File.join(dir, "output.docx")
+      adapter.convert(nested_note_xml, path)
+      extract_docx(path) do |doc, ns|
+        example = doc.at_xpath("//w:p[w:pPr/w:pStyle/@w:val='Example']", ns)
+        note = doc.at_xpath("//w:tc/w:p[w:pPr/w:pStyle/@w:val='Noteindent']", ns)
+        [example&.text, note&.text]
+      end
     end
   end
 

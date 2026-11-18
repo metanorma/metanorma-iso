@@ -1,12 +1,27 @@
 ---
 title: 108-018 - Fix note/example count mismatch
 priority: P2
-status: open
+status: partial
 ---
 
 # 108-018: Fix Note/Example Count Mismatch
 
 ## Problem
+
+The historical reference is `spec/examples/rice.docx`. The counts below
+match the exact paragraph style IDs in its `word/document.xml`.
+
+The current DOCX conversion of `spec/examples/rice.presentation.xml`
+produces 5 `Note`, 6 `Noteindent`, 1 `Figurenote`, 2 `Example`,
+1 `Exampleindent`, and 17 `Definition` paragraphs. The DIS fixture
+produces 5 `Note`, 4 `Noteindent`, 1 `Figurenote`, 2 `Example`,
+1 `Exampleindent`, and 15 `Definition` paragraphs.
+
+The reference counts its table footnotes as `Note` and its code callout
+label and annotation as `Example`. Its definition text and paragraph
+boundaries also differ from the current presentation XML. The remaining
+work is to verify those differences against matching input and output
+before treating the legacy style totals as renderer acceptance counts.
 
 ### Notes:
 - Latest: 6 paragraphs with `Note` style
