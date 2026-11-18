@@ -66,4 +66,34 @@ RSpec.describe IsoDoc::Iso::Docx::MathConversion do
 
     expect(model.o_maths.length).to eq(1)
   end
+
+  # Presentation bare-number stems carry no MathML at all: mnconvert
+  # emits the digit as plain text inside the semx wrapper, with a
+  # <latexmath> fallback the model does not map. The cell rendered as
+  # an empty run before the semx descent (metanorma-iso#1764).
+  it "renders a MathML-less bare-number fmt-stem as a text run" do
+    stem = Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
+      '<fmt-stem type="MathML"><semx element="stem" source="_x">' \
+      '0<latexmath>0</latexmath></semx></fmt-stem>',
+    )
+
+    model = rendered_paragraph(stem)
+
+    texts = model.runs.map { |run| Array(run.text).join }
+    expect(texts.join).to eq("0")
+    expect(model.o_maths).to be_empty
+  end
+
+  it "keeps a MathML-bearing fmt-stem on the equation path" do
+    stem = Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
+      '<fmt-stem type="MathML"><semx element="stem" source="_y">' \
+      '<math xmlns="http://www.w3.org/1998/Math/MathML">' \
+      "<mstyle displaystyle=\"false\"><mi>x</mi></mstyle></math>" \
+      "<latexmath>x</latexmath></semx></fmt-stem>",
+    )
+
+    model = rendered_paragraph(stem)
+
+    expect(model.o_maths.length).to eq(1)
+  end
 end

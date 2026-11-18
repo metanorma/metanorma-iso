@@ -341,7 +341,20 @@ module IsoDoc
           text = stem_math_text(element)
           return text if text && !text.empty?
 
-          collect_text(element)
+          text = collect_text(element)
+          return text if text && !text.empty?
+
+          # Presentation bare-number stems carry no MathML at all:
+          # mnconvert emits the digit as plain text inside the semx
+          # wrapper ("0<latexmath>0</latexmath>"), so the text only
+          # reachable through the semx child is the stem's content
+          # (isodoc#898: stem:[0]/stem:[1] vanished from table cells).
+          Array(attribute_value(element, :semx)).each do |child|
+            text = collect_text(child)
+            return text if text && !text.empty?
+          end
+
+          ""
         end
 
         # AsciiMath is the plain-text form of an inline symbol. The
