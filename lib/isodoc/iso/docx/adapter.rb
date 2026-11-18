@@ -342,7 +342,45 @@ module IsoDoc
                 else
                   source.to_s
                 end
-          parse_model_with_ordering(Metanorma::Iso::Document::Root, xml)
+          parse_model_with_ordering(Metanorma::Iso::Document::Root,
+                                    flatten_number_stems(xml))
+        end
+
+        # Numeric table cells need a Stem run, not a tree of MathML models.
+        # Keep block formulas intact: their renderer emits OMML, not text.
+        def flatten_number_stems(xml)
+          document = Nokogiri::XML(xml) { |config| config.huge }
+          document.xpath("//*[local-name()='stem' or local-name()='fmt-stem']" \
+                         "[not(ancestor::*[local-name()='formula'])]").each do |stem|
+            number = number_stem_text(stem)
+            next unless number
+
+            if stem.name == "fmt-stem"
+              stem.content = number
+            else
+              text = Nokogiri::XML::Node.new("asciimath", document)
+              text.namespace = stem.namespace
+              text.content = number
+              stem.children = text
+            end
+          end
+          document.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::AS_XML)
+        end
+
+        def number_stem_text(stem)
+          node = stem
+          while %w[stem fmt-stem semx math mstyle mrow].include?(node.name)
+            return unless node.element_children.one?
+            return if node.children.any? { |child| child.text? && !child.text.strip.empty? }
+
+            node = node.element_children.first
+          end
+          return unless node.name == "mn" &&
+            node.namespace&.href == "http://www.w3.org/1998/Math/MathML"
+          return unless node.children.one? && node.children.first.text?
+
+          value = node.text
+          value if /\A[+\-−]?\d+(?:[.,]\d+)?(?:[eE][+-]?\d+)?\z/.match?(value)
         end
 
         def create_document
