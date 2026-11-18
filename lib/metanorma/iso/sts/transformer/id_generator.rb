@@ -3,177 +3,294 @@
 module Metanorma
   module Iso
     module Sts
-      class Transformer::IdGenerator
-        def initialize(context)
-          @context = context
-          @id_map = {}
-          @section_counters = {
-            table: 0,
-            figure: 0,
-            formula: 0,
-            biblref: 0,
-            fn: 0,
-            unnumbered_table: 0,
-          }
-        end
-
-        def register(source_id, sts_id)
-          @id_map[source_id] = sts_id
-        end
-
-        def remap(source_id)
-          @id_map[source_id] || source_id
-        end
-
-        def id_for(element)
-          case element
-          when Metanorma::Iso::Document::Sections::IsoForewordSection
-            "sec_foreword"
-          when Metanorma::Iso::Document::Sections::IsoAbstractSection
-            "sec_abstract"
-          when Metanorma::Iso::Document::Sections::IsoClauseSection
-            id_for_clause(element)
-          when Metanorma::Iso::Document::Sections::IsoAnnexSection
-            id_for_annex(element)
-          when Metanorma::Iso::Document::Sections::IsoTermsSection
-            id_for_terms(element)
-          when Metanorma::Document::Components::Tables::TableBlock
-            id_for_table(element)
-          when Metanorma::Document::Components::AncillaryBlocks::FigureBlock
-            id_for_figure(element)
-          when Metanorma::Document::Components::AncillaryBlocks::FormulaBlock
-            id_for_formula(element)
-          when Metanorma::Document::Components::Paragraphs::ParagraphBlock
-            id_for_paragraph(element)
-          when Metanorma::Standoc::Document::Sections::StandardReferencesSection
-            id_for_ref_section(element)
-          else
-            id = element.id if element.class.method_defined?(:id)
-            id ? remap(id) : nil
-          end
-        end
-
-        def section_number(element)
-          if element.is_a?(Metanorma::Iso::Document::Sections::IsoClauseSection) ||
-              element.is_a?(Metanorma::Iso::Document::Sections::IsoAnnexSection) ||
-              element.is_a?(Metanorma::Iso::Document::Sections::IsoTermsSection)
-            element.number
-          end
-        end
-
-        private
-
-        def id_for_clause(clause)
-          return remap(clause.id) if clause.id && @id_map.key?(clause.id)
-
-          number = clause.number
-          sts_id = if number && !number.empty?
-                     "sec_#{number}"
-                   elsif clause.type == "intro"
-                     "sec_intro"
-                   elsif clause.type == "scope"
-                     "sec_scope"
-                   else
-                     clause.id ? remap(clause.id) : nil
-                   end
-
-          register(clause.id, sts_id) if clause.id && sts_id
-          sts_id
-        end
-
-        def id_for_annex(annex)
-          return remap(annex.id) if annex.id && @id_map.key?(annex.id)
-
-          number = annex.number
-          sts_id = if number && !number.empty?
-                     "sec_#{number}"
-                   else
-                     "sec_A"
-                   end
-
-          register(annex.id, sts_id) if annex.id
-          sts_id
-        end
-
-        def id_for_terms(terms)
-          return remap(terms.id) if terms.id && @id_map.key?(terms.id)
-
-          number = terms.number
-          sts_id = if number && !number.empty?
-                     "sec_#{number}"
-                   else
-                     "sec_terms"
-                   end
-
-          register(terms.id, sts_id) if terms.id
-          sts_id
-        end
-
-        def id_for_table(table)
-          return remap(table.id) if table.id && @id_map.key?(table.id)
-
-          @section_counters[:table] += 1
-          number = table.autonum if table.class.method_defined?(:autonum)
-          number = nil if number && number.to_s.empty?
-          if number
-            sts_id = "tab_#{number}"
-          else
-            letter = ("a".ord + @section_counters[:unnumbered_table]).chr
-            @section_counters[:unnumbered_table] += 1
-            sts_id = "tab_#{letter}"
+      module Transformer
+        # Derives document-unique STS ids for the elements that cannot keep
+        # their source ids:
+        #
+        # - annexes serialize as <app> with letter ids (sec_A, sec_B, …);
+        # - terms sections fall back to sec_terms (uniquified sec_terms_1, …)
+        #   when the section carries no number;
+        # - terms split one source id into a sec_-prefixed <term-sec> id and
+        #   a term_-prefixed <tbx:termEntry> id (xs:ID forbids sharing);
+        # - figures are numbered fig_1, fig_2, … in document order.
+        #
+        # Everything else (clauses, paragraphs, tables, formulas, dl) keeps
+        # its source id — xref rid values pass through `remap`, which falls
+        # back to the source id for unregistered targets, so IDREF values
+        # stay resolvable.
+        #
+        # `pre_register` walks the document up front so an xref pointing at
+        # a LATER element resolves: at transform time the target's claimed
+        # id already sits in the registry. The walk mirrors
+        # BlockDispatcher::TYPED_ATTR_DISPATCH (shared constant), so new
+        # dispatched block attributes are walked automatically.
+        class IdGenerator
+          def initialize
+            @registry = {}
+            @kinds = {}
+            @entry_ids = {}
+            @issued_ids = {}
+            @annex_count = 0
+            @figure_count = 0
+            @counter = 0
           end
 
-          register(table.id, sts_id) if table.id
-          sts_id
-        end
+          def register(source_id, sts_id, kind = nil)
+            @registry[source_id] = sts_id
+            @kinds[source_id] = kind if kind
+          end
 
-        def id_for_figure(figure)
-          return remap(figure.id) if figure.id && @id_map.key?(figure.id)
+          # Emission kind registered for the source id ("ref", "annex",
+          # "table", "figure", "formula", "clause"); nil when unknown.
+          def kind_for(source_id)
+            @kinds[source_id]
+          end
 
-          @section_counters[:figure] += 1
-          number = figure.autonum if figure.class.method_defined?(:autonum)
-          number = nil if number && number.to_s.empty?
-          sts_id = if number
-                     "fig_#{number}"
-                   else
-                     "fig_#{@section_counters[:figure]}"
-                   end
+          def remap(source_id)
+            @registry[source_id] || source_id
+          end
 
-          register(figure.id, sts_id) if figure.id
-          sts_id
-        end
+          # Document-unique variant of +base+: on collision appends _1, _2,
+          # … (xs:ID values must be unique across the whole document).
+          def claim(base)
+            return nil unless base
 
-        def id_for_formula(formula)
-          return remap(formula.id) if formula.id && @id_map.key?(formula.id)
+            seen = @issued_ids[base] || 0
+            @issued_ids[base] = seen + 1
+            seen.zero? ? base : "#{base}_#{seen}"
+          end
 
-          @section_counters[:formula] += 1
-          number = formula.autonum if formula.class.method_defined?(:autonum)
-          number = nil if number && number.to_s.empty?
-          sts_id = if number
-                     num = number.to_s.gsub(/[()]/, "")
-                     "formula_#{num}"
-                   else
-                     "formula_#{@section_counters[:formula]}"
-                   end
+          # ---- Pre-registration pass ------------------------------------------
 
-          register(formula.id, sts_id) if formula.id
-          sts_id
-        end
+          def pre_register(source)
+            @source = source
+            walk = IdWalk.new(source, self)
+            walk.run
+            self
+          end
 
-        def id_for_paragraph(para)
-          return nil unless para.id && !para.id.start_with?("_")
+          # ---- Section ids ----------------------------------------------------
 
-          remap(para.id)
-        end
+          # Annexes: sec_<number> from the section autonum ("A"), letters
+          # in document order when unnumbered. The letter also feeds the
+          # Annex label, so label and id stay consistent.
+          def id_for_annex(annex, autonum)
+            return registered_or_claim(annex, "annex") { claim("sec_#{autonum}") } if autonum
 
-        def id_for_ref_section(ref_section)
-          return remap(ref_section.id) if ref_section.id && @id_map.key?(ref_section.id)
+            letter = alpha_suffix(@annex_count, "A")
+            @annex_count += 1
+            registered_or_claim(annex, "annex") { claim("sec_#{letter}") }
+          end
 
-          normative = ref_section.normative.to_s == "true"
-          sts_id = normative ? "sec_normrefs" : "sec_bibl"
+          # Terms sections: sec_<number> when numbered, else the fallback
+          # sec_terms uniquified per terms section.
+          def id_for_terms(terms, autonum)
+            base = autonum ? "sec_#{autonum}" : "sec_terms"
+            registered_or_claim(terms, "clause") { claim(base) }
+          end
 
-          register(ref_section.id, sts_id) if ref_section.id
-          sts_id
+          # Clauses keep their source id (identity-claimed so generated
+          # ids cannot collide with it).
+          def id_for_clause(clause)
+            source_id = read_id(clause)
+            return nil unless source_id
+
+            registered_or_claim_by_source(source_id, "clause") { claim(source_id) }
+          end
+
+          # One nested <term-sec> per term with the sec_ prefix, and the
+          # termEntry with the term_ prefix, off the same suffix: the term
+          # autonum ("3.1.2") when known, else the source id stripped of
+          # its uuid decoration. xs:ID forbids sharing one value between
+          # the section and the entry. Idempotent: the pre-registration
+          # pass claims first, the transform reads the same claim.
+          def term_ids(term)
+            registered = term.id ? @registry[term.id] : nil
+            return [registered, @entry_ids[term.id]] if registered
+
+            suffix = term_id_suffix(term)
+            return [nil, nil] if suffix.empty?
+
+            sec_id = claim("sec_#{suffix}")
+            entry_id = claim("term_#{suffix}")
+            register(term.id, sec_id, "clause") if term.id
+            @entry_ids[term.id] = entry_id if term.id
+            [sec_id, entry_id]
+          end
+
+          # Figures are numbered fig_1, fig_2, … in document order — the
+          # mnconvert numbering. Pre-registration assigns first so xrefs
+          # pointing forward resolve; on-demand assignment covers figures
+          # outside the walked containers.
+          def figure_id(figure)
+            key = figure_key(figure)
+            @registry[key] ||= claim("fig_#{(@figure_count += 1)}")
+          end
+
+          def id_for(obj, prefix: "sec")
+            return nil unless obj
+            source_id = read_id(obj)
+            if source_id && !source_id.empty?
+              return @registry[source_id] if @registry.key?(source_id)
+              register(source_id, claim(source_id))
+              return @registry[source_id]
+            end
+
+            @counter += 1
+            "#{prefix}_#{@counter}"
+          end
+
+          def id_map
+            @registry
+          end
+
+          private
+
+          def read_id(obj)
+            return nil unless obj.is_a?(Lutaml::Model::Serializable)
+
+            obj.id
+          end
+
+          # A pre-registered id wins; otherwise compute + register now.
+          # Keyed by source id so the transform and the pre-pass agree.
+          def registered_or_claim(element, kind = nil, &block)
+            source_id = read_id(element)
+            if source_id && @registry.key?(source_id)
+              @registry[source_id]
+            else
+              id = block.call
+              register(source_id, id, kind) if source_id
+              id
+            end
+          end
+
+          def registered_or_claim_by_source(source_id, kind = nil, &block)
+            return @registry[source_id] if @registry.key?(source_id)
+
+            id = block.call
+            register(source_id, id, kind)
+            id
+          end
+
+          def figure_key(figure)
+            read_id(figure) || "object:#{figure.object_id}"
+          end
+
+          # The semantic <term> id is a uuid, usually "_8b70fb0a-…"; strip
+          # the leading underscore and any legacy term_ prefix so both
+          # derived ids stay valid NCNames. The presentation autonum
+          # ("3.1.2") wins when the source carries one.
+          def term_id_suffix(term)
+            autonum = @source&.term_autonum_for(term.id) if term.id
+            return autonum.to_s unless autonum.nil? || autonum.to_s.empty?
+
+            term.id.to_s.sub(/\A_?term_?/, "").delete_prefix("_")
+          end
+
+          # Letter index in base-26: 0 → +first_letter+, 25 → "Z", 26 → "AA".
+          def alpha_suffix(n, first_letter)
+            suffix = ""
+            loop do
+              suffix = ((n % 26) + first_letter.ord).chr + suffix
+              n = n / 26 - 1
+              break if n.negative?
+            end
+            suffix
+          end
+
+          # Document-order walk that claims the ids of every renamed
+          # element (annex, terms section, term, figure) before the
+          # transform runs. Attribute order mirrors
+          # BlockDispatcher::TYPED_ATTR_DISPATCH, so the walk visits the
+          # same blocks in the same order the dispatch will.
+          class IdWalk
+            def initialize(source, generator)
+              @source = source
+              @generator = generator
+              @seen = {}
+            end
+
+            def run
+              @source.annexes.each { |annex| visit_section(annex) }
+              @source.sections.each { |sec| visit_section(sec) }
+            end
+
+            private
+
+            def visit_section(section)
+              return if seen?(section)
+
+              case section.class.name&.split("::")&.last
+              when "IsoAnnexSection", "AnnexSection"
+                @generator.id_for_annex(section, autonum_of(section))
+              when "IsoTermsSection", "TermsSection"
+                @generator.id_for_terms(section, autonum_of(section))
+              else
+                @generator.id_for_clause(section) if read_id(section)
+              end
+
+              walk_blocks(section)
+              walk_children(section)
+            end
+
+            def walk_children(section)
+              Array(try(section, :clause)).each { |c| visit_section(c) }
+              Array(try(section, :terms)).each { |t| visit_section(t) }
+              Array(try(section, :term)).each { |t| @generator.term_ids(t) }
+            end
+
+            WALK_ATTRS = BlockDispatcher::TYPED_ATTR_DISPATCH.keys.freeze
+
+            def walk_blocks(section)
+              WALK_ATTRS.each do |attr|
+                next unless section.class.attributes.key?(attr)
+
+                Array(try(section, attr)).each do |item|
+                  walk_item(item)
+                end
+              end
+            end
+
+            def walk_item(item)
+              case item.class.name&.split("::")&.last
+              when "FigureBlock"
+                @generator.figure_id(item)
+              end
+              walk_siblings(item)
+            end
+
+            def walk_siblings(item)
+              %i[note example].each do |attr|
+                next unless item.class.attributes.key?(attr)
+
+                Array(try(item, attr))
+              end
+            end
+
+            def autonum_of(section)
+              RenderedTextExtractor.autonum_of(section)
+            end
+
+            def try(obj, attr)
+              obj.public_send(attr) if obj.class.attributes.key?(attr)
+            rescue StandardError
+              nil
+            end
+
+            def read_id(obj)
+              return nil unless obj.is_a?(Lutaml::Model::Serializable)
+              obj.id
+            end
+
+            def seen?(obj)
+              key = read_id(obj) || obj.object_id
+              return true if @seen[key]
+
+              @seen[key] = true
+              false
+            end
+          end
         end
       end
     end

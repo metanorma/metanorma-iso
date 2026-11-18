@@ -7,7 +7,8 @@ module IsoDoc
         # Renders <dl> definition lists with context-aware styling.
         #
         # Formula keys use bordered tables. Figure keys use KeyTitle and
-        # KeyText; other definition lists use Definition paragraphs.
+        # KeyText; the Symbols clause uses a two-column table; other
+        # definition lists use Definition paragraphs.
         class DefinitionListRenderer
           include Base
           include ListAttachments
@@ -18,6 +19,8 @@ module IsoDoc
               render_formula_key(definition_list, doc)
             when :figure
               render_figure_key(definition_list, doc)
+            when :definitions
+              render_symbol_table(definition_list, doc)
             else
               render_general(definition_list, doc)
             end
@@ -120,6 +123,34 @@ module IsoDoc
             render_pairs(definition_list, doc,
                          term_key: :key_title,
                          definition_key: :key_text)
+          end
+
+          # Classic chain parity: the symbols dl becomes a two-column
+          # table with one row per dt/dd pair. Both cells are always
+          # emitted so the grid stays rectangular, like the classic
+          # <td valign="top"> term/definition pair.
+          def render_symbol_table(definition_list, doc)
+            tbl = Uniword::Builder::TableBuilder.new
+            terms = Array(definition_list.dt)
+            definitions = Array(definition_list.dd)
+            terms.each_with_index do |dt, i|
+              tbl.row do |row|
+                row.cell do |cell|
+                  cell << render_cell_paragraph(dt, :table_body)
+                end
+                row.cell do |cell|
+                  dd = definitions[i]
+                  cell << render_cell_paragraph(dd, :table_body) if dd
+                end
+              end
+            end
+            doc << tbl
+          end
+
+          def render_cell_paragraph(node, style_key)
+            para = build_paragraph(style_key)
+            @inline_renderer.render(node, para)
+            para
           end
 
           def render_general(definition_list, doc)

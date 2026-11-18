@@ -14,7 +14,7 @@ module IsoDoc
         attr_accessor :in_note, :in_example, :in_table, :in_annex,
                       :in_normative, :in_foreword, :in_introduction,
                       :in_bibliography, :in_definition_dd, :in_formula,
-                      :in_figure,
+                      :in_figure, :in_definitions,
                       :section_depth,
                       :term_counter, :section_counter, :body_width,
                       :amend_zone
@@ -33,6 +33,7 @@ module IsoDoc
           @in_definition_dd = false
           @in_formula = false
           @in_figure = false
+          @in_definitions = false
           @section_depth = 0
           @section_counter = Counter.new(0)
           @term_counter = Counter.new(0)
@@ -178,6 +179,18 @@ module IsoDoc
           @in_figure = old
         end
 
+        # Enter a definitions section (ISO "Symbols and abbreviated
+        # terms"). While inside, Context#zone returns :definitions so
+        # DefinitionListRenderer renders the symbol definition list as a
+        # two-column table (classic chain: WordFunction#dl_parse_table).
+        def with_definitions
+          old = @in_definitions
+          @in_definitions = true
+          yield
+        ensure
+          @in_definitions = old
+        end
+
         # Enter an amend zone (:description or :newcontent). While inside,
         # Context#zone returns the amend sub-zone so StyleResolver can
         # apply BodyText for description and a3 (amend_newcontent) for
@@ -206,6 +219,7 @@ module IsoDoc
           return :table        if @in_table
           return :formula      if @in_formula
           return :figure       if @in_figure
+          return :definitions  if @in_definitions
           return :amend_description if @amend_zone == :description
           return :amend_newcontent if @amend_zone == :newcontent
           return :annex        if @in_annex

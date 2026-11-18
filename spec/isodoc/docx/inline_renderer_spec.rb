@@ -417,4 +417,86 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderer do
       renderer.preserve_whitespace = false
     end
   end
+
+  describe "inline stem rendering (isodoc#898)" do
+    # Presentation XML pairs each semantic <stem> with a
+    # <fmt-stem><semx source="..."> twin carrying the rendered math.
+    def semantic_stem(id = "s1")
+      '<stem block="false" type="MathML" id="' + id + '">' \
+        '<math xmlns="http://www.w3.org/1998/Math/MathML">' \
+        '<mi>F</mi></math><asciimath>F</asciimath></stem>'
+    end
+
+    def fmt_stem_twin(id = "s1")
+      '<fmt-stem type="MathML"><semx element="stem" source="' + id + '">' \
+        '<math xmlns="http://www.w3.org/1998/Math/MathML">' \
+        '<mi>F</mi></math><asciimath>F</asciimath></semx></fmt-stem>'
+    end
+
+    def paragraph_xml(content)
+      minimal_iso_xml(<<~INNER)
+        <preface>
+          <foreword id="fw">
+            <fmt-title>Foreword</fmt-title>
+            <p>#{content}</p>
+          </foreword>
+        </preface>
+      INNER
+    end
+
+    def render_paragraph(content)
+      root = parse_iso_document(paragraph_xml(content))
+      para_node = root.preface.foreword.paragraphs.first
+      para = build_para
+      renderer.render(para_node, para)
+      para.build
+    end
+
+    it "renders a semantic stem plus fmt-stem twin as exactly one equation" do
+      built = render_paragraph(
+        "Symbols: #{semantic_stem}#{fmt_stem_twin} end.",
+      )
+
+      expect(built.o_maths.length).to eq(1)
+      # Neither the AsciiMath source nor the semantic twin's text may
+      # leak as runs beside the equation.
+      expect(built.text).to eq("Symbols:  end.")
+    end
+
+    it "renders a semantic stem without a twin as one equation" do
+      built = render_paragraph("Value #{semantic_stem} shown.")
+
+      expect(built.o_maths.length).to eq(1)
+      expect(built.text).to eq("Value  shown.")
+    end
+
+    it "renders an fmt-stem without a semantic twin as one equation" do
+      built = render_paragraph("Value #{fmt_stem_twin} shown.")
+
+      expect(built.o_maths.length).to eq(1)
+      expect(built.text).to eq("Value  shown.")
+    end
+
+    it "renders an AsciiMath-only stem pair once as text" do
+      semantic = '<stem block="false" type="AsciiMath" id="s2">' \
+                 '<asciimath>K_L</asciimath></stem>'
+      twin = '<fmt-stem type="AsciiMath"><semx element="stem" source="s2">' \
+             '<asciimath>K_L</asciimath></semx></fmt-stem>'
+      built = render_paragraph("Symbols: #{semantic}#{twin} end.")
+
+      expect(built.o_maths).to be_empty
+      # Exactly one textual rendering of the symbol — not K_LK_L.
+      expect(built.text).to eq("Symbols: K_L end.")
+    end
+
+    it "renders a dt term stem plus twin exactly once" do
+      xml = "<dt>#{semantic_stem}#{fmt_stem_twin}</dt>"
+      dt_node = Metanorma::Document::Components::Lists::DtElement.from_xml(xml)
+
+      para = build_para
+      renderer.render(dt_node, para)
+
+      expect(para.build.o_maths.length).to eq(1)
+    end
+  end
 end
