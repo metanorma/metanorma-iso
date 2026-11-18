@@ -6,7 +6,7 @@ module IsoDoc
       # Manages the three-section DOCX layout and header/footer lifecycle.
       #
       # ISO DIS documents have three distinct sections:
-      #   1. Cover page — no headers/footers, no page numbering
+      #   1. Cover page — blank header/footer parts, no page numbering
       #   2. Front matter — roman numeral page numbers, even/odd headers
       #   3. Body — arabic page numbers starting at 1, even/odd headers
       #
@@ -72,9 +72,16 @@ module IsoDoc
         end
 
         # Insert a section break ending the cover page.
-        # Cover page: no headers/footers, no page numbering.
         def insert_cover_section(doc)
           sec = build_section(margins: COVER_MARGINS)
+          sec.header_references << Uniword::Wordprocessingml::HeaderReference.new(
+            type: "even", r_id: blank_cover_part(doc, :header, 0).r_id,
+          )
+          %w[even default].each_with_index do |type, index|
+            sec.footer_references << Uniword::Wordprocessingml::FooterReference.new(
+              type: type, r_id: blank_cover_part(doc, :footer, index).r_id,
+            )
+          end
           append_section_paragraph(doc, sec)
         end
 
@@ -127,7 +134,6 @@ module IsoDoc
 
         def build_section(margins:, page_numbering: nil)
           sec = Uniword::Wordprocessingml::SectionProperties.new
-          sec.type = "nextPage"
           sec.page_size = Uniword::Wordprocessingml::PageSize.new(
             width: PAGE_WIDTH, height: PAGE_HEIGHT,
           )
@@ -160,6 +166,24 @@ module IsoDoc
           )
         end
 
+        def blank_cover_part(doc, kind, index)
+          parts = doc.model.header_footer_parts
+          # The adapter reuses the template model across conversions. These
+          # parts have no store-level type so Uniword leaves the body refs alone.
+          existing = parts.of_kind(kind).reject(&:loaded?).select { |part| part.type.nil? }
+          return existing[index] if existing[index]
+
+          definition = Uniword::Ooxml::PartRegistry.find_by_key(kind)
+          target = parts.next_target(kind)
+          content = definition.loader_model.new
+          content.paragraphs << Uniword::Wordprocessingml::Paragraph.new
+          parts << Uniword::Docx::HeaderFooterPart.new(
+            kind: kind, target: target, rel_type: definition.rel_type,
+            content_type: definition.content_type, content: content,
+            r_id: doc.allocator.alloc_rid(target: target, type: definition.rel_type)
+          )
+        end
+
         # Find a header/footer part from the template by its rId.
         def find_part(doc, r_id)
           parts = doc.model.header_footer_parts
@@ -185,6 +209,7 @@ module IsoDoc
         # Create a paragraph with section properties attached.
         # In OOXML, a sectPr inside a pPr creates a section break.
         def append_section_paragraph(doc, section_properties)
+          section_properties.rsid_r = "00000000"
           para = Uniword::Builder::ParagraphBuilder.new
           para << ""
           model = para.build
