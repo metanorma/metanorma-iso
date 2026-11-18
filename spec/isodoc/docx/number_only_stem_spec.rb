@@ -1,34 +1,69 @@
 # frozen_string_literal: true
 
-require "spec_helper"
+require_relative "spec_helper"
 
-RSpec.describe "number-only inline stems" do
-  # 1.17.0 parity: a stem consisting of a bare number renders as plain
-  # text in the Word output, not as an OMML equation object and not
-  # dropped (metanorma-iso#1764).
+# 1.17.0 parity: a stem consisting of a bare number renders as plain
+# text in the Word output, not as an OMML equation object and not
+# dropped (metanorma-iso#1764: stem:[0]/stem:[1] vanished from table
+# cells whose presentation stems carry no asciimath fallback). Structured
+# stems keep the equation path.
+RSpec.describe IsoDoc::Iso::Docx::MathConversion do
+  let(:mapping) { IsoDoc::Iso::DocxStyleMapping.new }
+  let(:context) { IsoDoc::Iso::Docx::Context.new }
+  let(:doc) { Uniword::Builder::DocumentBuilder.new }
+  let(:resolver) { IsoDoc::Iso::Docx::StyleResolver.new(mapping, context) }
+
+  # MathConversion is a module; exercise it through the renderer that
+  # owns stem dispatch (InlineRenderer includes it).
+  let(:converter) do
+    IsoDoc::Iso::Docx::InlineRenderer.new(context, resolver, doc)
+  end
+
+  def stem_with(mathml_body)
+    Metanorma::Document::Components::Inline::StemInlineElement.from_xml(
+      "<stem block=\"false\" type=\"MathML\" id=\"s1\">" \
+      "<math xmlns=\"http://www.w3.org/1998/Math/MathML\">#{mathml_body}</math>" \
+      "</stem>",
+    )
+  end
+
+  def rendered_paragraph(stem)
+    para = Uniword::Builder::ParagraphBuilder.new
+    converter.dispatch_inline(stem, para)
+    para.model
+  end
+
+  it "extracts the digits of a bare number stem" do
+    expect(converter.number_only_stem_text(stem_with("<mn>0</mn>"))).to eq("0")
+    expect(converter.number_only_stem_text(stem_with("<mn>12</mn>"))).to eq("12")
+  end
+
+  it "keeps structured stems on the equation path" do
+    expect(converter.number_only_stem_text(
+      stem_with("<msup><mn>2</mn><mn>0</mn></msup>")
+    )).to be_nil
+    expect(converter.number_only_stem_text(
+      stem_with("<mi>x</mi>")
+    )).to be_nil
+    expect(converter.number_only_stem_text(
+      stem_with("<mn>0</mn><mo>+</mo><mn>1</mn>")
+    )).to be_nil
+  end
+
   it "renders a number-only stem as a text run" do
-    expect(number_only_stem_text_for("<math><mn>0</mn></math>")).to eq("0")
-    expect(number_only_stem_text_for("<math><mn>12</mn></math>")).to eq("12")
+    model = rendered_paragraph(stem_with("<mn>0</mn>"))
+
+    texts = model.runs.map { |run| Array(run.text).join }
+    expect(texts.join).to eq("0")
+    expect(model.o_maths).to be_empty
+    expect(model.o_math_paras).to be_empty
   end
 
-  it "keeps structured stems as equations" do
-    expect(number_only_stem_text_for(
-      "<math><msup><mn>2</mn><mn>0</mn></msup></math>"
-    )).to be_nil
-    expect(number_only_stem_text_for(
-      "<math><mi>x</mi></math>"
-    )).to be_nil
-    expect(number_only_stem_text_for(
-      "<math><mn>0</mn><mo>+</mo><mn>1</mn></math>"
-    )).to be_nil
-  end
+  it "renders a structured stem as an equation object" do
+    model = rendered_paragraph(
+      stem_with("<msup><mn>2</mn><mn>0</mn></msup>"),
+    )
 
-  private
-
-  def number_only_stem_text_for(mathml)
-    stub_stem = Object.new
-    stub_stem.define_singleton_method(:class) { Struct.new(:attributes).new(Struct.new(:key?).new(false)) }
-    walk = docx_walk_instance
-    walk.number_only_stem_text(stub_mathml_stem(mathml))
+    expect(model.o_maths.length).to eq(1)
   end
 end

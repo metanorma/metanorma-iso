@@ -566,7 +566,21 @@ module IsoDoc
           is_normative = refs_sect.normative.to_s == "true"
           @context.with_normative(is_normative) do
             walk_mixed_content(refs_sect, doc)
+            render_section_admonitions(refs_sect, doc)
           end
+        end
+
+        # Admonition children of the references section (e.g. an `[EDITOR]`
+        # editorial note following the reference list) render after the
+        # walked content — 1.17.0 carried them ("EDITORIAL NOTE — …").
+        # The section model is unordered, so the fallback walk cannot place
+        # them by document order; they are dispatched explicitly here once
+        # the model carries them (StandardReferencesSection admonition
+        # mapping, metanorma-iso#1764).
+        def render_section_admonitions(refs_sect, doc)
+          return unless refs_sect.class.attributes.key?(:admonition)
+
+          Array(refs_sect.admonition).each { |admonition| dispatch(admonition, doc) }
         end
 
         # ── Block visitors (central dispatch) ──────────────────────────
