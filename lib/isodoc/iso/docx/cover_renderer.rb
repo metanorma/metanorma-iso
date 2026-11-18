@@ -450,9 +450,11 @@ module IsoDoc
           language = language_code(bib) || "en"
           localized = editions.find { |entry| entry.language == language }
           text = extract_value(localized).to_s.strip
-          return text.sub(/\A./, &:upcase) unless text.empty?
+          unless text.empty? || text.match?(/\A[0-9]+\z/)
+            return text.sub(/\A[[:lower:]]/, &:upcase)
+          end
 
-          num = extract_value(editions.first).to_s.to_i
+          num = text.empty? ? extract_value(editions.first).to_s.to_i : text.to_i
           return nil if num.zero?
 
           suffix = ORDINAL_SUFFIXES[num % 100] || ORDINAL_SUFFIXES[num % 10] || "th"
