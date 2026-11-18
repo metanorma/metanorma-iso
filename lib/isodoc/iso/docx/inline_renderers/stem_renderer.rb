@@ -32,13 +32,21 @@ module IsoDoc
             mathml = omml_candidate(element)
             return false unless mathml
 
-            o_maths = convert_to_omml_inline(mathml)
+            o_maths = cached_omml(mathml)
             return false if o_maths.empty?
 
             o_maths.each { |o_math| para << o_math }
             true
           rescue StandardError
             false
+          end
+
+          # Plurimath plus Omml.parse cost ~26 ms a stem; ISO 2533 has 957
+          # non-numeric stems but only 236 distinct ones. The oMath objects
+          # are only serialized, so paragraphs can share them.
+          def cached_omml(mathml)
+            @omml_cache ||= {}
+            @omml_cache[mathml] ||= convert_to_omml_inline(mathml)
           end
 
           def omml_candidate(element)

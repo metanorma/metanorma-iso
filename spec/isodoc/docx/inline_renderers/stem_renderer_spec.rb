@@ -73,6 +73,14 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     expect(para.build.to_xml.scan(/<(w:r|m:oMath)\b/).flatten).to eq(%w[w:r m:oMath w:r])
   end
 
+  it "converts a repeated MathML stem once and renders it each time",
+     :aggregate_failures do
+    allow(Plurimath::Mathml::Parser).to receive(:new).and_call_original
+    2.times { expect(omml_texts(render_built(g_n_stem))).to eq([%w[g n]]) }
+
+    expect(Plurimath::Mathml::Parser).to have_received(:new).once
+  end
+
   it "renders a presentation fmt-stem as inline OMML via its semx" do
     stem = Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
       '<fmt-stem type="MathML"><semx element="stem" source="s1">' \
