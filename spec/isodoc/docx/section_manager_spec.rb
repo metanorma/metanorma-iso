@@ -13,6 +13,19 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
     with_dis_package { |zip| expect_dis_sections(zip) }
   end
 
+  it "serializes the DIS front matter page numbering as w:fmt" do
+    with_dis_package do |zip|
+      format = dis_front_matter_format(zip)
+      pending "needs uniword fix: pgNumType fmt is serialized without the w: prefix; see Uniword card"
+      expect(format).to eq("lowerRoman")
+    end
+  end
+
+  def dis_front_matter_format(zip)
+    document = Nokogiri::XML(zip.read("word/document.xml"))
+    document.at_xpath("(//w:body/w:p/w:pPr/w:sectPr)[2]/w:pgNumType/@w:fmt")&.value
+  end
+
   def with_dis_package(&block)
     fixture = "spec/fixtures/iso/is/document-en.dis.presentation.xml"
     Dir.mktmpdir do |dir|
