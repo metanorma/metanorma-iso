@@ -450,7 +450,7 @@ module IsoDoc
           language = language_code(bib) || "en"
           localized = editions.find { |entry| entry.language == language }
           text = extract_value(localized).to_s.strip
-          return text.capitalize unless text.empty?
+          return text.sub(/\A./, &:upcase) unless text.empty?
 
           num = extract_value(editions.first).to_s.to_i
           return nil if num.zero?
