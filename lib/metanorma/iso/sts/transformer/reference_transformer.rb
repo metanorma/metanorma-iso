@@ -1,134 +1,109 @@
 # frozen_string_literal: true
-
 module Metanorma
   module Iso
     module Sts
-      class Transformer::ReferenceTransformer < Transformer::Base
-        def transform_list(ref_section)
-          normative = ref_section.normative == "true"
+      module Transformer
+        class ReferenceTransformer < Base
+          def transform_section(ref_section)
+            bibitems = extract_bibitems(ref_section)
+            title_text = extract_title(ref_section)
 
-          build_ordered(::Sts::NisoSts::ReferenceList) do |rl|
-            rl.id = id_for(ref_section)
-            rl.content_type = normative ? "norm-refs" : "bibl"
+            paragraphs = intro_paragraphs(ref_section)
+            label = section_transformer.extract_autonum(ref_section)
+            normative = paragraphs.any? || !label.nil?
+            # Bibliography entries are numbered ([1], [2], …); normative
+            # reference entries are not (ISO/Metanorma convention).
+            refs = bibitems.map.with_index { |b, i| transform_bibitem(b, normative ? nil : i + 1) }.compact
 
-            if ref_section.title
-              rl.title transform_title(ref_section.title)
+            unless normative
+              # Back-matter bibliography: a bare ref-list.
+              return ModelBuilder.ref_list(content_type: "bibl", title: title_text, ref: refs)
             end
 
-            if ref_section.p && !ref_section.p.empty?
-              ref_section.p.each do |para|
-                rl.paragraph paragraph_transformer.transform(para)
-              end
-            end
-
-            if ref_section.references && !ref_section.references.empty?
-              ref_section.references.each_with_index do |bibitem, idx|
-                rl.ref transform_bibitem(bibitem, idx + 1)
-              end
-            end
-          end
-        end
-
-        def transform_bibitem(bibitem, index)
-          build_ordered(::Sts::NisoSts::Reference) do |ref|
-            ref.id = "biblref_#{index}"
-
-            lbl = ::Sts::NisoSts::Label.new(content: ["[#{index}]"])
-            ref.label lbl
-
-            mc = build_mixed_citation(bibitem)
-            ref.mixed_citation mc if mc
-
-            std = build_std_for(bibitem)
-            ref.std std if std
-          end
-        end
-
-        private
-
-        def build_mixed_citation(bibitem)
-          mc = ::Sts::NisoSts::MixedCitation.new
-
-          doc_id = primary_docidentifier(bibitem)
-          title_text = reference_title(bibitem)
-
-          if doc_id
-            mc.content doc_id
-            if title_text
-              mc.content ", "
-              italic = ::Sts::TbxIsoTml::Italic.new
-              italic.value = title_text
-              mc.italic italic
-            end
-          elsif title_text
-            mc.content title_text
-          else
-            return nil
+            # In-body normative references: a numbered <sec> whose intro
+            # paragraphs precede the (untitled) ref-list.
+            ref_list = ModelBuilder.ref_list(content_type: "norm-refs", title: nil, ref: refs)
+            attrs = {}
+            attrs[:id] = ref_section.id if ref_section.id
+            attrs[:type] = "norm-refs"
+            attrs[:label] = ::Sts::NisoSts::Label.new(content: [label]) if label
+            attrs[:title] = ::Sts::NisoSts::Title.new(content: [title_text]) if title_text && !title_text.empty?
+            attrs[:paragraphs] = paragraphs if paragraphs.any?
+            attrs[:ref_list] = [ref_list] if ref_list
+            ::Sts::NisoSts::Section.new(attrs)
           end
 
-          mc
-        end
+          def transform_bibitem(bibitem, ordinal = nil)
+            identifier = extract_docidentifier(bibitem)
+            formattedref = extract_formattedref(bibitem)
+            label_text = ordinal ? "[#{ordinal}]" : nil
 
-        def build_std_for(bibitem)
-          doc_id = primary_docidentifier(bibitem)
-          return nil unless doc_id
+            content_parts = []
+            content_parts << identifier if identifier
+            content_parts << formattedref if formattedref
 
-          std = ::Sts::NisoSts::ReferenceStandard.new
-          std.type = "dated"
-
-          dated_ref = ::Sts::NisoSts::StandardRef.new
-          dated_ref.type = "dated"
-          dated_ref.value = doc_id
-          std.std_ref dated_ref
-
-          undated = undated_identifier(doc_id)
-          if undated && undated != doc_id
-            undated_ref = ::Sts::NisoSts::StandardRef.new
-            undated_ref.type = "undated"
-            undated_ref.value = undated
-            std.std_ref undated_ref
+            rid = bibitem.id
+            id_generator.register(rid, rid, "ref") if rid
+            ModelBuilder.ref(
+              id: rid,
+              label: label_text,
+              mixed_citation: content_parts.join(", "),
+              std: build_std(identifier, formattedref)
+            )
           end
 
-          std
-        end
+          private
 
-        def primary_docidentifier(bibitem)
-          return nil unless bibitem.docidentifier
+          # Every bibliographic <std> carries a <title> (OIML X 999
+          # 5.4); the publication year rides inside the <std-ref>
+          # designation, which is type="dated" when the identifier
+          # embeds a year ("…:2012", "…-2022") and "undated" otherwise
+          # (NISO STS idiom — <std> has no <pub-date> in the base tag
+          # suite).
+          def build_std(identifier, formattedref)
+            return nil unless identifier || formattedref
 
-          ids = Array(bibitem.docidentifier)
-
-          primary = ids.find { |d| d.primary == true }
-          return primary.id.to_s if primary&.id
-
-          iso_id = ids.find { |d| d.type == "ISO" }
-          return iso_id.id.to_s if iso_id&.id
-
-          ids.first&.id&.to_s
-        end
-
-        def reference_title(bibitem)
-          return nil unless bibitem.title
-
-          titles = Array(bibitem.title)
-
-          main_title = titles.find { |t| t.type == "title-main" }
-          return extract_title_text(main_title) if main_title
-
-          extract_title_text(titles.first) if titles.first
-        end
-
-        def extract_title_text(title)
-          return nil unless title
-
-          if title.content && !title.content.empty?
-            Array(title.content).join
-          elsif title.element_order && !title.element_order.empty?
-            inline_transformer.extract_text(title)
+            type = identifier.to_s.match?(/(:\d{4}|-\d{4}\b)/) ? "dated" : "undated"
+            attrs = { type: type }
+            attrs[:std_ref] = ::Sts::NisoSts::StandardRef.new(type: type, value: identifier) if identifier
+            attrs[:title] = formattedref.to_s if formattedref
+            ::Sts::NisoSts::ReferenceStandard.new(attrs)
           end
-        end
 
-        def undated_identifier(doc_id)
-          doc_id.sub(/:\d{4}$/, "")
+          def extract_bibitems(ref_section)
+            refs = ref_section.references
+            return Array(refs) if refs
+            []
+          end
+
+          # Boilerplate paragraphs of an in-body references section
+          # ("The following documents are referred to ...").
+          def intro_paragraphs(ref_section)
+            
+
+            Array(ref_section.p).map { |p| paragraph_transformer.transform(p) }
+          end
+
+          def extract_title(ref_section)
+            return nil unless ref_section.title
+            RenderedTextExtractor.text_of(ref_section.title)
+          end
+
+          def extract_docidentifier(bibitem)
+            
+            ids = Array(bibitem.docidentifier)
+            primary = ids.find { |i| !i.type } || ids.first
+            return nil unless primary
+            val = primary.id || primary.to_s
+            val.to_s.strip
+          end
+
+          def extract_formattedref(bibitem)
+            fr = bibitem.formatted_ref
+            return nil unless fr
+            text = RenderedTextExtractor.text_of(fr)
+            text.empty? ? nil : text
+          end
         end
       end
     end

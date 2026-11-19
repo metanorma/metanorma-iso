@@ -10,7 +10,7 @@ RSpec.describe Metanorma::Iso::Sts do
 
       expect(model).to be_a(Sts::NisoSts::Standard)
       expect(model.front).to be_a(Sts::NisoSts::Front)
-      expect(model.front.iso_meta).to be_a(Sts::NisoSts::MetadataIso)
+      expect(model.front.std_meta).to be_a(Sts::NisoSts::MetadataStd)
       expect(model.body).to be_a(Sts::NisoSts::Body)
     end
   end
@@ -31,7 +31,7 @@ RSpec.describe Metanorma::Iso::Sts do
 
       sts = described_class.convert(xml)
       expect(sts).to include("<standard")
-      expect(sts).to include("<iso-meta")
+      expect(sts).to include("<std-meta")
     end
 
     it "handles empty bibdata gracefully" do

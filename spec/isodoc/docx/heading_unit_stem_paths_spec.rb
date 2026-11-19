@@ -1,0 +1,66 @@
+# frozen_string_literal: true
+
+require_relative "spec_helper"
+
+# A UnitsML unit stem is plain text in every heading-like path (introduction
+# subclause titles, preface titles, ToC entries) and OMML in body text
+# (metanorma-iso#1765).
+RSpec.describe IsoDoc::Iso::Docx::Adapter, "unit stems in heading-like paths" do
+  let(:adapter) { build_adapter }
+  let(:stem_xml) do
+    '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
+      '<mrow><mn>80</mn><mo rspace="thickmathspace">⁢</mo>' \
+      '<mrow xref="U_km"><mstyle mathvariant="normal"><mi>km</mi></mstyle></mrow>' \
+      '</mrow></math><asciimath>80 "unitsml(km)"</asciimath></stem>'
+  end
+  let(:rows) do
+    convert_and_extract(adapter, minimal_iso_xml(body)) do |pkg|
+      pkg.document.body.paragraphs.map do |p|
+        { style: para_style_value(p), omaths: p.o_maths.length,
+          text: p.runs.map { |r| run_text(r) }.join }
+      end
+    end
+  end
+
+  def row(style)
+    rows.find { |r| r[:style] == style }
+  end
+
+  context "with an introduction subclause title" do
+    let(:body) do
+      <<~X
+        <preface><introduction id="intro"><title>Introduction</title>
+          <clause id="intro-1"><fmt-title depth="2"><span class="fmt-caption-label"><semx element="autonum">0</semx>.<semx element="autonum">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title">Alt #{stem_xml}</semx></fmt-title><p>Body #{stem_xml}</p></clause>
+        </introduction></preface>
+      X
+    end
+
+    it "renders the unit as text in the subclause title" do
+      expect(row("a2")).to include(omaths: 0, text: "0.1Alt 80 km")
+    end
+
+    it "keeps body paragraphs as OMML" do
+      expect(rows.find { |r| r[:text] == "Body " }[:omaths]).to eq(1)
+    end
+  end
+
+  context "with a foreword title" do
+    let(:body) do
+      <<~X
+        <preface><foreword id="f"><fmt-title><semx element="title">Fore #{stem_xml}</semx></fmt-title><p>FB #{stem_xml}</p></foreword></preface>
+      X
+    end
+
+    it "renders the unit as text in the foreword title" do
+      expect(row("ForewordTitle")).to include(omaths: 0, text: "Fore 80 km")
+    end
+
+    it "renders the unit as text in the ToC entry" do
+      expect(row("TOC1")).to include(omaths: 0, text: "Fore 80 km1")
+    end
+
+    it "keeps foreword body paragraphs as OMML" do
+      expect(row("ForewordText")[:omaths]).to eq(1)
+    end
+  end
+end

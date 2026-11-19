@@ -204,7 +204,7 @@ RSpec.describe Metanorma::Iso do
       <title language="fr" type="title-amendment-prefix">AMENDEMENT 1</title>
              <docidentifier type="ISO" primary="true">ISO 17301-1:2016/NP Amd 1.3:2017</docidentifier>
              <docidentifier type="iso-reference">ISO 17301-1:2016/NP Amd 1.3:2017(E)</docidentifier>
-             <docidentifier type="URN">urn:iso:std:iso:17301:-1:ed-1:stage-10.00:amd:2017:v1.3:en</docidentifier>
+             <docidentifier type="URN">urn:iso:std:iso:17301:-1:ed-1:stage-10.00:amd:1:2017:v1.3:en</docidentifier>
              <docnumber>17301</docnumber>
              <date type="created">
                 <on>2016-05-01</on>
@@ -409,7 +409,7 @@ RSpec.describe Metanorma::Iso do
       <title language="fr" type="title-amendment-prefix">AMENDEMENT 1</title>
            <docidentifier type="ISO" primary="true">ISO 17301-1:2016/CD Amd 1:2017</docidentifier>
               <docidentifier type="iso-reference">ISO 17301-1:2016/CD Amd 1:2017(E)</docidentifier>
-              <docidentifier type="URN">urn:iso:std:iso:17301:-1:ed-1:CD:amd:2017:v1:en</docidentifier>
+              <docidentifier type="URN">urn:iso:std:iso:17301:-1:ed-1:stage-30.00:amd:1:2017:v1:en</docidentifier>
               <docnumber>17301</docnumber>
               <date type="created">
                  <on>2016-05-01</on>
@@ -489,7 +489,7 @@ RSpec.describe Metanorma::Iso do
         <bibdata type="standard">
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/DAM 1:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/DAM 1:#{Date.today.year}(E)</docidentifier>
-          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-40.00:amd:#{Date.today.year}:v1:en</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-40.00:amd:1:#{Date.today.year}:v1:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -565,7 +565,7 @@ RSpec.describe Metanorma::Iso do
         <bibdata type="standard">
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Amd 1:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Amd 1:#{Date.today.year}(E)</docidentifier>
-          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:amd:#{Date.today.year}:v1:en</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:amd:1:#{Date.today.year}:v1:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -642,7 +642,7 @@ RSpec.describe Metanorma::Iso do
         <bibdata type="standard">
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/CD Cor 3:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/CD Cor 3:#{Date.today.year}(E)</docidentifier>
-          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:CD:cor:#{Date.today.year}:v3:en</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-30.00:cor:3:#{Date.today.year}:v1:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -719,7 +719,7 @@ RSpec.describe Metanorma::Iso do
         <bibdata type='standard'>
           <docidentifier type='ISO' primary="true">ISO 17301-1:2030/FDCOR 3:#{Date.today.year}</docidentifier>
           <docidentifier type='iso-reference'>ISO 17301-1:2030/FDCOR 3:#{Date.today.year}(E)</docidentifier>
-          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:FDCOR:cor:#{Date.today.year}:v3:en</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:stage-50.00:cor:3:#{Date.today.year}:v1:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type='author'/>
@@ -795,7 +795,7 @@ RSpec.describe Metanorma::Iso do
         <bibdata type="standard">
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Cor 3:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Cor 3:#{Date.today.year}(E)</docidentifier>
-          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:cor:#{Date.today.year}:v3:en</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:cor:3:#{Date.today.year}:v1:en</docidentifier>
           <docnumber>17301</docnumber>
           <contributor>
             <role type="author"/>
@@ -886,7 +886,7 @@ RSpec.describe Metanorma::Iso do
       <title language="fr" type="title-addendum-prefix">ADDITIF 3</title>
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Add 3:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Add 3:#{Date.today.year}(E)</docidentifier>
-          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:sup:#{Date.today.year}:v3:en</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:sup:3:#{Date.today.year}:v1:en</docidentifier>
           <docidentifier type="iso-undated">ISO 17301-1:2030/Add 3</docidentifier>
           <docidentifier type="iso-with-lang">ISO 17301-1:2030/Add 3:#{Date.today.year}(en)</docidentifier>
           <docnumber>17301</docnumber>
@@ -979,7 +979,7 @@ RSpec.describe Metanorma::Iso do
       <title language="fr" type="title-supplement-prefix">SUPPLÉMENT 3</title>
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Suppl 3:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Suppl 3:#{Date.today.year}(E)</docidentifier>
-          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:sup:#{Date.today.year}:v3:en</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:sup:3:#{Date.today.year}:v1:en</docidentifier>
           <docidentifier type="iso-undated">ISO 17301-1:2030/Suppl 3</docidentifier>
           <docidentifier type="iso-with-lang">ISO 17301-1:2030/Suppl 3:#{Date.today.year}(en)</docidentifier>
           <docnumber>17301</docnumber>
@@ -1072,7 +1072,7 @@ RSpec.describe Metanorma::Iso do
       <title language="fr" type="title-extract-prefix">EXTRAIT 3</title>
           <docidentifier type="ISO" primary="true">ISO 17301-1:2030/Ext 3:#{Date.today.year}</docidentifier>
           <docidentifier type="iso-reference">ISO 17301-1:2030/Ext 3:#{Date.today.year}(E)</docidentifier>
-          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:ext:#{Date.today.year}:v3:en</docidentifier>
+          <docidentifier type='URN'>urn:iso:std:iso:17301:-1:ed-1:ext:3:#{Date.today.year}:v1:en</docidentifier>
           <docidentifier type="iso-undated">ISO 17301-1:2030/Ext 3</docidentifier>
           <docidentifier type="iso-with-lang">ISO 17301-1:2030/Ext 3:#{Date.today.year}(en)</docidentifier>
           <docnumber>17301</docnumber>

@@ -3,112 +3,78 @@
 module Metanorma
   module Iso
     module Sts
-      class Transformer::Base
-        attr_reader :context
+      module Transformer
+        class Base
+          attr_reader :context
 
-        def initialize(context)
-          @context = context
-        end
-
-        private
-
-        def id_for(source)
-          @context.id_generator.id_for(source)
-        end
-
-        def remap_id(source_id)
-          @context.id_generator.remap(source_id)
-        end
-
-        def paragraph_transformer
-          Transformer::ParagraphTransformer.new(@context)
-        end
-
-        def inline_transformer
-          Transformer::InlineTransformer.new(@context)
-        end
-
-        def list_transformer
-          Transformer::ListTransformer.new(@context)
-        end
-
-        def def_list_transformer
-          Transformer::DefListTransformer.new(@context)
-        end
-
-        def note_transformer
-          Transformer::NoteTransformer.new(@context)
-        end
-
-        def example_transformer
-          Transformer::ExampleTransformer.new(@context)
-        end
-
-        def section_transformer
-          Transformer::SectionTransformer.new(@context)
-        end
-
-        def table_transformer
-          Transformer::TableTransformer.new(@context)
-        end
-
-        def figure_transformer
-          Transformer::FigureTransformer.new(@context)
-        end
-
-        def formula_transformer
-          Transformer::FormulaTransformer.new(@context)
-        end
-
-        def sourcecode_transformer
-          Transformer::SourcecodeTransformer.new(@context)
-        end
-
-        def quote_transformer
-          Transformer::QuoteTransformer.new(@context)
-        end
-
-        def term_transformer
-          Transformer::TermTransformer.new(@context)
-        end
-
-        def reference_transformer
-          Transformer::ReferenceTransformer.new(@context)
-        end
-
-        def block_dispatcher
-          Transformer::BlockDispatcher.new(@context)
-        end
-
-        def build_ordered(klass)
-          instance = klass.new
-          yield instance if block_given?
-          instance
-        end
-
-        def transform_title(source_title)
-          title = Transformer::ModelBuilder.title
-          if source_title.is_a?(String)
-            title.content source_title
-          else
-            inline_transformer.apply_inline_content(source_title, title)
+          def initialize(context)
+            @context = context
           end
-          title
-        end
 
-        def skip_node?(node)
-          case node
-          when Metanorma::Document::Components::Inline::FmtAnnotationStartElement,
-               Metanorma::Document::Components::Inline::FmtAnnotationEndElement,
-               Metanorma::Document::Components::Inline::FmtTitleElement,
-               Metanorma::Document::Components::Inline::FmtXrefLabelElement,
-               Metanorma::Document::Components::Inline::VariantTitleElement,
-               Metanorma::Document::Components::EmptyElements::PageBreakElement,
-               Metanorma::Document::Components::IdElements::Bookmark,
-               Metanorma::Document::Components::Inline::SemxElement
-            true
-          else
-            false
+          protected
+
+          def source
+            context.source
+          end
+
+          def id_generator
+            context.id_generator
+          end
+
+          def dispatcher
+            @dispatcher ||= BlockDispatcher.new(context)
+          end
+
+          def paragraph_transformer
+            @paragraph_transformer ||= ParagraphTransformer.new(context)
+          end
+
+          def inline_transformer
+            @inline_transformer ||= InlineTransformer.new(context)
+          end
+
+          def list_transformer
+            @list_transformer ||= ListTransformer.new(context)
+          end
+
+          def table_transformer
+            @table_transformer ||= TableTransformer.new(context)
+          end
+
+          def figure_transformer
+            @figure_transformer ||= FigureTransformer.new(context)
+          end
+
+          def formula_transformer
+            @formula_transformer ||= FormulaTransformer.new(context)
+          end
+
+          def note_transformer
+            @note_transformer ||= NoteTransformer.new(context)
+          end
+
+          def requirement_transformer
+            @requirement_transformer ||= RequirementTransformer.new(context)
+          end
+
+          def reference_transformer
+            @reference_transformer ||= ReferenceTransformer.new(context)
+          end
+
+          def section_transformer
+            @section_transformer ||= SectionTransformer.new(context)
+          end
+
+          def term_transformer
+            @term_transformer ||= TermTransformer.new(context)
+          end
+
+          def dl_transformer
+            @dl_transformer ||= DlTransformer.new(context)
+          end
+
+          def front_transformer
+            @front_transformer ||= FrontTransformer.new(context)
           end
         end
       end

@@ -45,26 +45,6 @@ module RoundtripHelper
     doc.errors.any? { |e| e.type == Nokogiri::XML::SyntaxError::ERROR }
   end
 
-  # Compute the read/parse/serialize/re-parse cycle ONCE per fixture for
-  # the whole suite. Roundtrip specs assert against these immutable
-  # artifacts; previously every example repeated the full cycle (up to
-  # 18 times per fixture — the dominant suite cost on multi-MB files).
-  def self.fixture_data(path, doc_class)
-    @fixture_data_cache ||= {}
-    @fixture_data_cache[[path, doc_class]] ||= begin
-      xml = File.read(path)
-      doc = doc_class.from_xml(xml)
-      output_xml = doc.to_xml
-      {
-        xml: xml,
-        doc: doc,
-        output_xml: output_xml,
-        original_noko: parse_xml(xml),
-        roundtrip_noko: parse_xml(output_xml),
-      }
-    end
-  end
-
   # Extract root element attributes as a hash.
   def self.root_attrs(doc)
     root = doc.root

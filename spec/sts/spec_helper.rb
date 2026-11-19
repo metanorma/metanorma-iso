@@ -4,6 +4,11 @@ require "bundler/setup"
 require "lutaml/model"
 require "nokogiri"
 
+require "pathname"
+
+REPO_ROOT = Pathname.new(File.expand_path("../..", __dir__))
+FIXTURES_ROOT = REPO_ROOT.join("spec", "fixtures").freeze
+
 require "sts"
 require "metanorma/document"
 require "metanorma/iso/document"
