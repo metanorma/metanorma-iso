@@ -51,7 +51,9 @@ module IsoDoc
 
           # Wrap a paragraph's content with a bookmark range so Word can
           # scroll hyperlink targets to the right position. No-op when the
-          # node has no +id+ attribute.
+          # node has neither +anchor+ nor +id+. Xrefs link via +target+,
+          # which is the element's +anchor+, so the anchor wins over the
+          # (possibly different) +id+.
           def with_bookmark(node, para)
             name = bookmark_name(node)
             return yield unless name
@@ -64,9 +66,9 @@ module IsoDoc
           end
 
           def bookmark_name(node)
-            return nil unless node.class.attributes.key?(:id)
-
-            node.id
+            attrs = node.class.attributes
+            (node.anchor if attrs.key?(:anchor)) ||
+              (node.id if attrs.key?(:id))
           end
 
           # Whether a heading has no body text after autonum carriers are
