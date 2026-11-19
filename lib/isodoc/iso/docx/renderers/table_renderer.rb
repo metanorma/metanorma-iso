@@ -38,7 +38,11 @@ module IsoDoc
             outer.width(table.width) if table.width
 
             outer.row do |row|
-              row.cell { |c| c << inner_table_model }
+              row.cell do |c|
+                c << inner_table_model
+                # OOXML: a w:tc must end with a w:p, not a nested w:tbl.
+                c << Uniword::Builder::ParagraphBuilder.new
+              end
             end
             outer.row do |row|
               row.cell { |c| append_attachments_to_cell(c, table) }

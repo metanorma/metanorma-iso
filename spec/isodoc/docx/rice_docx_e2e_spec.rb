@@ -243,11 +243,6 @@ RSpec.describe "Rice DOCX end-to-end" do
     end
 
     it "ends every table cell with a paragraph" do
-      # OOXML requires a w:tc to end with a w:p. Known gap on rice: one
-      # cell holds only a nested w:tbl (a table-in-cell). The example is
-      # pending so it turns red-for-the-right-reason once the renderer
-      # appends the trailing empty paragraph.
-      pending "rice emits a w:tc ending in a nested w:tbl with no trailing w:p"
       expect(document.xpath("//w:tc[*[last()][not(self::w:p)]]", RiceDocxE2E::NS).size).to eq(0)
     end
   end
