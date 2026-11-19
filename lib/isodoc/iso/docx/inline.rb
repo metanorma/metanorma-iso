@@ -618,6 +618,11 @@ module IsoDoc
           @comment_id_lookup.call(annotation_target_id)
         end
 
+        # Whether an untitled clause's number is still queued.
+        def pending_clause_number?
+          !@pending_clause_number.nil?
+        end
+
         # Emit the queued clause number into +para+ (no-op when none is
         # queued) and drop the queue. Used by renderers that build their
         # paragraphs without going through #render (split paragraphs).

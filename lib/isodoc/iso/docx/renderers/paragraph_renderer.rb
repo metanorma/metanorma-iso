@@ -92,11 +92,27 @@ module IsoDoc
           def dispatch_split_element_node(element, state, doc)
             if block_element?(element)
               flush_split(state, doc)
+              emit_number_paragraph(doc)
               @walker.dispatch(element, doc)
             else
               state[:current] ||= start_split_paragraph(state)
               @inline_renderer.dispatch_inline(element, state[:current])
             end
+          end
+
+          # A <p> that opens with a block (a note) would otherwise have
+          # the queued untitled-clause number consumed inside that block.
+          # As for a clause whose first child is not a paragraph, the
+          # number gets its own leading paragraph instead.
+          def emit_number_paragraph(doc)
+            return unless @inline_renderer.pending_clause_number?
+
+            para = build_unstyled_paragraph
+            style = @resolver.context_body_style
+            para.style = style if style
+            @inline_renderer.emit_pending_clause_number(para)
+            @context.mark_zone_paragraph
+            doc << para
           end
 
           def flush_split(state, doc)

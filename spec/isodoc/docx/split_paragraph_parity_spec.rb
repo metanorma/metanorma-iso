@@ -81,4 +81,25 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "split paragraph parity" do
       expect(text_of(para_with(doc, ns, "Later paragraph."), ns)).to eq("Later paragraph.")
     end
   end
+
+  it "leads with a number paragraph, not the note, when the <p> opens with a note",
+     :aggregate_failures do
+    convert(<<~X) do |doc, ns|
+      <clause id="untitled" inline-header="true">#{title(1)}
+        <p id="sp3"><note id="n1"><p id="np1">Note text.</p></note>After note.</p>
+        <p>Later paragraph.</p>
+      </clause>
+    X
+      texts = doc.xpath("//w:p", ns).map { |p| text_of(p, ns) }
+      from = texts.index { |t| t.include?("Note text.") || t == "5.1" }
+      expect(texts[from, 4].map { |t| t.sub(/\ANOTE\s*/, "") }).to eq(
+        ["5.1", "Note text.", "After note.", "Later paragraph."],
+      )
+      lead = doc.xpath("//w:p", ns).find { |p| text_of(p, ns) == "5.1" }
+      expect(lead.at_xpath("w:bookmarkStart[@w:name='untitled']", ns)).not_to be_nil
+      expect(text_of(para_with(doc, ns, "Note text."), ns)).not_to include("5.1")
+      expect(doc.xpath("//w:bookmarkStart[@w:name='untitled']", ns).length).to eq(1)
+      expect(para_with(doc, ns, "After note.").at_xpath("w:bookmarkStart[@w:name='sp3']", ns)).not_to be_nil
+    end
+  end
 end
