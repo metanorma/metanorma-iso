@@ -635,7 +635,8 @@ module IsoDoc
         end
 
         # Emit "<number><tab>" as bold runs wrapped in the bookmark +name+
-        # (when given): the clause-number lead used on a paragraph.
+        # (when given): the clause-number lead used on a paragraph. With
+        # no +number+ the bookmark is emitted alone, as an empty range.
         def emit_clause_number(para, number, name)
           bm_id = @context.next_bookmark_id.to_s if name
           if bm_id
@@ -643,6 +644,8 @@ module IsoDoc
               id: bm_id, name: name,
             )
           end
+          return para << Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id) unless number
+
           number_run = bold_clause_run(text: number)
           # Templates without the :clause_number mapping (ISO Simple) keep bold only.
           apply_run_char_style(number_run, :clause_number)

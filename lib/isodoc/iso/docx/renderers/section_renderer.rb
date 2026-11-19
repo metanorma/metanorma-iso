@@ -70,11 +70,11 @@ module IsoDoc
             para.numbering(0)
           end
 
-          # A title holding only the autonum + delimiter (an untitled
-          # inline-header sub-clause).
+          # A clause with no title, or a title holding only the autonum +
+          # delimiter (an untitled inline-header sub-clause).
           def untitled?(section)
             title = section_title(section)
-            !title.nil? && heading_body_empty?(title)
+            title.nil? || heading_body_empty?(title)
           end
 
           # No heading paragraph: the clause number and its id bookmark
@@ -83,12 +83,15 @@ module IsoDoc
           # is no paragraph to lead, so the number gets its own paragraph
           # ahead of that child (as in Word's reference rendering) rather
           # than landing on whichever paragraph happens to come next, or
-          # being dropped.
+          # being dropped. A clause without a number (unnumbered, or
+          # untitled) leads with an empty id bookmark alone, so xrefs to
+          # it still resolve.
           def render_untitled_section(section, doc)
-            number = @inline_renderer.heading_number_text(section_title(section))
-            return walk_children(section, doc) unless number
+            title = section_title(section)
+            number = title && @inline_renderer.heading_number_text(title)
+            name = claimed_bookmark_name(section)
+            return walk_children(section, doc) unless number || name
 
-            name = bookmark_name(section)
             if first_child_paragraph?(section)
               @inline_renderer.with_clause_number(number, name) do
                 walk_children(section, doc)
@@ -97,6 +100,11 @@ module IsoDoc
               render_number_paragraph(number, name, doc)
               walk_children(section, doc)
             end
+          end
+
+          def claimed_bookmark_name(section)
+            name = bookmark_name(section)
+            name if name && @context.claim_bookmark_name(name)
           end
 
           def first_child_paragraph?(section)
