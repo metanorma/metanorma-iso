@@ -68,12 +68,22 @@ module IsoDoc
           # same paragraph style and alignment as the original <p>.
           def render_split(paragraph, doc)
             state = { current: nil, paragraph: paragraph, bookmark: nil,
-                      first: true, lead: nil }
+                      first: true, lead: nil,
+                      block_only: block_only?(paragraph) }
             each_ordered_element(paragraph) do |type, obj|
               dispatch_split_element(type, obj, state, doc)
             end
             flush_split(state, doc)
-            bookmark_unopened_split(state, doc)
+          end
+
+          # True when no child of +paragraph+ opens an output paragraph:
+          # every child is a block (a note, say) and there is no text.
+          def block_only?(paragraph)
+            each_ordered_element(paragraph) do |type, obj|
+              return false if type == :text && !obj.to_s.empty?
+              return false if type == :element && !block_element?(obj)
+            end
+            true
           end
 
           def dispatch_split_element(type, obj, state, doc)
@@ -94,6 +104,7 @@ module IsoDoc
             if block_element?(element)
               flush_split(state, doc)
               emit_number_paragraph(doc, state)
+              bookmark_unopened_split(state, doc) if state[:block_only]
               @walker.dispatch(element, doc)
             else
               state[:current] ||= start_split_paragraph(state)
@@ -125,11 +136,12 @@ module IsoDoc
             state[:current] = nil
           end
 
-          # A split <p> that opened no paragraph (a note alone, say) would
-          # drop its id bookmark. The bookmark goes on the untitled-clause
-          # number paragraph emitted ahead of the <p>'s block when there is
-          # one, else on an empty paragraph of its own. Both use an empty
-          # bookmark range, as BookmarkRenderer does for <bookmark>.
+          # A split <p> that opens no paragraph (a note alone, say) would
+          # drop its id bookmark. Ahead of its first block, the bookmark
+          # goes on the untitled-clause number paragraph when there is one,
+          # else on an empty paragraph of its own, so the target sits before
+          # the note. Both use an empty bookmark range, as BookmarkRenderer
+          # does for <bookmark>.
           def bookmark_unopened_split(state, doc)
             name = state[:first] && bookmark_name(state[:paragraph])
             return unless name
@@ -139,6 +151,7 @@ module IsoDoc
             para << Uniword::Wordprocessingml::BookmarkStart.new(id: id, name: name)
             para << Uniword::Wordprocessingml::BookmarkEnd.new(id: id)
             flush_paragraph(para, doc) unless state[:lead]
+            state[:first] = false
           end
 
           # Begin the next output paragraph of a split <p>. The first one

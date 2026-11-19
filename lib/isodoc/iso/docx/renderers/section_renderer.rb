@@ -88,6 +88,8 @@ module IsoDoc
           end
 
           def first_child_paragraph?(section)
+            return true unless ordered?(section)
+
             title = section_title(section)
             first = nil
             each_ordered_element(section) do |type, obj|

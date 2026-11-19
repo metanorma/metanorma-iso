@@ -121,4 +121,24 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "split paragraph parity" do
       expect(text_of(para_with(doc, ns, "Later paragraph."), ns)).to eq("Later paragraph.")
     end
   end
+
+  # Outside an untitled clause there is no number paragraph to carry the
+  # bookmark, so it gets an empty paragraph, and that must come before the
+  # note so the xref target is not placed after it.
+  it "places the id bookmark of a block-only <p> before its note",
+     :aggregate_failures do
+    convert(<<~X) do |doc, ns|
+      <clause id="parent">#{title(1)}
+        <p id="pp"><note id="nn"><p>Inner note text.</p></note></p>
+        <p>Later paragraph.</p>
+      </clause>
+    X
+      paras = doc.xpath("//w:body/w:p", ns).to_a
+      mark = paras.index { |p| p.at_xpath("w:bookmarkStart[@w:name='pp']", ns) }
+      note = paras.index { |p| text_of(p, ns).include?("Inner note text.") }
+      expect([mark.nil?, note.nil?]).to eq([false, false])
+      expect(mark).to be < note
+      expect(doc.xpath("//w:bookmarkStart[@w:name='pp']", ns).length).to eq(1)
+    end
+  end
 end
