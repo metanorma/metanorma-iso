@@ -43,3 +43,8 @@ present, so the rIds match the allocator's records and survive integrity checks.
 ## Files
 - `lib/isodoc/iso/docx/adapter.rb` — `apply_final_section`, `apply_header_footer`
 - `lib/uniword/docx/reconciler/body.rb` — `wire_parts_to_rels` uses allocator
+
+### Re-measured on batch4 tip 6455ca2f (2026-11-19, no code change)
+rice output has 3 sectPr (cover and front matter in pPr, body final), same
+count and order as spec/examples/rice.docx. Cover, front and body each carry
+header/footer references (reference body has footers only). Nothing left to do.

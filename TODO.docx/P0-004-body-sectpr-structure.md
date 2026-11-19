@@ -62,3 +62,11 @@ the output; the 2016 CD reference has none and is not an oracle. The footer
 refs match. pgMar order differs only in serialization. Body margins now come
 from the template (see P2-012). Pinned by `section_manager_spec.rb`
 (cover has no titlePg/pgNumType; sections have header+footer refs).
+
+### Re-measured on batch4 tip 6455ca2f (2026-11-19, no code change)
+rice output vs spec/examples/rice.docx, all 3 sectPr: no `titlePg`, no
+`w:code` on any pgSz (output and reference). Only remaining body differences:
+headerReference even/default (kept on purpose, see above), body pgMar
+right/bottom/gutter taken from the DIS template (851/567/0 vs 737/284/567),
+pgNumType start=1 present in both. Items 2 and 3 of the problem do not
+reproduce; item 1 is the documented decision.
