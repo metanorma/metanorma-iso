@@ -19,21 +19,31 @@ module IsoDoc
 
           def render(list, doc)
             style = @resolver.paragraph_style(:"list_number#{style_level}")
-            Array(list.listitem).each { |item| render_item(item, doc, style) }
+            num_id = @resolver.numbering_id(:decimal_list)
+            Array(list.listitem).each do |item|
+              render_item(item, doc, style, num_id)
+            end
             render_attached_notes(list, doc)
           end
 
           private
 
-          def render_item(item, doc, style_id)
+          def render_item(item, doc, style_id, num_id)
             para = Uniword::Builder::ParagraphBuilder.new
             para.style = style_id if style_id
-            append_label(item, para)
+            append_label(item, para, num_id)
             render_item_content(item, doc, para)
           end
 
-          def append_label(item, para)
-            label = collect_all_text(item.fmt_name)
+          # Semantic XML (no Presentation label): fall back to the template
+          # decimal numbering so the item is still numbered.
+          def append_label(item, para, num_id)
+            label = collect_all_text(item.fmt_name).to_s
+            if label.strip.empty?
+              para.numbering(num_id, list_level) if num_id
+              return
+            end
+
             para << Uniword::Wordprocessingml::Run.new(text: label)
             para << Uniword::Wordprocessingml::Run.new(
               tab: Uniword::Wordprocessingml::Tab.new,
