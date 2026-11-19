@@ -203,8 +203,26 @@ module IsoDoc
         # rule — entries under an ancestor-or-self annex at level >= 2
         # are skipped — and the annex ToC composition ruling of
         # 2026-10-26, so both output engines agree.
+        #
+        # An annex with no heading text renders through the untitled
+        # path, which emits its id bookmark but no _Toc twin. Its entry
+        # therefore points at the id bookmark; with no toc variant-title
+        # either, there is no text to list and no entry is written.
         def add_annex_entry(entries, annex)
-          entries << build_entry(annex, 1)
+          title = section_heading(annex)
+          if title && !@inline.heading_body_empty?(title)
+            entries << build_entry(annex, 1)
+          elsif toc_variant_title(annex)
+            entry = build_untitled_annex_entry(annex)
+            entries << entry if entry
+          end
+        end
+
+        def build_untitled_annex_entry(annex)
+          id = attribute_value(annex, :anchor) || attribute_value(annex, :id)
+          return unless id
+
+          TocEntry.new(source: annex, level: 1, bookmark_name: @context.bookmark_name(id))
         end
 
         def add_bibliography_entry(entries, bib)
