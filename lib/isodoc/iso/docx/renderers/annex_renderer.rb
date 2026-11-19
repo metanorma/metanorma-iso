@@ -31,6 +31,13 @@ module IsoDoc
             render_variant_title_toc(section, doc)
           end
 
+          # An annex with no title still carries its hidden ToC
+          # composition, ahead of the body that holds its id bookmark.
+          def render_untitled_section(section, doc)
+            render_variant_title_toc(section, doc)
+            super
+          end
+
           def render_variant_title_toc(section, doc)
             variant = Array(section.variant_title).find { |v| v.type == "toc" }
             return unless variant

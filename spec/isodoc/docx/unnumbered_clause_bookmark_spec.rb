@@ -7,8 +7,9 @@ require "zip"
 # A clause with no heading paragraph and no number (unnumbered and
 # untitled, or with no title at all) used to drop its id bookmark, leaving
 # xrefs to it without a target. The id bookmark now leads the first body
-# paragraph as an empty range, adding no paragraph, as the number does for
-# a numbered untitled clause.
+# paragraph as an empty range, as the number does for a numbered untitled
+# clause. A clause whose first child is not a paragraph gets an empty
+# anchor paragraph to carry it.
 RSpec.describe IsoDoc::Iso::Docx::Adapter, "unnumbered clause bookmark" do
   let(:adapter) { build_adapter }
   let(:inner) do

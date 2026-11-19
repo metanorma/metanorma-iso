@@ -39,4 +39,34 @@ RSpec.describe "DOCX annex hidden ToC variant title with an inline link" do
     order = hidden.xpath("./w:r | ./w:hyperlink", ns).map(&:text)
     expect(order.join).to include("Annex linked text")
   end
+
+  context "when the annex has no title" do
+    let(:untitled) do
+      xml = minimal_iso_xml(<<~INNER)
+        <bibdata>
+          <docidentifier primary="true">ISO 1:2016</docidentifier>
+          <ext><doctype>international-standard</doctype></ext>
+        </bibdata>
+        <sections/>
+        <annex id="a1" obligation="normative">
+          <variant-title type="toc"><span class="fmt-caption-label"><semx element="autonum" source="a1">A</semx></span><span class="fmt-caption-delim"><tab/></span>Gelatin</variant-title>
+          <p>Body.</p>
+        </annex>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "out.docx")
+        build_adapter.convert(xml, path)
+        Zip::File.open(path) { |z| Nokogiri::XML(z.read("word/document.xml")) }
+      end
+    end
+
+    it "keeps the hidden ToC paragraph" do
+      hidden = untitled.at_xpath("//w:p[w:pPr/w:pStyle/@w:val='variant-title-toc']", ns)
+      expect(hidden&.text).to include("Gelatin")
+    end
+
+    it "keeps the annex id bookmark" do
+      expect(untitled.xpath("//w:bookmarkStart/@w:name", ns).map(&:value)).to include("a1")
+    end
+  end
 end
