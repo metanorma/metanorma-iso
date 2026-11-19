@@ -3718,6 +3718,14 @@ style_library:
       hidden: false
       semi_hidden: true
       unhide_when_used: true
+    zzmovetofollowing:
+      id: zzmovetofollowing
+      type: character
+      name: zzmovetofollowing
+      based_on: DefaultParagraphFont
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
     BodyTextIndent3Char:
       id: BodyTextIndent3Char
       type: character

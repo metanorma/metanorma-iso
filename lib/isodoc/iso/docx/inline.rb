@@ -638,7 +638,10 @@ module IsoDoc
               id: bm_id, name: name,
             )
           end
-          para << bold_clause_run(text: number)
+          number_run = bold_clause_run(text: number)
+          # Templates without the :clause_number mapping (ISO Simple) keep bold only.
+          apply_run_char_style(number_run, :clause_number)
+          para << number_run
           para << bold_clause_run(tab: Uniword::Wordprocessingml::Tab.new)
           para << Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id) if bm_id
         end

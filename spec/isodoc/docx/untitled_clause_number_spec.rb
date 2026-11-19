@@ -2,6 +2,7 @@
 
 require_relative "spec_helper"
 require "tmpdir"
+require "zip"
 
 # An untitled inline-header sub-clause has no heading paragraph, but its
 # number must still lead its first body paragraph, with a bookmark named
@@ -54,6 +55,30 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "untitled clause number" do
       expect(para.at_xpath("w:bookmarkEnd[@w:id='#{bm['w:id']}']", ns)).not_to be_nil
       expect(bm.next_element.at_xpath("w:rPr/w:b", ns)).not_to be_nil
     end
+  end
+
+  # The ISO reference (spec/examples/rice.docx) sets the number run with the
+  # zzmovetofollowing character style, bold kept.
+  def output_styles_xml
+    Dir.mktmpdir do |dir|
+      path = File.join(dir, "output.docx")
+      adapter.convert(minimal_iso_xml(inner), path)
+      Zip::File.open(path) { |zip| zip.read("word/styles.xml") }
+    end
+  end
+
+  it "styles the number run with the zzmovetofollowing character style",
+     :aggregate_failures do
+    convert do |doc, ns|
+      run = para_with(doc, ns, "Untitled sub-clause body text.").at_xpath(".//w:r[w:t='5.1']", ns)
+      expect(run.at_xpath("w:rPr/w:rStyle/@w:val", ns)&.value).to eq("zzmovetofollowing")
+      expect(run.at_xpath("w:rPr/w:b", ns)).not_to be_nil
+    end
+  end
+
+  # The style must be defined in the shipped ISO template so the rStyle resolves.
+  it "ships the zzmovetofollowing style in the output styles.xml" do
+    expect(output_styles_xml).to include('w:styleId="zzmovetofollowing"')
   end
 
   it "adds no paragraph: only the first paragraph gets the number",
