@@ -107,6 +107,27 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     end
   end
 
+  def mathml_stem(inner, asciimath)
+    Metanorma::Document::Components::TextElements::StemElement.from_xml(
+      '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
+      "#{inner}</math><asciimath>#{asciimath}</asciimath></stem>",
+    )
+  end
+
+  it "keeps a number with spacing as text, not OMML", :aggregate_failures do
+    built = render_built(mathml_stem('<mn>5</mn><mspace width="1em"/>', "5"))
+
+    expect(built.o_maths).to be_empty
+    expect(built.text).to eq("5")
+  end
+
+  it "keeps a stem with no visible text as text, not an empty oMath", :aggregate_failures do
+    built = render_built(mathml_stem("<mi/>", "ASC"))
+
+    expect(built.o_maths).to be_empty
+    expect(built.text).to eq("ASC")
+  end
+
   it "preserves operators when MathML contains more than one token" do
     stem = Metanorma::Document::Components::TextElements::StemElement.from_xml(
       '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
