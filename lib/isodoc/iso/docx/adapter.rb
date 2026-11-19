@@ -358,6 +358,7 @@ module IsoDoc
           document = Nokogiri::XML(xml, &:huge)
           return xml if document.errors.any? { |e| e.error? || e.fatal? }
 
+          prune_stem_twins(document)
           document.xpath("//*[local-name()='stem' or local-name()='fmt-stem']" \
                          "[not(ancestor::*[local-name()='formula'])]").each do |stem|
             container = number_stem_container(stem)
@@ -375,6 +376,30 @@ module IsoDoc
             end
           end
           document.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::AS_XML)
+        end
+
+        # Collapses each semantic <stem> / <fmt-stem> twin pair (the
+        # fmt-stem's semx source is the stem's id, both on one parent)
+        # so the model parse reads the MathML once instead of twice.
+        #
+        # Most parents model <fmt-stem>, and the renderer already skips
+        # the semantic twin there (fmt_twin_of_stem?), so the stem is
+        # dropped. A <semx> parent (a table name, for example) does not
+        # model <fmt-stem>: the parse discards the twin and the stem is
+        # the only copy rendered, so there the fmt-stem is dropped.
+        def prune_stem_twins(document)
+          document.xpath("//*[local-name()='fmt-stem']").each do |fmt|
+            parent = fmt.parent
+            next unless parent&.element?
+
+            twin = fmt.at_xpath("./*[local-name()='semx']")
+            stem = twin && parent.element_children.find do |child|
+              child.name == "stem" && child["id"] == twin["source"]
+            end
+            next unless stem
+
+            (parent.name == "semx" ? fmt : stem).unlink
+          end
         end
 
         # fmt-stem wraps its MathML in a semx that points back to the
