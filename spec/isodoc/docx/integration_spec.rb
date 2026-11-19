@@ -286,7 +286,7 @@ RSpec.describe "DOCX integration", type: :integration do
 
       doc = extract_docx_xml(path, "word/document.xml")
 
-      hyperlink_el = doc.at_xpath("//w:hyperlink", ns)
+      hyperlink_el = doc.at_xpath("//w:hyperlink[not(@w:anchor)]", ns) # TOC entries are internal anchor links
       expect(hyperlink_el).not_to be_nil
 
       styled_run = hyperlink_el.at_xpath(".//w:r[w:rPr/w:rStyle[@w:val='Hyperlink']]", ns)
@@ -304,7 +304,7 @@ RSpec.describe "DOCX integration", type: :integration do
       INNER
 
       doc = extract_docx_xml(path, "word/document.xml")
-      hyperlink_el = doc.at_xpath("//w:hyperlink", ns)
+      hyperlink_el = doc.at_xpath("//w:hyperlink[not(@w:anchor)]", ns) # TOC entries are internal anchor links
       expect(hyperlink_el).not_to be_nil
       rid = hyperlink_el["r:id"]
       expect(rid).not_to be_nil
