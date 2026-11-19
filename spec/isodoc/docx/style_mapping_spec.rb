@@ -94,6 +94,30 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping do
   end
 end
 
+RSpec.describe IsoDoc::Iso::DocxStyleMapping, "#excluded?" do
+  subject(:mapping) { described_class.new }
+
+  {
+    "8601 lowercase family" => "bibyear",
+    "8601 author family" => "au1",
+    "8601 CamelCase extra" => "AdmittedTerm",
+    "Word builtin table" => "GridTable1Light",
+    "locale pollution" => "Code-einrck",
+    "Chinese Word numeric id" => "21103",
+    "collaboration noise" => "Mention1",
+  }.each do |category, style_id|
+    it "excludes #{style_id} (#{category})" do
+      expect(mapping.excluded?(style_id)).to be(true)
+    end
+  end
+
+  it "does not exclude mapped Era C styles" do
+    mapping.paragraph_styles.each_value do |style_id|
+      expect(mapping.excluded?(style_id)).to be(false), style_id
+    end
+  end
+end
+
 RSpec.describe IsoDoc::Iso::DocxStyleMapping, "Simple template" do
   subject(:mapping) { described_class.new(template: :simple) }
 

@@ -67,7 +67,7 @@ module IsoDoc
           end
 
           def bib_item_style
-            key = @context.in_normative ? :ref_norm : :biblio_entry
+            key = @context.in_normative ? :normref : :biblio_entry
             @resolver.paragraph_style(key)
           end
 

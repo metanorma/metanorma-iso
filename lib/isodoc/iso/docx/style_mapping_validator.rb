@@ -49,6 +49,12 @@ module IsoDoc
           @defects.select { |d| d.category == :excluded_leak }
         end
 
+        # styleIds mapped in paragraph/character styles that match an
+        # excluded_styles pattern.
+        def excluded_styles_in_mapping
+          excluded_leaks.map(&:style_id)
+        end
+
         private
 
         def validate!
@@ -108,12 +114,11 @@ module IsoDoc
         end
 
         def validate_excluded
-          globs = (@mapping.excluded_styles["globs"] || [])
-          return unless globs.any?
+          return if @mapping.excluded_style_ids.empty?
           all_mapped = (@mapping.paragraph_styles.values +
                         @mapping.character_styles.values).compact
           all_mapped.each do |leaked|
-            next unless matches_any_glob?(leaked, globs)
+            next unless @mapping.excluded?(leaked)
             @defects << Defect.new(
               category: :excluded_leak,
               key: :all_mapped,
@@ -121,10 +126,6 @@ module IsoDoc
               message: "mapping references excluded style #{leaked}"
             )
           end
-        end
-
-        def matches_any_glob?(style_id, globs)
-          globs.any? { |g| File.fnmatch(g, style_id.to_s, File::FNM_CASEFOLD) }
         end
       end
     end

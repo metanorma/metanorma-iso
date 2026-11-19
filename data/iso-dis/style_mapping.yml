@@ -107,7 +107,6 @@ paragraph_styles:
 
   # ── Normative references ──
   normref: RefNorm
-  ref_norm: RefNorm
 
   # ── Cover page ──
   cover_large: zzCoverlarge
@@ -251,3 +250,42 @@ excluded_styles:
     # Collaboration / track-changes
     - "*TrackChanges*"
     - "*Comment*"
+    # 8601-era semantic families (case-sensitive; Era C has Biblio*, no bib*)
+    - "bib*"
+    - "au[0-9]*"
+    - "cite*"
+    - "std*"
+    - "coverpage-*"
+    - "boilerplate-*"
+    # 8601-era CamelCase extras
+    - "AdmittedTerm"
+    - "AltTerms"
+    - "DeprecatedTerms"
+    - "AMENDHeading1Unnumbered"
+    - "BlockText"
+    - "CommentSubject*"
+    - "CommentText*"
+    - "FollowedHyperlink"
+    - "HTMLPreformatted*"
+    - "NormalIndent"
+    - "NormalWeb"
+    - "PlaceholderText"
+    - "TableISO"
+    # Word builtin table zoo
+    - "GridTable*"
+    - "ListTable*"
+    - "PlainTable*"
+    - "*-Accent[1-6]"
+    # Locale pollution
+    - "Code-einrck"
+    - "HTMLSchreibmaschine*"
+    - "HTMLZitat"
+    - "Listennummer*"
+    - "StdAbsatz-*"
+    - "[0-9]*"
+    # Word co-authoring noise
+    - "Hashtag*"
+    - "Mention*"
+    - "SmartHyperlink*"
+    - "UnresolvedMention*"
+    - "BalloonText*"

@@ -167,3 +167,5 @@ end
   - Each pattern matches expected sample.
   - No value in `paragraph_styles` / `character_styles` matches an
     excluded pattern.
+
+## Status: DONE — `DocxStyleMapping#excluded?`, `StyleMappingValidator#excluded_styles_in_mapping`, globs added to iso-dis style_mapping.yml, `excluded_styles_ref` header; specs in style_mapping_spec.rb and style_mapping_validator_spec.rb green, integrity spec confirms zero leaks.

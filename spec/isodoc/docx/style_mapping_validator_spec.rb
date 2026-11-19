@@ -90,5 +90,15 @@ RSpec.describe IsoDoc::Iso::Docx::StyleMappingValidator do
       v = described_class.new(leaky_mapping, library, numbering: num_lib)
       expect(v.excluded_leaks.map(&:style_id)).to include("STDTitle1")
     end
+
+    it "lists leaked style ids via excluded_styles_in_mapping" do
+      v = described_class.new(leaky_mapping, library, numbering: num_lib)
+      expect(v.excluded_styles_in_mapping).to eq(["STDTitle1"])
+    end
+
+    it "returns an empty list for the canonical mapping" do
+      v = described_class.new(mapping, library, numbering: num_lib)
+      expect(v.excluded_styles_in_mapping).to eq([])
+    end
   end
 end
