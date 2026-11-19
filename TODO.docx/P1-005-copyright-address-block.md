@@ -33,6 +33,8 @@ Re-measured by converting spec/examples/rice.presentation.xml with Processor#out
 - Reference: ONE paragraph, style `zzaddress` (ind left 505), lines separated by `<w:r><w:br/><w:t>line</w:t></w:r>`, email as a hyperlink run, `boilerplate-address` bookmark.
 - Output: ONE paragraph, style `zzCopyrightaddress`, lines separated by `<w:r><w:br/></w:r>`, email kept as a hyperlink run, `boilerplate-address` bookmark kept. The five-paragraph split is gone (fixed earlier; spec/isodoc/docx/boilerplate_renderer_spec.rb "with the full ISO address paragraph", 16 examples green).
 
-Remaining differences, deliberately not changed:
-- Style id: the DIS template (data/iso-dis/style_mapping.yml `copyright_address`) defines `zzCopyrightaddress` and has no `zzaddress`; matching the reference id would need a new template style.
-- Each line after a break keeps the source's leading space (" CP 401 ..."); the reference has none. Cosmetic.
+Resolved at base ac2393fb:
+- Leading space after a break: `BoilerplateRenderer#trim_after_breaks` strips leading whitespace from the run that follows a `w:br`, only in the copyright address paragraph (the source writes `<br/> line`). Other paragraphs keep their spaces. Spec: boilerplate_renderer_spec "starts each line after a break without a leading space".
+
+Remaining difference, deliberately not changed:
+- Style id: the DIS template (template.docx and data/iso-dis/styles.yml) defines `zzCopyrightaddress` and has no `zzaddress`. The reference is a CD 2016 document using a CD-era style. Emitting `zzaddress` would reference a style missing from the DIS template, so Word would fall back to Normal. The DIS style is the correct id for this template.

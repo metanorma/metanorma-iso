@@ -223,6 +223,10 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer, "#render_copyright in the
       expect(address_paragraphs.first[:style]).to eq("zzCopyrightaddress")
     end
 
+    it "starts each line after a break without a leading space" do
+      expect(address_line_texts).to eq(["CP 401", "Email: ", "Website: www.iso.org"])
+    end
+
     it "keeps the email and website text" do
       expect(address_paragraphs.first[:text]).to include("copyright@iso.org", "www.iso.org")
     end
@@ -241,6 +245,16 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer, "#render_copyright in the
 
       it "keeps the legal paragraph in the copyright style" do
         expect(address_paragraphs.map { |p| p[:style] }).to eq(["zzCopyright"])
+      end
+    end
+
+    def address_line_texts
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        build_adapter.convert(copyright_xml, path)
+        extract_docx(path) do |document, ns|
+          document.xpath("//w:body/w:p[contains(., 'copyright office')]/w:r[w:br]/following-sibling::*[1][self::w:r]", ns).map(&:text)
+        end
       end
     end
 

@@ -113,6 +113,7 @@ module IsoDoc
               para << content
             when Lutaml::Model::Serializable
               @inline.render(content, para)
+              trim_after_breaks(para) if address_paragraph?(content)
               anchor(content, para)
             else
               para << content.to_s
@@ -120,6 +121,14 @@ module IsoDoc
 
             doc << para
             para
+          end
+        end
+
+        # The source writes each address line as "<br/> line"; Word already
+        # starts the line after the break, so the space would indent it.
+        def trim_after_breaks(para)
+          para.model.runs.each_cons(2) do |previous, run|
+            run.substitute(/\A\s+/, "") if previous.break
           end
         end
 
