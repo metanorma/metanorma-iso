@@ -302,7 +302,6 @@ excluded_styles:
     - "figuretitle"
     - "tabletitle"
     - "sourcecode"
-    - "stem"
     - "stem1"
     - "normref"
     - "pseudocode"

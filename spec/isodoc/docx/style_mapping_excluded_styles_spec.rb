@@ -39,6 +39,10 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping, "#excluded?" do
     end
   end
 
+  it "keeps the stem span style allowed (StyleResolver emits it via SPAN_CLASS_TO_STYLE)" do
+    expect(mapping.excluded?("stem")).to be(false)
+  end
+
   it "keeps universal REF-001 styles allowed, including BodyTextindent1" do
     %w[BodyTextindent1 BodyTextChar FootnoteTextChar HeaderChar FooterChar
        TableNormal Heading1 Heading6 Notice].each do |style_id|

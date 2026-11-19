@@ -92,7 +92,7 @@ module IsoDoc
 
         def heading_style(level)
           if @context.in_annex
-            @mapping.annex_heading_style(level)
+            @mapping.annex_heading_style(level) || @mapping.heading_style(level)
           else
             @mapping.heading_style(level)
           end
