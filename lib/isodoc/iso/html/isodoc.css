@@ -1,0 +1,1456 @@
+p.Sourcecode, li.Sourcecode, div.Sourcecode, pre.Sourcecode {
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 12pt;
+  margin-left: 0cm;
+  text-align: left;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  tab-stops: 20.15pt;
+  font-size: {{monospacefontsize}};
+  font-family: {{monospacefont}};
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: "Courier New";
+  mso-ansi-language: EN-GB;
+}
+
+p.pseudocode, li.pseudocode, div.pseudocode {
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 12pt;
+  margin-left: 0cm;
+  text-align: left;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  tab-stops: 20.15pt;
+  font-size: {{smallerfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: "Courier New";
+  mso-ansi-language: EN-GB;
+}
+
+p.Biblio, li.Biblio, div.Biblio {
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 12pt;
+  margin-left: 33.15pt;
+  text-indent: -33.15pt;
+  tab-stops: 33.15pt;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+}
+
+p.NormRef, li.NormRef, div.NormRef {
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 12pt;
+  margin-left: 0pt;
+  text-indent: 0pt;
+  tab-stops: 33.15pt;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+}
+
+p.FigureTitle, li.FigureTitle, div.FigureTitle {
+  mso-style-name: "Figure Title";
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "";
+  mso-style-parent: "List Paragraph";
+  mso-style-link: "Figure Title Char";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6pt;
+  margin-left: 36pt;
+  mso-add-space: auto;
+  text-align: center;
+  text-indent: -30.35pt;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  /*mso-list:l9 level1 lfo17;*/
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  font-weight: bold;
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+}
+
+p.FigureTitleCxSpFirst, li.FigureTitleCxSpFirst, div.FigureTitleCxSpFirst {
+  mso-style-name: "Figure TitleCxSpFirst";
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "List Paragraph";
+  mso-style-link: "Figure Title Char";
+  mso-style-type: export-only;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 0cm;
+  margin-left: 36pt;
+  mso-add-space: auto;
+  text-align: center;
+  text-indent: -30.35pt;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  /*mso-list:l9 level1 lfo17;*/
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-ansi-language: EN-GB;
+  mso-fareast-language: EN-US;
+  font-weight: bold;
+}
+
+p.FigureTitleCxSpMiddle, li.FigureTitleCxSpMiddle, div.FigureTitleCxSpMiddle {
+  mso-style-name: "Figure TitleCxSpMiddle";
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "List Paragraph";
+  mso-style-link: "Figure Title Char";
+  mso-style-type: export-only;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 0cm;
+  margin-left: 36pt;
+  mso-add-space: auto;
+  text-align: center;
+  text-indent: -30.35pt;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  /*mso-list:l9 level1 lfo17;*/
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-ansi-language: EN-GB;
+  mso-fareast-language: EN-US;
+  font-weight: bold;
+}
+
+p.FigureTitleCxSpLast, li.FigureTitleCxSpLast, div.FigureTitleCxSpLast {
+  mso-style-name: "Figure TitleCxSpLast";
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "List Paragraph";
+  mso-style-link: "Figure Title Char";
+  mso-style-type: export-only;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6pt;
+  margin-left: 36pt;
+  mso-add-space: auto;
+  text-align: center;
+  text-indent: -30.35pt;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  /*mso-list:l9 level1 lfo17;*/
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-ansi-language: EN-GB;
+  mso-fareast-language: EN-US;
+  font-weight: bold;
+}
+
+span.NoteChar {
+  mso-style-name: "Note Char";
+  mso-style-unhide: no;
+  mso-style-locked: yes;
+  mso-style-link: Note;
+  mso-ansi-language: EN-GB;
+}
+
+p.AnnexFigureTitle, li.AnnexFigureTitle, div.AnnexFigureTitle {
+  mso-style-name: "Annex Figure Title";
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-link: "Annex Figure Title Char";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6pt;
+  margin-left: 17pt;
+  text-align: center;
+  text-indent: -11.35pt;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  /* mso-list:l6 level1 lfo13; */
+  tab-stops: list 5.65pt left 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-ansi-language: EN-GB;
+  mso-fareast-language: EN-US;
+  font-weight: bold;
+}
+
+p.AnnexTableTitle, li.AnnexTableTitle, div.AnnexTableTitle {
+  mso-style-name: "Annex Table Title";
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "List Paragraph";
+  mso-style-link: "Annex Table Title Char";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6pt;
+  margin-left: 0cm;
+  mso-add-space: auto;
+  text-align: center;
+  text-indent: 0cm;
+  line-height: 12pt;
+  /*page-break-before:always;*/
+  mso-pagination: widow-orphan;
+  page-break-after: avoid;
+  /* mso-list:l4 level1 lfo15; */
+  tab-stops: list 0cm left 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-ansi-language: EN-GB;
+  mso-fareast-language: EN-US;
+  font-weight: bold;
+  mso-bidi-font-weight: normal;
+}
+
+p.AnnexTableTitleCxSpFirst, li.AnnexTableTitleCxSpFirst, div.AnnexTableTitleCxSpFirst {
+  mso-style-name: "Annex Table TitleCxSpFirst";
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "List Paragraph";
+  mso-style-link: "Annex Table Title Char";
+  mso-style-type: export-only;
+  margin: 0cm;
+  mso-add-space: auto;
+  text-align: center;
+  text-indent: 0cm;
+  line-height: 12pt;
+  /*page-break-before:always;*/
+  mso-pagination: widow-orphan;
+  page-break-after: avoid;
+  /* mso-list:l4 level1 lfo15; */
+  tab-stops: list 0cm left 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-ansi-language: EN-GB;
+  mso-fareast-language: EN-US;
+  font-weight: bold;
+  mso-bidi-font-weight: normal;
+}
+
+p.AnnexTableTitleCxSpMiddle, li.AnnexTableTitleCxSpMiddle, div.AnnexTableTitleCxSpMiddle {
+  mso-style-name: "Annex Table TitleCxSpMiddle";
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "List Paragraph";
+  mso-style-link: "Annex Table Title Char";
+  mso-style-type: export-only;
+  margin: 0cm;
+  mso-add-space: auto;
+  text-align: center;
+  text-indent: 0cm;
+  line-height: 12pt;
+  /*page-break-before:always;*/
+  mso-pagination: widow-orphan;
+  page-break-after: avoid;
+  /* mso-list:l4 level1 lfo15; */
+  tab-stops: list 0cm left 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-ansi-language: EN-GB;
+  mso-fareast-language: EN-US;
+  font-weight: bold;
+  mso-bidi-font-weight: normal;
+}
+
+p.AnnexTableTitleCxSpLast, li.AnnexTableTitleCxSpLast, div.AnnexTableTitleCxSpLast {
+  mso-style-name: "Annex Table TitleCxSpLast";
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "List Paragraph";
+  mso-style-link: "Annex Table Title Char";
+  mso-style-type: export-only;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6pt;
+  margin-left: 0cm;
+  mso-add-space: auto;
+  text-align: center;
+  text-indent: 0cm;
+  line-height: 12pt;
+  /*page-break-before:always;*/
+  mso-pagination: widow-orphan;
+  page-break-after: avoid;
+  /* mso-list:l4 level1 lfo15; */
+  tab-stops: list 0cm left 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-ansi-language: EN-GB;
+  mso-fareast-language: EN-US;
+  font-weight: bold;
+  mso-bidi-font-weight: normal;
+}
+
+span.Char2 {
+  mso-style-name: "List Paragraph Char";
+  mso-style-noshow: yes;
+  mso-style-priority: 34;
+  mso-style-unhide: no;
+  mso-style-locked: yes;
+  mso-style-link: "List Paragraph";
+  mso-ansi-font-size: 11pt;
+  mso-bidi-font-size: 11pt;
+  mso-ansi-language: EN-GB;
+}
+
+span.AnnexTableTitleChar {
+  mso-style-name: "Annex Table Title Char";
+  mso-style-unhide: no;
+  mso-style-locked: yes;
+  mso-style-parent: "List Paragraph Char";
+  mso-style-link: "Annex Table Title";
+  mso-ansi-font-size: 11pt;
+  mso-bidi-font-size: 11pt;
+  mso-ansi-language: EN-GB;
+  font-weight: bold;
+  mso-bidi-font-weight: normal;
+}
+
+p.AdmonitionTitle, p.RecommendationTitle {
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6pt;
+  margin-left: 0cm;
+  text-align: center;
+  line-height: 12pt;
+  page-break-after: avoid;
+  mso-pagination: widow-orphan;
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  font-weight: bold;
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+}
+
+p.SourceTitle {
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6pt;
+  margin-left: 0cm;
+  text-align: center;
+  line-height: 12pt;
+  page-break-before: avoid;
+  mso-pagination: widow-orphan;
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  font-weight: bold;
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+}
+
+p.Tabletitle, li.Tabletitle, div.Tabletitle, p.ListTitle {
+  mso-style-name: "Table title";
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6pt;
+  margin-left: 36pt;
+  text-align: center;
+  text-indent: -18pt;
+  line-height: 12pt;
+  page-break-after: avoid;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  /* mso-list:l8 level1 lfo16; */
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-weight: bold;
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+}
+
+p.TabletitleCxSpFirst, li.TabletitleCxSpFirst, div.TabletitleCxSpFirst {
+  mso-style-name: "Table titleCxSpFirst";
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "List Paragraph";
+  mso-style-link: "Table title Char";
+  mso-style-type: export-only;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 0cm;
+  margin-left: 36pt;
+  mso-add-space: auto;
+  text-align: center;
+  text-indent: -18pt;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  mso-list: l8 level1 lfo16;
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-ansi-language: FR-CH;
+  mso-fareast-language: EN-US;
+  font-weight: bold;
+}
+
+p.TabletitleCxSpMiddle, li.TabletitleCxSpMiddle, div.TabletitleCxSpMiddle {
+  mso-style-name: "Table titleCxSpMiddle";
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "List Paragraph";
+  mso-style-link: "Table title Char";
+  mso-style-type: export-only;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 0cm;
+  margin-left: 36pt;
+  mso-add-space: auto;
+  text-align: center;
+  text-indent: -18pt;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  mso-list: l8 level1 lfo16;
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-ansi-language: FR-CH;
+  mso-fareast-language: EN-US;
+  font-weight: bold;
+}
+
+p.TabletitleCxSpLast, li.TabletitleCxSpLast, div.TabletitleCxSpLast {
+  mso-style-name: "Table titleCxSpLast";
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: "List Paragraph";
+  mso-style-link: "Table title Char";
+  mso-style-type: export-only;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6pt;
+  margin-left: 36pt;
+  mso-add-space: auto;
+  text-align: center;
+  text-indent: -18pt;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  mso-list: l8 level1 lfo16;
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-ansi-language: FR-CH;
+  mso-fareast-language: EN-US;
+  font-weight: bold;
+}
+
+span.FigureTitleChar {
+  mso-style-name: "Figure Title Char";
+  mso-style-unhide: no;
+  mso-style-locked: yes;
+  mso-style-parent: "List Paragraph Char";
+  mso-style-link: "Figure Title";
+  mso-ansi-font-size: 11pt;
+  mso-bidi-font-size: 11pt;
+  mso-ansi-language: EN-GB;
+  font-weight: bold;
+}
+
+span.TabletitleChar {
+  mso-style-name: "Table title Char";
+  mso-style-unhide: no;
+  mso-style-locked: yes;
+  mso-style-parent: "List Paragraph Char";
+  mso-style-link: "Table title";
+  mso-ansi-font-size: 11pt;
+  mso-bidi-font-size: 11pt;
+  mso-ansi-language: FR-CH;
+  font-weight: bold;
+}
+
+span.AnnexFigureTitleChar {
+  mso-style-name: "Annex Figure Title Char";
+  mso-style-unhide: no;
+  mso-style-locked: yes;
+  mso-style-link: "Annex Figure Title";
+  mso-ansi-font-size: 11pt;
+  mso-bidi-font-size: 11pt;
+  mso-ansi-language: EN-GB;
+  font-weight: bold;
+}
+
+p.Note, div.Note, li.Note, p.TableFootnote, div.TableFootnote, li.TableFootnote {
+  mso-style-unhide: no;
+  mso-style-name: "Note";
+  mso-style-qformat: yes;
+  mso-style-parent: "";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 12pt;
+  margin-left: 0cm;
+  text-align: justify;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  tab-stops: 20.15pt;
+  mso-bidi-font-size: {{normalfontsize}};
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+}
+
+p.Note, li.Note, p.TableFootnote, div.TableFootnote, li.TableFootnote {
+  font-size: {{smallerfontsize}};
+  font-family: {{bodyfont}};
+}
+
+/* may need to be revised */
+p.ANNEX, li.ANNEX, div.ANNEX {
+  mso-style-name: ANNEX;
+  mso-style-priority: 10;
+  mso-style-unhide: no;
+  mso-style-next: Normal;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 24pt;
+  margin-left: 0cm;
+  text-align: center;
+  text-indent: 0cm;
+  line-height: 15.5pt;
+  mso-line-height-rule: exactly;
+  page-break-before: always;
+  mso-pagination: widow-orphan;
+  page-break-after: avoid;
+  mso-outline-level: 1;
+  mso-list: l0 level1 lfo12;
+  tab-stops: 20.15pt;
+  font-size: 14pt;
+  mso-bidi-font-size: {{normalfontsize}};
+  font-family: {{headerfont}};
+  mso-fareast-font-family: "SimHei", serif;
+  mso-bidi-font-family: {{headerfont}};
+  mso-ansi-language: EN-GB;
+  mso-fareast-language: JA;
+  font-weight: bold;
+  mso-bidi-font-weight: normal;
+}
+
+p.BiblioTitle, li.BiblioTitle, div.BiblioTitle {
+  mso-style-name: "Biblio Title";
+  mso-style-priority: 5;
+  mso-style-noshow: yes;
+  mso-style-unhide: no;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 15.5pt;
+  margin-left: 0cm;
+  text-align: center;
+  line-height: 15.5pt;
+  mso-pagination: widow-orphan;
+  mso-outline-level: 1;
+  tab-stops: 20.15pt;
+  font-size: 14pt;
+  mso-bidi-font-size: {{normalfontsize}};
+  font-family: {{headerfont}};
+  mso-fareast-font-family: "SimHei", serif;
+  mso-bidi-font-family: {{headerfont}};
+  mso-ansi-language: EN-GB;
+  font-weight: bold;
+  mso-bidi-font-weight: normal;
+}
+
+p.Definition, li.Definition, div.Definition {
+  mso-style-name: Definition;
+  mso-style-priority: 9;
+  mso-style-unhide: no;
+  mso-style-link: "Definition Char";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6pt;
+  margin-left: 0cm;
+  text-align: justify;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+}
+
+p.ForewordTitle, li.ForewordTitle, div.ForewordTitle {
+  mso-style-name: "Foreword Title";
+  mso-style-noshow: yes;
+  mso-style-unhide: no;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 15.5pt;
+  margin-left: 0cm;
+  text-align: justify;
+  line-height: 15.5pt;
+  page-break-before: always;
+  mso-pagination: widow-orphan;
+  page-break-after: avoid;
+  mso-outline-level: 1;
+  mso-hyphenate: none;
+  tab-stops: 20.15pt;
+  font-size: 14pt;
+  mso-bidi-font-size: {{normalfontsize}};
+  font-family: {{headerfont}};
+  mso-fareast-font-family: "SimHei", serif;
+  mso-bidi-font-family: {{headerfont}};
+  mso-ansi-language: EN-GB;
+  font-weight: bold;
+  mso-bidi-font-weight: normal;
+}
+
+p.IntroTitle, li.IntroTitle, div.IntroTitle {
+  mso-style-name: "Intro Title";
+  mso-style-noshow: yes;
+  mso-style-unhide: no;
+  mso-style-parent: "Foreword Title";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 15.5pt;
+  margin-left: 0cm;
+  text-align: justify;
+  line-height: 15.5pt;
+  mso-pagination: widow-orphan;
+  page-break-after: avoid;
+  mso-outline-level: 1;
+  mso-hyphenate: none;
+  tab-stops: 20.15pt;
+  font-size: 14pt;
+  mso-bidi-font-size: {{normalfontsize}};
+  font-family: {{headerfont}};
+  mso-fareast-font-family: "SimHei", serif;
+  mso-bidi-font-family: {{headerfont}};
+  mso-ansi-language: EN-GB;
+  font-weight: bold;
+  page-break-before: always;
+  mso-bidi-font-weight: normal;
+}
+
+p.TitlePageSubhead, li.TitlePageSubhead, div.TitlePageSubhead {
+  mso-style-noshow: yes;
+  mso-style-unhide: no;
+  mso-style-parent: "Foreword Title";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 15.5pt;
+  margin-left: 0cm;
+  text-align: center;
+  line-height: 15.5pt;
+  mso-pagination: widow-orphan;
+  page-break-after: avoid;
+  mso-hyphenate: none;
+  tab-stops: 20.15pt;
+  font-size: 14pt;
+  mso-bidi-font-size: {{normalfontsize}};
+  font-family: {{headerfont}};
+  mso-fareast-font-family: "SimHei", serif;
+  mso-bidi-font-family: {{headerfont}};
+  mso-ansi-language: EN-GB;
+  font-weight: bold;
+  mso-bidi-font-weight: normal;
+}
+
+p.Terms, li.Terms, div.Terms {
+  mso-style-name: "Term(s)";
+  mso-style-priority: 8;
+  mso-style-unhide: no;
+  mso-style-next: Definition;
+  margin: 0cm;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  page-break-after: avoid;
+  mso-hyphenate: none;
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{headerfont}};
+  mso-fareast-font-family: "SimHei", serif;
+  mso-bidi-font-family: {{headerfont}};
+  mso-ansi-language: EN-GB;
+  mso-bidi-font-weight: normal;
+}
+
+p.AltTerms, li.AltTerms, div.AltTerms {
+  mso-style-name: "AltTerm(s)";
+  mso-style-priority: 8;
+  mso-style-unhide: no;
+  mso-style-next: Definition;
+  margin: 0cm;
+  margin-bottom: 0.0001pt;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  page-break-after: avoid;
+  mso-hyphenate: none;
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+  mso-bidi-font-weight: normal;
+}
+
+p.DeprecatedTerms, li.DeprecatedTerms, div.DeprecatedTerms {
+  mso-style-name: "DeprecatedTerm(s)";
+  mso-style-priority: 8;
+  mso-style-unhide: no;
+  mso-style-next: Definition;
+  margin: 0cm;
+  margin-bottom: 0.0001pt;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  page-break-after: avoid;
+  mso-hyphenate: none;
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+  mso-bidi-font-weight: normal;
+}
+
+p.TermNum, li.TermNum, div.TermNum {
+  mso-style-name: TermNum;
+  mso-style-priority: 7;
+  mso-style-unhide: no;
+  mso-style-next: "Term(s)";
+  margin: 0cm;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  page-break-after: avoid;
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{headerfont}};
+  mso-fareast-font-family: "SimHei", serif;
+  mso-bidi-font-family: {{headerfont}};
+  mso-ansi-language: EN-GB;
+  font-weight: bold;
+  mso-bidi-font-weight: normal;
+}
+
+p.zzHelp, li.zzHelp, div.zzHelp {
+  mso-style-name: zzHelp;
+  mso-style-unhide: no;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 12pt;
+  margin-left: 0cm;
+  text-align: justify;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  font-size: {{normalfontsize}};
+  mso-bidi-font-size: 10pt;
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: "MS Mincho";
+  mso-bidi-font-family: "Times New Roman";
+  color: green;
+  mso-ansi-language: EN-GB;
+  mso-fareast-language: JA;
+}
+
+p.zzContents, li.zzContents, div.zzContents {
+  mso-style-name: zzContents;
+  mso-style-noshow: yes;
+  mso-style-unhide: no;
+  mso-style-next: "TOC 1";
+  margin-top: 48pt;
+  margin-right: 0cm;
+  margin-bottom: 15.5pt;
+  margin-left: 0cm;
+  line-height: 15.5pt;
+  mso-line-height-rule: exactly;
+  page-break-before: always;
+  mso-pagination: widow-orphan;
+  page-break-after: avoid;
+  mso-hyphenate: none;
+  tab-stops: 20.15pt;
+  font-size: 14pt;
+  mso-bidi-font-size: {{normalfontsize}};
+  font-family: {{headerfont}};
+  mso-fareast-font-family: "SimHei", serif;
+  mso-bidi-font-family: {{headerfont}};
+  mso-ansi-language: EN-GB;
+  font-weight: bold;
+  mso-bidi-font-weight: normal;
+}
+
+p.zzCopyright, li.zzCopyright, div.zzCopyright {
+  mso-style-name: zzCopyright;
+  mso-style-noshow: yes;
+  mso-style-unhide: no;
+  mso-style-next: Normal;
+  margin-top: 0cm;
+  margin-right: 0pt;
+  margin-bottom: 6pt;
+  margin-left: 0pt;
+  text-align: justify;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  tab-stops: 20.15pt 25.7pt 481.15pt;
+  font-size: 11pt;
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+}
+
+p.zzCopyright1 {
+  mso-style-name: zzCopyright;
+  mso-style-noshow: yes;
+  mso-style-unhide: no;
+  mso-style-next: Normal;
+  margin-top: 0cm;
+  margin-right: 0pt;
+  margin-bottom: 6pt;
+  margin-left: 0pt;
+  text-align: justify;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  tab-stops: 20.15pt 25.7pt 481.15pt;
+  font-size: 10pt;
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+}
+
+div.zzCopyrightContainer {
+  border: none;
+  padding: 0cm;
+  mso-padding-alt: 1pt 4pt 1pt 4pt;
+}
+
+p.zzAddress {
+  margin: 0cm;
+  margin-bottom: 12pt;
+  margin-left: 20.15pt;
+  mso-layout-grid-align: none;
+  text-autospace: none;
+  padding: 0cm;
+  mso-padding-alt: 0cm 4pt 0cm 4pt;
+  font-size: 10pt;
+  font-family: {{bodyfont}};
+}
+
+p.zzWarning {
+  border: none;
+  mso-border-alt: solid windowtext 0.5pt;
+  padding: 0cm;
+  mso-padding-alt: 1pt 4pt 1pt 4pt;
+  font-size: 10pt;
+  mso-bidi-font-weight: bold;
+  font-family: {{bodyfont}};
+}
+
+p.zzWarningHdr {
+  margin-bottom: 6pt;
+  border: none;
+  mso-border-alt: solid windowtext 0.5pt;
+  padding: 0cm;
+  mso-padding-alt: 1pt 4pt 1pt 4pt;
+  font-size: 10pt;
+  mso-bidi-font-weight: bold;
+  font-family: {{bodyfont}};
+  text-align: center;
+  font-weight: bold;
+}
+
+p.zzSTDTitle, li.zzSTDTitle, div.zzSTDTitle {
+  mso-style-name: zzSTDTitle;
+  mso-style-noshow: yes;
+  mso-style-unhide: no;
+  mso-style-next: Normal;
+  margin-top: 20pt;
+  margin-right: 0cm;
+  margin-bottom: 38pt;
+  margin-left: 0cm;
+  line-height: 17.5pt;
+  mso-line-height-rule: exactly;
+  mso-pagination: widow-orphan;
+  mso-hyphenate: none;
+  tab-stops: 20.15pt;
+  font-size: 16pt;
+  mso-bidi-font-size: {{normalfontsize}};
+  font-family: {{headerfont}};
+  mso-fareast-font-family: "SimHei", serif;
+  mso-bidi-font-family: {{headerfont}};
+  mso-ansi-language: EN-GB;
+  font-weight: bold;
+  mso-bidi-font-weight: normal;
+}
+
+p.zzSTDTitle1, li.zzSTDTitle1, div.zzSTDTitle1 {
+  mso-style-name: zzSTDTitle;
+  mso-style-noshow: yes;
+  mso-style-unhide: no;
+  mso-style-next: Normal;
+  margin-top: 0pt;
+  margin-right: 0cm;
+  margin-bottom: 18pt;
+  margin-left: 0cm;
+  line-height: 17.5pt;
+  mso-line-height-rule: exactly;
+  mso-pagination: widow-orphan;
+  mso-hyphenate: none;
+  tab-stops: 20.15pt;
+  font-size: 16pt;
+  mso-bidi-font-size: {{normalfontsize}};
+  font-family: {{headerfont}};
+  mso-fareast-font-family: "SimHei", serif;
+  mso-bidi-font-family: {{headerfont}};
+  mso-ansi-language: EN-GB;
+  font-weight: bold;
+  mso-bidi-font-weight: normal;
+}
+
+p.zzSTDTitle2, li.zzSTDTitle2, div.zzSTDTitle2 {
+  mso-style-name: zzSTDTitle;
+  mso-style-noshow: yes;
+  mso-style-unhide: no;
+  mso-style-next: Normal;
+  margin-top: 0pt;
+  margin-right: 0cm;
+  margin-bottom: 18pt;
+  margin-left: 0cm;
+  line-height: 17.5pt;
+  mso-line-height-rule: exactly;
+  mso-pagination: widow-orphan;
+  mso-hyphenate: none;
+  tab-stops: 20.15pt;
+  font-size: 16pt;
+  mso-bidi-font-size: {{normalfontsize}};
+  font-family: {{headerfont}};
+  mso-fareast-font-family: "SimHei", serif;
+  mso-bidi-font-family: {{headerfont}};
+  mso-ansi-language: EN-GB;
+  mso-bidi-font-weight: normal;
+}
+
+p.Quote, li.Quote, div.Quote {
+  mso-style-priority: 99;
+  margin-top: 0cm;
+  margin-right: 36pt;
+  margin-bottom: 0cm;
+  margin-left: 36pt;
+  text-align: justify;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  tab-stops: 20.15pt;
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+}
+
+p.Quote, li.Quote {
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+}
+
+p.QuoteAttribution {
+  text-align: right;
+}
+
+p.Admonition, li.Admonition, div.Admonition {
+  mso-style-priority: 99;
+  mso-pagination: widow-orphan;
+  border: none;
+  padding: 0cm;
+  mso-ascii-font-family: {{bodyfont}};
+  mso-ascii-theme-font: minor-latin;
+  mso-fareast-font-family: "SimSun", serif;
+  mso-fareast-theme-font: minor-fareast;
+  mso-hansi-font-family: {{bodyfont}};
+  mso-hansi-theme-font: minor-latin;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-bidi-theme-font: minor-bidi;
+  mso-ansi-language: EN-AU;
+}
+
+p.Admonition, li.Admonition {
+  font-size: 12pt;
+  font-family: {{bodyfont}};
+  font-weight: bold;
+}
+
+p.Code, li.Code, div.Code {
+  mso-style-name: Code;
+  mso-style-priority: 16;
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  text-align: left;
+  margin: 0cm;
+  line-height: 10pt;
+  mso-pagination: widow-orphan;
+  tab-stops: 20.15pt;
+  font-size: {{monospacefontsize}};
+  mso-bidi-font-size: {{normalfontsize}};
+  font-family: {{monospacefont}};
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: "Cambria";
+  mso-ansi-language: EN-GB;
+}
+
+p.Formula, li.Formula, div.Formula {
+  mso-style-name: Formula;
+  mso-style-noshow: yes;
+  mso-style-unhide: no;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 11pt;
+  margin-left: 20.15pt;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  tab-stops: right 487.45pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: "SimSun", serif;
+  mso-bidi-font-family: {{bodyfont}};
+  mso-ansi-language: EN-GB;
+}
+
+p.ForewordText, li.ForewordText, div.ForewordText {
+  mso-style-name: "Foreword Text";
+  mso-style-unhide: no;
+  mso-style-link: "Foreword Text Char";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6pt;
+  margin-left: 0cm;
+  text-align: justify;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-fareast-language: EN-US;
+}
+
+span.ForewordTextChar {
+  mso-style-name: "Foreword Text Char";
+  mso-style-unhide: no;
+  mso-style-locked: yes;
+  mso-style-parent: "";
+  mso-style-link: "Foreword Text";
+  mso-ansi-font-size: 11pt;
+  mso-bidi-font-size: 11pt;
+}
+
+p.Source, li.Source, div.Source {
+  mso-style-name: Source;
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  mso-style-parent: Definition;
+  mso-style-link: "Source Char";
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6pt;
+  margin-left: 0cm;
+  text-align: justify;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  tab-stops: 20.15pt;
+  font-size: {{normalfontsize}};
+  font-family: {{bodyfont}};
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-ansi-language: EN-GB;
+  mso-fareast-language: EN-US;
+}
+
+span.DefinitionChar {
+  mso-style-name: "Definition Char";
+  mso-style-priority: 9;
+  mso-style-unhide: no;
+  mso-style-locked: yes;
+  mso-style-link: Definition;
+  mso-ansi-font-size: 11pt;
+  mso-bidi-font-size: 11pt;
+  mso-ansi-language: EN-GB;
+}
+
+span.SourceChar {
+  mso-style-name: "Source Char";
+  mso-style-unhide: no;
+  mso-style-locked: yes;
+  mso-style-parent: "Definition Char";
+  mso-style-link: Source;
+  mso-ansi-font-size: 11pt;
+  mso-bidi-font-size: 11pt;
+  mso-ansi-language: EN-GB;
+}
+
+table.dl {
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: {{normalfontsize}};
+  margin-left: 0cm;
+}
+
+div.figdl {
+  text-align: left;
+}
+
+table.figdl {
+  mso-para-margin: 0cm;
+  mso-para-margin-bottom: 0.0001pt;
+  mso-pagination: widow-orphan;
+  align: left;
+  text-align: left;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-left: 0cm;
+  margin-right: 0cm;
+}
+
+div.figdl p, table.figdl p {
+  font-size: {{smallerfontsize}};
+}
+
+div.formula_dl, p.formula_dl, table.formula_dl {
+  margin-left: 20.15pt;
+}
+
+table.MsoISOTable, table.MsoISOTableBig {
+  mso-style-name: "Table ISO";
+  mso-tstyle-rowband-size: 0;
+  mso-tstyle-colband-size: 0;
+  mso-style-noshow: yes;
+  mso-style-priority: 99;
+  mso-style-parent: "";
+  mso-padding-alt: 0cm 2.85pt 0cm 2.85pt;
+  mso-para-margin: 0cm;
+  mso-para-margin-bottom: 0.0001pt;
+  mso-pagination: widow-orphan;
+  border-collapse: collapse;
+  /*mso-table-layout-alt:fixed;*/
+  border: solid windowtext 2pt;
+  mso-border-alt: solid windowtext 2pt;
+  mso-yfti-tbllook: 480;
+  mso-border-insideh: 0.75pt solid windowtext;
+  mso-border-insidev: 0.75pt solid windowtext;
+  font-size: {{smallerfontsize}};
+  font-family: {{bodyfont}};
+}
+
+table.MsoISOTable th, table.MsoISOTableBig th {
+  border: solid windowtext 1pt;
+  mso-border-alt: solid windowtext 1pt;
+  padding: 0cm 2.85pt 0cm 2.85pt;
+}
+
+table.MsoISOTable td, table.MsoISOTableBig td {
+  border: solid windowtext 1pt;
+  mso-border-alt: solid windowtext 1pt;
+  padding: 0cm 2.85pt 0cm 2.85pt;
+}
+
+table.MsoNormalTable th, table.MsoNormalTable td {
+  border: none;
+  mso-border-alt: none;
+}
+
+table.MsoISOTable p, table.MsoISOTableBig p {
+  font-size: {{smallerfontsize}};
+}
+
+table.MsoTableGrid {
+  mso-style-name: "Table Grid";
+  mso-tstyle-rowband-size: 0;
+  mso-tstyle-colband-size: 0;
+  mso-style-priority: 39;
+  mso-style-unhide: no;
+  border: solid windowtext 1pt;
+  mso-border-alt: solid windowtext 0.5pt;
+  mso-padding-alt: 0cm 5.4pt 0cm 5.4pt;
+  mso-border-insideh: 0.5pt solid windowtext;
+  mso-border-insidev: 0.5pt solid windowtext;
+  mso-para-margin: 0cm;
+  mso-para-margin-bottom: 0.0001pt;
+  mso-pagination: widow-orphan;
+  font-size: {{smallerfontsize}};
+  font-family: {{bodyfont}};
+}
+
+div.formula {
+  tab-stops: right 487.45pt;
+}
+
+body {
+  tab-interval: 36pt;
+}
+
+.coverpage_docnumber {
+  text-align: right;
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.coverpage_techcommittee {
+  text-align: right;
+}
+
+.coverpage_docstage {
+  text-align: center;
+  font-size: 30pt;
+  color: #485094;
+}
+
+div.doctitle {
+  margin-top: 100pt;
+  text-align: left;
+  font-size: 16pt;
+}
+
+div.coverpage_warning {
+  mso-element: para-border-div;
+  border: solid windowtext 1pt #485094;
+  mso-border-alt: solid windowtext 0.5pt;
+  padding: 1pt 4pt 1pt 4pt #485094;
+  margin-left: 4.25pt;
+  margin-right: 4.25pt;
+}
+
+.coverpage_warning {
+  color: #485094;
+  font-size: 10pt;
+}
+
+.coverpage {
+  text-align: center;
+  margin: 2em 0;
+}
+
+.coverpage-logo {
+  color: #485094;
+}
+
+.coverpage-tc-name {
+  color: #485094;
+  font-size: 1.2em;
+  line-height: 1.2em;
+  margin: 0.25em 0;
+}
+
+.coverpage-doc-identity {
+  background-color: #485094;
+  color: white;
+  font-size: 2em;
+  line-height: 2em;
+  margin: 0.5em 0;
+}
+
+.coverpage-title {
+  font-weight: 400;
+}
+
+.coverpage-title .title-second {
+  display: none;
+}
+
+.coverpage-stage-block {
+  font-style: italic;
+  font-size: 1.25em;
+  font-weight: 600;
+}
+
+.coverpage-warning {
+  border-top: solid 1px #f36f36;
+  border-bottom: solid 1px #f36f36;
+  margin: 1em 2em;
+  color: #485094;
+  padding: 1em;
+}
+
+.coverpage-warning .title {
+  color: #f36f36;
+  font-weight: 500;
+}
+
+.coverpage-warning .content {
+  font-style: italic;
+}
+
+/*
+.boilerplate-copyright {
+  padding: 1em;
+}
+*/
+.boilerplate-copyright .boilerplate-name {
+  color: #485094;
+  font-weight: 600;
+}
+
+.boilerplate-copyright .boilerplate-address {
+  color: #485094;
+}
+
+div.rule {
+  width: 100%;
+  height: 1px;
+  background-color: #485094;
+  margin: 2em 0;
+}
+
+#toc-list ul {
+  margin-bottom: 0.25em;
+}
+
+#toc-list li {
+  list-style-type: none;
+}
+
+.MsoTocTextSpan {
+  color: windowtext;
+  display: none;
+  mso-hide: screen;
+  mso-ansi-language: EN-GB;
+  text-decoration: none;
+  text-underline: none;
+}
+
+a.TableFootnoteRef, span.TableFootnoteRef {
+  mso-style-priority: 99;
+  mso-style-parent: "Footnote Reference";
+  vertical-align: super;
+}
+
+aside {
+  font-size: {{footnotefontsize}};
+}
+
+/*
+div.Example {
+	border:solid black .25pt;
+	mso-border-alt:solid black .25pt;
+	padding:10pt;
+	mso-padding-alt:10.0pt 10.0pt 10.0pt 10.0pt;
+	margin:10pt;
+	mso-margin-alt:10.0pt 10.0pt 10.0pt 10.0pt;
+}
+*/
+/*
+div.Example {
+  margin-left:70.9pt;
+  text-indent:-70.9pt;
+}
+*/
+p.Example, li.Example, div.Example, td.Example {
+  tab-stops: 70.9pt;
+}
+
+p.Example, li.Example, td.Example {
+  mso-style-name: Example;
+  mso-style-link: "Example Char";
+  font-size: {{smallerfontsize}};
+  font-family: {{bodyfont}};
+}
+
+div.Example, td.Example {
+  margin: 0in;
+  margin-bottom: 6pt;
+}
+
+p.Example, li.Example, div.Example {
+  mso-style-unhide: no;
+  mso-style-qformat: yes;
+  margin-top: 0cm;
+  margin-right: 0cm;
+  margin-bottom: 6pt;
+  margin-left: 0cm;
+  text-align: justify;
+  line-height: 12pt;
+  mso-pagination: widow-orphan;
+  /* tab-stops:20.15pt; */
+  mso-fareast-font-family: Calibri;
+  mso-bidi-font-family: "Times New Roman";
+  mso-ansi-language: EN-GB;
+  mso-fareast-language: EN-US;
+}
+
+span.ExampleChar {
+  mso-style-name: "Example Char";
+  mso-style-unhide: no;
+  mso-style-locked: yes;
+  mso-style-link: Example;
+  mso-ansi-language: EN-GB;
+}
+
+div.Note span.stem {
+  font-size: {{smallerfontsize}};
+}
+
+div.Note p.Sourcecode, div.Note pre.Sourcecode {
+  font-size: 8pt;
+  margin-left: 1cm;
+}
+
+div.Note table.dl {
+  font-size: {{smallerfontsize}};
+  margin-left: 1cm;
+}
+
+span.note_label, span.example_label, td.example_label, td.note_label, span.termnote_label, td.termnote_label {
+  font-size: {{smallerfontsize}};
+  font-family: {{bodyfont}};
+}

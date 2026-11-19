@@ -304,6 +304,10 @@ module IsoDoc
         # inline flow the PDF ToC composes.
         def render_toc_heading_text(node, para)
           sink = HeadingTextSink.new(para)
+          @inline.with_heading { render_toc_heading_source(node, sink) }
+        end
+
+        def render_toc_heading_source(node, sink)
           if (variant = toc_variant_title(node))
             @inline.render(variant, sink)
           elsif node.class.attributes.key?(:fmt_title) && node.fmt_title

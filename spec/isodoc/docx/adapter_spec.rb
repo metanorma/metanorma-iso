@@ -789,6 +789,80 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
     end
   end
 
+  # ── References section editorial note ────────────────────────────
+
+  # An `[EDITOR]` editorial note placed inside the references clause is
+  # part of the section content. The DOC walk visits references sections
+  # through visit_references_section, whose model is unordered, so the
+  # note must be dispatched explicitly after the walked content
+  # (metanorma-iso#1764: the note rendered in HTML but was dropped from
+  # the Word output).
+  describe "references section editorial note" do
+    # The DOC ingest parses references sections into
+    # StandardReferencesSection, which carries the admonition children
+    # only from metanorma-standoc with the references-admonition mapping.
+    before do
+      unless Metanorma::Standoc::Document::Sections::StandardReferencesSection
+             .attributes.key?(:admonition)
+        skip "requires metanorma-standoc with the StandardReferencesSection admonition mapping"
+      end
+    end
+
+    def extract_docx(path)
+      require "zip"
+      Zip::File.open(path) do |zip|
+        doc = Nokogiri::XML(zip.find_entry("word/document.xml").get_input_stream.read)
+        ns = { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" }
+        yield doc, ns
+      end
+    end
+
+    def editorial_note_xml
+      minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <p>Ref.</p>
+          </clause>
+        </sections>
+        <bibliography>
+          <references id="bib-norm" normative="true">
+            <fmt-title>Normative references</fmt-title>
+            <bibitem id="ISO80000-2" anchor="ISO80000-2">
+              <biblio-tag><span class="stdpublisher">ISO </span><span class="stddocNumber">80000</span>-<span class="stddocPartNumber">2</span></biblio-tag>
+            </bibitem>
+            <admonition type="editorial" id="editnote">
+              <fmt-name><span class="fmt-element-name">EDITORIAL NOTE</span></fmt-name>
+              <p>This editorial note follows the reference list.</p>
+            </admonition>
+          </references>
+        </bibliography>
+      INNER
+    end
+
+    it "renders the editorial note after the reference list" do
+      xml = editorial_note_xml
+
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "bib.docx")
+        adapter.convert(xml, path)
+
+        extract_docx(path) do |doc, ns|
+          texts = doc.xpath("//w:t", ns).map(&:text)
+          full_text = texts.join
+          expect(full_text).to include("ISO 80000-2")
+          expect(full_text).to include("EDITORIAL NOTE")
+          expect(full_text).to include("This editorial note follows the reference list.")
+
+          bib_idx = texts.index { |t| t.include?("80000") }
+          note_idx = texts.index { |t| t.include?("This editorial note follows") }
+          expect(bib_idx).to be
+          expect(note_idx).to be > bib_idx
+        end
+      end
+    end
+  end
+
   # ── Table of contents ────────────────────────────────────────────
 
   describe "table of contents" do

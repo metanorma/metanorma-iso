@@ -1,11 +1,11 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 @theme {
-  --color-iso-blue: #0061B0;
-  --color-iso-blue-bright: #1a78c8;
-  --color-iso-blue-dark: #00487a;
-  --color-iso-red: #E4002B;
-  --color-accent: var(--color-iso-blue);
+  --color-oiml-blue: #004996;
+  --color-oiml-blue-bright: #1a6bcc;
+  --color-oiml-blue-dark: #013a78;
+  --color-oiml-warm: #d4a017;
+  --color-accent: var(--color-oiml-blue);
   --color-accent-soft: #e7eff9;
   --color-accent-strong: #4d97f5;
   --color-nav-bg: #faf6ee;
@@ -72,12 +72,6 @@
   }
 }
 
-/* ISO brand wordmark (text-based; replaces the official ISO logo for
-   licensing reasons) */
-.brand-wordmark {
-  letter-spacing: 0.04em;
-}
-
 /* Semantic utilities used by the renderer's element handlers */
 @utility note {
   margin: 1rem 0;
@@ -93,7 +87,7 @@
 @utility example {
   margin: 1rem 0;
   padding: 0.75rem 1.1rem;
-  border-left: 3px solid var(--color-iso-red);
+  border-left: 3px solid var(--color-oiml-warm);
   background: var(--color-accent-soft);
   border-radius: 0 8px 8px 0;
   box-shadow: 0 1px 2px rgba(16, 42, 84, 0.06);
@@ -298,8 +292,8 @@ h2.toc-heading {
 .tc-label { font-weight: 700; color: var(--color-accent); }
 .tc-delim { color: var(--color-ink-faint); }
 
-/* Unnumbered front-matter sections (Foreword, Introduction): separated
-   muted cards, no big heading band */
+/* Unnumbered front-matter sections (Copyright, Feedback, Foreword,
+   Introduction): separated muted cards, no big heading band */
 .frontmatter {
   margin: 0 0 1.1rem;
   padding: 0.9rem 1.2rem;

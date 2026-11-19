@@ -2,8 +2,48 @@ require "spec_helper"
 require "relaton/iso"
 require "relaton/iec"
 require "relaton/ietf"
+require "tmpdir"
+require "webmock/rspec"
 
 RSpec.describe Metanorma::Iso do
+  let(:cache_dir) { Dir.mktmpdir("iso-refs-") }
+  let(:local_cached_header) do
+    LOCAL_CACHED_ISOBIB_BLANK_HDR.sub("spec/relatondb", cache_dir)
+      .sub(":local-cache:", ":local-cache-only:")
+  end
+
+  let(:withdrawn_fixture) do
+    File.expand_path(
+      "../relatondb/cache/v2/docs/is/iso%2F31%2F8b026bccc81a78c0.xml", __dir__
+    )
+  end
+  let(:withdrawn_input) do
+    <<~INPUT
+      #{local_cached_header}
+
+      [bibliography]
+      == Bibliography
+
+      * [[[iso2,ISO 31-0]]]
+    INPUT
+  end
+  let(:withdrawn_xml) do
+    Nokogiri::XML(Asciidoctor.convert(withdrawn_input, *OPTIONS))
+      .tap(&:remove_namespaces!)
+  end
+
+  after { FileUtils.remove_entry(cache_dir) }
+
+  before(:each, :withdrawn_reference) { mock_withdrawn_references }
+
+  it "renders withdrawn references offline with an existing source cache",
+     :aggregate_failures, :withdrawn_reference do
+    expect { withdrawn_xml }.not_to(change { File.binread(withdrawn_fixture) })
+    expect(withdrawn_xml.at("//note[@type='Unpublished-Status']")&.text)
+      .to include("Withdrawn")
+    expect(File).to exist(File.join(cache_dir, "cache"))
+  end
+
   it "processes draft ISO reference" do
     mock_fdis_iso
     mock_fdis_iec
@@ -129,7 +169,7 @@ RSpec.describe Metanorma::Iso do
                    </contributor>
                    <edition>1</edition>
                    <note type="Unpublished-Status">
-                      <p id="_">Under preparation. Stage at the time of publication: IEC/PWI 100-44:#{Date.today.year} ED1.</p>
+                      <p id="_">Under preparation. Stage at the time of publication: IEC PWI 100-44:#{Date.today.year} ED1.</p>
                    </note>
                    <language>en</language>
                    <language>fr</language>
@@ -362,8 +402,9 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "renders withdrawn and cancelled ISO references" do
+    mock_withdrawn_references
     input = <<~INPUT
-      #{LOCAL_CACHED_ISOBIB_BLANK_HDR}
+      #{local_cached_header}
 
       <<iso1,clause=1>>
       <<iso2,clause=1>>
@@ -510,6 +551,7 @@ RSpec.describe Metanorma::Iso do
                    <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:3621:en</uri>
                    <uri type="rss">https://www.iso.org/contents/data/standard/00/36/3621.detail.rss</uri>
                    <docidentifier type="ISO" primary="true">ISO 31-0:1992</docidentifier>
+                   <docidentifier type="iso-undated">ISO 31-0</docidentifier>
                    <docidentifier type="iso-reference">ISO 31-0:1992(E)</docidentifier>
                    <docidentifier type="URN">urn:iso:std:iso:31:-0:stage-95.99</docidentifier>
                    <docnumber>31</docnumber>
@@ -614,6 +656,7 @@ RSpec.describe Metanorma::Iso do
                <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:76389:en</uri>
                <uri type="rss">https://www.iso.org/contents/data/standard/07/63/76389.detail.rss</uri>
                <docidentifier type="ISO" primary="true">ISO 683-3:2019</docidentifier>
+               <docidentifier type="iso-undated">ISO 683-3</docidentifier>
                <docidentifier type="iso-reference">ISO 683-3:2019(E)</docidentifier>
                <docidentifier type="URN">urn:iso:std:iso:683:-3:stage-95.99</docidentifier>
                <docnumber>683</docnumber>
@@ -695,8 +738,9 @@ RSpec.describe Metanorma::Iso do
   # (obsoletedBy ISO 80000-1:2009). A document published in 2005 must not show
   # it as withdrawn; a document published in 2015 must.
   it "suppresses a withdrawn-reference note when the withdrawal postdates publication" do
+    mock_withdrawn_references
     input = <<~INPUT
-      #{LOCAL_CACHED_ISOBIB_BLANK_HDR.sub(':nodoc:', ":nodoc:\n:copyright-year: 2005")}
+      #{local_cached_header.sub(':nodoc:', ":nodoc:\n:copyright-year: 2005")}
 
       [bibliography]
       == Bibliography
@@ -710,8 +754,9 @@ RSpec.describe Metanorma::Iso do
   end
 
   it "keeps a withdrawn-reference note when the withdrawal predates publication" do
+    mock_withdrawn_references
     input = <<~INPUT
-      #{LOCAL_CACHED_ISOBIB_BLANK_HDR.sub(':nodoc:', ":nodoc:\n:copyright-year: 2015")}
+      #{local_cached_header.sub(':nodoc:', ":nodoc:\n:copyright-year: 2015")}
 
       [bibliography]
       == Bibliography
@@ -726,9 +771,29 @@ RSpec.describe Metanorma::Iso do
 
   private
 
+  def mock_withdrawn_references
+    stub_request(:any, /.*/).to_raise("Unexpected HTTP request")
+    fixtures = File.expand_path("../relatondb/cache/v2/docs/is", __dir__)
+    allow(Relaton::Iso::Bibliography).to receive(:get) do |id, _year, _opts|
+      filename = case id.to_s
+                 when /\AISO 31-0/ then "iso%2F31%2F8b026bccc81a78c0.xml"
+                 when /\AISO 683-3/ then "iso%2F683%2F17fa7275475e8674.xml"
+                 else raise "Unexpected reference: #{id}"
+                 end
+      Relaton::Bib::Bibitem.from_xml(File.read(File.join(fixtures, filename)))
+    end
+  end
+
+  # relaton#205: the flavor's `get` receives the parsed pubid object when
+  # the reference parses as one, else the raw String. Match on the rendered
+  # reference so the stub binds on either relaton generation.
+  def relaton_ref(code)
+    satisfy("a reference rendering as #{code.inspect}") { |ref| ref.to_s == code }
+  end
+
   def mock_fdis_iso
     expect(Relaton::Iso::Bibliography).to receive(:get)
-      .with("ISO/FDIS 17664-1", "2020", anything) do
+      .with(relaton_ref("ISO/FDIS 17664-1"), "2020", anything) do
       Relaton::Bib::Bibitem.from_xml(<<~"OUTPUT")
         <bibitem id="_" anchor="x" type="standard">
           <fetched>#{Date.today}</fetched>
@@ -772,7 +837,7 @@ RSpec.describe Metanorma::Iso do
 
     def mock_fdis_iec
       expect(Relaton::Iec::Bibliography).to receive(:get)
-        .with("IEC PWI 100-44 ED1", nil, anything) do
+        .with(relaton_ref("IEC PWI 100-44 ED1"), nil, anything) do
         Relaton::Bib::Bibitem.from_xml(<<~"OUTPUT")
           <bibitem id="_" anchor="x" type="standard">
             <fetched>#{Date.today}</fetched>

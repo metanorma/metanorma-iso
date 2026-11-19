@@ -1,0 +1,2923 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" version="3.3.4" schema-version="v2.1.5" flavor="iso">
+<bibdata type="standard">
+<title language="en" type="main">Metrological regulation for load cells — Metrological and technical requirements</title>
+
+<title language="en" type="title-main">Metrological regulation for load cells</title>
+
+<title language="en" type="title-part">Metrological and technical requirements</title>
+
+<title language="en" type="title-part-prefix">Part 1</title>
+
+<title language="ru" type="title-part-prefix">Часть 1</title>
+
+<title language="fr" type="main">Réglementation métrologique des cellules de pesée — Exigences métrologiques et techniques</title>
+
+<title language="fr" type="title-main">Réglementation métrologique des cellules de pesée</title>
+
+<title language="fr" type="title-part">Exigences métrologiques et techniques</title>
+
+<title language="fr" type="title-part-prefix">Partie 1</title>
+<docidentifier primary="true" type="ISO">OIML R 60-1</docidentifier><docnumber>60</docnumber><contributor><role type="author"/><organization>
+<name>International Organization of Legal Metrology</name>
+<abbreviation>OIML</abbreviation><logo><image src="/usr/local/bundle/gems/metanorma-taste-1.0.2/data/oiml/oiml-logo.svg" mimetype="image/svg+xml"><svg xmlns="http://www.w3.org/2000/svg" id="uuid-8254e958-185a-4059-ac34-8a156a2e0e83" viewBox="0 0 120 100" width="42mm" height="34.8mm"><path d="M36.59,13.77c8.2,10.18,37.61,10.18,45.62,0" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M36.59,86.47c8.2-10.18,37.61-10.18,45.62,0" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><circle cx="59.35" cy="49.99" r="42.94" style="fill:none; stroke:#000; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M26.44,54.24c0,1.43-.04,2.82-.37,4.11-.66,2.53-2.16,4.29-5.65,4.29s-4.98-1.76-5.65-4.29c-.33-1.29-.41-2.68-.41-4.11v-7.99c0-1.32.22-2.56.55-3.67.66-2.23,2.23-3.71,5.5-3.71s4.73,1.46,5.46,3.71c.37,1.1.55,2.35.55,3.67M20.41,63.55c7.25,0,11.4-6.71,11.4-13.42,0-6.05-5.28-12.18-11.4-12.18s-11.42,6.13-11.42,12.18c0,6.71,4.18,13.42,11.44,13.42h-.02Z" style="fill:#231f20; fill-rule:evenodd;"/><polyline points="46.79 39.43 50.42 39.43 50.42 38.51 38.47 38.51 38.47 39.43 42.1 39.43 42.1 62.08 38.47 62.08 38.47 63 50.42 63 50.42 62.08 46.79 62.08" style="fill:#231f20;"/><polyline points="81.46 39.43 85.1 39.43 85.1 38.51 75.82 38.51 70.5 55.26 65.37 38.51 55.91 38.51 55.91 39.43 59.54 39.43 59.54 62.08 55.91 62.08 55.91 63 64.27 63 64.27 62.08 60.71 62.08 60.71 40.04 60.78 40.04 68.08 63 69.33 63 76.66 40.04 76.77 40.04 76.77 62.08 73.14 62.08 73.14 63 85.1 63 85.1 62.08 81.46 62.08" style="fill:#231f20;"/><path d="M110.64,63l.37-8.25h-1.14c-.15,4.22-1.79,7.33-6.46,7.33h-4.8v-22.66h3.82v-.92h-12.14v.92h3.63v22.66h-3.63v.92" style="fill:#231f20;"/><path d="M59.44,7.2c-15.32-.03-24.58,13.59-27.7,29.99" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M32.1,64.61c3.39,15.63,12.47,28.32,27.32,28.32" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M59.44,7.2c-7.58,0-12.11,13.69-13.58,30.14" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M46.13,64.63c1.69,15.62,6.12,28.3,13.27,28.3" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><line x1="59.44" y1="7.07" x2="59.42" y2="37.34" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><line x1="59.45" y1="64.5" x2="59.42" y2="92.87" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M72.94,37.35c-1.54-16.44-6.09-30.14-13.53-30.14" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M59.47,92.95c7.32,0,11.74-12.78,13.35-28.46" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M87.14,37.22c-3.1-16.38-12.35-30.01-27.72-30.01" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M59.47,92.95c14.85.03,23.95-12.78,27.34-28.5" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/></svg></image></logo></organization></contributor><contributor><role type="author"><description>committee</description></role><organization>
+<name>International Organization of Legal Metrology</name>
+<subdivision type="Technical committee" subtype="TC">
+<name>Instruments for measuring mass and density</name>
+<identifier>TC 9</identifier><identifier type="full">TC 9</identifier></subdivision></organization></contributor><contributor><role type="authorizer"><description>Agency</description></role><organization>
+<name>International Organization of Legal Metrology</name>
+</organization></contributor><contributor><role type="publisher"/><organization>
+<name>International Organization of Legal Metrology</name>
+<abbreviation>OIML</abbreviation><logo><image src="/usr/local/bundle/gems/metanorma-taste-1.0.2/data/oiml/oiml-logo.svg" mimetype="image/svg+xml"><svg xmlns="http://www.w3.org/2000/svg" id="uuid-8254e958-185a-4059-ac34-8a156a2e0e83_inject_1" viewBox="0 0 120 100" width="42mm" height="34.8mm"><path d="M36.59,13.77c8.2,10.18,37.61,10.18,45.62,0" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M36.59,86.47c8.2-10.18,37.61-10.18,45.62,0" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><circle cx="59.35" cy="49.99" r="42.94" style="fill:none; stroke:#000; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M26.44,54.24c0,1.43-.04,2.82-.37,4.11-.66,2.53-2.16,4.29-5.65,4.29s-4.98-1.76-5.65-4.29c-.33-1.29-.41-2.68-.41-4.11v-7.99c0-1.32.22-2.56.55-3.67.66-2.23,2.23-3.71,5.5-3.71s4.73,1.46,5.46,3.71c.37,1.1.55,2.35.55,3.67M20.41,63.55c7.25,0,11.4-6.71,11.4-13.42,0-6.05-5.28-12.18-11.4-12.18s-11.42,6.13-11.42,12.18c0,6.71,4.18,13.42,11.44,13.42h-.02Z" style="fill:#231f20; fill-rule:evenodd;"/><polyline points="46.79 39.43 50.42 39.43 50.42 38.51 38.47 38.51 38.47 39.43 42.1 39.43 42.1 62.08 38.47 62.08 38.47 63 50.42 63 50.42 62.08 46.79 62.08" style="fill:#231f20;"/><polyline points="81.46 39.43 85.1 39.43 85.1 38.51 75.82 38.51 70.5 55.26 65.37 38.51 55.91 38.51 55.91 39.43 59.54 39.43 59.54 62.08 55.91 62.08 55.91 63 64.27 63 64.27 62.08 60.71 62.08 60.71 40.04 60.78 40.04 68.08 63 69.33 63 76.66 40.04 76.77 40.04 76.77 62.08 73.14 62.08 73.14 63 85.1 63 85.1 62.08 81.46 62.08" style="fill:#231f20;"/><path d="M110.64,63l.37-8.25h-1.14c-.15,4.22-1.79,7.33-6.46,7.33h-4.8v-22.66h3.82v-.92h-12.14v.92h3.63v22.66h-3.63v.92" style="fill:#231f20;"/><path d="M59.44,7.2c-15.32-.03-24.58,13.59-27.7,29.99" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M32.1,64.61c3.39,15.63,12.47,28.32,27.32,28.32" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M59.44,7.2c-7.58,0-12.11,13.69-13.58,30.14" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M46.13,64.63c1.69,15.62,6.12,28.3,13.27,28.3" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><line x1="59.44" y1="7.07" x2="59.42" y2="37.34" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><line x1="59.45" y1="64.5" x2="59.42" y2="92.87" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M72.94,37.35c-1.54-16.44-6.09-30.14-13.53-30.14" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M59.47,92.95c7.32,0,11.74-12.78,13.35-28.46" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M87.14,37.22c-3.1-16.38-12.35-30.01-27.72-30.01" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M59.47,92.95c14.85.03,23.95-12.78,27.34-28.5" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/></svg></image></logo></organization></contributor><contributor><role type="authorizer"><description>committee</description></role><organization>
+<name>International Organization for Standardization</name>
+<subdivision type="Technical committee" subtype="TC">
+<name>Instruments for measuring mass and density</name>
+<identifier>TC 9</identifier><identifier type="full">TC 9</identifier></subdivision><abbreviation>ISO</abbreviation></organization></contributor><edition>2</edition><version><revision-date>2021-10-01</revision-date></version><language>en</language><script>Latn</script><status><stage abbreviation="IS">60</stage><substage>60</substage></status><copyright><from>2021</from><owner><organization>
+<name>International Organization of Legal Metrology</name>
+<abbreviation>OIML</abbreviation><logo><image src="/usr/local/bundle/gems/metanorma-taste-1.0.2/data/oiml/oiml-logo.svg" mimetype="image/svg+xml"><svg xmlns="http://www.w3.org/2000/svg" id="uuid-8254e958-185a-4059-ac34-8a156a2e0e83_inject_2" viewBox="0 0 120 100" width="42mm" height="34.8mm"><path d="M36.59,13.77c8.2,10.18,37.61,10.18,45.62,0" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M36.59,86.47c8.2-10.18,37.61-10.18,45.62,0" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><circle cx="59.35" cy="49.99" r="42.94" style="fill:none; stroke:#000; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M26.44,54.24c0,1.43-.04,2.82-.37,4.11-.66,2.53-2.16,4.29-5.65,4.29s-4.98-1.76-5.65-4.29c-.33-1.29-.41-2.68-.41-4.11v-7.99c0-1.32.22-2.56.55-3.67.66-2.23,2.23-3.71,5.5-3.71s4.73,1.46,5.46,3.71c.37,1.1.55,2.35.55,3.67M20.41,63.55c7.25,0,11.4-6.71,11.4-13.42,0-6.05-5.28-12.18-11.4-12.18s-11.42,6.13-11.42,12.18c0,6.71,4.18,13.42,11.44,13.42h-.02Z" style="fill:#231f20; fill-rule:evenodd;"/><polyline points="46.79 39.43 50.42 39.43 50.42 38.51 38.47 38.51 38.47 39.43 42.1 39.43 42.1 62.08 38.47 62.08 38.47 63 50.42 63 50.42 62.08 46.79 62.08" style="fill:#231f20;"/><polyline points="81.46 39.43 85.1 39.43 85.1 38.51 75.82 38.51 70.5 55.26 65.37 38.51 55.91 38.51 55.91 39.43 59.54 39.43 59.54 62.08 55.91 62.08 55.91 63 64.27 63 64.27 62.08 60.71 62.08 60.71 40.04 60.78 40.04 68.08 63 69.33 63 76.66 40.04 76.77 40.04 76.77 62.08 73.14 62.08 73.14 63 85.1 63 85.1 62.08 81.46 62.08" style="fill:#231f20;"/><path d="M110.64,63l.37-8.25h-1.14c-.15,4.22-1.79,7.33-6.46,7.33h-4.8v-22.66h3.82v-.92h-12.14v.92h3.63v22.66h-3.63v.92" style="fill:#231f20;"/><path d="M59.44,7.2c-15.32-.03-24.58,13.59-27.7,29.99" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M32.1,64.61c3.39,15.63,12.47,28.32,27.32,28.32" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M59.44,7.2c-7.58,0-12.11,13.69-13.58,30.14" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M46.13,64.63c1.69,15.62,6.12,28.3,13.27,28.3" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><line x1="59.44" y1="7.07" x2="59.42" y2="37.34" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><line x1="59.45" y1="64.5" x2="59.42" y2="92.87" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M72.94,37.35c-1.54-16.44-6.09-30.14-13.53-30.14" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M59.47,92.95c7.32,0,11.74-12.78,13.35-28.46" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M87.14,37.22c-3.1-16.38-12.35-30.01-27.72-30.01" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/><path d="M59.47,92.95c14.85.03,23.95-12.78,27.34-28.5" style="fill:none; stroke:#231f20; stroke-miterlimit:3.85; stroke-width:.91px;"/></svg></image></logo></organization></owner></copyright><ext><doctype>international-standard</doctype><flavor>iso</flavor><structuredidentifier><project-number part="1">OIML 60</project-number></structuredidentifier><stagename abbreviation="IS">International Standard</stagename></ext></bibdata><metanorma-extension><semantic-metadata><stage-published>true</stage-published></semantic-metadata>
+<presentation-metadata><doctype-alias>international-recommendation</doctype-alias><document-scheme>2013</document-scheme><toc-heading-levels>2</toc-heading-levels><html-toc-heading-levels>2</html-toc-heading-levels><doc-toc-heading-levels>3</doc-toc-heading-levels><pdf-toc-heading-levels>2</pdf-toc-heading-levels></presentation-metadata><UnitsML xmlns="https://schema.unitsml.org/unitsml/1.0"><UnitSet><Unit dimensionURL="#NISTd5" id="U_NISTu23">
+        <UnitSystem name="SI" type="SI_derived" lang="en-US"/>
+        <UnitName lang="en">degree Celsius</UnitName>
+        <UnitSymbol type="HTML">°C</UnitSymbol>
+        <UnitSymbol type="MathMl">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi mathvariant="normal">°C</mi>
+          </math>
+        </UnitSymbol>
+      </Unit><Unit dimensionURL="#NISTd14" id="U_kPa">
+        <UnitSystem name="SI" type="SI_derived" lang="en-US"/>
+        <UnitName lang="en">kPa</UnitName>
+        <UnitSymbol type="HTML">kPa</UnitSymbol>
+        <UnitSymbol type="MathMl">
+          <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <mi mathvariant="normal">kPa</mi>
+          </math>
+        </UnitSymbol>
+        <RootUnits>
+          <EnumeratedRootUnit unit="pascal" prefix="k"/>
+        </RootUnits>
+      </Unit></UnitSet><DimensionSet><Dimension id="NISTd5">
+        <ThermodynamicTemperature symbol="Theta" powerNumerator="1"/>
+      </Dimension><Dimension id="NISTd14">
+        <Length symbol="L" powerNumerator="-1"/>
+        <Mass symbol="M" powerNumerator="1"/>
+        <Time symbol="T" powerNumerator="-2"/>
+      </Dimension></DimensionSet><PrefixSet><Prefix prefixBase="10" prefixPower="3" id="NISTp10_3">
+        <PrefixName lang="en">kilo</PrefixName>
+        <PrefixSymbol type="ASCII">k</PrefixSymbol>
+        <PrefixSymbol type="unicode">k</PrefixSymbol>
+        <PrefixSymbol type="LaTeX">k</PrefixSymbol>
+        <PrefixSymbol type="HTML">k</PrefixSymbol>
+      </Prefix></PrefixSet></UnitsML></metanorma-extension>
+<boilerplate><copyright-statement>
+
+<clause id="_26a1404b-5691-bab0-51f5-438211e9bbfc" inline-header="false" obligation="normative"><p id="_1d37d283-b53c-595e-4f5b-96140619aae7">© OIML 2021</p>
+
+<p id="_6711e67c-7bc3-b668-a67f-ec68c6b24d99" align="left">Bureau International de Métrologie Légale<br/> 11, rue Turgot – 75009 Paris – France<br/> Telephone: 33 (0)1 48 78 12 82<br/> Fax: 33 (0)1 42 82 17 27<br/> E-mail: link:mailto:biml@oiml.org<br/> Internet:  <link target="https://www.oiml.org">www.oiml.org</link></p>
+</clause>
+</copyright-statement>
+<feedback-statement>
+
+<clause id="_c93b7b8e-c823-7557-2ecf-8a9b8feb9a61" inline-header="false" obligation="normative"><p id="_d0a674b7-3667-12e4-81ba-deec26ebe4bb">OIML Publications may be downloaded from the OIML web site in the form of PDF files. Additional information on OIML Publications may be obtained from the Organisation’s headquarters:</p>
+
+<p id="_f0f7fd17-e1fc-5b10-60ff-c6d972b4eaa1" align="left">Bureau International de Métrologie Légale<br/> 11, rue Turgot – 75009 Paris – France<br/> Telephone: 33 (0)1 48 78 12 82<br/> Fax: 33 (0)1 42 82 17 27<br/> E-mail:  <link target="mailto:biml@oiml.org"/><br/> Internet:  <link target="https://www.oiml.org">www.oiml.org</link></p>
+</clause>
+</feedback-statement></boilerplate><preface><foreword id="_2c98efec-601c-2239-97a9-62f5238f022d" obligation="informative">
+<title id="_41c9fad3-d4c1-eecc-4fad-f91704acc026">Foreword</title>
+<p id="_562d2fb6-d63e-84ae-e97e-5078e3b7b4a7">The International Organisation of Legal Metrology (OIML) is a worldwide, intergovernmental organisation whose primary aim is to harmonise the regulations and metrological controls applied by the national metrological services, or related organisations, of its Member States. The main categories of OIML publications are:</p>
+
+<ul id="_4f820a64-f515-3c5e-cf17-f88f7689f579"><li><p id="_d372c31f-bfd7-7fbb-535a-ed45152cf8ca"><strong>International Recommendations (OIML R)</strong>, which are model regulations that establish the metrological characteristics required of certain measuring instruments and which specify methods and equipment for checking their conformity. OIML Member States shall implement these Recommendations to the greatest possible extent;</p>
+</li>
+<li><p id="_82dedfa9-31e2-ffd7-34db-ed3d3913cc6b"><strong>International Documents (OIML D)</strong>, which are informative in nature and which are intended to harmonise and improve work in the field of legal metrology;</p>
+</li>
+<li><p id="_d0c20f2d-127a-b5bd-a238-7454decfcac5"><strong>International Guides (OIML G)</strong>, which are also informative in nature and which are intended to give guidelines for the application of certain requirements to legal metrology; and</p>
+</li>
+<li><p id="_9a623d5d-7950-60e7-1649-808e78aeacee"><strong>International Basic Publications (OIML B)</strong>, which define the operating rules of the various OIML structures and systems.</p>
+</li>
+</ul>
+
+<p id="_0be69df8-5ff3-5678-8945-66a921bc4e81">OIML Draft Recommendations, Documents and Guides are developed by Project Groups linked to Technical Committees or Subcommittees which comprise representatives from OIML Member States. Certain international and regional institutions also participate on a consultation basis. Cooperative agreements have been established between the OIML and certain institutions, such as ISO and the IEC, with the objective of avoiding contradictory requirements. Consequently, manufacturers and users of measuring instruments, test laboratories, etc. may simultaneously apply OIML publications and those of other institutions.</p>
+
+<p id="_ba13e892-20b5-80a9-312e-a25da604a959">International Recommendations, Documents, Guides and Basic Publications are published in English (E) and translated into French (F) and are subject to periodic revision.</p>
+
+<p id="_b7af99b1-4765-8464-90e3-8626b04b84de">Additionally, the OIML publishes or participates in the publication of <strong>Vocabularies (OIML V)</strong> and periodically commissions legal metrology experts to write <strong>Expert Reports (OIML E)</strong>. Expert Reports are intended to provide information and advice, and are written solely from the viewpoint of their author, without the involvement of a Technical Committee or Subcommittee, nor that of the CIML. Thus, they do not necessarily represent the views of the OIML.</p>
+
+<p id="_3ff9d426-d25c-df8b-126a-772db05b7299">This publication — reference OIML R 60-1:2021 — is an updated edition (developed by the OIML Certification System Management Committee) of OIML R 60-1:2017 (developed by Project Group 1 of OIML Technical Committee TC 9 <em>Instruments for measuring mass and density</em>). This updated edition consolidates the Amendment (2019-12-23) to R 60:2017, and includes other editorial and minor technical changes. It was approved for final publication by the International Committee of Legal Metrology at its 56th meeting in October 2021 and was sanctioned by the 16th International Conference on Legal Metrology in 2021. It supersedes the previous edition of R 60 dated 2017.</p>
+
+<p id="_f38c1156-6177-3ef5-50b8-864745ac082c">OIML Publications may be downloaded from the OIML web site in the form of PDF files. Additional information on OIML Publications may be obtained from the Organisation’s headquarters:</p>
+
+<p id="_751e9754-4918-f7bc-6597-17b5f66ca306">Bureau International de Métrologie Légale<br/> 11, rue Turgot — 75009 Paris — France<br/> Telephone: 33 (0)1 48 78 12 82<br/> Fax: 33 (0)1 42 82 17 27<br/> E-mail:  <link target="mailto:biml@oiml.org"/><br/> Internet: www.oiml.org</p>
+</foreword></preface><sections>
+<clause id="_0c23170a-702b-a7e1-831a-4c3275ef0b3d" inline-header="false" obligation="normative">
+<title id="_46069e95-51f4-1e9a-f2b9-70fe751a0935">Introduction</title>
+<p id="_3c1284ac-d3e9-0d10-dbbe-4e9617711a92">Load cells comprise a distinct element or module within other complex instruments; they do not produce distinct quantitative values that are inherently identified or associated with denominations or units. The data that can be extracted from a load cell is simply a measurement of change in the output of the load cell in relation to the input. This relative change must be converted by other elements or modules within an instrument into values that are meaningful measurements which can then be used to identify a quantity.</p>
+
+<p id="_82c057bb-509a-ff16-cf29-850975029f82">Although strain gauge technology was a primary focus in the initial development of R 60, it is to be understood that load cells that operate using other principles may also be evaluated under this Recommendation.</p>
+</clause>
+
+<clause id="_5ee7856f-be57-502e-7021-763c0f45de54" inline-header="false" obligation="normative">
+<title id="_6d44f874-56e1-6381-8a6a-6f45728d9975">Scope</title>
+<clause id="_40d94f64-ee5c-2e91-7677-3579764567f7" inline-header="false" obligation="normative"><p id="_27fee4b8-c9b5-e185-eb51-cf78a61baa41">This Recommendation prescribes the principal metrological static requirements and static evaluation procedures for load cells used in the determination of conformity to this Recommendation. It is intended to provide authorities with uniform means for determining the metrological characteristics of load cells used in measuring instruments that are subjected to metrological controls.</p>
+
+<p id="_aada72d8-cbe6-dbee-5e66-8b35b4117450">It is acknowledged that test procedures found in OIML R 60-2 are useful in the evaluation of load cells that are currently in service (i.e. primarily of the strain gauge design) however, there may be variations in designs for load cells that will require additional or modified test procedures to appropriately evaluate them. These additional test procedures may be annexed when necessary.</p>
+
+<p id="_aeedf795-2666-ed28-8f43-576b4452e75d">Except where otherwise specified, these requirements apply regardless of the technology or operating principle employed. The requirements and evaluation procedures in this Recommendation have been drafted to be non-specific with regard to load cell design and their operating principles.</p>
+</clause>
+
+<clause id="_3bd3c190-0c6c-790a-cb7f-2abf8704c245" inline-header="false" obligation="normative"><p id="_910f8462-d552-4c53-f5b6-76a8a65d3bc9">This Recommendation utilises the principle that several measurement errors shall
+be considered together when applying load cell performance characteristics to the
+permitted error envelope. Thus, it is not considered appropriate to specify individual
+errors for given characteristics (e.g. non-linearity, hysteresis, effects of influence
+factors), but rather to consider the total error envelope allowed for a load cell
+as the limiting factor. The use of an error envelope allows the balancing of the
+individual contributions to the total error of measurement while still achieving
+the intended final result.<note id="_646d72b4-89e2-2dd0-de71-33c976fd7b19"><p id="_adea2257-b85d-5592-6879-9fb66eee286e">The error envelope may be defined as the boundary of the combined individual errors (see  <xref target="table-4"/>) as a function of the force introduced by the applied load (expressed in mass units) over the measuring range. The combined error determined may be positive or negative and include the effects of non-linearity, hysteresis and temperature.</p>
+</note></p>
+
+
+</clause>
+
+<clause id="_c2b1131c-55de-e101-0ce0-29deed1ff34f" anchor="sec-2.3" inline-header="false" obligation="normative"><p id="_b9a015f6-75bd-0749-9cd3-197e075ce525">“Weighing modules” as noted in OIML R 76 [1], T.2.2.7 (see R 60, Annex A, A.2.1), are not covered by this Recommendation. Weighing instruments that include load cells and which give an indication of mass are the subjects of separate Recommendations. While digital load cells may be covered under this Recommendation, a load cell that produces an output consisting of more than digital “raw counts” is not covered. In the illustration from OIML R 76 below, the scope of R 60 would not extend beyond module #3.</p>
+
+<figure id="_788563f8-9b32-5147-7703-bc928b27a9b0" anchor="fig-1">
+<name id="_9112c143-636f-a42b-9367-9098a19f5fd6">Typical components in a weighing instrument</name>
+<image id="_12c22b48-064e-206e-5d37-cae69e75231e" src="images/figure-1.svg" mimetype="image/svg+xml" height="auto" width="auto" filename="images/figure-1.svg"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 448.88 238.22">
+  <!-- Generator: Adobe Illustrator 30.2.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 1)  -->
+  <defs>
+    <style>
+      .st0 {
+        font-size: 10px;
+      }
+
+      .st0, .st1, .st2 {
+        font-family: ArialMT, Arial;
+      }
+
+      .st3 {
+        fill: #fff;
+        stroke-width: .75px;
+      }
+
+      .st3, .st4, .st5 {
+        stroke: #000;
+        stroke-miterlimit: 10;
+      }
+
+      .st4, .st5 {
+        fill: none;
+      }
+
+      .st5 {
+        stroke-dasharray: 4;
+      }
+
+      .st1 {
+        font-size: 7px;
+      }
+
+      .st2 {
+        font-size: 6px;
+      }
+    </style>
+  </defs>
+  <g id="lines_inject_3">
+    <line class="st4" x1="45.94" y1="83.39" x2="332.15" y2="83.39"/>
+    <line class="st4" x1="302.39" y1="83.53" x2="302.39" y2="48.93"/>
+    <line class="st5" x1="388.31" y1="8.07" x2="388.31" y2="198.23"/>
+  </g>
+  <g id="rectangles_inject_3">
+    <rect class="st3" x="399.36" y="21.01" width="43.72" height="31.6"/>
+    <rect class="st3" x="332.11" y="67.19" width="43.72" height="31.6"/>
+    <rect class="st3" x="280.19" y="17.3" width="43.72" height="31.6"/>
+    <rect class="st3" x="224.88" y="66" width="43.72" height="35.15"/>
+    <rect class="st3" x="169.66" y="66" width="43.72" height="35.15"/>
+    <rect class="st3" x="112.9" y="66" width="43.72" height="35.15"/>
+    <rect class="st3" x="57" y="66" width="43.72" height="35.15"/>
+    <rect class="st3" x="2.11" y="66" width="43.72" height="35.15"/>
+    <rect class="st3" x="399.36" y="64.59" width="43.72" height="31.6"/>
+    <rect class="st3" x="399.36" y="108.39" width="43.72" height="31.6"/>
+    <rect class="st3" x="399.36" y="151.97" width="43.72" height="31.6"/>
+  </g>
+  <g id="arrows">
+    <g>
+      <line class="st4" x1="107.74" y1="137.02" x2="107.74" y2="106.3"/>
+      <polygon points="107.74 101.36 110.58 108.32 107.74 106.67 104.89 108.32 107.74 101.36"/>
+    </g>
+    <g>
+      <line class="st4" x1="164" y1="137.02" x2="164" y2="106.3"/>
+      <polygon points="164 101.36 166.85 108.32 164 106.67 161.15 108.32 164 101.36"/>
+    </g>
+    <g>
+      <line class="st4" x1="219.14" y1="137.02" x2="219.14" y2="106.3"/>
+      <polygon points="219.14 101.36 221.98 108.32 219.14 106.67 216.29 108.32 219.14 101.36"/>
+    </g>
+    <g>
+      <line class="st4" x1="284.9" y1="137.02" x2="284.9" y2="106.3"/>
+      <polygon points="284.9 101.36 287.74 108.32 284.9 106.67 282.05 108.32 284.9 101.36"/>
+    </g>
+  </g>
+  <g id="texts_inject_3">
+    <text class="st1" transform="translate(287.85 26.39)"><tspan x="0" y="0">Key(s) or </tspan><tspan x="-4.68" y="8.4">Keyboard to </tspan><tspan x="2.33" y="16.8">operate</tspan></text>
+    <text class="st1" transform="translate(410.86 38.68)"><tspan x="0" y="0">Printer</tspan></text>
+    <text class="st1" transform="translate(341.92 80.66)"><tspan x="0" y="0">Primary</tspan><tspan x="1.16" y="8.4">display</tspan></text>
+    <text class="st1" transform="translate(92.95 148.48)"><tspan x="0" y="0">Analogue</tspan><tspan x="5.65" y="8.4">signal</tspan></text>
+    <text class="st0" transform="translate(.6 216.8)"><tspan x="0" y="0">From OIML R 76:</tspan></text>
+    <text class="st0" transform="translate(.6 236.15)"><tspan x="0" y="0">Definition of typical modules within a weighing system (other combinations are possible). </tspan></text>
+    <text class="st1" transform="translate(154.27 148.4)"><tspan x="0" y="0">Digital</tspan><tspan x="-9.33" y="8.4">“raw values”</tspan><tspan x="-2.92" y="16.8">(counts)</tspan></text>
+    <text class="st1" transform="translate(204.55 149.69)"><tspan x="0" y="0">Weighing</tspan><tspan x="6.22" y="8.4">value</tspan><tspan x="1.37" y="16.8">(in mass</tspan><tspan x="6.03" y="25.2">units)</tspan></text>
+    <text class="st1" transform="translate(260.97 151.12)"><tspan x="0" y="0">Net, gross, tare</tspan><tspan x="9.14" y="8.4">and other</tspan><tspan x="12.26" y="16.8">primary</tspan><tspan x="9.14" y="25.2">indication</tspan><tspan x="7.2" y="33.6">(e.g. price)</tspan></text>
+    <text class="st1" transform="translate(227.68 72.84)"><tspan x="0" y="0">Further data</tspan><tspan x="2.14" y="8.4">processing</tspan><tspan x="3.11" y="16.8">(e.g., tare,</tspan><tspan x="10.31" y="25.2">price)</tspan></text>
+    <text class="st1" transform="translate(184.13 77.04)"><tspan x="0" y="0">Data</tspan><tspan x="-9.53" y="8.4">processing</tspan><tspan x="-5.83" y="16.8">(scaling)</tspan></text>
+    <text class="st1" transform="translate(116.08 77.04)"><tspan x="0" y="0">Analogue to</tspan><tspan x="9.54" y="8.4">digital</tspan><tspan x="4.09" y="16.8">converter</tspan></text>
+    <text class="st1" transform="translate(64.08 81.24)"><tspan x="0" y="0">Analogue</tspan><tspan x="1.95" y="8.4">load cell</tspan></text>
+    <text class="st1" transform="translate(6.27 72.84)"><tspan x="0" y="0">Mechanical</tspan><tspan x="-2.92" y="8.4">and electrical</tspan><tspan x=".77" y="16.8">connecting</tspan><tspan x="3.5" y="25.2">elements</tspan></text>
+    <text class="st1" transform="translate(404.49 78.05)"><tspan x="0" y="0">Secondary</tspan><tspan x="5.84" y="8.4">display</tspan></text>
+    <text class="st1" transform="translate(401.18 121.86)"><tspan x="0" y="0">Data storage</tspan><tspan x="9.92" y="8.4">device</tspan></text>
+    <text class="st1" transform="translate(412.47 161.23)"><tspan x="0" y="0">Other</tspan><tspan x="-6.81" y="8.4">peripheral</tspan><tspan x="-3.11" y="16.8">devices</tspan></text>
+    <text class="st2" transform="translate(407.55 9.31)"><tspan x="0" y="0">Peripheral</tspan><tspan x="3.5" y="7.2">devices</tspan></text>
+  </g>
+  <g id="numbers">
+    <text class="st1" transform="translate(22.02 57.4)"><tspan x="0" y="0">1</tspan></text>
+    <text class="st1" transform="translate(76.92 57.4)"><tspan x="0" y="0">2</tspan></text>
+    <text class="st1" transform="translate(132.81 57.4)"><tspan x="0" y="0">3</tspan></text>
+    <text class="st1" transform="translate(189.58 57.4)"><tspan x="0" y="0">4</tspan></text>
+    <text class="st1" transform="translate(244.8 57.4)"><tspan x="0" y="0">5</tspan></text>
+    <text class="st1" transform="translate(300.1 11.7)"><tspan x="0" y="0">6</tspan></text>
+    <text class="st1" transform="translate(352.03 61.72)"><tspan x="0" y="0">7</tspan></text>
+  </g>
+</svg></image></figure>
+
+<figure id="_266f6190-5121-bc34-7e8b-aac5aac891c1" anchor="fig-2">
+<name id="_9248160a-f146-ca29-75d1-7114a116847f">Characterisation of load cell capabilities</name>
+<image id="_dd832dff-a3ff-9895-9083-7e8c11e655da" src="images/figure-2.svg" mimetype="image/svg+xml" height="auto" width="auto" filename="images/figure-2.svg"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 593.44 251.71">
+  <!-- Generator: Adobe Illustrator 30.2.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 1)  -->
+  <defs>
+    <style>
+      .st0 {
+        font-size: 13px;
+      }
+
+      .st0, .st1, .st2 {
+        font-family: ArialMT, Arial;
+      }
+
+      .st1 {
+        font-size: 10px;
+      }
+
+      .st3 {
+        fill: #fff;
+      }
+
+      .st3, .st4 {
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: .75px;
+      }
+
+      .st4 {
+        fill: none;
+      }
+
+      .st2 {
+        font-size: 8px;
+      }
+    </style>
+  </defs>
+  <g id="lines_inject_4">
+    <line class="st4" x1="91.04" y1="41.98" x2="499.68" y2="41.98"/>
+    <polyline class="st4" points="189.84 65.54 189.84 84.86 398.62 84.86 398.62 65.54"/>
+    <polyline class="st4" points="491.28 65.54 491.28 84.86 592.06 84.86 592.06 65.54"/>
+  </g>
+  <g id="rectangles_inject_4">
+    <rect class="st3" x=".97" y="18.46" width="90.07" height="46.08"/>
+    <rect class="st3" x="106.18" y="18.46" width="76.22" height="46.08"/>
+    <rect class="st3" x="197.54" y="18.46" width="93.98" height="46.08"/>
+    <rect class="st3" x="291.35" y="18.46" width="99.37" height="46.08"/>
+    <rect class="st3" x="405.52" y="18.46" width="76.4" height="46.08"/>
+    <rect class="st3" x="500.21" y="18.46" width="82.19" height="46.08"/>
+  </g>
+  <g id="texts_inject_4">
+    <text class="st2" transform="translate(25.77 29.23)"><tspan x="0" y="0">Mechanical</tspan><tspan x="-15.57" y="9.6">parts of the load cell</tspan><tspan x="-13.12" y="28.8">(force introduction)</tspan></text>
+    <text class="st2" transform="translate(113.61 34.03)"><tspan x="0" y="0">Force conversion</tspan><tspan x="-2.67" y="19.2">(e.g strain gauges)</tspan></text>
+    <text class="st2" transform="translate(212.95 29.23)"><tspan x="0" y="0">Passive analogue</tspan><tspan x=".67" y="9.6">signal processing</tspan><tspan x="7.57" y="28.8">(linearization)</tspan></text>
+    <text class="st2" transform="translate(301.01 29.23)"><tspan x="0" y="0">Active analogue signal</tspan><tspan x="20.68" y="9.6">processing</tspan><tspan x="15.13" y="28.8">(amplification)</tspan></text>
+    <text class="st2" transform="translate(413.03 34.03)"><tspan x="0" y="0">Analogue / digital</tspan><tspan x="11.35" y="19.2">conversion</tspan></text>
+    <text class="st2" transform="translate(521.29 29.23)"><tspan x="0" y="0">Digital data</tspan><tspan x=".67" y="9.6">processing</tspan><tspan x="4.9" y="28.8">(scaling)</tspan></text>
+    <text class="st1" transform="translate(258.65 95.4)"><tspan x="0" y="0">Analogue signal</tspan></text>
+    <text class="st0" transform="translate(.59 137.88)"><tspan x="0" y="0">Analogue passive load cell</tspan></text>
+    <text class="st0" transform="translate(246.98 137.88)"><tspan x="0" y="0">A - C</tspan></text>
+    <text class="st0" transform="translate(246.98 163.51)"><tspan x="0" y="0">A - D</tspan></text>
+    <text class="st0" transform="translate(246.98 189.14)"><tspan x="0" y="0">A - E</tspan></text>
+    <text class="st0" transform="translate(246.98 214.78)"><tspan x="0" y="0">A - F</tspan></text>
+    <text class="st0" transform="translate(.59 163.51)"><tspan x="0" y="0">Analogue active load cell</tspan></text>
+    <text class="st0" transform="translate(.57 189.15)"><tspan x="0" y="0">Digital load cell</tspan></text>
+    <text class="st0" transform="translate(.57 214.78)"><tspan x="0" y="0">Digital load cell with data processing</tspan></text>
+    <text class="st0" transform="translate(.59 247.13)"><tspan x="0" y="0">Analogue load cells and digital load cells without data processing are within scope of OIML R 60.</tspan></text>
+    <text class="st1" transform="translate(42.67 13.14)"><tspan x="0" y="0">A</tspan></text>
+    <text class="st1" transform="translate(140.95 13.14)"><tspan x="0" y="0">B</tspan></text>
+    <text class="st1" transform="translate(240.92 13.14)"><tspan x="0" y="0">C</tspan></text>
+    <text class="st1" transform="translate(337.42 13.14)"><tspan x="0" y="0">D</tspan></text>
+    <text class="st1" transform="translate(440.38 13.14)"><tspan x="0" y="0">E</tspan></text>
+    <text class="st1" transform="translate(538.25 13.14)"><tspan x="0" y="0">F</tspan></text>
+    <text class="st1" transform="translate(513.32 95.4)"><tspan x="0" y="0">Digital signal</tspan></text>
+  </g>
+</svg></image></figure>
+
+<pagebreak/></clause>
+</clause>
+
+<clause id="_2b3d6585-21b7-68da-c5c4-10391724ff62" inline-header="false" obligation="normative">
+<title id="_90a8923e-4bb0-ef0d-f7bb-96c50b62251d">Terminology (Terms and definitions)</title>
+<p id="_a72ebd9f-74a8-6790-a396-87b42beefb77">The terms most frequently used in the load cell field and their definitions are given below (see  <xref target="sec-3.6"/> for an illustration of certain definitions). The terminology used in this Recommendation conforms to OIML V 2-200  <em>International Vocabulary of Metrology — Basic and General Concepts and Associated Terms</em> (VIM) <eref type="inline" bibitemid="OIML_V_2_200_2012" citeas="OIML V 2-200:2012"/>, to OIML V 1  <em>International Vocabulary of Terms in Legal Metrology</em> (VIML) <eref type="inline" bibitemid="OIML_V_1_2013" citeas="OIML V 1:2013"/>, to OIML D 9 <em>Principles of metrological supervision</em> <eref type="inline" bibitemid="OIML_D_9_2004" citeas="OIML D 9:2004"/>, to OIML D 11 <em>General requirements for measuring instruments</em> <eref type="inline" bibitemid="OIML_D_11_2008" citeas="OIML D 11:2008"/>, and to OIML B 18 <em>Framework for the OIML Certification System (OIML-CS)</em> <eref type="inline" bibitemid="OIML_B_18_2018" citeas="OIML B 18:2018"/>.</p>
+
+<p id="_f0b850bf-d46c-2915-f6f7-db4f4e3f2cd5">In addition, for the purposes of this Recommendation, the following definitions apply:</p>
+
+<terms id="_eb46a3a3-c97e-14f5-edb6-7628d98ab9a2" obligation="normative">
+<title id="_26ba91c0-5047-ec20-bc35-86093faea725">General definitions</title>
+<term id="_37033cd4-1e65-5bae-0f9e-f9bc798dc2e9" anchor="term-durability"><preferred><expression>
+<name>durability</name>
+</expression>
+</preferred>
+<definition id="_98f81e84-8a08-852c-754c-fa363c54f8db"><verbal-definition id="_95ce9716-f778-62f3-d425-974b4568a818"><p id="_4e2e0cce-69f7-c860-3244-cf40ab3b44fa">ability of a measuring instrument to maintain its performance characteristics over a period of use</p></verbal-definition></definition>
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>5.15</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_a08379e5-c8ff-ebda-3abc-dc140ff61980" anchor="term-legal-metrology"><preferred><expression>
+<name>legal metrology</name>
+</expression>
+</preferred>
+<definition id="_322cd891-12e7-17dc-0344-900a9b32603c"><verbal-definition id="_c6c3178b-d687-ed6a-a020-97012509cda9"><p id="_f1f0f4c6-4ab3-06e0-28ea-710289538862">practice and process of applying statutory and regulatory structure and enforcement to metrology</p><p id="_de4d6a8a-bb72-ba19-3c0c-9a2dd90f71a8">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_1_2013" citeas="OIML V 1:2013"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>1.01</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_993efcd5-ede9-e8f2-117a-ae9acd72e589" anchor="term-load-cell"><preferred><expression>
+<name>load cell</name>
+</expression>
+</preferred>
+<definition id="_10c7c8d8-8eee-c1d7-bead-f2687d25f662"><verbal-definition id="_69ccbddb-5361-7040-c8cb-4c0dc0dff7e1"><p id="_691d2ca5-9467-8628-c30e-1b1442688856">measuring transducer that will produce an output in response to an applied load. This output may be converted by another device into measurement units such as mass</p></verbal-definition></definition>
+
+
+
+
+
+
+
+
+ <term id="_73859606-3f97-ebff-0ce9-89ef321a164a" anchor="term-analogue-passive-load-cell"><preferred><expression>
+<name>analogue-passive load cell</name>
+</expression>
+</preferred>
+<definition id="_4c21074e-b51e-648b-9809-df2d1de22962"><verbal-definition id="_08a1f90c-f883-38a7-4cdf-e50c491c08d4"><p id="_33fa342c-f8a1-40a6-f3f8-c0457117393a">load cell from which the output provides either measurable data or direct information representing the measurand value</p></verbal-definition></definition>
+
+
+ <termnote id="_f2979526-549f-fdcb-0d60-1a27238795b1"><p id="_b6ce9843-6939-5d37-a226-364f86fa0792">The ratio between output and input may be adjustable and this type of load cell may utilise</p>
+
+<ul id="_7bd8c2c7-b299-fc33-47ed-8da5e6b6b90e"><li><p id="_17bad211-3afe-b3f5-74b2-bcdd1a55e39b">passive electronics (e.g. strain gauges), and</p>
+</li>
+<li><p id="_fec7e62f-020e-8f36-22ac-0295bf6cc5c7">passive temperature compensation elements</p>
+</li>
+</ul>
+</termnote></term><term id="_0da486f0-f239-e159-8abd-f0824f362be1" anchor="term-analogue-active-load-cell"><preferred><expression>
+<name>analogue-active load cell</name>
+</expression>
+</preferred>
+<definition id="_5eda0ef5-935e-3497-aa6f-3c1ae812a10e"><verbal-definition id="_5c62fd96-3bd6-aa40-bc47-70e21f2cc1ef"><p id="_d4ee6127-8f38-94cf-9b6c-bfa840f0729b">load cell which is capable of performing the functions as described under <concept><refterm>analogue-passive load cell</refterm><renderterm>analogue-passive load cell</renderterm><xref target="term-analogue-passive-load-cell"/></concept> and which also utilises active electronics</p></verbal-definition></definition>
+
+
+ <termnote id="_33403cf6-3248-0069-f99a-8b9196ef9c71"><p id="_b66822ee-c6d5-b83d-a0e3-d3519564a95c">This type of load cell may utilise the active electronics for</p>
+
+<ul id="_53eeb407-d48e-6e33-37d1-08d181278a99"><li><p id="_51a936e7-ec55-c44f-6ace-298462bee2a5">gaining an electronic representation of the measurand value,</p>
+</li>
+<li><p id="_cb8a8f4f-e56d-120f-11d6-770f78d15c4e">active temperature compensation, and</p>
+</li>
+<li><p id="_94c13998-16c2-529b-be41-dbb318b04f0e">similar functions being of influence to the measurand value.</p>
+</li>
+</ul>
+</termnote></term><term id="_13a2571e-fd17-aa61-48c9-0274bfac4015" anchor="term-digital-load-cell"><preferred><expression>
+<name>digital load cell</name>
+</expression>
+</preferred>
+<definition id="_b81ba008-17f5-e6f4-2e4b-fbdc6465da93"><verbal-definition id="_dfd131c0-3e4b-93ff-18ca-d4ca192d1b5f"><p id="_4181268b-285e-e6c5-5061-5e9284081c0c">analogue-active load cell which includes an analogue to digital conversion device providing a representation of the measurand value in some unprocessed digital format</p></verbal-definition></definition>
+ </term><term id="_c2accd31-d64f-f3e9-a8bd-54e6d5ff1ac6" anchor="sec-3.1.3.4"><preferred><expression>
+<name>digital load cell equipped with further data processing (Figure 2, A-F)</name>
+</expression>
+</preferred>
+<definition id="_63086b80-a4c9-6659-0949-250f9d0c0536"><verbal-definition id="_0c182fb3-247d-5419-0da7-e5f4b8e9d15c"><p id="_4eea8c22-92f6-ba33-f441-fc73fb49157f">analogue-active load cell which includes an analogue to digital conversion device providing a representation of the measurand value in some digital format and includes further digital processing (e.g. scaling)</p></verbal-definition></definition>
+ </term></term>
+
+<term id="_5f4519b3-5655-b6c1-60fc-a9de5a7d2bf6" anchor="term-marking"><preferred><expression>
+<name>marking</name>
+</expression>
+</preferred>
+<definition id="_75fcedaf-b925-a6fe-0500-32afe909a632"><verbal-definition id="_e07d266e-8193-13f1-dc5b-a906e229bc55"><p id="_c4c4ae10-76e9-da38-6a59-47399e395cb2">affixing of one or more marks</p><p id="_b8337f5a-c7ba-adc6-de29-996d6e41097c">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_1_2013" citeas="OIML V 1:2013"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>2.19</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_7fb8feb0-8cd6-9bc6-06ef-0085fa6914e6" anchor="term-metrological-supervision"><preferred><expression>
+<name>metrological supervision</name>
+</expression>
+</preferred>
+<definition id="_b32441aa-f778-6766-d44f-4316be4d8858"><verbal-definition id="_e53bddca-64cd-c5ea-2d7c-0eef59d89897"><p id="_92b7e5cf-c093-23b5-4549-882a459fe4e5">activity of legal metrological control to check the observance of metrology laws and regulations</p><p id="_f29d5650-9bc2-7469-9344-937e262b7528">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_1_2013" citeas="OIML V 1:2013"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>2.03</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_384491c0-1f24-ca03-21b6-a22fee0bf3f6" anchor="term-measuring-transducer"><preferred><expression>
+<name>measuring transducer</name>
+</expression>
+</preferred>
+<definition id="_14efd256-066b-9300-7cfc-1caee9a63910"><verbal-definition id="_3588ba7f-1e6e-b2dc-689f-7befba389571"><p id="_d8465c5e-5c24-1f53-6f28-89d5a49c141b">device, used in measurement, that provides an output quantity having a specified relation to the input quantity</p></verbal-definition></definition>
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_2_200_2012" type="inline" citeas="OIML V 2-200:2012"><localityStack><locality type="clause"><referenceFrom>3.7</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_dd602487-d490-6004-95d7-c16bf635bc8e" anchor="term-performance-test"><preferred><expression>
+<name>performance test</name>
+</expression>
+</preferred>
+<definition id="_866ffa15-3728-6707-d24a-390d175eb65c"><verbal-definition id="_38a30a55-8f25-b728-f12b-9841e9b69b5f"><p id="_c45cf8b3-f77f-0890-9602-8b8e130148f3">test to verify whether the load cell under test is capable of performing its intended functions</p></verbal-definition></definition>
+ </term>
+
+<term id="_69bbc670-ba53-51c6-a6c8-448ebee742a5" anchor="term-rated-operating-condition"><preferred><expression>
+<name>rated operating condition</name>
+</expression>
+</preferred>
+<definition id="_9cfdb271-d12f-2970-38de-4d05198dd59c"><verbal-definition id="_09fd4531-42fe-761d-333c-8d209a9911fc"><p id="_8421388c-ddb9-703c-f62a-f4834f9c059f">operating condition that must be fulfilled during measurement in order that a measuring instrument or measuring system perform as designed</p><p id="_0a593db3-b6c4-0fe6-45e4-fbeeeeb7fad9">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_2_200_2012" citeas="OIML V 2-200:2012"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_2_200_2012" type="inline" citeas="OIML V 2-200:2012"><localityStack><locality type="clause"><referenceFrom>4.9</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_d3e0fd48-a503-6d47-9208-50daa9ce5c31" anchor="term-sealing"><preferred><expression>
+<name>sealing</name>
+</expression>
+</preferred>
+<definition id="_7b52bbfb-4cfa-ce6a-7021-dae77ce0ff17"><verbal-definition id="_d2966450-a1ba-a00f-8487-423bd9f0ce78"><p id="_dac1132e-75f9-5dba-496c-acf8b69ae4b3">means intended to protect the measuring instrument against any unauthorised modification, readjustment, removal of parts, software, etc.</p><p id="_11d85f58-92f0-0aeb-13e4-536ab1e575af">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_1_2013" citeas="OIML V 1:2013"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>2.20</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_8de87f6f-db5d-2e11-898a-ff0feb611a1e" anchor="term-type-_pattern_-evaluation"><preferred><expression>
+<name>type (pattern) evaluation</name>
+</expression>
+</preferred>
+<definition id="_3cae2ebe-a1cd-a327-b98a-458be865778b"><verbal-definition id="_882ceab0-4b98-f9ae-389e-41c131de19a2"><p id="_f6405f31-a094-e1c1-bd90-45f67474e034">conformity assessment procedure on one or more specimens of an identified type (pattern) of measuring instruments which results in an evaluation report and / or an evaluation certificate</p><p id="_c50f1514-77b6-ea01-3f40-fc0d259c4f51">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_1_2013" citeas="OIML V 1:2013"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>2.04</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_6ec70a6d-737d-7472-4575-140ea8b48a44" anchor="term-type-approval"><preferred><expression>
+<name>type approval</name>
+</expression>
+</preferred>
+<definition id="_00e5ce93-2461-a3d5-619c-fd3e3789d411"><verbal-definition id="_5ccc2525-1532-8adb-04f2-2443ab5eb02e"><p id="_e25a8ad9-6a79-a606-5916-ab6535212df4">decision of legal relevance, based on the review of the type evaluation report, that the type of a measuring instrument complies with the relevant statutory requirements and results in the issuance of the type approval certificate</p></verbal-definition></definition>
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>2.05</referenceFrom></locality></localityStack></origin>
+</source></term>
+</terms>
+
+<clause id="_84762d3f-2272-59ac-622b-c67133c8f090" inline-header="false" obligation="normative">
+<title id="_2e65a5e6-d678-6813-f02f-0150e669eaad">Categories of load cells</title>
+<terms id="_8471bb74-4a20-fcdb-4e80-9e6476c2e68c" obligation="normative">
+<title id="_40ad6d69-9fae-c9d7-040b-bd46b07ebede">Application of load</title>
+<term id="_78d92428-86d6-51b1-823e-a59d5936e851" anchor="term-compression-loading"><preferred><expression>
+<name>compression loading</name>
+</expression>
+</preferred>
+<definition id="_5808a25e-e97f-42e9-0902-79e575e7c835"><verbal-definition id="_1cd9cc8c-6c81-9c21-9520-35bb670179ab"><p id="_06f877c9-c433-418a-cc0c-5e99e7d7dd16">applying a compressive force to the load receptor of a load cell</p></verbal-definition></definition>
+ </term>
+
+<term id="_b5f971e7-bc6e-4f19-c7a8-2262df97e77e" anchor="term-tension-loading"><preferred><expression>
+<name>tension loading</name>
+</expression>
+</preferred>
+<definition id="_fb8328d8-d0c7-d3d0-6fce-53b77c844ee1"><verbal-definition id="_97713d08-a6b2-6905-5d06-6d473393aba2"><p id="_59b83bbb-e4c0-8d75-3dd4-202a25c6569e">applying a tension force to the load receptor of a load cell</p></verbal-definition></definition>
+ </term>
+</terms>
+</clause>
+
+<terms id="_e0c07b77-f6b6-4db2-c377-eb1c985ae8a8" obligation="normative">
+<title id="_5202064b-c3fd-35b7-fffa-8e08b8568558">Construction of load cells (see sections 1 and 2.1)</title>
+<term id="_17902461-5e51-e111-d196-6179b224e53f" anchor="term-strain-gauge"><preferred><expression>
+<name>strain gauge</name>
+</expression>
+</preferred>
+<definition id="_46b55617-69bf-cd9f-ac0f-18f0688168a1"><verbal-definition id="_4d4bd6bc-b650-fdae-d0cb-25b8ba7b58c8"><p id="_abc3f0da-0813-87a7-0514-c21fec04d689">analogue resistive element that is attached to a load cell structure and that changes resistance depending on the deformation of the load cell structure when compression or tension forces are applied to the load cell</p></verbal-definition></definition>
+ </term>
+</terms>
+
+<terms id="_d2ea40cb-8eda-38ac-681b-e3f5fb37d40b" obligation="normative">
+<title id="_55edb982-97bb-a7ff-4ce1-1ef728c79830">Metrological characteristics of a load cell</title>
+<term id="_21ed473f-58b4-ebd3-3d0e-3b364bdf97bc" anchor="term-humidity-symbol"><preferred><expression>
+<name>humidity symbol</name>
+</expression>
+</preferred>
+<definition id="_0f1c5d43-42f8-231c-5e7c-9dfb39d8fb7d"><verbal-definition id="_fb2a96f1-0b54-7da9-6c5e-98f118f75c74"><p id="_570e293f-94f1-d35c-8b1b-ae5e99de9d3c">symbol assigned to a load cell that indicates the conditions of humidity under which the load cell has been tested</p></verbal-definition></definition>
+ </term>
+
+<term id="_13f3e9e7-8321-7c42-3de9-07ab71fafe82" anchor="term-load-cell-family"><preferred><expression>
+<name>load cell family</name>
+</expression>
+</preferred>
+<definition id="_71266b3e-8c7e-dd66-fb91-e05396024fd9"><verbal-definition id="_cc0f1ffd-fd07-2376-fe04-ced0b7313ac1"><p id="_4c52275e-7f85-c09c-8b80-4d9032420f7d">group of load cells which for the purposes of type evaluation are considered as one family and that are of:</p><ol id="_a4d6c093-e683-0f53-dcd3-31c0adc31de9"><li><p id="_7abaa6cf-d7ad-3365-495d-2debb5a6bc0f">the same material or combination of materials (for example mild steel, stainless steel or aluminium);</p>
+</li>
+<li><p id="_0f151779-22bb-5948-8993-9817ac4503da">the same design of the measurement technique (for example strain gauges bonded to metal);</p>
+</li>
+<li><p id="_82dcfc36-5e2a-d49c-0427-b97f2a3ae8de">when used, the same principle used to attach the strain gauge to the load cell;</p>
+</li>
+<li><p id="_c52a0142-9686-43a9-c822-6490a7fa8a50">the same method of construction (for example shape, sealing of strain gauges, mounting method, manufacturing method);</p>
+</li>
+<li><p id="_546e2c4d-a9e6-9c90-11fb-2d89487a68ad">the same set of specifications (for example output rating, input impedance, supply voltage, cable details); and</p>
+</li>
+<li><p id="_25e5a92b-02bf-88f6-0efe-35d0b5a62aaf">one or more load cell groups where all load cells within the group possess identical metrological characteristics (as listed in  <xref target="sec-5.1.5"/> — including: class; <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>n</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>n_{"LC"}</asciimath></stem>; temperature rating, etc.).</p>
+</li>
+</ol></verbal-definition></definition>
+
+
+
+
+ <termnote id="_66665cb5-2b63-0c1b-c32f-7f86542ec5ce"><p id="_f4936eae-1b68-0833-8fb0-b76bf90213f5">The examples provided are not intended to be limiting.</p>
+</termnote></term>
+</terms>
+
+<terms id="_b95399c0-fb3f-382a-77ef-1b5c25d2fd0c" anchor="sec-3.5" obligation="normative">
+<title id="_49d33070-571e-1435-1364-f0baa540b2b2">Range, capacity and output terms</title>
+<term id="_60a038af-139d-4632-e2b5-4cc5e38c7efc" anchor="term-load-cell-interval"><preferred><expression>
+<name>load cell interval</name>
+</expression>
+</preferred>
+<definition id="_46b6adfa-d7a2-57a9-33a5-e9c32c5d7a9a"><verbal-definition id="_5dab47d9-a4ff-675a-840a-eb2c69ab412a"><p id="_b855bd03-5725-720b-7fcd-45e8c4f0f887">subdivision of the load cell measuring range</p></verbal-definition></definition>
+ </term>
+
+<term id="_9e1f0dd3-25f3-3275-18f4-07332fb7c271" anchor="term-load-cell-measuring-range-_for-verification_"><preferred><expression>
+<name>load cell measuring range (for verification)</name>
+</expression>
+</preferred>
+<definition id="_e8c6a646-5bb1-e991-2d94-994cc06d6106"><verbal-definition id="_ca23e247-55e3-4b80-1cdb-634ce64a9e06"><p id="_9a8fcd6a-8aa8-3d41-8213-0bc062c75ebe">range between the maximum load of the measuring range <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"max"}</asciimath></stem> and minimum
+load of the measuring range <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"min"}</asciimath></stem></p><p id="_af1ea2ba-b22c-abe5-c0b1-d48f7be6aeed">load cell measuring range <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mo>=</mo>
+    <mrow>
+      <mo>(</mo>
+      <msub>
+        <mi>D</mi>
+        <mtext>max</mtext>
+      </msub>
+      <mo>−</mo>
+      <msub>
+        <mi>D</mi>
+        <mtext>min</mtext>
+      </msub>
+      <mo/>
+    </mrow>
+  </mstyle>
+</math><asciimath>= (D_{"max"} - D_{"min"}</asciimath></stem>)</p></verbal-definition></definition>
+
+
+ </term>
+
+<term id="_2ddd4a50-b2cd-5987-7672-97b4b08e589c" anchor="term-load-cell-output"><preferred><expression>
+<name>load cell output</name>
+</expression>
+</preferred>
+<definition id="_a21efcba-95e3-9f31-3475-8b21b3fbd7ea"><verbal-definition id="_cf39b31a-1f07-1723-aa5a-84344de5fb7e"><p id="_387aeb79-bba0-4762-f608-a8242d4d1be2">measurable quantity into which a load cell converts the measured input quantity</p></verbal-definition></definition>
+ </term>
+
+<term id="_0d2d75a9-7ba8-3da9-6e4c-c7ed43a4f334" anchor="term-load-cell-verification-interval-_v_"><preferred><expression>
+<name>load cell verification interval (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mi>v</mi>
+  </mstyle>
+</math><asciimath>v</asciimath></stem>)</name>
+</expression>
+</preferred>
+<definition id="_fab091cb-348a-3f0b-012f-82b9e4ac3dcb"><verbal-definition id="_f427a6cf-0bc7-8c5a-46b0-5bd760e5465d"><p id="_b433da42-f33a-2c2e-2bac-d450691f7607">load cell interval, expressed in units of mass, used in the test of the load cell for accuracy classification</p></verbal-definition></definition>
+ </term>
+
+<term id="_051bc8ee-4e28-1c86-f2c2-4e1bd575c0be" anchor="sec-3.5.5"><preferred><expression>
+<name>maximum capacity (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"max"}</asciimath></stem>)</name>
+</expression>
+</preferred>
+<definition id="_7a23d311-4b2d-bb31-c2e6-ef6a7168a4e8"><verbal-definition id="_5124a92e-9947-7f69-b822-ab943c46df6b"><p id="_ad357108-c50a-77f7-aad8-29076f549f7d">largest value of a quantity expressed in units of mass, which may be applied to a load cell</p></verbal-definition></definition>
+ </term>
+
+<term id="_72482558-d896-1cea-062d-f04b33fa7e72" anchor="sec-3.5.6"><preferred><expression>
+<name>maximum load of the measuring range (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"max"</asciimath></stem>)</name>
+</expression>
+</preferred>
+<definition id="_21cdc6b2-4b02-72cd-7079-ae5e898a94d2"><verbal-definition id="_d17d9c6d-0f98-ac42-2c4d-4839b90fb5da"><p id="_30514c1c-8fdd-7205-3f11-71d0ae61cdac">largest value of a quantity expressed in units of mass which can be introduced to a load cell under test</p></verbal-definition></definition>
+ </term>
+
+<term id="_4872df7b-a83d-c290-b9a9-a72b6f5bfe29" anchor="term-maximum-measuring-range"><preferred><expression>
+<name>maximum measuring range</name>
+</expression>
+</preferred>
+<definition id="_5ae509f5-220c-9b64-f184-e3b8307782e6"><verbal-definition id="_68b13aa0-251e-fb5a-dd3f-0d515a1eabfe"><p id="_473a5a6b-98f3-11b1-a9a4-a011964a31f0">range of values of the quantity expressed in units of mass that may be applied to a load cell</p><p id="_453c6064-bf96-3855-9465-6aeaf8949716">maximum measuring range <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mo>=</mo>
+    <mrow>
+      <mo>(</mo>
+      <msub>
+        <mi>E</mi>
+        <mtext>max</mtext>
+      </msub>
+      <mo>−</mo>
+      <msub>
+        <mi>E</mi>
+        <mtext>min</mtext>
+      </msub>
+      <mo>)</mo>
+    </mrow>
+  </mstyle>
+</math><asciimath>= (E_{"max"} - E_{"min"})</asciimath></stem></p></verbal-definition></definition>
+
+
+
+
+ <termnote id="_351c8142-5755-1967-9f3b-f7050dd91ccc"><p id="_3d4a2d18-3ed5-4bf8-cd65-d9e3cd113232">maximum measuring range is the range between maximum capacity <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"max"}</asciimath></stem>
+and minimum dead load <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"min"}</asciimath></stem></p>
+</termnote></term>
+
+<term id="_5a314b43-28fc-4149-4827-af6f81e4c191" anchor="sec-3.5.8"><preferred><expression>
+<name>maximum number of load cell verification intervals (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>n</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>n_{"LC"}</asciimath></stem>)</name>
+</expression>
+</preferred>
+<definition id="_2981853c-4017-56bc-51ba-5596cac9cfda"><verbal-definition id="_0b7b8bc8-4557-dad3-361d-6253c97f2b09"><p id="_4467abf2-56f4-1c1a-43ed-aa99060b2d81">maximum number of load cell verification intervals into which the maximum measuring range may be divided</p></verbal-definition></definition>
+ </term>
+
+<term id="_20f790f0-021d-9521-a68d-380681e12546" anchor="sec-3.5.9"><preferred><expression>
+<name>minimum dead load (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"min"}</asciimath></stem>)</name>
+</expression>
+</preferred>
+<definition id="_18bf44c5-dee9-88af-73f2-ff7d060c154d"><verbal-definition id="_40dc124f-dca1-0989-eacb-0a8c0d07a2b7"><p id="_b44a8d87-f103-2e7d-11fa-40a557b796b1">smallest value of a quantity (expressed in mass units) that may be applied to a load cell</p></verbal-definition></definition>
+ </term>
+
+<term id="_b991ca58-cd1a-4a8c-4225-023cd245ce1e" anchor="sec-3.5.10"><preferred><expression>
+<name>minimum dead load output return (DR)</name>
+</expression>
+</preferred>
+<definition id="_0b11e5f9-9d20-71b3-45fd-ecd74d0c6110"><verbal-definition id="_5a39277c-63c9-bdda-0004-90044862072b"><p id="_8a27f934-5138-0539-ccf0-62defa571072">difference of load cell output, expressed in units of mass at the minimum dead load
+(<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"min"}</asciimath></stem>), measured before and after application of a load of <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"max"}</asciimath></stem></p></verbal-definition></definition>
+ </term>
+
+<term id="_7af29394-3e96-1131-7291-889f35735a5d" anchor="sec-3.5.11"><preferred><expression>
+<name>minimum load cell verification interval (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>v</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>v_{"min"}</asciimath></stem>)</name>
+</expression>
+</preferred>
+<definition id="_29eb6987-8a8b-9816-699f-a82e1cddc7a7"><verbal-definition id="_425e4f57-af09-3f2d-1714-ee3b3c1ca1e4"><p id="_4e606985-7f72-0192-a51d-d87b616af7b5">smallest load cell verification interval in units of mass into which the maximum
+measuring range (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+    <mo>−</mo>
+    <msub>
+      <mi>E</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"max"} - E_{"min"}</asciimath></stem>) can be divided</p></verbal-definition></definition>
+ </term>
+
+<term id="_f092dfc1-1674-6347-d230-b5cdc26ae28d" anchor="sec-3.5.12"><preferred><expression>
+<name>minimum load of the measuring range (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"min"}</asciimath></stem>)</name>
+</expression>
+</preferred>
+<definition id="_15eaa5a8-2d44-5802-1d1e-9300be07b963"><verbal-definition id="_458e97fb-c4bb-fba6-3cac-cf139aa48007"><p id="_89b80cb6-a193-44f3-6fb7-3a11937e9212">smallest value of a quantity expressed in units of mass, applied to a load cell under test</p></verbal-definition></definition>
+ </term>
+
+<term id="_1025eb5d-0d40-4798-5a98-790f19b87dde" anchor="term-number-of-load-cell-verification-intervals-_n_"><preferred><expression>
+<name>number of load cell verification intervals (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mi>n</mi>
+  </mstyle>
+</math><asciimath>n</asciimath></stem>)</name>
+</expression>
+</preferred>
+<definition id="_3fb845c7-b0cc-efc5-fcb3-cb5e0a01edd6"><verbal-definition id="_22bc966c-c936-493d-312a-fbe4c60f8d7b"><p id="_8296bde3-ca10-a27c-0e87-568d76263560">total of load cell verification intervals into which the maximum measuring range is divided</p></verbal-definition></definition>
+ </term>
+
+<term id="_9a65c283-f876-05c9-82a2-261418251450" anchor="sec-3.5.14"><preferred><expression>
+<name>relative minimum dead load output return (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mi>Z</mi>
+  </mstyle>
+</math><asciimath>Z</asciimath></stem>)</name>
+</expression>
+</preferred>
+<definition id="_be46675f-2da7-da01-0e00-0b8fa8188350"><verbal-definition id="_187a9ea0-fbd2-86be-e000-70d5771c9dcf"><p id="_bd06c90a-63f0-9107-730b-54e8894d92ea">ratio of the maximum measuring range, to two times the minimum dead load output return, DR</p></verbal-definition></definition>
+
+
+ <termnote id="_e50a05eb-7754-5ff9-8de1-43969a2352ac"><p id="_13aafd28-dceb-69f7-4a48-95a7888f18e5">This ratio is used to describe multi-interval instruments.</p>
+</termnote></term>
+
+<term id="_2b24ea8a-6705-b6e5-9f53-d2bbed0d9f91" anchor="sec-3.5.15"><preferred><expression>
+<name>relative minimum load cell verification interval (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mi>Y</mi>
+  </mstyle>
+</math><asciimath>Y</asciimath></stem>)</name>
+</expression>
+</preferred>
+<definition id="_1346866a-00e8-c811-4c29-29173aebae03"><verbal-definition id="_5b3a670b-c3f4-b8ff-4a31-dfd2c45116fa"><p id="_c1d4b5fe-9c57-b89e-72cb-4c80d57ef733">ratio of the maximum measuring range, to the minimum load cell verification interval,
+<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>v</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>v_{"min"}</asciimath></stem></p></verbal-definition></definition>
+
+
+ <termnote id="_e1b2396d-f82a-ab8e-5538-e2de5c061f54"><p id="_1d8b121d-9453-829c-e7eb-5a10aa024ac4">This ratio describes the resolution of the load cell independent from the load cell capacity.</p>
+</termnote></term>
+
+<term id="_6adecf00-f07c-83a1-8ea5-984177460a9c" anchor="term-safe-load-limit-_E___lim___"><preferred><expression>
+<name>safe load limit (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>lim</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"lim"}</asciimath></stem>)</name>
+</expression>
+</preferred>
+<definition id="_4b1d0ee8-f717-e2e8-855e-c9e6d385378a"><verbal-definition id="_cafc225d-3f66-f99f-a054-a428e682c093"><p id="_569890f5-6304-650b-47ba-2bf48ed27260">maximum load that can be applied without producing a permanent shift in the performance characteristics beyond those specified</p></verbal-definition></definition>
+ </term>
+
+<term id="_6d94f24e-78c6-4f97-3055-0a2630d0bacf" anchor="term-warm-up-time"><preferred><expression>
+<name>warm-up time</name>
+</expression>
+</preferred>
+<definition id="_6883e5c8-7da0-7e45-43bb-1e700b62444e"><verbal-definition id="_93776c02-b940-725c-9afb-0dc58e0e7f80"><p id="_7836b5c6-98c1-da59-9059-f99c1266f8fa">time between the moment power is applied to a load cell and the moment at which the load cell is capable of complying with the requirements</p></verbal-definition></definition>
+ </term>
+</terms>
+
+<clause id="_9b917385-391a-ba25-5dd4-f3e663103ad1" anchor="sec-3.6" inline-header="false" obligation="normative">
+<title id="_247e994d-4d26-9452-5c32-2e38a4748b19">Illustration of certain definitions</title>
+<p id="_525ae919-1615-945d-f1bc-eec04e934d6c">The terms that appear above the central horizontal line (related to parameters <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"min"}</asciimath></stem>
+and <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"max"}</asciimath></stem>) are parameters that are fixed by the design of the load cell.
+The terms that appear below that line (related to parameters <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"min"}</asciimath></stem> and
+<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"max"}</asciimath></stem>) are parameters that are variable, dependent on the conditions of the test of a load cell (in particular, those load cells used in weighing instruments).</p>
+
+<figure id="_46a6ce09-e684-1c55-bc4b-bf299a8fdf10">
+<name id="_46395700-563b-be7b-fac2-09cc2a229a5e">Illustration of certain definitions</name>
+<image id="_121fbb8a-7a76-7c56-bea3-c978e6a987e8" src="images/figure-3.svg" mimetype="image/svg+xml" height="auto" width="auto" filename="images/figure-3.svg"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 564.41 218.41">
+  <!-- Generator: Adobe Illustrator 30.2.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 1)  -->
+  <defs>
+    <style>
+      .st0 {
+        stroke-linecap: round;
+      }
+
+      .st0, .st1 {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: .75px;
+      }
+
+      .st2 {
+        font-family: Arial-BoldMT, Arial;
+        font-size: 15px;
+        font-weight: 700;
+      }
+    </style>
+  </defs>
+  <g id="lines_inject_5">
+    <line class="st1" x1="62.75" y1="41.92" x2="62.75" y2="164.9"/>
+    <line class="st1" x1="120.31" y1="41.92" x2="120.31" y2="99.98"/>
+    <line class="st1" x1="435.82" y1="41.92" x2="435.82" y2="99.98"/>
+    <line class="st1" x1="392.94" y1="100.97" x2="392.94" y2="164.9"/>
+    <line class="st1" x1="158.25" y1="100.97" x2="158.25" y2="164.9"/>
+    <line class="st1" x1="488.44" y1="41.92" x2="488.44" y2="164.9"/>
+    <line class="st1" x1="62.75" y1="100.3" x2="488.44" y2="100.3"/>
+    <g>
+      <line class="st0" x1="122.58" y1="54.2" x2="433.53" y2="54.2"/>
+      <path d="M129.8,59.28c.16-.25.08-.57-.16-.73l-6.82-4.35,6.82-4.35c.25-.16.32-.48.16-.73-.16-.25-.49-.32-.73-.16l-7.52,4.79c-.15.1-.24.27-.24.45s.09.35.24.45l7.52,4.79c.09.06.19.08.28.08.17,0,.35-.09.45-.24Z"/>
+      <path d="M426.3,59.28c-.16-.25-.08-.57.16-.73l6.82-4.35-6.82-4.35c-.25-.16-.32-.48-.16-.73.16-.25.49-.32.73-.16l7.52,4.79c.15.1.24.27.24.45s-.09.35-.24.45l-7.52,4.79c-.09.06-.19.08-.28.08-.17,0-.35-.09-.45-.24Z"/>
+    </g>
+    <g>
+      <line class="st0" x1="160.26" y1="123.37" x2="391.67" y2="123.37"/>
+      <path d="M167.49,128.45c.16-.25.08-.57-.16-.73l-6.82-4.35,6.82-4.35c.25-.16.32-.48.16-.73-.16-.25-.49-.32-.73-.16l-7.52,4.79c-.15.1-.24.27-.24.45s.09.35.24.45l7.52,4.79c.09.06.19.08.28.08.17,0,.35-.09.45-.24Z"/>
+      <path d="M384.44,128.45c-.16-.25-.08-.57.16-.73l6.82-4.35-6.82-4.35c-.25-.16-.32-.48-.16-.73.16-.25.49-.32.73-.16l7.52,4.79c.15.1.24.27.24.45s-.09.35-.24.45l-7.52,4.79c-.09.06-.19.08-.28.08-.17,0-.35-.09-.45-.24Z"/>
+    </g>
+  </g>
+  <g id="texts_inject_5">
+    <text class="st2" transform="translate(70.24 11.21)"><tspan x="0" y="0">Minimum dead load</tspan></text>
+    <text class="st2" transform="translate(121.57 194.13)"><tspan x="0" y="0">Minimum load</tspan></text>
+    <text class="st2" transform="translate(360.72 11.21)"><tspan x="0" y="0">Maximum capacity</tspan></text>
+    <text class="st2" transform="translate(347.17 194.13)"><tspan x="0" y="0">Maximum load</tspan></text>
+    <text class="st2" transform="translate(0 103.86)"><tspan x="0" y="0">No Load</tspan></text>
+    <text class="st2" transform="translate(493.2 78.85)"><tspan x="0" y="0">Safe load</tspan><tspan x="17.93" y="18">limit</tspan></text>
+    <text class="st2" transform="translate(515.22 128.03)"><tspan x="0" y="0">E</tspan></text>
+    <text class="st2" transform="translate(525.23 133.02) scale(.58)"><tspan x="0" y="0">lim</tspan></text>
+    <text class="st2" transform="translate(419.29 29.16)"><tspan x="0" y="0">E</tspan></text>
+    <text class="st2" transform="translate(429.3 34.15) scale(.58)"><tspan x="0" y="0">max</tspan></text>
+    <text class="st2" transform="translate(384.75 212.27)"><tspan x="0" y="0">D</tspan></text>
+    <text class="st2" transform="translate(395.58 217.26) scale(.58)"><tspan x="0" y="0">max</tspan></text>
+    <text class="st2" transform="translate(106.89 29.16)"><tspan x="0" y="0">E</tspan></text>
+    <text class="st2" transform="translate(116.9 34.15) scale(.58)"><tspan x="0" y="0">min</tspan></text>
+    <text class="st2" transform="translate(157.78 212.27)"><tspan x="0" y="0">D</tspan></text>
+    <text class="st2" transform="translate(168.61 217.26) scale(.58)"><tspan x="0" y="0">min</tspan></text>
+    <text class="st2" transform="translate(183.43 85.78)"><tspan x="0" y="0">Maximum measuring range</tspan></text>
+    <text class="st2" transform="translate(183.87 143.1)"><tspan x="0" y="0">Load cell measuring range</tspan></text>
+  </g>
+</svg></image></figure>
+
+<p id="_61c410f4-d2eb-ca10-30e5-3c074826a811">The following statements apply: (see also R 60-2, 2.7.3.4)</p>
+
+<ol id="_93f9d679-66e4-455e-feb0-3ba7fe91563d"><li><p id="_29489702-6627-6fd9-2e6c-e147676bbe64"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mrow>
+      <mo>(</mo>
+      <msub>
+        <mi>D</mi>
+        <mtext>max</mtext>
+      </msub>
+      <mo>−</mo>
+      <msub>
+        <mi>D</mi>
+        <mtext>min</mtext>
+      </msub>
+      <mo>)</mo>
+    </mrow>
+    <mrow>
+      <mo>(</mo>
+      <msub>
+        <mi>E</mi>
+        <mtext>max</mtext>
+      </msub>
+      <mo>−</mo>
+      <msub>
+        <mi>E</mi>
+        <mtext>min</mtext>
+      </msub>
+      <mo>)</mo>
+    </mrow>
+  </mstyle>
+</math><asciimath>(D_{"max"} - D_{"min"})  (E_{"max"} - E_{"min"})</asciimath></stem></p>
+</li>
+<li><p id="_0579370f-828c-f759-ba30-78ef1f849a82"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>min</mtext>
+    </msub>
+    <mo>≤</mo>
+    <msub>
+      <mi>D</mi>
+      <mtext>min</mtext>
+    </msub>
+    <mo>≤</mo>
+    <mrow>
+      <mo>(</mo>
+      <mn>0.1</mn>
+      <msub>
+        <mi>E</mi>
+        <mtext>max</mtext>
+      </msub>
+      <mo>)</mo>
+    </mrow>
+  </mstyle>
+</math><asciimath>E_{"min"} &lt;= D_{"min"} &lt;= (0.1 E_{"max"})</asciimath></stem>, and <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mrow>
+      <mo>(</mo>
+      <mn>0.9</mn>
+      <msub>
+        <mi>E</mi>
+        <mtext>max</mtext>
+      </msub>
+      <mo>)</mo>
+    </mrow>
+    <mo>≤</mo>
+    <msub>
+      <mi>D</mi>
+      <mtext>max</mtext>
+    </msub>
+    <mo>≤</mo>
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>(0.9 E_{"max"}) &lt;= D_{"max"} &lt;= E_{"max"}</asciimath></stem></p>
+</li>
+</ol>
+</clause>
+
+<terms id="_268f5756-6ee5-d1f3-ac6f-ab05e67b7e0b" obligation="normative">
+<title id="_0d44992c-89dd-6c42-1ac4-27b66429bec0">Measurement and error terms</title>
+<term id="_7a555bba-77e7-6881-0c8f-1e80d6a6633c" anchor="term-creep"><preferred><expression>
+<name>creep</name>
+</expression>
+</preferred>
+<definition id="_7d25b442-a23a-7231-0b5b-5d987b86bf70"><verbal-definition id="_f9f8c8b2-1716-ab3f-a87d-424b24e8a3bb"><p id="_cafb08fb-15b3-9347-2ddb-c39f3d039d1c">change in load cell output occurring with time while under constant load and with all environmental conditions and other variables also remaining constant</p></verbal-definition></definition>
+ </term>
+
+<term id="_4658650c-de37-02b7-44c5-91ac78f6a0fe" anchor="term-apportioning-factor-_p___LC___"><preferred><expression>
+<name>apportioning factor (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>p_{"LC"}</asciimath></stem>)</name>
+</expression>
+</preferred>
+<definition id="_fdce6e0e-1e54-8530-24df-42c0ee3d1a72"><verbal-definition id="_4837f78e-3d91-f826-217b-37f7fdb8251b"><p id="_0543aad6-10aa-977c-e8d7-af01510562fb">value of a dimensionless fraction expressed as a decimal (for example, 0.7) representing that portion of an error observed in the (weighing) instrument which is attributed to the load cell alone</p></verbal-definition></definition>
+
+
+ <termnote id="_1697e53e-3081-da14-519e-32074aa62d4e"><p id="_58f20487-a409-b310-d6b6-205f4000bb07">This value is used in determining the MPE (see <xref target="sec-3.7.10"/>).</p>
+</termnote></term>
+
+<term id="_fc2bd92d-e62b-86fa-daab-8bae8f993dda" anchor="term-durability-error"><preferred><expression>
+<name>durability error</name>
+</expression>
+</preferred>
+<definition id="_ce1f1866-9792-d2ba-1661-b833f99ee138"><verbal-definition id="_7b84c98d-59a1-aaa2-55f5-2dbcf0d78383"><p id="_cd244d8b-0aa7-2a19-2d50-4c3bdb895369">difference between the intrinsic error after a period of use and the initial intrinsic error of a measuring instrument</p></verbal-definition></definition>
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>5.16</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_6d27c344-373e-c08e-1927-068a2dd64b56" anchor="term-expanded-uncertainty"><preferred><expression>
+<name>expanded uncertainty</name>
+</expression>
+</preferred>
+<definition id="_61575f23-dcd9-80d1-be61-3b97b298d8a7"><verbal-definition id="_91172a0f-86d9-5fba-8f61-40c1a5423a2a"><p id="_2190f3ec-0617-5f51-a6b2-3139d62017a3">quantity defining an interval about the result of a measurement that may be expected to encompass a large fraction of the distribution of values that could reasonably be attributed to the measurand (OIML G 1-100  <em>Guide to the Expression of Uncertainty in Measurement</em>) [7]</p></verbal-definition></definition>
+ </term>
+
+<term id="_d9455968-221c-9ba2-f9be-b5f1abb63834" anchor="term-fault"><preferred><expression>
+<name>fault</name>
+</expression>
+</preferred>
+<definition id="_255eb31f-11e4-ce24-829a-5ff342029d87"><verbal-definition id="_226fb071-67b8-e2e4-6fa7-1a958339052f"><p id="_6b355cab-2d89-61d9-22c7-b7fbd5fd08de">difference between the error of indication and the intrinsic error of a measuring instrument (For notes, refer to the  <eref type="inline" bibitemid="OIML_V_1_2013" citeas="OIML V 1:2013"/>).</p></verbal-definition></definition>
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>5.12</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_10fd6343-dc01-1f97-915d-b558487556e5" anchor="term-fault-detection-output"><preferred><expression>
+<name>fault detection output</name>
+</expression>
+</preferred>
+<definition id="_42576e60-3d3d-2e90-2159-e073b5b5d721"><verbal-definition id="_9fe1988d-3f1b-c365-4ee5-3881417c1e17"><p id="_6e5936f2-2be5-f6db-a2db-de7fcef89d28">electrical representation issued by the load cell indicating that a fault condition exists</p></verbal-definition></definition>
+ </term>
+
+<term id="_a8a5664f-50c1-c101-f27f-14b7b319243c" anchor="term-hysteresis-error"><preferred><expression>
+<name>hysteresis error</name>
+</expression>
+</preferred>
+<definition id="_6a547f46-2c5f-8dc3-5e0d-dc61fec75c7b"><verbal-definition id="_2713d580-ed2c-915c-dfe4-237e26ad2221"><p id="_6baf0fae-bda5-1f2d-da55-1a0c50b08186">difference in load cell output readings for the same applied force between the reading
+obtained by increasing the load from minimum load (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"min"}</asciimath></stem>), and the reading
+obtained by decreasing the load from maximum load (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"max"}</asciimath></stem>)</p></verbal-definition></definition>
+ </term>
+
+<term id="_462bfc92-7572-5e57-6c95-df042f165272" anchor="term-initial-intrinsic-error"><preferred><expression>
+<name>initial intrinsic error</name>
+</expression>
+</preferred>
+<definition id="_abe0e38a-37ef-b84c-51e5-17a0f85a7407"><verbal-definition id="_5ff3b6a6-3121-ee8b-88e1-d47b56a0e9bb"><p id="_a596494b-5be1-a613-12ca-d034d89e4c4e">intrinsic error of a measuring instrument as determined prior to performance tests and durability evaluations</p></verbal-definition></definition>
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>5.11</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_02bb1e1b-a99a-dc53-5e09-1b095e9ccca2" anchor="term-load-cell-intrinsic-error"><preferred><expression>
+<name>load cell intrinsic error</name>
+</expression>
+</preferred>
+<definition id="_534b9c50-fd7f-d8f1-5cf3-050ada56f51f"><verbal-definition id="_100da018-eb40-d50a-93bb-09c52576e678"><p id="_243256e8-4199-1cab-5e99-691aee817cd8">error resulting from a load cell, determined under reference conditions</p></verbal-definition></definition>
+ </term>
+
+<term id="_b1741228-86b6-6cc4-f473-b89085d48413" anchor="sec-3.7.10"><preferred><expression>
+<name>maximum permissible error (MPE)</name>
+</expression>
+</preferred>
+<definition id="_5fe83fbd-4e26-806e-71fd-6bfc91464713"><verbal-definition id="_e0f83241-9e28-4815-0ac0-01744285b7ff"><p id="_48ace2b4-d3be-a5fd-1971-65b5982f5a81">extreme value of measurement error, with respect to a known reference quantity value, permitted by specifications or regulations for a given measurement, measuring instrument, or measuring system</p><p id="_77e97bfe-e18c-0c5e-62f9-42c2d2a46fe7">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_2_200_2012" citeas="OIML V 2-200:2012"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_2_200_2012" type="inline" citeas="OIML V 2-200:2012"><localityStack><locality type="clause"><referenceFrom>4.26</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_56c56e71-6c22-12f6-3a4f-7f61d3cd7f84" anchor="term-measurement-error"><preferred><expression>
+<name>measurement error</name>
+</expression>
+</preferred>
+<definition id="_b175ca51-511f-23b4-b46f-a68d5fe942da"><verbal-definition id="_ccf946d1-8c86-79fd-3493-7494d1ddf1cb"><p id="_29a859e2-276b-c21b-bb93-cbc48f16ddf0">measured quantity minus a reference quantity value.</p><p id="_98960dfc-76ca-3380-7f24-ca48afa43ceb">(For additional notes, refer to the <eref type="inline" bibitemid="OIML_V_2_200_2012" citeas="OIML V 2-200:2012"/>).</p></verbal-definition></definition>
+
+
+
+
+
+
+ <termnote id="_c8b8e575-1d01-9cd8-bdf3-cf35f1df34d2"><p id="_e95c8de0-ed02-6e6e-86c1-0b70949d9a85">The term “measurement error” in this Recommendation refers to load cell measurement errors.</p>
+</termnote><source status="identical" type="authoritative"><origin bibitemid="OIML_V_2_200_2012" type="inline" citeas="OIML V 2-200:2012"><localityStack><locality type="clause"><referenceFrom>2.16</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_801a9581-116c-edf2-df95-e9c0f0cee531" anchor="term-measured-quantity-_value_"><preferred><expression>
+<name>measured quantity (value)</name>
+</expression>
+</preferred>
+<definition id="_22614432-9e52-132b-d00e-6c38ffb80ad4"><verbal-definition id="_010a21bd-2a7d-1cbe-93d1-c9ab66281cbf"><p id="_372fa418-7986-6a85-9445-3ff39f28aa06">quantity value representing a measurement result</p><p id="_65064ca1-2a65-75e6-db2d-6db976737b91">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_2_200_2012" citeas="OIML V 2-200:2012"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_2_200_2012" type="inline" citeas="OIML V 2-200:2012"><localityStack><locality type="clause"><referenceFrom>2.10</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_ded7af00-895b-e9e5-6c8d-16216f8df56e" anchor="term-non-linearity"><preferred><expression>
+<name>non-linearity</name>
+</expression>
+</preferred>
+<definition id="_1b09fa5b-bbf5-7846-cf9c-31d99674a9a8"><verbal-definition id="_6e3875c6-3f82-7d2f-c356-ab3f7046d74b"><p id="_6b535c83-d863-3cbe-3765-64961ac60cc1">deviation from the average of the values of load cell signals from a straight line through zero force applied and maximum force applied</p></verbal-definition></definition>
+ </term>
+
+<term id="_5bb6fe01-2a3c-0094-aa1f-d844b74e1e37" anchor="term-repeatability-error"><preferred><expression>
+<name>repeatability error</name>
+</expression>
+</preferred>
+<definition id="_9e463565-f945-cdc7-2ed5-e3993f497419"><verbal-definition id="_a94ca572-7539-fab0-d52e-e9cf593b3d6e"><p id="_df60320b-b8b5-265a-ef70-aab5aea68874">difference between load cell output readings taken from consecutive tests under the same loading and environmental conditions of measurement</p></verbal-definition></definition>
+ </term>
+
+<term id="_745402e5-86dc-863e-8843-a4c1d17e13df" anchor="term-resolution"><preferred><expression>
+<name>resolution</name>
+</expression>
+</preferred>
+<definition id="_22b6bf5b-42ad-dbec-b123-cf1707a75da9"><verbal-definition id="_88122a5c-0cb8-ed73-91e2-8a95adbe5bcf"><p id="_004649a6-f7ed-f709-1082-888fafccdbd6">smallest change in a quantity being measured that causes a perceptible change in the corresponding indication</p><p id="_65b9ff23-260c-476b-a061-8b36f1e57914">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_2_200_2012" citeas="OIML V 2-200:2012"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_2_200_2012" type="inline" citeas="OIML V 2-200:2012"><localityStack><locality type="clause"><referenceFrom>4.14</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_3728361b-6a4d-b32c-6146-efbeca188c61" anchor="term-significant-durability-error"><preferred><expression>
+<name>significant durability error</name>
+</expression>
+</preferred>
+<definition id="_05d5eff4-ae3f-ed98-bf7e-03f05c91cc33"><verbal-definition id="_33344d3f-804a-8bea-479b-730212166b0b"><p id="_bdd0a3c5-1f7b-a4a1-3111-e4d8bd26e581">durability error exceeding the value specified in the applicable Recommendation</p><p id="_56f0ee96-9107-c854-62a4-92ff2d246d0f">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_1_2013" citeas="OIML V 1:2013"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>5.17</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_9059d261-b7b9-b34d-dace-02079b3a09d9" anchor="term-significant-fault"><preferred><expression>
+<name>significant fault</name>
+</expression>
+</preferred>
+<definition id="_07071377-1643-b1b4-0999-d66c4ee63918"><verbal-definition id="_4ebe0049-68fe-2a82-5266-b7ceb47ddb54"><p id="_f4d85bd6-f923-c36b-b49e-3139660cc4c2">fault exceeding the applicable fault limit value</p><p id="_2fe74824-4ae8-30fe-ad45-7a8d06df1f06">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_1_2013" citeas="OIML V 1:2013"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>5.14</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_197482b0-cd24-4cc2-b50d-d1f3783ef431" anchor="term-span-stability"><preferred><expression>
+<name>span stability</name>
+</expression>
+</preferred>
+<definition id="_de870a82-5c70-3bcf-521e-4c7ce5b121f7"><verbal-definition id="_0634fca6-b79d-ca23-5410-c23ee5370ab1"><p id="_bca3636b-b8e1-2f8c-b9e0-6f028bad37a7">capability of a load cell to maintain the load cell output of the load cell’s measuring range over a period of use within specified limits</p></verbal-definition></definition>
+ </term>
+
+<term id="_a6fa225b-74a5-1469-ac3e-35e673d63c79" anchor="term-temperature-effect-on-minimum-dead-load-output"><preferred><expression>
+<name>temperature effect on minimum dead load output</name>
+</expression>
+</preferred>
+<definition id="_83de0776-2efb-c520-eae7-5d6a50f8f19f"><verbal-definition id="_102ffd31-3779-cd7c-20da-9cfa21bdd89a"><p id="_247dbb4b-d7db-b908-9f77-661c44bdaa1d">change of the signal output under minimum dead load due to a change in ambient temperature</p></verbal-definition></definition>
+ </term>
+
+<term id="_12b98442-3576-c43b-ebf7-03f3aacac5ac" anchor="term-temperature-effect-on-sensitivity"><preferred><expression>
+<name>temperature effect on sensitivity</name>
+</expression>
+</preferred>
+<definition id="_71ac8c1f-ecf6-19ee-dee7-fcd48fa683c5"><verbal-definition id="_6ab319dc-04c6-15e5-bf09-8409862e9d94"><p id="_a4a30b9a-6e6f-db91-fd46-221773b05968">change in sensitivity due to a change in ambient temperature</p></verbal-definition></definition>
+ </term>
+
+<term id="_74daaf09-37a7-deea-b7f5-24968058f359" anchor="term-type-approval-mark"><preferred><expression>
+<name>type approval mark</name>
+</expression>
+</preferred>
+<definition id="_d3560b64-5046-9d3a-aa48-d79656243e5b"><verbal-definition id="_3b654f99-7d66-fed8-8bbc-1ac941cacd3a"><p id="_d0fb8967-5156-f3c1-3050-79885865fe1d">mark applied to a measuring instrument certifying its conformity to the approved type</p></verbal-definition></definition>
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>3.07</referenceFrom></locality></localityStack></origin>
+</source></term>
+</terms>
+
+<terms id="_e770687e-4aa7-d485-8434-517249de4bd5" obligation="normative">
+<title id="_24213a26-a715-ed74-47ac-8e00df64f7e6">Influences and reference conditions</title>
+<term id="_2af857d6-631a-b2ba-c5e8-18e7bbec750c" anchor="term-disturbance"><preferred><expression>
+<name>disturbance</name>
+</expression>
+</preferred>
+<definition id="_5dcd9543-d843-1ef2-4ad2-a654e3ae2678"><verbal-definition id="_6c190c1f-3ea3-1ac1-c46b-dedbe2c9a5fd"><p id="_237dbc6d-b5b8-0500-40ce-5cb3acbf6808">influence quantity having a value within the limits specified in the relevant Recommendation, but outside the specified rated operating conditions of a measuring instrument</p></verbal-definition></definition>
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>5.19</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_51a28b35-2115-3542-7614-79a14ea89d56" anchor="term-influence-factor"><preferred><expression>
+<name>influence factor</name>
+</expression>
+</preferred>
+<definition id="_04565d0d-f0d0-093a-7752-e2c3d183fc14"><verbal-definition id="_09c25614-f558-2716-2d61-0db56e74b2b3"><p id="_888495f1-ff30-3dbe-17ce-6904c5069b73">influence quantity having a value which ranges within the rated operating conditions of a measuring instrument</p><p id="_7dabcd23-9853-a55c-b2f0-d11d2c8b6571">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_1_2013" citeas="OIML V 1:2013"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_1_2013" type="inline" citeas="OIML V 1:2013"><localityStack><locality type="clause"><referenceFrom>5.17</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_1490d4f8-8661-332c-701b-6bc02bfe3052" anchor="term-influence-quantity"><preferred><expression>
+<name>influence quantity</name>
+</expression>
+</preferred>
+<definition id="_bc418bc9-0fa9-c2f4-54a0-c5929bb2abab"><verbal-definition id="_5e4534af-f4d5-ca61-0f48-4fe33b0845fa"><p id="_f390fca7-2ac9-39c9-fb0e-12bf09ea7cb8">quantity that, in a direct measurement, does not affect the quantity that is actually measured, but that affects the relation between the indication and the measurement result</p><p id="_0c1716e9-f186-e782-4fd5-af87d897f0ef">(For examples and notes, refer to the <eref type="inline" bibitemid="OIML_V_2_200_2012" citeas="OIML V 2-200:2012"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_2_200_2012" type="inline" citeas="OIML V 2-200:2012"><localityStack><locality type="clause"><referenceFrom>2.52</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_6a8d51f0-7c18-77fa-55db-5affd9eb4ae4" anchor="term-rated-operating-condition-1"><preferred><expression>
+<name>rated operating condition</name>
+</expression>
+</preferred>
+<definition id="_51e62b62-e06b-95b1-c540-620b9e67cc39"><verbal-definition id="_83d878f0-e4d9-6687-5c49-12b7715bbd07"><p id="_c00bcf0f-29e3-4903-1e73-0d56add347bf">operating condition that must be fulfilled during measurement in order that a measuring instrument or measuring system perform as designed</p><p id="_e51bf0bc-a61b-0aa4-ac1f-9a0bf14b0ae7">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_2_200_2012" citeas="OIML V 2-200:2012"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_2_200_2012" type="inline" citeas="OIML V 2-200:2012"><localityStack><locality type="clause"><referenceFrom>4.9</referenceFrom></locality></localityStack></origin>
+</source></term>
+
+<term id="_936bbfe1-8140-7a86-2fee-3704c32be435" anchor="term-reference-_operating_-condition"><preferred><expression>
+<name>reference (operating) condition</name>
+</expression>
+</preferred>
+<definition id="_a87a7f47-4e93-377a-537a-15a82325ab83"><verbal-definition id="_d8ecd76f-c00e-586e-35e7-7710182d2df0"><p id="_12ced525-41c9-f56a-590b-6808d87eb9fb">operating condition prescribed for evaluating the performance of a measuring instrument or measuring system or for comparison of measurement results</p><p id="_dcec0acc-8bfa-f568-034a-5680dc61612f">(For notes, refer to the <eref type="inline" bibitemid="OIML_V_2_200_2012" citeas="OIML V 2-200:2012"/>).</p></verbal-definition></definition>
+
+
+
+
+ <source status="identical" type="authoritative"><origin bibitemid="OIML_V_2_200_2012" type="inline" citeas="OIML V 2-200:2012"><localityStack><locality type="clause"><referenceFrom>4.11</referenceFrom></locality></localityStack></origin>
+</source></term>
+</terms>
+
+<definitions id="_82309959-a8a0-bd49-2739-5d5015d0681b" type="abbreviated_terms" obligation="normative">
+<title id="_c77383dd-dd64-247a-bd44-5862666848d5">Abbreviations</title>
+<dl id="_04e1b172-8061-f8c9-10e0-0aa20d22425a"><dt anchor="symbol-AC" id="_db8790c5-e31c-e8f7-6af8-11825a516ae2">AC</dt><dd id="_19661401-1f88-467b-2441-b7e57b2043c3"><p id="_69eba77a-1060-2203-5c6e-2f8544cd130b">Alternating Current</p>
+</dd>
+<dt anchor="symbol-CH" id="_54d6bab6-cbd5-cb76-2cf9-5adaa89e1a45">CH</dt><dd id="_d3c8bbbb-f674-19a8-fcf7-114d2b49f395"><p id="_37f5088c-0d88-d943-c8bd-b78ba84f5fa6">Cyclic Humidity</p>
+</dd>
+<dt anchor="symbol-DC" id="_b0dcde0a-bca8-432e-7c0f-ce67773444a6">DC</dt><dd id="_e611acd0-07f3-a392-cde6-20a3737e01b7"><p id="_1a2b7af6-8e55-e477-dc90-353e427a4687">Direct Current</p>
+</dd>
+<dt anchor="symbol-DR" id="_37958e69-64e5-ca01-d3a4-0cae48eb1961">DR</dt><dd id="_6797c459-37e4-e76a-7ac2-ac6f155338d8"><p id="_48624cbb-5430-67fe-8b34-7c15e6aab258">Minimum Deadload Output Return</p>
+</dd>
+<dt anchor="symbol-EMC" id="_7cc4558a-13ed-4e09-96c6-91b8293485b4">EMC</dt><dd id="_4829b123-3db3-b312-a5ea-7b54aa914365"><p id="_8aff7e2e-9eab-611e-aebe-23806cd774ff">Electro Magnetic Compatibility</p>
+</dd>
+<dt anchor="symbol-EUT" id="_bcf3fb62-9d19-aa45-f12c-6027379b7009">EUT</dt><dd id="_0dba88a7-2e07-1119-a77a-1eec03314ffe"><p id="_6468a846-0439-8b55-2f61-ac89cefde46a">Equipment Under Test</p>
+</dd>
+<dt anchor="symbol-I_O" id="_42cf9af9-b201-520e-2111-b32222861586">I/O</dt><dd id="_07f70008-3e19-9362-2006-599a8c999609"><p id="_e9d2beb0-9e92-924f-1e94-4a0ce53b73a8">Input/Output</p>
+</dd>
+<dt anchor="symbol-IEC" id="_d0fad042-f0ae-b8df-4655-1490ae120406">IEC</dt><dd id="_cff831ce-0344-d9d6-b8ed-a17e3a4b4d4e"><p id="_96b35549-dd9b-a7dd-3dcf-adf6480b42f1">International Electrotechnical Commission</p>
+</dd>
+<dt anchor="symbol-ISO" id="_013db107-f51b-303b-9ef0-524251591fb2">ISO</dt><dd id="_cb90dc04-9988-1aa7-f9c6-2b80bd89ce5c"><p id="_2705c401-2e84-13ec-edf3-4297c9c9d49b">International Organization for Standardization</p>
+</dd>
+<dt anchor="symbol-LC" id="_19ed841c-2ce1-c30c-e333-df9385e1ab94">LC</dt><dd id="_95c9bed0-99d8-96b6-4570-5c2be0a80e92"><p id="_09d3f036-bf75-5ca8-18c0-ca661d9022ef">Load Cell</p>
+</dd>
+<dt anchor="symbol-MPE" id="_58c350d1-4615-66b8-1cfb-2dcae4fbd130">MPE</dt><dd id="_0577e0e9-129e-9c35-e468-4b9005c45120"><p id="_ae6c93c5-ad57-84d5-f373-ae020e9884cc">Maximum Permissible Error</p>
+</dd>
+<dt anchor="symbol-NH" id="_db1d10b7-ac6f-3040-2034-5b13e9835953">NH</dt><dd id="_d399882b-11a4-2d49-0e4a-239abdc4d064"><p id="_e5051f6e-42d1-4ed6-7ace-a700d7d5f419">No Humidity</p>
+</dd>
+<dt anchor="symbol-OIML" id="_f14dac95-e07b-8b09-7ab5-b719066d9497">OIML</dt><dd id="_7cc139d4-6f7d-c539-e8fc-e7b29b63b147"><p id="_fe592cc7-ed89-2c01-40cc-623d93ac8126">International Organisation of Legal Metrology</p>
+</dd>
+<dt anchor="symbol-OIML-1" id="_a5501423-82b5-4e46-929d-7b35b6b3b7de">OIML</dt><dd id="_f9077ce2-024a-2683-870b-651677b205f7"><p id="_3a6e0ded-d641-1d6c-fe8d-ddab2851b433">R 60-1:2021 (E)</p>
+</dd>
+<dt anchor="symbol-SH" id="_679c5531-732b-68a2-82db-81e8d61cbc99">SH</dt><dd id="_db2e16a7-d3b4-0428-3bab-1cf063fb66ee"><p id="_a2225782-51cb-bbfe-8995-db9dc4015358">Steady-State Humidity</p>
+</dd>
+<dt anchor="symbol-VIM" id="_d3478415-01a4-5bad-2ebf-fb5b3f7abdc8">VIM</dt><dd id="_4c8cca67-a369-669c-ac92-97857c307415"><p id="_1f3c05fc-5ec6-108e-8fb5-e7880b3f9123">International Vocabulary of Metrology — Basic and General Concepts and Associated Terms</p>
+</dd>
+<dt anchor="symbol-VIML" id="_c6bf954f-eb67-e1da-9764-ffb79d13ba8c">VIML</dt><dd id="_dda4dd1b-a3df-42a9-4674-6cf46eaba3d5"><p id="_c061b98b-5d51-bf32-07a7-603e1d9a4814">International vocabulary of terms in legal metrology</p>
+</dd></dl>
+</definitions></clause>
+
+<clause id="_d0d8d765-731f-74cb-224d-59e39370dff5" inline-header="false" obligation="normative">
+<title id="_70223002-c49f-6ed0-2d3b-15d37ed42c05">Description of load cells</title>
+<p id="_dfdc06ce-a8c2-9442-d004-d29fc948f9fd">A load cell provides an output proportional to a force resulting from applying a load. Load cells may be used as a single transducer or applied together with other load cells in a system where the design allows such application. The term “load cell” in this Recommendation is not limited to any particular type of technology or design principle.</p>
+
+<p id="_1df951c1-cdb0-b077-9387-93f321da7184">While many technologies are used in the design of load cells, those used in legal metrology applications are commonly designed to provide an electrical output relative to a mechanical input. Both analogue and digital outputs are recognised in load cells within that category. Although strain gauge technology was a primary focus in the development of R 60, it is to be understood that load cells that operate using other principles may also be evaluated under this Recommendation. Variations of transducers that operate using alternative basis of input/output may include, but are not limited to pressure (e.g. hydraulic, pneumatic), vibratory frequency and magnetic forces.</p>
+
+<p id="_0480e644-5911-2e13-1a4d-3fcaf0e038a3">The term load cell may describe an elemental component/module or a somewhat more complex instrument including constituents that perform functions such as signal filtering and analogue-to-digital conversion.</p>
+</clause>
+
+<clause id="_5e7bc85b-6dbc-cb31-89d0-bd1357c24c0c" inline-header="false" obligation="normative">
+<title id="_6b700363-ee00-e4cb-edb9-ddbd53ded3b4">Metrological requirements</title>
+<clause id="_a2037a09-a8b5-779a-6c72-9ea3cf4ec214" inline-header="false" obligation="normative">
+<title id="_867f4f81-79f8-3e5f-2313-9dcb8d487b07">Principle of load cell classification</title>
+<p id="_5e2e13e5-1f79-e4e9-13cc-4105633c6c17">The classification of load cells into specific accuracy classes is provided to facilitate their application to various measuring systems. In the application of this Recommendation, it should be recognised that the effective performance of a particular load cell may be improved by compensation means within the measuring system with which it is applied. Therefore, it is not the intention of this Recommendation to require that a load cell be of the same accuracy class as the measuring system in which it may be applied. Nor does it require that a measuring instrument, indicating in units of mass for example, use a load cell which has been approved during a separate type evaluation. All data/items found in  <xref target="sec-5.1.1"><location target="sec-5.1.1" connective="from"/><location target="sec-5.1.7" connective="to"/></xref> shall be specified by the manufacturer.</p>
+
+<clause id="_17d2e1f5-29d5-410c-82de-25a82c561c5e" anchor="sec-5.1.1" inline-header="false" obligation="normative">
+<title id="_8297b55e-b87b-fe84-1532-e7962d1579e9">Accuracy classes and their symbols</title>
+<p id="_e1a2baa0-c538-d56d-3015-a52aa40d2e84">Load cells shall be ranked according to their overall performance capabilities into one of the four accuracy classes whose designations are as follows:</p>
+
+<p id="_fd0ec4ee-1c01-a35b-bfa6-d9c5bb888cef">Class A; Class B; Class C; Class D.</p>
+</clause>
+
+<clause id="_77eba5eb-8e75-9836-1097-fa6e21956797" anchor="sec-5.1.2" inline-header="false" obligation="normative">
+<title id="_86008ecd-7497-b72b-e6f9-488e3ccb5cda">Maximum number of load cell verification intervals</title>
+<p id="_56120abe-f391-ed70-c3b8-55fa4980b8e3">The maximum number of load cell verification intervals, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>n</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>n_{"LC"}</asciimath></stem>, into which
+the maximum measuring range <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+    <mo>−</mo>
+    <msub>
+      <mi>E</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"max"} - E_{"min"}</asciimath></stem> (see <xref target="sec-3.5.8"/>) can be divided in a measuring system shall be within the limits presented in  <xref target="table-1"/>.</p>
+
+<table id="_f027de96-0e4d-dee7-64c1-bfdb1a39f4bf" anchor="table-1">
+<name id="_2b075879-ca23-6e5c-e8c8-06d090049268">Maximum number of load cell verification intervals (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>n</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>n_{"LC"}</asciimath></stem>) according to accuracy class</name>
+<thead><tr id="_7c6ecd61-8dd4-1d80-b0ec-ab6d61838c83"><th id="_2365e352-c229-f0bb-b49e-a596d2b6e8e3" valign="top" align="center"/><th id="_91300cc4-5159-a905-8880-a5592db06e86" valign="top" align="center">Class A</th>
+<th id="_b4e15652-5b5e-cebc-b3a6-cbb2e7006412" valign="top" align="center">Class B</th>
+<th id="_44610335-9045-0240-c49e-55af2e23cc73" valign="top" align="center">Class C</th>
+<th id="_47b864da-b69d-d2c5-00b5-a3769f13781e" valign="top" align="center">Class D</th>
+</tr></thead>
+<tbody><tr id="_3fd149ec-9949-f2d5-8279-4ccfc8daf97c"><td id="_16ade17f-9c7f-bd6a-7351-56c3ea4d3d63" valign="top" align="left">Lower limit</td>
+<td id="_454a9578-ae5c-a47e-2cac-c1be53d17dd4" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><mn>50000</mn></mstyle></math><asciimath>50000</asciimath></stem></td>
+<td id="_aa5f10ee-4b64-55eb-576c-ea60283ba421" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><mn>5000</mn></mstyle></math><asciimath>5000</asciimath></stem></td>
+<td id="_aa638a0c-4d3d-59a4-ed37-e9adf63a4c64" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><mn>500</mn></mstyle></math><asciimath>500</asciimath></stem></td>
+<td id="_5cfd94b2-893e-dcee-938e-3d75593c08b1" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><mn>100</mn></mstyle></math><asciimath>100</asciimath></stem></td>
+</tr><tr id="_46b5480f-ca4f-eb1d-668a-d88cf2d3c37c"><td id="_206f0bc0-47ef-53f3-4c8e-4797b1214149" valign="top" align="left">Upper limit</td>
+<td id="_836e08eb-6f7a-6dae-7fa8-f3979a55b956" valign="top" align="center">Unlimited</td>
+<td id="_571242ca-a29f-5211-5caa-b199bd221c69" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><mn>100000</mn></mstyle></math><asciimath>100000</asciimath></stem></td>
+<td id="_8f715900-8e59-cc48-7145-70c1c4c592c5" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><mn>10000</mn></mstyle></math><asciimath>10000</asciimath></stem></td>
+<td id="_3389ec8f-1c3f-d217-e951-3c06d8569b9c" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><mn>1000</mn></mstyle></math><asciimath>1000</asciimath></stem></td>
+</tr></tbody>
+</table>
+</clause>
+
+<clause id="_e7e525aa-ca46-556d-ce1c-0c5b17a609f2" inline-header="false" obligation="normative">
+<title id="_0c34437f-502b-a758-6f0b-a9f347dfbc66">Minimum load cell verification interval</title>
+<p id="_cb44958e-2129-3d46-002a-7a06f5cf6b85">The minimum load cell verification interval, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>v</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>v_{"min"}</asciimath></stem>, shall be specified by the manufacturer (see  <xref target="sec-3.5.11"/> in combination with <xref target="sec-3.5.15"/>).</p>
+</clause>
+
+<clause id="_39534d58-d668-5149-9ee2-c3f46c54cd92" anchor="sec-5.1.4" inline-header="false" obligation="normative">
+<title id="_c4a57413-8b54-87d0-47de-e321fb6e74eb">Supplementary classifications</title>
+<p id="_4b97c921-8946-17a8-b7a4-acb3805be2e7">Load cells shall also be classified by the intended manner in which a load is applied to the load cell wherever there would be a risk of confusing the manner of loading (i.e. compression loading, tension loading or universal). A load cell may bear different classifications according to the intended manner in which a load is applied to the load cell. The manner of loading for which the classification(s) applies(y) shall be specified. For multiple capacity load cells, each capacity shall be classified separately.</p>
+</clause>
+
+<clause id="_1df9949b-9f32-f585-146e-7e2645ad502a" anchor="sec-5.1.5" inline-header="false" obligation="normative">
+<title id="_0132620e-c22a-e38b-1503-9f4200fd52cf">Complete load cell classification</title>
+<p id="_061061b8-5389-3c15-10b2-7bc282f36a17">The load cell shall be classified corresponding to the following six parameters:</p>
+
+<ol id="_33421a9d-b08d-767f-1df7-2ba2b58b0599"><li><p id="_3bb1dd0f-b92c-af03-2794-6378153758ba">accuracy class designation (see <xref target="sec-5.1.1"/> and <xref target="sec-6.2.4.1"/>);</p>
+</li>
+<li><p id="_a2790e07-0e2b-7e9a-ef32-e3630b61934a">maximum number of load cell verification intervals (see <xref target="sec-5.1.2"/> and <xref target="sec-6.2.4.5"/>);</p>
+</li>
+<li><p id="_d3dc6736-8dac-f4fc-88bd-5f48bf856d87">intended manner of the application of the load, if necessary (see <xref target="sec-5.1.4"/> and <xref target="sec-6.2.4.2"/>);</p>
+</li>
+<li><p id="_ef7a6db1-a3df-2f33-6060-2f2043a06a63">special limits of working temperature, if applicable (see <xref target="sec-6.2.4.3"/>);</p>
+</li>
+<li><p id="_7f119409-e349-a6ec-1759-daf783ad3e99">humidity symbol, if applicable (see <xref target="sec-6.2.4.4"/>); and</p>
+</li>
+<li><p id="_62a37f7b-e210-eecd-f8a2-829467ccea60">additional characterisation information, as listed below in <xref target="fig-4"><location target="fig-4" connective="and"/><location target="sec-5.1.6" connective="and"/><location target="sec-5.1.7" connective="and"/></xref>.</p>
+</li>
+</ol>
+
+<p id="_92c9538e-9f7e-b8d4-e536-7e376039fecd">An example illustrating the six parts of the load cell classification is shown in <xref target="fig-4"/>.</p>
+
+<figure id="_937a7087-2940-3e77-870b-4a341cef7b7e" anchor="fig-4">
+<name id="_62cb6dba-75c8-404e-dc7b-b011f9518857">Complete load cell classification</name>
+<image id="_3cf404b7-e218-2a33-6007-9180a13d0706" src="images/figure-4.svg" mimetype="image/svg+xml" height="auto" width="auto" filename="images/figure-4.svg"><svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 459.12 285.96">
+  <!-- Generator: Adobe Illustrator 30.2.1, SVG Export Plug-In . SVG Version: 2.1.1 Build 1)  -->
+  <defs>
+    <style>
+      .st0, .st1 {
+        font-family: Arial-ItalicMT, Arial;
+        font-style: italic;
+      }
+
+      .st0, .st2, .st3 {
+        font-size: 10px;
+      }
+
+      .st1 {
+        font-size: 9px;
+      }
+
+      .st2 {
+        font-family: ArialMT, Arial;
+      }
+
+      .st3, .st4 {
+        font-family: Arial-BoldMT, Arial;
+        font-weight: 700;
+      }
+
+      .st5 {
+        fill: none;
+        stroke: #000;
+        stroke-miterlimit: 10;
+        stroke-width: .25px;
+      }
+
+      .st4 {
+        font-size: 14px;
+      }
+    </style>
+  </defs>
+  <g id="lines_inject_6">
+    <line class="st5" x1="125.59" y1="30.33" x2="136" y2="114.51"/>
+    <line class="st5" x1="204.65" y1="10.72" x2="168.17" y2="111.5"/>
+    <line class="st5" x1="324.2" y1="49.39" x2="239.81" y2="121.47"/>
+    <line class="st5" x1="214.88" y1="157.59" x2="197.34" y2="130.58"/>
+    <line class="st5" x1="103.17" y1="158.11" x2="125.51" y2="128.81"/>
+  </g>
+  <g id="texts_inject_6">
+    <text class="st2" transform="translate(12.53 11.61)"><tspan x="0" y="0">Maximum number of load cell verification</tspan><tspan x="0" y="12">intervals, stated in units of 1000:</tspan></text>
+    <text class="st2" transform="translate(208.03 13.25)"><tspan x="0" y="0">Humidity</tspan><tspan x="0" y="12">classification</tspan></text>
+    <text class="st2" transform="translate(327.02 47.1)"><tspan x="0" y="0">Special temperature limits</tspan></text>
+    <text class="st2" transform="translate(343.31 60.72)"><tspan x="0" y="0">e.g. - 5/30 represents</tspan></text>
+    <text class="st2" transform="translate(365.68 75.06)"><tspan x="0" y="0">-5°C to +30°C </tspan></text>
+    <text class="st2" transform="translate(30.77 172.86)"><tspan x="0" y="0">Accuracy class designation</tspan></text>
+    <text class="st2" transform="translate(216.85 165.81)"><tspan x="0" y="0">Symbol for different types of loads</tspan></text>
+    <text class="st2" transform="translate(218.1 186.86)"><tspan x="0" y="0">Tension</tspan></text>
+    <text class="st2" transform="translate(218.1 216.89)"><tspan x="0" y="0">Compression</tspan></text>
+    <text class="st2" transform="translate(218.1 246.92)"><tspan x="0" y="0">Beam</tspan></text>
+    <text class="st2" transform="translate(287.07 246.92)"><tspan x="0" y="0">↓ or ↑</tspan></text>
+    <g>
+      <text class="st2" transform="translate(292.2 271)"><tspan x="0" y="0">↑ ↓</tspan></text>
+      <text class="st2" transform="translate(292.2 282.89)"><tspan x="0" y="0">↑ ↑</tspan></text>
+    </g>
+    <text class="st2" transform="translate(296.18 180.86)"><tspan x="0" y="0">↑</tspan><tspan x="0" y="12">↓</tspan></text>
+    <text class="st4" transform="translate(192.69 123.01)"><tspan x="0" y="0">↑</tspan></text>
+    <text class="st2" transform="translate(296.17 210.89)"><tspan x="0" y="0">↓</tspan><tspan x="0" y="12">↑</tspan></text>
+    <text class="st2" transform="translate(218.1 276.95)"><tspan x="0" y="0">Universal</tspan></text>
+    <text class="st2" transform="translate(58.63 187.12)"><tspan x="0" y="0">A - Class A</tspan></text>
+    <text class="st2" transform="translate(58.63 202.46)"><tspan x="0" y="0">B - Class B</tspan></text>
+    <text class="st2" transform="translate(58.63 217.8)"><tspan x="0" y="0">C - Class C</tspan></text>
+    <text class="st2" transform="translate(58.63 233.14)"><tspan x="0" y="0">D - Class D</tspan></text>
+    <text class="st3" transform="translate(214.35 123.68)"><tspan x="0" y="0">-5/30</tspan></text>
+    <text class="st3" transform="translate(157.16 123.68)"><tspan x="0" y="0">NH</tspan></text>
+    <text class="st3" transform="translate(126.17 123.68)"><tspan x="0" y="0">C3</tspan></text>
+    <text class="st2" transform="translate(11.8 41.5)"><tspan x="0" y="0" xml:space="preserve">e.g.  3 represents 3 000</tspan></text>
+    <text class="st2" transform="translate(208.03 39.84)"><tspan x="0" y="0">1. NH</tspan></text>
+    <text class="st2" transform="translate(208.03 55.52)"><tspan x="0" y="0">2. SH or</tspan></text>
+    <text class="st2" transform="translate(208.03 70.29)"><tspan x="0" y="0">3. CH or no symbol</tspan></text>
+    <text class="st2" transform="translate(25.84 58.67)"><tspan x="0" y="0">1.5 represents 1 500</tspan></text>
+    <text class="st0" transform="translate(53.65 122.94)"><tspan x="0" y="0">For example</tspan></text>
+    <text class="st1" transform="translate(330.07 96.13)"><tspan x="0" y="0">Note:</tspan></text>
+    <text class="st1" transform="translate(353.77 96.13)"><tspan x="0" y="0">This is only prescribed</tspan><tspan x="0" y="10.8">when the temperature</tspan><tspan x="0" y="21.6">limits are different</tspan><tspan x="0" y="32.4">from -10°C to +40°C</tspan></text>
+  </g>
+</svg></image></figure>
+</clause>
+
+<clause id="_8ea968bc-0259-c5bc-5e18-fe931916f1ad" anchor="sec-5.1.6" inline-header="false" obligation="normative">
+<title id="_5fac7bf2-8688-fc46-da78-0968d4276a53">Standard classification</title>
+<p id="_fc697ce5-acfb-97c4-fcd3-61e4c916e2a2">Standard classifications shall be used; examples are shown in <xref target="table-2"/>.</p>
+
+<table id="_13890ba6-b793-1422-b8db-ab17c01bf7f4" anchor="table-2">
+<name id="_97e03b42-2953-fda4-be8d-2f453d4bf88d">Examples of load cell classification</name>
+<thead><tr id="_235d8523-6749-c8fb-a2fb-7bbe75eb206e"><th id="_042c0f16-1a3d-b0cb-f9b5-387b31d29ce8" valign="top" align="left">Classification symbol</th>
+<th id="_8184ba4c-ae0e-8b5d-1e48-2ab304a8faa8" valign="top" align="left">Description</th>
+</tr></thead>
+<tbody><tr id="_6f0ce19b-6007-ba73-b081-644ac8cfbebc"><td id="_3ecfa414-a814-1de4-13c9-1d3bdcc4df85" valign="top" align="left">C2</td>
+<td id="_2ca3a1f7-69fa-adc8-d8a9-01928cb06485" valign="top" align="left">Class C, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><mn>2000</mn></mstyle></math><asciimath>2000</asciimath></stem> intervals</td>
+</tr><tr id="_a01ee6f1-3a69-0f49-e7ea-741502a9ce88"><td id="_5756bbf8-0637-8120-9ef0-a0d0797dc13a" valign="top" align="left">C3 ↓ ↑ 5/35</td>
+<td id="_a4b1225d-2ce9-4a02-a96f-591a624a151d" valign="top" align="left">Class C, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><mn>3000</mn></mstyle></math><asciimath>3000</asciimath></stem> intervals, compression, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mo>+</mo>
+    <mn>5</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>+5 "unitsml(degC)"</asciimath></stem> to <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mo>+</mo>
+    <mn>35</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>+35 "unitsml(degC)"</asciimath></stem></td>
+</tr><tr id="_ad598df1-339f-2c83-464e-9fafbf74443f"><td id="_d37e5ff3-885c-8614-5e30-d0fdb9f83cf2" valign="top" align="left">C2 NH</td>
+<td id="_c41e166d-02e8-afc7-be9a-367a0ef138e6" valign="top" align="left">Class C, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><mn>2000</mn></mstyle></math><asciimath>2000</asciimath></stem> intervals, not to be subjected to humidity test</td>
+</tr></tbody>
+</table>
+</clause>
+
+<clause id="_ee71fa11-c2a1-7779-8da5-306982d1a8e6" anchor="sec-5.1.7" inline-header="false" obligation="normative">
+<title id="_1a9db92d-48a4-66aa-7ad2-b11e5a8bf0d0">Multiple classifications</title>
+<p id="_9cca743c-40d2-01e6-4d8b-794c0c202ecd">Load cells that have comprehensive classifications for the manner in which the load is applied to the load cell shall be accompanied by the relative information for each classification. An example is shown in  <xref target="table-3"/>. An illustration of the standard classification symbols, using an example, is shown in  <xref target="fig-4"/>.</p>
+
+<table id="_e5757c00-a896-065b-520e-eee00fe1d9b8" anchor="table-3">
+<name id="_1da67031-ff09-4dc5-c782-39d2437be558">Examples of multiple classifications</name>
+<thead><tr id="_213f5987-7ed1-beaf-81b5-37a212764b0f"><th id="_bf92e9da-fadb-b854-e7c5-9df02434dbec" valign="top" align="left">Classification symbol</th>
+<th id="_9b6d698a-7ac9-be87-8545-913cd870362f" valign="top" align="left">Description</th>
+</tr></thead>
+<tbody><tr id="_f7698888-58fe-c482-c843-ffca6ea5496a"><td id="_493835cf-9bc7-80dc-2157-5ab916c07b49" valign="top" align="left">C2 ↑</td>
+<td id="_128e5d13-4945-888c-d1d9-0bf3e12c7844" valign="top" align="left">Class C, 2 000 intervals</td>
+</tr><tr id="_802b42e8-a77f-ad85-0d5d-21cd8393fdd0"><td id="_1f0b4db8-0597-06ac-8f36-9bf6913c7d41" valign="top" align="left">C1.5 ↓</td>
+<td id="_fb36ce2d-4274-a982-f485-7c796cbef874" valign="top" align="left">Class C, 1 500 intervals</td>
+</tr><tr id="_c888642c-f0d0-95fa-c737-bf2d004f5d3e"><td id="_9e2cb203-de91-5b3c-39c6-ab0f6e7dc846" valign="top" align="left">C1 ↓ ↑ — 5/30</td>
+<td id="_282b6c8e-6ecc-c190-b179-fa3761fa7e50" valign="top" align="left">Class C, 1 000 intervals, compression, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mo>−</mo>
+    <mn>5</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>-5 "unitsml(degC)"</asciimath></stem> to <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mo>+</mo>
+    <mn>30</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>+30 "unitsml(degC)"</asciimath></stem></td>
+</tr><tr id="_86eb03a5-61ea-61b9-a900-71e477988ca2"><td id="_48b5b9ef-2e12-2af3-0287-84bcf93a697e" valign="top" align="left">C3 ↑ ↓ — 5/30</td>
+<td id="_3f0b384a-d6e9-9d2b-be62-bcc229d0b5d9" valign="top" align="left">Class C, 3 000 intervals, tension, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mo>−</mo>
+    <mn>5</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>-5 "unitsml(degC)"</asciimath></stem> to <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mo>+</mo>
+    <mn>30</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>+30 "unitsml(degC)"</asciimath></stem></td>
+</tr></tbody>
+</table>
+</clause>
+</clause>
+
+<clause id="_1245599c-0970-004f-b0e6-07937a798acb" inline-header="false" obligation="normative">
+<title id="_09dbb53c-7a7a-5ffe-530c-c5da39c4bf19">Measuring ranges</title>
+<clause id="_c264459b-f414-f716-3576-f347e3ca4075" inline-header="false" obligation="normative">
+<title id="_12ba45de-a54c-0a7f-babf-922f1c7e647b">Minimum load of the measuring range (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"min"}</asciimath></stem>) (see <xref target="sec-3.5.12"/>)</title>
+<p id="_fcf0fc1a-267e-da2f-1dcb-84396480199d">The value of the smallest load applied to a load cell during test which is expressed
+in units of mass shall not be less than <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"min"}</asciimath></stem> (see <xref target="sec-3.5.9"/>).</p>
+</clause>
+
+<clause id="_b69b7b25-1638-b98b-22b9-1dd0ba75b9d9" inline-header="false" obligation="normative">
+<title id="_310c3a25-ef0a-e751-104c-e88a3c823758">Maximum load of the measuring range (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"max"}</asciimath></stem>) (see <xref target="sec-3.5.6"/>)</title>
+<p id="_43b84737-8ed9-69e1-a300-64b75668f97a">The value of the largest load applied to a load cell during test which is expressed
+in units of mass shall not be greater than <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"max"}</asciimath></stem> (see <xref target="sec-3.5.5"/>).</p>
+</clause>
+</clause>
+
+<clause id="_74ec87b5-ca17-b8fb-73a1-eb2b589bc4c2" anchor="sec-5.3" inline-header="false" obligation="normative">
+<title id="_b9e44222-595f-6f2f-433a-2136d9a9999a">Maximum permissible measurement errors</title>
+<p id="_03073d38-227b-05b3-db58-1081ebc3ddbb">Under the rated operating conditions in <xref target="sec-5.6"/>, the maximum permissible error (MPE) shall not exceed the values stated in  <xref target="sec-5.5"/>.</p>
+
+<p id="_da8c5abc-5ff7-815e-d3d1-ed206c9289f6">The MPE is applicable after increasing as well as decreasing the force applied (i.e. they include hysteresis).</p>
+
+<clause id="_e824cc1f-1ec7-9fee-a0ed-3d200b24c418" inline-header="false" obligation="normative">
+<title id="_36a9d58b-229d-e0fe-b28d-1e25e6c0338c">Maximum permissible errors for each accuracy class</title>
+<p id="_4d5dc486-c41c-ad25-1f75-d9445896b86e">The maximum permissible measurement errors for each accuracy class are related to
+the maximum number of load cell verification intervals (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>n</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>n_{"LC"}</asciimath></stem>) specified for the load cell (see  <xref target="sec-5.1.2"/>) and to the actual value of the load cell verification
+interval, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mi>v</mi>
+  </mstyle>
+</math><asciimath>v</asciimath></stem>.</p>
+</clause>
+
+<clause id="_996156dd-cc92-9657-dda8-d8f3739ff8e6" anchor="sec-5.3.2" inline-header="false" obligation="normative">
+<title id="_acea5f5a-de82-c69d-77c4-762f0bf3c24b">Type evaluation</title>
+<p id="_c2449cc7-1e65-b900-eef8-7a93717ef9fe">The MPE (see <xref target="sec-3.7.10"/>) on type evaluation shall be the values derived using
+the expressions contained in the left column of <xref target="table-4"/>. The apportioning factor,
+<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>p_{"LC"}</asciimath></stem> shall be chosen and declared (if other than 0.7) by the manufacturer
+and shall be in the range of 0.3 to 0.8: (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>0.3</mn>
+    <mo>≤</mo>
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+    <mo>≤</mo>
+    <mn>0.8</mn>
+  </mstyle>
+</math><asciimath>0.3 &lt;= p_{"LC"} &lt;= 0.8</asciimath></stem>)<fn id="_0fd3eba8-c317-df67-6381-23bfe95a1306" reference="1"><p id="_1fadef22-58ff-8f71-eceb-dd2b990c971d">Associated with apportionment of error provisions contained within OIML R 76-1, 3.5.1 and 3.10.2.1 [1]; R 50-1, 2.2.33.2.2 [24]; R 51-1, 5.2.3.4 [25]; R 61-1, 5.2.3.3 [26]; R 106-1, 5.1.3.2 [27]; or R 107-1, 5.1.4.1 [28], when load cell is applied to such instruments.</p>
+</fn>, where “m” is the value (expressed in mass)
+representing the force introduced by the load applied.</p>
+
+<table id="_0e243e44-7e58-5296-b9cc-54b50e99e6b0" anchor="table-4">
+<name id="_5da30615-424a-943b-dbf8-5f7519fece19">Maximum Permissible Errors (MPE) on type evaluation</name>
+<thead><tr id="_bd9f7bec-143a-4561-0ace-17eb895f76e6"><th id="_f70ededb-6b53-0dfd-b526-48dadb82fda5" valign="top" rowspan="2" align="center">MPE (+/-)</th>
+<th id="_9b681e82-919e-d8d5-4090-ccc47d82f02d" colspan="4" valign="top" align="center">Load, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mi>m</mi>
+  </mstyle>
+</math><asciimath>m</asciimath></stem></th>
+</tr><tr id="_3e5774d7-f930-e159-9914-442d3dc91a00"><th id="_9c0f9cdb-1234-2437-9412-c51ca7b735f4" valign="top" align="center">Class A</th>
+<th id="_d60a0e90-28ff-c456-6064-e00f744f443a" valign="top" align="center">Class B</th>
+<th id="_e02f9acb-5615-ca72-0f2b-20f2322573d5" valign="top" align="center">Class C</th>
+<th id="_b4ce70db-3033-aaca-a1ae-229fc30ca69f" valign="top" align="center">Class D</th>
+</tr></thead>
+<tbody><tr id="_3337217c-207e-09f7-fd1d-3147f679fe87"><td id="_238d2224-7dfe-ae49-00d4-174a81b7a804" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+    <mo>×</mo>
+    <mn>0.5</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>p_{"LC"} xx 0.5 " v"</asciimath></stem></td>
+<td id="_34377087-4b47-e73d-6e52-631e1b5bed56" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>0</mn>
+    <mo>≤</mo>
+    <mi>m</mi>
+    <mo>≤</mo>
+    <mn>50000</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>0 &lt;= m &lt;= 50000 " v"</asciimath></stem></td>
+<td id="_7543e25e-b589-806a-3a03-0aa273b2b5f1" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>0</mn>
+    <mo>≤</mo>
+    <mi>m</mi>
+    <mo>≤</mo>
+    <mn>5000</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>0 &lt;= m &lt;= 5000 " v"</asciimath></stem></td>
+<td id="_bd4fcc05-ba05-feaf-ae56-199fdf6c3b26" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>0</mn>
+    <mo>≤</mo>
+    <mi>m</mi>
+    <mo>≤</mo>
+    <mn>500</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>0 &lt;= m &lt;= 500 " v"</asciimath></stem></td>
+<td id="_0789e1cb-f8fc-c721-ac08-1df4037f76b8" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>0</mn>
+    <mo>≤</mo>
+    <mi>m</mi>
+    <mo>≤</mo>
+    <mn>50</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>0 &lt;= m &lt;= 50 " v"</asciimath></stem></td>
+</tr><tr id="_f5593e09-0c32-e6c6-8d82-8b2672a6bbbb"><td id="_53a1dd04-dbd6-7503-70ff-3e10c8a317bb" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+    <mo>×</mo>
+    <mn>1.0</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>p_{"LC"} xx 1.0 " v"</asciimath></stem></td>
+<td id="_6501e2b7-4bf6-7a4c-bf19-f2604040b492" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>50000</mn>
+    <mtext> v</mtext>
+    <mo>&lt;</mo>
+    <mi>m</mi>
+    <mo>≤</mo>
+    <mn>200</mn>
+    <mn>000</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>50000 " v" &lt; m &lt;= 200 000 " v"</asciimath></stem></td>
+<td id="_df908208-090a-1d23-cdcc-b5572f8b3091" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>5000</mn>
+    <mtext> v</mtext>
+    <mo>&lt;</mo>
+    <mi>m</mi>
+    <mo>≤</mo>
+    <mn>20</mn>
+    <mn>000</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>5000 " v" &lt; m &lt;= 20 000 " v"</asciimath></stem></td>
+<td id="_38513437-eda9-f93d-35c3-227c98b316a7" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>500</mn>
+    <mtext> v</mtext>
+    <mo>&lt;</mo>
+    <mi>m</mi>
+    <mo>≤</mo>
+    <mn>2</mn>
+    <mn>000</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>500 " v" &lt; m &lt;= 2 000 " v"</asciimath></stem></td>
+<td id="_58b51576-5d37-adc8-28f7-eb4c8b4cda77" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>50</mn>
+    <mtext> v</mtext>
+    <mo>&lt;</mo>
+    <mi>m</mi>
+    <mo>≤</mo>
+    <mn>200</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>50 " v" &lt; m &lt;= 200 " v"</asciimath></stem></td>
+</tr><tr id="_83b33c35-8f42-348e-e910-d49859fba7ab"><td id="_2f4f0e84-22e3-f700-b3f0-19529435c5c6" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+    <mo>×</mo>
+    <mn>1.5</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>p_{"LC"} xx 1.5 " v"</asciimath></stem></td>
+<td id="_251242ad-6d96-927f-fa4c-fe91f65d8f4a" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>200000</mn>
+    <mtext> v</mtext>
+    <mo>&lt;</mo>
+    <mi>m</mi>
+  </mstyle>
+</math><asciimath>200000 " v" &lt; m</asciimath></stem></td>
+<td id="_06a9c37e-5b27-06a5-026a-304cd0832ef5" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>20000</mn>
+    <mtext> v</mtext>
+    <mo>&lt;</mo>
+    <mi>m</mi>
+    <mo>≤</mo>
+    <mn>100</mn>
+    <mn>000</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>20000 " v" &lt; m &lt;= 100 000 " v"</asciimath></stem></td>
+<td id="_6d54e1a6-6c76-5a9d-b150-c29051d98cea" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>2000</mn>
+    <mtext> v</mtext>
+    <mo>&lt;</mo>
+    <mi>m</mi>
+    <mo>≤</mo>
+    <mn>10000</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>2000 " v" &lt; m &lt;= 10000 " v"</asciimath></stem></td>
+<td id="_632a00ba-1b02-f745-796f-2bfc882275f7" valign="top" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>200</mn>
+    <mtext> v</mtext>
+    <mo>&lt;</mo>
+    <mi>m</mi>
+    <mo>≤</mo>
+    <mn>1</mn>
+    <mn>000</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>200 " v" &lt; m &lt;= 1 000 " v"</asciimath></stem></td>
+</tr></tbody>
+</table>
+
+<p id="_c4426222-6ea0-6230-2dad-00a08563ab06">The value of the apportioning factor, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>p_{"LC"}</asciimath></stem> shall appear on the OIML certificate,
+if the value is not equal to 0.7. If the apportioning factor, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>p_{"LC"}</asciimath></stem> is not specified on the certificate then the value 0.7 shall be assumed. The maximum permissible error may be positive or negative and is applicable to both increasing and decreasing loads.</p>
+
+<p id="_be7662fe-62ac-92ab-32bb-61ead7c3e43d">The limits of error shown include errors due to non-linearity, hysteresis and temperature effect on sensitivity over certain temperature ranges, specified in  <xref target="sec-5.6.1.1"/> and  <xref target="sec-5.6.1.2"/>. Further errors, not included in the <xref target="table-4"/> limits of error, are treated separately.</p>
+</clause>
+</clause>
+
+<clause id="_1e46917b-2704-2773-fa17-3efa497d6376" inline-header="false" obligation="normative">
+<title id="_a4d513b6-699c-c5a6-025a-5719b6a038fb">Repeatability error</title>
+<p id="_8082d16c-7ed2-52d1-cf50-161975d33cb5">The maximum difference between the results of five identical load applications for classes A and B and of three identical load applications for classes C and D shall not be greater than the absolute value of the MPE for that load.</p>
+</clause>
+
+<clause id="_66ab56c8-70e8-0340-2bae-adc908d92cdb" anchor="sec-5.5" inline-header="false" obligation="normative">
+<title id="_577fb9ec-d483-cba3-48a2-bc0905412116">Permissible variation of results under reference conditions</title>
+<clause id="_56242b56-443a-5bb2-49fe-167bfbc13e06" anchor="sec-5.5.1" inline-header="false" obligation="normative">
+<title id="_699ed09e-d8a9-8667-fdaa-34f0159cc26c">Creep</title>
+<p id="_bbbe4707-4a78-f530-fd9c-129a0e14de2b">The difference between the reading taken upon the application of a maximum load (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"max"}</asciimath></stem>)
+and the reading observed within and after 30 minutes of exposure of 90 % to 100 %
+of <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"max"}</asciimath></stem> shall not exceed 0.7 times the absolute value of MPE for the applied load.</p>
+
+<p id="_ba9036a6-6b77-7a90-f805-0cf095695441">Regardless of any value declared by the manufacturer for the apportioning factor,
+<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>p_{"LC"}</asciimath></stem>, the MPE for creep shall be determined from <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mi>t</mi>
+    <mi>a</mi>
+    <mi>b</mi>
+    <mo>≤</mo>
+    <mo>−</mo>
+    <mn>4</mn>
+  </mstyle>
+</math><asciimath>table-4</asciimath></stem> using
+the apportioning factor, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+    <mo>=</mo>
+    <mn>0.7</mn>
+  </mstyle>
+</math><asciimath>p_{"LC"} = 0.7</asciimath></stem>.</p>
+
+<p id="_7ebfcaf1-ac16-500b-f104-cbf50e0e46f3">The difference in readings taken after 20 minutes of exposure to 90 % to 100 % of
+<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"max"}</asciimath></stem> and at 30 minutes of exposure to 90 % to 100 % of <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"max"}</asciimath></stem> shall not exceed 0.15 times the absolute value of MPE.</p>
+
+<example id="_97612274-0c29-e571-fe4d-103e2ec51953"><p id="_5963c84e-b972-44ab-74e8-9767d44e9a96">Load cell class: C3 (declared by the manufacturer)</p>
+
+<p id="_59959dba-f4a7-6170-9818-60efdcdd5fff">Apportioning factor: <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+    <mo>=</mo>
+    <mn>0.7</mn>
+  </mstyle>
+</math><asciimath>p_{"LC"} = 0.7</asciimath></stem></p>
+
+<p id="_94de4de5-af51-23bb-73f4-f0285b4639b5">Applied load: <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>max</mtext>
+    </msub>
+    <mo>=</mo>
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"max"} = E_{"max"}</asciimath></stem> (test specification)</p>
+
+<p id="_5926c37a-2ae7-7e1e-cf82-5416a327ce96">Maximum difference between the reading <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mo>=</mo>
+    <mn>0.7</mn>
+    <mo>×</mo>
+    <mrow>
+      <mo>(</mo>
+      <mn>0.7</mn>
+      <mo>×</mo>
+      <mn>1.5</mn>
+      <mi>v</mi>
+      <mo>)</mo>
+    </mrow>
+    <mo>=</mo>
+    <mn>0.735</mn>
+    <mi>v</mi>
+  </mstyle>
+</math><asciimath>= 0.7 xx (0.7 xx 1.5 v) = 0.735 v</asciimath></stem></p>
+</example>
+
+<example id="_c9d51893-de75-9d0a-afec-8c8c51acf38f"><p id="_664dd085-4c10-2be3-892a-dcee85d46770">Load cell class: C3 (declared by the manufacturer)</p>
+
+<p id="_a97356ae-2a1a-47f3-cdbc-bf33fb474602">Apportioning factor: <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+    <mo>=</mo>
+    <mn>0.7</mn>
+  </mstyle>
+</math><asciimath>p_{"LC"} = 0.7</asciimath></stem></p>
+
+<p id="_c2f8e950-b176-e174-d318-66556925fc56">Applied load: <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>max</mtext>
+    </msub>
+    <mo>=</mo>
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"max"} = E_{"max"}</asciimath></stem> (test specification)</p>
+
+<p id="_b6203912-4587-b3f8-b6ea-b0bb681cff18">Maximum difference between the initial reading <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mo>=</mo>
+    <mn>0.15</mn>
+    <mo>×</mo>
+    <mrow>
+      <mo>(</mo>
+      <mn>0.7</mn>
+      <mo>×</mo>
+      <mn>1.5</mn>
+      <mtext> v</mtext>
+      <mo>)</mo>
+    </mrow>
+    <mo>=</mo>
+    <mn>0.1575</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>= 0.15 xx (0.7 xx 1.5 " v") = 0.1575 " v"</asciimath></stem></p>
+</example>
+</clause>
+
+<clause id="_15c5946d-4d52-90fe-a444-16baa68e7249" inline-header="false" obligation="normative">
+<title id="_e6c57433-2ba1-5fd5-8239-8e95f4aec161">Minimum dead load output return (DR) (see <xref target="sec-3.5.10"/>)</title>
+<p id="_085fbee3-aa5c-93a7-1f86-eca927899993">The difference between the initial reading of the minimum load output (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"min"}</asciimath></stem>)
+and the reading of <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"min"}</asciimath></stem> at the conclusion of the creep test (<xref target="sec-5.5.1"/>),
+shall not exceed half the value of the load cell verification interval
+(<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>0.5</mn>
+    <mtext> v</mtext>
+  </mstyle>
+</math><asciimath>0.5 " v"</asciimath></stem>).<note id="_727b5249-3243-467c-7ee5-efc16d5a828a"><p id="_04ef11f6-2541-ea71-7fab-31ab8ea35ac9">It should be noted that DR is the minimum dead load output return expressed in mass units (g, kg, t). DR has to be adjusted in a value expressed in load cell verification intervals, v.</p>
+</note></p>
+
+
+</clause>
+</clause>
+
+<clause id="_6b9c3695-8b9d-26e8-f673-41e43a40f178" anchor="sec-5.6" inline-header="false" obligation="normative">
+<title id="_82fb6949-c50d-5309-5efc-19c807d0ae20">Influence quantities (Rated operating conditions)</title>
+<p id="_aa85632a-f14f-542f-1e2e-277478004a1a">Load cells shall be evaluated under the conditions specified in <xref target="sec-5.6.1"><location target="sec-5.6.1" connective="from"/><location target="sec-5.6.3" connective="to"/></xref>. An evaluation may include additional special testing performed under conditions that vary from those specified in  <xref target="sec-5.6.1"><location target="sec-5.6.1" connective="from"/><location target="sec-5.6.3" connective="to"/></xref> if requested and specified by the applicant submitting the load cell for evaluation. This special testing may be performed in addition to, but not instead of testing under the specified conditions in  <xref target="sec-5.6.1"><location target="sec-5.6.1" connective="from"/><location target="sec-5.6.3" connective="to"/></xref>.</p>
+
+<p id="_11476318-41e7-1741-c915-7e33883a419f">Load cells that are equipped with functions typically performed by complete instruments may be required to be evaluated against additional requirements contained in other OIML Recommendations for those complete instruments. These additional evaluations are outside the scope of this Recommendation (see  <xref target="sec-2.3"><location target="sec-2.3" connective="and"/><location target="fig-2" connective="and"/></xref>).</p>
+
+<clause id="_ad0f1ff9-e4b1-3ad4-8afa-eccfd303e03f" anchor="sec-5.6.1" inline-header="false" obligation="normative">
+<title id="_de52553d-def7-ab05-be6f-d46e1beff9f0">Temperature</title>
+<clause id="_1579a1ba-88b6-0201-9c33-6a342f7a18d4" anchor="sec-5.6.1.1" inline-header="false" obligation="normative">
+<title id="_78f895c2-dd8d-adf4-5afe-2a8454eaf130">Temperature limits</title>
+<p id="_b102431d-719e-282e-16c5-eda73a84e646">Excluding temperature effects on minimum dead load output, the load cell shall perform
+within the limits of error in <xref target="sec-5.3.2"/> over the temperature range of
+<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mo>−</mo>
+    <mn>10</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>-10 "unitsml(degC)"</asciimath></stem> to <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mo>+</mo>
+    <mn>40</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>+40 "unitsml(degC)"</asciimath></stem>, unless otherwise specified
+as in <xref target="sec-5.6.1.2"/>.<note id="_ecfdbbbc-ebdf-0091-c2d2-1e3b95317bc8"><p id="_ca6de3f4-6714-bfae-532a-3a880a187c98">National legislation may prescribe alternative temperature limits outside of the range specified above as appropriate for local climatic conditions and the environmental conditions that can be anticipated.</p>
+</note></p>
+
+
+</clause>
+
+<clause id="_ae1b6984-0af9-2864-bd7f-86ff5900dab2" anchor="sec-5.6.1.2" inline-header="false" obligation="normative">
+<title id="_5ff87e3e-b7e4-0049-1037-e41275c22290">Special limits</title>
+<p id="_cdbdee2a-9918-0ee0-d2ef-d71a3ca60f7e">Load cells for which particular limits of working temperature are specified shall satisfy, within those ranges, the conditions defined in  <xref target="sec-5.3.2"/>. The span of these ranges shall be at least:</p>
+
+<p id="_67358827-1b3b-cf4d-afa4-a8bfb1184019"><span style="text-indent:12.5mm"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>5</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>5 "unitsml(degC)"</asciimath></stem> for load cells of class A;</span><br/>
+<span style="text-indent:12.5mm"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>15</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>15 "unitsml(degC)"</asciimath></stem> for load cells of class B;</span><br/>
+<span style="text-indent:12.5mm"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>30</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>30 "unitsml(degC)"</asciimath></stem> for load cells of classes C and D.</span></p>
+</clause>
+
+<clause id="_40bfb4f3-89d9-44e2-4ede-e4ff8f6ea2e3" inline-header="false" obligation="normative">
+<title id="_aa16a058-a6b5-8ab9-9163-65b780f95d01">Temperature effect on minimum dead load output</title>
+<p id="_6cc79a16-3945-1bb1-bbde-2f7906ba053e">The minimum dead load output of the load cell over the temperature range, as specified in  <xref target="sec-5.6.1.1"/> or <xref target="sec-5.6.1.2"/>, shall not vary by an amount greater than the
+apportioning factor, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>p_{"LC"}</asciimath></stem>, times the minimum load cell verification interval,
+<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>v</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>v_{"min"}</asciimath></stem>, for any change in ambient temperature of:</p>
+
+<p id="_e9b59f30-9724-1162-2b7f-6d7957d04916"><span style="text-indent:12.5mm"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>2</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>2 "unitsml(degC)"</asciimath></stem> for load cells of class A;</span><br/>
+<span style="text-indent:12.5mm"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>5</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>5 "unitsml(degC)"</asciimath></stem> for load cells of class B, C and D.</span></p>
+</clause>
+</clause>
+
+<clause id="_76c5e966-a721-50b9-8014-d647a1a284f4" inline-header="false" obligation="normative">
+<title id="_eeb8c4e9-d42d-8e36-cb27-f275813ee793">Barometric pressure</title>
+<p id="_851b15fd-bf48-03a3-1a70-f2e829ecbbf5">The output of the load cell shall not vary by an amount greater than the minimum
+load cell verification interval, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>v</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>v_{"min"}</asciimath></stem>, for any incremental change in
+barometric pressure equivalent to <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>1</mn>
+    <mo rspace="thickmathspace">⁢</mo>
+    <mrow xref="U_kPa">
+      <mstyle mathvariant="normal">
+        <mi>kPa</mi>
+      </mstyle>
+      
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>1 "unitsml(kPa)"</asciimath></stem>.</p>
+</clause>
+
+<clause id="_a3492024-415c-30fb-de1b-64972af427e0" anchor="sec-5.6.3" inline-header="false" obligation="normative">
+<title id="_6aacb403-1083-5c0d-ca11-d608ad69ba5c">Humidity</title>
+<p id="_42dfaedc-0cac-8a84-4b89-22944fccc2bd">With respect to humidity conditions, this Recommendation defines 3 humidity classes: CH (cyclic humidity — as standard), NH (no humidity), and SH (steady-state humidity). In the case of class NH or SH, the class designation shall be marked on the load cell. In the case of class CH, class designation marking of the load cell is not mandatory.</p>
+
+<clause id="_36e183d9-4fe1-a496-45c8-f28b1a66e736" inline-header="false" obligation="normative">
+<title id="_c6c51274-caaf-0482-52ad-e7bf21991f04">Humidity error — CH or unmarked load cells</title>
+<p id="_9298b8eb-4de9-c086-4791-94bc729b4fe3">This requirement is only applicable to load cells marked CH or with no humidity symbol marking and not applicable to load cells marked NH or SH.</p>
+
+<p id="_651a47f5-da4c-2982-feff-56ea4d6e94e5">The influence of exposure to temperature cycles specified in R 60-2, 2.10.5.12 <eref type="inline" bibitemid="R060-2" citeas="R060-2"><localityStack><locality type="clause"><referenceFrom>2.10.5.12</referenceFrom></locality></localityStack></eref> on
+the load cell output for minimum load shall not be greater than 4 % of the difference
+between the output on the maximum capacity, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"max"}</asciimath></stem>, and that at the minimum
+dead load, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>E_{"min"}</asciimath></stem>.</p>
+
+<p id="_a46a8287-318b-b711-6673-87cbc0b3a6c8">The influence of exposure to temperature cycles specified in R 60-2, 2.10.5.12 on the load cell output for the maximum load shall not be greater than the load cell verification interval, v.</p>
+</clause>
+
+<clause id="_f8ff51bb-cbf2-2491-b30d-6f08725178fe" inline-header="false" obligation="normative">
+<title id="_cb1a9208-dad0-fa40-0cdc-6be8ba947561">Humidity error — SH marked load cells</title>
+<p id="_0149b1ab-2a16-9305-a087-d0e7a917bb95">This requirement is only applicable to load cells marked SH and is not applicable to load cells marked NH or CH or with no humidity symbol marking.</p>
+
+<p id="_a09bfbd7-c7cd-dd8c-8cfa-22e7d33f6744">A load cell shall meet the MPE applicable to the load applied as specified in <xref target="table-4"/>, when exposed to conditions of relative humidity variations as specified in R 60-2, 2.10.6.11.</p>
+</clause>
+</clause>
+</clause>
+
+<clause id="_8e7e5a10-a9e0-7632-8189-e3a3f7344368" inline-header="false" obligation="normative">
+<title id="_655093e1-e5db-306a-41b9-221a6dbbfc8e">Requirements for analogue-active and digital load cells</title>
+<clause id="_388146b8-c786-4541-7077-648ed4f9c629" anchor="sec-5.7.1" inline-header="false" obligation="normative">
+<title id="_b5547e5a-f569-1f58-c8d4-5392abd6b5c2">General requirements</title>
+<p id="_aab261a0-b5cb-c4e3-c3bc-d3703d9cdf13">In addition to the other requirements of this Recommendation, analogue-active load
+cells shall comply with the following requirements. The MPE shall be determined using
+an apportioning factor, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>p_{"LC"}</asciimath></stem> greater than or equal to 0.7 and less than
+or equal to 0.8 (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mn>0.7</mn>
+    <mo>≤</mo>
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+    <mo>≤</mo>
+    <mn>0.8</mn>
+  </mstyle>
+</math><asciimath>0.7 &lt;= p_{"LC"} &lt;= 0.8</asciimath></stem>) substituted for the apportioning
+factor, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>p_{"LC"}</asciimath></stem>, that is declared by the manufacturer and applied to the other requirements.</p>
+
+<p id="_b0cdd95d-f482-2bf1-4694-65caa467bfd0">If a digital load cell equipped with further data processing (<xref target="sec-3.1.3.4"/>) is configured with substantial additional electronic functions (e.g. display of indications, frequency counter) that are typical of an electronic weighing instrument, it may be considered outside the scope of this Recommendation and the load cell may need to undergo additional evaluation against requirements contained in other OIML Recommendations which are applicable to weighing instruments.</p>
+
+<clause id="_0d2876f4-3f2f-f97c-1766-3e5c7175e338" anchor="sec-5.7.1.1" inline-header="false" obligation="normative">
+<title id="_31db6628-362c-5450-67b6-a919cf14941c">Faults</title>
+<p id="_7c8f7d9e-910f-2bcb-e8e3-119bcb461b48">An analogue-active load cell shall be designed and manufactured such that when it is exposed to electrical disturbances either:</p>
+
+<ol id="_1c66b867-ab46-6e29-66fd-22634a3f81d0"><li id="_282bf554-e295-6ece-fb6d-d63d49f7a52a" anchor="item-5.7.1.1-a"><p id="_d13213df-a5e5-2eb2-3ad1-a2e434d39ec8">significant faults do not occur; or</p>
+</li>
+<li id="_49e04464-4fb9-ce9f-fb71-09ad7dd1735a" anchor="item-5.7.1.1-b"><p id="_0afa8b22-0d03-3da4-dee3-c879f808f64c">significant faults are detected and acted upon.</p>
+</li>
+</ol>
+
+<p id="_534259c3-26f7-1dc4-cae9-af423cdf1f89">If significant faults do occur, and the load cell is equipped with the intelligence to detect and act upon significant faults through the instrument that the load cell is installed in, the reporting of and acting upon significant faults would then be evaluated under the appropriate Recommendation for the complete instrument.</p>
+
+<p id="_7ac7b280-e968-e464-4e9c-419ee5b5475d">Messages of significant faults should not be confused with other messages presented.<note id="_ed71096b-a5da-a64c-d42b-2c5fb6bc157e"><p id="_3561ec44-e8ab-5734-57c5-33584d63fe11">A fault in value that is equal to or smaller than the load cell minimum verification
+interval, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>v</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>v_{"min"}</asciimath></stem>, is allowed.</p>
+</note></p>
+
+
+</clause>
+
+<clause id="_9f2e7fbd-2334-b026-c00a-6d459e3166f1" anchor="sec-5.7.1.2" inline-header="false" obligation="normative">
+<title id="_3625c7f6-b7cd-d42f-a960-c95a6a9e7edc">Acting upon significant faults</title>
+<p id="_b7b18227-1519-06a2-0c2a-e7991e415757">When a significant fault has been detected, either the load cell shall be made inoperative automatically or a fault detection output shall be issued automatically. This fault detection output shall continue until the fault has been resolved.</p>
+</clause>
+
+<clause id="_d4ef8a93-8224-cc5e-9def-d501c2433061" anchor="sec-5.7.1.3" inline-header="false" obligation="normative">
+<title id="_6cb415a9-49fc-095a-d256-518591f2f17e">Durability</title>
+<p id="_757a11fa-7a1c-78b0-61a1-6ff30ceafd22">The load cell shall be suitably durable so that the requirements of this Recommendation may be met in accordance with the intended use of the load cell.</p>
+</clause>
+
+<clause id="_416f7900-079b-e42d-bffd-a76a724ffbe8" inline-header="false" obligation="normative">
+<title id="_c4de61cd-fc14-bee8-8680-7b1860bea64c">Compliance with requirements</title>
+<p id="_a3ec46fb-bd0f-c251-57cd-9df0e44d349d">An analogue-active load cell is presumed to comply with the requirements in <xref target="sec-5.7.1.1"><location target="sec-5.7.1.1" connective="and"/><location target="sec-5.7.1.3" connective="and"/></xref>, if it passes the examinations specified in <xref target="sec-5.7.2"/> and R 60-2, 2.10.7.</p>
+</clause>
+
+<clause id="_e92246ee-48f0-aa68-219d-15959460824a" inline-header="false" obligation="normative">
+<title id="_72122b36-980a-5a26-d8a6-91f24b59b8ed">Application of the requirements in <xref target="sec-5.7.1.1"/></title>
+<p id="_ae0959f9-63d5-c5ec-fbb5-8e1a5eaf2899">The requirements in <xref target="sec-5.7.1.1"/> may be applied separately to each individual cause or significant fault. The choice of whether  <xref target="item-5.7.1.1-a"/> or <xref target="item-5.7.1.1-b"/> is applied is left to the manufacturer.</p>
+</clause>
+</clause>
+
+<clause id="_a8c2ac1b-9bd9-b970-34b7-2fdfb217481c" anchor="sec-5.7.2" inline-header="false" obligation="normative">
+<title id="_1dc429ca-ab8f-3c70-5de5-8cf65b5ca6c9">Influence quantities</title>
+<clause id="_5ef52170-c7a2-afc7-63dd-24a41b51e998" inline-header="false" obligation="normative">
+<title id="_a4b76723-d0d1-7c59-80e6-89aa43afc7c3">Warm-up time</title>
+<p id="_74880f24-3473-9a76-05f3-03b47e334ae8">During the designed warm-up time of an analogue-active load cell there shall be no transmission of measurement results.</p>
+</clause>
+
+<clause id="_5fb83eb2-2e76-ef13-f433-e4151b53c6b3" inline-header="false" obligation="normative">
+<title id="_d1b16200-04f7-cff5-b903-c5766a05c39b">Mains power supply (AC)</title>
+<p id="_fa8cce93-dea6-feae-9883-c460d4b2c682">An analogue-active load cell that operates from a mains power supply shall be designed to comply with the metrological requirements if the mains power supply varies in voltage from -15 % to +10 % of the supply voltage.</p>
+</clause>
+
+<clause id="_70a0a550-6739-6e24-1b34-1b3a34fb993e" inline-header="false" obligation="normative">
+<title id="_b5037a13-8e39-2c25-e2ef-a678046778f9">Battery power supply (DC)</title>
+<p id="_1e48767d-ce5a-36b6-8a30-c7db964fb448">An analogue-active load cell that operates from a battery power supply shall either continue to function correctly, or not provide a measurement result whenever the voltage is below the value specified by the manufacturer.</p>
+</clause>
+
+<clause id="_731ae921-a446-9ac0-2cce-cfdb4c939963" inline-header="false" obligation="normative">
+<title id="_34c99328-3292-38f4-6716-589d2093840e">Maximum allowable variations during voltage variations</title>
+<p id="_969825f3-5f88-8a24-2d04-5d2d71358a3f">All functions shall operate as designed.</p>
+
+<p id="_b827976f-833f-e4a9-0927-5ec17f364b20">All measurement results shall be within maximum permissible errors.</p>
+</clause>
+
+<clause id="_5fbb9d99-0272-5f0f-0ac8-6b5da9f62cec" inline-header="false" obligation="normative">
+<title id="_5b40809c-8297-f3c9-66d3-e3539159a7c1">Disturbances</title>
+<p id="_4119df2f-c857-db06-8b5f-9dfe3dc51584">When an analogue-active load cell is subjected to the disturbances specified in R 60-2, 2.10.7.5 to 2.10.7.10 (also summarised in  <xref target="table-5"/>), the difference between the load cell output due to a disturbance and the load cell output without disturbance (fault) shall satisfy the conditions in  <xref target="sec-5.7.1.1"/>.</p>
+
+<table id="_20e3ff94-79b4-15c3-5351-8140796356f0" anchor="table-5">
+<name id="_df634e69-27d8-313c-785e-26388b683815">Influence factors and disturbances</name>
+<thead><tr id="_c6e00fe1-19c3-297d-f28c-f5109c63fab2"><th id="_13d4b9a7-f7d8-7fca-db5c-6867687ac824" valign="top" align="left">Test</th>
+<th id="_9a3a0acd-d761-8bc8-7707-a970628825a8" valign="top" align="center">Subclause R 60-2, 2.10 test procedure</th>
+<th id="_492850fd-d1dd-9d8f-35a3-4194ccd8fe28" valign="middle" align="center"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>p_{"LC"}</asciimath></stem><fn id="_10b91117-51c7-68cb-bdfe-1835f49613c2" reference="a"><p id="_cc90c06b-d877-a5dd-d07a-f0e407138a03"><stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+    <mo>=</mo>
+    <mn>0.7</mn>
+  </mstyle>
+</math><asciimath>p_{"LC"} = 0.7</asciimath></stem> shall be used for analogue-active load cells during influence factors tests.</p>
+</fn></th>
+<th id="_2e815a59-75e7-9c60-f113-712418823b88" valign="top" align="center">Characteristic under test</th>
+</tr></thead>
+<tbody><tr id="_31d0cdaa-a5fc-e643-2b57-09746ad09352"><td id="_347fa465-d7a3-6ce7-8772-dbf2422907ca" valign="top" align="left">Warm-up time</td>
+<td id="_d6f90b01-21af-8e0e-3c8a-acd173b2e570" valign="top" align="center">2.10.7.3</td>
+<td id="_42c1fdcb-a643-0939-e1b8-e84d1f448eb1" valign="middle" rowspan="9" align="center">1.0</td>
+<td id="_c0ba0fee-7229-3f5d-7e6a-8dca1bdd511e" valign="top" align="center">Influence factor</td>
+</tr><tr id="_2d1ba38e-7f47-f821-1748-c2e61fd40a4a"><td id="_a0e28a16-2a3d-ae41-dd24-a88ca0e8735b" valign="top" align="left">Power voltage variations</td>
+<td id="_a05c956c-83a3-db39-534f-87c40f6385ef" valign="top" align="center">2.10.7.4</td>
+<td id="_a42dd9f0-3786-6ad8-02aa-34138809396e" valign="middle" align="center">Influence factor</td>
+</tr><tr id="_90f8bb08-af77-fe4d-4e78-8a79671e7d6b"><td id="_10e83986-0134-5b89-0c72-f8c1d4820bbe" valign="top" align="left">Short-time power reductions</td>
+<td id="_6e685511-c471-9806-aa69-b7ca6da51fa0" valign="top" align="center">2.10.7.5</td>
+<td id="_3a8eac66-ac66-cfc7-1a6f-3cc3f31601f0" valign="middle" align="center">Disturbance</td>
+</tr><tr id="_babf9fe4-084f-3c11-cc22-8857f0cdd1c3"><td id="_52519951-69b7-2153-8fe5-eb0c4e02ee8f" valign="top" align="left">Bursts (electrical fast transients)</td>
+<td id="_42ab87a7-318b-e879-373c-3ced01ce5870" valign="top" align="center">2.10.7.6</td>
+<td id="_2b804be9-e135-40f6-742c-96d750734f33" valign="middle" align="center">Disturbance</td>
+</tr><tr id="_6b9e95dc-31bd-6abe-2898-1a06105fdff2"><td id="_bc5b9277-fd1e-870c-0144-033f707f3d33" valign="top" align="left">Surge</td>
+<td id="_23777149-e484-3d3b-afca-0e20310b825e" valign="top" align="center">2.10.7.7</td>
+<td id="_7a56a493-6d37-f6dd-f217-298d9dafa3c0" valign="middle" align="center">Disturbance</td>
+</tr><tr id="_1f47c46d-3348-6830-3fa5-c9256c2c1611"><td id="_d1c02dbf-6bad-d58d-3579-2c0820f1042c" valign="top" align="left">Electrostatic discharge</td>
+<td id="_1133390a-9f8b-6ab2-c6bc-279b4c2d8ab4" valign="top" align="center">2.10.7.8</td>
+<td id="_653e44ef-5bce-4543-a2b5-524c2ae028a4" valign="middle" align="center">Disturbance</td>
+</tr><tr id="_6a7440c9-287b-c476-921d-f2991d122f67"><td id="_32a95582-527a-086a-033c-69c856a42d74" valign="top" align="left">Electromagnetic susceptibility</td>
+<td id="_154b27b7-070b-773f-b9af-c909e57c3dca" valign="top" align="center">2.10.7.9</td>
+<td id="_0e08d081-850a-48bc-8a9c-79866d79ff56" valign="middle" align="center">Disturbance</td>
+</tr><tr id="_f2edc42d-12f0-6bdf-a9da-4d79c3e3f7dd"><td id="_3e7a8701-fd3f-9510-3c07-db76d85a1658" valign="top" align="left">Immunity to conducted electromagnetic fields</td>
+<td id="_4fcd6381-c066-620e-a323-9d8cfa48e7de" valign="top" align="center">2.10.7.10</td>
+<td id="_5584bf79-ccfc-40bc-3387-3f67f1f59375" valign="middle" align="center">Disturbance</td>
+</tr><tr id="_6863afdd-bd12-2f3c-968d-43642fc03604"><td id="_2c083862-c568-e655-91e1-c26f58bff7e0" valign="top" align="left">Span stability</td>
+<td id="_723022d3-ecd9-e1c9-87f8-eb12086aa4f5" valign="top" align="center">2.10.7.11</td>
+<td id="_37798128-d634-eeab-98e5-218dd788762d" valign="middle" align="center">Influence factor</td>
+</tr></tbody>
+</table>
+</clause>
+
+<clause id="_8b6ae347-e54e-2a0a-a26d-650a7d24584b" inline-header="false" obligation="normative">
+<title id="_413a5b50-7d97-a87d-d9bb-aaa207a1f48d">Span stability: maximum allowable variation requirements (not applicable to class A load cells)</title>
+<p id="_a53b1d7a-f127-38c3-f063-9d9a47809bde">When an analogue-active load cell is subjected to the span stability test specified
+in R 60-2, 2.10.7.11, the variation in the load cell span measurement results shall
+not exceed the greater of: half the load cell verification interval; or half the
+absolute value of the MPE for the applied test load <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>D</mi>
+      <mtext>max</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>D_{"max"}</asciimath></stem>.</p>
+</clause>
+</clause>
+</clause>
+</clause>
+
+<clause id="_1d4048e2-09f8-7159-d379-23889d33583c" inline-header="false" obligation="normative">
+<title id="_fd97b476-1d32-14ce-5f9a-b6286c8627cd">Technical requirements</title>
+<clause id="_405195a5-1845-b5e9-584b-2d39e6b3e057" inline-header="false" obligation="normative">
+<title id="_b30d5de2-8382-130b-c1a3-56e68702b70a">Software</title>
+<p id="_cbe29504-87de-97ec-0efc-78c1754746c9">Provision shall be made for appropriate sealing by mechanical, electronic and/or cryptographic means, making any change that affects the metrological integrity of the device impossible or evident. Any embedded programming (i.e. firmware) that influences the raw count output of the load cell will be evaluated under the terms of this Recommendation. In addition, if the software modifies load cell performance, not exceeding the functions of analogue to digital conversion and the linearization of the load cell output, then that software shall be evaluated under the terms in this Recommendation and in accordance with OIML D 31 [8]. Any weighing instrument function shall be evaluated under other appropriate Recommendations for weighing instruments.</p>
+
+<p id="_369f159f-5717-a07a-fc4b-c1b2c9c14208">Functionality of any software which is not covered by this Recommendation, e.g. functionalities of weighing instruments, is outside the scope of this Recommendation and is therefore not evaluated. It may be required to undergo additional evaluations against other requirements contained in the applicable OIML Recommendations for weighing instruments.</p>
+
+<p id="_52658957-d3a6-740e-34a7-1f797f497328">The requirements which are relevant to the evaluation of load cells and provided in OIML D 31 [8] shall be fulfilled for the load cell by taking into account the following aspects.</p>
+
+<ol id="_f7deb70e-3e26-2f44-6617-4454e3f4056a"><li><p id="_e81db825-4c78-2342-bb48-fae39dd29bbf">In general, for load cells, the severity level I, examined with validation procedure A, is required.</p>
+</li>
+<li><p id="_95771318-c724-e4e5-4f61-709f4294466c">For legally relevant software of digital load cells the following statements according to OIML D 31 [8] shall be applied.</p>
+<ol id="_cdc23459-79db-5dda-f5ed-e0575a6de8d5"><li><p id="_0fa16ba9-981b-da1e-530b-0e6c7f90a4ac">The exception described in OIML D 31, 5.1.1 [8] for an imprint of the software identification is allowed.</p>
+</li>
+<li><p id="_2dc12f81-710a-fc18-aa64-f7187936dd2b">The level of conformity of manufactured devices to the approved type is according to OIML D 31, 5.2.5 (subclause a) [8].</p>
+</li>
+<li><p id="_abace09f-c15c-3f02-812f-4142c06d597e">Updating the legally relevant software of a load cell in the field is possible via verified or traced update according to OIML D 31, 5.2.6.2 and 5.2.6.3 [8].</p>
+</li>
+<li><p id="_5ed913c3-8cbe-29f6-19cd-54221b1c893f">The software documentation shall include descriptions according to the applicable requirements of OIML D 31, 6.1.1 [8].</p>
+</li>
+</ol>
+</li>
+</ol>
+
+<p id="_395b554d-61ff-7874-0a9b-32a56f70b8b1">The validation procedures are described in OIML D 31, 6.4 [8].</p>
+</clause>
+
+<clause id="_efcd3192-5fd1-10d8-d839-acf8caf6f671" inline-header="false" obligation="normative">
+<title id="_9d27709a-a6eb-e7c6-e791-9ae9d7b5738a">Inscriptions and presentation of load cell information</title>
+<p id="_013522ca-f3a2-9d57-c6e0-9e143cc12f00">Technical information markings including load cell classifications as indicated in <xref target="sec-5.1.5"/> must be specified for the load cell(s).</p>
+
+<clause id="_36e85824-e2da-8278-c22e-7f662125cd92" inline-header="false" obligation="normative">
+<title id="_92dbe45e-b268-a6c7-77cf-c95de48eb4f2">Mandatory markings on the load cell</title>
+<p id="_78fef056-3ac6-0d1d-1306-31ab654f1ae4">The following mandatory markings shall be clearly and indelibly marked on the load cell. When a sticker or data plate is used it shall be impossible to remove them without damaging them.</p>
+
+<ol id="_a35f2043-a562-959d-b18f-65f44ad05654"><li><p id="_ac1fc5c5-f7c1-fbfd-6e77-96dfe6d84b1c">Manufacturer’s name or trade mark</p>
+</li>
+<li><p id="_4efd1862-7b5e-a76d-61fc-cef74cf15afc">Manufacturer’s type designation or load cell model</p>
+</li>
+<li><p id="_4e9cea21-3aa2-1373-030f-3cec1918af9a">Serial number</p>
+</li>
+<li><p id="_dab801af-5fd3-f94b-8393-f92cd43468aa">Maximum capacity as: <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+    <mo>=</mo>
+    <mtext>(in units g, kg, t)</mtext>
+  </mstyle>
+</math><asciimath>E_{"max"} = "(in units g, kg, t)"</asciimath></stem></p>
+</li>
+<li><p id="_6f1b7398-dc95-ed66-720b-e42e8c13bd78">Year of production</p>
+</li>
+<li><p id="_59a4c2bf-5ec0-81d5-9c6b-24cc9c493e8c">Type approval mark (if applicable)</p>
+</li>
+</ol>
+
+<p id="_98c33415-0ca7-b659-2ec4-aac863750aa9">If due to the limitation of the size of the load cell, it is impossible to apply all the mandatory markings, the manufacturer’s name or trade mark, the load cell type designation, the serial number, and the maximum capacity shall be provided as a minimum on the load cell itself. All other mandatory information shall be provided in an accompanying document supplied by the manufacturer and submitted to the user. Where such a document is provided, the information required in  <xref target="sec-6.2.2"/> shall also be given therein.</p>
+</clause>
+
+<clause id="_8d6ea95b-4f28-eaf9-1380-ad7cbff0756c" anchor="sec-6.2.2" inline-header="false" obligation="normative">
+<title id="_fd7ec28d-5eda-37ac-e148-b89776a00c48">Mandatory additional information</title>
+<p id="_ab612b54-5a0f-bcac-45ad-f2a5b560bd0c">The following mandatory information shall be provided in a document accompanying the load cell supplied by the manufacturer and submitted to the user or, if space permits, they may be marked on the load cell. Where the information provided is associated with a specific unit of measure, the unit (g, kg, t) shall also be specified.</p>
+
+<ol id="_9d18b775-aa2c-2443-7afc-d8b9f3836f83"><li><p id="_2ef620f5-7ddd-570e-c870-2246d43f8661">Manufacturer’s name or trade mark</p>
+</li>
+<li><p id="_a132212d-ec00-515b-1bcd-fddd4841a70e">Manufacturer’s type designation or load cell model</p>
+</li>
+<li><p id="_bb012891-2e49-3718-a0db-9e3705267737">Accuracy class(es); see <xref target="sec-6.2.4.1"/></p>
+</li>
+<li><p id="_0b4e1660-a4ef-f02f-f4af-7665f22009d9">Type of load; see <xref target="sec-6.2.4.2"/></p>
+</li>
+<li><p id="_345de483-48cb-af86-8f5f-ed773bb0c77a">Working temperature when required; see <xref target="sec-6.2.4.3"/></p>
+</li>
+<li><p id="_a4756f0b-e148-532c-3138-14e7f7878f13">Humidity symbol when required; see <xref target="sec-6.2.4.4"/></p>
+</li>
+<li><p id="_a8502ce1-1760-658e-67b3-62296e27c12b">Maximum capacity as: <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>max</mtext>
+    </msub>
+    <mo>=</mo>
+  </mstyle>
+</math><asciimath>E_{"max"} =</asciimath></stem></p>
+</li>
+<li><p id="_30267ea3-ed00-d7ea-3aa5-39be0ff4c6b7">Minimum dead load as: <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>min</mtext>
+    </msub>
+    <mo>=</mo>
+  </mstyle>
+</math><asciimath>E_{"min"} =</asciimath></stem></p>
+</li>
+<li><p id="_b9f0276a-4e03-c675-80e4-c3c9d7307999">Safe load limit as: <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>E</mi>
+      <mtext>lim</mtext>
+    </msub>
+    <mo>=</mo>
+  </mstyle>
+</math><asciimath>E_{"lim"} =</asciimath></stem></p>
+</li>
+<li><p id="_6499978e-7018-522e-d05a-f7f9ce7d820e">Minimum load cell verification interval as <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>v</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>v_{"min"}</asciimath></stem> (or relative minimum
+load cell verification interval, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mi>Y</mi>
+  </mstyle>
+</math><asciimath>Y</asciimath></stem>) =</p>
+</li>
+<li><p id="_13f68ebc-0147-27ba-97d3-3294b7531f3e">Value of the apportioning factor, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>p</mi>
+      <mtext>LC</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>p_{"LC"}</asciimath></stem>, if not equal to 0.7; and</p>
+</li>
+<li><p id="_f73426f8-a7cb-6d0a-ee4b-e099e51ede2b">Other pertinent conditions that must be observed to obtain the specified performance (for example, electrical characteristics of the load cell such as output rating, input impedance, supply voltage, cable details, mounting torque, etc.).</p>
+</li>
+</ol>
+</clause>
+
+<clause id="_a963a066-2101-7c5a-ce7a-fee315885f5b" inline-header="false" obligation="normative">
+<title id="_4663d5a9-6abc-2875-712e-34abe21248b6">Non-mandatory additional information</title>
+<p id="_f3f9efab-eec2-11a4-4e57-c397b8c17145">In addition to the information required in <xref target="sec-6.2.2"/>, the following information may optionally be specified:</p>
+
+<ol id="_9ee8b7e0-9179-df49-a498-5b32a8948cb2"><li><p id="_3d598a29-a4bb-061a-db0e-f84e48ae7f88">for a weighing instrument (for example a multiple range instrument according to
+OIML R 76 [1]), the relative <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <msub>
+      <mi>v</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>v_{"min"}</asciimath></stem>, <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mi>Y</mi>
+  </mstyle>
+</math><asciimath>Y</asciimath></stem>, where
+<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mi>Y</mi>
+    <mo>=</mo>
+    <mrow>
+      <mo>(</mo>
+      <msub>
+        <mi>E</mi>
+        <mtext>max</mtext>
+      </msub>
+      <mo>−</mo>
+      <msub>
+        <mi>E</mi>
+        <mtext>min</mtext>
+      </msub>
+      <mo>)</mo>
+    </mrow>
+    <mo>/</mo>
+    <msub>
+      <mi>v</mi>
+      <mtext>min</mtext>
+    </msub>
+  </mstyle>
+</math><asciimath>Y = (E_{"max"} - E_{"min"}) // v_{"min"}</asciimath></stem> (see <xref target="sec-3.5.15"/>);</p>
+</li>
+<li><p id="_7dec3063-cbb9-d4d9-9649-b8b5ddc2e79d">for a weighing instrument (for example a multi-interval instrument according to
+OIML R 76) [1], the relative DR, Z, where
+<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mi>Z</mi>
+    <mo>=</mo>
+    <mrow>
+      <mo>(</mo>
+      <msub>
+        <mi>E</mi>
+        <mtext>max</mtext>
+      </msub>
+      <mo>−</mo>
+      <msub>
+        <mi>E</mi>
+        <mtext>min</mtext>
+      </msub>
+      <mo>)</mo>
+    </mrow>
+    <mo>/</mo>
+    <mrow>
+      <mo>(</mo>
+      <mn>2</mn>
+      <mo>×</mo>
+      <mi>D</mi>
+      <mi>R</mi>
+      <mo>)</mo>
+    </mrow>
+  </mstyle>
+</math><asciimath>Z = (E_{"max"} - E_{"min"}) // (2 xx DR)</asciimath></stem> (see <xref target="sec-3.5.14"/>) and the value of DR (see  <xref target="sec-3.5.10"/>) is set at the maximum permissible minimum dead load output return according to R 60-2, 2.10.1;</p>
+</li>
+<li><p id="_ede29593-4976-f076-d868-9daba6cb9d55">other information considered necessary or useful by the manufacturer.</p>
+</li>
+</ol>
+</clause>
+
+<clause id="_1ad55728-eac2-d55d-00a4-60992f0ef4bc" inline-header="false" obligation="normative">
+<title id="_b2eda67c-f4a6-2c04-dc2a-928bd324c4b9">Specific markings</title>
+<clause id="_c2c229ab-a136-98d8-3013-161206ea5eda" anchor="sec-6.2.4.1" inline-header="false" obligation="normative">
+<title id="_426d55d0-006d-9fa7-38e7-9cbf3a19edc2">Accuracy class designation</title>
+<p id="_66b320da-4a02-2131-cb41-c95f53af54e2">Class A load cells shall be designated by the character “A”, class B by “B”, class C by “C” and class D by the character “D”.</p>
+</clause>
+
+<clause id="_970c1736-91ff-4229-2a44-f689031de284" anchor="sec-6.2.4.2" inline-header="false" obligation="normative">
+<title id="_2398e39a-803c-e403-2d94-7530ec8b596f">Designation of the type of load applied to the load cell</title>
+<p id="_e39347d7-1dae-83f8-fd53-ed26b3fa7e16">The designation of the type of load applied to the load cell shall be specified when it is not clearly apparent from the load cell construction, using the symbols shown in  <xref target="table-6"/>.</p>
+
+<table id="_c9f93be8-3bb4-927a-e886-873bc8877408" anchor="table-6">
+<name id="_3d62784c-108c-03f8-5bd8-52b461d51a9d">Symbols for different types of load transmission principles</name>
+<tbody><tr id="_7d85eb98-6312-e4f7-0612-d1f905b12c60"><td id="_bb5cbc8d-34e8-e628-ad93-78b89eb8a821" valign="top" align="left">Tension</td>
+<td id="_277e1949-7ace-0bb6-4068-fb0188acbba1" valign="top" align="left">↑<br/> ↓</td>
+</tr><tr id="_1a8ac616-9ca3-c341-f4b2-bfd2b537569c"><td id="_cebbea3a-1c57-db8e-9dab-fe9f4bb73ec7" valign="top" align="left">Compression</td>
+<td id="_0ee8070c-1857-07ff-e7e5-1fb9e796b614" valign="top" align="left">↓<br/> ↑</td>
+</tr><tr id="_8dab4cc5-12e0-f0af-b637-51ba70c33ced"><td id="_0b7dab06-25d6-3ab3-d44d-3ae2adb68fd0" valign="top" align="left">Beam</td>
+<td id="_c5eac724-29e4-c71b-47d8-775809c34fa2" valign="top" align="left">↑ or ↓</td>
+</tr><tr id="_c8607f70-ec05-33cd-cf6a-4bf462481c09"><td id="_e7120f3e-8999-9a94-782d-82f9c0a72826" valign="top" align="left">Universal</td>
+<td id="_efc7177d-90fe-e2fc-4e95-4fe380fd2ac8" valign="top" align="left">↑ ↓<br/> ↓ ↑</td>
+</tr></tbody>
+</table>
+</clause>
+
+<clause id="_d1549d4c-2864-dcf9-1445-abd6931819c5" anchor="sec-6.2.4.3" inline-header="false" obligation="normative">
+<title id="_a7ce37e8-6bfb-d6bf-686f-683d39c24bb9">Working temperature designation</title>
+<p id="_dacc9a25-32f1-01c1-1b3d-8a64bc71ecdd">The special limits of working temperature, as referred to in <xref target="sec-5.6.1.2"/>, shall be specified when the load cell cannot perform within the limits of error in  <xref target="sec-5.3"><location target="sec-5.3" connective="from"/><location target="sec-5.6" connective="to"/></xref> over the temperature range specified in  <xref target="sec-5.6.1.1"/>. In such cases, the limits
+of temperature shall be designated in degrees Celsius (<stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mstyle displaystyle="false">
+    <mrow xref="U_NISTu23">
+      <mstyle mathvariant="normal">
+        <mi>°C</mi>
+      </mstyle>
+      
+      
+    </mrow>
+  </mstyle>
+</math><asciimath>"unitsml(degC)"</asciimath></stem>).</p>
+</clause>
+
+<clause id="_0c385b0e-905d-740a-46bd-c0e727bc1df2" anchor="sec-6.2.4.4" inline-header="false" obligation="normative">
+<title id="_b311f2e7-3e2d-fa97-a33c-9f9913975c3b">Humidity symbols</title>
+<ol id="_ade23ec9-44d7-00ec-9813-48d13a5b396b"><li><p id="_5c131182-f4ad-7d04-e359-5b43002d4d76">A load cell not designed to meet performance criteria evaluated under R 60-2, 2.10.5 or 2.10.6 shall be marked by the symbol NH.</p>
+</li>
+<li><p id="_05634c94-f1cf-2330-bbab-971f612c5b80">A load cell submitted for evaluation and designed to meet performance criteria evaluated under R 60-2, 2.10.5 shall be marked by the symbol CH or not be marked with any humidity classification.</p>
+</li>
+<li><p id="_8ec73cae-8f5e-e088-cd8c-6a3fba396c51">A load cell submitted for evaluation and manufactured to meet performance criteria evaluated under R 60-2, 2.10.6 shall be marked by the symbol SH.</p>
+</li>
+</ol>
+</clause>
+
+<clause id="_68f08a74-365d-2282-c965-648bfebc7499" anchor="sec-6.2.4.5" inline-header="false" obligation="normative">
+<title id="_b730d7f5-3599-103b-5913-e8c631fee625">Maximum number of load cell verification intervals</title>
+<p id="_616c537f-54f2-9828-ae6b-65ddd0d37473">The maximum number of load cell verification intervals for which the accuracy class
+applies shall be designated in actual units (e.g. <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><mn>3000</mn></mstyle></math><asciimath>3000</asciimath></stem>) or, when combined with the accuracy class designation (see  <xref target="sec-6.2.4.1"/>) to produce a classification symbol (see  <xref target="sec-5.1.6"/>), it shall be designated in units of <stem block="false" type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mstyle displaystyle="false"><mn>1000</mn></mstyle></math><asciimath>1000</asciimath></stem>.</p>
+</clause>
+</clause>
+</clause>
+</clause>
+
+
+</sections><bibliography><references id="_6faf087c-8eff-0e1b-bad2-60256a653c6c" normative="false" obligation="informative">
+<title id="_2b4ed339-a7ed-1bbb-9576-55fcbc1ace3a">Bibliography</title><bibitem anchor="OIML_V_1_2013" id="_15b7a1de-f37c-3134-c685-5be1d3fa3f23">
+  <formattedref format="application/x-isodoc+xml">
+    <em>International Vocabulary of Terms in Legal Metrology (VIML)</em>
+  </formattedref>
+  <docidentifier>OIML V 1:2013</docidentifier>
+  <docnumber>1</docnumber>
+  <date type="published">
+    <on>2013</on>
+  </date>
+  <language>en</language>
+  <script>Latn</script>
+</bibitem><bibitem anchor="OIML_V_2_200_2012" id="_053688d1-fcb1-04d1-f186-71b4f7931707">
+  <formattedref format="application/x-isodoc+xml">
+    <em>International Vocabulary of Metrology — Basic and General Concepts and Associated Terms (VIM)</em>
+  </formattedref>
+  <docidentifier>OIML V 2-200:2012</docidentifier>
+  <docnumber>2-200</docnumber>
+  <date type="published">
+    <on>2012</on>
+  </date>
+  <language>en</language>
+  <script>Latn</script>
+</bibitem><bibitem anchor="OIML_D_9_2004" id="_7ee659f3-1568-153a-6858-2ae3c94253a9">
+  <formattedref format="application/x-isodoc+xml">
+    <em>Principles of metrological supervision</em>
+  </formattedref>
+  <docidentifier>OIML D 9:2004</docidentifier>
+  <docnumber>9</docnumber>
+  <date type="published">
+    <on>2004</on>
+  </date>
+  <language>en</language>
+  <script>Latn</script>
+</bibitem><bibitem anchor="OIML_D_11_2008" id="_72bbdeb6-fdfb-926a-9cde-020a334cf521">
+  <formattedref format="application/x-isodoc+xml">
+    <em>General requirements for electronic measuring instruments</em>
+  </formattedref>
+  <docidentifier>OIML D 11:2008</docidentifier>
+  <docnumber>11</docnumber>
+  <date type="published">
+    <on>2008</on>
+  </date>
+  <language>en</language>
+  <script>Latn</script>
+</bibitem><bibitem anchor="OIML_B_18_2018" id="_88056957-53ed-d4da-8022-fb22facd392c">
+  <formattedref format="application/x-isodoc+xml">
+    <em>Framework for the OIML Certification System (OIML-CS)</em>
+  </formattedref>
+  <docidentifier>OIML B 18:2018</docidentifier>
+  <docnumber>18</docnumber>
+  <date type="published">
+    <on>2018</on>
+  </date>
+  <language>en</language>
+  <script>Latn</script>
+</bibitem><bibitem anchor="R060-2" id="_2823c19b-1c75-5e87-81be-37217ca321b7">
+  <formattedref format="application/x-isodoc+xml">[NO INFORMATION AVAILABLE]</formattedref>
+  <docidentifier>R060-2</docidentifier>
+  <docidentifier type="repository">current-metanorma-collection/R060-2</docidentifier>
+  <docnumber>060-2</docnumber>
+  <language>en</language>
+  <script>Latn</script>
+</bibitem>
+
+
+
+
+
+
+</references></bibliography>
+</metanorma>

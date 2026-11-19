@@ -3,16 +3,15 @@
 module Metanorma
   module Iso
     module Sts
-      # HTML rendering for ISO STS XML (Liquid-templated; see
+      # HTML rendering for OIML STS XML (Liquid-based; see
       # html_renderer/ruby.rb).
       module HtmlRenderer
         autoload :Ruby, "#{__dir__}/html_renderer/ruby"
-        autoload :Handlers, "#{__dir__}/html_renderer/handlers"
 
         module_function
 
-        def render(model_or_xml, **opts)
-          Ruby.new.render(model_or_xml, **opts)
+        def render(sts_xml, **)
+          Ruby.new.render(sts_xml, **)
         end
       end
     end

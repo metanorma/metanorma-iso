@@ -23,6 +23,7 @@ module IsoDoc
       # to InlineRenderer itself (Open/Closed Principle).
       class InlineRenderer
         include ModelUtils
+        include MathConversion
 
         # Public state: handlers and SourcecodeRenderer read/write these.
         attr_accessor :preserve_whitespace
@@ -65,6 +66,29 @@ module IsoDoc
         # Stripping applies recursively — autonum carriers wrapped inside
         # other inline elements (e.g. <strong>) are also skipped.
         def render_heading(node, para)
+          with_heading { render_heading_content(node, para) }
+        end
+
+        # Run the block with the heading flag set, restoring it on exit
+        # (including on raise). For heading-like paths (ToC entries,
+        # preface titles) that must not use render_heading's autonum
+        # stripping but still need plain-text unit stems.
+        def with_heading
+          was_heading = @in_heading
+          @in_heading = true
+          yield
+        ensure
+          @in_heading = was_heading
+        end
+
+        # Whether a heading is being rendered. Headings feed the TOC and
+        # cross-reference text, so a stem carrying a UnitsML unit renders
+        # as text ("80 km") there, not as an inline OMML object (#1765).
+        def in_heading?
+          @in_heading ? true : false
+        end
+
+        def render_heading_content(node, para)
           unless strip_autonum_for?(para)
             render(node, para)
             return
@@ -191,10 +215,14 @@ module IsoDoc
         # MixedInlineFallbackRenderer, FmtXrefRenderer).
         def render_mixed_inline_fallback(element, para)
           if ordered?(element)
+            twins = fmt_stem_source_ids(element)
             element.each_mixed_content do |child|
               case child
               when String then add_text(para, child)
-              else dispatch_inline(child, para)
+              else
+                next if fmt_twin_of_stem?(child, twins)
+
+                dispatch_inline(child, para)
               end
             end
           else
@@ -214,6 +242,9 @@ module IsoDoc
             run.properties ||= Uniword::Wordprocessingml::RunProperties.new
             yield run
             para << run
+          end
+          temp.model.o_maths.each do |omath|
+            para << omath
           end
           temp.model.hyperlinks.each do |link|
             link.runs.each do |run|
@@ -294,6 +325,40 @@ module IsoDoc
 
         # ── Stem / footnote / callout helpers ─────────────────────────
 
+        # Semantic stem classes that the presentation XML pairs with a
+        # <fmt-stem><semx source="..."> presentation twin on the same
+        # node (paragraph, term, table cell). The twin is the rendered
+        # form and renders in place of the semantic element; walking
+        # both emitted every symbol's content twice.
+        SEMANTIC_STEM_CLASSES = [
+          Metanorma::Document::Components::Inline::StemInlineElement,
+          Metanorma::Document::Components::TextElements::StemElement,
+        ].freeze
+
+        # Source ids of the presentation fmt-stem twins declared on
+        # +node+. Empty when the node carries no fmt-stem.
+        def fmt_stem_source_ids(node)
+          fmt = attribute_value(node, :fmt_stem)
+          return [].freeze if fmt.nil?
+
+          Array(fmt).flat_map do |fmt_stem|
+            Array(attribute_value(fmt_stem, :semx)).filter_map do |semx|
+              attribute_value(semx, :source)
+            end
+          end.compact
+        end
+
+        # Whether +element+ is a semantic stem whose presentation
+        # fmt-stem twin (matched via the twin's semx source id) is
+        # present on the same node. Such semantic elements are skipped:
+        # the twin renders in their place, exactly once.
+        def fmt_twin_of_stem?(element, twin_ids)
+          return false if twin_ids.empty?
+
+          SEMANTIC_STEM_CLASSES.any? { |klass| element.is_a?(klass) } &&
+            twin_ids.include?(element.id)
+        end
+
         def stem_fallback_text(element)
           text = stem_asciimath_text(element)
           # UnitsML macros are source notation; the MathML carries the
@@ -307,7 +372,20 @@ module IsoDoc
           text = stem_math_text(element)
           return text if text && !text.empty?
 
-          collect_text(element)
+          text = collect_text(element)
+          return text if text && !text.empty?
+
+          # Presentation bare-number stems carry no MathML at all:
+          # mnconvert emits the digit as plain text inside the semx
+          # wrapper ("0<latexmath>0</latexmath>"), so the text only
+          # reachable through the semx child is the stem's content
+          # (isodoc#898: stem:[0]/stem:[1] vanished from table cells).
+          Array(attribute_value(element, :semx)).each do |child|
+            text = collect_text(child)
+            return text if text && !text.empty?
+          end
+
+          ""
         end
 
         # AsciiMath is the plain-text form of an inline symbol. The
@@ -514,12 +592,16 @@ module IsoDoc
         # ── Ordered-content walking ───────────────────────────────────
 
         def render_ordered_inline(node, para)
+          twins = fmt_stem_source_ids(node)
           walked = false
           each_ordered_element(node) do |type, obj|
             walked = true
             case type
             when :text then add_text(para, obj)
-            when :element then dispatch_inline(obj, para)
+            when :element
+              next if fmt_twin_of_stem?(obj, twins)
+
+              dispatch_inline(obj, para)
             end
           end
           return if walked
@@ -576,21 +658,23 @@ module IsoDoc
         # ── Heading rendering (autonum stripping) ─────────────────────
 
         def render_heading_ordered(node, para)
+          twins = fmt_stem_source_ids(node)
           walked = false
           each_ordered_element(node) do |type, obj|
             walked = true
-            walk_heading_child(type, obj, para)
+            walk_heading_child(type, obj, para, twins)
           end
           return if walked
 
           render(node, para)
         end
 
-        def walk_heading_child(type, obj, para)
+        def walk_heading_child(type, obj, para, twins = [])
           case type
           when :text then para << obj
           when :element
             return if autonum_carrier?(obj)
+            return if fmt_twin_of_stem?(obj, twins)
 
             dispatch_inline(obj, para)
           end
