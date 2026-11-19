@@ -618,6 +618,31 @@ module IsoDoc
           @comment_id_lookup.call(annotation_target_id)
         end
 
+        # Emit the queued clause number into +para+ (no-op when none is
+        # queued) and drop the queue. Used by renderers that build their
+        # paragraphs without going through #render (split paragraphs).
+        def emit_pending_clause_number(para)
+          pending = @pending_clause_number
+          return unless pending
+
+          @pending_clause_number = nil
+          emit_clause_number(para, pending[:number], pending[:name])
+        end
+
+        # Emit "<number><tab>" as bold runs wrapped in the bookmark +name+
+        # (when given): the clause-number lead used on a paragraph.
+        def emit_clause_number(para, number, name)
+          bm_id = @context.next_bookmark_id.to_s if name
+          if bm_id
+            para << Uniword::Wordprocessingml::BookmarkStart.new(
+              id: bm_id, name: name,
+            )
+          end
+          para << bold_clause_run(text: number)
+          para << bold_clause_run(tab: Uniword::Wordprocessingml::Tab.new)
+          para << Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id) if bm_id
+        end
+
         private
 
         # ── Ordered-content walking ───────────────────────────────────
@@ -695,24 +720,6 @@ module IsoDoc
         def caption_label?(element)
           element.is_a?(Metanorma::Document::Components::Inline::SpanElement) &&
             element.class_attr == "fmt-caption-label"
-        end
-
-        # Emit "<number><tab>" as bold runs wrapped in the clause's
-        # bookmark, then drop the queue so only the first paragraph gets it.
-        def emit_pending_clause_number(para)
-          pending = @pending_clause_number
-          return unless pending
-
-          @pending_clause_number = nil
-          bm_id = @context.next_bookmark_id.to_s if pending[:name]
-          if bm_id
-            para << Uniword::Wordprocessingml::BookmarkStart.new(
-              id: bm_id, name: pending[:name],
-            )
-          end
-          para << bold_clause_run(text: pending[:number])
-          para << bold_clause_run(tab: Uniword::Wordprocessingml::Tab.new)
-          para << Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id) if bm_id
         end
 
         def bold_clause_run(**attrs)

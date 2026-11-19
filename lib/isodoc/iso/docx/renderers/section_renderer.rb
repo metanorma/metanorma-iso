@@ -65,15 +65,44 @@ module IsoDoc
             !title.nil? && heading_body_empty?(title)
           end
 
-          # No heading paragraph (the paragraph count must not rise): the
-          # clause number and its id bookmark lead the first body paragraph.
+          # No heading paragraph: the clause number and its id bookmark
+          # lead the first body paragraph. When the clause's first child
+          # is not a paragraph (table, list, note...) there is no
+          # paragraph to lead, so the number gets its own paragraph ahead
+          # of that child (as in Word's reference rendering) rather than
+          # landing on whichever paragraph happens to come next.
           def render_untitled_section(section, doc)
             number = @inline_renderer.heading_number_text(section_title(section))
             return walk_children(section, doc) unless number
 
-            @inline_renderer.with_clause_number(number, bookmark_name(section)) do
+            name = bookmark_name(section)
+            if first_child_paragraph?(section)
+              @inline_renderer.with_clause_number(number, name) do
+                walk_children(section, doc)
+              end
+            else
+              render_number_paragraph(number, name, doc)
               walk_children(section, doc)
             end
+          end
+
+          def first_child_paragraph?(section)
+            title = section_title(section)
+            first = nil
+            each_ordered_element(section) do |type, obj|
+              first ||= obj if type == :element && !obj.equal?(title)
+            end
+            first.nil? ||
+              first.is_a?(Metanorma::Document::Components::Paragraphs::ParagraphBlock)
+          end
+
+          def render_number_paragraph(number, name, doc)
+            para = build_unstyled_paragraph
+            style = @resolver.context_body_style
+            para.style = style if style
+            @inline_renderer.emit_clause_number(para, number, name)
+            @context.mark_zone_paragraph
+            doc << para
           end
 
           def render_title_content(title, para)

@@ -67,7 +67,8 @@ module IsoDoc
           # block as a sibling. Each contiguous inline run picks up the
           # same paragraph style and alignment as the original <p>.
           def render_split(paragraph, doc)
-            state = { current: nil, paragraph: paragraph }
+            state = { current: nil, paragraph: paragraph, bookmark: nil,
+                      first: true }
             each_ordered_element(paragraph) do |type, obj|
               dispatch_split_element(type, obj, state, doc)
             end
@@ -84,7 +85,7 @@ module IsoDoc
           def append_split_text(text, state)
             return if text.nil? || text.empty?
 
-            state[:current] ||= new_paragraph(state[:paragraph])
+            state[:current] ||= start_split_paragraph(state)
             @inline_renderer.add_text(state[:current], text)
           end
 
@@ -93,7 +94,7 @@ module IsoDoc
               flush_split(state, doc)
               @walker.dispatch(element, doc)
             else
-              state[:current] ||= new_paragraph(state[:paragraph])
+              state[:current] ||= start_split_paragraph(state)
               @inline_renderer.dispatch_inline(element, state[:current])
             end
           end
@@ -101,8 +102,36 @@ module IsoDoc
           def flush_split(state, doc)
             return unless state[:current]
 
+            close_split_bookmark(state)
             flush_paragraph(state[:current], doc)
             state[:current] = nil
+          end
+
+          # Begin the next output paragraph of a split <p>. The first one
+          # carries what render_simple gives the whole <p>: the queued
+          # untitled-clause number and the <p>'s own id bookmark (which
+          # spans that first paragraph).
+          def start_split_paragraph(state)
+            para = new_paragraph(state[:paragraph])
+            return para unless state[:first]
+
+            state[:first] = false
+            @inline_renderer.emit_pending_clause_number(para)
+            name = bookmark_name(state[:paragraph])
+            if name
+              id = @context.next_bookmark_id.to_s
+              para << Uniword::Wordprocessingml::BookmarkStart.new(id: id,
+                                                                   name: name)
+              state[:bookmark] = id
+            end
+            para
+          end
+
+          def close_split_bookmark(state)
+            id = state[:bookmark] or return
+
+            state[:current] << Uniword::Wordprocessingml::BookmarkEnd.new(id: id)
+            state[:bookmark] = nil
           end
 
           def new_paragraph(paragraph)
