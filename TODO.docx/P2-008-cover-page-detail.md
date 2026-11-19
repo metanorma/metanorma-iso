@@ -69,3 +69,6 @@ The cover page has wrong paragraph structure compared to reference. Multiple dif
 
 ## Location
 - `lib/isodoc/iso/docx/adapter.rb` — `render_cover`, `render_copyright_block`, `extract_edition_text`
+
+## Status: warning styles + spacer DONE (see P2-007 Status); rest partial
+Same change as P2-007 (simple template zzwarninghdr/zzwarning, nbsp spacer; DIS keeps Notice). Copyright already follows the cover sectPr. Open: doc number, full doc ID with draft date, TC/SC line, edition wording, single-paragraph title.

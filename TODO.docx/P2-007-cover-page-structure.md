@@ -72,3 +72,10 @@ The cover page layout differs significantly between output and reference. The re
 
 ## Location
 - `lib/isodoc/iso/docx/adapter.rb` — cover page rendering
+
+## Status: warning + spacer DONE (lane/1728-cover-warning); rest partial
+- Warning styles: `zzwarninghdr`/`zzwarning` added to the **iso-simple** template (template.dotx styles.xml, styles.yml, style_mapping.yml `warning_header`/`warning`). Chosen for simple only: reference rice.docx (a CD, simple template, stages 00-30) uses them; the iso-dis template has no such styles (Era C uses Notice), so DIS keeps Notice.
+- nbsp spacer: real structure. Reference para 12 is U+00A0 with no style, closing the zzwarning box before the cover sectPr. `BoilerplateRenderer#render_license` now appends it after a license statement (no statement, no spacer).
+- Copyright block placement: already correct. `visit_root` renders the copyright after `insert_cover_section` (reference: zzCopyright starts after the cover sectPr); address consolidation is P1-005 (DONE).
+- Proof: spec/isodoc/docx/boilerplate_renderer_spec.rb "#render_license on the simple (WD/CD) template" (3 of 4 examples red before the fix, all green after).
+- Still open: standalone doc number, TC/SC line, spelled-out edition, single-paragraph title, stage-badge order.

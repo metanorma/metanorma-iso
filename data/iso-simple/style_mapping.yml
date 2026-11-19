@@ -66,6 +66,10 @@ paragraph_styles:
   # Source and key
   source: Source
 
+  # Cover-page warning for WD/CD drafts (reference: zzwarninghdr + zzwarning)
+  warning_header: zzwarninghdr
+  warning: zzwarning
+
   # Colophon
   colophon: zzCopyright
   std_title: zzSTDTitle
