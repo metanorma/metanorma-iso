@@ -59,7 +59,9 @@ module IsoDoc
 
             para = build_paragraph(@resolver.figure_title_style)
             with_bookmark(figure, para) do
-              @inline_renderer.render(name, para)
+              # Captions feed the lists of figures/tables like headings do:
+              # unit stems stay text ("80 km"), not OMML (#1765).
+              @inline_renderer.with_heading { @inline_renderer.render(name, para) }
             end
             doc << para
           end

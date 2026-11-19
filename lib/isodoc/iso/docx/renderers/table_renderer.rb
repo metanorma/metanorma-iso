@@ -74,7 +74,9 @@ module IsoDoc
             title_para = Uniword::Builder::ParagraphBuilder.new
             title_para.style = @resolver.table_title_style
             with_bookmark(table, title_para) do
-              @inline_renderer.render(name, title_para)
+              # Captions feed the lists of figures/tables like headings do:
+              # unit stems stay text ("80 km"), not OMML (#1765).
+              @inline_renderer.with_heading { @inline_renderer.render(name, title_para) }
             end
             doc << title_para
           end
