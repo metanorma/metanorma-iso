@@ -45,8 +45,15 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
       expect(heading_text).not_to include("unitsml(")
     end
 
-    it "renders the same text in body paragraphs" do
-      expect(body_texts).to include(heading_text)
+    # Body stems render as inline OMML (the heading stays text).
+    let(:body_math_tokens) do
+      body = paragraphs.find { |p| p.o_maths.any? }
+      body.o_maths.map { |m| m.to_xml.scan(%r{<m:t[^>]*>([^<]*)</m:t>}).flatten }
+    end
+
+    it "renders the unit as an inline equation in body paragraphs" do
+      expect(body_math_tokens).to eq([%w[80 km]])
+      expect(body_texts).to include("Altitude ")
     end
 
     context "with a power and quotient in the unit" do
@@ -62,7 +69,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
       end
 
       it "preserves unit structure in body paragraphs" do
-        expect(body_texts).to include("Altitude 80 (m²/s)")
+        expect(body_math_tokens.flatten).to eq(%w[80 m 2 s])
       end
     end
   end

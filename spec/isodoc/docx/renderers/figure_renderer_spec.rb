@@ -93,4 +93,21 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::FigureRenderer do
         "figure note should use Figurenote, got: #{styles.inspect}"
     end
   end
+
+  # Presentation XML keeps the semantic <stem> and adds an <fmt-stem> twin
+  # inside the caption's <semx>; the caption must show the stem once, as
+  # text, the way body paragraphs do.
+  def caption_stem_xml
+    '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>80</mn><mo rspace="thickmathspace">&#x2062;</mo><mrow xref="U_km"><mstyle mathvariant="normal"><mi>km</mi></mstyle></mrow></mrow></math><asciimath>80 "unitsml(km)"</asciimath></stem>' \
+      '<fmt-stem type="MathML"><semx element="stem" source="s1"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>80</mn></math><asciimath>80 "unitsml(km)"</asciimath></semx></fmt-stem>'
+  end
+
+  it "keeps a stem inside the figure caption, once, as text" do
+    name = "<fmt-name><semx element=\"name\">Fig #{caption_stem_xml}</semx></fmt-name>"
+    xml = minimal_iso_xml("<sections><clause id=\"c1\"><title>Scope</title><figure id=\"f1\">%s</figure></clause></sections>" % name)
+    convert_and_extract(adapter, xml) do |pkg|
+      para = pkg.document.body.paragraphs.find { |x| para_style_value(x) == "Figuretitle" }
+      expect(para.runs.map { |r| run_text(r) }.join).to eq("Fig 80 km")
+    end
+  end
 end

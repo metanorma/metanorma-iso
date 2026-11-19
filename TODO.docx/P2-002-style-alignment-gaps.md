@@ -27,6 +27,25 @@ style-only deltas. The report has 466 remaining deltas and completed in
 has 467 remaining deltas (55.7 seconds). Private source content remains
 outside the repository.
 
+## Remaining list (2026-11-19 re-check)
+
+The private `/tmp/5878.docx` and the delta tool are not on this machine, so
+no bucket was re-measured against the submission. Checked from the repository
+instead (rice fixture `spec/fixtures/iso/is/document-en.presentation.xml`,
+default DIS template, per-style `w:pStyle` counts):
+
+- Items 1 and 4 (ListParagraph, AnnexFigureTitle/AnnexTableTitle) are done in
+  the Simple mapping. Items 2 and 3 (zzwarning/zzwarninghdr) cannot be done:
+  neither template defines those styles (DIS keeps Warningtext/Warningtitle).
+- Items 6 and 7 (note/example counts) are closed by P2-010.
+- Item 8 (`a3` over-use): the 18 `a3` paragraphs in the rice fixture are
+  level-3 annex clause titles (for example "Sample divider,", "Preparation of
+  test sample"), which is the intended `annex_heading3` mapping. `a3` is not a
+  fallback style; no code change. A different count in the submission needs
+  the submission to diagnose.
+- Still open, needs the private source: which of the 466 deltas remain, and
+  `zzCover`, `CoverTitleA1`, `Formula`, `PAGEBREAK` differences.
+
 ## Problem
 
 Many style assignments differ between latest output and reference:

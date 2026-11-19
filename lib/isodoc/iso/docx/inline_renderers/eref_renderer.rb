@@ -4,8 +4,9 @@ module IsoDoc
   module Iso
     module Docx
       module InlineRenderers
-        # Renders <eref> as a Word hyperlink whose URL is the cite key
-        # (so cross-document links resolve via Word's bookmark target).
+        # Renders <eref> as an internal Word hyperlink to the bookmark of
+        # the cited bibitem; without a bibitemid there is no target, so
+        # the text is emitted unlinked.
         class ErefRenderer
           include Base
 
@@ -13,9 +14,9 @@ module IsoDoc
             text = parent.collect_text(element)
             return if text.nil? || text.empty?
 
-            cite = element.citeas || element.bibitemid
-            if cite && !cite.empty?
-              link = Uniword::Hyperlink.new(url: "##{cite}", text: text)
+            target = element.bibitemid
+            if target && !target.empty?
+              link = Uniword::Hyperlink.new(anchor: target, text: text)
               link_model = link.to_model(allocator: doc.allocator)
               parent.apply_hyperlink_style(link_model)
               para << link_model

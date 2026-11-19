@@ -58,7 +58,9 @@ module IsoDoc
             return unless name
 
             para = build_paragraph(@resolver.figure_title_style)
-            @inline_renderer.render(name, para)
+            with_bookmark(figure, para) do
+              @inline_renderer.render(name, para)
+            end
             doc << para
           end
 
