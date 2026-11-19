@@ -3,12 +3,14 @@
 require_relative "spec_helper"
 
 RSpec.describe IsoDoc::Iso::Docx::Adapter do # rubocop:disable RSpec/SpecFilePathFormat
-  # flatten_number_stems is private; exercised without building a document.
+  # flatten_number_stems is private; exercised without building a DOCX.
   let(:adapter) { described_class.allocate }
   let(:mathml) { "http://www.w3.org/1998/Math/MathML" }
 
   def flatten(xml)
-    adapter.send(:flatten_number_stems, xml)
+    document = Nokogiri::XML(xml)
+    adapter.send(:flatten_number_stems, document)
+    document.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::AS_XML)
   end
 
   def doc(body)
@@ -142,7 +144,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do # rubocop:disable RSpec/SpecFilePat
 
   it "returns malformed input unchanged" do
     ["<a><b></a>", "garbage"].each do |xml|
-      expect(flatten(xml)).to eq(xml)
+      expect(adapter.send(:prune_for_model, xml)).to eq(xml)
     end
   end
 end

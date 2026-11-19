@@ -43,7 +43,7 @@ RSpec.describe "DOCX number-stem flattening pipeline", type: :feature do
   end
 
   it "drops the MathML count of stem:[0] and stem:[101325] to 0", :aggregate_failures do
-    flattened = adapter_class.new.send(:flatten_number_stems, presxml)
+    flattened = adapter_class.new.send(:prune_for_model, presxml)
 
     expect(math_count(presxml)).to be_positive
     expect(math_count(flattened)).to eq(0)

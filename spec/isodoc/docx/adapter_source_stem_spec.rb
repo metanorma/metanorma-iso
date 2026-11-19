@@ -7,45 +7,53 @@ require "metanorma-iso"
 RSpec.describe IsoDoc::Iso::Docx::Adapter do # rubocop:disable RSpec/SpecFilePathFormat
   describe "#drop_source_stems" do
     let(:adapter) { described_class.allocate }
+    let(:math) { "<math xmlns=\"http://www.w3.org/1998/Math/MathML\"><mi>x</mi></math>" }
 
     def drop(body)
-      xml = "<metanorma xmlns=\"http://riboseinc.com/isoxml\"><p>#{body}</p></metanorma>"
-      Nokogiri::XML(adapter.send(:drop_source_stems, xml))
-        .xpath("//*[local-name()='p']/*").map(&:name)
+      xml = "<metanorma xmlns=\"http://riboseinc.com/isoxml\">#{body}</metanorma>"
+      document = Nokogiri::XML(xml)
+      adapter.send(:drop_source_stems, document)
+      document.root.element_children.first.element_children.map(&:name)
     end
 
-    def fmt_stem(source)
+    def stem(id = "s1")
+      "<stem id=\"#{id}\" type=\"MathML\">#{math}</stem>"
+    end
+
+    def fmt_stem(source, inner = math)
       "<fmt-stem type=\"MathML\"><semx element=\"stem\" source=\"#{source}\">" \
-        "<asciimath>x</asciimath></semx></fmt-stem>"
+        "#{inner}</semx></fmt-stem>"
     end
 
-    it "drops a stem whose fmt-stem sibling points back to it" do
-      expect(drop("<stem id=\"s1\"><asciimath>x</asciimath></stem>#{fmt_stem('s1')}"))
-        .to eq(["fmt-stem"])
+    it "drops a formula stem whose fmt-stem renders it as MathML" do
+      expect(drop("<formula>#{stem}#{fmt_stem('s1')}<name>1</name></formula>"))
+        .to eq(%w[fmt-stem name])
     end
 
-    it "keeps a stem that no fmt-stem renders" do
-      expect(drop("<stem id=\"s1\"><asciimath>x</asciimath></stem>")).to eq(["stem"])
+    it "keeps an inline stem, which the inline renderer prints" do
+      expect(drop("<p>#{stem}#{fmt_stem('s1')}</p>")).to eq(%w[stem fmt-stem])
     end
 
-    it "keeps a stem whose next fmt-stem renders another stem" do
-      expect(drop("<stem id=\"s1\"><asciimath>x</asciimath></stem>#{fmt_stem('s2')}"))
+    it "keeps a formula stem whose fmt-stem has no MathML to render" do
+      expect(drop("<formula>#{stem}#{fmt_stem('s1', '<asciimath>x</asciimath>')}</formula>"))
         .to eq(%w[stem fmt-stem])
     end
 
-    it "keeps a stem without an id" do
-      expect(drop("<stem><asciimath>x</asciimath></stem>#{fmt_stem('s1')}"))
+    it "keeps a formula stem whose fmt-stem renders another stem" do
+      expect(drop("<formula>#{stem}#{fmt_stem('s2')}</formula>")).to eq(%w[stem fmt-stem])
+    end
+
+    it "keeps a formula stem without an id" do
+      expect(drop("<formula><stem>#{math}</stem>#{fmt_stem('s1')}</formula>"))
         .to eq(%w[stem fmt-stem])
     end
 
-    it "returns malformed input unchanged" do
-      expect(adapter.send(:drop_source_stems, "<a><b></a>")).to eq("<a><b></a>")
+    it "returns malformed input unchanged from the pre-parse step" do
+      expect(adapter.send(:prune_for_model, "<a><b></a>")).to eq("<a><b></a>")
     end
   end
 
-  # Inline renderers walk every child, so the source <stem> beside a
-  # <fmt-stem> printed each symbol twice ("0" "0" in a table cell).
-  describe "rendered runs", type: :feature do
+  describe "rendered output", type: :feature do
     let(:presxml) do
       adoc = <<~ADOC
         = Document title
@@ -59,6 +67,11 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do # rubocop:disable RSpec/SpecFilePat
 
         The time stem:[t_90] is short.footnote:[See stem:[t_90].]
 
+        [stem]
+        ++++
+        r = 1/2 d
+        ++++
+
         |===
         | stem:[0] | stem:[x_1]
         |===
@@ -66,49 +79,41 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do # rubocop:disable RSpec/SpecFilePat
       IsoDoc::Iso::PresentationXMLConvert.new({})
         .convert("test", Asciidoctor.convert(adoc, backend: :iso, header_footer: true), true)
     end
-    let(:kept) do
-      adapter = described_class.new
-      allow(adapter).to receive(:drop_source_stems) { |xml| xml }
-      runs(adapter)
-    end
-    let(:dropped) { runs(described_class.new) }
 
-    def runs(adapter)
+    # Ids that differ on every run.
+    let(:random_attributes) { /\s(?:w14:paraId|w14:textId|w:rsid\w*)="[^"]*"/ }
+
+    def parts(adapter)
       Dir.mktmpdir do |dir|
         path = File.join(dir, "output.docx")
         adapter.convert(presxml, path)
         Zip::File.open(path) do |zip|
-          ns = { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" }
           %w[word/document.xml word/footnotes.xml].to_h do |part|
-            xml = Nokogiri::XML(zip.find_entry(part).get_input_stream.read)
-            [part, xml.xpath("//w:p", ns).map { |p| p.xpath("w:r", ns).map(&:to_xml) }]
+            [part, zip.find_entry(part).get_input_stream.read.gsub(random_attributes, "")]
           end
         end
       end
     end
 
-    def paragraph(runs, text)
-      runs.find { |p| p.join.include?(text) }
+    def formula_stem_count(xml)
+      Nokogiri::XML(xml).xpath("//*[local-name()='formula']/*[local-name()='stem']").size
     end
 
-    [">0<", ">x_1<", "The time "].each do |text|
-      it "renders the stem in #{text.inspect} once, as the fmt-stem run", :aggregate_failures do
-        after = paragraph(dropped["word/document.xml"], text)
+    it "drops the formula's source stem before the parse" do
+      pruned = described_class.allocate.send(:prune_for_model, presxml)
 
-        expect(paragraph(kept["word/document.xml"], text).uniq).to eq(after)
-        expect(after.join.scan(/>(?:0|x_1|t_90)</).size).to eq(1)
-      end
+      expect([formula_stem_count(presxml), formula_stem_count(pruned)]).to eq([1, 0])
     end
 
-    it "keeps every other paragraph unchanged" do
-      stem_free = ->(all) { all.reject { |p| p.join.match?(/>(?:0|x_1|t_90)</) } }
+    it "writes the same document and footnotes as without the drop", :aggregate_failures do
+      kept = described_class.new
+      allow(kept).to receive(:drop_source_stems)
+      dropped = parts(described_class.new)
 
-      expect(stem_free.call(dropped["word/document.xml"]))
-        .to eq(stem_free.call(kept["word/document.xml"]))
-    end
-
-    it "renders a footnote symbol once" do
-      expect(dropped["word/footnotes.xml"].join).to include("See t_90.")
+      expect(dropped["word/document.xml"]).to include("oMathPara")
+        .and include(">x_1<").and include(">0<")
+      expect(dropped["word/footnotes.xml"]).to include("t_90")
+      expect(dropped).to eq(parts(kept))
     end
   end
 end
