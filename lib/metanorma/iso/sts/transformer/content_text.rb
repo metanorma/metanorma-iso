@@ -8,12 +8,12 @@ module Metanorma
           return "" unless node
           return node if node.is_a?(String)
 
-          c = node.content if node.class.method_defined?(:content)
+          c = node.content if node.respond_to?(:content)
           # Inline elements disagree on their text-attribute name: most
           # metanorma-document inline models (TtElement, SmallCapElement,
           # Bcp14Element, XrefElement, ParagraphBlock) map mixed content to
           # `text`; only SubElement and LinkElement use `content`.
-          c = node.text if c.nil? && node.class.method_defined?(:text)
+          c = node.text if c.nil? && node.respond_to?(:text)
           return "" unless c
 
           c.is_a?(Array) ? c.join : c.to_s
@@ -44,7 +44,7 @@ module Metanorma
         private
 
         def extract_attr(obj, attr_name)
-          return nil unless obj.class.method_defined?(attr_name)
+          return nil unless obj.respond_to?(attr_name)
 
           val = obj.public_send(attr_name)
           return nil unless val

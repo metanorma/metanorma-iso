@@ -39,12 +39,11 @@ module Metanorma
         }
       end
 
-      # Register the native metanorma-document ISO-STS transformer for the
-      # +:isosts+ leg. This declaration is inert while the QA gate
-      # (+Metanorma::Iso::Sts.enabled?+) is off: {#output} intercepts
-      # +:isosts+ with mnconvert and never reaches the base-class driver.
-      # NISO +:sts+ is deliberately absent — it has no metanorma-document
-      # transformer and stays on mnconvert.
+      # Register the native metanorma-document STS transformer for the
+      # +:isosts+ leg (the OIML engine ported to Metanorma::Iso::Sts).
+      # This is the production path; METANORMA_ISO_NATIVE_STS=0 rolls back
+      # to mnconvert. NISO +:sts+ stays on mnconvert, whose emission the
+      # OutputSanitizer repairs to schema-valid NISO STS.
       def document_transformers
         {
           isosts: {
@@ -52,17 +51,17 @@ module Metanorma
             transformer: Metanorma::Iso::Sts::Transformer::Standard,
             strip_default_namespace: true,
             post_process: lambda do |xml, _transformer, _options|
-              Metanorma::Iso::Sts::Transformer::NbspProcessor.apply_to_text(xml)
+              # processing-meta is valid per the delivery-gate schema
+              # (NISO STS extended-1.2 MathML3).
+              Metanorma::Iso::Sts.inject_namespaces(xml)
+                .then { |x| Metanorma::Iso::Sts.inject_processing_meta(x) }
+                .then { |x| Metanorma::Iso::Sts.fix_lang_attribute(x) }
             end,
           },
         }
       end
 
       def use_presentation_xml(ext)
-        # When the native ISO-STS transformer is enabled it consumes semantic
-        # XML (matching mnconvert's input_format: MN); while gated off, keep
-        # the historical presentation-XML routing so mnconvert is unchanged.
-        return false if ext == :isosts && Metanorma::Iso::Sts.enabled?
         return false if ext == :sts_html
         return true if %i[html_alt sts isosts doc docx].include?(ext)
 
@@ -98,10 +97,10 @@ module Metanorma
         when :isosts
           if Metanorma::Iso::Sts.enabled?
             # native metanorma-document transformer via the base-class
-            # document_transformers driver (QA gate ON)
+            # document_transformers driver (default)
             super
           else
-            # default: mnconvert (QA gate OFF)
+            # rollback: mnconvert (METANORMA_ISO_NATIVE_STS=0)
             IsoDoc::Iso::IsoStsConvert.new(options)
               .convert(inname, isodoc_node, nil, outname)
           end

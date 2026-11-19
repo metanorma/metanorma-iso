@@ -111,7 +111,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do # rubocop:disable RSpec/SpecFilePat
       dropped = parts(described_class.new)
 
       expect(dropped["word/document.xml"]).to include("oMathPara")
-        .and include(">x_1<").and include(">0<")
+        .and include("<m:sub><m:r><m:t>1</m:t>").and include(">0<")
       expect(dropped["word/footnotes.xml"]).to include("t_90")
       expect(dropped).to eq(parts(kept))
     end

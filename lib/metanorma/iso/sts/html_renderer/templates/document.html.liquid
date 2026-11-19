@@ -11,7 +11,8 @@
 </head>
 <body class="bg-paper text-ink font-body text-[16px] leading-relaxed m-0">
 <header class="site-nav sticky top-0 z-40 flex items-center gap-3 min-h-[56px] px-5 py-2 bg-nav-bg border-b border-nav-border text-nav-text shadow-sm">
-  <span class="brand-wordmark shrink-0 inline-flex items-center justify-center h-[34px] px-3 rounded-md bg-iso-blue text-white font-bold text-lg tracking-wide">ISO</span>
+  <span class="brand-logo-light shrink-0 [&>svg]:h-[34px] [&>svg]:w-auto [&>svg]:block">{{ logo_light }}</span>
+  <span class="brand-logo-dark shrink-0 [&>svg]:h-[34px] [&>svg]:w-auto [&>svg]:block">{{ logo_dark }}</span>
   <span class="nav-doc-title font-semibold text-nav-text truncate min-w-0">{{ title | escape }}</span>
   <nav class="breadcrumb hidden md:flex items-baseline gap-2 min-w-0 text-sm whitespace-nowrap overflow-hidden ml-auto" aria-label="Breadcrumb">
     <span class="crumb-doc font-mono text-xs font-bold tracking-wider uppercase text-accent">{{ docid | escape }}</span><span class="crumb-sep text-ink-faint" aria-hidden="true">›</span><span class="crumb-current overflow-hidden text-ellipsis text-ink-faint" id="crumb-current"></span>

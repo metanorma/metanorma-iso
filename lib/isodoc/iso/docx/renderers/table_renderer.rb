@@ -73,7 +73,9 @@ module IsoDoc
 
             title_para = Uniword::Builder::ParagraphBuilder.new
             title_para.style = @resolver.table_title_style
-            @inline_renderer.render(name, title_para)
+            with_bookmark(table, title_para) do
+              @inline_renderer.render(name, title_para)
+            end
             doc << title_para
           end
 

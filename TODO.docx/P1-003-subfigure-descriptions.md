@@ -1,5 +1,8 @@
 # 081: Missing sub-figure descriptions for Figure C.2 a/b/c
 
+status: done
+note: Already renders on 7774b78e (a/b/c as Figuretitle); pinned by rice_docx_structural_fixes_spec.rb.
+
 ## Problem
 Reference has detailed descriptions for Figure C.2's sub-figures (a/b/c). Output is missing these paragraphs.
 

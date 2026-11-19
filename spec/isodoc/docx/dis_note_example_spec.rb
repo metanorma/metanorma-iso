@@ -63,9 +63,13 @@ RSpec.describe Metanorma::Iso::Processor, "#output" do # rubocop:disable RSpec/S
 
   def first_paragraph_fragment(paragraph)
     # Use a prose fragment from the first paragraph. References and footnotes
-    # can interrupt that prose with Word fields and footnote markers.
-    text = paragraph.xpath(".//text()[not(ancestor::fn or ancestor::concept or ancestor::eref or ancestor::xref)]")
-    text.map { |node| normalize(node.text) }.max_by(&:length)
+    # can interrupt that prose with Word fields and footnote markers. Stems
+    # render as OMML, so their source text is the MathML token run rather
+    # than the AsciiMath.
+    text = paragraph.xpath(".//text()[not(ancestor::fn or ancestor::concept or ancestor::eref or ancestor::xref or ancestor::math or ancestor::asciimath)]")
+    fragments = text.map { |node| normalize(node.text) }
+    fragments.concat(paragraph.xpath(".//math").map { |math| math.text.gsub(/\s+/, "") })
+    fragments.max_by(&:length)
   end
 
   def normalize(text)

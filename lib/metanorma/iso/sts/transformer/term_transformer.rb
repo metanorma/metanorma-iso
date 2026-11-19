@@ -1,232 +1,219 @@
-# frozen_string_literal: true
+# frozen_string: true
 
 module Metanorma
   module Iso
     module Sts
-      class Transformer::TermTransformer < Transformer::Base
-        # A terms section renders as a <sec sec-type="terms"> carrying its
-        # intro paragraphs/lists, with one nested <term-sec> per term holding
-        # the TBX termEntry — the shape mnconvert emits for ISO-STS.
-        # (sts-ruby's NisoSts::TermSection cannot hold section intro content:
-        # it supports only label/term-display/termEntry, so the wrapper
-        # Section carries the boilerplate.)
-        def transform_section(terms)
-          Transformer::ModelBuilder.section(
-            id: id_for(terms),
-            sec_type: "terms",
-            label: terms_label(terms),
-            title: terms.title ? transform_title(terms.title) : nil,
-          ) do |sec|
-            terms.each_mixed_content do |node|
-              next if node.is_a?(String)
-              next if node == terms.title
+      module Transformer
+        # A term becomes one nested <term-sec> holding the TBX
+        # <tbx:termEntry> — the shape mnconvert emits for ISO-STS
+        # terminology sections. term-sec and termEntry derive from the
+        # same source id but must not share the derived value: xs:ID
+        # forbids duplicates, so the section takes the sec_ prefix and
+        # the entry the term_ prefix (the split mnconvert emits:
+        # sec_3.1.2 / term_3.1.2).
+        class TermTransformer < Base
+          def transform(source_term)
+            sec_id, entry_id = id_generator.term_ids(source_term)
 
-              if node.is_a?(Metanorma::Iso::Document::Terms::IsoTerm)
-                sec.term_sec build_term_section(node)
-              else
-                block_dispatcher.dispatch(node, sec)
+            Transformer::ModelBuilder.term_section(id: sec_id) do |ts|
+              number = extract_term_number(source_term)
+              ts.label = ::Sts::NisoSts::Label.new(content: [number]) if number
+
+              entry = ::Sts::TbxIsoTml::TermEntry.new
+              entry.id = entry_id if entry_id
+              entry.lang_set = build_lang_set(source_term)
+              ts.term_entry = entry
+            end
+          end
+
+          private
+
+          # The term number ("3.1") from the term's fmt-name caption label.
+          def extract_term_number(source_term)
+            section_transformer.extract_autonum(source_term)
+          end
+
+          # Built through the block form so lutaml-model's order tracking
+          # records setter-call order: the released LangSet mapping
+          # declares subject_field last, but the tbx:langSet content model
+          # places tig last, so mapping-declaration order emits
+          # subjectField after the tigs and fails XSD validation. Gem-level
+          # defect — the workaround pins the schema's order here.
+          def build_lang_set(term)
+            lang = context.language || "en"
+
+            ::Sts::TbxIsoTml::LangSet.new do |set|
+              set.lang = lang
+
+              if domain_text(term)
+                sf = ::Sts::TbxIsoTml::SubjectField.new
+                sf.value = [domain_text(term)]
+                set.subject_field sf
               end
-            end
-          end
-        end
 
-        def transform_entry(term)
-          entry = ::Sts::TbxIsoTml::TermEntry.new
-          entry.id = "term_#{term.id.gsub(/^term_/, '')}" if term.id
+              Array(term.definition).each do |defn|
+                set.definition build_definition(defn)
+              end
+              Array(term.termnote).each { |tn| set.note build_note(tn) }
+              Array(term.termexample).each { |te| set.example build_example(te) }
+              Array(term.termsource).each { |ts| set.source build_source_ref(ts) }
+              Array(term.source).each { |s| set.source build_source_ref(s) }
 
-          lang = @context.language || "en"
-          entry.lang_set build_lang_set(term, lang)
-
-          entry
-        end
-
-        private
-
-        def terms_label(terms)
-          terms.number if terms.number && !terms.number.empty?
-        end
-
-        # One nested <term-sec> per term, holding the TBX termEntry.
-        def build_term_section(term)
-          Transformer::ModelBuilder.term_section(
-            id: term.id ? "term_#{term.id.gsub(/^term_/, '')}" : nil,
-          ) do |ts|
-            ts.term_entry transform_entry(term)
-          end
-        end
-
-        def build_lang_set(term, lang)
-          ls = ::Sts::TbxIsoTml::LangSet.new
-          ls.lang = lang
-
-          if term.domain&.text
-            sf = ::Sts::TbxIsoTml::SubjectField.new
-            sf.value = term.domain.text
-            ls.subject_field sf
-          end
-
-          Array(term.definition).each do |defn|
-            ls.definition build_definition(defn)
-          end
-          Array(term.termnote).each { |tn| ls.note build_note(tn) }
-          Array(term.termexample).each { |te| ls.example build_example(te) }
-          Array(term.termsource).each { |ts| ls.source build_source_ref(ts) }
-          Array(term.source).each { |s| ls.source build_source_ref(s) }
-
-          build_tigs_for(term).each { |tig| ls.tig tig }
-
-          ls
-        end
-
-        def build_definition(defn)
-          d = ::Sts::TbxIsoTml::Definition.new
-
-          if defn.verbal_definition
-            vd = defn.verbal_definition
-            if vd.p && !vd.p.empty?
-              vd.p.each { |para| inline_transformer.apply_inline_content(para, d) }
+              build_tigs_for(term).each { |tig| set.tig tig }
             end
           end
 
-          if defn.p && !defn.p.empty?
-            defn.p.each { |para| inline_transformer.apply_inline_content(para, d) }
+          def domain_text(term)
+            
+
+            domain = Array(term.domain).first
+            return nil unless domain
+
+            text = RenderedTextExtractor.text_of(domain).strip
+            text.empty? ? nil : text
           end
 
-          if defn.ul && !defn.ul.empty?
-            defn.ul.each { |ul| d.list list_transformer.transform(ul) }
-          end
-          if defn.ol && !defn.ol.empty?
-            defn.ol.each { |ol| d.list list_transformer.transform(ol) }
-          end
+          def build_definition(defn)
+            d = ::Sts::TbxIsoTml::Definition.new
 
-          d
-        end
-
-        def build_note(tn)
-          note = ::Sts::TbxIsoTml::Note.new
-
-          if tn.p && !tn.p.empty?
-            tn.p.each do |para|
-              inline_transformer.apply_inline_content(para, note)
+            if defn.verbal_definition
+              vd = defn.verbal_definition
+              Array(vd.p).each { |para| inline_transformer.apply_inline_content(para, d) }
             end
+
+            Array(defn.p).each { |para| inline_transformer.apply_inline_content(para, d) }
+
+            Array(defn.ul).each { |ul| d.list list_transformer.transform(ul) }
+            Array(defn.ol).each { |ol| d.list list_transformer.transform(ol) }
+
+            d
           end
 
-          note
-        end
-
-        def build_example(te)
-          ex = ::Sts::TbxIsoTml::Example.new
-
-          if te.p && !te.p.empty?
-            te.p.each do |para|
-              inline_transformer.apply_inline_content(para, ex)
-            end
+          def build_note(tn)
+            note = ::Sts::TbxIsoTml::Note.new
+            Array(tn.p).each { |para| inline_transformer.apply_inline_content(para, note) }
+            note
           end
 
-          ex
-        end
+          def build_example(te)
+            ex = ::Sts::TbxIsoTml::Example.new
+            Array(te.p).each { |para| inline_transformer.apply_inline_content(para, ex) }
+            ex
+          end
 
-        def build_source_ref(ts)
-          src = ::Sts::TbxIsoTml::Source.new
-          origin = ts.origin
-          if origin
+          def build_source_ref(ts)
+            src = ::Sts::TbxIsoTml::Source.new
+            origin = ts.origin
+            return src unless origin
+
             citeas = origin.citeas
-            src.value = citeas if citeas
-          end
-          src
-        end
-
-        def build_tigs_for(term)
-          has_multiple = Array(term.admitted).any? || Array(term.deprecates).any?
-
-          tigs = Array(term.preferred).map do |pref|
-            build_tig(pref, "preferredTerm", has_multiple)
-          end
-          Array(term.admitted).each do |adm|
-            tigs << build_tig(adm, "admittedTerm", true)
-          end
-          Array(term.deprecates).each do |dep|
-            tigs << build_tig(dep, "deprecatedTerm", true)
+            src.value = [citeas] if citeas
+            src
           end
 
-          tigs
-        end
+          def build_tigs_for(term)
+            has_multiple = Array(term.admitted).any? || Array(term.deprecates).any?
 
-        def build_tig(designation, norm_status, has_multiple)
-          tig = ::Sts::TbxIsoTml::TermInformationGroup.new
+            tigs = Array(term.preferred).map do |pref|
+              build_tig(pref, "preferredTerm", has_multiple)
+            end
+            Array(term.admitted).each do |adm|
+              tigs << build_tig(adm, "admittedTerm", true)
+            end
+            Array(term.deprecates).each do |dep|
+              tigs << build_tig(dep, "deprecatedTerm", true)
+            end
 
-          term_text = extract_designation_text(designation)
-          t = ::Sts::TbxIsoTml::Term.new
-          t.value = [term_text] if term_text
-          tig.term = t
+            tigs
+          end
 
-          if designation.expression
-            expr = designation.expression
-            if expr.name && !expr.name.empty?
-              name = expr.name.first
+          def build_tig(designation, norm_status, has_multiple)
+            tig = ::Sts::TbxIsoTml::TermInformationGroup.new
+
+            term_text = extract_designation_text(designation)
+            t = ::Sts::TbxIsoTml::Term.new
+            t.value = [term_text] if term_text
+            tig.term = t
+
+            if designation.expression
+              expr = designation.expression
+              name = Array(expr.name).first
               if name
                 term_content = Array(name.text).join
-                if term_content && !term_content.empty?
-                  t.value = [term_content]
-                end
+                t.value = [term_content] if term_content && !term_content.empty?
 
-                grammar = detect_grammar(name)
-                if grammar
+                pos_value = detect_grammar(name, designation)
+                if pos_value
                   pos = ::Sts::TbxIsoTml::PartOfSpeech.new
-                  pos.value = grammar
+                  pos.value = pos_value
                   tig.pos = pos
                 end
               end
+
+              abbrev_type = expr.abbreviation_type
+              if abbrev_type && !abbrev_type.empty?
+                tt = ::Sts::TbxIsoTml::TermType.new
+                tt.value = abbrev_type_map(abbrev_type)
+                tig.term_type = tt
+              end
             end
 
-            abbrev_type = expr.abbreviation_type
-            if abbrev_type && !abbrev_type.empty?
-              tt = ::Sts::TbxIsoTml::TermType.new
-              tt.value = abbrev_type_map(abbrev_type)
-              tig.term_type = tt
+            if has_multiple
+              na = ::Sts::TbxIsoTml::NormativeAuthorization.new
+              na.value = norm_status
+              tig.normative_authorization = na
             end
+
+            tig
           end
 
-          if has_multiple
-            na = ::Sts::TbxIsoTml::NormativeAuthorization.new
-            na.value = norm_status
-            tig.normative_authorization = na
-          end
+          def extract_designation_text(designation)
+            texts = Array(designation.text)
+            return texts.join if texts.any?
 
-          tig
-        end
+            if designation.expression
+              expr = designation.expression
+              Array(expr.name).each do |n|
+                t = Array(n.text).join
+                return t unless t.empty?
 
-        def extract_designation_text(designation)
-          texts = Array(designation.text)
-          return texts.join if texts.any?
-
-          if designation.expression
-            expr = designation.expression
-            Array(expr.name).each do |n|
-              t = Array(n.text).join
-              return t unless t.empty?
+                rendered = RenderedTextExtractor.text_of(n)
+                return rendered unless rendered.nil? || rendered.empty?
+              end
             end
+
+            nil
           end
 
-          nil
-        end
+          # The semantic name carries no part-of-speech; the presentation
+          # grammar annotation (fmt-name semx grammar attr) does.
+          def detect_grammar(name_element, designation = nil)
+            grammar = designation.class.attributes.key?(:grammar) ? designation.grammar : nil
+            grammar = Array(grammar).first if grammar.is_a?(Array)
+            return grammar_value(grammar) if grammar
 
-        def detect_grammar(name_element)
-          return nil unless name_element
-
-          if name_element.text
-            text = Array(name_element.text).join
-            return nil if text.empty?
+            nil
           end
 
-          nil
-        end
+          def grammar_value(grammar)
+            %i[value is_abbreviation?].each do |attr|
+              next unless grammar.class.attributes.key?(attr)
+              next if attr == :is_abbreviation?
 
-        def abbrev_type_map(type)
-          case type
-          when "acronym" then "acronym"
-          when "abbreviation" then "abbreviation"
-          else "variant"
+              val = grammar.public_send(attr)
+              return val.to_s unless val.nil? || val.to_s.empty?
+            end
+            nil
+          rescue StandardError
+            nil
+          end
+
+          def abbrev_type_map(type)
+            case type
+            when "acronym" then "acronym"
+            when "abbreviation" then "abbreviation"
+            else "variant"
+            end
           end
         end
       end

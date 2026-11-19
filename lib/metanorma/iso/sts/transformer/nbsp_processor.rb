@@ -4,7 +4,8 @@ module Metanorma
   module Iso
     module Sts
       class Transformer::NbspProcessor
-        NBSP = " "
+        # U+00A0 NO-BREAK SPACE.
+        NBSP = "\u00A0"
 
         RULES = [
           [/(Part) (\d)/i, "\\1#{NBSP}\\2"],
@@ -28,9 +29,6 @@ module Metanorma
         end
 
         # Apply the NBSP rules to every text node of a serialised XML string.
-        # Used as the metanorma-core +document_transformers+ +:post_process+
-        # hook, replacing the previously-private
-        # DocumentTransformer#apply_nbsp_to_text.
         #
         # Tags are extracted with index arithmetic instead of a quantified
         # regex: a scanning regex (gsub or split) retries every '<' start

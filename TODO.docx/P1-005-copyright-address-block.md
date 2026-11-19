@@ -26,3 +26,6 @@ In `render_copyright_block`, consolidate all address lines into a single paragra
 
 ## Location
 - `lib/isodoc/iso/docx/adapter.rb` — `render_copyright_block`
+
+## Status: DONE (residual)
+Copyright address now rendered once in zzCopyrightaddress with email/website kept; proof: spec/isodoc/docx/boilerplate_renderer_spec.rb "with the full ISO address paragraph" (red on e0c0a1da, green after).

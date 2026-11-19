@@ -65,6 +65,8 @@ module IsoDoc
            Renderers::TermsSectionRenderer],
           [Metanorma::Iso::Document::Sections::IsoClauseSection,
            Renderers::ClauseRenderer],
+          [Metanorma::Standoc::Document::Sections::DefinitionSection,
+           Renderers::DefinitionSectionRenderer],
           [Metanorma::Standoc::Document::Sections::StandardReferencesSection,
            Renderers::ReferencesRenderer],
           [Metanorma::Document::Components::Sections::ReferencesSection,
@@ -382,6 +384,7 @@ module IsoDoc
         # Numeric table cells need a Stem run, not a tree of MathML models.
         # Keep block formulas intact: their renderer emits OMML, not text.
         def flatten_number_stems(document)
+          prune_stem_twins(document)
           document.xpath("//*[local-name()='stem' or local-name()='fmt-stem']" \
                          "[not(ancestor::*[local-name()='formula'])]").each do |stem|
             container = number_stem_container(stem)
@@ -397,6 +400,63 @@ module IsoDoc
               text.content = number
               container.children = text
             end
+          end
+        end
+
+        # Collapses each semantic <stem> / <fmt-stem> twin pair (the
+        # fmt-stem's semx source is the stem's id, both on one parent)
+        # so the model parse reads the MathML once instead of twice.
+        #
+        # Most parents model <fmt-stem>, and the renderer already skips
+        # the semantic twin there (fmt_twin_of_stem?), so the stem is
+        # dropped. A <semx> parent (a table name, for example) does not
+        # model <fmt-stem>: the parse discards the twin and the stem is
+        # the only copy rendered, so there the stem is kept and takes the
+        # fmt-stem's content, the formatted value, and the fmt-stem is dropped.
+        def prune_stem_twins(document)
+          document.xpath("//*[local-name()='fmt-stem']").each do |fmt|
+            parent = fmt.parent
+            next unless parent&.element?
+
+            twin = fmt.at_xpath("./*[local-name()='semx']")
+            stem = twin && parent.element_children.find do |child|
+              child.name == "stem" && child["id"] == twin["source"]
+            end
+            next unless stem && prunable_in?(parent, twin)
+
+            if parent.name == "semx"
+              adopt_fmt_content(stem, fmt, twin)
+            else
+              stem.unlink
+            end
+          end
+        end
+
+        # A formula falls back to its semantic stem when the fmt-stem
+        # carries no MathML (FormulaRenderer#extract_mathml): keep it then.
+        def prunable_in?(parent, twin)
+          parent.name != "formula" ||
+            !twin.at_xpath(".//*[local-name()='math']").nil?
+        end
+
+        # The kept stem carries the presentation rendering (ISO decimal
+        # comma, digit grouping); its own MathML holds the raw number.
+        def adopt_fmt_content(stem, fmt, twin)
+          stem.children = twin.children
+          fmt.unlink
+          sync_number_copies(stem)
+        end
+
+        # A number-only stem is rendered from its asciimath copy, which still
+        # holds the raw number; make it match the formatted MathML.
+        def sync_number_copies(stem)
+          maths = stem.element_children.select { |child| child.name == "math" }
+          number = maths.one? && !loose_text?(stem) &&
+            math_number_text(maths.first)
+          return unless number
+
+          stem.element_children.each do |child|
+            child.content = number if NUMBER_STEM_COPIES.include?(child.name)
           end
         end
 
@@ -680,7 +740,21 @@ module IsoDoc
           is_normative = refs_sect.normative.to_s == "true"
           @context.with_normative(is_normative) do
             walk_mixed_content(refs_sect, doc)
+            render_section_admonitions(refs_sect, doc)
           end
+        end
+
+        # Admonition children of the references section (e.g. an `[EDITOR]`
+        # editorial note following the reference list) render after the
+        # walked content — 1.17.0 carried them ("EDITORIAL NOTE — …").
+        # The section model is unordered, so the fallback walk cannot place
+        # them by document order; they are dispatched explicitly here once
+        # the model carries them (StandardReferencesSection admonition
+        # mapping, metanorma-iso#1764).
+        def render_section_admonitions(refs_sect, doc)
+          return unless refs_sect.class.attributes.key?(:admonition)
+
+          Array(refs_sect.admonition).each { |admonition| dispatch(admonition, doc) }
         end
 
         # ── Block visitors (central dispatch) ──────────────────────────

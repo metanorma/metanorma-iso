@@ -116,6 +116,14 @@ module IsoDoc
         globs
       end
 
+      # Whether +style_id+ matches an excluded_styles glob or style_ids
+      # entry. Matching is case-sensitive, as Word styleIds are.
+      def excluded?(style_id)
+        excluded_style_ids.any? do |glob|
+          File.fnmatch(glob, style_id.to_s)
+        end
+      end
+
       def self.load_default(template: :dis)
         new(template: template)
       end

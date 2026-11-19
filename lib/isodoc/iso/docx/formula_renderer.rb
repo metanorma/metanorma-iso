@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require "plurimath"
-require "omml"
-
 module IsoDoc
   module Iso
     module Docx
@@ -23,6 +20,7 @@ module IsoDoc
       # StyleResolver and render symbol keys as formula_dl tables.
       class FormulaRenderer
         include ModelUtils
+        include MathConversion
 
         def initialize(resolver, inline_renderer, context: nil, walker: nil)
           @resolver = resolver
@@ -84,75 +82,26 @@ module IsoDoc
           # the semantic stem. fmt_stem wraps the math in a <semx>
           # element so the math appears under semx[].math; stem carries
           # it directly as stem.math.
-          extract_mathml_from_stem(formula.fmt_stem) ||
-            extract_mathml_from_stem(formula.stem)
-        end
-
-        def extract_mathml_from_stem(stem)
-          return nil unless stem
-
-          # Direct :math attribute (Mml::V3::Math or array of them).
-          if stem.class.attributes.key?(:math)
-            mathml = mathml_from_value(stem.math)
-            return mathml if mathml
-          end
-
-          # Wrapped in semx children (presentation-layer fmt_stem).
-          if stem.class.attributes.key?(:semx)
-            Array(stem.semx).each do |child|
-              next unless child.class.attributes.key?(:math)
-
-              mathml = mathml_from_value(child.math)
-              return mathml if mathml
-            end
-          end
-
-          extract_mathml_from_content(stem)
-        end
-
-        # Convert a single Mml::V3::Math, an array of them, or a raw
-        # MathML string into a single MathML string. Returns nil when
-        # the input is empty or unrecognised.
-        def mathml_from_value(value)
-          return nil if value.nil?
-
-          case value
-          when Array
-            value.map { |v| mathml_string_from_object(v) }.compact.first
-          else
-            mathml_string_from_object(value)
-          end
-        end
-
-        def mathml_string_from_object(obj)
-          return obj.to_s if obj.is_a?(String)
-          return nil unless obj.is_a?(Lutaml::Model::Serializable)
-
-          xml = obj.to_xml
-          xml&.strip&.empty? ? nil : xml
-        rescue StandardError
-          nil
-        end
-
-        def extract_mathml_from_content(node)
-          [:content, :text, :value].each do |attr|
-            next unless node.class.attributes.key?(attr)
-            val = node.public_send(attr)
-            return val if val.is_a?(String) && val.include?("<math")
-          end
-          nil
+          stem_mathml(formula.fmt_stem) || stem_mathml(formula.stem)
         end
 
         # Build the formula paragraph with OMML math content.
+        #
+        # The equation, tab, and number all go through the
+        # ParagraphBuilder `<<` API: direct collection writes bypass
+        # element_order tracking, and both the DOCX serializer and the
+        # MHTML writer then fall back to runs-before-math order, which
+        # puts the ISO formula number ahead of its equation.
         def render_formula_with_omml(formula, mathml_string, doc)
           para = Uniword::Builder::ParagraphBuilder.new
           para.style = @resolver.paragraph_style(:formula)
 
           omml_para = convert_to_omml_para(mathml_string)
           if omml_para
+            para << omml_para
+            append_formula_name(formula, para)
             built = para.build
-            built.o_math_paras << omml_para
-            append_formula_name(formula, built)
+            bookmark_paragraph(formula, built)
             doc << built
           else
             render_formula_as_text(formula, doc)
@@ -162,13 +111,7 @@ module IsoDoc
         end
 
         def convert_to_omml_para(mathml_string)
-          plurimath_formula = Plurimath::Mathml::Parser.new(mathml_string).parse
-          omml_xml = plurimath_formula.to_omml
-          return nil if omml_xml.nil? || omml_xml.empty?
-
-          Omml.parse(omml_xml)
-        rescue StandardError
-          nil
+          omml_para_from_mathml(mathml_string)
         end
 
         # Render formula as plain text when OMML conversion fails.
@@ -182,27 +125,38 @@ module IsoDoc
           name = attribute_value(formula, :fmt_name)
           append_formula_name_to_builder(name, para) if name
 
+          bookmark_paragraph(formula, para.model)
           doc << para
         end
 
-        # Append the formula name/label to a built paragraph model.
-        def append_formula_name(formula, built_para)
-          name = attribute_value(formula, :fmt_name)
-          return unless name
+        # Anchor target for xrefs to the formula. The bookmark range is
+        # empty and sits ahead of the content, as Word emits it.
+        def bookmark_paragraph(formula, para_model)
+          name = attribute_value(formula, :anchor) ||
+            attribute_value(formula, :id)
+          return unless name && @context
 
-          name_text = collect_text(name)
+          bm_id = @context.next_bookmark_id.to_s
+          para_model.bookmark_starts <<
+            Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, name: name)
+          para_model.bookmark_ends <<
+            Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id)
+        end
+
+        # Append the formula name/label to a paragraph builder.
+        def append_formula_name(formula, builder)
+          name_text = formula_name_text(formula)
           return if name_text.nil? || name_text.empty?
 
           tab_run = Uniword::Wordprocessingml::Run.new
           tab_run.tab = Uniword::Wordprocessingml::Tab.new
-          built_para.runs << tab_run
+          builder << tab_run
 
-          name_run = build_styled_run(name_text)
-          built_para.runs << name_run
+          builder << build_styled_run(name_text)
         end
 
         def append_formula_name_to_builder(name, para)
-          name_text = collect_text(name)
+          name_text = formula_name_text_value(name)
           return if name_text.nil? || name_text.empty?
 
           tab_run = Uniword::Wordprocessingml::Run.new
@@ -213,6 +167,30 @@ module IsoDoc
             @inline.add_text_with_char_style(para, name_text, :stem)
           else
             para << name_text
+          end
+        end
+
+        # The formula's <fmt-name> label, e.g. "(1)". The presentation
+        # XML wraps the autonum in a span tree (fmt-caption-label /
+        # fmt-autonum-delim), so the flat-text-only collect_text returns
+        # "" for it and the ISO formula number silently disappears.
+        # Route the label through the InlineRenderer — the same walk the
+        # figure captions use — and take the produced run text; fall
+        # back to collect_text for flat shapes.
+        def formula_name_text(formula)
+          name = attribute_value(formula, :fmt_name)
+          return unless name
+
+          formula_name_text_value(name)
+        end
+
+        def formula_name_text_value(name)
+          if @inline.is_a?(InlineRenderer) && ordered?(name)
+            temp = Uniword::Builder::ParagraphBuilder.new
+            @inline.render(name, temp)
+            temp.model.text
+          else
+            collect_text(name)
           end
         end
 

@@ -1,3 +1,19 @@
+---
+status: done
+---
+
+> **Proof (2026-11-19):** Reproduced on the real fixture `spec/fixtures/iso/is/document-en.presentation.xml`
+> (7 RefNorm paragraphs). All card items are already satisfied or are not defects:
+> - `)` footnote marker and ` , ` separator: present on the two flagged entries (ISO 712 and ISO 16634:—),
+>   fixed by #1781 (P1-011/P1-012) and now pinned against the real fixture in
+>   `spec/isodoc/docx/renderers/bibliography_renderer_spec.rb`.
+> - `RefNorm` vs `normref`: not a defect. `normref` is the legacy Word-HTML style name of the reference
+>   rice.docx; `data/iso-dis/style_mapping.yml` maps `normref: RefNorm`, `RefNorm` is defined in the output
+>   styles.xml, and `word_dis_styles.rb` uses the same name.
+> - "ISO 712:2009" vs output "ISO 712": comes from the fixture's biblio-tag (no year), not the renderer.
+> - Reference count 7 vs 8 RefNorm in the card: current output has 7 (also pinned by
+>   rice_docx_structural_fixes_spec).
+
 # 069: Fix Normative Reference Formatting
 
 ## Problem

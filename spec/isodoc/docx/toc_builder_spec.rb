@@ -94,6 +94,26 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       expect(field_chars.length).to be > 0
     end
 
+    it "selects the cached entry set on a Word field refresh" do
+      xml = minimal_iso_xml("<sections><clause id=\"s1\"><fmt-title>Scope</fmt-title></clause></sections>")
+      toc_builder.render(parse_iso_document(xml), doc)
+      instr = doc.model.body.paragraphs.flat_map(&:runs).filter_map(&:instr_text)
+        .map { |i| Array(i.text).join }.find { |t| t.include?("TOC") }
+
+      # \u would also select the annex sub-clause styles (a2/a3,
+      # outline levels 1/2), which the cached entries omit.
+      expect(instr).to eq(
+        ' TOC \\o "1-3" \\h \\z \\t "Foreword Title,1,Intro Title,1,ANNEX,1,Biblio Title,1" ',
+      )
+    end
+
+    it "asks Word to refresh the placeholder page numbers on open" do
+      xml = minimal_iso_xml("<sections><clause id=\"s1\"><fmt-title>Scope</fmt-title></clause></sections>")
+      toc_builder.render(parse_iso_document(xml), doc)
+
+      expect(doc.model.settings.update_fields).not_to be_nil
+    end
+
     it "handles model with no sections gracefully" do
       xml = minimal_iso_xml("<sections/>")
       model = parse_iso_document(xml)

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metanorma xmlns="https://www.metanorma.org/ns/standoc" type="presentation" version="3.4.3" flavor="iso">
+<bibdata type="standard">
+<title language="en" type="main">Clinical thermometers (mercury-in-glass, with maximum device)</title>
+<docidentifier primary="true" type="ISO">OIML R 7</docidentifier>
+<docnumber>7</docnumber>
+<language>en</language>
+<status><stage>60</stage></status>
+<copyright><from>1979</from><owner><organization><name>International Organization of Legal Metrology</name></organization></owner></copyright>
+<contributor><role type="publisher"/><organization><name>International Organization of Legal Metrology</name></organization></contributor>
+<ext><doctype>international-recommendation</doctype></ext>
+</bibdata>
+<preface>
+<foreword id="foreword">
+<p id="foreword-p1">This is the foreword.</p>
+</foreword>
+</preface>
+<sections>
+<clause id="s_scope" inline-header="false" obligation="normative">
+<title>Scope</title>
+<p id="scope-p1">This Recommendation applies to clinical thermometers.</p>
+<ul id="scope-list">
+<li><p>First bullet.</p></li>
+<li><p>Second bullet.</p></li>
+</ul>
+</clause>
+</sections>
+</metanorma>
