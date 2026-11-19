@@ -1,5 +1,13 @@
 # 089: Missing 190 bookmarks and 45 hyperlinks
 
+status: partial
+
+## Status (measured on rice, base 7774b78e)
+- Before: 125 bookmarks, 76 hyperlinks. After: 195 bookmarks (all unique), 85 hyperlinks. Reference: 293 / 120.
+- Figures, tables, formulas, headings, terms and bib items already had bookmarks; the premise that figures/tables lacked them was false.
+- Fixed: paragraphs with an id now get a bookmark (+70); fmt-concept now renders its xref as a hyperlink (+9, also restores the "(3.1)" display text).
+- Remaining delta: ~26 _Toc hyperlinks (toc_builder lane); ~98 bookmarks the reference carries on notes, lists, dl, termnote/termexample, quote, sourcecode and some clauses (Word-authored GUID bookmarks, no xref targets them); term anchors differ (ref `paddy`, source `term-paddy`); 11 table-footnote hyperlinks.
+
 ## Problem
 Output has 103 bookmarks vs reference 293 (-190). Output has 75 hyperlinks vs reference 120 (-45).
 

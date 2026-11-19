@@ -54,7 +54,9 @@ module IsoDoc
             para = build_unstyled_paragraph
             apply_style(para, paragraph)
             apply_alignment(para, paragraph)
-            @inline_renderer.render(paragraph, para)
+            with_bookmark(paragraph, para) do
+              @inline_renderer.render(paragraph, para)
+            end
             @context.mark_zone_paragraph
             doc << para
           end
