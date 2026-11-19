@@ -79,10 +79,11 @@ module IsoDoc
 
           # No heading paragraph: the clause number and its id bookmark
           # lead the first body paragraph. When the clause's first child
-          # is not a paragraph (table, list, note...) there is no
-          # paragraph to lead, so the number gets its own paragraph ahead
-          # of that child (as in Word's reference rendering) rather than
-          # landing on whichever paragraph happens to come next.
+          # is not a paragraph (table, list, note...), or it has none, there
+          # is no paragraph to lead, so the number gets its own paragraph
+          # ahead of that child (as in Word's reference rendering) rather
+          # than landing on whichever paragraph happens to come next, or
+          # being dropped.
           def render_untitled_section(section, doc)
             number = @inline_renderer.heading_number_text(section_title(section))
             return walk_children(section, doc) unless number
@@ -99,13 +100,14 @@ module IsoDoc
           end
 
           def first_child_paragraph?(section)
+            return true unless ordered?(section)
+
             title = section_title(section)
             first = nil
             each_ordered_element(section) do |type, obj|
               first ||= obj if type == :element && !obj.equal?(title)
             end
-            first.nil? ||
-              first.is_a?(Metanorma::Document::Components::Paragraphs::ParagraphBlock)
+            first.is_a?(Metanorma::Document::Components::Paragraphs::ParagraphBlock)
           end
 
           def render_number_paragraph(number, name, doc)

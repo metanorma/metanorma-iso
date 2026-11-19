@@ -102,4 +102,43 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "split paragraph parity" do
       expect(para_with(doc, ns, "After note.").at_xpath("w:bookmarkStart[@w:name='sp3']", ns)).not_to be_nil
     end
   end
+
+  # A <p> whose only child is a note opens no paragraph of its own, so its
+  # id bookmark must still be emitted and closed somewhere in the document.
+  it "keeps the id bookmark of a split <p> that opens no paragraph",
+     :aggregate_failures do
+    convert(<<~X) do |doc, ns|
+      <clause id="untitled" inline-header="true">#{title(1)}
+        <p id="pp"><note id="nn"><p>Inner note text.</p></note></p>
+        <p>Later paragraph.</p>
+      </clause>
+    X
+      bm = doc.at_xpath("//w:bookmarkStart[@w:name='pp']", ns)
+      expect(bm).not_to be_nil
+      expect(doc.xpath("//w:bookmarkStart[@w:name='pp']", ns).length).to eq(1)
+      expect(doc.at_xpath("//w:bookmarkEnd[@w:id='#{bm['w:id']}']", ns)).not_to be_nil
+      expect(text_of(para_with(doc, ns, "Inner note text."), ns)).to eq("Inner note text.")
+      expect(text_of(para_with(doc, ns, "Later paragraph."), ns)).to eq("Later paragraph.")
+    end
+  end
+
+  # Outside an untitled clause there is no number paragraph to carry the
+  # bookmark, so it gets an empty paragraph, and that must come before the
+  # note so the xref target is not placed after it.
+  it "places the id bookmark of a block-only <p> before its note",
+     :aggregate_failures do
+    convert(<<~X) do |doc, ns|
+      <clause id="parent">#{title(1)}
+        <p id="pp"><note id="nn"><p>Inner note text.</p></note></p>
+        <p>Later paragraph.</p>
+      </clause>
+    X
+      paras = doc.xpath("//w:body/w:p", ns).to_a
+      mark = paras.index { |p| p.at_xpath("w:bookmarkStart[@w:name='pp']", ns) }
+      note = paras.index { |p| text_of(p, ns).include?("Inner note text.") }
+      expect([mark.nil?, note.nil?]).to eq([false, false])
+      expect(mark).to be < note
+      expect(doc.xpath("//w:bookmarkStart[@w:name='pp']", ns).length).to eq(1)
+    end
+  end
 end

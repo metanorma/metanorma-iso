@@ -68,11 +68,22 @@ module IsoDoc
           # same paragraph style and alignment as the original <p>.
           def render_split(paragraph, doc)
             state = { current: nil, paragraph: paragraph, bookmark: nil,
-                      first: true }
+                      first: true, lead: nil,
+                      block_only: block_only?(paragraph) }
             each_ordered_element(paragraph) do |type, obj|
               dispatch_split_element(type, obj, state, doc)
             end
             flush_split(state, doc)
+          end
+
+          # True when no child of +paragraph+ opens an output paragraph:
+          # every child is a block (a note, say) and there is no text.
+          def block_only?(paragraph)
+            each_ordered_element(paragraph) do |type, obj|
+              return false if type == :text && !obj.to_s.empty?
+              return false if type == :element && !block_element?(obj)
+            end
+            true
           end
 
           def dispatch_split_element(type, obj, state, doc)
@@ -92,7 +103,8 @@ module IsoDoc
           def dispatch_split_element_node(element, state, doc)
             if block_element?(element)
               flush_split(state, doc)
-              emit_number_paragraph(doc)
+              emit_number_paragraph(doc, state)
+              bookmark_unopened_split(state, doc) if state[:block_only]
               @walker.dispatch(element, doc)
             else
               state[:current] ||= start_split_paragraph(state)
@@ -104,7 +116,7 @@ module IsoDoc
           # the queued untitled-clause number consumed inside that block.
           # As for a clause whose first child is not a paragraph, the
           # number gets its own leading paragraph instead.
-          def emit_number_paragraph(doc)
+          def emit_number_paragraph(doc, state)
             return unless @inline_renderer.pending_clause_number?
 
             para = build_unstyled_paragraph
@@ -113,6 +125,7 @@ module IsoDoc
             @inline_renderer.emit_pending_clause_number(para)
             @context.mark_zone_paragraph
             doc << para
+            state[:lead] = para
           end
 
           def flush_split(state, doc)
@@ -121,6 +134,24 @@ module IsoDoc
             close_split_bookmark(state)
             flush_paragraph(state[:current], doc)
             state[:current] = nil
+          end
+
+          # A split <p> that opens no paragraph (a note alone, say) would
+          # drop its id bookmark. Ahead of its first block, the bookmark
+          # goes on the untitled-clause number paragraph when there is one,
+          # else on an empty paragraph of its own, so the target sits before
+          # the note. Both use an empty bookmark range, as BookmarkRenderer
+          # does for <bookmark>.
+          def bookmark_unopened_split(state, doc)
+            name = state[:first] && bookmark_name(state[:paragraph])
+            return unless name
+
+            id = @context.next_bookmark_id.to_s
+            para = state[:lead] || new_paragraph(state[:paragraph])
+            para << Uniword::Wordprocessingml::BookmarkStart.new(id: id, name: name)
+            para << Uniword::Wordprocessingml::BookmarkEnd.new(id: id)
+            flush_paragraph(para, doc) unless state[:lead]
+            state[:first] = false
           end
 
           # Begin the next output paragraph of a split <p>. The first one
