@@ -367,4 +367,20 @@ RSpec.describe "Rice DOCX structural invariants" do
       end
     end
   end
+
+  describe "Sub-figure descriptions of Figure C.2" do
+    let(:titles) do
+      ns = { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" }
+      doc_xml.xpath("//w:p[w:pPr/w:pStyle/@w:val='Figuretitle']", ns)
+        .map { |p| p.xpath(".//w:t", ns).map(&:text).join }
+    end
+
+    it "renders a), b) and c) as Figuretitle paragraphs" do
+      expect(titles).to include(
+        a_string_matching(/\Aa\)[[:space:]]+Initial stages: No grains/),
+        a_string_matching(/\Ab\)[[:space:]]+Intermediate stages: Some fully/),
+        a_string_matching(/\Ac\)[[:space:]]+Final stages: All kernels/),
+      )
+    end
+  end
 end
