@@ -523,6 +523,82 @@ style_library:
         bold: true
         color: 0000FF
         font_size: '16.0'
+    zzwarninghdr:
+      id: zzwarninghdr
+      type: paragraph
+      name: zzwarninghdr
+      based_on: Normal
+      semi_hidden: true
+      ui_priority: '99'
+      paragraph_properties:
+        borders:
+        - type: top
+          val: single
+          sz: '4'
+          space: '1'
+          color: auto
+        - type: left
+          val: single
+          sz: '4'
+          space: '4'
+          color: auto
+        - type: bottom
+          val: single
+          sz: '4'
+          space: '1'
+          color: auto
+        - type: right
+          val: single
+          sz: '4'
+          space: '4'
+          color: auto
+        spacing:
+          before: '5.0'
+          line: '12.0'
+          line_rule: auto
+        alignment: center
+      run_properties:
+        bold: true
+        font_size: '10.0'
+        font_size_cs: '10.0'
+    zzwarning:
+      id: zzwarning
+      type: paragraph
+      name: zzwarning
+      based_on: Normal
+      semi_hidden: true
+      ui_priority: '99'
+      paragraph_properties:
+        borders:
+        - type: top
+          val: single
+          sz: '4'
+          space: '1'
+          color: auto
+        - type: left
+          val: single
+          sz: '4'
+          space: '4'
+          color: auto
+        - type: bottom
+          val: single
+          sz: '4'
+          space: '1'
+          color: auto
+        - type: right
+          val: single
+          sz: '4'
+          space: '4'
+          color: auto
+        spacing:
+          before: '5.0'
+          after: '5.0'
+          line: '12.0'
+          line_rule: auto
+        alignment: left
+      run_properties:
+        font_size: '10.0'
+        font_size_cs: '10.0'
     Footer:
       id: Footer
       type: paragraph

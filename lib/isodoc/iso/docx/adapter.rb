@@ -492,6 +492,7 @@ module IsoDoc
           if @template_path && File.exist?(@template_path)
             @template_root ||= Uniword.load(@template_path)
             root = @template_root
+            @template_margins ||= SectionManager.template_margins(root)
             if root.body
               root.body.paragraphs.clear
               root.body.tables.clear
@@ -611,6 +612,8 @@ module IsoDoc
         #   [SECTPR — body section, arabic page numbers]
 
         def visit_root(model, doc)
+          @context.in_amendment = AmendmentDoctype.amendment?(model)
+
           # ── Render annotations (comments) before body traversal ──
           if model.annotation_container
             @comment_renderer.render(model.annotation_container, 
@@ -620,6 +623,7 @@ module IsoDoc
           # ── Section 1: Cover page ──
           @cover_renderer.render(model.bibdata, doc)
           @boilerplate_renderer.render_license(model.boilerplate, doc)
+          @section_manager.template_margins = @template_margins || {}
           @section_manager.insert_cover_section(doc)
 
           # ── Copyright page (still cover section's next page) ──
@@ -627,8 +631,11 @@ module IsoDoc
           doc.page_break
 
           # ── Section 2: Front matter (roman numerals) ──
-          @toc_builder.render(model, doc)
-          doc.page_break
+          # Amendments carry no table of contents.
+          unless @context.in_amendment
+            @toc_builder.render(model, doc)
+            doc.page_break
+          end
 
           @preface_renderer.render(model.preface, doc) if model.preface
 
@@ -747,9 +754,48 @@ module IsoDoc
         # Dispatch entry point used by Renderers::Walker.
         def dispatch(node, doc)
           renderer = @registry.lookup(node.class)
-          return renderer.render(node, doc) if renderer
+          return walk_mixed_content(node, doc) unless renderer
+          return renderer.render(node, doc) unless ANCHORED_BLOCKS
+                                                   .any? { |k| node.is_a?(k) }
 
-          walk_mixed_content(node, doc)
+          render_anchored(renderer, node, doc)
+        end
+
+        # Blocks whose renderers emit plain paragraphs without a bookmark
+        # of their own: the block's id/anchor lands on the first paragraph
+        # it produces, so the id stays a valid anchor target.
+        ANCHORED_BLOCKS = [
+          Metanorma::Document::Components::MultiParagraph::AdmonitionBlock,
+          Metanorma::Document::Components::MultiParagraph::QuoteBlock,
+          Metanorma::Document::Components::AncillaryBlocks::ExampleBlock,
+          Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock,
+          Metanorma::Document::Components::Blocks::NoteBlock,
+          Metanorma::Document::Components::Lists::OrderedList,
+          Metanorma::Document::Components::Lists::UnorderedList,
+          Metanorma::Document::Components::Lists::DefinitionList,
+        ].freeze
+
+        def render_anchored(renderer, node, doc)
+          paragraphs = container_paragraphs(doc)
+          before = paragraphs&.size
+          result = renderer.render(node, doc)
+          first = paragraphs && paragraphs.drop(before).find do |element|
+            element.is_a?(Uniword::Wordprocessingml::Paragraph) ||
+              element.is_a?(Uniword::Builder::ParagraphBuilder)
+          end
+          Renderers::Anchoring.anchor(@context, node, first) if first
+          result
+        end
+
+        # The paragraph list of +doc+: document body, table cell, or the
+        # table attachment buffer (which holds paragraphs and tables).
+        def container_paragraphs(doc)
+          return doc.paragraphs if doc.is_a?(Renderers::TableAttachmentBuffer)
+
+          model = doc.respond_to?(:model) ? doc.model : nil
+          return unless model
+
+          model.respond_to?(:body) ? model.body&.paragraphs : model.paragraphs
         end
 
         # ── Tree walking ───────────────────────────────────────────────

@@ -1,7 +1,7 @@
 # DOCX Architecture: Root-Cause Fix Plan
 
 Date: 2026-05-28
-Status: Root-cause fixes implemented for R1, R2, R4, R6, R7
+Status: CLOSED 2026-11-19. R1, R2, R4, R6, R7 implemented; R3 done upstream; R5, R9, R10 obsolete (verdicts below)
 Goal: Eliminate `flatten_xml` hack and reconciler transforms. Make the pipeline produce correct output natively.
 
 ---
@@ -77,38 +77,16 @@ Each remaining difference is introduced at a specific point. Fix it there, not l
 
 ---
 
-## Remaining Fixes
+## Remaining Items: Verdicts (2026-11-19)
 
-### R3. Namespace declaration ordering
+Evidence: rice converted with `Metanorma::Iso::Processor.new.output(nil, "spec/examples/rice.presentation.xml", out, :docx)` on base 2e463195 with lutaml-model 0.8.175 and uniword 1.7.10; output unzipped and inspected.
 
-**Origin**: `lutaml/xml/adapter/xml_serializer.rb:215-226` builds `attributes` hash from `element_node.hoisted_declarations`. Hash uses insertion order.
-
-**Root-cause fix**: Sort `hoisted_declarations` by prefix:
-```ruby
-element_node.hoisted_declarations.sort_by { |prefix, _|
-  prefix.nil? ? "" : prefix.to_s
-}.each do |key, uri|
-```
-
-**Files**: `lutaml-model/lib/lutaml/xml/adapter/xml_serializer.rb:215`
-
-### R5. Sequential rIds
-
-**Origin**: `adapter.rb clear_stale_template_content` strips non-infrastructure relationships, leaving gaps. Reconciler renumbers them.
-
-**Root-cause fix**: Remove adapter-level strip. Let reconciler handle entirely.
-
-**Files**: `metanorma-iso/lib/isodoc/iso/docx/adapter.rb`
-
-### R9. Bold element redundancy
-
-**Low priority** — Word strips redundant `<w:b/>` during save.
-
-### R10. Adjacent table merging
-
-**Medium priority** — requires body-level post-processing.
-
----
+| Item | Verdict | Evidence |
+|---|---|---|
+| R3 namespace ordering | DONE (upstream, lutaml-model) | `xml_serializer.rb:243` in lutaml-model 0.8.175 already does `hoisted_declarations.sort_by { prefix.nil? ? "" : prefix.to_s }`. Rice `word/document.xml` root declares xmlns in sorted order (aink, am3d, cx..cx8, m, mc, o, oel, r, v, w, w10, w14, w15, w16...). No code in metanorma-iso. |
+| R5 sequential rIds | OBSOLETE (premise false, cosmetic) | The adapter strip (`clear_stale_template_content`) only removes `/image` and `/customXml` rels, not all non-infrastructure rels. The uniword reconciler does no rId renumbering (rIds come from the IdAllocator and are never reused). Rice `document.xml.rels` has ids 5-22 and 25-46: gaps are valid OPC. Every `r:id/r:embed/r:link` in document.xml resolves (no dangling). The proposed fix (drop the strip) would re-introduce stale template images and customXml, and renumbering would touch hyperlink ids (another lane). No change. |
+| R9 bold redundancy | OBSOLETE | Word strips redundant `<w:b/>` on save; rice output has 0 `<w:b/><w:b/>`. Accepted difference. |
+| R10 adjacent table merging | OBSOLETE (not reproduced) | Rice `document.xml` contains 0 occurrences of `</w:tbl><w:tbl>`. Reopen only with a reproducing input. |
 
 ## What Word Always Changes (ACCEPT)
 

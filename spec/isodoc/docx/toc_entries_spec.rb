@@ -41,14 +41,14 @@ RSpec.describe "DOCX DIS table of contents", type: :feature do
   end
 
   def heading_text(entry)
-    entry.xpath("w:r[w:tab]/preceding-sibling::w:r/w:t", ns).map(&:text).join
+    entry.xpath("w:hyperlink/w:r[w:tab]/preceding-sibling::w:r/w:t", ns).map(&:text).join
   end
 
   def expect_bibliography_heading
     entry = entries.find do |para|
-      para.xpath("w:r[w:tab]/preceding-sibling::w:r/w:t", ns).text.strip == "Bibliography"
+      para.xpath("w:hyperlink/w:r[w:tab]/preceding-sibling::w:r/w:t", ns).text.strip == "Bibliography"
     end
-    field = entry&.at_xpath("w:r/w:instrText[contains(., 'PAGEREF')]", ns)
+    field = entry&.at_xpath("w:hyperlink/w:r/w:instrText[contains(., 'PAGEREF')]", ns)
     target = field&.text.to_s.split[1]
     heading = document.at_xpath(
       "//w:p[w:pPr/w:pStyle[@w:val='BiblioTitle']][w:bookmarkStart[@w:name=$name]]",
@@ -58,7 +58,7 @@ RSpec.describe "DOCX DIS table of contents", type: :feature do
   end
 
   def expect_no_untitled_clauses
-    labels = entries.map { |entry| entry.xpath("w:r[w:tab]/preceding-sibling::w:r/w:t", ns).text.strip }
+    labels = entries.map { |entry| entry.xpath("w:hyperlink/w:r[w:tab]/preceding-sibling::w:r/w:t", ns).text.strip }
     expect(labels).not_to include("4.2.1", "4.2.2")
   end
 
@@ -69,8 +69,8 @@ RSpec.describe "DOCX DIS table of contents", type: :feature do
 
   def expect_heading_pageref(entry)
     label = entry.xpath(".//w:t", ns).text
-    expect(entry.xpath("w:r/w:tab", ns).size).to eq(1), label
-    fields = entry.xpath("w:r/w:instrText[contains(., 'PAGEREF')]", ns)
+    expect(entry.xpath("w:hyperlink/w:r/w:tab", ns).size).to eq(1), label
+    fields = entry.xpath("w:hyperlink/w:r/w:instrText[contains(., 'PAGEREF')]", ns)
     expect(fields.size).to eq(1), label
     return unless fields.size == 1
 

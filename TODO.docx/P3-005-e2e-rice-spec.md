@@ -1,11 +1,37 @@
 ---
-status: partial
+status: done
 ---
 
 # 023 — Spec: End-to-end rice DOCX output
 
-The formula key work in item 5 is complete and covered by synthetic specs.
-Full rice end-to-end coverage remains open.
+Delivered as `spec/isodoc/docx/rice_docx_e2e_spec.rb` (rice converted once,
+`before(:all)`; 27 examples, ~45 s). It is wired into CI through the
+`docx_e2e_spec` rake task, which `rake` (the default task) runs; the
+`:slow` tag plus `.rspec --tag ~slow` kept the older `end_to_end_spec.rb`
+out of every run, and `rake` previously ran only `spec/sts`.
+
+Asserted as properties (not snapshot counts): every pStyle/rStyle used in
+document/footnotes/headers/footers is defined in styles.xml; no excluded
+styleIds; unique styleIds; every numId defined; heading numbering comes from
+the style cascade; unique bookmark names and ids, paired start/end; every
+hyperlink anchor (xref, eref, TOC) resolves to a bookmark; every r:id and
+r:embed resolves; footnote references and bodies match both ways; body ends
+with sectPr; header/footer parts exist; images: one non-empty media part per
+source image, in an image paragraph style; OMML: block formulas = oMathPara,
+inline stems = oMath; Box-begin/Box-end alternate; Disp-quotep has no ind;
+KeyTitle = KeyText; header/footer styles and roman-then-arabic order.
+
+Departures from the list below, measured on rice 2026-11-19:
+- item 6 (Dimension50/75/100): rice images use `FigureGraphic`; the spec
+  accepts both.
+- item 9 (InlineCode): rice has no body `<tt>` (all 32 are committee
+  identifiers in bibdata and bibliography), so there is nothing to assert.
+  Covered by monospace renderer specs.
+- item 4 (Box wrapping): rice has 2 Box-begin/Box-end pairs; the spec asserts
+  they alternate, not that every note is boxed (notes use inline labels,
+  see end_to_end_spec "inline-label layout").
+- Open defect found: one table cell ends in a nested `w:tbl` with no trailing
+  `w:p` (invalid OOXML). The assertion is written and `pending`.
 
 ## Goal
 

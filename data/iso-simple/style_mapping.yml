@@ -21,6 +21,7 @@ paragraph_styles:
 
   # Annex headings
   annex: ANNEX
+  annex_heading1: Heading1   # no distinct annex level-1 style; explicit, not a fallback
   annex_heading2: a2
   annex_heading3: a3
   annex_heading4: a4
@@ -65,6 +66,10 @@ paragraph_styles:
 
   # Source and key
   source: Source
+
+  # Cover-page warning for WD/CD drafts (reference: zzwarninghdr + zzwarning)
+  warning_header: zzwarninghdr
+  warning: zzwarning
 
   # Colophon
   colophon: zzCopyright

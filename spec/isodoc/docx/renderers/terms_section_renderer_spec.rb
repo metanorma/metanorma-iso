@@ -26,7 +26,8 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermsSectionRenderer do
           paragraphs = doc.xpath("//w:body/w:p").map do |paragraph|
             paragraph.xpath(".//w:t").map(&:text).join
           end
-          links = doc.xpath("//w:body//w:hyperlink").map do |link|
+          # External links only: TOC entries are internal w:anchor links.
+          links = doc.xpath("//w:body//w:hyperlink[@r:id]").map do |link|
             [link.xpath(".//w:t").map(&:text).join,
              rels.at_xpath("//*[@Id='#{link['r:id']}']/@Target").value]
           end

@@ -36,7 +36,8 @@ module IsoDoc
           header: 709, footer: 0, gutter: 567,
         }.freeze
 
-        # Body margins
+        # Fallback front matter and body margins, used only when the
+        # template carries no section properties for that section.
         BODY_MARGINS = {
           top: 794, bottom: 567, left: 1077, right: 1077,
           header: 720, footer: 720, gutter: 0,
@@ -54,9 +55,37 @@ module IsoDoc
         BODY_FOOTER_EVEN = "rId27"
         BODY_FOOTER_DEFAULT = "rId28"
 
+        # Set by the adapter from SectionManager.template_margins.
+        attr_writer :template_margins
+
+        MARGIN_NAMES = %i[top right bottom left header footer gutter].freeze
+
         def initialize(resolver, header_footer_renderer)
           @resolver = resolver
           @hf_renderer = header_footer_renderer
+          @template_margins = {}
+        end
+
+        # The page margins of the template's front matter and body
+        # sections, in document order, as { front:, body: }. Read this
+        # before the template content is cleared. The cover keeps its own
+        # layout: the template's cover section is a plain default page,
+        # not the ISO cover design.
+        def self.template_margins(root)
+          body = root&.body
+          return {} unless body
+
+          sections = body.paragraphs.filter_map { |para| para.properties&.section_properties }
+          sections << body.section_properties if body.section_properties
+          { front: margins_of(sections[1]), body: margins_of(sections[2]) }.compact
+        end
+
+        def self.margins_of(section)
+          page_margins = section&.page_margins
+          return unless page_margins
+
+          margins = MARGIN_NAMES.to_h { |name| [name, page_margins.public_send(name)] }
+          margins if margins.values.none?(&:nil?)
         end
 
         # The PageScheme for the front matter section.
@@ -95,7 +124,7 @@ module IsoDoc
           write_footer_part(doc, FRONT_FOOTER_DEFAULT, copyright_text, scheme)
 
           sec = build_section(
-            margins: BODY_MARGINS,
+            margins: @template_margins.fetch(:front, BODY_MARGINS),
             page_numbering: { format: scheme.format },
           )
           add_header_footer_refs(sec,
@@ -117,7 +146,7 @@ module IsoDoc
           write_footer_part(doc, BODY_FOOTER_DEFAULT, copyright_text, scheme)
 
           sec = build_section(
-            margins: BODY_MARGINS,
+            margins: @template_margins.fetch(:body, BODY_MARGINS),
             page_numbering: { start: 1 },
           )
           add_header_footer_refs(sec,

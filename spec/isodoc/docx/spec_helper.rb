@@ -111,3 +111,16 @@ end
 def run_text(run)
   Array(run.text).join
 end
+
+# A ToC entry paragraph's runs in document order. The entry text, tab and
+# PAGEREF field sit inside a w:hyperlink; the TOC field begin/instr/
+# separate (first entry) and end (last entry) are direct paragraph runs.
+def entry_runs(para)
+  inner = para.hyperlinks.flat_map(&:runs)
+  return para.runs if inner.empty?
+
+  runs = para.runs
+  lead = runs.first&.field_char&.fldCharType == "begin" ? runs.first(3) : []
+  trail = runs.drop(lead.size)
+  lead + inner + trail
+end

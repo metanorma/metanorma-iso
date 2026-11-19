@@ -83,8 +83,12 @@ Cover paragraphs 0-8 now equal the reference text: `17301`,
 that already selects the simple template); DIS and later keep the labelled
 DIS cover. Spec: `cover_renderer_spec.rb` "compact cover for stages before DIS".
 
-Remaining delta (outside CoverRenderer):
-- Cover paragraph styles: the simple template has no zzCover; the reference
-  warning uses `zzwarninghdr`/`zzwarning` (style mapping, not touched).
-- Reference para 12 is an nbsp spacer after the warning body (boilerplate).
-- Copyright block move/consolidation is boilerplate_renderer territory.
+Warning styles and spacer (lane/1728-cover-warning):
+- `zzwarninghdr`/`zzwarning` added to the iso-simple template (template.dotx
+  styles.xml, styles.yml, style_mapping.yml `warning_header`/`warning`). The
+  iso-dis template has no such styles, so DIS keeps Notice.
+- Reference para 12 is a U+00A0 spacer with no style, closing the zzwarning box.
+  `BoilerplateRenderer#render_license` appends it after a license statement.
+  Spec: boilerplate_renderer_spec.rb "#render_license on the simple (WD/CD) template".
+- Copyright placement is already correct (it follows the cover sectPr); address
+  consolidation is P1-005 (DONE).

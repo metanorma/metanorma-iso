@@ -46,6 +46,33 @@ default DIS template, per-style `w:pStyle` counts):
 - Still open, needs the private source: which of the 466 deltas remain, and
   `zzCover`, `CoverTitleA1`, `Formula`, `PAGEBREAK` differences.
 
+## Rice measurement (2026-11-19, lane/1728-pstyles @ 2e463195)
+
+Processor DOCX of `spec/examples/rice.presentation.xml` against the reference
+`spec/examples/rice.docx` (2016 CD), per-style `w:pStyle` counts. Output has
+434 styled paragraphs of 514; the reference 207 of 515 (it leaves most body
+paragraphs unstyled). No code change came out of it: every delta is
+template-bound or edition-bound.
+
+| Style (out vs ref) | Verdict |
+|---|---|
+| Tablebody 132/0, Tableheader 12/0 | Template styles; parity already treats as Normal (item 5). |
+| a3 18/1 | Edition: source has 18 level-3 annex titles (item 8). |
+| BiblioEntry 15 / ListParagraph 0 vs 14 | DIS template has no ListParagraph (Simple maps it). |
+| ListContinue1 12, ListNumber1 9 vs 0 | Ref leaves list paragraphs unstyled; DIS defines both. |
+| zzCover 10, CoverTitleA1/2, MainTitle1/2 | Cover/title layout differs in the 2016 reference. |
+| Note 5 + Noteindent 6 vs Note 15 | Source has 9 notes + 5 termnotes; P2-010 matches each one. |
+| TermsAdmitted 8 vs AltTerms 6 | DIS template has no AltTerms/DeprecatedTerms. |
+| RefNorm 7 vs normref 7 | DIS template has no normref. |
+| Figuretitle 6 vs AnnexFigureTitle 6 | DIS template has no AnnexFigureTitle. |
+| Warningtext/title 2/2 vs zzwarning/hdr 2/1 | DIS template has none (Notice). |
+| Formula, KeyTitle/Text, FigureGraphic, Box-*, Formuladescription | Defined by the DIS template; ref leaves them unstyled. |
+| Code 2 vs 1 | Extra is the code-callout annotation, absent in the 2016 source. |
+| Definition 17 vs 16 | Extra is the "N/A" definition-list entry. |
+
+Closing these needs template styles (out of scope: mapping-only rule) or the
+private submission; status stays partial.
+
 ## Problem
 
 Many style assignments differ between latest output and reference:

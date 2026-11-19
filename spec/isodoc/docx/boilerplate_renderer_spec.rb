@@ -45,6 +45,57 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer do
     end
   end
 
+  describe "#render_license on the simple (WD/CD) template" do
+    let(:adapter) { build_adapter(template: :simple) }
+
+    def license_xml
+      minimal_iso_xml(<<~INNER)
+        <boilerplate>
+          <license-statement>
+            <clause>
+              <title>Warning for WDs and CDs</title>
+              <p>This document is not an ISO International Standard.</p>
+              <p>Recipients of this draft are invited to submit comments.</p>
+            </clause>
+          </license-statement>
+        </boilerplate>
+        <sections/>
+      INNER
+    end
+
+    def style_and_text(para)
+      [para_style_value(para),
+       para.runs.map { |r| r.text || "" }.join]
+    end
+
+    it "styles the warning as zzwarninghdr / zzwarning" do
+      renderer.render_license(parse_iso_document(license_xml).boilerplate, doc)
+
+      pairs = doc.model.body.paragraphs.map { |p| style_and_text(p) }
+      expect(pairs.first(3).map(&:first))
+        .to eq(%w[zzwarninghdr zzwarning zzwarning])
+    end
+
+    it "closes the warning box with an unstyled nbsp spacer paragraph" do
+      renderer.render_license(parse_iso_document(license_xml).boilerplate, doc)
+
+      expect(style_and_text(doc.model.body.paragraphs.last))
+        .to eq([nil, "\u00A0"])
+    end
+
+    it "defines the warning styles in the template" do
+      %w[zzwarninghdr zzwarning].each do |id|
+        expect(IsoDoc::Iso::Docx::StyleLibrary.load_default(template: :simple)
+          .paragraph_style?(id)).to be(true), "#{id} missing from styles.yml"
+      end
+    end
+
+    it "adds no spacer when there is no license statement" do
+      renderer.render_license(nil, doc)
+      expect(doc.model.body.paragraphs).to be_empty
+    end
+  end
+
   describe "#render_copyright" do
     it "renders copyright statements on the copyright page" do
       xml = minimal_iso_xml(<<~INNER)
@@ -172,6 +223,10 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer, "#render_copyright in the
       expect(address_paragraphs.first[:style]).to eq("zzCopyrightaddress")
     end
 
+    it "starts each line after a break without a leading space" do
+      expect(address_line_texts).to eq(["CP 401", "Email: ", "Website: www.iso.org"])
+    end
+
     it "keeps the email and website text" do
       expect(address_paragraphs.first[:text]).to include("copyright@iso.org", "www.iso.org")
     end
@@ -190,6 +245,16 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer, "#render_copyright in the
 
       it "keeps the legal paragraph in the copyright style" do
         expect(address_paragraphs.map { |p| p[:style] }).to eq(["zzCopyright"])
+      end
+    end
+
+    def address_line_texts
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        build_adapter.convert(copyright_xml, path)
+        extract_docx(path) do |document, ns|
+          document.xpath("//w:body/w:p[contains(., 'copyright office')]/w:r[w:br]/following-sibling::*[1][self::w:r]", ns).map(&:text)
+        end
       end
     end
 
