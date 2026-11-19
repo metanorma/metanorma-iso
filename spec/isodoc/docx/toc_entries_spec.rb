@@ -30,6 +30,20 @@ RSpec.describe "DOCX DIS table of contents", type: :feature do
     expect_bibliography_heading
   end
 
+  # P2-005: the label is never concatenated with the title ("1Scope")
+  # and never dropped; the separator is a space, the only tab being the
+  # page-number tab.
+  it "separates each entry's section number from its title with a space",
+     :aggregate_failures do
+    texts = entries.map { |entry| heading_text(entry) }
+    expect(texts).to include("1 Scope", "4 Specifications", "Foreword")
+    expect(texts.grep(/\A\d+(\.\d+)*[[:alpha:]]/)).to be_empty
+  end
+
+  def heading_text(entry)
+    entry.xpath("w:r[w:tab]/preceding-sibling::w:r/w:t", ns).map(&:text).join
+  end
+
   def expect_bibliography_heading
     entry = entries.find do |para|
       para.xpath("w:r[w:tab]/preceding-sibling::w:r/w:t", ns).text.strip == "Bibliography"

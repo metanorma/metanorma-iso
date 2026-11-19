@@ -36,10 +36,7 @@ module IsoDoc
           return unless boilerplate
 
           walk_statements(boilerplate.copyright_statement, doc,
-                          :copyright_hdr, :copyright)
-
-          address = find_address_block(boilerplate)
-          render_address(doc, address) if address
+                          :copyright_hdr, :copyright_statement)
 
           walk_statements(boilerplate.legal_statement, doc,
                           :copyright_hdr, :copyright)
@@ -80,12 +77,23 @@ module IsoDoc
           doc << para
         end
 
+        # Only the copyright statement carries the address block; legal and
+        # feedback paragraphs keep zzCopyright even if they name the office.
+        def paragraph_style_key(content, style_key)
+          return style_key unless style_key == :copyright_statement
+          return :copyright unless address_paragraph?(content)
+
+          :copyright_address
+        end
+
         def render_paragraphs(section, doc, style_key)
           return unless section.class.attributes.key?(:paragraphs)
 
           Array(section.paragraphs).each do |content|
             para = Uniword::Builder::ParagraphBuilder.new
-            para.style = @resolver.paragraph_style(style_key)
+            para.style = @resolver.paragraph_style(
+              paragraph_style_key(content, style_key),
+            )
 
             case content
             when String
@@ -100,40 +108,11 @@ module IsoDoc
           end
         end
 
-        def find_address_block(boilerplate)
-          Array(boilerplate.copyright_statement).each do |stmt|
-            text = find_address_in_section(stmt)
-            return text if text
-          end
-          nil
-        end
-
-        # In ISO XML, the address is typically the paragraph after the
-        # copyright message (contains "copyright office").
-        def find_address_in_section(section)
-          if section.class.attributes.key?(:paragraphs)
-            address_para = Array(section.paragraphs).find do |p|
-              collect_text(p).include?("copyright office")
-            end
-            return collect_text(address_para) if address_para
-          end
-
-          return nil unless section.class.attributes.key?(:subsection)
-
-          Array(section.subsection).each do |sub|
-            text = find_address_in_section(sub)
-            return text if text
-          end
-          nil
-        end
-
-        def render_address(doc, address_text)
-          return unless address_text
-
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = @resolver.paragraph_style(:copyright_address)
-          para << address_text
-          doc << para
+        # The ISO copyright address paragraph (contains "copyright office")
+        # is rendered once, in the address style, from its own content so
+        # that line breaks and link text (email) are kept.
+        def address_paragraph?(content)
+          collect_text(content).include?("copyright office")
         end
       end
     end
