@@ -153,6 +153,7 @@ module IsoDoc
             built = para.build
             built.o_math_paras << omml_para
             append_formula_name(formula, built)
+            bookmark_paragraph(formula, built)
             doc << built
           else
             render_formula_as_text(formula, doc)
@@ -182,7 +183,22 @@ module IsoDoc
           name = attribute_value(formula, :fmt_name)
           append_formula_name_to_builder(name, para) if name
 
+          bookmark_paragraph(formula, para.model)
           doc << para
+        end
+
+        # Anchor target for xrefs to the formula. The bookmark range is
+        # empty and sits ahead of the content, as Word emits it.
+        def bookmark_paragraph(formula, para_model)
+          name = attribute_value(formula, :anchor) ||
+            attribute_value(formula, :id)
+          return unless name && @context
+
+          bm_id = @context.next_bookmark_id.to_s
+          para_model.bookmark_starts <<
+            Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, name: name)
+          para_model.bookmark_ends <<
+            Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id)
         end
 
         # Append the formula name/label to a built paragraph model.
