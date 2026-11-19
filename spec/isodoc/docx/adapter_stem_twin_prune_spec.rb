@@ -138,6 +138,28 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do # rubocop:disable RSpec/SpecFilePat
     end
   end
 
+  describe "inside a formula" do
+    # FormulaRenderer#extract_mathml falls back to the semantic stem
+    # when the fmt-stem carries no MathML.
+    def formula(fmt_content)
+      "<formula id=\"f\"><fmt-name>(2)</fmt-name>" \
+        "<stem type=\"MathML\" id=\"s1\">#{complex}</stem>" \
+        "#{fmt_twin('s1', fmt_content)}</formula>"
+    end
+
+    it "keeps the stem when its fmt-stem twin has no MathML" do
+      doc = prune(formula("just text"))
+
+      expect(stem_ids(doc, "stem")).to eq(["s1"])
+    end
+
+    it "still drops the stem when the fmt-stem twin carries MathML" do
+      doc = prune(formula(complex))
+
+      expect(stem_ids(doc, "stem")).to be_empty
+    end
+  end
+
   describe "footnote body text" do
     it "renders a footnote stem and its fmt-stem twin once" do
       expect(footnote_text("Mean #{stem_pair('"CO"_2')}, 2025."))

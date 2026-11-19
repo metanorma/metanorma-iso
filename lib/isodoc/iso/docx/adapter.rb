@@ -397,7 +397,7 @@ module IsoDoc
             stem = twin && parent.element_children.find do |child|
               child.name == "stem" && child["id"] == twin["source"]
             end
-            next unless stem
+            next unless stem && prunable_in?(parent, twin)
 
             if parent.name == "semx"
               adopt_fmt_content(stem, fmt, twin)
@@ -405,6 +405,13 @@ module IsoDoc
               stem.unlink
             end
           end
+        end
+
+        # A formula falls back to its semantic stem when the fmt-stem
+        # carries no MathML (FormulaRenderer#extract_mathml): keep it then.
+        def prunable_in?(parent, twin)
+          parent.name != "formula" ||
+            !twin.at_xpath(".//*[local-name()='math']").nil?
         end
 
         # The kept stem carries the presentation rendering (ISO decimal
