@@ -19,10 +19,25 @@ module IsoDoc
             if lead
               @inline_renderer.render(lead, para)
             else
-              @inline_renderer.render(item, para)
+              render_bare_item_inline(item, para)
             end
             doc << para
             render_item_blocks(item, doc, lead)
+          end
+
+          # A li with no lead paragraph carries its text inline. Its
+          # fmt-name is the list label, which the list renderer supplies
+          # itself (literal label or numPr), so it is never body content.
+          def render_bare_item_inline(item, para)
+            label = Array(item.fmt_name)
+            each_ordered_element(item) do |type, obj|
+              next if label.any? { |l| l.equal?(obj) }
+
+              case type
+              when :text then @inline_renderer.add_text(para, obj)
+              when :element then @inline_renderer.dispatch_inline(obj, para)
+              end
+            end
           end
 
           def render_item_blocks(item, doc, lead)
