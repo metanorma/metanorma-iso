@@ -141,11 +141,52 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer, "#render_copyright in the
   end
   let(:copyright_block) do
     ["All rights reserved.", "ISO copyright office",
-     "Published in Switzerland", "ISO copyright office"]
+     "Published in Switzerland"]
   end
 
   it "preserves the copyright page when legal and feedback statements are absent" do
     expect(copyright_page(copyright_xml)).to eq([*copyright_block, :page_break, "Contents"])
+  end
+
+  context "with the full ISO address paragraph" do
+    let(:copyright_xml) do
+      minimal_iso_xml(<<~INNER)
+        <boilerplate>
+          <copyright-statement>
+            <clause>
+              <p>All rights reserved.</p>
+              <p align="left">ISO copyright office<br/> CP 401<br/> Email:  <link target="mailto:copyright@iso.org"/><br/> Website: www.iso.org</p>
+              <p>Published in Switzerland</p>
+            </clause>
+          </copyright-statement>
+        </boilerplate>
+        <sections/>
+      INNER
+    end
+
+    it "prints the address once" do
+      expect(address_paragraphs.length).to eq(1)
+    end
+
+    it "uses the address style" do
+      expect(address_paragraphs.first[:style]).to eq("zzCopyrightaddress")
+    end
+
+    it "keeps the email and website text" do
+      expect(address_paragraphs.first[:text]).to include("copyright@iso.org", "www.iso.org")
+    end
+
+    def address_paragraphs
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        build_adapter.convert(copyright_xml, path)
+        extract_docx(path) do |document, ns|
+          document.xpath("//w:body/w:p[contains(., 'copyright office')]", ns).map do |p|
+            { style: p.at_xpath("w:pPr/w:pStyle/@w:val", ns).value, text: p.text }
+          end
+        end
+      end
+    end
   end
 
   context "with legal and feedback statements" do
