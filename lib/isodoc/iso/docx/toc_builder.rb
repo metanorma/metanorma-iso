@@ -35,7 +35,14 @@ module IsoDoc
         # as the field RESULT (between the separate and the end), so a
         # Word field refresh replaces them wholesale instead of
         # duplicating them.
-        TOC_FIELD_INSTRUCTION = ' TOC \\o "1-3" \\h \\z \\u '.freeze
+        #
+        # \o "1-3" selects heading 1-3 and \t adds the unnumbered
+        # heading styles at level 1, so a refresh yields the entries
+        # cached here. \u is omitted: it also selects every paragraph
+        # style with an outline level, which pulls in the annex
+        # sub-clause styles (a2/a3) and the main-title style.
+        TOC_FIELD_INSTRUCTION = ' TOC \\o "1-3" \\h \\z \\t ' \
+                                '"Foreword Title,1,Intro Title,1,ANNEX,1,Biblio Title,1" '
 
         def initialize(resolver, inline_renderer, context)
           @resolver = resolver
@@ -67,9 +74,18 @@ module IsoDoc
                              open_field: index.zero?,
                              close_field: index == entries.size - 1)
           end
+
+          request_field_refresh(doc)
         end
 
         private
+
+        # The cached page numbers are placeholders; w:updateFields makes
+        # Word recompute them (and the TOC) when the document is opened.
+        def request_field_refresh(doc)
+          doc.model.settings ||= Uniword::Wordprocessingml::Settings.new
+          doc.model.settings.update_fields = Uniword::Wordprocessingml::UpdateFields.new
+        end
 
         def render_toc_heading(doc)
           para = Uniword::Builder::ParagraphBuilder.new
@@ -255,10 +271,9 @@ module IsoDoc
           append_tab(para)
 
           # PAGEREF field with a placeholder result: the static result
-          # shows the leader's landing value until Word refreshes the
-          # fields, when the entry's bookmark yields the real page
-          # number. The classic isodoc DOCX ToC carries the same "1"
-          # placeholder in every field result.
+          # is "1" until Word refreshes the fields (w:updateFields, see
+          # request_field_refresh), when the entry's bookmark yields the
+          # real page number.
           para << field_char_run("begin")
           para << instr_text_run(" PAGEREF #{entry.bookmark_name} \\h ")
           para << field_char_run("separate")
