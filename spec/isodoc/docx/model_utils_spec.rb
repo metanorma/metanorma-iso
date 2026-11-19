@@ -155,6 +155,7 @@ RSpec.describe IsoDoc::Iso::Docx::ModelUtils do
         <bibdata type="standard">
         <title language="en" type="title-main">Main T</title>
         </bibdata>
+        <preface><foreword id="fw"><fmt-title>T</fmt-title><p>Hello <em>world</em> end</p></foreword></preface>
         <sections><clause id="c1"><fmt-title>C</fmt-title><p>x</p></clause></sections>
         </metanorma>
       XML
@@ -196,6 +197,11 @@ RSpec.describe IsoDoc::Iso::Docx::ModelUtils do
 
       it "keeps the bibdata titles" do
         expect(english_main_title(root)).to eq("Main T")
+      end
+
+      it "populates element_order on mixed inline paragraph content" do
+        paragraph = root.preface.foreword.paragraphs.first
+        expect(utilizer.ordered?(paragraph)).to be(true)
       end
     end
   end

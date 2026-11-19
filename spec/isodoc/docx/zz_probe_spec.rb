@@ -2,24 +2,33 @@
 
 require_relative "spec_helper"
 
-RSpec.describe "probe" do
-  it "probes" do
-    xml = <<~XML
-      <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="presentation" flavor="iso">
-      <bibdata type="standard">
-      <title language="en" type="title-main">Main T</title>
-      </bibdata>
-      <preface><foreword id="fw"><fmt-title>T</fmt-title><p>Hello <em>world</em> end</p></foreword></preface>
-      <sections><clause id="c1"><fmt-title>C</fmt-title><p>x</p></clause></sections>
-      </metanorma>
-    XML
-    [:leptris, :nokogiri].each do |ad|
-      root = Lutaml::Model::AdapterScope.with(xml: ad) { Metanorma::Iso::Document::Root.from_xml(xml) }
-      puts "#{ad}: root eo=#{root.element_order&.size.inspect} bib eo=#{root.bibdata&.element_order&.size.inspect}"
-      puts "#{ad}: preface=#{root.preface.inspect[0, 60]} sections=#{root.sections&.element_order&.size.inspect}"
-      para = root.preface&.foreword&.paragraphs&.first
-      puts "#{ad}: para eo=#{para&.element_order&.size.inspect}"
-      puts "#{ad}: title=#{root.bibdata.titles.for_language('en')&.title_main&.value.inspect}"
+RSpec.describe IsoDoc::Iso::Docx::ModelUtils do
+  let(:utilizer) { Class.new { include IsoDoc::Iso::Docx::ModelUtils }.new }
+
+  describe "#parse_model_with_ordering" do
+    # Ordering must reach mixed inline content (text around <em>), not
+    # just the root, even when leptris is the ambient adapter
+    # (lutaml/lutaml-model#1163).
+    let(:xml) do
+      <<~XML
+        <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="presentation" flavor="iso">
+        <bibdata type="standard">
+        <title language="en" type="title-main">Main T</title>
+        </bibdata>
+        <preface><foreword id="fw"><fmt-title>T</fmt-title><p>Hello <em>world</em> end</p></foreword></preface>
+        <sections><clause id="c1"><fmt-title>C</fmt-title><p>x</p></clause></sections>
+        </metanorma>
+      XML
+    end
+    let(:root) do
+      Lutaml::Model::AdapterScope.with(xml: :leptris) do
+        utilizer.parse_model_with_ordering(Metanorma::Iso::Document::Root, xml)
+      end
+    end
+    let(:paragraph) { root.preface.foreword.paragraphs.first }
+
+    it "populates element_order on inline paragraph content" do
+      expect(utilizer.ordered?(paragraph)).to be(true)
     end
   end
 end
