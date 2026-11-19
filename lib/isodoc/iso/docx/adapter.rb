@@ -344,7 +344,7 @@ module IsoDoc
                 else
                   source.to_s
                 end
-          Metanorma::Iso::Document::Root.from_xml(xml)
+          parse_model_with_ordering(Metanorma::Iso::Document::Root, xml)
         end
 
         def create_document

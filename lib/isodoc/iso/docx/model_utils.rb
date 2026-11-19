@@ -12,6 +12,26 @@ module IsoDoc
       # of attribute access, text extraction, dimension parsing, and
       # ordered-content traversal.
       module ModelUtils
+        # Parse +xml+ into +model_class+ under an adapter that populates
+        # lutaml's mixed-content metadata (element_order and
+        # map_all_content targets). The conversion pipeline depends on
+        # both: element_order drives ordered walking (inline spans,
+        # titles, the middle title page) and map_all_content carries raw
+        # bodies. lutaml-model's default (leptris) XML adapter populates
+        # neither, silently dropping them (lutaml/lutaml-model#1163);
+        # nokogiri populates both. Scoped per parse via AdapterScope, so
+        # no process-wide default is touched. The scope becomes inert once
+        # leptris gains these.
+        def parse_model_with_ordering(model_class, xml)
+          if defined?(Lutaml::Model::AdapterScope)
+            Lutaml::Model::AdapterScope.with(xml: :nokogiri) do
+              model_class.from_xml(xml)
+            end
+          else
+            model_class.from_xml(xml)
+          end
+        end
+
         # Whether a model node carries element_order information
         # (i.e., uses lutaml-model's ordered mapping mode).
         def ordered?(node)
