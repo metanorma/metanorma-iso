@@ -1,10 +1,17 @@
 ---
 title: 108-010 - Add missing run styles (rStyles)
 priority: P2
-status: partial
+status: resolved-no-code-change
 ---
 
 # 108-010: Add Missing Run Styles (rStyles)
+
+> **Status 2026-11-19 (lane/1728-rstyles).** Hyperlink and FootnoteReference are emitted on
+> every link and footnote reference (rice: 372 and 13). The remaining listed styles are
+> CD-edition names (a2/a3 are heading levels, ForewordText/zzCover/normref/Source are paragraph
+> styles; rptBold/rptItalic and EndnoteReference are not in the DIS template or the rice
+> reference). Bold/italic are direct run properties in the DIS output. Nothing real left; see
+> P2-001 for the excluded semantic styles.
 
 The current DIS fixture emits `Hyperlink` and `FootnoteReference` run
 styles, covered by `adapter_spec.rb` and `bibliography_renderer_spec.rb`.
