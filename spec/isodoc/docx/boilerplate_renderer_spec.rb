@@ -176,6 +176,23 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer, "#render_copyright in the
       expect(address_paragraphs.first[:text]).to include("copyright@iso.org", "www.iso.org")
     end
 
+    context "when a legal statement also names the copyright office" do
+      let(:copyright_xml) do
+        minimal_iso_xml(<<~INNER)
+          <boilerplate>
+            <legal-statement>
+              <clause><p>Ask the ISO copyright office for permission.</p></clause>
+            </legal-statement>
+          </boilerplate>
+          <sections/>
+        INNER
+      end
+
+      it "keeps the legal paragraph in the copyright style" do
+        expect(address_paragraphs.map { |p| p[:style] }).to eq(["zzCopyright"])
+      end
+    end
+
     def address_paragraphs
       Dir.mktmpdir do |dir|
         path = File.join(dir, "output.docx")

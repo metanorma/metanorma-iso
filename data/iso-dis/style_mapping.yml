@@ -9,7 +9,6 @@
 # Numbering:       data/iso-dis/numbering.yml (7 abstractNums)
 # Exclusion list:  BUGS.gen/021-iso-template-style-audit.md
 excluded_styles_ref: BUGS.gen/021-iso-template-style-audit.md
-excluded_styles_ref: BUGS.gen/021-iso-template-style-audit.md
 
 paragraph_styles:
   # ── Document structure ──

@@ -36,7 +36,7 @@ module IsoDoc
           return unless boilerplate
 
           walk_statements(boilerplate.copyright_statement, doc,
-                          :copyright_hdr, :copyright)
+                          :copyright_hdr, :copyright_statement)
 
           walk_statements(boilerplate.legal_statement, doc,
                           :copyright_hdr, :copyright)
@@ -77,9 +77,11 @@ module IsoDoc
           doc << para
         end
 
+        # Only the copyright statement carries the address block; legal and
+        # feedback paragraphs keep zzCopyright even if they name the office.
         def paragraph_style_key(content, style_key)
-          return style_key unless style_key == :copyright
-          return style_key unless address_paragraph?(content)
+          return style_key unless style_key == :copyright_statement
+          return :copyright unless address_paragraph?(content)
 
           :copyright_address
         end
