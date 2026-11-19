@@ -424,7 +424,7 @@ RSpec.describe "DOCX integration", type: :integration do
       expect(num_ids.uniq).to include("3")
     end
 
-    it "ordered arabic list uses decimal numId" do
+    it "ordered arabic list without presentation label falls back to decimal numId" do
       path = generate_docx(<<~INNER)
         <sections>
           <clause id="s1">
@@ -442,7 +442,7 @@ RSpec.describe "DOCX integration", type: :integration do
       expect(num_ids.uniq).to include("1")
     end
 
-    it "ordered alpha list uses decimal numId" do
+    it "ordered alpha list without presentation label falls back to decimal numId" do
       path = generate_docx(<<~INNER)
         <sections>
           <clause id="s1">
@@ -458,6 +458,29 @@ RSpec.describe "DOCX integration", type: :integration do
       doc = extract_docx_xml(path, "word/document.xml")
       num_ids = doc.xpath("//w:numPr/w:numId/@w:val", ns).map(&:to_s)
       expect(num_ids.uniq).to include("1")
+    end
+
+    it "presentation-labelled ordered list uses literal label plus tab, no numPr" do
+      lab = ->(l) { "<fmt-name><semx element=\"autonum\" source=\"x\">#{l}</semx><span class=\"fmt-label-delim\">)</span></fmt-name>" }
+      path = generate_docx(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <ol type="alphabet">
+              <li>#{lab.call('a')}<p>Item a</p></li>
+              <li>#{lab.call('b')}<p>Item b</p></li>
+            </ol>
+          </clause>
+        </sections>
+      INNER
+
+      doc = extract_docx_xml(path, "word/document.xml")
+      paras = doc.xpath("//w:p[w:pPr/w:pStyle/@w:val='ListNumber1']", ns)
+      shapes = paras.map do |p|
+        p.xpath(".//w:t | .//w:tab", ns).map { |n| n.name == "tab" ? "<TAB>" : n.text }.join
+      end
+      expect(shapes).to eq(["a)<TAB>Item a", "b)<TAB>Item b"])
+      expect(paras.map { |p| p.at_xpath("w:pPr/w:numPr", ns) }).to all(be_nil)
     end
   end
 
