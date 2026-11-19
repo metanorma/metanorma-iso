@@ -375,12 +375,14 @@ RSpec.describe "Rice DOCX structural invariants" do
         .map { |p| p.xpath(".//w:t", ns).map(&:text).join }
     end
 
-    it "renders a), b) and c) as Figuretitle paragraphs" do
-      expect(titles).to include(
+    it "renders a), b) and c) as Figuretitle paragraphs directly before the Figure C.2 caption" do
+      caption = titles.index { |t| t.start_with?("Figure C.2") }
+      expect(caption).to be >= 3
+      expect(titles[(caption - 3)...caption]).to match([
         a_string_matching(/\Aa\)[[:space:]]+Initial stages: No grains/),
         a_string_matching(/\Ab\)[[:space:]]+Intermediate stages: Some fully/),
         a_string_matching(/\Ac\)[[:space:]]+Final stages: All kernels/),
-      )
+      ])
     end
   end
 end
