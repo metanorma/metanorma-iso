@@ -27,5 +27,12 @@ In `render_copyright_block`, consolidate all address lines into a single paragra
 ## Location
 - `lib/isodoc/iso/docx/adapter.rb` — `render_copyright_block`
 
-## Status: DONE (residual)
-Copyright address now rendered once in zzCopyrightaddress with email/website kept; proof: spec/isodoc/docx/boilerplate_renderer_spec.rb "with the full ISO address paragraph" (red on e0c0a1da, green after).
+## Status: DONE (verified at base 6455ca2f, no code change)
+Re-measured by converting spec/examples/rice.presentation.xml with Processor#output(..., :docx) and comparing with spec/examples/rice.docx.
+
+- Reference: ONE paragraph, style `zzaddress` (ind left 505), lines separated by `<w:r><w:br/><w:t>line</w:t></w:r>`, email as a hyperlink run, `boilerplate-address` bookmark.
+- Output: ONE paragraph, style `zzCopyrightaddress`, lines separated by `<w:r><w:br/></w:r>`, email kept as a hyperlink run, `boilerplate-address` bookmark kept. The five-paragraph split is gone (fixed earlier; spec/isodoc/docx/boilerplate_renderer_spec.rb "with the full ISO address paragraph", 16 examples green).
+
+Remaining differences, deliberately not changed:
+- Style id: the DIS template (data/iso-dis/style_mapping.yml `copyright_address`) defines `zzCopyrightaddress` and has no `zzaddress`; matching the reference id would need a new template style.
+- Each line after a break keeps the source's leading space (" CP 401 ..."); the reference has none. Cosmetic.
