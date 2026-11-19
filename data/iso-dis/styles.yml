@@ -2929,6 +2929,24 @@ style_library:
         keep_next: false
         keep_lines: false
         page_break_before: false
+    variant-title-toc:
+      id: variant-title-toc
+      type: paragraph
+      name: variant-title-toc
+      based_on: Normal
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '100'
+          after: '100'
+          line: '240'
+        alignment: left
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
     zzContents:
       id: zzContents
       type: paragraph

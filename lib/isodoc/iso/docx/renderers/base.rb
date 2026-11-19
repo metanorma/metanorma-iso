@@ -54,15 +54,29 @@ module IsoDoc
           # node has neither +anchor+ nor +id+. Xrefs link via +target+,
           # which is the element's +anchor+, so the anchor wins over the
           # (possibly different) +id+.
-          def with_bookmark(node, para)
+          def with_bookmark(node, para, &)
             name = bookmark_name(node)
             return yield unless name
 
             bm_id = @context.next_bookmark_id.to_s
             para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, 
                                                                  name: name)
-            yield
+            with_toc_bookmark(name, para, &)
             para << Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id)
+          end
+
+          # Headings the table of contents lists carry a second,
+          # Word-style +_Toc+ bookmark (the ToC entry's hyperlink and
+          # PAGEREF target). The id bookmark stays: xrefs link to it.
+          def with_toc_bookmark(name, para)
+            return yield unless @context.toc_targets.include?(name)
+
+            toc_id = @context.next_bookmark_id.to_s
+            para << Uniword::Wordprocessingml::BookmarkStart.new(
+              id: toc_id, name: Context.toc_bookmark_name(name),
+            )
+            yield
+            para << Uniword::Wordprocessingml::BookmarkEnd.new(id: toc_id)
           end
 
           def bookmark_name(node)

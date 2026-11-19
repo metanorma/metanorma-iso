@@ -228,8 +228,18 @@ module IsoDoc
           TocEntry.new(
             source: node,
             level: level,
-            bookmark_name: id || "_Toc#{object_id}_#{level}",
+            bookmark_name: toc_bookmark_for(id, level),
           )
+        end
+
+        # The heading renderers bookmark the registered id with a _Toc
+        # twin; the entry points at the twin. A node with no id keeps a
+        # synthetic name (it has no heading bookmark to share).
+        def toc_bookmark_for(id, level)
+          return "_Toc#{object_id}_#{level}" unless id
+
+          @context.toc_targets << id
+          Context.toc_bookmark_name(id)
         end
 
         def has_title?(node)
@@ -267,18 +277,25 @@ module IsoDoc
             para << field_char_run("separate")
           end
 
-          render_toc_heading_text(entry.source, para)
-          append_tab(para)
+          # The text, tab and page number form one hyperlink to the
+          # heading's _Toc bookmark, so the entry is clickable.
+          link = Uniword::Wordprocessingml::Hyperlink.new(
+            anchor: entry.bookmark_name, history: "1",
+          )
+          runs = HyperlinkRuns.new(link, para)
+          render_toc_heading_text(entry.source, runs)
+          append_tab(runs)
 
           # PAGEREF field with a placeholder result: the static result
           # is "1" until Word refreshes the fields (w:updateFields, see
           # request_field_refresh), when the entry's bookmark yields the
           # real page number.
-          para << field_char_run("begin")
-          para << instr_text_run(" PAGEREF #{entry.bookmark_name} \\h ")
-          para << field_char_run("separate")
-          para << Uniword::Wordprocessingml::Run.new(text: "1")
-          para << field_char_run("end")
+          runs << field_char_run("begin")
+          runs << instr_text_run(" PAGEREF #{entry.bookmark_name} \\h ")
+          runs << field_char_run("separate")
+          runs << Uniword::Wordprocessingml::Run.new(text: "1")
+          runs << field_char_run("end")
+          para << link
 
           para << field_char_run("end") if close_field
 
@@ -302,8 +319,8 @@ module IsoDoc
         # right margin behind a dot leader (metanorma-pdfa#119). The
         # separator is therefore flattened to a space, matching the
         # inline flow the PDF ToC composes.
-        def render_toc_heading_text(node, para)
-          sink = HeadingTextSink.new(para)
+        def render_toc_heading_text(node, runs)
+          sink = HeadingTextSink.new(runs)
           @inline.with_heading { render_toc_heading_source(node, sink) }
         end
 
@@ -314,6 +331,26 @@ module IsoDoc
             @inline.render(node.fmt_title, sink)
           elsif node.class.attributes.key?(:title) && node.title
             @inline.render(node.title, sink)
+          end
+        end
+
+        # Collects an entry's runs into its hyperlink; anything that is
+        # not a run (a bookmark, a nested link) goes to the paragraph.
+        class HyperlinkRuns
+          def initialize(link, para)
+            @link = link
+            @para = para
+          end
+
+          def <<(element)
+            element = Uniword::Wordprocessingml::Run.new(text: element) if element.is_a?(String)
+            element = element.build if element.is_a?(Uniword::Builder::RunBuilder)
+            if element.is_a?(Uniword::Wordprocessingml::Run)
+              @link.runs << element
+            else
+              @para << element
+            end
+            self
           end
         end
 

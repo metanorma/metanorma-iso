@@ -50,6 +50,22 @@ module IsoDoc
           @bookmark_counter.next
         end
 
+        # Bookmark names (clause ids) the table of contents links to.
+        # TocBuilder registers them before the body renders; the heading
+        # renderers then add a Word-style +_Toc+ bookmark beside the id
+        # bookmark, and the ToC entry hyperlinks / PAGEREFs to it.
+        def toc_targets
+          @toc_targets ||= Set.new
+        end
+
+        # Stable +_Toc+ bookmark name for a clause id: Word-style prefix
+        # plus a digest of the (document-unique) id, so it is unique
+        # whenever the id is and never collides with an id bookmark
+        # (ids never start with _Toc).
+        def self.toc_bookmark_name(name)
+          "_Toc#{Digest::SHA1.hexdigest(name.to_s)[0, 12]}"
+        end
+
         def next_comment_id
           @comment_counter.next
         end

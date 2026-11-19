@@ -89,6 +89,7 @@ paragraph_styles:
   toc8: TOC8
   toc9: TOC9
   contents_title: zzContents
+  variant_title_toc: variant-title-toc
   toc_heading: TOCHeading
 
   # ── Terms ──
