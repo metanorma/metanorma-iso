@@ -175,6 +175,7 @@ character_styles:
   inline_code: InlineCode
   inline_code_bold: InlineCodeBold
   inline_code_italic: InlineCodeItalic
+  clause_number: zzmovetofollowing
 
 # Paragraph styles whose <w:pPr><w:numPr> in template styles.xml produces
 # the section/term number automatically. When rendering headings that use

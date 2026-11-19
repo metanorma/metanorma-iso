@@ -48,6 +48,17 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     expect(built.text).to eq("")
   end
 
+  # rice "100 mm ± 5 mm": the plus-minus is a lone <mo> stem. It is not
+  # lost: it renders as an inline oMath whose m:t holds the sign (a w:t-only
+  # text extractor does not see it, which is how it was misread as dropped).
+  it "keeps a lone plus-minus operator stem as an oMath carrying the sign" do
+    stem = Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
+      '<fmt-stem type="MathML"><semx element="stem" source="s1"><math ' \
+      'xmlns="http://www.w3.org/1998/Math/MathML"><mo>±</mo></math></semx></fmt-stem>',
+    )
+    expect(omml_tokens(stem)).to eq([["±"]])
+  end
+
   it "renders a presentation fmt-stem via the semx-wrapped MathML as OMML" do
     stem = Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
       '<fmt-stem type="MathML"><semx element="stem" source="s1">' \

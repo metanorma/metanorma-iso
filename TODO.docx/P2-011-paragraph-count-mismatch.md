@@ -63,9 +63,12 @@ raise the count without changing the layout.
 ## Fix status
 
 No simple renderer bug in an unowned file was found. Rendered text
-losses seen while diffing (`paddy (3.1)` cross-reference text,
-`+/-` in `100 mm +/- 5 mm`) are inline xref and math issues, not
-paragraph-count causes, and belong to the hyperlink and math lanes.
+losses seen while diffing (`paddy (3.1)` cross-reference text) are inline
+xref issues, not paragraph-count causes, and belong to the hyperlink lane.
+The ± in `100 mm ± 5 mm` is NOT lost: it is a lone-operator inline stem
+rendered as `<m:oMath><m:r><m:t>±</m:t></m:r></m:oMath>` between the `w:t`
+runs (measured on rice DOCX, pinned in stem_renderer_spec.rb). A `w:t`-only
+text extractor does not see it.
 
 Open judgement item: BUG 020 skips the heading paragraph of untitled
 inline-header sub-clauses, which also drops the clause number (4.2.1 and
