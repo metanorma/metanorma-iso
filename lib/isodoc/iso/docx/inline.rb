@@ -450,7 +450,7 @@ module IsoDoc
           return unless values&.one?
 
           value = values.first
-          value if /\A[+\-−]?\d+(?:[.,]\d+)?(?:[eE][+-]?\d+)?\z/.match?(value)
+          value if NUMBER_PATTERN.match?(value)
         end
 
         # Keep unit scripts and fraction grouping while omitting style markup.

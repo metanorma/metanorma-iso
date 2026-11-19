@@ -14,7 +14,7 @@ module IsoDoc
         attr_accessor :in_note, :in_example, :in_table, :in_annex,
                       :in_normative, :in_foreword, :in_introduction,
                       :in_bibliography, :in_definition_dd, :in_formula,
-                      :in_figure, :in_definitions,
+                      :in_figure, :in_definitions, :list_depth,
                       :section_depth,
                       :term_counter, :section_counter, :body_width,
                       :amend_zone
@@ -34,6 +34,7 @@ module IsoDoc
           @in_formula = false
           @in_figure = false
           @in_definitions = false
+          @list_depth = 0
           @section_depth = 0
           @section_counter = Counter.new(0)
           @term_counter = Counter.new(0)
@@ -169,6 +170,13 @@ module IsoDoc
           yield
         ensure
           @formula_key_footnote_handler = old
+        end
+
+        def with_list
+          @list_depth += 1
+          yield
+        ensure
+          @list_depth -= 1
         end
 
         def with_figure
