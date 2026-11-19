@@ -22,8 +22,12 @@ module IsoDoc
 
           def render(section, doc)
             around_section(section, doc) do
-              render_section_title(section, doc)
-              walk_children(section, doc)
+              if untitled?(section)
+                render_untitled_section(section, doc)
+              else
+                render_section_title(section, doc)
+                walk_children(section, doc)
+              end
             end
           end
 
@@ -45,7 +49,6 @@ module IsoDoc
           def render_section_title(section, doc)
             title = section_title(section)
             return unless title
-            return if heading_body_empty?(title)
 
             para = build_unstyled_paragraph
             para.style = title_style_for(section)
@@ -53,6 +56,24 @@ module IsoDoc
               render_title_content(title, para)
             end
             doc << para
+          end
+
+          # A title holding only the autonum + delimiter (an untitled
+          # inline-header sub-clause).
+          def untitled?(section)
+            title = section_title(section)
+            !title.nil? && heading_body_empty?(title)
+          end
+
+          # No heading paragraph (the paragraph count must not rise): the
+          # clause number and its id bookmark lead the first body paragraph.
+          def render_untitled_section(section, doc)
+            number = @inline_renderer.heading_number_text(section_title(section))
+            return walk_children(section, doc) unless number
+
+            @inline_renderer.with_clause_number(number, bookmark_name(section)) do
+              walk_children(section, doc)
+            end
           end
 
           def render_title_content(title, para)
