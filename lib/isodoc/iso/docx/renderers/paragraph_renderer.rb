@@ -66,7 +66,10 @@ module IsoDoc
           # same paragraph style and alignment as the original <p>.
           def render_split(paragraph, doc)
             state = { current: nil, paragraph: paragraph }
+            twins = @inline_renderer.fmt_stem_source_ids(paragraph)
             each_ordered_element(paragraph) do |type, obj|
+              next if type == :element && @inline_renderer.fmt_twin_of_stem?(obj, twins)
+
               dispatch_split_element(type, obj, state, doc)
             end
             flush_split(state, doc)

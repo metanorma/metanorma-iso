@@ -56,7 +56,7 @@ module IsoDoc
         # carries no MathML or the conversion fails.
         def inline_omath_models(stem)
           mathml = stem_mathml(stem)
-          return nil unless mathml
+          return nil if mathml.nil? || visibly_blank_mathml?(mathml)
 
           omml_para = omml_para_from_mathml(mathml)
           return nil unless omml_para.is_a?(Omml::Models::OMathPara)
@@ -71,7 +71,7 @@ module IsoDoc
         # plain text, not as an equation object. Returns the digits when
         # the MathML carries exactly one <mn> with a digits-only payload
         # and no other MathML elements beyond the math/semantics/mrow
-        # wrappers, nil otherwise.
+        # wrappers (spacing like <mspace/> is ignored), nil otherwise.
         def number_only_stem_text(stem)
           mathml = stem_mathml(stem)
           return nil unless mathml.to_s.include?("<mn")
@@ -82,7 +82,7 @@ module IsoDoc
 
           wrappers = mathml.gsub(%r{<mn[^>]*>[^<]*</mn>}, "")
                            .scan(/<([a-zA-Z]+)[\s>]/).flatten
-          return nil unless wrappers.all? { |tag| %w[math semantics mrow].include?(tag) }
+          return nil unless wrappers.all? { |tag| %w[math semantics mrow mspace].include?(tag) }
 
           digits
         rescue StandardError
@@ -90,6 +90,12 @@ module IsoDoc
         end
 
         private
+
+        # MathML with no text content (an empty <mi/>) would convert to
+        # an empty oMath and drop the stem; callers fall back to text.
+        def visibly_blank_mathml?(mathml)
+          mathml.gsub(/<[^>]*>/, "").strip.empty?
+        end
 
         # Direct :math attribute (semantic stem), then <semx>-wrapped
         # math (presentation fmt-stem).
