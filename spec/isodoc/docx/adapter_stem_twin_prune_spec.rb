@@ -98,6 +98,44 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do # rubocop:disable RSpec/SpecFilePat
 
       expect(doc.xpath("//*[local-name()='fmt-stem']")).to be_empty
     end
+
+    context "with a numeric stem under a semx parent" do
+      def semx_pair(raw, formatted, asciimath)
+        am = "<asciimath>#{asciimath}</asciimath>"
+        prune("<semx element=\"name\" source=\"n\">Range " \
+              "<stem id=\"s1\">#{math(raw)}#{am}</stem>" \
+              "<fmt-stem><semx source=\"s1\">#{math(formatted)}#{am}" \
+              "</semx></fmt-stem></semx>")
+      end
+
+      let(:doc) do
+        semx_pair("<mn>1770.9</mn>", "<mn>1 770,9</mn>", "1770.9")
+      end
+
+      def stem
+        doc.at_xpath("//*[local-name()='stem']")
+      end
+
+      it "keeps the formatted number" do
+        expect(stem.text).to include("1 770,9")
+      end
+
+      it "drops the semantic number" do
+        expect(stem.text).not_to include("1770.9")
+      end
+
+      it "keeps the stem id and a single stem" do
+        expect(stem_ids(doc, "stem")).to eq(["s1"])
+      end
+
+      it "leaves the asciimath of a unit stem untouched" do
+        unit = "<mn>1 770,9</mn><mi>hPa</mi>"
+        out = semx_pair("<mn>1770.9</mn>", unit, "1770.9 hPa")
+
+        expect(out.at_xpath("//*[local-name()='asciimath']").text)
+          .to eq("1770.9 hPa")
+      end
+    end
   end
 
   describe "footnote body text" do

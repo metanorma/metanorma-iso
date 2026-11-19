@@ -386,7 +386,8 @@ module IsoDoc
         # the semantic twin there (fmt_twin_of_stem?), so the stem is
         # dropped. A <semx> parent (a table name, for example) does not
         # model <fmt-stem>: the parse discards the twin and the stem is
-        # the only copy rendered, so there the fmt-stem is dropped.
+        # the only copy rendered, so there the stem is kept and takes the
+        # fmt-stem's content, the formatted value, and the fmt-stem is dropped.
         def prune_stem_twins(document)
           document.xpath("//*[local-name()='fmt-stem']").each do |fmt|
             parent = fmt.parent
@@ -398,7 +399,32 @@ module IsoDoc
             end
             next unless stem
 
-            (parent.name == "semx" ? fmt : stem).unlink
+            if parent.name == "semx"
+              adopt_fmt_content(stem, fmt, twin)
+            else
+              stem.unlink
+            end
+          end
+        end
+
+        # The kept stem carries the presentation rendering (ISO decimal
+        # comma, digit grouping); its own MathML holds the raw number.
+        def adopt_fmt_content(stem, fmt, twin)
+          stem.children = twin.children
+          fmt.unlink
+          sync_number_copies(stem)
+        end
+
+        # A number-only stem is rendered from its asciimath copy, which still
+        # holds the raw number; make it match the formatted MathML.
+        def sync_number_copies(stem)
+          maths = stem.element_children.select { |child| child.name == "math" }
+          number = maths.one? && !loose_text?(stem) &&
+            math_number_text(maths.first)
+          return unless number
+
+          stem.element_children.each do |child|
+            child.content = number if NUMBER_STEM_COPIES.include?(child.name)
           end
         end
 
