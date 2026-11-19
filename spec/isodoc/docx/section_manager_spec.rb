@@ -57,8 +57,8 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
     end
     expected_margins = [
       %w[794 737 284 851 709 0 567],
-      %w[794 1077 567 1077 720 720 0],
-      %w[794 1077 567 1077 720 720 0],
+      %w[794 851 567 851 720 283 0],
+      %w[794 851 567 851 720 283 0],
     ]
     expect(margins).to eq(expected_margins)
     expect(sections.xpath("w:cols/@w:space").map(&:value)).to eq(["720"] * 3)

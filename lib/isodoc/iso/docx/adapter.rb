@@ -434,6 +434,7 @@ module IsoDoc
           if @template_path && File.exist?(@template_path)
             @template_root ||= Uniword.load(@template_path)
             root = @template_root
+            @template_margins ||= SectionManager.template_margins(root)
             if root.body
               root.body.paragraphs.clear
               root.body.tables.clear
@@ -564,6 +565,7 @@ module IsoDoc
           # ── Section 1: Cover page ──
           @cover_renderer.render(model.bibdata, doc)
           @boilerplate_renderer.render_license(model.boilerplate, doc)
+          @section_manager.template_margins = @template_margins || {}
           @section_manager.insert_cover_section(doc)
 
           # ── Copyright page (still cover section's next page) ──
