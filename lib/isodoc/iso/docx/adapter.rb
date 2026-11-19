@@ -28,6 +28,10 @@ module IsoDoc
       #
       # Output format is determined by file extension (.docx or .doc).
       class Adapter
+        NUMBER_MATH_WRAPPERS = %w[mstyle mrow].freeze
+        # Text forms a stem may carry next to its MathML.
+        NUMBER_STEM_COPIES = %w[asciimath latexmath].freeze
+
         include ModelUtils
 
         attr_reader :context, :resolver
@@ -342,7 +346,86 @@ module IsoDoc
                 else
                   source.to_s
                 end
-          parse_model_with_ordering(Metanorma::Iso::Document::Root, xml)
+          parse_model_with_ordering(Metanorma::Iso::Document::Root,
+                                    flatten_number_stems(xml))
+        end
+
+        # Numeric table cells need a Stem run, not a tree of MathML models.
+        # Keep block formulas intact: their renderer emits OMML, not text.
+        def flatten_number_stems(xml)
+          document = Nokogiri::XML(xml, &:huge)
+          return xml if document.errors.any? { |e| e.error? || e.fatal? }
+
+          document.xpath("//*[local-name()='stem' or local-name()='fmt-stem']" \
+                         "[not(ancestor::*[local-name()='formula'])]").each do |stem|
+            container = number_stem_container(stem)
+            number = container && number_stem_text(container)
+            next unless number
+
+            if container.name == "fmt-stem"
+              container.content = number
+            else
+              # The stem renderer reads a semx's asciimath, not its text.
+              text = Nokogiri::XML::Node.new("asciimath", document)
+              text.namespace = stem.namespace
+              text.content = number
+              container.children = text
+            end
+          end
+          document.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::AS_XML)
+        end
+
+        # fmt-stem wraps its MathML in a semx that points back to the
+        # semantic stem; flatten inside the semx so that link survives.
+        def number_stem_container(stem)
+          return stem unless stem.name == "fmt-stem"
+
+          children = stem.element_children
+          return stem unless children.one? && children.first.name == "semx"
+          return if loose_text?(stem)
+
+          children.first
+        end
+
+        # One number-only <math>, plus optional asciimath/latexmath copies
+        # that hold the same number (the text the renderer prefers).
+        def number_stem_text(container)
+          return if loose_text?(container)
+
+          maths, copies = container.element_children
+            .partition { |child| child.name == "math" }
+          return unless maths.one? &&
+            copies.all? { |child| NUMBER_STEM_COPIES.include?(child.name) }
+
+          number = math_number_text(maths.first)
+          number if number && copies.all? { |child| child.text.strip == number }
+        end
+
+        def math_number_text(math)
+          node = math
+          while node.name == "math" || NUMBER_MATH_WRAPPERS.include?(node.name)
+            return unless node.element_children.one?
+            return if styled_wrapper?(node) || loose_text?(node)
+
+            node = node.element_children.first
+          end
+          return unless node.name == "mn" &&
+            node.namespace&.href == "http://www.w3.org/1998/Math/MathML"
+          return unless node.children.one? && node.children.first.text?
+
+          value = node.text
+          value if NUMBER_PATTERN.match?(value)
+        end
+
+        def loose_text?(node)
+          node.children.any? { |child| child.text? && !child.text.strip.empty? }
+        end
+
+        # mathcolor, scriptlevel etc. change rendering; only displaystyle is
+        # invisible to the text path.
+        def styled_wrapper?(node)
+          %w[mstyle mrow].include?(node.name) &&
+            node.attribute_nodes.any? { |attr| attr.name != "displaystyle" }
         end
 
         def create_document

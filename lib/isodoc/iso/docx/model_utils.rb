@@ -12,6 +12,10 @@ module IsoDoc
       # of attribute access, text extraction, dimension parsing, and
       # ordered-content traversal.
       module ModelUtils
+        # Digit groups may be split by a space, no-break space or narrow
+        # no-break space ("101 325", "−9,806 65").
+        NUMBER_PATTERN = /\A[+\-−]?(?:\d{1,3}(?:[   ]\d{3})+|\d+)
+                          (?:[.,]\d+(?:[   ]\d+)*)?(?:[eE][+-]?\d+)?\z/x
         # Parse +xml+ into +model_class+ under an adapter that populates
         # lutaml's mixed-content metadata (element_order and
         # map_all_content targets). The conversion pipeline depends on

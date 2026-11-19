@@ -1,6 +1,7 @@
 .DS_Store
 .byebug_history
 .rspec_status
+.scratch/
 coverage/
 spec/examples/.byebug_history
 spec/examples/.tmp.xml
