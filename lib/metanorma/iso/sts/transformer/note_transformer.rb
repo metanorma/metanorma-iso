@@ -12,6 +12,12 @@ module Metanorma
         # number) is captured in <label>. Term entries use "Note N to
         # entry:" via TermTransformer.
         class NoteTransformer < Base
+          # List-carrying attributes across the block classes served by
+          # this transformer, in grammar order. Read through the typed
+          # registry guard (extract_lists) — not every class declares
+          # every slot.
+          LIST_ATTRS = %i[ul ol list].freeze
+
           def transform(source_note)
             paragraphs = extract_paragraphs(source_note)
             lists = extract_lists(source_note)
@@ -21,6 +27,9 @@ module Metanorma
             if example?(source_note)
               label = designation_label(source_note, "EXAMPLE")
               ModelBuilder.non_normative_example(paragraph: paragraphs, list: lists, preformat: preformats, label: label)
+            elsif source_note.is_a?(admonition_block_class)
+              ModelBuilder.non_normative_note(paragraph: paragraphs, list: lists,
+                                              label: admonition_label(source_note))
             else
               ModelBuilder.non_normative_note(paragraph: paragraphs, list: lists,
                                               label: designation_label(source_note, "NOTE"))
@@ -33,8 +42,11 @@ module Metanorma
           # when the source carries none. The number can live only in
           # the rendered caption ("EXAMPLE <autonum>1</autonum>") —
           # recover it there when the element carries no @autonum.
+          # Only blocks that declare @autonum answer it (QuoteBlock /
+          # AdmonitionBlock have no autonum slot — the guarded read
+          # keeps unknown block shapes from crashing the dispatch).
           def designation_label(source, kind)
-            number = source.autonum.to_s.strip
+            number = attribute_string(source, :autonum)
             number = caption_number(source) if number.empty?
             number.empty? ? kind : "#{kind} #{number}"
           end
@@ -65,6 +77,24 @@ module Metanorma
 
           private
 
+          # Guarded attribute read: only classes that declare the
+          # attribute answer it, so blocks lacking a slot (e.g. an
+          # autonum on QuoteBlock) yield "" instead of raising.
+          def attribute_string(source, attr)
+            return "" unless source.class.attributes.key?(attr)
+
+            source.public_send(attr).to_s.strip
+          end
+
+          # mnconvert renders an admonition's designation as the block's
+          # type, upcased (<admonition type="editorial"> yields
+          # <label>EDITORIAL</label>); an untyped admonition carries no
+          # designation at all.
+          def admonition_label(source)
+            type = attribute_string(source, :type)
+            type.empty? ? nil : type.upcase
+          end
+
           def example?(source_note)
             source_note.is_a?(example_block_class)
           end
@@ -77,19 +107,28 @@ module Metanorma
               Array(source_note.content)
                 .select { |p| p.is_a?(paragraph_block_class) }
                 .map { |p| paragraph_transformer.transform(p) }
+            when admonition_block_class, quote_block_class
+              Array(source_note.paragraphs).map { |p| paragraph_transformer.transform(p) }
             else
               []
             end
           end
 
-          # The note/example body lives on typed attributes (content /
-          # paragraphs hold the paragraphs; ul / ol the block lists;
-          # sourcecode the literal blocks) — walking mixed content yields
-          # nothing and emits an empty shell. The dl/quote/table/figure/
+          # The note/example/admonition body lives on typed attributes
+          # (content / paragraphs hold the paragraphs; ul / ol / list the
+          # block lists; sourcecode the literal blocks) — walking mixed
+          # content yields nothing and emits an empty shell. Each
+          # attribute is read only where the class declares it (the
+          # AdmonitionBlock carries no list slots; the ExampleBlock's
+          # grammar spells unordered lists both <list> and <ul>) — the
+          # guarded read keeps unknown block shapes from crashing the
+          # dispatch: blocks without the expected structure render what
+          # they have and skip the rest. The dl/quote/table/figure/
           # requirement carriers have no counterpart on the NisoSts
           # note/example models and are skipped.
           def extract_lists(source_note)
-            %i[ul ol].flat_map do |attr|
+            LIST_ATTRS.flat_map do |attr|
+              next [] unless source_note.class.attributes.key?(attr)
               Array(source_note.public_send(attr)).map { |l| list_transformer.transform(l) }
             end
           end
@@ -134,6 +173,14 @@ module Metanorma
 
           def example_block_class
             Metanorma::Document::Components::AncillaryBlocks::ExampleBlock
+          end
+
+          def admonition_block_class
+            Metanorma::Document::Components::MultiParagraph::AdmonitionBlock
+          end
+
+          def quote_block_class
+            Metanorma::Document::Components::MultiParagraph::QuoteBlock
           end
 
           def sourcecode_block_class
