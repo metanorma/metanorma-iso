@@ -55,11 +55,24 @@ module IsoDoc
               element = Uniword::Wordprocessingml::Run.new(text: element) if element.is_a?(String)
               element = element.build if element.is_a?(Uniword::Builder::RunBuilder)
               hide(element)
-              @para << element
+              if @after_link && element.is_a?(Uniword::Wordprocessingml::Run)
+                append_after_link(element)
+              else
+                @para << element
+              end
+              @after_link = element.is_a?(Uniword::Wordprocessingml::Hyperlink)
               self
             end
 
             private
+
+            # ParagraphBuilder merges a run into the previous run even
+            # when a hyperlink sits between them, which would move the
+            # text before the link. Append the run at its own position.
+            def append_after_link(run)
+              @para.model.runs << run
+              @para.model.element_order << Lutaml::Xml::Element.new("Element", "r")
+            end
 
             def hide(element)
               if element.is_a?(Uniword::Wordprocessingml::Hyperlink)

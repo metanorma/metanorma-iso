@@ -62,15 +62,30 @@ module IsoDoc
         # Word rejects bookmark names longer than this.
         MAX_BOOKMARK_NAME = 40
 
-        # Claim +name+ for a new bookmark. True exactly once per valid
-        # name: later claims (a second renderer reaching the same id) and
-        # names Word would reject (blank, over MAX_BOOKMARK_NAME) are
-        # refused, so bookmark names stay unique and legal.
-        def claim_bookmark_name(name)
+        # The bookmark name Word sees for element id +name+: the id
+        # itself when Word accepts it, otherwise a deterministic short
+        # form (sanitised prefix + digest of the id, MAX_BOOKMARK_NAME
+        # long). Bookmark emission and every xref/eref anchor go through
+        # this one mapping, so a long id stays resolvable. The result
+        # never starts with +_Toc+ (the digest is not in front and an
+        # id-derived prefix cannot lead with an underscore).
+        def bookmark_name(name)
           name = name.to_s
-          return false if name.empty? || name.length > MAX_BOOKMARK_NAME
+          return name if name.length <= MAX_BOOKMARK_NAME
 
-          !claimed_bookmark_names.add?(name).nil?
+          digest = Digest::SHA1.hexdigest(name)[0, 12]
+          prefix = name.gsub(/[^A-Za-z0-9]/, "_").sub(/\A[^A-Za-z]+/, "")
+          "#{prefix[0, MAX_BOOKMARK_NAME - 13]}_#{digest}"
+        end
+
+        # Claim the bookmark for id +name+. Returns the name to emit
+        # (see #bookmark_name), or nil when the id is blank or already
+        # bookmarked, so bookmark names stay unique.
+        def claim_bookmark_name(name)
+          return if name.to_s.empty?
+
+          emitted = bookmark_name(name)
+          emitted if claimed_bookmark_names.add?(emitted)
         end
 
         # Bookmark names (clause ids) the table of contents links to.

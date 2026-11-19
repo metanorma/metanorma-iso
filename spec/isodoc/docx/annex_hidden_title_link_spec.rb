@@ -33,4 +33,10 @@ RSpec.describe "DOCX annex hidden ToC variant title with an inline link" do
     visible = hidden.xpath(".//w:r[not(w:rPr/w:vanish)]", ns)
     expect(visible.map(&:text)).to eq([])
   end
+
+  it "keeps the linked run between the text around it" do
+    hidden = document.at_xpath("//w:p[w:pPr/w:pStyle/@w:val='variant-title-toc']", ns)
+    order = hidden.xpath("./w:r | ./w:hyperlink", ns).map(&:text)
+    expect(order.join).to include("Annex linked text")
+  end
 end

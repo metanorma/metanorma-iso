@@ -14,7 +14,7 @@ module IsoDoc
             return unless name
 
             id = context.next_bookmark_id.to_s
-            start = Uniword::Wordprocessingml::BookmarkStart.new(id: id, name: name)
+            start = Uniword::Wordprocessingml::BookmarkStart.new(id: id, name: context.bookmark_name(name))
             para << start
             para << Uniword::Wordprocessingml::BookmarkEnd.new(id: id)
           end

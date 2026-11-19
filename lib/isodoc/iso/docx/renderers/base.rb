@@ -34,7 +34,8 @@ module IsoDoc
           # already bookmarked, or illegal for Word, is skipped.
           def anchor(context, node, para)
             name = name_of(node)
-            return unless name && context.claim_bookmark_name(name)
+            name = name && context.claim_bookmark_name(name)
+            return unless name
 
             model = para.respond_to?(:model) ? para.model : para
             bm_id = context.next_bookmark_id.to_s
@@ -85,13 +86,14 @@ module IsoDoc
           # which is the element's +anchor+, so the anchor wins over the
           # (possibly different) +id+.
           def with_bookmark(node, para, &)
-            name = bookmark_name(node)
-            return with_unclaimable_toc_bookmark(name, para, &) unless name && @context.claim_bookmark_name(name)
+            id = bookmark_name(node)
+            name = id && @context.claim_bookmark_name(id)
+            return yield unless name
 
             bm_id = @context.next_bookmark_id.to_s
-            para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, 
+            para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id,
                                                                  name: name)
-            with_toc_bookmark(name, para, &)
+            with_toc_bookmark(id, para, &)
             para << Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id)
           end
 
@@ -118,18 +120,6 @@ module IsoDoc
             )
             yield
             para << Uniword::Wordprocessingml::BookmarkEnd.new(id: toc_id)
-          end
-
-          # A heading id Word cannot bookmark (over MAX_BOOKMARK_NAME)
-          # still gets its +_Toc+ twin, which is always a legal name:
-          # the ToC entry's hyperlink and PAGEREF point at it. The id
-          # itself stays unbookmarked, so xrefs to it remain unresolved.
-          def with_unclaimable_toc_bookmark(name, para, &)
-            if name.to_s.length > Context::MAX_BOOKMARK_NAME
-              with_toc_bookmark(name, para, &)
-            else
-              yield
-            end
           end
 
           def bookmark_name(node)
