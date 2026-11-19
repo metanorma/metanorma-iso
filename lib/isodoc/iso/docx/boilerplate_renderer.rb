@@ -27,8 +27,11 @@ module IsoDoc
         def render_license(boilerplate, doc)
           return unless boilerplate
 
+          return if Array(boilerplate.license_statement).empty?
+
           walk_statements(boilerplate.license_statement, doc,
                           :warning_header, :warning)
+          doc << spacer_paragraph
         end
 
         # Render copyright, legal, and feedback statements on the copyright page.
@@ -45,6 +48,15 @@ module IsoDoc
         end
 
         private
+
+        # The reference cover closes the warning box with a lone nbsp
+        # paragraph (no style) before the cover section break; without it
+        # the box border merges with whatever follows.
+        def spacer_paragraph
+          para = Uniword::Builder::ParagraphBuilder.new
+          para << "\u00A0"
+          para
+        end
 
         def walk_statements(statements, doc, title_style_key, body_style_key)
           Array(statements).each do |stmt|
