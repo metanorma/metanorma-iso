@@ -64,6 +64,30 @@ RSpec.describe "DOCX bookmark twins (ToC targets and inline bookmarks)",
     BODY
   end
 
+  def inline_before_number_only_annex
+    <<~BODY
+      <sections>
+        <clause id="c0"><title>Zero</title>
+          <p>Intro <bookmark id="a7"/> text.</p>
+        </clause>
+      </sections>
+      <annex id="a7" obligation="normative">
+        <fmt-title><span class="fmt-caption-label"><semx element="autonum" source="a7">A</semx></span><span class="fmt-caption-delim"><tab/></span></fmt-title>
+        <p>Body.</p>
+      </annex>
+    BODY
+  end
+
+  def empty_title_annex
+    <<~BODY
+      <sections/>
+      <annex id="a8" obligation="normative">
+        <fmt-title/>
+        <p>Body.</p>
+      </annex>
+    BODY
+  end
+
   def document_for(body)
     xml = minimal_iso_xml("#{bibdata}\n#{body}")
     Dir.mktmpdir do |dir|
@@ -85,6 +109,12 @@ RSpec.describe "DOCX bookmark twins (ToC targets and inline bookmarks)",
     toc_entries(doc).map { |entry| entry.at_xpath("./w:hyperlink/@w:anchor", ns)&.value }
   end
 
+  # Text of the paragraph that holds the bookmark +name+.
+  def bookmark_host_text(doc, name)
+    host = doc.at_xpath("//w:p[.//w:bookmarkStart[@w:name='#{name}']]", ns)
+    host && host.xpath(".//w:t", ns).map(&:text).join
+  end
+
   def pageref_targets(doc)
     doc.xpath("//w:instrText", ns).map(&:text).grep(/PAGEREF /).map { |t| t[/PAGEREF (\S+)/, 1] }
   end
@@ -92,16 +122,14 @@ RSpec.describe "DOCX bookmark twins (ToC targets and inline bookmarks)",
   context "with an annex that has no title but a toc variant-title" do
     let(:doc) { document_for(untitled_annex_with_toc_text) }
 
-    it "emits the annex id bookmark" do
-      expect(bookmark_names(doc)).to include("a1")
+    let(:twin) { IsoDoc::Iso::Docx::Context.toc_bookmark_name("a1") }
+
+    it "emits the annex id bookmark and its _Toc twin" do
+      expect(bookmark_names(doc)).to include("a1", twin)
     end
 
-    it "links its ToC entry to that id bookmark, not to an unemitted _Toc twin" do
-      expect(toc_link_anchors(doc)).to eq(["a1"])
-    end
-
-    it "points its PAGEREF at that id bookmark" do
-      expect(pageref_targets(doc)).to eq(["a1"])
+    it "links its ToC entry and PAGEREF to the _Toc twin" do
+      expect([toc_link_anchors(doc), pageref_targets(doc)]).to eq([[twin], [twin]])
     end
   end
 
@@ -129,9 +157,24 @@ RSpec.describe "DOCX bookmark twins (ToC targets and inline bookmarks)",
   context "with an annex whose title holds only its number" do
     let(:doc) { document_for(number_only_annex) }
 
-    it "lists the annex, linked to its emitted id bookmark" do
-      expect([toc_link_anchors(doc), bookmark_names(doc).include?("a7")])
-        .to eq([["a7"], true])
+    it "lists the annex, linked to the _Toc twin on its number" do
+      twin = IsoDoc::Iso::Docx::Context.toc_bookmark_name("a7")
+      expect([toc_link_anchors(doc), bookmark_host_text(doc, twin)]).to eq([[twin], "ABody."])
+    end
+  end
+
+  context "with an inline bookmark that claims a number-only annex's id first" do
+    let(:doc) { document_for(inline_before_number_only_annex) }
+
+    it "links the annex's ToC entry to the annex, not to the inline bookmark" do
+      anchor = toc_link_anchors(doc).last
+      expect(bookmark_host_text(doc, anchor)).to eq("ABody.")
+    end
+  end
+
+  context "with an annex whose title element is empty" do
+    it "lists no blank ToC entry" do
+      expect(toc_entries(document_for(empty_title_annex))).to be_empty
     end
   end
 end

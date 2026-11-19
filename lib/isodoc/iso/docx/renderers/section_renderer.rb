@@ -89,22 +89,33 @@ module IsoDoc
           def render_untitled_section(section, doc)
             title = section_title(section)
             number = title && @inline_renderer.heading_number_text(title)
-            name = claimed_bookmark_name(section)
-            return walk_children(section, doc) unless number || name
+            names = untitled_bookmark_names(section)
+            return walk_children(section, doc) unless number || names.any?
 
             if first_child_paragraph?(section)
-              @inline_renderer.with_clause_number(number, name) do
+              @inline_renderer.with_clause_number(number, names) do
                 walk_children(section, doc)
               end
             else
-              render_number_paragraph(number, name, doc)
+              render_number_paragraph(number, names, doc)
               walk_children(section, doc)
             end
           end
 
-          def claimed_bookmark_name(section)
+          # The id bookmark, unless an earlier inline bookmark took the
+          # name, and the _Toc twin of a ToC-listed clause, which the ToC
+          # entry targets even when the id bookmark went elsewhere.
+          def untitled_bookmark_names(section)
             name = bookmark_name(section)
-            name if name && @context.claim_bookmark_name(name)
+            return [] unless name
+
+            [@context.claim_bookmark_name(name), untitled_toc_twin(name)].compact
+          end
+
+          def untitled_toc_twin(name)
+            return unless @context.toc_targets.include?(name)
+
+            @context.claim_bookmark_name(Context.toc_bookmark_name(name))
           end
 
           def first_child_paragraph?(section)
@@ -118,11 +129,11 @@ module IsoDoc
             first.is_a?(Metanorma::Document::Components::Paragraphs::ParagraphBlock)
           end
 
-          def render_number_paragraph(number, name, doc)
+          def render_number_paragraph(number, names, doc)
             para = build_unstyled_paragraph
             style = @resolver.context_body_style
             para.style = style if style
-            @inline_renderer.emit_clause_number(para, number, name)
+            @inline_renderer.emit_clause_number(para, number, names)
             @context.mark_zone_paragraph
             doc << para
           end

@@ -205,15 +205,15 @@ module IsoDoc
         # 2026-10-26, so both output engines agree.
         #
         # An annex with no heading text renders through the untitled
-        # path, which emits its id bookmark but no _Toc twin. Its entry
-        # therefore points at the id bookmark. A number-only title still
-        # lists the annex; with no title and no toc variant-title there
-        # is no text to list and no entry is written.
+        # path, which carries its _Toc twin on the clause number. A
+        # number-only title still lists the annex; with no visible
+        # number and no toc variant-title there is no text to list and
+        # no entry is written.
         def add_annex_entry(entries, annex)
           title = section_heading(annex)
           if title && !@inline.heading_body_empty?(title)
             entries << build_entry(annex, 1)
-          elsif title || toc_variant_title(annex)
+          elsif (title && @inline.heading_number_text(title)) || toc_variant_title(annex)
             entry = build_untitled_annex_entry(annex)
             entries << entry if entry
           end
@@ -223,7 +223,7 @@ module IsoDoc
           id = attribute_value(annex, :anchor) || attribute_value(annex, :id)
           return unless id
 
-          TocEntry.new(source: annex, level: 1, bookmark_name: @context.bookmark_name(id))
+          TocEntry.new(source: annex, level: 1, bookmark_name: toc_bookmark_for(id, 1))
         end
 
         def add_bibliography_entry(entries, bib)
