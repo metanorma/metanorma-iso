@@ -33,7 +33,7 @@ Re-measured by converting spec/examples/rice.presentation.xml with Processor#out
 - Reference: ONE paragraph, style `zzaddress` (ind left 505), lines separated by `<w:r><w:br/><w:t>line</w:t></w:r>`, email as a hyperlink run, `boilerplate-address` bookmark.
 - Output: ONE paragraph, style `zzCopyrightaddress`, lines separated by `<w:r><w:br/></w:r>`, email kept as a hyperlink run, `boilerplate-address` bookmark kept. The five-paragraph split is gone (fixed earlier; spec/isodoc/docx/boilerplate_renderer_spec.rb "with the full ISO address paragraph", 16 examples green).
 
-Resolved at base ac2393fb:
+Resolved on lane/1728-cards-batch4 (commit "Trim leading space after line breaks in the copyright address block"):
 - Leading space after a break: `BoilerplateRenderer#trim_after_breaks` strips leading whitespace from the run that follows a `w:br`, only in the copyright address paragraph (the source writes `<br/> line`). Other paragraphs keep their spaces. Spec: boilerplate_renderer_spec "starts each line after a break without a leading space".
 
 Remaining difference, deliberately not changed:
