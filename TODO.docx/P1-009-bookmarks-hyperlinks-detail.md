@@ -8,6 +8,10 @@ status: partial
 - Fixed: paragraphs with an id now get a bookmark (+70); fmt-concept now renders its xref as a hyperlink (+9, also restores the "(3.1)" display text).
 - Remaining delta: ~26 _Toc hyperlinks (toc_builder lane); ~98 bookmarks the reference carries on notes, lists, dl, termnote/termexample, quote, sourcecode and some clauses (Word-authored GUID bookmarks, no xref targets them); term anchors differ (ref `paddy`, source `term-paddy`); 11 table-footnote hyperlinks.
 
+- Classification (lane 1728-xref-links, measured at e6c302ba): every source xref/fmt-xref/eref target (77 fmt-xref) yields exactly one internal hyperlink; all anchors resolve to bookmarks; no emitted-link defect remains. Locked by spec/isodoc/docx/rice_xref_links_spec.rb.
+- Reference-only links are edition differences (reference = 2016 CD, source = 2023 DIS): table1a..d (7x table1c), tableD-1a, figureC-1a are Word-authored bookmarks on in-table footnote text; the source has no such targets (table fn are `fn` + fmt-footnote-container, rendered by us as native Word footnotes with bodies in footnotes.xml). IEC61010-2, AnnexA(+1), figureA-1(+1) have no/fewer xrefs in the source (IEC61010-2: 0; AnnexA: 2 fmt-xref vs 3 in ref; figureA-1: 1 vs 2). Term anchors differ by naming (ref `paddy`, ours `term-paddy`).
+- Remaining delta: _Toc hyperlinks (toc_builder lane) only; the rest is not a defect.
+
 ## Problem
 Output has 103 bookmarks vs reference 293 (-190). Output has 75 hyperlinks vs reference 120 (-45).
 
