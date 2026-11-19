@@ -1,3 +1,9 @@
+---
+status: done
+---
+
+Done: fixed by #1782 (62faf403). Cover sectPr #0 carries headerReference even, footerReference even and footerReference default, each pointing to a dedicated blank part, and no titlePg (matches the reference). Pinned by `spec/isodoc/docx/section_manager_spec.rb` ("writes the three DIS sections with the cover break before copyright"), which now also asserts no titlePg on the cover. Not checked: opening the file in real Word.
+
 # 058: Fix Missing Cover Page Section Headers/Footers
 
 ## Problem

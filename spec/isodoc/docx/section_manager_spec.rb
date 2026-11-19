@@ -66,6 +66,7 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
     expect(cover.at_xpath("@w:rsidR")&.value).to eq("00000000")
     expect(front.at_xpath("@w:rsidR")&.value).to eq("00000000")
     expect(cover.at_xpath("w:pgNumType")).to be_nil
+    expect(cover.at_xpath("w:titlePg")).to be_nil
     expect(body.at_xpath("w:pgNumType/@w:start")&.value).to eq("1")
   end
 
