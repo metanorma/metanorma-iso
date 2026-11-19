@@ -5,7 +5,8 @@ module IsoDoc
     module Docx
       module Renderers
         # Renders an OrderedList as a sequence of numbering-applied
-        # paragraphs using the Era C decimal_list numId (1, 2, 3, ...).
+        # paragraphs (ListNumber1..4 by nesting depth) using the Era C
+        # decimal_list numId (1, 2, 3, ...).
         #
         # Era C's 7-abstractNum scheme exposes decimal ordered-list
         # numbering as numId 1 (and 2 as an alt referencing the same
@@ -15,31 +16,24 @@ module IsoDoc
         class OrderedListRenderer
           include Base
           include ListAttachments
+          include ListItemContent
 
           def render(list, doc)
             num_id = @resolver.numbering_id(:decimal_list)
+            style = @resolver.paragraph_style(:"list_number#{style_level}")
             Array(list.listitem).each do |item|
-              render_item(item, doc, num_id)
+              render_item(item, doc, num_id, style)
             end
             render_attached_notes(list, doc)
           end
 
           private
 
-          def render_item(item, doc, num_id)
+          def render_item(item, doc, num_id, style_id)
             para = Uniword::Builder::ParagraphBuilder.new
-            para.numbering(num_id, 0) if num_id
-            emit_item_content(item, para)
-            doc << para
-          end
-
-          def emit_item_content(item, para)
-            paragraphs = item.paragraphs
-            if paragraphs && !paragraphs.empty?
-              paragraphs.each { |p| @inline_renderer.render(p, para) }
-            else
-              @inline_renderer.render(item, para)
-            end
+            para.style = style_id if style_id
+            para.numbering(num_id, list_level) if num_id
+            render_item_content(item, doc, para)
           end
         end
       end

@@ -79,7 +79,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::UnorderedListRenderer do
     end
   end
 
-  it "renders multiple paragraphs inside a single list item" do
+  it "renders a following paragraph of a list item as an unnumbered sibling" do
     xml = minimal_iso_xml(<<~INNER)
       <sections>
         <clause id="c1">
@@ -105,8 +105,11 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::UnorderedListRenderer do
         "multi-paragraph item should still be one numbering paragraph"
 
       text = list_paras.first.runs.map { |r| r.text || "" }.join
-      expect(text).to include("First paragraph.")
-      expect(text).to include("Second paragraph.")
+      expect(text).to eq("First paragraph.")
+      texts = pkg.document.body.paragraphs.map do |p|
+        p.runs.map { |r| r.text || "" }.join
+      end
+      expect(texts).to include("Second paragraph.")
     end
   end
 
