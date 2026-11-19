@@ -41,6 +41,29 @@ RSpec.describe "DOCX bookmark twins (ToC targets and inline bookmarks)",
     BODY
   end
 
+  def inline_before_clause
+    <<~BODY
+      <sections>
+        <clause id="c0"><title>Zero</title>
+          <p>Intro <bookmark id="target"/> text.</p>
+        </clause>
+        <clause id="target"><title>Target heading</title>
+          <p>Body.</p>
+        </clause>
+      </sections>
+    BODY
+  end
+
+  def number_only_annex
+    <<~BODY
+      <sections/>
+      <annex id="a7" obligation="normative">
+        <fmt-title><span class="fmt-caption-label"><semx element="autonum" source="a7">A</semx></span><span class="fmt-caption-delim"><tab/></span></fmt-title>
+        <p>Body.</p>
+      </annex>
+    BODY
+  end
+
   def document_for(body)
     xml = minimal_iso_xml("#{bibdata}\n#{body}")
     Dir.mktmpdir do |dir|
@@ -91,6 +114,24 @@ RSpec.describe "DOCX bookmark twins (ToC targets and inline bookmarks)",
   context "with an inline bookmark that reuses a clause id" do
     it "emits every bookmark name at most once" do
       expect(bookmark_names(document_for(reused_clause_id)).tally.values.max).to eq(1)
+    end
+  end
+
+  context "with an inline bookmark that claims a clause id before its heading" do
+    let(:doc) { document_for(inline_before_clause) }
+
+    it "keeps the heading's _Toc twin, so every ToC link and PAGEREF resolves" do
+      targets = toc_link_anchors(doc).compact + pageref_targets(doc)
+      expect([targets.empty?, targets - bookmark_names(doc)]).to eq([false, []])
+    end
+  end
+
+  context "with an annex whose title holds only its number" do
+    let(:doc) { document_for(number_only_annex) }
+
+    it "lists the annex, linked to its emitted id bookmark" do
+      expect([toc_link_anchors(doc), bookmark_names(doc).include?("a7")])
+        .to eq([["a7"], true])
     end
   end
 end

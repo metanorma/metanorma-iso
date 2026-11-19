@@ -206,13 +206,14 @@ module IsoDoc
         #
         # An annex with no heading text renders through the untitled
         # path, which emits its id bookmark but no _Toc twin. Its entry
-        # therefore points at the id bookmark; with no toc variant-title
-        # either, there is no text to list and no entry is written.
+        # therefore points at the id bookmark. A number-only title still
+        # lists the annex; with no title and no toc variant-title there
+        # is no text to list and no entry is written.
         def add_annex_entry(entries, annex)
           title = section_heading(annex)
           if title && !@inline.heading_body_empty?(title)
             entries << build_entry(annex, 1)
-          elsif toc_variant_title(annex)
+          elsif title || toc_variant_title(annex)
             entry = build_untitled_annex_entry(annex)
             entries << entry if entry
           end

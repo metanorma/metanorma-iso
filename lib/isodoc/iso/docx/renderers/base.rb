@@ -87,8 +87,12 @@ module IsoDoc
           # (possibly different) +id+.
           def with_bookmark(node, para, &)
             id = bookmark_name(node)
-            name = id && @context.claim_bookmark_name(id)
-            return yield unless name
+            return yield unless id
+
+            # An earlier inline bookmark may already hold the id; the
+            # heading still carries its _Toc twin, the ToC's target.
+            name = @context.claim_bookmark_name(id)
+            return with_toc_bookmark(id, para, &) unless name
 
             bm_id = @context.next_bookmark_id.to_s
             para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id,
@@ -114,9 +118,12 @@ module IsoDoc
           def with_toc_bookmark(name, para)
             return yield unless @context.toc_targets.include?(name)
 
+            toc_name = @context.claim_bookmark_name(Context.toc_bookmark_name(name))
+            return yield unless toc_name
+
             toc_id = @context.next_bookmark_id.to_s
             para << Uniword::Wordprocessingml::BookmarkStart.new(
-              id: toc_id, name: Context.toc_bookmark_name(name),
+              id: toc_id, name: toc_name,
             )
             yield
             para << Uniword::Wordprocessingml::BookmarkEnd.new(id: toc_id)
