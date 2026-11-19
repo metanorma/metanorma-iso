@@ -129,4 +129,39 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ParagraphRenderer do
         "embedded note must not be wrapped in Box-end"
     end
   end
+  # Presentation XML keeps the semantic <stem> next to the <fmt-stem>
+  # that renders it. Paragraphs, cells and paragraphs split around a
+  # note printed both ("t_90t_90" in the ISO 2533 test method).
+  describe "a stem followed by its fmt-stem" do
+    def stem_pair(id, sym)
+      math = %(<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>#{sym}</mi></math>)
+      %(<stem type="MathML" id="#{id}">#{math}<asciimath>#{sym}</asciimath></stem>) +
+        %(<fmt-stem type="MathML"><semx element="stem" source="#{id}">#{math}) +
+        %(<asciimath>#{sym}</asciimath></semx></fmt-stem>)
+    end
+
+    let(:texts) do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections><clause id="c1"><title>Scope</title>
+          <p>PLAIN #{stem_pair("s1", "pa")} end</p>
+          <p>SPLIT #{stem_pair("s2", "sp")} mid <note id="n1"><p>inner</p></note> tail #{stem_pair("s3", "sq")}</p>
+          <table id="t1"><thead><tr><th>#{stem_pair("s4", "th")}</th></tr></thead>
+            <tbody><tr><td><p>CELL #{stem_pair("s5", "td")}</p></td></tr></tbody></table>
+        </clause></sections>
+      INNER
+      texts = nil
+      convert_and_extract(adapter, xml) do |pkg|
+        ns = { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+               "m" => "http://schemas.openxmlformats.org/officeDocument/2006/math" }
+        doc = Nokogiri::XML(pkg.document.to_xml)
+        texts = doc.xpath("//w:p", ns).map { |p| p.xpath(".//m:t | .//w:t", ns).map(&:text).join }
+      end
+      texts
+    end
+
+    it "renders each symbol once", :aggregate_failures do
+      expect(texts).to include("PLAIN pa end", "SPLIT sp mid ", " tail sq", "th", "CELL td")
+      expect(texts.join).not_to match(/papa|spsp|sqsq|thth|tdtd/)
+    end
+  end
 end
