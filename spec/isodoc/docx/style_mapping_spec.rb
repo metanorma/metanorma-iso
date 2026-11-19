@@ -138,8 +138,11 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping, "Simple template" do
   end
 
   it "falls back to BodyText where Simple has no dedicated style" do
-    expect(mapping.paragraph_style(:biblio_entry)).to eq("BodyText")
     expect(mapping.paragraph_style(:footnote_text)).to eq("BodyText")
+  end
+
+  it "uses ListParagraph for bibliography entries (no BiblioEntry in Simple)" do
+    expect(mapping.paragraph_style(:biblio_entry)).to eq("ListParagraph")
   end
 end
 
