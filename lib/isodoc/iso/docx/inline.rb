@@ -559,14 +559,27 @@ module IsoDoc
           return collect_all_text(paragraph) unless ordered?(paragraph)
 
           segments = []
+          twins = fmt_stem_source_ids(paragraph)
           each_ordered_element(paragraph) do |type, obj|
             case type
             when :text then segments << obj.to_s
             when :element
-              segments << (stem_asciimath_text(obj) || collect_all_text(obj))
+              next if fmt_twin_of_stem?(obj, twins)
+
+              segments << footnote_element_text(obj)
             end
           end
           segments.join
+        end
+
+        # A stem's asciimath, except that a UnitsML macro is source
+        # notation: the rendered unit is what the reader should see.
+        def footnote_element_text(element)
+          text = stem_asciimath_text(element)
+          return collect_all_text(element) unless text
+          return text unless text.include?("unitsml(")
+
+          stem_fallback_text(element)
         end
 
         # Create a footnote whose body paragraph carries the
