@@ -79,6 +79,49 @@ RSpec.describe "DOCX bookmarks and xrefs for ids over the bookmark limit" do
     end
   end
 
+  context "when a formula, bibliography entry or split paragraph has a long id" do
+    let(:formula_id) { "formula_with_a_very_long_identifier_over_forty_chars_f" }
+    let(:bib_id) { "bibitem_with_a_very_long_identifier_over_forty_chars" }
+    let(:split_id) { "split_para_with_a_very_long_identifier_over_forty_chars" }
+    let(:document) do
+      xml = minimal_iso_xml(<<~INNER)
+        <bibdata>
+          <docidentifier primary="true">ISO 1:2016</docidentifier>
+          <ext><doctype>international-standard</doctype></ext>
+        </bibdata>
+        <sections>
+          <clause id="CL"><title>One</title>
+            <p>See <xref target="#{formula_id}">formula</xref>, <eref bibitemid="#{bib_id}">bib</eref>
+            and <xref target="#{split_id}">split</xref>.</p>
+            <formula id="#{formula_id}"><stem type="AsciiMath">x=1</stem></formula>
+            <p id="#{split_id}">Lead text.<note><p>A note.</p></note> Tail text.</p>
+          </clause>
+        </sections>
+        <bibliography>
+          <references id="_normative_references" normative="true">
+            <bibitem id="#{bib_id}" type="standard">
+              <title>T</title><docidentifier>ISO 2</docidentifier>
+            </bibitem>
+          </references>
+        </bibliography>
+      INNER
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "out.docx")
+        build_adapter.convert(xml, path)
+        Zip::File.open(path) { |z| Nokogiri::XML(z.read("word/document.xml")) }
+      end
+    end
+
+    it "bookmarks each under its mapped name, so the links resolve", :aggregate_failures do
+      [formula_id, bib_id, split_id].each do |id|
+        expect(anchors).to include(mapped_name(id))
+        expect(bookmark_names).to include(mapped_name(id))
+      end
+      expect(anchors.reject { |a| bookmark_names.include?(a) }).to eq([])
+      expect(bookmark_names.map(&:length).max).to be <= 40
+    end
+  end
+
   def mapped_name(id)
     IsoDoc::Iso::Docx::Context.new.bookmark_name(id)
   end

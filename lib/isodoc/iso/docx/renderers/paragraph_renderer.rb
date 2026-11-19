@@ -143,7 +143,7 @@ module IsoDoc
           # the note. Both use an empty bookmark range, as BookmarkRenderer
           # does for <bookmark>.
           def bookmark_unopened_split(state, doc)
-            name = state[:first] && bookmark_name(state[:paragraph])
+            name = state[:first] && claimed_split_name(state)
             return unless name
 
             id = @context.next_bookmark_id.to_s
@@ -152,6 +152,12 @@ module IsoDoc
             para << Uniword::Wordprocessingml::BookmarkEnd.new(id: id)
             flush_paragraph(para, doc) unless state[:lead]
             state[:first] = false
+          end
+
+          # The split <p>'s id bookmark name, mapped and claimed like
+          # every other id bookmark (see Context#claim_bookmark_name).
+          def claimed_split_name(state)
+            @context.claim_bookmark_name(bookmark_name(state[:paragraph]))
           end
 
           # Begin the next output paragraph of a split <p>. The first one
@@ -164,7 +170,7 @@ module IsoDoc
 
             state[:first] = false
             @inline_renderer.emit_pending_clause_number(para)
-            name = bookmark_name(state[:paragraph])
+            name = claimed_split_name(state)
             if name
               id = @context.next_bookmark_id.to_s
               para << Uniword::Wordprocessingml::BookmarkStart.new(id: id,
