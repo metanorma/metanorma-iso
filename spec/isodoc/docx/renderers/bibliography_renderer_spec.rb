@@ -133,6 +133,33 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::BibliographyRenderer do
                         expected_footnote_run("ISO 1232:2009", footnote_id)])
   end
 
+  # P1-010 pin: the real IS fixture, not synthetic XML. The semantic normref
+  # style maps to the template's RefNorm style (data/iso-dis/style_mapping.yml).
+  def is_fixture_normref_entries
+    Dir.mktmpdir do |dir|
+      path = File.join(dir, "is.docx")
+      adapter.convert(File.read("spec/fixtures/iso/is/document-en.presentation.xml"), path)
+      extract_docx(path) do |doc, ns|
+        styles = Zip::File.open(path) { |zip| zip.read("word/styles.xml") }
+        entries = doc.xpath("//w:p[w:pPr/w:pStyle/@w:val='RefNorm']", ns).map do |para|
+          para.xpath("w:r", ns).map do |run|
+            run.at_xpath("w:footnoteReference", ns) ? "[fn]" : run.xpath("w:t", ns).text
+          end.join
+        end
+        [entries, styles.include?('w:styleId="RefNorm"')]
+      end
+    end
+  end
+
+  it "keeps IS fixture normative footnote markers on the flagged entries only", :aggregate_failures do
+    entries, style_defined = is_fixture_normref_entries
+    flagged, plain = entries.partition { |entry| entry.include?("[fn]") }
+    expect([style_defined, entries.size]).to eq([true, 7])
+    expect(flagged).to match([/\AISO.712\[fn\]\) , Cereals and cereal/,
+                              /\AISO.16634:\u2014\[fn\]\) , Cereals, pulses/])
+    expect(plain).to all(match(/\AISO.\d[\d:-]*, [[:alpha:]]/))
+  end
+
   it "embeds a bookmark with the bibitem id" do
     xml = minimal_iso_xml(<<~INNER)
       <bibliography>
