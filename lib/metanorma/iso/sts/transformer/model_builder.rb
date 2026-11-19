@@ -48,7 +48,7 @@ module Metanorma
 
           def sec(id: nil, label: nil, title: nil, sec_type: nil, content: [],
                   paragraph: [], sec: [], list: [], table_wrap: [], fig: [],
-                  non_normative_note: [], non_normative_example: [])
+                  non_normative_note: [], non_normative_example: [], disp_quote: [])
             all_content = Array(content) + Array(paragraph)
             distributed = distribute_sec_content(all_content)
 
@@ -63,6 +63,7 @@ module Metanorma
             attrs[:fig] = (Array(fig) + distributed[:fig]) if (fig&.any? || distributed[:fig].any?)
             attrs[:non_normative_note] = (Array(non_normative_note) + distributed[:note]) if (non_normative_note&.any? || distributed[:note].any?)
             attrs[:non_normative_example] = (Array(non_normative_example) + distributed[:example]) if (non_normative_example&.any? || distributed[:example].any?)
+            attrs[:disp_quote] = (Array(disp_quote) + distributed[:disp_quote]) if (disp_quote&.any? || distributed[:disp_quote].any?)
             ::Sts::NisoSts::Section.new(attrs)
           end
 
@@ -76,6 +77,7 @@ module Metanorma
               when ::Sts::TbxIsoTml::TableWrap then result[:table_wrap] << item
               when ::Sts::NisoSts::NonNormativeNote then result[:note] << item
               when ::Sts::NisoSts::NonNormativeExample then result[:example] << item
+              when ::Sts::NisoSts::DispQuote then result[:disp_quote] << item
               when ::Sts::NisoSts::DisplayFormula then result[:formula] << item
               when ::Sts::NisoSts::DefList then result[:def_list] << item
               end
@@ -213,6 +215,14 @@ module Metanorma
               e.p = Array(paragraph) if paragraph&.any?
               e.list = Array(list) if list&.any?
               e.preformat = Array(preformat) if preformat&.any?
+            end
+          end
+
+          def disp_quote(id: nil, paragraph: [], attribution: nil)
+            ::Sts::NisoSts::DispQuote.new do |q|
+              q.id = id if id
+              q.attribution = attribution if attribution
+              Array(paragraph).each { |p| q.paragraphs p }
             end
           end
 
