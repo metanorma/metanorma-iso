@@ -21,6 +21,8 @@ module IsoDoc
             else
               render_bare_item_inline(item, para)
             end
+            anchor_paragraph(item, para)
+            anchor_paragraph(lead, para) if lead
             doc << para
             render_item_blocks(item, doc, lead)
           end

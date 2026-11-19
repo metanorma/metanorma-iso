@@ -59,12 +59,30 @@ module IsoDoc
           @bookmark_counter.next
         end
 
+        # Word rejects bookmark names longer than this.
+        MAX_BOOKMARK_NAME = 40
+
+        # Claim +name+ for a new bookmark. True exactly once per valid
+        # name: later claims (a second renderer reaching the same id) and
+        # names Word would reject (blank, over MAX_BOOKMARK_NAME) are
+        # refused, so bookmark names stay unique and legal.
+        def claim_bookmark_name(name)
+          name = name.to_s
+          return false if name.empty? || name.length > MAX_BOOKMARK_NAME
+
+          !claimed_bookmark_names.add?(name).nil?
+        end
+
         # Bookmark names (clause ids) the table of contents links to.
         # TocBuilder registers them before the body renders; the heading
         # renderers then add a Word-style +_Toc+ bookmark beside the id
         # bookmark, and the ToC entry hyperlinks / PAGEREFs to it.
         def toc_targets
           @toc_targets ||= Set.new
+        end
+
+        def claimed_bookmark_names
+          @claimed_bookmark_names ||= Set.new
         end
 
         # Stable +_Toc+ bookmark name for a clause id: Word-style prefix

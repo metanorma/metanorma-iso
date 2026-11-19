@@ -162,6 +162,8 @@ prefix: nil)
                 para = build_paragraph(:definition)
                 apply_definition_spacing(para)
                 @inline_renderer.render(defn, para)
+                anchor_paragraph(defn, para)
+                semx_paragraphs(defn).each { |p| anchor_paragraph(p, para) }
                 doc << para
               end
               return
@@ -171,7 +173,18 @@ prefix: nil)
               para = build_paragraph(:definition)
               apply_definition_spacing(para)
               @inline_renderer.render(p, para)
+              anchor_paragraph(p, para)
+              anchor_paragraph(defn, para) if p.equal?(paragraphs.first)
               doc << para
+            end
+          end
+
+          # <p>s one <semx> level down (fmt-definition > semx > p).
+          def semx_paragraphs(node)
+            return [] unless node.class.attributes.key?(:semx)
+
+            Array(node.semx).flat_map do |semx|
+              semx.class.attributes.key?(:p) ? Array(semx.p) : []
             end
           end
 
@@ -202,6 +215,10 @@ prefix: nil)
               @context.with_note do
                 para = build_paragraph(:note)
                 @inline_renderer.render(tn, para)
+                anchor_paragraph(tn, para)
+                Array(attribute_value(tn, :p)).each do |p|
+                  anchor_paragraph(p, para)
+                end
                 doc << para
               end
             end
@@ -244,6 +261,7 @@ prefix: nil)
 
             para = build_paragraph(:example)
             @inline_renderer.render(name, para)
+            anchor_paragraph(example, para)
             doc << para
           end
         end

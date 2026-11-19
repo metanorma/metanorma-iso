@@ -16,6 +16,36 @@ module IsoDoc
         #                       that walk mixed content)
         #
         # Subclasses MUST implement +render(node, doc)+.
+        # Empty-range bookmark placement shared by the renderers and the
+        # adapter's block dispatch.
+        module Anchoring
+          module_function
+
+          # Name a node's bookmark carries: its +anchor+ (what xrefs
+          # target) wins over its +id+.
+          def name_of(node)
+            attrs = node.class.attributes
+            (node.anchor if attrs.key?(:anchor)) ||
+              (node.id if attrs.key?(:id))
+          end
+
+          # Anchor +node+ at +para+ (builder or model) as an empty
+          # bookmark ahead of the content, as Word emits it. A name
+          # already bookmarked, or illegal for Word, is skipped.
+          def anchor(context, node, para)
+            name = name_of(node)
+            return unless name && context.claim_bookmark_name(name)
+
+            model = para.respond_to?(:model) ? para.model : para
+            bm_id = context.next_bookmark_id.to_s
+            model.bookmark_starts <<
+              Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id,
+                                                           name: name)
+            model.bookmark_ends <<
+              Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id)
+          end
+        end
+
         module Base
           include ModelUtils
 
@@ -56,13 +86,24 @@ module IsoDoc
           # (possibly different) +id+.
           def with_bookmark(node, para, &)
             name = bookmark_name(node)
-            return yield unless name
+            return yield unless name && @context.claim_bookmark_name(name)
 
             bm_id = @context.next_bookmark_id.to_s
             para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, 
                                                                  name: name)
             with_toc_bookmark(name, para, &)
             para << Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id)
+          end
+
+          # Anchor +node+ (by its id/anchor) at +para+, a paragraph
+          # builder or model, as an empty bookmark ahead of the content
+          # (as Word emits it). Used where the paragraph is built by a
+          # container renderer instead of passing through with_bookmark:
+          # list items, note/example lead paragraphs, definition list
+          # entries. A name already bookmarked, or illegal for Word, is
+          # skipped.
+          def anchor_paragraph(node, para)
+            Anchoring.anchor(@context, node, para)
           end
 
           # Headings the table of contents lists carry a second,
@@ -80,9 +121,7 @@ module IsoDoc
           end
 
           def bookmark_name(node)
-            attrs = node.class.attributes
-            (node.anchor if attrs.key?(:anchor)) ||
-              (node.id if attrs.key?(:id))
+            Anchoring.name_of(node)
           end
 
           # Whether a heading has no body text after autonum carriers are

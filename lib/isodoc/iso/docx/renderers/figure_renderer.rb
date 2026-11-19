@@ -72,6 +72,7 @@ module IsoDoc
             Array(figure.note).each do |note|
               para = build_paragraph(:figure_note)
               @inline_renderer.render(note, para)
+              anchor_paragraph(note, para)
               doc << para
             end
           end

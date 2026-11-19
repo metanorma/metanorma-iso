@@ -696,9 +696,48 @@ module IsoDoc
         # Dispatch entry point used by Renderers::Walker.
         def dispatch(node, doc)
           renderer = @registry.lookup(node.class)
-          return renderer.render(node, doc) if renderer
+          return walk_mixed_content(node, doc) unless renderer
+          return renderer.render(node, doc) unless ANCHORED_BLOCKS
+                                                   .any? { |k| node.is_a?(k) }
 
-          walk_mixed_content(node, doc)
+          render_anchored(renderer, node, doc)
+        end
+
+        # Blocks whose renderers emit plain paragraphs without a bookmark
+        # of their own: the block's id/anchor lands on the first paragraph
+        # it produces, so the id stays a valid anchor target.
+        ANCHORED_BLOCKS = [
+          Metanorma::Document::Components::MultiParagraph::AdmonitionBlock,
+          Metanorma::Document::Components::MultiParagraph::QuoteBlock,
+          Metanorma::Document::Components::AncillaryBlocks::ExampleBlock,
+          Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock,
+          Metanorma::Document::Components::Blocks::NoteBlock,
+          Metanorma::Document::Components::Lists::OrderedList,
+          Metanorma::Document::Components::Lists::UnorderedList,
+          Metanorma::Document::Components::Lists::DefinitionList,
+        ].freeze
+
+        def render_anchored(renderer, node, doc)
+          paragraphs = container_paragraphs(doc)
+          before = paragraphs&.size
+          result = renderer.render(node, doc)
+          first = paragraphs && paragraphs.drop(before).find do |element|
+            element.is_a?(Uniword::Wordprocessingml::Paragraph) ||
+              element.is_a?(Uniword::Builder::ParagraphBuilder)
+          end
+          Renderers::Anchoring.anchor(@context, node, first) if first
+          result
+        end
+
+        # The paragraph list of +doc+: document body, table cell, or the
+        # table attachment buffer (which holds paragraphs and tables).
+        def container_paragraphs(doc)
+          return doc.paragraphs if doc.is_a?(Renderers::TableAttachmentBuffer)
+
+          model = doc.respond_to?(:model) ? doc.model : nil
+          return unless model
+
+          model.respond_to?(:body) ? model.body&.paragraphs : model.paragraphs
         end
 
         # ── Tree walking ───────────────────────────────────────────────
