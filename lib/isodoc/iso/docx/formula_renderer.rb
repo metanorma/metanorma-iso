@@ -190,7 +190,8 @@ module IsoDoc
         # Anchor target for xrefs to the formula. The bookmark range is
         # empty and sits ahead of the content, as Word emits it.
         def bookmark_paragraph(formula, para_model)
-          name = attribute_value(formula, :id)
+          name = attribute_value(formula, :anchor) ||
+            attribute_value(formula, :id)
           return unless name && @context
 
           bm_id = @context.next_bookmark_id.to_s

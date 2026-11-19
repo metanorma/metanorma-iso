@@ -224,7 +224,7 @@ module IsoDoc
         end
 
         def build_entry(node, level)
-          id = node.id if node.class.attributes.key?(:id)
+          id = attribute_value(node, :anchor) || attribute_value(node, :id)
           TocEntry.new(
             source: node,
             level: level,
