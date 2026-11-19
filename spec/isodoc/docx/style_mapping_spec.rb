@@ -122,6 +122,44 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping, "Simple template" do
   end
 end
 
+RSpec.describe IsoDoc::Iso::DocxStyleMapping, "Simple run styles (P2-003)" do
+  subject(:mapping) { described_class.new(template: :simple) }
+
+  let(:library) { IsoDoc::Iso::Docx::StyleLibrary.load_default(template: :simple) }
+
+  it "maps Hyperlink to a character style the Simple template defines" do
+    expect(mapping.character_style(:hyperlink)).to eq("Hyperlink")
+    expect(library.character_style?("Hyperlink")).to be(true)
+  end
+
+  it "maps every Simple character style to one the template defines" do
+    mapping.character_styles.each_value do |style_id|
+      expect(library.character_style?(style_id)).to be(true)
+    end
+  end
+
+  # The card's other rStyles are not character styles in the Simple
+  # template, so emitting them as rStyle would reference a style that
+  # is missing or of the wrong type.
+  %w[zzCover normref FootnoteReference EndnoteReference rptBold rptItalic].each do |id|
+    it "has no #{id} style, so no run style is mapped for it" do
+      expect(library.style?(id)).to be(false)
+    end
+  end
+
+  %w[a2 a3 ForewordText Source].each do |id|
+    it "defines #{id} as a paragraph style only, not a run style" do
+      expect(library.paragraph_style?(id)).to be(true)
+      expect(library.character_style?(id)).to be(false)
+    end
+  end
+
+  it "leaves footnote and stem run styles unmapped in Simple" do
+    expect(mapping.character_style(:footnote_reference)).to be_nil
+    expect(mapping.character_style(:stem)).to be_nil
+  end
+end
+
 RSpec.describe IsoDoc::Iso::DocxTemplates do
   describe ".template_path" do
     it "returns DIS template path" do
