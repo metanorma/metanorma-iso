@@ -82,7 +82,7 @@ module IsoDoc
           return nil unless mathml.to_s.include?("<mn")
 
           node = Nokogiri::XML(mathml).root
-          node = node.element_children.first while number_wrapper?(node)
+          node = visible_children(node).first while number_wrapper?(node)
           return nil unless node&.name == "mn" && node.element_children.empty?
 
           number = node.text.strip
@@ -99,12 +99,18 @@ module IsoDoc
           mathml.gsub(/<[^>]*>/, "").strip.empty?
         end
 
+        # Element children other than <mspace/>, which only adds spacing
+        # and does not stop a number rendering as plain text.
+        def visible_children(node)
+          node.element_children.reject { |child| child.name == "mspace" }
+        end
+
         # A wrapper with one element child, to be looked through. A
         # mstyle/mrow with attributes other than displaystyle changes
         # rendering, so it is not a bare-number wrapper.
         def number_wrapper?(node)
           return false unless node && NUMBER_WRAPPER_TAGS.include?(node.name)
-          return false unless node.element_children.one?
+          return false unless visible_children(node).one?
 
           node.attribute_nodes.all? { |attr| attr.name == "displaystyle" }
         end
