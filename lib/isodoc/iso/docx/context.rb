@@ -17,7 +17,7 @@ module IsoDoc
                       :in_figure, :in_definitions, :list_depth,
                       :section_depth,
                       :term_counter, :section_counter, :body_width,
-                      :amend_zone
+                      :amend_zone, :in_amendment
         def initialize
           @footnote_counter = Counter.new
           @bookmark_counter = Counter.new
@@ -40,6 +40,15 @@ module IsoDoc
           @term_counter = Counter.new(0)
           @zone_paragraph_counts = Hash.new(0)
           @amend_zone = nil
+          @in_amendment = false
+        end
+
+        # Whether clause headings render unnumbered: an amendment-style
+        # document (doctype amendment / technical-corrigendum), except
+        # inside <newcontent>, which re-enables numbering for the clauses
+        # being inserted into the amended standard.
+        def suppress_heading_numbers?
+          (in_amendment && amend_zone != :newcontent) || false
         end
 
         def next_footnote_id

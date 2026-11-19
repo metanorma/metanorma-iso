@@ -52,10 +52,22 @@ module IsoDoc
 
             para = build_unstyled_paragraph
             para.style = title_style_for(section)
+            suppress_number(para)
             with_bookmark(section, para) do
               render_title_content(title, para)
             end
             doc << para
+          end
+
+          # Amendment documents run with unnumbered clause titles. The
+          # number comes from the heading style's numPr, so numId 0 on
+          # the paragraph cancels it (as ClauseRenderer does for the
+          # introduction's a2 headings).
+          def suppress_number(para)
+            return unless @context.suppress_heading_numbers?
+            return unless @resolver.auto_numbered_style?(para.style&.value)
+
+            para.numbering(0)
           end
 
           # A title holding only the autonum + delimiter (an untitled

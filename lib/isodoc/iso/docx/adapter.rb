@@ -553,6 +553,8 @@ module IsoDoc
         #   [SECTPR — body section, arabic page numbers]
 
         def visit_root(model, doc)
+          @context.in_amendment = AmendmentDoctype.amendment?(model)
+
           # ── Render annotations (comments) before body traversal ──
           if model.annotation_container
             @comment_renderer.render(model.annotation_container, 
@@ -569,8 +571,11 @@ module IsoDoc
           doc.page_break
 
           # ── Section 2: Front matter (roman numerals) ──
-          @toc_builder.render(model, doc)
-          doc.page_break
+          # Amendments carry no table of contents.
+          unless @context.in_amendment
+            @toc_builder.render(model, doc)
+            doc.page_break
+          end
 
           @preface_renderer.render(model.preface, doc) if model.preface
 
