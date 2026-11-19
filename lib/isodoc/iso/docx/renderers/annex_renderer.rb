@@ -62,6 +62,9 @@ module IsoDoc
             private
 
             def hide(element)
+              if element.is_a?(Uniword::Wordprocessingml::Hyperlink)
+                Array(element.runs).each { |run| hide(run) }
+              end
               return unless element.is_a?(Uniword::Wordprocessingml::Run)
 
               element.properties ||= Uniword::Wordprocessingml::RunProperties.new

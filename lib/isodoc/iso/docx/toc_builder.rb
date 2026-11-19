@@ -279,10 +279,7 @@ module IsoDoc
 
           # The text, tab and page number form one hyperlink to the
           # heading's _Toc bookmark, so the entry is clickable.
-          link = Uniword::Wordprocessingml::Hyperlink.new(
-            anchor: entry.bookmark_name, history: "1",
-          )
-          runs = HyperlinkRuns.new(link, para)
+          runs = HyperlinkRuns.new(entry.bookmark_name, para)
           render_toc_heading_text(entry.source, runs)
           append_tab(runs)
 
@@ -295,7 +292,6 @@ module IsoDoc
           runs << field_char_run("separate")
           runs << Uniword::Wordprocessingml::Run.new(text: "1")
           runs << field_char_run("end")
-          para << link
 
           para << field_char_run("end") if close_field
 
@@ -334,23 +330,37 @@ module IsoDoc
           end
         end
 
-        # Collects an entry's runs into its hyperlink; anything that is
-        # not a run (a bookmark, a nested link) goes to the paragraph.
+        # Collects an entry's runs into its hyperlink and appends the
+        # hyperlink to the paragraph on its first run. An element that is
+        # not a run (a bookmark, a nested link) goes to the paragraph in
+        # arrival order; hyperlinks cannot nest, so it closes the current
+        # hyperlink and the runs that follow open a new one to the same
+        # anchor. The text order of the entry is therefore preserved.
         class HyperlinkRuns
-          def initialize(link, para)
-            @link = link
+          def initialize(anchor, para)
+            @anchor = anchor
             @para = para
+            @open_link = nil
           end
 
           def <<(element)
             element = Uniword::Wordprocessingml::Run.new(text: element) if element.is_a?(String)
             element = element.build if element.is_a?(Uniword::Builder::RunBuilder)
             if element.is_a?(Uniword::Wordprocessingml::Run)
-              @link.runs << element
+              open_link.runs << element
             else
+              @open_link = nil
               @para << element
             end
             self
+          end
+
+          private
+
+          def open_link
+            @open_link ||= Uniword::Wordprocessingml::Hyperlink.new(
+              anchor: @anchor, history: "1",
+            ).tap { |link| @para << link }
           end
         end
 

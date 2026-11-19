@@ -86,7 +86,7 @@ module IsoDoc
           # (possibly different) +id+.
           def with_bookmark(node, para, &)
             name = bookmark_name(node)
-            return yield unless name && @context.claim_bookmark_name(name)
+            return with_unclaimable_toc_bookmark(name, para, &) unless name && @context.claim_bookmark_name(name)
 
             bm_id = @context.next_bookmark_id.to_s
             para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, 
@@ -118,6 +118,18 @@ module IsoDoc
             )
             yield
             para << Uniword::Wordprocessingml::BookmarkEnd.new(id: toc_id)
+          end
+
+          # A heading id Word cannot bookmark (over MAX_BOOKMARK_NAME)
+          # still gets its +_Toc+ twin, which is always a legal name:
+          # the ToC entry's hyperlink and PAGEREF point at it. The id
+          # itself stays unbookmarked, so xrefs to it remain unresolved.
+          def with_unclaimable_toc_bookmark(name, para, &)
+            if name.to_s.length > Context::MAX_BOOKMARK_NAME
+              with_toc_bookmark(name, para, &)
+            else
+              yield
+            end
           end
 
           def bookmark_name(node)
