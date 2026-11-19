@@ -122,3 +122,5 @@ has TOC1..TOC9, so all level lookups succeed.
     `BiblioEntry` if at entry level).
 - `toc_builder_spec.rb` (extend):
   - TOC level 1 uses `TOC1` from YAML, no string fallback.
+
+## Status: PARTIAL — `ref_norm` collapsed into `normref` (spec: bibliography_renderer_spec RefNorm green). `figure_title_annex`/`table_title_annex` kept: iso-simple maps them to distinct AnnexFigureTitle/AnnexTableTitle (style_resolver_spec "Simple template"), so the pair is a real semantic difference, not a fallback. `grep "paragraph_style(.*) ||"` = 0 matches.
