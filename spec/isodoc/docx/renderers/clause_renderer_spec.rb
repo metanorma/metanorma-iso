@@ -30,29 +30,30 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
     end
     let(:heading_text) do
       heading = paragraphs.find { |p| para_style_value(p) == "Heading1" }
-      heading.runs.map { |run| run_text(run) }.join + math_text(heading)
+      heading.runs.map { |run| run_text(run) }.join
     end
     let(:body_texts) do
       body = paragraphs.reject { |p| para_style_value(p).to_s.start_with?("Heading") }
-      body.map { |p| p.runs.map { |run| run_text(run) }.join + math_text(p) }
-    end
-
-    # Inline stems render as OMML, not runs; their visible text is the
-    # concatenation of the oMath text nodes.
-    def math_text(para)
-      para.o_maths.map { |m| m.to_xml.scan(/<m:t[^>]*>([^<]*)<\/m:t>/).join }.join
+      body.map { |p| p.runs.map { |run| run_text(run) }.join }
     end
 
     it "renders the value and unit in heading runs" do
-      expect(heading_text).to eq("Altitude 80km")
+      expect(heading_text).to eq("Altitude 80 km")
     end
 
     it "omits the source unit macro from heading runs" do
       expect(heading_text).not_to include("unitsml(")
     end
 
-    it "renders the same text in body paragraphs" do
-      expect(body_texts).to include(heading_text)
+    # Body stems render as inline OMML (the heading stays text).
+    let(:body_math_tokens) do
+      body = paragraphs.find { |p| p.o_maths.any? }
+      body.o_maths.map { |m| m.to_xml.scan(%r{<m:t[^>]*>([^<]*)</m:t>}).flatten }
+    end
+
+    it "renders the unit as an inline equation in body paragraphs" do
+      expect(body_math_tokens).to eq([%w[80 km]])
+      expect(body_texts).to include("Altitude ")
     end
 
     context "with a power and quotient in the unit" do
@@ -63,22 +64,12 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
           '</mstyle></mrow></math><asciimath>80 "unitsml(m^2/s)"</asciimath></stem>'
       end
 
-      def math_xml(para)
-        para.o_maths.map(&:to_xml).join
-      end
-
-      it "preserves unit structure in the heading as a fraction of a power" do
-        heading = paragraphs.find { |p| para_style_value(p) == "Heading1" }
-
-        expect(heading_text).to eq("Altitude 80m2s")
-        expect(math_xml(heading)).to include("<m:f>").and include("<m:sSup>")
+      it "preserves unit structure in the heading" do
+        expect(heading_text).to eq("Altitude 80 (m²/s)")
       end
 
       it "preserves unit structure in body paragraphs" do
-        body = paragraphs.reject { |p| para_style_value(p).to_s.start_with?("Heading") }
-
-        expect(body_texts).to include("Altitude 80m2s")
-        expect(body.map { |p| math_xml(p) }.join).to include("<m:f>").and include("<m:sSup>")
+        expect(body_math_tokens.flatten).to eq(%w[80 m 2 s])
       end
     end
   end

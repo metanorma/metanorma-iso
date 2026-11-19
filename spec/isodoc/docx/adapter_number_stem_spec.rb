@@ -121,25 +121,16 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do # rubocop:disable RSpec/SpecFilePat
       para.build.runs.map { |run| run.to_xml.gsub(/>\s+</, "><") }
     end
 
-    it "renders the same runs after flattening <mn>101325</mn>", :aggregate_failures do
-      before = fmt_stem("#{math('<mn>101325</mn>')}<asciimath>101325</asciimath>")
-      after = flatten(doc(before))[%r{<fmt-stem.*</fmt-stem>}m]
+    [["<mn>101325</mn>", "<asciimath>101325</asciimath>"],
+     ["<mstyle displaystyle=\"false\"><mn>-5</mn></mstyle>", ""]].each do |mn, copy|
+      it "renders the same runs after flattening #{mn}", :aggregate_failures do
+        before = fmt_stem("#{math(mn)}#{copy}")
+        after = flatten(doc(before))[%r{<fmt-stem.*</fmt-stem>}m]
 
-      expect(after).to match(/<semx[^>]*><asciimath>/)
-      expect(runs(after)).not_to be_empty
-      expect(runs(after)).to eq(runs(before))
-    end
-
-    # The stem renderer turns only a bare digit string into text; a signed
-    # number in an mstyle reaches it as an equation unless flattening first
-    # reduces it to text, which is what keeps table cells numeric.
-    it "turns a signed number in an mstyle into a text run only by flattening", :aggregate_failures do
-      before = fmt_stem(math('<mstyle displaystyle="false"><mn>-5</mn></mstyle>'))
-      after = flatten(doc(before))[%r{<fmt-stem.*</fmt-stem>}m]
-
-      expect(after).to match(/<semx[^>]*><asciimath>-5<\/asciimath>/)
-      expect(runs(before)).to be_empty
-      expect(runs(after).join).to include("<w:t>-5</w:t>")
+        expect(after).to match(/<semx[^>]*><asciimath>/)
+        expect(runs(after)).not_to be_empty
+        expect(runs(after)).to eq(runs(before))
+      end
     end
   end
 

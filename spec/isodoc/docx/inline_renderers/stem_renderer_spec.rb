@@ -86,9 +86,13 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     expect(Plurimath::Mathml::Parser).not_to have_received(:new)
   end
 
+  # Same shapes Adapter#flatten_number_stems flattens, so a stem renders
+  # identically before and after flattening.
   ["−12,50", "1.250E-6"].each do |value|
-    it "renders #{value} as an OMML equation" do
-      expect(omml_tokens(numeric_stem(value))).to eq([[value]])
+    it "renders #{value} as a text run, not an equation", :aggregate_failures do
+      built = render_built(numeric_stem(value))
+      expect(built.text).to eq(value)
+      expect(built.o_maths).to be_empty
     end
   end
 
@@ -136,6 +140,13 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     built = render_built(presentation_unit_stem)
     expect(omml_tokens(presentation_unit_stem)).to eq([%w[80 km]])
     expect(built.text).to eq("")
+  end
+
+  it "renders a unit stem as text inside a heading", :aggregate_failures do
+    allow(inline).to receive(:in_heading?).and_return(true)
+    built = render_built(presentation_unit_stem)
+    expect(built.text).to eq("80 km")
+    expect(built.o_maths).to be_empty
   end
 
   def structured_unit_stem(mathml)
