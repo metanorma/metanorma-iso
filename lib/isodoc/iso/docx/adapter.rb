@@ -347,7 +347,26 @@ module IsoDoc
                   source.to_s
                 end
           parse_model_with_ordering(Metanorma::Iso::Document::Root,
-                                    flatten_number_stems(xml))
+                                    flatten_number_stems(drop_source_stems(xml)))
+        end
+
+        # Presentation XML keeps each source <stem> next to the <fmt-stem>
+        # that renders it (its semx points back by id). Renderers read the
+        # fmt-stem, so the source copy is only parse cost.
+        def drop_source_stems(xml)
+          document = Nokogiri::XML(xml, &:huge)
+          return xml if document.errors.any? { |e| e.error? || e.fatal? }
+
+          document.xpath("//*[local-name()='stem'][@id]").each do |stem|
+            fmt = stem.next_element
+            next unless fmt&.name == "fmt-stem" &&
+              fmt.element_children.any? do |semx|
+                semx.name == "semx" && semx["source"] == stem["id"]
+              end
+
+            stem.remove
+          end
+          document.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::AS_XML)
         end
 
         # Numeric table cells need a Stem run, not a tree of MathML models.
