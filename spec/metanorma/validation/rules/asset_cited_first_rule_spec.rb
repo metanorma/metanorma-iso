@@ -8,6 +8,10 @@ RSpec.describe Metanorma::Iso::Validation::Rules::AssetCitedFirstRule do
 
   def context_with(xml)
     root = Metanorma::IsoDocument::Root.from_xml(xml)
+    context_for(root)
+  end
+
+  def context_for(root)
     Metanorma::Iso::Validation::Context.new(root: root, log: nil,
                                             state: state, shared: nil)
   end
@@ -133,6 +137,61 @@ RSpec.describe Metanorma::Iso::Validation::Rules::AssetCitedFirstRule do
       issues = rule.check(context_with(xml))
       expect(issues.size).to eq(1)
       expect(issues.first.params).to eq(%w[Table tab-a1])
+    end
+  end
+
+  describe "direct xref attribute carrying a bare String (#1819)" do
+    xref_class = Metanorma::Document::Components::Inline::XrefElement
+
+    # Three tables; the middle one carries a table cell. The cell sits
+    # AFTER tab-1 and BEFORE tab-3, so anything it cites resolves on both
+    # sides of the position comparison.
+    def table_cell_doc
+      xml_doc(
+        "<table id=\"tab-1\"><name>T1</name></table>" \
+        "<table id=\"tab-2\"><name>T2</name>" \
+        "<thead><tr><th>H</th></tr></thead>" \
+        "<tbody><tr><td>See Table 1</td></tr></tbody>" \
+        "</table>" \
+        "<table id=\"tab-3\"><name>T3</name></table>"
+      )
+    end
+
+    def first_table_cell(root)
+      cells = []
+      rule.each_document_node(root) do |node|
+        cells << node if node.is_a?(Metanorma::Document::Components::Tables::TableCell)
+      end
+      cells.first
+    end
+
+    it "does not crash when the direct xref attribute carries a bare String" do
+      root = Metanorma::IsoDocument::Root.from_xml(table_cell_doc)
+      first_table_cell(root).xref = "tab-1"
+      expect { rule.check(context_for(root)) }.not_to raise_error
+    end
+
+    it "ignores the bare String: the cited asset stays uncited" do
+      root = Metanorma::IsoDocument::Root.from_xml(table_cell_doc)
+      first_table_cell(root).xref = "tab-1"
+      expect(rule.check(context_for(root))).to eq([])
+    end
+
+    it "still counts a real XrefElement in the direct xref attribute" do
+      root = Metanorma::IsoDocument::Root.from_xml(table_cell_doc)
+      first_table_cell(root).xref = xref_class.new(target: "tab-1")
+      issues = rule.check(context_for(root))
+      expect(issues.size).to eq(1)
+      expect(issues.first.code).to eq("ISO_54")
+      expect(issues.first.params).to eq(%w[Table tab-1])
+    end
+
+    it "keeps the XrefElement and drops the String in a mixed attribute" do
+      root = Metanorma::IsoDocument::Root.from_xml(table_cell_doc)
+      first_table_cell(root).xref = [xref_class.new(target: "tab-1"), "tab-1"]
+      issues = rule.check(context_for(root))
+      expect(issues.size).to eq(1)
+      expect(issues.first.params).to eq(%w[Table tab-1])
     end
   end
 

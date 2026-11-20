@@ -102,8 +102,11 @@ module Metanorma
 
           # Inline xrefs reachable from +node+: its mixed content plus any
           # direct xref attribute (table cells, definition-list terms).
-          # Deduplicated by object identity: nodes with mixed content can
-          # expose the same xref both ways.
+          # Both paths admit only XrefElement instances: the declared xref
+          # attribute can carry a bare String on a hand-built or partially
+          # cast model (metanorma/metanorma-iso#1819), and only real xrefs
+          # answer #target. Deduplicated by object identity: nodes with
+          # mixed content can expose the same xref both ways.
           def inline_xrefs(node)
             xrefs = []
             if node.class.method_defined?(:each_mixed_content)
@@ -111,7 +114,9 @@ module Metanorma
                 xrefs << item if item.is_a?(XREF_CLASS)
               end
             end
-            xrefs.concat(Array(node.xref)) if node.class.method_defined?(:xref)
+            if node.class.method_defined?(:xref)
+              xrefs.concat(Array(node.xref).grep(XREF_CLASS))
+            end
             xrefs.uniq { |x| x.object_id }
           end
 
