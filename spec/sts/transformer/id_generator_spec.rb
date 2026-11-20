@@ -69,6 +69,14 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::IdGenerator, :aggregate_failure
       expect(generator.kind_for("c2")).to eq("clause")
     end
 
+    it "records a formula's kind so an earlier xref to it is typed disp-formula" do
+      formula = source_for(sections: <<~XML)
+        <clause id="c1"><title>One</title><formula id="f1"><stem type="MathML"/></formula></clause>
+      XML
+      generator.pre_register(formula)
+      expect(generator.kind_for("f1")).to eq("formula")
+    end
+
     it "is idempotent for a source id already registered" do
       generator.pre_register(source)
       expect(generator.id_for_clause(source.sections.first)).to eq("c1")

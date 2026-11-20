@@ -46,6 +46,12 @@ module Metanorma
             @kinds[source_id]
           end
 
+          # Records the kind of a block that keeps its source id
+          # (formula, table), so an xref to it gets the right @ref-type.
+          def mark_kind(source_id, kind)
+            @kinds[source_id] ||= kind if source_id && !source_id.empty?
+          end
+
           def remap(source_id)
             @registry[source_id] || source_id
           end
@@ -256,6 +262,8 @@ module Metanorma
               case item.class.name&.split("::")&.last
               when "FigureBlock"
                 @generator.figure_id(item)
+              when "FormulaBlock"
+                @generator.mark_kind(read_id(item), "formula")
               end
               walk_siblings(item)
             end
