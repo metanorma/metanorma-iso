@@ -9,8 +9,10 @@
         <full>Date and time — Representations for information interchange — Basic rules</full>
       </title-wrap>
       <proj-id>ISO 98765</proj-id>
+      <release-version>IS</release-version>
       <std-ident>
         <originator>ISO</originator>
+        <doc-type>IS</doc-type>
         <doc-number>98765</doc-number>
         <part-number>1</part-number>
       </std-ident>

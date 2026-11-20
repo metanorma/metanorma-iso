@@ -9,8 +9,10 @@
         <full>Gadget systems — Coupling dimensions — Rotary sockets</full>
       </title-wrap>
       <proj-id>ISO 99001</proj-id>
+      <release-version>IS</release-version>
       <std-ident>
         <originator>ISO</originator>
+        <doc-type>Amd</doc-type>
         <doc-number>99001</doc-number>
         <part-number>2</part-number>
       </std-ident>
