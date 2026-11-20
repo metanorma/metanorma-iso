@@ -24,7 +24,7 @@ module Metanorma
             "NoteBlock"                    => :dispatch_via_note,
             "ExampleBlock"                 => :dispatch_via_note,
             "AdmonitionBlock"              => :dispatch_via_note,
-            "QuoteBlock"                   => :dispatch_via_note,
+            "QuoteBlock"                   => :dispatch_via_quote,
             "SourcecodeBlock"              => :dispatch_via_sourcecode,
             "RequirementModel"             => :dispatch_via_requirement,
             "RecommendationModel"          => :dispatch_via_requirement,
@@ -75,7 +75,7 @@ module Metanorma
             examples: :dispatch_via_note,
             admonitions: :dispatch_via_note,
             sourcecode_blocks: :dispatch_via_sourcecode,
-            quote_blocks: :dispatch_via_note,
+            quote_blocks: :dispatch_via_quote,
             definition_lists: :dispatch_via_dl,
             definitions: :dispatch_via_section,
             # IsoTermsSection names its block collections by element
@@ -167,6 +167,14 @@ module Metanorma
             model = note_transformer.transform(obj)
             [model, *list_trailing_notes(obj)].compact
           end
+
+          # A quote renders as <disp-quote>; its unordered/ordered lists
+          # have no disp-quote slot and surface as sibling <list>
+          # elements after it, preserving document order.
+          def dispatch_via_quote(obj)
+            model = quote_transformer.transform(obj)
+            [model, *quote_trailing_lists(obj)].compact
+          end
           def dispatch_via_requirement(obj); requirement_transformer.transform(obj); end
           def dispatch_via_sourcecode(obj); note_transformer.transform_preformat(obj); end
           def dispatch_via_references(obj); reference_transformer.transform_section(obj); end
@@ -178,6 +186,13 @@ module Metanorma
                 next [] unless list.class.attributes.key?(:note)
                 Array(list.note).filter_map { |n| note_transformer.transform(n) }
               end
+            end
+          end
+
+          def quote_trailing_lists(obj)
+            %i[ul ol].flat_map do |attr|
+              next [] unless obj.class.attributes.key?(attr)
+              Array(obj.public_send(attr)).map { |l| list_transformer.transform(l) }
             end
           end
         end

@@ -39,6 +39,7 @@ module Metanorma
               when ::Sts::NisoSts::DisplayFormula then target.disp_formula item
               when ::Sts::NisoSts::DefList then target.def_list item
               when ::Sts::NisoSts::Preformat then target.preformat item
+              when ::Sts::NisoSts::DispQuote then target.disp_quote item
               when ::Sts::NisoSts::TermSection then target.term_sec item
               when ::Sts::NisoSts::Section then target.sec item
               end

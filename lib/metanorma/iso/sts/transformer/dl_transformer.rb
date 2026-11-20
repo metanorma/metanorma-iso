@@ -31,14 +31,37 @@ module Metanorma
             attrs = {}
             attrs[:id] = dt.id if dt.id
 
-            term_text = RenderedTextExtractor.text_of(dt)
-            term = term_text.nil? || term_text.empty? ? nil : ModelBuilder.term(content: [term_text])
+            term = build_term(dt)
+            attrs[:term] = term if term
 
             defn = dd ? build_def(dd) : nil
 
-            attrs[:term] = term if term
             attrs[:defn] = defn if defn
             ModelBuilder.def_item(**attrs)
+          end
+
+          # NISO STS <term> is mixed content: the dt's inline children
+          # (strong, em, tt, sub/sup, xref) transform INTO the term
+          # through the guarded inline dispatch. The #122 crash fired
+          # exactly here — the 3.5.21 engine dispatched the dt's walk
+          # onto Sts::NisoSts::Term on a floating sts floor whose Term
+          # declared no monospace slot. The guarded dispatch renders
+          # what the target declares and keeps the rest as text.
+          def build_term(dt)
+            term_text = RenderedTextExtractor.text_of(dt)
+            return nil if term_text.nil? || term_text.empty?
+
+            entries = paragraph_transformer.entries_for(dt)
+            ::Sts::NisoSts::Term.new do |term|
+              if entries.empty?
+                # The walk and the text extraction disagree at the
+                # edges: the extracted text is the floor, so an
+                # empty <term/> never ships.
+                term.text term_text
+              else
+                inline_transformer.apply_inline_entries(entries, term)
+              end
+            end
           end
 
           # One <p> per def: the dd's paragraphs contribute their inline

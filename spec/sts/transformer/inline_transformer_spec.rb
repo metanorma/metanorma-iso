@@ -41,14 +41,11 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::InlineTransformer do
       expect(own_text(doc)).to include("A ").and include(" end.")
     end
 
-    it "merges consecutive text runs into one entry so none is dropped" do
+    it "serializes every text run, so none is dropped" do
       transformer, para = paragraph_in("one <strong>b</strong> two <em>i</em> three")
-      target = Sts::TbxIsoTml::Note.new
+      doc = Nokogiri::XML(transformer.apply_inline_content(para, Sts::TbxIsoTml::Note.new).to_xml)
 
-      transformer.apply_inline_content(para, target)
-
-      expect(target.value.grep(String).size).to eq(1)
-      expect(target.value.first).to eq("one  two  three")
+      expect(own_text(doc)).to include("one").and include("two").and include("three")
     end
 
     it "carries subscript and superscript with their text" do

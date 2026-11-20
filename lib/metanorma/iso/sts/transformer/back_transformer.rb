@@ -88,6 +88,7 @@ module Metanorma
               when ::Sts::NisoSts::NonNormativeNote then app.non_normative_note item
               when ::Sts::NisoSts::NonNormativeExample then app.non_normative_example item
               when ::Sts::NisoSts::Preformat then app.preformat item
+              when ::Sts::NisoSts::DispQuote then app.disp_quote item
               when ::Sts::NisoSts::Section then app.sec item
               when ::Sts::NisoSts::TermSection then app.sec item
               when ::Sts::NisoSts::ReferenceList then app.ref_list item
