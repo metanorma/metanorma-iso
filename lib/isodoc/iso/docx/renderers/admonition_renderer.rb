@@ -52,6 +52,7 @@ module IsoDoc
           def render_body_paragraph(paragraph, doc)
             para = build_paragraph(:admonition)
             @inline_renderer.render(paragraph, para)
+            anchor_paragraph(paragraph, para)
             doc << para
           end
 

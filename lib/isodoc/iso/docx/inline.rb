@@ -46,6 +46,8 @@ module IsoDoc
 
         # Render all inline content from a node into a ParagraphBuilder.
         def render(node, para)
+          emit_pending_clause_number(para) if paragraph_block?(node)
+
           if ordered?(node)
             render_ordered_inline(node, para)
           else
@@ -124,10 +126,39 @@ module IsoDoc
           @strip_autonum
         end
 
+        # Run the block with +number+ (and the bookmark +name+ of its
+        # clause) queued for the next paragraph rendered through #render:
+        # an untitled inline-header clause emits no heading paragraph, so
+        # its number leads its first body paragraph instead (the way the
+        # ISO HTML output does). The queue is cleared on exit, so a clause
+        # whose first child is not a paragraph never leaks its number into
+        # a later sibling.
+        def with_clause_number(number, names)
+          previous = @pending_clause_number
+          @pending_clause_number = { number: number, names: names }
+          yield
+        ensure
+          @pending_clause_number = previous
+        end
+
+        # The visible clause number carried by a heading's
+        # <span class="fmt-caption-label">, or nil when it has none.
+        def heading_number_text(node)
+          return unless ordered?(node)
+
+          each_ordered_element(node) do |type, obj|
+            next unless type == :element && caption_label?(obj)
+
+            text = collect_all_text(obj).to_s.strip
+            return text unless text.empty?
+          end
+          nil
+        end
+
         # Whether a heading's body is empty after autonum carriers are
         # stripped. Untitled sub-clauses have <fmt-title> with only the
-        # section number + delimiter — they should skip the heading
-        # paragraph entirely so the body paragraph follows directly.
+        # section number + delimiter — they emit no heading paragraph;
+        # SectionRenderer queues the number onto the first body paragraph.
         def heading_body_empty?(node)
           text = collect_heading_body_text(node)
           text.nil? || text.strip.empty?
@@ -559,14 +590,27 @@ module IsoDoc
           return collect_all_text(paragraph) unless ordered?(paragraph)
 
           segments = []
+          twins = fmt_stem_source_ids(paragraph)
           each_ordered_element(paragraph) do |type, obj|
             case type
             when :text then segments << obj.to_s
             when :element
-              segments << (stem_asciimath_text(obj) || collect_all_text(obj))
+              next if fmt_twin_of_stem?(obj, twins)
+
+              segments << footnote_element_text(obj)
             end
           end
           segments.join
+        end
+
+        # A stem's asciimath, except that a UnitsML macro is source
+        # notation: the rendered unit is what the reader should see.
+        def footnote_element_text(element)
+          text = stem_asciimath_text(element)
+          return collect_all_text(element) unless text
+          return text unless text.include?("unitsml(")
+
+          stem_fallback_text(element)
         end
 
         # Create a footnote whose body paragraph carries the
@@ -585,6 +629,41 @@ module IsoDoc
           return nil unless @comment_id_lookup
 
           @comment_id_lookup.call(annotation_target_id)
+        end
+
+        # Whether an untitled clause's number is still queued.
+        def pending_clause_number?
+          !@pending_clause_number.nil?
+        end
+
+        # Emit the queued clause number into +para+ (no-op when none is
+        # queued) and drop the queue. Used by renderers that build their
+        # paragraphs without going through #render (split paragraphs).
+        def emit_pending_clause_number(para)
+          pending = @pending_clause_number
+          return unless pending
+
+          @pending_clause_number = nil
+          emit_clause_number(para, pending[:number], pending[:names])
+        end
+
+        # Emit "<number><tab>" as bold runs wrapped in the bookmarks +names+
+        # (when given): the clause-number lead used on a paragraph. With
+        # no +number+ the bookmarks are emitted alone, as empty ranges.
+        def emit_clause_number(para, number, names)
+          bm_ids = Array(names).compact.map do |name|
+            bm_id = @context.next_bookmark_id.to_s
+            para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, name: name)
+            bm_id
+          end
+          if number
+            number_run = bold_clause_run(text: number)
+            # Templates without the :clause_number mapping (ISO Simple) keep bold only.
+            apply_run_char_style(number_run, :clause_number)
+            para << number_run
+            para << bold_clause_run(tab: Uniword::Wordprocessingml::Tab.new)
+          end
+          bm_ids.reverse_each { |id| para << Uniword::Wordprocessingml::BookmarkEnd.new(id: id) }
         end
 
         private
@@ -653,6 +732,24 @@ module IsoDoc
             end
             para << line unless line.empty?
           end
+        end
+
+        # ── Clause number on an untitled clause's first paragraph ─────
+
+        def paragraph_block?(node)
+          node.is_a?(Metanorma::Document::Components::Paragraphs::ParagraphBlock)
+        end
+
+        def caption_label?(element)
+          element.is_a?(Metanorma::Document::Components::Inline::SpanElement) &&
+            element.class_attr == "fmt-caption-label"
+        end
+
+        def bold_clause_run(**attrs)
+          run = Uniword::Wordprocessingml::Run.new(**attrs)
+          run.properties = Uniword::Wordprocessingml::RunProperties.new
+          apply_bold_to_run(run)
+          run
         end
 
         # ── Heading rendering (autonum stripping) ─────────────────────

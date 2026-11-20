@@ -72,7 +72,7 @@ module IsoDoc
           end
 
           def with_bibitem_bookmark(bibitem, para)
-            name = bibitem_bookmark_name(bibitem)
+            name = @context.claim_bookmark_name(bibitem_bookmark_name(bibitem))
             return yield unless name
 
             bm_id = @context.next_bookmark_id.to_s

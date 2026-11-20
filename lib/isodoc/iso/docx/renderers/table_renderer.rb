@@ -14,6 +14,7 @@ module IsoDoc
         class TableRenderer
           include Base
           include ModelUtils
+          include TableFootnotes
 
           def render(table, doc)
             render_table_name(table, doc)
@@ -38,7 +39,11 @@ module IsoDoc
             outer.width(table.width) if table.width
 
             outer.row do |row|
-              row.cell { |c| c << inner_table_model }
+              row.cell do |c|
+                c << inner_table_model
+                # OOXML: a w:tc must end with a w:p, not a nested w:tbl.
+                c << Uniword::Builder::ParagraphBuilder.new
+              end
             end
             outer.row do |row|
               row.cell { |c| append_attachments_to_cell(c, table) }
@@ -80,11 +85,17 @@ module IsoDoc
           end
 
           def build_table_sections(table, tbl)
-            @context.with_table do
-              render_table_section(table.thead, tbl, :header)
-              render_table_section(table.tbody, tbl, :body)
-              render_table_section(table.tfoot, tbl, :footer)
+            footnotes = collecting_table_footnotes do
+              @context.with_table do
+                render_table_section(table.thead, tbl, :header)
+                render_table_section(table.tbody, tbl, :body)
+                render_table_section(table.tfoot, tbl, :footer)
+              end
             end
+            return if footnotes.empty?
+
+            # The submitted ISO tables set table footnotes in Note style.
+            append_table_footnotes(tbl, footnotes, columns: table_column_count(tbl.model), style_key: :note)
           end
 
           # Era C tables in presentation XML carry <note>, <example>,
@@ -116,24 +127,64 @@ module IsoDoc
             rows = section.tr
             return unless rows
 
-            Array(rows).each { |tr| render_table_row(tr, tbl, row_type) }
+            spans = TableRowSpans.new
+            Array(rows).each { |tr| render_table_row(tr, tbl, row_type, spans) }
           end
 
-          def render_table_row(table_row, tbl, row_type)
+          def render_table_row(table_row, tbl, row_type, spans)
+            spans.start_row
             tbl.row do |row|
-              cells = Array(table_row.th) + Array(table_row.td)
-              cells.each { |cell| render_row_cell(cell, row, row_type) }
+              row_cells(table_row).each do |cell|
+                render_continuations(spans, row)
+                render_row_cell(cell, row, row_type, spans)
+              end
+              render_continuations(spans, row)
+              spans.each_trailing_continuation do |gap, n|
+                gap.times { add_empty_cell(row) }
+                add_continuation(row, n)
+              end
             end
           end
 
-          def render_row_cell(cell, row, row_type)
+          # Cells in source order; th and td may be mixed within a row.
+          def row_cells(table_row)
+            if ordered?(table_row)
+              cells = []
+              each_ordered_element(table_row, allow_filter: %i[th td]) do |type, obj|
+                cells << obj if type == :element
+              end
+              return cells unless cells.empty?
+            end
+            Array(table_row.th) + Array(table_row.td)
+          end
+
+          def render_continuations(spans, row)
+            spans.each_continuation_here { |n| add_continuation(row, n) }
+          end
+
+          def add_empty_cell(row)
+            row.cell { |c| c << Uniword::Builder::ParagraphBuilder.new }
+          end
+
+          def add_continuation(row, colspan)
+            row.cell do |c|
+              c.column_span(colspan) if colspan > 1
+              c.model.properties.v_merge = TableRowSpans.continuation
+              c << Uniword::Builder::ParagraphBuilder.new
+            end
+          end
+
+          def render_row_cell(cell, row, row_type, spans)
             return unless cell
 
-            col_span = cell.colspan
+            col_span = [cell.colspan.to_i, 1].max
+            row_span = [cell.rowspan.to_i, 1].max
             row.cell do |c|
-              c.column_span(col_span.to_i) if col_span
+              c.column_span(col_span) if col_span > 1
+              c.model.properties.v_merge = TableRowSpans.restart if row_span > 1
               render_cell_content(cell, c, row_type)
             end
+            spans.place(col_span, row_span)
           end
 
           def render_cell_content(cell, cell_builder, row_type)
@@ -240,9 +291,9 @@ module IsoDoc
           end
 
           def ensure_table_grid(table_model, width)
-            return if table_model.grid
-
             cols = table_column_count(table_model)
+            return widen_grid(table_model.grid, cols) if table_model.grid
+
             col_width = column_width(cols, width)
             grid_cols = Array.new(cols) do
               Uniword::Wordprocessingml::GridCol.new(width: col_width)
@@ -251,8 +302,22 @@ module IsoDoc
               Uniword::Wordprocessingml::TableGrid.new(columns: grid_cols)
           end
 
+          # Uniword sizes the grid by cell count, which undercounts rows
+          # that use gridSpan; add the missing columns.
+          def widen_grid(grid, cols)
+            (cols - grid.columns.size).times do
+              grid.columns << Uniword::Wordprocessingml::GridCol.new
+            end
+          end
+
           def table_column_count(table_model)
-            table_model.rows.map { |r| r.cells&.count || 0 }.max || 0
+            table_model.rows.map { |r| row_grid_width(r) }.max || 0
+          end
+
+          def row_grid_width(row)
+            Array(row.cells).sum do |cell|
+              [cell.properties&.grid_span&.value.to_i, 1].max
+            end
           end
 
           def column_width(cols, width)

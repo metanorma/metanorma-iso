@@ -7,6 +7,19 @@ RSpec.describe IsoDoc::Iso::Docx::StyleResolver do
   let(:context) { IsoDoc::Iso::Docx::Context.new }
   let(:resolver) { described_class.new(mapping, context) }
 
+  # Default DIS mapping with annex_heading2 removed; the file is read at
+  # construction, so the temp directory is safe to remove afterwards.
+  let(:resolver_without_annex2) do
+    data = YAML.load_file(IsoDoc::Iso::DocxTemplates.style_mapping_path(:dis))
+    data["paragraph_styles"].delete("annex_heading2")
+    Dir.mktmpdir do |dir|
+      path = File.join(dir, "style_mapping.yml")
+      File.write(path, YAML.dump(data))
+      custom = IsoDoc::Iso::DocxStyleMapping.new(config_path: path)
+      described_class.new(custom, context)
+    end
+  end
+
   describe "#paragraph_style" do
     it "delegates to style mapping" do
       expect(resolver.paragraph_style(:note)).to eq("Note")
@@ -39,6 +52,18 @@ RSpec.describe IsoDoc::Iso::Docx::StyleResolver do
     it "falls back to body heading for level 1 inside annex" do
       context.with_annex do
         expect(resolver.heading_style(1)).to eq("Heading1")
+      end
+    end
+
+    it "falls back to the plain heading style inside annex when annex_headingN is unmapped" do
+      context.with_annex do
+        expect(resolver_without_annex2.heading_style(2)).to eq("Heading2")
+      end
+    end
+
+    it "heading_style! does not raise for an unmapped annex level with a body heading" do
+      context.with_annex do
+        expect(resolver_without_annex2.heading_style!(2)).to eq("Heading2")
       end
     end
   end

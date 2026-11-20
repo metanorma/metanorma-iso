@@ -68,7 +68,8 @@ module IsoDoc
         # any nested subsections (the boilerplate <clause> wrapper).
         def render_section(section, doc, title_style_key, body_style_key)
           render_title(section, doc, title_style_key)
-          render_paragraphs(section, doc, body_style_key)
+          first = render_paragraphs(section, doc, body_style_key).first
+          anchor(section, first) if first
 
           return unless section.class.attributes.key?(:subsection)
 
@@ -99,9 +100,9 @@ module IsoDoc
         end
 
         def render_paragraphs(section, doc, style_key)
-          return unless section.class.attributes.key?(:paragraphs)
+          return [] unless section.class.attributes.key?(:paragraphs)
 
-          Array(section.paragraphs).each do |content|
+          Array(section.paragraphs).map do |content|
             para = Uniword::Builder::ParagraphBuilder.new
             para.style = @resolver.paragraph_style(
               paragraph_style_key(content, style_key),
@@ -112,12 +113,28 @@ module IsoDoc
               para << content
             when Lutaml::Model::Serializable
               @inline.render(content, para)
+              trim_after_breaks(para) if address_paragraph?(content)
+              anchor(content, para)
             else
               para << content.to_s
             end
 
             doc << para
+            para
           end
+        end
+
+        # The source writes each address line as "<br/> line"; Word already
+        # starts the line after the break, so the space would indent it.
+        def trim_after_breaks(para)
+          para.model.runs.each_cons(2) do |previous, run|
+            run.substitute(/\A\s+/, "") if previous.break
+          end
+        end
+
+        # Keep a statement's (or its paragraph's) id as a bookmark.
+        def anchor(node, para)
+          Renderers::Anchoring.anchor(@inline.context, node, para)
         end
 
         # The ISO copyright address paragraph (contains "copyright office")

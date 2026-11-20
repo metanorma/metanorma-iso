@@ -90,20 +90,19 @@ RSpec.describe "Rice DOCX structural invariants" do
   end
 
   describe "Footnote references collapse identical footnotes" do
-    # Identical <fn> elements (same target/identity) in the source
-    # should share ONE footnote definition in footnotes.xml and one
-    # footnoteReference id. The rice document has 22 <fn> elements
-    # but only 16 distinct footnotes — duplicates are collapsed by
-    # FootnoteRenderer's cache.
-    it "multiple references may share an id (collapsed)" do
+    # The repeated <fn> elements in the rice document are table
+    # footnotes. Like spec/examples/rice.docx, each table lists every
+    # footnote body once in its last row, however often a cell cites it.
+    it "lists each repeated table footnote once in its table's last row" do
       ns = { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" }
-      refs = doc_xml.xpath("//w:footnoteReference", ns).map { |e| e["w:id"] }
-      ref_counts = refs.tally
-      # At least one id should be reused (the rice doc has 6 duplicate fns)
-      reused = ref_counts.select { |_, c| c > 1 }
-      expect(reused).not_to be_empty,
-        "expected at least one footnote id to be reused across references " \
-        "(rice document has duplicate <fn> elements): #{ref_counts.inspect}"
+      bodies = doc_xml.xpath("//w:tbl", ns).filter_map do |tbl|
+        cells = tbl.xpath("./w:tr[last()]/w:tc", ns)
+        next unless cells.size == 1
+
+        cells.first.xpath(".//w:p", ns).map { |p| p.xpath(".//w:t", ns).map(&:text).join }
+      end
+      expect(bodies).not_to be_empty
+      bodies.each { |texts| expect(texts).to eq(texts.uniq) }
     end
 
     it "every referenced footnote id exists in footnotes.xml" do
@@ -375,14 +374,17 @@ RSpec.describe "Rice DOCX structural invariants" do
         .map { |p| p.xpath(".//w:t", ns).map(&:text).join }
     end
 
-    it "renders a), b) and c) as Figuretitle paragraphs directly before the Figure C.2 caption" do
+    def titles_before_caption
       caption = titles.index { |t| t.start_with?("Figure C.2") }
-      expect(caption).to be >= 3
-      expect(titles[(caption - 3)...caption]).to match([
-        a_string_matching(/\Aa\)[[:space:]]+Initial stages: No grains/),
-        a_string_matching(/\Ab\)[[:space:]]+Intermediate stages: Some fully/),
-        a_string_matching(/\Ac\)[[:space:]]+Final stages: All kernels/),
-      ])
+      caption.to_i >= 3 ? titles[(caption - 3)...caption] : []
+    end
+
+    it "renders a), b) and c) as Figuretitle paragraphs directly before the Figure C.2 caption" do
+      expect(titles_before_caption).to match(
+        [a_string_matching(/\Aa\)[[:space:]]+Initial stages: No grains/),
+         a_string_matching(/\Ab\)[[:space:]]+Intermediate stages: Some fully/),
+         a_string_matching(/\Ac\)[[:space:]]+Final stages: All kernels/)],
+      )
     end
   end
 end

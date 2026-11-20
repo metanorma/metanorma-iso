@@ -358,6 +358,7 @@ module IsoDoc
           document = Nokogiri::XML(xml, &:huge)
           return xml if document.errors.any? { |e| e.error? || e.fatal? }
 
+          prune_stem_twins(document)
           document.xpath("//*[local-name()='stem' or local-name()='fmt-stem']" \
                          "[not(ancestor::*[local-name()='formula'])]").each do |stem|
             container = number_stem_container(stem)
@@ -375,6 +376,63 @@ module IsoDoc
             end
           end
           document.to_xml(save_with: Nokogiri::XML::Node::SaveOptions::AS_XML)
+        end
+
+        # Collapses each semantic <stem> / <fmt-stem> twin pair (the
+        # fmt-stem's semx source is the stem's id, both on one parent)
+        # so the model parse reads the MathML once instead of twice.
+        #
+        # Most parents model <fmt-stem>, and the renderer already skips
+        # the semantic twin there (fmt_twin_of_stem?), so the stem is
+        # dropped. A <semx> parent (a table name, for example) does not
+        # model <fmt-stem>: the parse discards the twin and the stem is
+        # the only copy rendered, so there the stem is kept and takes the
+        # fmt-stem's content, the formatted value, and the fmt-stem is dropped.
+        def prune_stem_twins(document)
+          document.xpath("//*[local-name()='fmt-stem']").each do |fmt|
+            parent = fmt.parent
+            next unless parent&.element?
+
+            twin = fmt.at_xpath("./*[local-name()='semx']")
+            stem = twin && parent.element_children.find do |child|
+              child.name == "stem" && child["id"] == twin["source"]
+            end
+            next unless stem && prunable_in?(parent, twin)
+
+            if parent.name == "semx"
+              adopt_fmt_content(stem, fmt, twin)
+            else
+              stem.unlink
+            end
+          end
+        end
+
+        # A formula falls back to its semantic stem when the fmt-stem
+        # carries no MathML (FormulaRenderer#extract_mathml): keep it then.
+        def prunable_in?(parent, twin)
+          parent.name != "formula" ||
+            !twin.at_xpath(".//*[local-name()='math']").nil?
+        end
+
+        # The kept stem carries the presentation rendering (ISO decimal
+        # comma, digit grouping); its own MathML holds the raw number.
+        def adopt_fmt_content(stem, fmt, twin)
+          stem.children = twin.children
+          fmt.unlink
+          sync_number_copies(stem)
+        end
+
+        # A number-only stem is rendered from its asciimath copy, which still
+        # holds the raw number; make it match the formatted MathML.
+        def sync_number_copies(stem)
+          maths = stem.element_children.select { |child| child.name == "math" }
+          number = maths.one? && !loose_text?(stem) &&
+            math_number_text(maths.first)
+          return unless number
+
+          stem.element_children.each do |child|
+            child.content = number if NUMBER_STEM_COPIES.include?(child.name)
+          end
         end
 
         # fmt-stem wraps its MathML in a semx that points back to the
@@ -434,6 +492,7 @@ module IsoDoc
           if @template_path && File.exist?(@template_path)
             @template_root ||= Uniword.load(@template_path)
             root = @template_root
+            @template_margins ||= SectionManager.template_margins(root)
             if root.body
               root.body.paragraphs.clear
               root.body.tables.clear
@@ -553,6 +612,8 @@ module IsoDoc
         #   [SECTPR — body section, arabic page numbers]
 
         def visit_root(model, doc)
+          @context.in_amendment = AmendmentDoctype.amendment?(model)
+
           # ── Render annotations (comments) before body traversal ──
           if model.annotation_container
             @comment_renderer.render(model.annotation_container, 
@@ -562,6 +623,7 @@ module IsoDoc
           # ── Section 1: Cover page ──
           @cover_renderer.render(model.bibdata, doc)
           @boilerplate_renderer.render_license(model.boilerplate, doc)
+          @section_manager.template_margins = @template_margins || {}
           @section_manager.insert_cover_section(doc)
 
           # ── Copyright page (still cover section's next page) ──
@@ -569,8 +631,11 @@ module IsoDoc
           doc.page_break
 
           # ── Section 2: Front matter (roman numerals) ──
-          @toc_builder.render(model, doc)
-          doc.page_break
+          # Amendments carry no table of contents.
+          unless @context.in_amendment
+            @toc_builder.render(model, doc)
+            doc.page_break
+          end
 
           @preface_renderer.render(model.preface, doc) if model.preface
 
@@ -689,9 +754,48 @@ module IsoDoc
         # Dispatch entry point used by Renderers::Walker.
         def dispatch(node, doc)
           renderer = @registry.lookup(node.class)
-          return renderer.render(node, doc) if renderer
+          return walk_mixed_content(node, doc) unless renderer
+          return renderer.render(node, doc) unless ANCHORED_BLOCKS
+                                                   .any? { |k| node.is_a?(k) }
 
-          walk_mixed_content(node, doc)
+          render_anchored(renderer, node, doc)
+        end
+
+        # Blocks whose renderers emit plain paragraphs without a bookmark
+        # of their own: the block's id/anchor lands on the first paragraph
+        # it produces, so the id stays a valid anchor target.
+        ANCHORED_BLOCKS = [
+          Metanorma::Document::Components::MultiParagraph::AdmonitionBlock,
+          Metanorma::Document::Components::MultiParagraph::QuoteBlock,
+          Metanorma::Document::Components::AncillaryBlocks::ExampleBlock,
+          Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock,
+          Metanorma::Document::Components::Blocks::NoteBlock,
+          Metanorma::Document::Components::Lists::OrderedList,
+          Metanorma::Document::Components::Lists::UnorderedList,
+          Metanorma::Document::Components::Lists::DefinitionList,
+        ].freeze
+
+        def render_anchored(renderer, node, doc)
+          paragraphs = container_paragraphs(doc)
+          before = paragraphs&.size
+          result = renderer.render(node, doc)
+          first = paragraphs && paragraphs.drop(before).find do |element|
+            element.is_a?(Uniword::Wordprocessingml::Paragraph) ||
+              element.is_a?(Uniword::Builder::ParagraphBuilder)
+          end
+          Renderers::Anchoring.anchor(@context, node, first) if first
+          result
+        end
+
+        # The paragraph list of +doc+: document body, table cell, or the
+        # table attachment buffer (which holds paragraphs and tables).
+        def container_paragraphs(doc)
+          return doc.paragraphs if doc.is_a?(Renderers::TableAttachmentBuffer)
+
+          model = doc.respond_to?(:model) ? doc.model : nil
+          return unless model
+
+          model.respond_to?(:body) ? model.body&.paragraphs : model.paragraphs
         end
 
         # ── Tree walking ───────────────────────────────────────────────

@@ -73,9 +73,25 @@ The cover page layout differs significantly between output and reference. The re
 ## Location
 - `lib/isodoc/iso/docx/adapter.rb` — cover page rendering
 
-## Status: warning + spacer DONE (lane/1728-cover-warning); rest partial
-- Warning styles: `zzwarninghdr`/`zzwarning` added to the **iso-simple** template (template.dotx styles.xml, styles.yml, style_mapping.yml `warning_header`/`warning`). Chosen for simple only: reference rice.docx (a CD, simple template, stages 00-30) uses them; the iso-dis template has no such styles (Era C uses Notice), so DIS keeps Notice.
-- nbsp spacer: real structure. Reference para 12 is U+00A0 with no style, closing the zzwarning box before the cover sectPr. `BoilerplateRenderer#render_license` now appends it after a license statement (no statement, no spacer).
-- Copyright block placement: already correct. `visit_root` renders the copyright after `insert_cover_section` (reference: zzCopyright starts after the cover sectPr); address consolidation is P1-005 (DONE).
-- Proof: spec/isodoc/docx/boilerplate_renderer_spec.rb "#render_license on the simple (WD/CD) template" (3 of 4 examples red before the fix, all green after).
-- Still open: standalone doc number, TC/SC line, spelled-out edition, single-paragraph title, stage-badge order.
+## Status (2026-11-19): partial
+
+Measured by reconverting a CD-stage (stage 30) presentation XML built from
+`spec/examples/rice.adoc` (the committed `rice.presentation.xml` is a 2023 DIS
+document, so it cannot be compared with the 2016 CD `rice.docx`).
+
+Cover paragraphs 0-8 now equal the reference text: `17301`,
+`ISO/CD 17301-1 (draft 2016-05-01)`, `TC 34/SC 4/WG 3`, `Second edition`,
+`Date: 2016-05-01`, one em-dash title paragraph, blank, `CD stage`, blank.
+`CoverRenderer` renders this compact layout for stages below 40 (the stage
+that already selects the simple template); DIS and later keep the labelled
+DIS cover. Spec: `cover_renderer_spec.rb` "compact cover for stages before DIS".
+
+Warning styles and spacer (lane/1728-cover-warning):
+- `zzwarninghdr`/`zzwarning` added to the iso-simple template (template.dotx
+  styles.xml, styles.yml, style_mapping.yml `warning_header`/`warning`). The
+  iso-dis template has no such styles, so DIS keeps Notice.
+- Reference para 12 is a U+00A0 spacer with no style, closing the zzwarning box.
+  `BoilerplateRenderer#render_license` appends it after a license statement.
+  Spec: boilerplate_renderer_spec.rb "#render_license on the simple (WD/CD) template".
+- Copyright placement is already correct (it follows the cover sectPr); address
+  consolidation is P1-005 (DONE).

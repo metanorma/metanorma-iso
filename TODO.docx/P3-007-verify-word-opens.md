@@ -1,6 +1,6 @@
 # TODO 005: Verify DOCX opens in Word without "unreadable content" error
 
-## Status: TODO (requires manual Word testing)
+## Status: DONE (verified in Microsoft Word, 2026-11-19)
 
 ## Context
 All known XML-level fixes have been applied:
@@ -29,3 +29,7 @@ Generated: `data/rice_fixed9.docx`
 1. Open `data/rice_fixed9.docx` in Microsoft Word
 2. Verify no "unreadable content" dialog appears
 3. If dialog still appears, extract and compare with Word's repaired version
+
+## Verification (2026-11-19)
+- rice.presentation.xml rendered to DOCX at ac2393fb (lane/1728-cards-batch4), opened in Microsoft Word read-only: no "unreadable content" or repair dialog.
+- Table of contents entries clicked in Word jump to their headings.

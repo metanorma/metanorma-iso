@@ -1,3 +1,16 @@
+---
+status: resolved-no-code-change
+---
+> **Status 2026-11-19 (lane/1728-rstyles).** Measured on rice, DIS output: 372 Hyperlink,
+> 13 FootnoteReference (all 12 footnoteReference runs plus the marker suffix), 7 zzmovetofollowing;
+> the 6-Hyperlink figure below is stale. Inline stems render as OMML (30 m:oMath), so the
+> `stem` rStyle does not apply. `citesec/citeapp/citefig/citetbl`, `stdpublisher0/stddocnumber/
+> stdyear/stddocpartnumber/stddoctitle`, `notelabel/termnotelabel/examplelabel/tablefootnoteref`
+> are 2016-CD styles that the DIS template does not define and `data/iso-dis/style_mapping.yml`
+> `excluded_styles` bans on purpose (StyleMappingValidator enforces it; adding them turned
+> style_mapping_validator_spec red). Not a gap. The presentation spans keep their text; the DOCX
+> writer drops an rStyle the template lacks. Pinned by spec/isodoc/docx/semantic_run_styles_spec.rb.
+
 # 067: Fix Missing rStyle (Run-Level Styles)
 
 ## Problem

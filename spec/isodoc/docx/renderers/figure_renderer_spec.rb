@@ -95,19 +95,40 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::FigureRenderer do
   end
 
   # Presentation XML keeps the semantic <stem> and adds an <fmt-stem> twin
-  # inside the caption's <semx>; the caption must show the stem once, as
-  # text, the way body paragraphs do.
+  # inside the caption's <semx>; the caption must show the stem once, as an
+  # inline OMML equation (Word supports OMML in captions).
   def caption_stem_xml
     '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mrow><mn>80</mn><mo rspace="thickmathspace">&#x2062;</mo><mrow xref="U_km"><mstyle mathvariant="normal"><mi>km</mi></mstyle></mrow></mrow></math><asciimath>80 "unitsml(km)"</asciimath></stem>' \
       '<fmt-stem type="MathML"><semx element="stem" source="s1"><math xmlns="http://www.w3.org/1998/Math/MathML"><mn>80</mn></math><asciimath>80 "unitsml(km)"</asciimath></semx></fmt-stem>'
   end
 
-  it "keeps a stem inside the figure caption, once, as text" do
+  it "keeps a stem inside the figure caption, once, as OMML" do
     name = "<fmt-name><semx element=\"name\">Fig #{caption_stem_xml}</semx></fmt-name>"
     xml = minimal_iso_xml("<sections><clause id=\"c1\"><title>Scope</title><figure id=\"f1\">%s</figure></clause></sections>" % name)
     convert_and_extract(adapter, xml) do |pkg|
       para = pkg.document.body.paragraphs.find { |x| para_style_value(x) == "Figuretitle" }
-      expect(para.runs.map { |r| run_text(r) }.join).to eq("Fig 80 km")
+      omaths = Nokogiri::XML(para.to_xml).xpath("//m:oMath", "m" => "http://schemas.openxmlformats.org/officeDocument/2006/math")
+      text = para.runs.map { |r| run_text(r) }.join
+      expect([text, omaths.map { |m| m.xpath(".//m:t", "m" => "http://schemas.openxmlformats.org/officeDocument/2006/math").map(&:text) }])
+        .to eq(["Fig ", [%w[80 km]]])
+    end
+  end
+
+  def key_xml
+    minimal_iso_xml(<<~INNER)
+      <sections><clause id="c1"><title>Scope</title>
+        <figure id="f1"><name>Figure 1</name>
+          <key><name>Key</name><dl><dt>X</dt><dd><p>the x axis</p></dd></dl></key>
+        </figure>
+      </clause></sections>
+    INNER
+  end
+
+  it "renders the figure key's name as a bold paragraph before its entries" do
+    convert_and_extract(adapter, key_xml) do |pkg|
+      texts = pkg.document.body.paragraphs.map { |x| x.runs.map { |r| run_text(r) }.join }
+
+      expect(texts.each_cons(2)).to include(%w[Key X])
     end
   end
 end

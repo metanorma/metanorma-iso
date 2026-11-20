@@ -72,6 +72,7 @@ module IsoDoc
             para = build_paragraph(style_key)
             append_label(para, label_text(node))
             @inline_renderer.render(first, para)
+            anchor_paragraph(first, para)
             @context.mark_zone_paragraph
             doc << para
             children.drop(1).each { |child| @walker.dispatch(child, doc) }

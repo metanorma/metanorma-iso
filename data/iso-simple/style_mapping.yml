@@ -21,6 +21,7 @@ paragraph_styles:
 
   # Annex headings
   annex: ANNEX
+  annex_heading1: Heading1   # no distinct annex level-1 style; explicit, not a fallback
   annex_heading2: a2
   annex_heading3: a3
   annex_heading4: a4

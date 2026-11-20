@@ -27,5 +27,14 @@ In `render_copyright_block`, consolidate all address lines into a single paragra
 ## Location
 - `lib/isodoc/iso/docx/adapter.rb` — `render_copyright_block`
 
-## Status: DONE (residual)
-Copyright address now rendered once in zzCopyrightaddress with email/website kept; proof: spec/isodoc/docx/boilerplate_renderer_spec.rb "with the full ISO address paragraph" (red on e0c0a1da, green after).
+## Status: DONE (verified at base 6455ca2f, no code change)
+Re-measured by converting spec/examples/rice.presentation.xml with Processor#output(..., :docx) and comparing with spec/examples/rice.docx.
+
+- Reference: ONE paragraph, style `zzaddress` (ind left 505), lines separated by `<w:r><w:br/><w:t>line</w:t></w:r>`, email as a hyperlink run, `boilerplate-address` bookmark.
+- Output: ONE paragraph, style `zzCopyrightaddress`, lines separated by `<w:r><w:br/></w:r>`, email kept as a hyperlink run, `boilerplate-address` bookmark kept. The five-paragraph split is gone (fixed earlier; spec/isodoc/docx/boilerplate_renderer_spec.rb "with the full ISO address paragraph", 16 examples green).
+
+Resolved on lane/1728-cards-batch4 (commit "Trim leading space after line breaks in the copyright address block"):
+- Leading space after a break: `BoilerplateRenderer#trim_after_breaks` strips leading whitespace from the run that follows a `w:br`, only in the copyright address paragraph (the source writes `<br/> line`). Other paragraphs keep their spaces. Spec: boilerplate_renderer_spec "starts each line after a break without a leading space".
+
+Remaining difference, deliberately not changed:
+- Style id: the DIS template (template.docx and data/iso-dis/styles.yml) defines `zzCopyrightaddress` and has no `zzaddress`. The reference is a CD 2016 document using a CD-era style. Emitting `zzaddress` would reference a style missing from the DIS template, so Word would fall back to Normal. The DIS style is the correct id for this template.

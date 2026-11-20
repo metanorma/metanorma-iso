@@ -2929,6 +2929,24 @@ style_library:
         keep_next: false
         keep_lines: false
         page_break_before: false
+    variant-title-toc:
+      id: variant-title-toc
+      type: paragraph
+      name: variant-title-toc
+      based_on: Normal
+      ui_priority: '99'
+      hidden: false
+      semi_hidden: true
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '100'
+          after: '100'
+          line: '240'
+        alignment: left
+        keep_next: false
+        keep_lines: false
+        page_break_before: false
     zzContents:
       id: zzContents
       type: paragraph
@@ -3718,6 +3736,14 @@ style_library:
       hidden: false
       semi_hidden: true
       unhide_when_used: true
+    zzmovetofollowing:
+      id: zzmovetofollowing
+      type: character
+      name: zzmovetofollowing
+      based_on: DefaultParagraphFont
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
     BodyTextIndent3Char:
       id: BodyTextIndent3Char
       type: character

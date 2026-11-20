@@ -12,6 +12,7 @@ module IsoDoc
         class DefinitionListRenderer
           include Base
           include ListAttachments
+          include TableFootnotes
 
           def render(definition_list, doc)
             case @context.zone
@@ -35,9 +36,7 @@ module IsoDoc
 
             table = formula_key_table
             definitions = Array(definition_list.dd)
-            footnotes = {}
-            handler = ->(note, para) { collect_table_footnote(note, para, footnotes) }
-            @context.with_formula_key_footnotes(handler) do
+            footnotes = collecting_table_footnotes do
               terms.each_with_index do |term, index|
                 table.row do |row|
                   formula_cell(row, term)
@@ -45,7 +44,8 @@ module IsoDoc
                 end
               end
             end
-            append_table_footnotes(table, footnotes) unless footnotes.empty?
+            # The ISO templates have no tablefootnote paragraph style.
+            append_table_footnotes(table, footnotes, columns: 2, style_key: :footnote_text) unless footnotes.empty?
             doc << table
           end
 
@@ -65,9 +65,11 @@ module IsoDoc
 
           def formula_cell(row, node)
             row.cell do |cell|
-              formula_cell_content(node).each do |part|
+              formula_cell_content(node).each_with_index do |part, i|
                 para = build_paragraph(:table_body)
                 @inline_renderer.render(part, para) if part
+                anchor_entry(part, para) if part
+                anchor_paragraph(node, para) if i.zero? && !part.equal?(node)
                 cell << para
               end
             end
@@ -81,42 +83,6 @@ module IsoDoc
             end
 
             paragraphs
-          end
-
-          def collect_table_footnote(note, para, footnotes)
-            label = note.reference
-
-            append_footnote_label(para, label) unless note.hiddenref
-            body = Array(@context.formula_footnote_bodies).find { |entry| entry.id == note.target }
-            paragraphs = body ? Array(body.semx&.p) : Array(note.p)
-            footnotes[note.target || label] ||= [label, paragraphs] unless paragraphs.empty?
-          end
-
-          def append_footnote_label(para, label)
-            properties = Uniword::Wordprocessingml::RunProperties.new(
-              vertical_align: Uniword::Properties::VerticalAlign.new(value: "superscript"),
-            )
-            para << Uniword::Wordprocessingml::Run.new(text: label, properties: properties)
-          end
-
-          def append_table_footnotes(table, footnotes)
-            table.row do |row|
-              row.cell do |cell|
-                cell.column_span(2)
-                footnotes.each_value do |label, paragraphs|
-                  paragraphs.each_with_index do |part, index|
-                    # The ISO templates have no tablefootnote paragraph style.
-                    para = build_paragraph(:footnote_text)
-                    if index.zero?
-                      append_footnote_label(para, label)
-                      para << " "
-                    end
-                    @inline_renderer.render(part, para)
-                    cell << para
-                  end
-                end
-              end
-            end
           end
 
           def render_figure_key(definition_list, doc)
@@ -150,7 +116,17 @@ module IsoDoc
           def render_cell_paragraph(node, style_key)
             para = build_paragraph(style_key)
             @inline_renderer.render(node, para)
+            anchor_entry(node, para)
             para
+          end
+
+          # A dt/dd (and the p children rendered into the same paragraph)
+          # keep their id as a bookmark on the paragraph that carries them.
+          def anchor_entry(node, para)
+            anchor_paragraph(node, para)
+            Array(attribute_value(node, :p)).each do |p|
+              anchor_paragraph(p, para)
+            end
           end
 
           def render_general(definition_list, doc)
@@ -170,12 +146,14 @@ module IsoDoc
           def append_pair(doc, term, definition, term_key, definition_key)
             term_para = build_paragraph(term_key)
             @inline_renderer.render(term, term_para)
+            anchor_entry(term, term_para)
             doc << term_para
 
             return unless definition
 
             definition_para = build_paragraph(definition_key)
             @inline_renderer.render(definition, definition_para)
+            anchor_entry(definition, definition_para)
             doc << definition_para
           end
         end

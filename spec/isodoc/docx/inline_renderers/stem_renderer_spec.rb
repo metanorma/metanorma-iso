@@ -48,6 +48,17 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     expect(built.text).to eq("")
   end
 
+  # rice "100 mm ± 5 mm": the plus-minus is a lone <mo> stem. It is not
+  # lost: it renders as an inline oMath whose m:t holds the sign (a w:t-only
+  # text extractor does not see it, which is how it was misread as dropped).
+  it "keeps a lone plus-minus operator stem as an oMath carrying the sign" do
+    stem = Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
+      '<fmt-stem type="MathML"><semx element="stem" source="s1"><math ' \
+      'xmlns="http://www.w3.org/1998/Math/MathML"><mo>±</mo></math></semx></fmt-stem>',
+    )
+    expect(omml_tokens(stem)).to eq([["±"]])
+  end
+
   it "renders a presentation fmt-stem via the semx-wrapped MathML as OMML" do
     stem = Metanorma::Document::Components::Inline::FmtStemElement.from_xml(
       '<fmt-stem type="MathML"><semx element="stem" source="s1">' \
@@ -78,6 +89,22 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     )
   end
 
+  def g_n_stem
+    Metanorma::Document::Components::TextElements::StemElement.from_xml(
+      '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
+      "<msub><mi>g</mi><mi>n</mi></msub></math><asciimath>g_n</asciimath></stem>",
+    )
+  end
+
+  # ISO 2533 has 957 non-numeric stems but only 236 distinct ones; the
+  # Plurimath conversion (~26 ms) runs once per distinct MathML string.
+  it "converts a repeated MathML stem once and renders it each time", :aggregate_failures do
+    allow(Plurimath::Mathml::Parser).to receive(:new).and_call_original
+
+    2.times { expect(omml_tokens(g_n_stem)).to eq([%w[g n]]) }
+    expect(Plurimath::Mathml::Parser).to have_received(:new).once
+  end
+
   it "keeps a digits-only number as a text run without reparsing it", :aggregate_failures do
     allow(Plurimath::Mathml::Parser).to receive(:new).and_call_original
     built = render_built(numeric_stem("12"))
@@ -94,6 +121,27 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
       expect(built.text).to eq(value)
       expect(built.o_maths).to be_empty
     end
+  end
+
+  def mathml_stem(inner, asciimath)
+    Metanorma::Document::Components::TextElements::StemElement.from_xml(
+      '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
+      "#{inner}</math><asciimath>#{asciimath}</asciimath></stem>",
+    )
+  end
+
+  it "keeps a number with spacing as text, not OMML", :aggregate_failures do
+    built = render_built(mathml_stem('<mn>5</mn><mspace width="1em"/>', "5"))
+
+    expect(built.o_maths).to be_empty
+    expect(built.text).to eq("5")
+  end
+
+  it "keeps a stem with no visible text as text, not an empty oMath", :aggregate_failures do
+    built = render_built(mathml_stem("<mi/>", "ASC"))
+
+    expect(built.o_maths).to be_empty
+    expect(built.text).to eq("ASC")
   end
 
   it "preserves operators when MathML contains more than one token" do
