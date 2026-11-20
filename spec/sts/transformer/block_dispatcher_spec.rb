@@ -79,12 +79,12 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::BlockDispatcher do
   end
 
   describe "#dispatch_section_blocks" do
-    it "collects the typed blocks of a clause in attribute order" do
+    it "collects the typed blocks of a clause in source order" do
       blocks = dispatcher.dispatch_section_blocks(clause)
 
       expect(blocks.map(&:class)).to eq(
-        [Sts::NisoSts::Paragraph, Sts::NisoSts::List, Sts::NisoSts::Figure,
-         Sts::NisoSts::NonNormativeNote, Sts::NisoSts::DefList],
+        [Sts::NisoSts::Paragraph, Sts::NisoSts::List, Sts::NisoSts::DefList,
+         Sts::NisoSts::NonNormativeNote, Sts::NisoSts::Figure],
       )
     end
 

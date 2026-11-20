@@ -36,6 +36,10 @@
       <p id="_scope_p1">This document specifies the socket sizes of invented gadgets.<fn><label>1</label><p>1)The sizes are fictional and apply to no real product.</p></fn>
 </p>
     </sec>
+    <sec id="sec_terms" sec-type="terms">
+      <title>Terms and definitions</title>
+      <p id="_terms_p">No terms are listed.</p>
+    </sec>
     <sec id="_req">
       <title>Requirements</title>
       <sec id="_req_gen">
@@ -67,6 +71,26 @@
             <p id="_ol1_2">Finish requirements.</p>
           </list-item>
         </list>
+        <fig id="fig_2">
+          <caption>
+            <title>Socket layout</title>
+          </caption>
+          <graphic xlink:href="socket"/>
+          <def-list id="_figkey">
+            <def-item>
+              <term>a</term>
+              <def>
+                <p id="_figkey_a">mounting flange</p>
+              </def>
+            </def-item>
+            <def-item>
+              <term>b</term>
+              <def>
+                <p id="_figkey_b">drive opening</p>
+              </def>
+            </def-item>
+          </def-list>
+        </fig>
         <table-wrap id="_tab1">
           <caption>
             <title>Socket sizes</title>
@@ -90,16 +114,7 @@
             </tbody>
           </table>
         </table-wrap>
-        <fig id="fig_2">
-          <caption>
-            <title>Socket layout</title>
-          </caption>
-          <graphic xlink:href="socket"/>
-        </fig>
       </sec>
-    </sec>
-    <sec id="sec_terms" sec-type="terms">
-      <title>Terms and definitions</title>
     </sec>
   </body>
   <back>
@@ -127,6 +142,14 @@
               <title>Size series</title>
             </caption>
             <graphic xlink:href="series"/>
+            <def-list id="_figkey2">
+              <def-item>
+                <term>n</term>
+                <def>
+                  <p id="_figkey2_n">size index</p>
+                </def>
+              </def-item>
+            </def-list>
           </fig>
         </sec>
       </app>

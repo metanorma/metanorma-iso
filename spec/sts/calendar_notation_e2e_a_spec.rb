@@ -8,16 +8,8 @@ require_relative "spec_helper"
 # a normative reference, an annex and a bibliography.
 #
 # The golden file is the converter's own output, read and checked by hand
-# against the NISO STS target shape. Where the output is NOT what the
-# source document asks for, the golden file pins today's behaviour and a
-# `pending` example states the correct behaviour (it turns red the moment
-# the converter is fixed, so the golden file gets regenerated then):
-#
-#   1. body clauses are emitted grouped by kind (terms after clauses,
-#      normative references last), not in source order;
-#   2. blocks inside a clause are emitted grouped by kind (the formula
-#      lands after the "where" paragraph, notes and examples after it);
-#   3. the introductory paragraph of a terms section is dropped.
+# against the NISO STS target shape: body clauses and the blocks inside a
+# clause keep source order, and the terms-section introduction is kept.
 RSpec.describe "ISO 8601-1-style document end-to-end to STS" do
   let(:fixtures) { FIXTURES_ROOT.join("sts_e2e") }
   let(:input) { File.read(fixtures.join("calendar_notation_e2e_a.input.xml")) }
@@ -113,20 +105,17 @@ RSpec.describe "ISO 8601-1-style document end-to-end to STS" do
   end
 
   it "keeps body clauses in source order (scope, norm-refs, terms, rules)" do
-    pending "body clauses are grouped by kind, not kept in source order"
     expect(doc.xpath("//body/sec/@id").map(&:text))
       .to eq(%w[scope norm-refs sec_terms rules])
   end
 
   it "keeps the formula before its where paragraph" do
-    pending "blocks inside a clause are grouped by kind, not source order"
     names = doc.at_xpath("//sec[@id='rules-count']").element_children
       .map { |e| e["id"] || e.name }
     expect(names.index("rules-f1")).to be < names.index("rules-p2")
   end
 
   it "keeps the introductory paragraph of the terms section" do
-    pending "the terms-section introductory paragraph is dropped"
     expect(doc.at_xpath("//sec[@sec-type='terms']/p").text)
       .to include("the following terms and definitions apply")
   end

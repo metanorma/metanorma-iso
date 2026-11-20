@@ -105,7 +105,6 @@ RSpec.describe "Amendment document end-to-end STS conversion" do
   # marker (and the expected file) must then be updated.
   describe "known gaps (pending)" do
     it "converts a figure key (dl) to a legend inside the fig" do
-      pending "figure key (dl inside figure) is dropped"
       expect(doc.xpath("//fig//def-list//term").map(&:text)).to eq(%w[a b n])
     end
 
@@ -115,7 +114,6 @@ RSpec.describe "Amendment document end-to-end STS conversion" do
     end
 
     it "keeps a paragraph in a terms clause that has no terms" do
-      pending "text of a terms clause without term entries is dropped"
       expect(doc.at_xpath("//sec[@sec-type='terms']//p")&.text)
         .to eq("No terms are listed.")
     end
