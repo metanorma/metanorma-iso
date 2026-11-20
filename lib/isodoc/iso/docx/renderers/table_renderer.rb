@@ -17,10 +17,12 @@ module IsoDoc
           include TableFootnotes
 
           def render(table, doc)
-            render_table_name(table, doc)
-
             tbl = Uniword::Builder::TableBuilder.new
-            build_table_sections(table, tbl)
+            footnotes = collecting_table_footnotes do
+              render_table_name(table, doc)
+              build_table_sections(table, tbl)
+            end
+            append_collected_footnotes(tbl, footnotes)
             ensure_table_structure(tbl.model, table.width)
 
             if has_table_attachments?(table)
@@ -85,16 +87,17 @@ module IsoDoc
           end
 
           def build_table_sections(table, tbl)
-            footnotes = collecting_table_footnotes do
-              @context.with_table do
-                render_table_section(table.thead, tbl, :header)
-                render_table_section(table.tbody, tbl, :body)
-                render_table_section(table.tfoot, tbl, :footer)
-              end
+            @context.with_table do
+              render_table_section(table.thead, tbl, :header)
+              render_table_section(table.tbody, tbl, :body)
+              render_table_section(table.tfoot, tbl, :footer)
             end
+          end
+
+          # The submitted ISO tables set table footnotes in Note style.
+          def append_collected_footnotes(tbl, footnotes)
             return if footnotes.empty?
 
-            # The submitted ISO tables set table footnotes in Note style.
             append_table_footnotes(tbl, footnotes, columns: table_column_count(tbl.model), style_key: :note)
           end
 
@@ -105,6 +108,9 @@ module IsoDoc
           # standard block dispatcher so they pick up NoteRenderer,
           # ExampleRenderer, DefinitionListRenderer, etc.
           TABLE_ATTACHMENT_ATTRS = %i[note example sourcecode dl key].freeze
+
+          NESTED_TABLE = Metanorma::Document::Components::Tables::TableBlock
+          CELL_BLOCK_ELEMENTS = %w[note example p ol ul dl sourcecode quote table].freeze
 
           # OOXML default table look val 04A0: first-row + first-column
           # special formatting on, no banding. Matches Word's "Table Grid".
@@ -217,7 +223,7 @@ module IsoDoc
             cell.element_order.any? do |el|
               next false unless el.element?
 
-              %w[note example p ol ul dl sourcecode quote].include?(el.name)
+              CELL_BLOCK_ELEMENTS.include?(el.name)
             end
           end
 
@@ -227,9 +233,19 @@ module IsoDoc
               when :text
                 append_text_to_cell(obj, cell_builder, style_key)
               when :element
-                dispatch_cell_element(obj, cell_builder, style_key)
+                # Word fuses two tables with no paragraph between them.
+                cell_builder << Uniword::Builder::ParagraphBuilder.new if obj.is_a?(NESTED_TABLE) && ends_in_table?(cell_builder)
+                dispatch_cell_element(obj, TableCellElement::CellTarget.new(cell_builder, style_key))
               end
             end
+            # OOXML: a w:tc must end with a w:p, not a nested w:tbl.
+            cell_builder << Uniword::Builder::ParagraphBuilder.new if ends_in_table?(cell_builder)
+          end
+
+          # Reads what the cell actually emitted, so an element that renders
+          # nothing (an empty list) cannot hide a trailing table.
+          def ends_in_table?(cell_builder)
+            Array(cell_builder.model.element_order).last&.name == "tbl"
           end
 
           def append_text_to_cell(text, cell_builder, style_key)
@@ -247,14 +263,16 @@ module IsoDoc
             cell_para.style = @resolver.paragraph_style(style_key)
           end
 
-          def dispatch_cell_element(element, cell_builder, style_key)
-            target = TableCellElement::CellTarget.new(cell_builder, style_key)
+          def dispatch_cell_element(element, target)
+            return render(element, target) if element.is_a?(NESTED_TABLE)
+
             cell_registry.dispatch(element, target)
           end
 
           def cell_registry
             @cell_registry ||= TableCellElement::Registry.new(
               resolver: @resolver, inline_renderer: @inline_renderer,
+              dispatcher: method(:dispatch_cell_element)
             )
           end
 
