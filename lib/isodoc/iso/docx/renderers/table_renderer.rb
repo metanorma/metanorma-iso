@@ -132,7 +132,10 @@ module IsoDoc
                 render_row_cell(cell, row, row_type, spans)
               end
               render_continuations(spans, row)
-              spans.each_trailing_continuation { |n| add_continuation(row, n) }
+              spans.each_trailing_continuation do |gap, n|
+                gap.times { add_empty_cell(row) }
+                add_continuation(row, n)
+              end
             end
           end
 
@@ -150,6 +153,10 @@ module IsoDoc
 
           def render_continuations(spans, row)
             spans.each_continuation_here { |n| add_continuation(row, n) }
+          end
+
+          def add_empty_cell(row)
+            row.cell { |c| c << Uniword::Builder::ParagraphBuilder.new }
           end
 
           def add_continuation(row, colspan)
@@ -277,15 +284,23 @@ module IsoDoc
           end
 
           def ensure_table_grid(table_model, width)
-            return if table_model.grid
-
             cols = table_column_count(table_model)
+            return widen_grid(table_model.grid, cols) if table_model.grid
+
             col_width = column_width(cols, width)
             grid_cols = Array.new(cols) do
               Uniword::Wordprocessingml::GridCol.new(width: col_width)
             end
             table_model.grid =
               Uniword::Wordprocessingml::TableGrid.new(columns: grid_cols)
+          end
+
+          # Uniword sizes the grid by cell count, which undercounts rows
+          # that use gridSpan; add the missing columns.
+          def widen_grid(grid, cols)
+            (cols - grid.columns.size).times do
+              grid.columns << Uniword::Wordprocessingml::GridCol.new
+            end
           end
 
           def table_column_count(table_model)

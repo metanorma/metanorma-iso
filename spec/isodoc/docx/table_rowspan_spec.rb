@@ -84,6 +84,25 @@ RSpec.describe "table rowspan rendering" do
     expect(rows[3].map { |c| c[:merge] }).to eq([nil, :continue])
   end
 
+  it "sizes the grid by gridSpan when no row has one cell per column" do
+    rows_of(table_xml(
+              "",
+              "<tr><td rowspan=\"2\" colspan=\"2\">big</td><td>z</td></tr>" \
+              "<tr><td>r</td></tr>",
+            ))
+    expect(@grid).to eq(3)
+  end
+
+  it "pads a short row with empty cells before a later continuation" do
+    rows = rows_of(table_xml(
+                     "<tr><th>A</th><th>B</th><th>C</th></tr>",
+                     "<tr><td>x</td><td>y</td><td rowspan=\"2\">tall</td></tr>" \
+                     "<tr><td>p</td></tr>",
+                   ))
+    expect(rows[2].map { |c| c[:merge] }).to eq([nil, nil, :continue])
+    expect(rows[2].map { |c| c[:text] }).to eq(["p", "", ""])
+  end
+
   it "places a header-row spanning cell's continuation first in the next row" do
     rows = rows_of(table_xml(
                      "<tr><th rowspan=\"2\">H</th><th>B</th></tr><tr><th>C</th></tr>",

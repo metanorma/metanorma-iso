@@ -60,12 +60,15 @@ module IsoDoc
           end
 
           # Continuations left over once the row's own cells are done
-          # (spans that end the row, or follow a gap).
+          # (spans that end the row, or follow a gap). Yields
+          # [gap, colspan]: gap is the number of empty grid columns a
+          # short row leaves before the continuation.
           def each_trailing_continuation
             @pending.keys.select { |c| c >= @column }.sort.each do |col|
               entry = @pending[col]
-              yield entry[1]
+              yield col - @column, entry[1]
               consume(col)
+              @column = col + entry[1]
             end
           end
 
