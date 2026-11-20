@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
 require_relative "../spec_helper"
+require "tmpdir"
+require "zip"
+require "nokogiri"
 
 RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::FootnoteRenderer do
   let(:mapping) { IsoDoc::Iso::DocxStyleMapping.new }
@@ -120,6 +123,70 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::FootnoteRenderer do
       ref_ids.each do |ref_id|
         expect(fn_ids).to include(ref_id),
           "footnoteReference id #{ref_id.inspect} must exist in footnotes.xml"
+      end
+    end
+  end
+
+  describe "ISO \"N)\" footnote label" do # rubocop:disable RSpec/MultipleMemoizedHelpers
+    let(:ns) { { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" } }
+    let(:adapter) { build_adapter }
+
+    def labelled_xml(label_delim)
+      minimal_iso_xml(<<~INNER)
+        <sections>
+          <clause id="c1"><title>Scope</title>
+            <p id="p1">Body text<fn id="f1" reference="1"><p id="fp">Footnote body.</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum">1</semx>#{label_delim}</sup></span></fmt-fn-label></fn> more.</p>
+          </clause>
+        </sections>
+      INNER
+    end
+
+    def convert_parts(xml)
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        adapter.convert(xml, path)
+        yield docx_entry_xml(path, "word/document.xml"), docx_entry_xml(path, "word/footnotes.xml")
+      end
+    end
+
+    def docx_entry_xml(path, entry_name)
+      Zip::File.open(path) do |zip|
+        Nokogiri::XML(zip.find_entry(entry_name).get_input_stream.read)
+      end
+    end
+
+    def body_footnote(footnotes)
+      footnotes.xpath("//w:footnote[not(@w:type)]", ns).first
+    end
+
+    it "carries the closing parenthesis after the anchor in a body paragraph", :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      convert_parts(labelled_xml('<span class="fmt-label-delim">)</span>')) do |document, _|
+        suffix = document.at_xpath("//w:r[w:footnoteReference]/following-sibling::w:r[1]", ns)
+        expect(suffix.xpath("w:t", ns).text).to eq(")")
+        expect(suffix.at_xpath("w:rPr/w:rStyle/@w:val", ns).value).to eq("FootnoteReference")
+      end
+    end
+
+    it "labels the footnote body \"N)\" with a superscript marker and delimiter", :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      convert_parts(labelled_xml('<span class="fmt-label-delim">)</span>')) do |_, footnotes|
+        para = body_footnote(footnotes).at_xpath("w:p", ns)
+        expect(para.element_children.first.name).to eq("pPr")
+        marker, closing = para.xpath("w:r", ns).first(2)
+        expect(marker.at_xpath("w:footnoteRef", ns)).not_to be_nil
+        expect(marker.at_xpath("w:rPr/w:rStyle/@w:val", ns).value).to eq("FootnoteReference")
+        expect(closing.xpath("w:t", ns).text).to eq(")")
+        expect(closing.at_xpath("w:rPr/w:rStyle/@w:val", ns).value).to eq("FootnoteReference")
+        expect(para.xpath("w:r/w:t", ns).map(&:text).join).to eq(") Footnote body.")
+      end
+    end
+
+    it "adds no delimiter when the presentation label has none", :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      convert_parts(labelled_xml("")) do |document, footnotes|
+        expect(document.at_xpath("//w:r[w:footnoteReference]/following-sibling::w:r[1]/w:t", ns).text)
+          .to eq(" more.")
+        para = body_footnote(footnotes).at_xpath("w:p", ns)
+        expect(para.xpath("w:r/w:t", ns).map(&:text).join).to eq("Footnote body.")
+        expect(para.at_xpath("w:r/w:rPr/w:rStyle/@w:val", ns).value).to eq("FootnoteReference")
       end
     end
   end
