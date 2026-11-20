@@ -13,6 +13,7 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::NoteTransformer do
         <note id="n3"><p id="np3">Note with list</p><ul id="nu"><li id="nl"><p id="nlp">Item</p></li></ul></note>
         <note id="n4"/>
         <admonition id="a1" type="caution"><p id="ap1">Careful</p></admonition>
+        <admonition id="a2" type="warning"><fmt-name><span class="fmt-caption-label">Hot surface above 100</span></fmt-name><p id="ap2">Hot</p></admonition>
         <example id="e1"><p id="ep1">Plain example</p></example>
         <example id="e2" autonum="3"><p id="ep2">Numbered example</p></example>
         <example id="e3"><p id="ep3">Example with code</p><sourcecode id="sc">a &lt; b</sourcecode></example>
@@ -36,6 +37,10 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::NoteTransformer do
 
     it "labels the note by the admonition type" do
       expect(doc.at_xpath("//label").text).to eq("CAUTION")
+    end
+
+    it "keeps trailing title digits out of the label" do
+      expect(note_xml("AdmonitionBlock", "a2").at_xpath("//label").text).to eq("WARNING")
     end
   end
 

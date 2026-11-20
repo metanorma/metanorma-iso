@@ -22,8 +22,7 @@ module Metanorma
               label = designation_label(source_note, "EXAMPLE")
               ModelBuilder.non_normative_example(paragraph: paragraphs, list: lists, preformat: preformats, label: label)
             else
-              ModelBuilder.non_normative_note(paragraph: paragraphs, list: lists,
-                                              label: designation_label(source_note, note_kind(source_note)))
+              ModelBuilder.non_normative_note(paragraph: paragraphs, list: lists, label: note_label(source_note))
             end
           end
 
@@ -64,6 +63,14 @@ module Metanorma
           end
 
           private
+
+          # An admonition's fmt-name is its title, not a numbered caption,
+          # so its trailing digits are never a designation number.
+          def note_label(source_note)
+            return note_kind(source_note) if source_note.is_a?(admonition_block_class)
+
+            designation_label(source_note, "NOTE")
+          end
 
           # An admonition carries its kind (warning, caution...) in @type.
           def note_kind(source_note)
