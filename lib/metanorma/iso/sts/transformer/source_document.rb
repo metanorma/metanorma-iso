@@ -145,10 +145,13 @@ module Metanorma
             secs = typed_root.sections
             return [] unless secs
 
-            SECTION_COLLECTIONS.flat_map { |attr| Array(secs.public_send(attr)) }
-              .sort_by do |s|
-                s.displayorder || Float::INFINITY
-              end
+            # displayorder (presentation XML) wins; without it the
+            # element order of the source decides, never the grouping
+            # by collection.
+            SourceOrder.entries(secs, SECTION_COLLECTIONS).map(&:last)
+              .each_with_index
+              .sort_by { |s, i| [s.displayorder || Float::INFINITY, i] }
+              .map(&:first)
           end
 
           def annexes
