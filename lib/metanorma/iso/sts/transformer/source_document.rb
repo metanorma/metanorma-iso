@@ -35,6 +35,7 @@ module Metanorma
             langs = bibdata.language rescue nil
             return "en" unless langs
             lang = langs.is_a?(Array) ? langs.first : langs
+            return "en" unless lang
             val = lang.is_a?(String) ? lang : lang.value.to_s
             val.strip.match?(/\A[a-z]{2}(-[A-Z]{2})?\z/) ? val.strip : "en"
           end

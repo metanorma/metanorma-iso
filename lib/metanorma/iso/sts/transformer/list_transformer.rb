@@ -115,8 +115,8 @@ module Metanorma
             attrs = {}
             attrs[:term] = ::Sts::NisoSts::Term.new(text: [term_text]) if term_text && !term_text.empty?
             if desc_text && !desc_text.empty?
-              attrs[:def] = ::Sts::NisoSts::Def.new(
-                paragraph: [::Sts::NisoSts::Paragraph.new(content: [desc_text])]
+              attrs[:definition] = ::Sts::NisoSts::Def.new(
+                paragraph: [::Sts::NisoSts::Paragraph.new(text: [desc_text])]
               )
             end
             ::Sts::NisoSts::DefItem.new(attrs)
