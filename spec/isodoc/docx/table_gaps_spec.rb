@@ -165,4 +165,29 @@ RSpec.describe "table content gaps" do
       expect(rows.last.text).to include("First body.").and include("Second body.")
     end
   end
+
+  context "with a table, loose text or a lone dd in a dl inside a cell" do
+    def cell_of(cell_xml)
+      converted_document(%(<table id="t1"><tbody><tr><td>#{cell_xml}</td></tr></tbody></table>))
+        .at_xpath("//w:body/w:tbl/w:tr/w:tc", ns)
+    end
+
+    it "ends a cell with a paragraph when its last dd ends in a table" do
+      cell = cell_of(<<~XML)
+        <dl><dt>a</dt><dd><table id="t2"><tbody><tr><td>inner</td></tr></tbody></table></dd></dl>
+      XML
+      expect(cell.xpath("w:tbl//w:tc", ns).map(&:text)).to eq(["inner"])
+      expect(cell.element_children.last.name).to eq("p")
+    end
+
+    it "keeps text that sits beside a list in a dd" do
+      cell = cell_of("<dl><dt>a</dt><dd>LOOSE<ul><li><p>b</p></li></ul></dd></dl>")
+      expect(cell.xpath("w:p", ns).map(&:text)).to eq(%w[a LOOSE b])
+    end
+
+    it "keeps a dd that has no dt" do
+      cell = cell_of("<dl><dd><p>orphan</p></dd></dl>")
+      expect(cell.xpath("w:p", ns).map(&:text)).to eq(%w[orphan])
+    end
+  end
 end

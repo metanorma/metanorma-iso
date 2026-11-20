@@ -20,8 +20,8 @@ module IsoDoc
               terms = Array(element.dt)
               definitions = Array(element.dd)
               append_paragraph(nil, target) if terms.empty? && definitions.empty?
-              terms.each_with_index do |term, index|
-                append_paragraph(term, target)
+              [terms.size, definitions.size].max.times do |index|
+                append_paragraph(terms[index], target) if terms[index]
                 render_definition(definitions[index], target)
               end
             end
@@ -31,13 +31,30 @@ module IsoDoc
             def render_definition(node, target)
               if nested_blocks?(node)
                 each_ordered_element(node) do |type, child|
-                  next unless type == :element
-
-                  dispatcher.call(child, target)
+                  if type == :text
+                    append_loose_text(child, target)
+                  else
+                    dispatcher.call(child, target)
+                    # A w:tc may not end in, or fuse, a w:tbl.
+                    target << Uniword::Builder::ParagraphBuilder.new if table?(child)
+                  end
                 end
               else
                 paragraphs_of(node).each { |part| append_paragraph(part, target) }
               end
+            end
+
+            def append_loose_text(text, target)
+              return if text.strip.empty?
+
+              para = Uniword::Builder::ParagraphBuilder.new
+              para.style = @resolver.paragraph_style(target.style_key) if target.style_key
+              para << text.strip
+              target << para
+            end
+
+            def table?(child)
+              child.is_a?(Metanorma::Document::Components::Tables::TableBlock)
             end
 
             def nested_blocks?(node)
