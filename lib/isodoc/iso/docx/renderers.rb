@@ -25,6 +25,7 @@ module IsoDoc
                  "isodoc/iso/docx/renderers/unordered_list_renderer"
         autoload :TableRenderer,        "isodoc/iso/docx/renderers/table_renderer"
         autoload :TableRowSpans,        "isodoc/iso/docx/renderers/table_row_spans"
+        autoload :TableColumnWidths,    "isodoc/iso/docx/renderers/table_column_widths"
         autoload :TableFootnotes,       "isodoc/iso/docx/renderers/table_footnotes"
         autoload :TableAttachmentBuffer,
                  "isodoc/iso/docx/renderers/table_attachment_buffer"

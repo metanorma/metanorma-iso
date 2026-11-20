@@ -271,4 +271,73 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
         .to eq(["Tab ", [["80", "\u2004", "km"]]]) # thickmathspace renders as U+2004
     end
   end
+
+  describe "borders and column widths" do
+    def convert_table(table_xml)
+      xml = minimal_iso_xml(<<~INNER)
+        <sections><clause id="c1"><title>Scope</title>#{table_xml}</clause></sections>
+      INNER
+      convert_and_extract(adapter, xml) { |pkg| return pkg.document.body.tables.first }
+    end
+
+    let(:plain_table) do
+      <<~TABLE
+        <table id="t1">
+          <thead><tr><th>No</th><th>Description of the characteristic under test</th></tr></thead>
+          <tbody><tr><td>1</td><td>A much longer description for the second column</td></tr></tbody>
+        </table>
+      TABLE
+    end
+
+    it "frames a data table with a 1 pt solid rule and 0.5 pt inner rules" do
+      borders = convert_table(plain_table).properties.table_borders
+
+      expect(borders).not_to be_nil
+      expect([borders.top, borders.bottom, borders.left, borders.right].map { |b| [b.val, b.sz] })
+        .to all(eq(["single", 8]))
+      expect([borders.inside_h, borders.inside_v].map { |b| [b.val, b.sz] })
+        .to all(eq(["single", 4]))
+    end
+
+    it "sizes columns by their content, not equally" do
+      widths = convert_table(plain_table).grid.columns.map(&:width)
+
+      expect(widths.sum).to be > 0
+      expect(widths.first).to be < widths.last
+      expect(widths.first).to be >= ((6 * widths.sum / 66) - 1)
+    end
+
+    it "gives each cell the width of its grid columns" do
+      tbl = convert_table(plain_table)
+      widths = tbl.grid.columns.map(&:width)
+
+      cell_widths = tbl.rows.last.cells.map { |c| c.properties.cell_width.w }
+      expect(cell_widths).to eq(widths)
+    end
+
+    it "honours the widths of a colgroup" do
+      tbl = convert_table(<<~TABLE)
+        <table id="t1" width="10000">
+          <colgroup><col width="25%"/><col width="75%"/></colgroup>
+          <tbody><tr><td>A very long first cell text that would otherwise dominate the grid</td><td>b</td></tr></tbody>
+        </table>
+      TABLE
+
+      expect(tbl.grid.columns.map(&:width)).to eq([2500, 7500])
+    end
+
+    it "spreads a column span over the columns it covers" do
+      tbl = convert_table(<<~TABLE)
+        <table id="t1" width="9000">
+          <colgroup><col width="1"/><col width="1"/><col width="1"/></colgroup>
+          <tbody>
+            <tr><td colspan="2">ab</td><td>c</td></tr>
+            <tr><td>d</td><td>e</td><td>f</td></tr>
+          </tbody>
+        </table>
+      TABLE
+
+      expect(tbl.rows.first.cells.map { |c| c.properties.cell_width.w }).to eq([6000, 3000])
+    end
+  end
 end
