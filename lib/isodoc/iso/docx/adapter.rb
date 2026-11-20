@@ -792,10 +792,10 @@ module IsoDoc
         def container_paragraphs(doc)
           return doc.paragraphs if doc.is_a?(Renderers::TableAttachmentBuffer)
 
-          model = doc.respond_to?(:model) ? doc.model : nil
-          return unless model
+          return unless doc.is_a?(Uniword::Builder::BaseBuilder)
+          return doc.model.body&.paragraphs if doc.is_a?(Uniword::Builder::DocumentBuilder)
 
-          model.respond_to?(:body) ? model.body&.paragraphs : model.paragraphs
+          doc.model.paragraphs
         end
 
         # ── Tree walking ───────────────────────────────────────────────

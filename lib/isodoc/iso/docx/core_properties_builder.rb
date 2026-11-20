@@ -14,7 +14,7 @@ module IsoDoc
       #   dc:title          — composed English title (intro/main/part)
       #   dc:creator        — copyright holder or publisher organization
       #   cp:lastModifiedBy — same as dc:creator
-      #   cp:revision       — version revision-date from bibdata (defaults to "1")
+      #   cp:revision       — version draft number from bibdata (defaults to "1")
       #   dcterms:created   — first created/published/issued date from bibdata
       #   dcterms:modified  — current time
       class CorePropertiesBuilder
@@ -63,12 +63,15 @@ module IsoDoc
           org_name(org) || DEFAULT_CREATOR
         end
 
+        # Word refuses to open a package whose cp:revision is not a
+        # positive integer ("unreadable content"), so a revision-date or
+        # a dotted draft such as "2.1" falls back to the default.
         def revision
           return DEFAULT_REVISION unless bib_has?(:version)
           return DEFAULT_REVISION unless @bib.version
 
-          value = version_string(@bib.version)
-          value.to_s.empty? ? DEFAULT_REVISION : value.to_s
+          value = version_string(@bib.version).to_s
+          /\A0*[1-9]\d*\z/.match?(value) ? value.sub(/\A0+/, "") : DEFAULT_REVISION
         end
 
         def created_property
@@ -161,7 +164,7 @@ module IsoDoc
           return version.to_s if version.is_a?(String)
           return nil unless version.is_a?(Lutaml::Model::Serializable)
 
-          %i[revision_date draft].each do |attr|
+          %i[draft].each do |attr|
             next unless version.class.attributes.key?(attr)
 
             val = version.public_send(attr)

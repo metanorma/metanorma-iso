@@ -22,12 +22,24 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     para.build.o_maths.map(&:to_xml)
   end
 
+  # Read OMML nodes by namespace, not by prefix: the element serializes
+  # with a default namespace on its own and with m: inside a document.
+  def omml_ns = "http://schemas.openxmlformats.org/officeDocument/2006/math"
+
   def omml_tokens(element)
-    omml_xml(element).map { |xml| xml.scan(%r{<m:t[^>]*>([^<]*)</m:t>}).flatten }
+    omml_xml(element).map do |xml|
+      Nokogiri::XML(xml).xpath("//m:t", "m" => omml_ns).map(&:text)
+    end
   end
 
   def omml_structure(element)
-    omml_xml(element).join.scan(/<m:(sSup|sSubSup|sSub|f)\b/).flatten
+    omml_xml(element).flat_map do |xml|
+      Nokogiri::XML(xml).xpath(
+        "//*[namespace-uri()='#{omml_ns}' and " \
+        "(local-name()='sSup' or local-name()='sSubSup' or " \
+        "local-name()='sSub' or local-name()='f')]",
+      ).map(&:name)
+    end
   end
 
   def render_built(element)
@@ -165,7 +177,8 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
 
   it "uses rendered MathML instead of the presentation source macro", :aggregate_failures do
     built = render_built(presentation_unit_stem)
-    expect(omml_tokens(presentation_unit_stem)).to eq([%w[80 km]])
+    # plurimath renders rspace="thickmathspace" as a U+2004 run
+    expect(omml_tokens(presentation_unit_stem)).to eq([["80", "\u2004", "km"]])
     expect(built.text).to eq("")
   end
 

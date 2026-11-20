@@ -268,7 +268,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
       omaths = Nokogiri::XML(para.to_xml).xpath("//m:oMath", "m" => "http://schemas.openxmlformats.org/officeDocument/2006/math")
       text = para.runs.map { |r| run_text(r) }.join
       expect([text, omaths.map { |m| m.xpath(".//m:t", "m" => "http://schemas.openxmlformats.org/officeDocument/2006/math").map(&:text) }])
-        .to eq(["Tab ", [%w[80 km]]])
+        .to eq(["Tab ", [["80", "\u2004", "km"]]]) # thickmathspace renders as U+2004
     end
   end
 end

@@ -53,6 +53,10 @@ module IsoDoc
               target << para
             end
 
+            def definition?(node)
+              node.is_a?(Metanorma::Document::Components::Lists::Definition)
+            end
+
             def table?(child)
               child.is_a?(Metanorma::Document::Components::Tables::TableBlock)
             end
@@ -67,7 +71,7 @@ module IsoDoc
             def paragraphs_of(node)
               return [] unless node
 
-              parts = node.respond_to?(:p) ? Array(node.p) : []
+              parts = definition?(node) ? Array(node.p) : []
               only_paragraphs = Array(node.element_order).all? do |entry|
                 entry.element? ? entry.name == "p" : entry.text_content.to_s.strip.empty?
               end

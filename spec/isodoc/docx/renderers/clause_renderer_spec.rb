@@ -37,8 +37,10 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
       body.map { |p| p.runs.map { |run| run_text(run) }.join }
     end
 
+    # By namespace: an o_math serializes with a default namespace, no m: prefix.
     def math_tokens(para)
-      para.o_maths.map { |m| m.to_xml.scan(%r{<m:t[^>]*>([^<]*)</m:t>}).flatten }
+      ns = { "m" => "http://schemas.openxmlformats.org/officeDocument/2006/math" }
+      para.o_maths.map { |m| Nokogiri::XML(m.to_xml).xpath("//m:t", ns).map(&:text) }
     end
 
     def heading
@@ -50,7 +52,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
     end
 
     it "renders the value and unit in the heading as inline OMML", :aggregate_failures do
-      expect(math_tokens(heading)).to eq([%w[80 km]])
+      expect(math_tokens(heading)).to eq([["80", "\u2004", "km"]])
       expect(heading_text).to eq("Altitude ")
     end
 
@@ -59,7 +61,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
     end
 
     it "renders the unit as an inline equation in body paragraphs" do
-      expect(body_math_tokens).to eq([%w[80 km]])
+      expect(body_math_tokens).to eq([["80", "\u2004", "km"]])
       expect(body_texts).to include("Altitude ")
     end
 

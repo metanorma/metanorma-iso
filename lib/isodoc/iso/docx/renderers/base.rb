@@ -37,7 +37,7 @@ module IsoDoc
             name = name && context.claim_bookmark_name(name)
             return unless name
 
-            model = para.respond_to?(:model) ? para.model : para
+            model = para.is_a?(Uniword::Builder::BaseBuilder) ? para.model : para
             bm_id = context.next_bookmark_id.to_s
             model.bookmark_starts <<
               Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id,
