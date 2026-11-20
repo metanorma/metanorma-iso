@@ -60,13 +60,28 @@ module IsoDoc
           mathml = stem_mathml(stem)
           return nil if mathml.nil? || visibly_blank_mathml?(mathml)
 
+          cached_inline_omaths(mathml)
+        rescue StandardError
+          nil
+        end
+
+        # Plurimath plus Omml.parse cost ~26 ms a stem; ISO 2533 has 957
+        # non-numeric stems but only 236 distinct ones (25.6 ms fresh,
+        # 5.1 ms repeated). The oMath models are only serialized, so
+        # paragraphs share them. Failures are cached too (nil).
+        def cached_inline_omaths(mathml)
+          @inline_omath_cache ||= {}
+          return @inline_omath_cache[mathml] if @inline_omath_cache.key?(mathml)
+
+          @inline_omath_cache[mathml] = build_inline_omaths(mathml)
+        end
+
+        def build_inline_omaths(mathml)
           omml_para = omml_para_from_mathml(mathml)
           return nil unless omml_para.is_a?(Omml::Models::OMathPara)
 
           omaths = omml_para.o_math.to_a
           omaths.empty? ? nil : omaths
-        rescue StandardError
-          nil
         end
 
         # 1.17.0 parity: a stem whose MathML is a bare number renders as
