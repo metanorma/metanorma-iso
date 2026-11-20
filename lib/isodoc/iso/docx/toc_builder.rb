@@ -38,11 +38,12 @@ module IsoDoc
         #
         # \o "1-3" selects heading 1-3 and \t adds the unnumbered
         # heading styles at level 1, so a refresh yields the entries
-        # cached here. \u is omitted: it also selects every paragraph
-        # style with an outline level, which pulls in the annex
-        # sub-clause styles (a2/a3) and the main-title style.
+        # cached here. The annex sub-clause styles (a2/a3) are listed
+        # in \t at level 1, as the ISO submission ToC does. \u is
+        # omitted: it also selects every paragraph style with an
+        # outline level, which pulls in the main-title style.
         TOC_FIELD_INSTRUCTION = ' TOC \\o "1-3" \\h \\z \\t ' \
-                                '"Foreword Title,1,Intro Title,1,ANNEX,1,Biblio Title,1" '
+                                '"Foreword Title,1,Intro Title,1,ANNEX,1,a2,1,a3,1,Biblio Title,1" '
 
         def initialize(resolver, inline_renderer, context)
           @resolver = resolver
@@ -198,11 +199,11 @@ module IsoDoc
           fmt || title
         end
 
-        # The ToC lists the annex entry alone. Annex sub-clauses are
-        # excluded (level >= 2 under an annex), matching the PDF engine's
-        # rule — entries under an ancestor-or-self annex at level >= 2
-        # are skipped — and the annex ToC composition ruling of
-        # 2026-10-26, so both output engines agree.
+        # The ToC lists the annex entry and its sub-clauses down to
+        # level 3 (A, A.1, A.1.1). The ISO submission DOCX lists every
+        # annex sub-clause in the TOC1 style, so the entries carry
+        # level 1 whatever their depth. This reverses the earlier
+        # "annex entry alone" composition.
         #
         # An annex with no heading text renders through the untitled
         # path, which carries its _Toc twin on the clause number. A
@@ -216,6 +217,17 @@ module IsoDoc
           elsif (title && @inline.heading_number_text(title)) || toc_variant_title(annex)
             entry = build_untitled_annex_entry(annex)
             entries << entry if entry
+          end
+          add_annex_subclause_entries(entries, annex, 2)
+        end
+
+        def add_annex_subclause_entries(entries, parent, depth)
+          return if depth > 3 || !parent.class.attributes.key?(:clause)
+
+          Array(parent.clause).each do |sub|
+            title = section_heading(sub)
+            entries << build_entry(sub, 1) if title && !@inline.heading_body_empty?(title)
+            add_annex_subclause_entries(entries, sub, depth + 1)
           end
         end
 

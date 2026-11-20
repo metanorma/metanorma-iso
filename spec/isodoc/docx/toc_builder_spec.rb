@@ -100,10 +100,10 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       instr = doc.model.body.paragraphs.flat_map { |p| entry_runs(p) }.filter_map(&:instr_text)
         .map { |i| Array(i.text).join }.find { |t| t.include?("TOC") }
 
-      # \u would also select the annex sub-clause styles (a2/a3,
-      # outline levels 1/2), which the cached entries omit.
+      # a2/a3 (annex sub-clauses) are listed in \t at level 1, matching
+      # the cached entries; \u would also pull in other outline styles.
       expect(instr).to eq(
-        ' TOC \\o "1-3" \\h \\z \\t "Foreword Title,1,Intro Title,1,ANNEX,1,Biblio Title,1" ',
+        ' TOC \\o "1-3" \\h \\z \\t "Foreword Title,1,Intro Title,1,ANNEX,1,a2,1,a3,1,Biblio Title,1" ',
       )
     end
 
@@ -221,37 +221,36 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       expect(texts).to include("Scope")
     end
 
-    it "excludes annex sub-clauses from the ToC" do
+    it "lists annex sub-clauses to level 3 in the TOC1 style" do
+      sub = lambda do |id, label, text, inner = ""|
+        %(<clause id="#{id}"><fmt-title><span class="fmt-caption-label"><semx element="autonum" source="#{id}">#{label}</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="#{id}t">#{text}</semx></fmt-title><p>Body.</p>#{inner}</clause>)
+      end
+      deep = sub.call("a1-1-1-1", "A.1.1.1", "Annex level four")
+      level3 = sub.call("a1-1-1", "A.1.1", "Annex level three", deep)
+      level2 = sub.call("a1-1", "A.1", "Annex sub one", level3)
       xml = minimal_iso_xml(<<~INNER)
         <sections/>
         <annex id="a1">
           <fmt-title><span class="fmt-caption-label"><semx element="autonum" source="a1">A</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="a1t">Annex text</semx></fmt-title>
-          <clause id="a1-1"><fmt-title><span class="fmt-caption-label"><semx element="autonum" source="a1">A</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="a1-1">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="a1-1t">Annex sub one</semx></fmt-title><p>Body.</p></clause>
-          <clause id="a1-2"><fmt-title><span class="fmt-caption-label"><semx element="autonum" source="a1">A</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="a1-2">2</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="a1-2t">Annex sub two</semx></fmt-title><p>Body.</p></clause>
+          #{level2}
+          #{sub.call('a1-2', 'A.2', 'Annex sub two')}
         </annex>
       INNER
 
-      model = parse_iso_document(xml)
-      toc_builder.render(model, doc)
+      toc_builder.render(parse_iso_document(xml), doc)
 
-      texts = doc.model.body.paragraphs.flat_map do |p|
-        entry_runs(p).map { |r| run_text(r) }
+      entries = doc.model.body.paragraphs.select do |p|
+        para_style_value(p)&.match?(/\ATOC\d\z/)
       end
-
-      # The annex main entry is present…
-      expect(texts).to include("Annex text")
-      # …but its sub-clauses are not, at any ToC level.
-      expect(texts).not_to include("Annex sub one")
-      expect(texts).not_to include("Annex sub two")
-      expect(texts).not_to include("A.1")
-      expect(texts).not_to include("A.2")
-
-      # No entry paragraph is styled below TOC1.
-      deeper = doc.model.body.paragraphs.select do |p|
-        s = para_style_value(p)
-        s && s.match?(/\ATOC[23]\z/)
-      end
-      expect(deeper).to be_empty
+      texts = entries.map { |p| entry_runs(p).map { |r| run_text(r) }.join }
+      expect(texts.size).to eq(4)
+      expect(texts[1]).to include("Annex sub one")
+      expect(texts[2]).to include("Annex level three")
+      expect(texts[3]).to include("Annex sub two")
+      expect(texts.join).not_to include("Annex level four")
+      expect(texts[0]).to include("Annex text")
+      # The submission lists every annex sub-clause in TOC1.
+      expect(entries.map { |p| para_style_value(p) }).to all(eq("TOC1"))
     end
   end
 
