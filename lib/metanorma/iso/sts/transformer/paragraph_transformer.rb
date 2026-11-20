@@ -361,16 +361,29 @@ module Metanorma
             end
           end
 
+          def plain_text_children(node)
+            text = [node.content, *Array(node.sub).flat_map { |s| plain_text_children(s) }].join
+            text.empty? ? [] : [clean_text(text)]
+          end
+
           # Recursively walks node's children, returning an array of
           # strings and Sts inline model instances (InlineFormula, Xref,
           # ExtLink, Bold, Italic, Sub, Sup) in document order. Stems
           # become InlineFormula via MathML passthrough; nested strong/
           # em become nested Bold/Italic.
           def build_inline_children(node)
-
+            # SubElement is not a mixed-content model: its text sits on
+            # +content+ (nested <sub> on +sub+), which walk_inline never
+            # yields — it would emit an empty <sub/>.
+            return plain_text_children(node) if node.is_a?(Metanorma::Document::Components::Inline::SubElement)
 
             entries = []
             current_text = nil
+            # SubElement keeps its text in a plain +content+ string, not in
+            # mixed content, so the walk below never yields it.
+            if node.is_a?(Metanorma::Document::Components::Inline::SubElement)
+              current_text = node.content
+            end
 
             walk_inline(node) do |kind, child, payload|
               case kind

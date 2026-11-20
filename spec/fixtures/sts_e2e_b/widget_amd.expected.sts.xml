@@ -1,0 +1,158 @@
+<standard xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en" dtd-version="1.0">
+  <processing-meta tagset-family="sts" base-tagset="interchange" table-model="xhtml" mathml-version="3.0" math-representation="mathml" terminology-model="tbx"><custom-meta-group><custom-meta><meta-name>iec_iso_coding_guidelines_edition</meta-name><meta-value>2.1</meta-value></custom-meta></custom-meta-group></processing-meta>
+  <front>
+    <std-meta>
+      <title-wrap xml:lang="en">
+        <intro>Gadget systems</intro>
+        <main>Coupling dimensions</main>
+        <compl>Rotary sockets</compl>
+        <full>Gadget systems — Coupling dimensions — Rotary sockets</full>
+      </title-wrap>
+      <proj-id>ISO 99001</proj-id>
+      <release-version>IS</release-version>
+      <std-ident>
+        <originator>ISO</originator>
+        <doc-type>Amd</doc-type>
+        <doc-number>99001</doc-number>
+        <part-number>2</part-number>
+      </std-ident>
+      <std-org std-org-type="sdo">
+        <std-org-abbrev>ISO</std-org-abbrev>
+      </std-org>
+      <content-language>en</content-language>
+      <std-ref type="dated">ISO 99001-2:2025/Amd 1:2026</std-ref>
+      <std-ref type="undated">ISO 99001-2:2025/Amd 1</std-ref>
+      <doc-ref>ISO 99001-2:2025/Amd 1:2026(E)</doc-ref>
+      <permissions>
+        <copyright-statement>© 2026 ISO</copyright-statement>
+        <copyright-year>2026</copyright-year>
+        <copyright-holder>ISO</copyright-holder>
+      </permissions>
+    </std-meta>
+  </front>
+  <body>
+    <sec id="_scope" sec-type="scope">
+      <title>Scope</title>
+      <p id="_scope_p1">This document specifies the socket sizes of invented gadgets.<fn><label>1</label><p>1)The sizes are fictional and apply to no real product.</p></fn>
+</p>
+    </sec>
+    <sec id="sec_terms" sec-type="terms">
+      <title>Terms and definitions</title>
+      <p id="_terms_p">No terms are listed.</p>
+    </sec>
+    <sec id="_req">
+      <title>Requirements</title>
+      <sec id="_req_gen">
+        <title>General</title>
+        <p id="_req_p1">A socket shall meet the dimensions in <xref ref-type="table" rid="_tab1">_tab1</xref> and the layout in <xref ref-type="fig" rid="fig_2">fig_2</xref>. Test methods are in <xref ref-type="app" rid="sec_A">sec_A</xref>; the informative sizing notes are in <xref ref-type="app" rid="sec_B">sec_B</xref>.</p>
+        <list list-type="arabic">
+          <list-item>
+            <p id="_ol1_1">Material requirements:</p>
+            <list list-type="bullet">
+              <list-item>
+                <p id="_ul1_1">metal;</p>
+              </list-item>
+              <list-item>
+                <p id="_ul1_2">plastic, with the following grades:</p>
+                <list list-type="roman-lower">
+                  <list-item>
+                    <label>i)</label>
+                    <p id="_ol2_1">grade one;</p>
+                  </list-item>
+                  <list-item>
+                    <label>ii)</label>
+                    <p id="_ol2_2">grade two.</p>
+                  </list-item>
+                </list>
+              </list-item>
+            </list>
+          </list-item>
+          <list-item>
+            <p id="_ol1_2">Finish requirements.</p>
+          </list-item>
+        </list>
+        <fig id="fig_2">
+          <caption>
+            <title>Socket layout</title>
+          </caption>
+          <graphic xlink:href="socket"/>
+          <def-list id="_figkey">
+            <def-item>
+              <term>a</term>
+              <def>
+                <p id="_figkey_a">mounting flange</p>
+              </def>
+            </def-item>
+            <def-item>
+              <term>b</term>
+              <def>
+                <p id="_figkey_b">drive opening</p>
+              </def>
+            </def-item>
+          </def-list>
+        </fig>
+        <table-wrap id="_tab1">
+          <caption>
+            <title>Socket sizes</title>
+          </caption>
+          <table>
+            <thead>
+              <tr>
+                <th>Size</th>
+                <th>Opening, mm</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>S1</td>
+                <td>10</td>
+              </tr>
+              <tr>
+                <td>S2</td>
+                <td>12</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+      </sec>
+    </sec>
+  </body>
+  <back>
+    <app-group>
+      <app id="sec_A" content-type="normative">
+        <label>Annex A</label>
+        <title>Test methods</title>
+        <sec id="_annA1">
+          <title>Torque test</title>
+          <p id="_annA1_p">Apply the torque given in <xref ref-type="table" rid="_tab1">_tab1</xref> and check <xref ref-type="sec" rid="_req_gen">_req_gen</xref>.</p>
+        </sec>
+        <sec id="_annA2">
+          <title>Visual test</title>
+          <p id="_annA2_p">Inspect each socket.</p>
+        </sec>
+      </app>
+      <app id="sec_B" content-type="informative">
+        <label>Annex B</label>
+        <title>Sizing notes</title>
+        <sec id="_annB1">
+          <title>Rationale</title>
+          <p id="_annB1_p">The sizes follow a geometric series.</p>
+          <fig id="fig_1">
+            <caption>
+              <title>Size series</title>
+            </caption>
+            <graphic xlink:href="series"/>
+            <def-list id="_figkey2">
+              <def-item>
+                <term>n</term>
+                <def>
+                  <p id="_figkey2_n">size index</p>
+                </def>
+              </def-item>
+            </def-list>
+          </fig>
+        </sec>
+      </app>
+    </app-group>
+  </back>
+</standard>

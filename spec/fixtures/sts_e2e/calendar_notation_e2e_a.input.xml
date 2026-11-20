@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="iso">
+  <bibdata type="standard">
+    <title language="en" type="title-intro">Date and time</title>
+    <title language="en" type="title-main">Representations for information interchange</title>
+    <title language="en" type="title-part">Basic rules</title>
+    <title language="en" type="main">Date and time — Representations for information interchange — Basic rules</title>
+    <docidentifier type="ISO">ISO 98765-1:2030</docidentifier>
+    <docnumber>98765</docnumber>
+    <contributor>
+      <role type="publisher"/>
+      <organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization>
+    </contributor>
+    <language>en</language>
+    <script>Latn</script>
+    <status><stage>60</stage><substage>60</substage></status>
+    <copyright><from>2030</from><owner><organization><abbreviation>ISO</abbreviation></organization></owner></copyright>
+    <ext>
+      <doctype>international-standard</doctype>
+      <structuredidentifier><project-number part="1">ISO 98765</project-number></structuredidentifier>
+    </ext>
+  </bibdata>
+  <preface>
+    <foreword id="fwd" obligation="informative">
+      <title>Foreword</title>
+      <p id="fwd-p1">This invented fixture describes a fictional notation for tallying lunar cycles.</p>
+    </foreword>
+  </preface>
+  <sections>
+    <clause id="scope" type="scope" obligation="normative">
+      <title>Scope</title>
+      <p id="scope-p1">This document specifies a tally notation for counting lunar cycles.</p>
+      <note id="scope-n1"><p id="scope-n1p">The notation is intended for hand-written ledgers.</p></note>
+    </clause>
+    <references id="norm-refs" normative="true" obligation="informative">
+      <title>Normative references</title>
+      <p id="norm-refs-p">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document.</p>
+      <bibitem id="nref1" type="standard">
+        <formattedref format="text/plain">Invented time units</formattedref>
+        <docidentifier type="ISO">ISO 44444:2028</docidentifier>
+        <docnumber>44444</docnumber>
+      </bibitem>
+    </references>
+    <terms id="terms" obligation="normative">
+      <title>Terms and definitions</title>
+      <p id="terms-p1">For the purposes of this document, the following terms and definitions apply.</p>
+      <term id="_6c1f0a52-3b7e-4d10-9a11-0c5e1f7b2a01">
+        <preferred><expression><name>lunar cycle</name></expression></preferred>
+        <definition id="term-cycle-d"><verbal-definition id="term-cycle-vd"><p id="term-cycle-p">interval between two successive new moons</p></verbal-definition></definition>
+        <termnote id="term-cycle-n1"><p id="term-cycle-n1p">A lunar cycle is shorter than a calendar month in the notation.</p></termnote>
+        <termexample id="term-cycle-e1"><p id="term-cycle-e1p">The interval from one new moon to the next.</p></termexample>
+      </term>
+      <term id="_6c1f0a52-3b7e-4d10-9a11-0c5e1f7b2a02">
+        <preferred><expression><name>tally mark</name></expression></preferred>
+        <admitted><expression><name>stroke</name></expression></admitted>
+        <definition id="term-tally-d"><verbal-definition id="term-tally-vd"><p id="term-tally-p">single vertical line recording one lunar cycle</p></verbal-definition></definition>
+      </term>
+      <term id="_6c1f0a52-3b7e-4d10-9a11-0c5e1f7b2a03">
+        <preferred><expression><name>bundle</name></expression></preferred>
+        <definition id="term-bundle-d"><verbal-definition id="term-bundle-vd"><p id="term-bundle-p">group of five tally marks</p></verbal-definition></definition>
+        <termnote id="term-bundle-n1"><p id="term-bundle-n1p">The fifth mark crosses the other four.</p></termnote>
+      </term>
+    </terms>
+    <clause id="rules" obligation="normative">
+      <title>Counting rules</title>
+      <clause id="rules-count" obligation="normative">
+        <title>Counting</title>
+        <p id="rules-p1">Each lunar cycle shall be recorded as one tally mark.</p>
+        <example id="rules-ex1"><p id="rules-ex1p">Seven cycles are written as one bundle followed by two tally marks.</p></example>
+        <formula id="rules-f1">
+          <stem type="MathML" block="true"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>n</mi><mo>=</mo><mn>5</mn><mi>b</mi><mo>+</mo><mi>r</mi></math><asciimath>n = 5 b + r</asciimath></stem>
+        </formula>
+        <p id="rules-p2">where</p>
+        <dl id="rules-dl1">
+          <dt>n</dt><dd><p id="rules-dl1a">is the total number of cycles;</p></dd>
+          <dt>b</dt><dd><p id="rules-dl1b">is the number of bundles;</p></dd>
+          <dt>r</dt><dd><p id="rules-dl1c">is the number of remaining tally marks.</p></dd>
+        </dl>
+        <note id="rules-n1"><p id="rules-n1p">The remainder <em>r</em> is always less than 5.</p></note>
+      </clause>
+      <clause id="rules-table" obligation="normative">
+        <title>Worked values</title>
+        <p id="rules-tp">Table 1 gives the decomposition for selected totals.</p>
+        <table id="tbl1">
+          <name>Decomposition of selected totals</name>
+          <thead><tr><th>Total n</th><th>Bundles b</th><th>Remainder r</th></tr></thead>
+          <tbody>
+            <tr><td>3</td><td>0</td><td>3</td></tr>
+            <tr><td>12</td><td>2</td><td>2</td></tr>
+          </tbody>
+        </table>
+      </clause>
+    </clause>
+  </sections>
+  <annex id="annexA" obligation="informative">
+    <title>Ledger layout</title>
+    <p id="annexA-p1">A ledger page has twelve rows.</p>
+  </annex>
+  <bibliography>
+    <references id="bibl" normative="false" obligation="informative">
+      <title>Bibliography</title>
+      <bibitem id="ref1" type="standard">
+        <formattedref format="text/plain">Invented ledger practice</formattedref>
+        <docidentifier type="ISO">ISO 55555:2029</docidentifier>
+        <docnumber>55555</docnumber>
+        <date type="published"><on>2029</on></date>
+        <contributor><role type="publisher"/><organization><abbreviation>ISO</abbreviation></organization></contributor>
+      </bibitem>
+      <bibitem id="ref2" type="book">
+        <formattedref format="text/plain">A Handbook of Tallies</formattedref>
+        <docidentifier>HT-1</docidentifier>
+        <date type="published"><on>2001</on></date>
+      </bibitem>
+    </references>
+  </bibliography>
+</metanorma>

@@ -15,10 +15,22 @@ module Metanorma
             caption_text = extract_title(source_fig)
             graphic = extract_graphic(source_fig)
 
-            ModelBuilder.fig(id: fig_id, label: label_text, caption: ModelBuilder.caption(title: caption_text), graphic: graphic)
+            ModelBuilder.fig(id: fig_id, label: label_text, caption: ModelBuilder.caption(title: caption_text), graphic: graphic).tap do |fig|
+              key = figure_key(source_fig)
+              fig.def_list = key if key
+            end
           end
 
           private
+
+          # The figure key (a dl inside the figure) becomes the fig's
+          # def-list (Sts::NisoSts::Figure#def_list).
+          def figure_key(source_fig)
+            return nil unless source_fig.class.attributes.key?(:dl)
+
+            dl = Array(source_fig.dl).first
+            dl && dl_transformer.transform(dl)
+          end
 
           # "Figure 1" from the presentation XML autonum attribute —
           # same pattern as TableTransformer's label.
