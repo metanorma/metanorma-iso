@@ -12,7 +12,7 @@ module Metanorma
           [/(\d) (%)/, "\\1#{NBSP}\\2"],
           [/(ISO[\/&]?(?:TC|IEC)?) (\d)/i, "\\1#{NBSP}\\2"],
           [/(NOTE) (\d)/i, "\\1#{NBSP}\\2"],
-          [/(Note)\s(\d)\s(to entry)/i, "\\1#{NBSP}\\2#{NBSP}\\3"],
+          [/(Note)[\s\u00A0](\d)[\s\u00A0](to entry)/i, "\\1#{NBSP}\\2#{NBSP}\\3"],
           [/(Table|Figure|Clause|Volume) (([A-Za-z]\.)?\d)/i,
            "\\1#{NBSP}\\2"],
           [/(Formula) (\()/i, "\\1#{NBSP}\\2"],

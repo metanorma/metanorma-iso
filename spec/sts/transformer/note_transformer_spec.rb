@@ -12,6 +12,7 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::NoteTransformer do
         <note id="n2" autonum="2"><p id="np2">Numbered note</p></note>
         <note id="n3"><p id="np3">Note with list</p><ul id="nu"><li id="nl"><p id="nlp">Item</p></li></ul></note>
         <note id="n4"/>
+        <admonition id="a1" type="caution"><p id="ap1">Careful</p></admonition>
         <example id="e1"><p id="ep1">Plain example</p></example>
         <example id="e2" autonum="3"><p id="ep2">Numbered example</p></example>
         <example id="e3"><p id="ep3">Example with code</p><sourcecode id="sc">a &lt; b</sourcecode></example>
@@ -24,6 +25,18 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::NoteTransformer do
 
   def note_xml(suffix, id)
     xml_of(transformer.transform(node_of(root, suffix, id: id)))
+  end
+
+  describe "#transform for an admonition" do
+    let(:doc) { note_xml("AdmonitionBlock", "a1") }
+
+    it "emits the paragraph although an admonition has no list attributes" do
+      expect(doc.at_xpath("//p[@id='ap1']").text).to eq("Careful")
+    end
+
+    it "labels the note by the admonition type" do
+      expect(doc.at_xpath("//label").text).to eq("CAUTION")
+    end
   end
 
   describe "#transform for a note" do

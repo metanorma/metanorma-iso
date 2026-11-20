@@ -23,7 +23,7 @@ module Metanorma
               ModelBuilder.non_normative_example(paragraph: paragraphs, list: lists, preformat: preformats, label: label)
             else
               ModelBuilder.non_normative_note(paragraph: paragraphs, list: lists,
-                                              label: designation_label(source_note, "NOTE"))
+                                              label: designation_label(source_note, note_kind(source_note)))
             end
           end
 
@@ -34,7 +34,7 @@ module Metanorma
           # the rendered caption ("EXAMPLE <autonum>1</autonum>") —
           # recover it there when the element carries no @autonum.
           def designation_label(source, kind)
-            number = source.autonum.to_s.strip
+            number = source.class.attributes.key?(:autonum) ? source.autonum.to_s.strip : ""
             number = caption_number(source) if number.empty?
             number.empty? ? kind : "#{kind} #{number}"
           end
@@ -65,13 +65,20 @@ module Metanorma
 
           private
 
+          # An admonition carries its kind (warning, caution...) in @type.
+          def note_kind(source_note)
+            return "NOTE" unless source_note.is_a?(admonition_block_class)
+
+            source_note.type.to_s.strip.upcase.then { |t| t.empty? ? "NOTE" : t }
+          end
+
           def example?(source_note)
             source_note.is_a?(example_block_class)
           end
 
           def extract_paragraphs(source_note)
             case source_note
-            when example_block_class
+            when example_block_class, admonition_block_class
               Array(source_note.paragraphs).map { |p| paragraph_transformer.transform(p) }
             when note_block_class
               Array(source_note.content)
@@ -89,7 +96,8 @@ module Metanorma
           # requirement carriers have no counterpart on the NisoSts
           # note/example models and are skipped.
           def extract_lists(source_note)
-            %i[ul ol].flat_map do |attr|
+            # An admonition shares this path but declares no list attributes.
+            %i[ul ol].select { |attr| source_note.class.attributes.key?(attr) }.flat_map do |attr|
               Array(source_note.public_send(attr)).map { |l| list_transformer.transform(l) }
             end
           end
@@ -134,6 +142,10 @@ module Metanorma
 
           def example_block_class
             Metanorma::Document::Components::AncillaryBlocks::ExampleBlock
+          end
+
+          def admonition_block_class
+            Metanorma::Document::Components::MultiParagraph::AdmonitionBlock
           end
 
           def sourcecode_block_class

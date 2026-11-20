@@ -33,7 +33,6 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::NbspProcessor, :aggregate_failu
     # earlier NOTE rule has already turned the first space into U+00A0 and
     # \s does not match U+00A0.
     it "also binds 'to entry' (PENDING: rule order)" do
-      pending "the Note-to-entry rule is shadowed by the NOTE rule"
       expect(described_class.process("Note 1 to entry"))
         .to eq("Note#{nbsp}1#{nbsp}to entry")
     end
