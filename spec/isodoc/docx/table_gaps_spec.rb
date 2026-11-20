@@ -131,4 +131,38 @@ RSpec.describe "table content gaps" do
       expect(cells.last.xpath("w:p", ns).size).to eq(1)
     end
   end
+
+  context "with block content inside a dd in a cell" do
+    let(:doc) do
+      converted_document(<<~XML)
+        <table id="t1"><tbody><tr><td><dl>
+        <dt>a</dt><dd><p>intro</p><ul><li><p>bullet</p></li></ul></dd>
+        <dt>b</dt><dd><ol><li><p>first</p></li></ol></dd>
+        <dt>c</dt><dd><dl><dt>nt</dt><dd><p>nd</p></dd></dl></dd>
+        </dl></td></tr></tbody></table>
+      XML
+    end
+    let(:cell) { doc.at_xpath("//w:body/w:tbl/w:tr/w:tc", ns) }
+
+    it "keeps the paragraph, list items and nested dl of each dd" do
+      expect(cell.xpath("w:p", ns).map(&:text)).to eq(%w[a intro bullet b first c nt nd])
+    end
+
+    it "numbers the list items" do
+      expect(cell.xpath("w:p[w:pPr/w:numPr]", ns).map(&:text)).to eq(%w[bullet first])
+    end
+  end
+
+  context "with two different footnotes sharing a reference and no target" do
+    let(:doc) do
+      converted_document(<<~XML)
+        <table id="t1"><tbody><tr><td>x<fn reference="a"><p>First body.</p></fn></td><td>y<fn reference="a"><p>Second body.</p></fn></td></tr></tbody></table>
+      XML
+    end
+
+    it "keeps both bodies in the table foot" do
+      rows = doc.at_xpath("//w:body/w:tbl", ns).xpath("w:tr", ns)
+      expect(rows.last.text).to include("First body.").and include("Second body.")
+    end
+  end
 end

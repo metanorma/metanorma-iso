@@ -22,9 +22,12 @@ module IsoDoc
           class Registry
             attr_reader :table, :default, :resolver, :inline_renderer
 
-            def initialize(resolver:, inline_renderer:)
+            # +dispatcher+ renders block content nested in a cell element
+            # (a list or table inside a dd); it defaults to this registry.
+            def initialize(resolver:, inline_renderer:, dispatcher: method(:dispatch))
               @resolver = resolver
               @inline_renderer = inline_renderer
+              @dispatcher = dispatcher
               @table = {}
               register_defaults
             end
@@ -70,6 +73,7 @@ module IsoDoc
                 Metanorma::Document::Components::Lists::DefinitionList,
                 DefinitionListHandler.new(
                   resolver: @resolver, inline_renderer: @inline_renderer,
+                  dispatcher: @dispatcher
                 ),
               )
             end

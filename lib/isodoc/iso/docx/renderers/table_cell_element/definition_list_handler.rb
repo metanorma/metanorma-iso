@@ -7,9 +7,14 @@ module IsoDoc
         module TableCellElement
           # Renders a <dl> inside a table cell as one paragraph per dt and
           # dd, each carrying the cell's row-type style. Inline content,
-          # footnotes included, goes through the cell's own renderers.
+          # footnotes included, goes through the cell's own renderers; a dd
+          # that holds lists, a nested dl or a table hands each child to
+          # the cell dispatcher.
           class DefinitionListHandler
             include Base
+            include ModelUtils
+
+            NESTED_BLOCKS = %w[ul ol dl table note example sourcecode figure formula quote].freeze
 
             def render(element, target)
               terms = Array(element.dt)
@@ -17,11 +22,28 @@ module IsoDoc
               append_paragraph(nil, target) if terms.empty? && definitions.empty?
               terms.each_with_index do |term, index|
                 append_paragraph(term, target)
-                paragraphs_of(definitions[index]).each { |part| append_paragraph(part, target) }
+                render_definition(definitions[index], target)
               end
             end
 
             private
+
+            def render_definition(node, target)
+              if nested_blocks?(node)
+                each_ordered_element(node) do |type, child|
+                  next unless type == :element
+
+                  dispatcher.call(child, target)
+                end
+              else
+                paragraphs_of(node).each { |part| append_paragraph(part, target) }
+              end
+            end
+
+            def nested_blocks?(node)
+              ordered?(node) &&
+                node.element_order.any? { |entry| entry.element? && NESTED_BLOCKS.include?(entry.name) }
+            end
 
             # A dd of several <p> becomes one paragraph each, not one run-on
             # paragraph.

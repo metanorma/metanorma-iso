@@ -237,7 +237,7 @@ module IsoDoc
               when :element
                 # Word fuses two tables with no paragraph between them.
                 cell_builder << Uniword::Builder::ParagraphBuilder.new if nested && obj.is_a?(NESTED_TABLE)
-                dispatch_cell_element(obj, cell_builder, style_key)
+                dispatch_cell_element(obj, TableCellElement::CellTarget.new(cell_builder, style_key))
                 nested = obj.is_a?(NESTED_TABLE)
               end
             end
@@ -260,8 +260,7 @@ module IsoDoc
             cell_para.style = @resolver.paragraph_style(style_key)
           end
 
-          def dispatch_cell_element(element, cell_builder, style_key)
-            target = TableCellElement::CellTarget.new(cell_builder, style_key)
+          def dispatch_cell_element(element, target)
             return render(element, target) if element.is_a?(NESTED_TABLE)
 
             cell_registry.dispatch(element, target)
@@ -270,6 +269,7 @@ module IsoDoc
           def cell_registry
             @cell_registry ||= TableCellElement::Registry.new(
               resolver: @resolver, inline_renderer: @inline_renderer,
+              dispatcher: method(:dispatch_cell_element)
             )
           end
 

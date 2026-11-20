@@ -24,7 +24,13 @@ module IsoDoc
             append_footnote_label(para, label) unless note.hiddenref
             body = Array(@context.formula_footnote_bodies).find { |entry| entry.id == note.target }
             paragraphs = body ? Array(body.semx&.p) : Array(note.p)
-            footnotes[note.target || label] ||= [label, paragraphs] unless paragraphs.empty?
+            footnotes[footnote_key(note, label, paragraphs)] ||= [label, paragraphs] unless paragraphs.empty?
+          end
+
+          # A repeated reference carries the same target; without one, the
+          # same label and text.
+          def footnote_key(note, label, paragraphs)
+            note.target || [label, paragraphs.map { |part| collect_all_text(part) }]
           end
 
           def append_footnote_label(para, label)
