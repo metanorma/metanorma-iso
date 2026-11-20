@@ -171,10 +171,10 @@ module Metanorma
             paragraphs = Array(fn_element.p).map.with_index { |p, i| build_fn_paragraph(p, fn_element, first: i.zero?) }
             return nil if paragraphs.empty?
 
-            attrs = { id: fn_element.id, p: paragraphs }
+            attrs = { id: fn_element.id, paragraph: paragraphs }
             label = fn_label(fn_element)
             attrs[:label] = ::Sts::NisoSts::Label.new(content: [label]) if label
-            ::Sts::TbxIsoTml::Fn.new(attrs)
+            ::Sts::NisoSts::Fn.new(attrs)
           end
 
           # Fn#p is typed as Sts::NisoSts::Paragraph (uses :text attr).
