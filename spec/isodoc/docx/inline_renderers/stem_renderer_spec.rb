@@ -89,6 +89,22 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     )
   end
 
+  def g_n_stem
+    Metanorma::Document::Components::TextElements::StemElement.from_xml(
+      '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
+      "<msub><mi>g</mi><mi>n</mi></msub></math><asciimath>g_n</asciimath></stem>",
+    )
+  end
+
+  # ISO 2533 has 957 non-numeric stems but only 236 distinct ones; the
+  # Plurimath conversion (~26 ms) runs once per distinct MathML string.
+  it "converts a repeated MathML stem once and renders it each time", :aggregate_failures do
+    allow(Plurimath::Mathml::Parser).to receive(:new).and_call_original
+
+    2.times { expect(omml_tokens(g_n_stem)).to eq([%w[g n]]) }
+    expect(Plurimath::Mathml::Parser).to have_received(:new).once
+  end
+
   it "keeps a digits-only number as a text run without reparsing it", :aggregate_failures do
     allow(Plurimath::Mathml::Parser).to receive(:new).and_call_original
     built = render_built(numeric_stem("12"))
