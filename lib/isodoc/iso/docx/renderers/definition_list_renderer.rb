@@ -12,6 +12,7 @@ module IsoDoc
         class DefinitionListRenderer
           include Base
           include ListAttachments
+          include TableFootnotes
 
           def render(definition_list, doc)
             case @context.zone
@@ -35,9 +36,7 @@ module IsoDoc
 
             table = formula_key_table
             definitions = Array(definition_list.dd)
-            footnotes = {}
-            handler = ->(note, para) { collect_table_footnote(note, para, footnotes) }
-            @context.with_formula_key_footnotes(handler) do
+            footnotes = collecting_table_footnotes do
               terms.each_with_index do |term, index|
                 table.row do |row|
                   formula_cell(row, term)
@@ -45,7 +44,8 @@ module IsoDoc
                 end
               end
             end
-            append_table_footnotes(table, footnotes) unless footnotes.empty?
+            # The ISO templates have no tablefootnote paragraph style.
+            append_table_footnotes(table, footnotes, columns: 2, style_key: :footnote_text) unless footnotes.empty?
             doc << table
           end
 
@@ -83,42 +83,6 @@ module IsoDoc
             end
 
             paragraphs
-          end
-
-          def collect_table_footnote(note, para, footnotes)
-            label = note.reference
-
-            append_footnote_label(para, label) unless note.hiddenref
-            body = Array(@context.formula_footnote_bodies).find { |entry| entry.id == note.target }
-            paragraphs = body ? Array(body.semx&.p) : Array(note.p)
-            footnotes[note.target || label] ||= [label, paragraphs] unless paragraphs.empty?
-          end
-
-          def append_footnote_label(para, label)
-            properties = Uniword::Wordprocessingml::RunProperties.new(
-              vertical_align: Uniword::Properties::VerticalAlign.new(value: "superscript"),
-            )
-            para << Uniword::Wordprocessingml::Run.new(text: label, properties: properties)
-          end
-
-          def append_table_footnotes(table, footnotes)
-            table.row do |row|
-              row.cell do |cell|
-                cell.column_span(2)
-                footnotes.each_value do |label, paragraphs|
-                  paragraphs.each_with_index do |part, index|
-                    # The ISO templates have no tablefootnote paragraph style.
-                    para = build_paragraph(:footnote_text)
-                    if index.zero?
-                      append_footnote_label(para, label)
-                      para << " "
-                    end
-                    @inline_renderer.render(part, para)
-                    cell << para
-                  end
-                end
-              end
-            end
           end
 
           def render_figure_key(definition_list, doc)

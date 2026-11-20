@@ -1,10 +1,19 @@
 ---
 title: P2-011 - Paragraph count mismatch
 priority: P2
-status: partial
+status: done
 ---
 
 # P2-011: Paragraph count mismatch
+
+## Closed (2026-11-20): recorded layout choice
+
+Closed by decision. On rice the totals match (515 = 515); the remaining
++16 body / -16 table-cell split is the layout choices listed below (figure
+key as body paragraphs, footnotes in `footnotes.xml`, admonition wrappers)
+plus edition content. None is a renderer defect, and the paragraph count is
+not an oracle. Open items stay on their own cards (P1-003, P2-007, P1-005,
+P2-010).
 
 ## Re-measurement on base 6455ca2f (2026-11-19, batches 3-4)
 

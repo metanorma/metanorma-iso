@@ -44,11 +44,15 @@ RSpec.describe "Rice DOCX cross-reference hyperlinks" do
     expect(bookmark_names).to eq(bookmark_names.uniq)
   end
 
-  it "renders table footnotes as native Word footnotes with their bodies" do
-    expect(document.xpath("//w:footnoteReference", NS)).not_to be_empty
+  # rice.docx keeps table footnotes inside the table, as in ISO's own output:
+  # no Word footnote reference in a table, bodies in the table's last row.
+  it "keeps table footnotes out of the Word footnotes" do
+    expect(document.xpath("//w:tbl//w:footnoteReference", NS)).to be_empty
+    expect(parts["word/footnotes.xml"].text).not_to include("Organic extraneous matter")
   end
 
-  it "keeps the table footnote bodies in footnotes.xml" do
-    expect(parts["word/footnotes.xml"].text).to include("Organic extraneous matter", "Parboiled rice.")
+  it "puts the table footnote bodies in the last row of their tables" do
+    last_rows = document.xpath("//w:tbl/w:tr[last()]", NS).map(&:text).join
+    expect(last_rows).to include("Organic extraneous matter", "Parboiled rice.")
   end
 end
