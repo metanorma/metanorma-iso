@@ -36,7 +36,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
   end
 
   def parse_standalone_element(klass, xml_fragment)
-    klass.from_xml(xml_fragment)
+    parse_model_with_ordering(klass, xml_fragment)
   end
 
   # ── Run-format handlers (parallel to italic/bold) ─────────────────
@@ -49,7 +49,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
 
       run = para.build.runs.first
       expect(run.properties.strike).to be_a(Uniword::Properties::Strike)
-      expect(run.text).to eq("removed")
+      expect(run_text(run)).to eq("removed")
     end
   end
 
@@ -61,7 +61,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
 
       run = para.build.runs.first
       expect(run.properties.underline).to be_a(Uniword::Properties::Underline)
-      expect(run.text).to eq("stressed")
+      expect(run_text(run)).to eq("stressed")
     end
   end
 
@@ -84,7 +84,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
 
       run = para.build.runs.first
       expect(run.properties.small_caps).to be_a(Uniword::Properties::SmallCaps)
-      expect(run.text).to eq("Acronym")
+      expect(run_text(run)).to eq("Acronym")
     end
   end
 
@@ -126,13 +126,20 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
   end
 
   describe IsoDoc::Iso::Docx::InlineRenderers::ErefRenderer do
-    it "renders an ErefElement as a hyperlink whose URL is the cite key" do
+    it "renders an ErefElement as an internal-anchor hyperlink to the bibitem" do
+      eref = parse_first_inline('<eref bibitemid="ISO712">[1]</eref>')
+      para = build_para
+      described_class.new(parent).render(eref, para)
+
+      expect(para.build.hyperlinks.map(&:anchor)).to eq(["ISO712"])
+    end
+
+    it "renders an ErefElement without bibitemid as plain text" do
       eref = parse_first_inline('<eref citeas="ISO1234">[1]</eref>')
       para = build_para
       described_class.new(parent).render(eref, para)
 
-      link_model = para.build.hyperlinks.first
-      expect(link_model.runs.map(&:text).join).to eq("[1]")
+      expect(para.build.hyperlinks).to be_empty
     end
   end
 
@@ -199,7 +206,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
 
       run = para.build.runs.first
       expect(run.properties.vertical_align.value).to eq("superscript")
-      expect(run.text).to eq("(1)")
+      expect(run_text(run)).to eq("(1)")
     end
   end
 
@@ -214,7 +221,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers do
       para = build_para
       described_class.new(parent).render(asc, para)
 
-      expect(para.build.runs.first.text).to eq("x^2")
+      expect(run_text(para.build.runs.first)).to eq("x^2")
     end
   end
 

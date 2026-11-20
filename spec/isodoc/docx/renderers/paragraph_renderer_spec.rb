@@ -5,7 +5,7 @@ require_relative "../spec_helper"
 RSpec.describe IsoDoc::Iso::Docx::Renderers::ParagraphRenderer do
   let(:adapter) { build_adapter }
 
-  it "renders a plain paragraph in the default body zone without an explicit rstyle" do
+  it "styles a plain paragraph in the body zone BodyText (issue 1728)" do
     xml = minimal_iso_xml(<<~INNER)
       <sections>
         <clause id="c1">
@@ -20,10 +20,57 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ParagraphRenderer do
         p.runs.any? { |r| r.text.to_s.include?("A plain body paragraph") }
       end
       expect(plain).not_to be_nil
-      # Era C body text uses the document default; no rStyle is required.
-      style_value = para_style_value(plain)
-      expect(style_value).to be_nil.or eq("Bodytext")
+      expect(para_style_value(plain)).to eq("BodyText")
     end
+  end
+
+  # Contexts where a class-less <p> was left as Normal (issue 1728).
+  def style_of_paragraph(xml, text)
+    convert_and_extract(adapter, xml) do |pkg|
+      para = pkg.document.body.paragraphs.find do |p|
+        p.runs.any? { |r| r.text.to_s.include?(text) }
+      end
+      expect(para).not_to be_nil
+      return para_style_value(para)
+    end
+  end
+
+  it "styles a plain paragraph in an annex clause BodyText" do
+    xml = minimal_iso_xml(<<~INNER)
+      <annex id="a1" inline-header="false" obligation="normative">
+        <title>Tables</title>
+        <p>Annex intro paragraph.</p>
+      </annex>
+    INNER
+
+    expect(style_of_paragraph(xml, "Annex intro paragraph")).to eq("BodyText")
+  end
+
+  it "styles a plain paragraph in the introduction BodyText" do
+    xml = minimal_iso_xml(<<~INNER)
+      <preface>
+        <introduction id="intro" obligation="informative">
+          <title>Introduction</title>
+          <clause id="i1"><title>General</title><p>Intro paragraph.</p></clause>
+        </introduction>
+      </preface>
+    INNER
+
+    expect(style_of_paragraph(xml, "Intro paragraph")).to eq("BodyText")
+  end
+
+  it "styles a plain paragraph after a list BodyText" do
+    xml = minimal_iso_xml(<<~INNER)
+      <sections>
+        <clause id="c1">
+          <title>Scope</title>
+          <ul id="l1"><li><p>item one</p></li></ul>
+          <p>After the list.</p>
+        </clause>
+      </sections>
+    INNER
+
+    expect(style_of_paragraph(xml, "After the list")).to eq("BodyText")
   end
 
   it "skips paragraphs with class zzSTDTitle (cover title duplicates)" do
@@ -118,15 +165,50 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ParagraphRenderer do
         "embedded note body text should be rendered"
 
       # The embedded note follows the XSL inline-label contract: the
-      # note body lands in a Noteindent paragraph and no Era C box is
+      # note body lands in a Note paragraph (Noteindent is only for notes inside an example) and no Era C box is
       # drawn around it.
       styles = paragraphs.map { |p| para_style_value(p).to_s }
       expect(styles).not_to include("Box-begin"),
         "embedded note must not be wrapped in Box-begin"
-      expect(styles).to include("Noteindent"),
-        "embedded note body should use Noteindent style"
+      expect(styles).to include("Note"),
+        "embedded note body should use the Note style"
       expect(styles).not_to include("Box-end"),
         "embedded note must not be wrapped in Box-end"
+    end
+  end
+  # Presentation XML keeps the semantic <stem> next to the <fmt-stem>
+  # that renders it. Paragraphs, cells and paragraphs split around a
+  # note printed both ("t_90t_90" in the ISO 2533 test method).
+  describe "a stem followed by its fmt-stem" do
+    def stem_pair(id, sym)
+      math = %(<math xmlns="http://www.w3.org/1998/Math/MathML"><mi>#{sym}</mi></math>)
+      %(<stem type="MathML" id="#{id}">#{math}<asciimath>#{sym}</asciimath></stem>) +
+        %(<fmt-stem type="MathML"><semx element="stem" source="#{id}">#{math}) +
+        %(<asciimath>#{sym}</asciimath></semx></fmt-stem>)
+    end
+
+    let(:texts) do
+      xml = minimal_iso_xml(<<~INNER)
+        <sections><clause id="c1"><title>Scope</title>
+          <p>PLAIN #{stem_pair("s1", "pa")} end</p>
+          <p>SPLIT #{stem_pair("s2", "sp")} mid <note id="n1"><p>inner</p></note> tail #{stem_pair("s3", "sq")}</p>
+          <table id="t1"><thead><tr><th>#{stem_pair("s4", "th")}</th></tr></thead>
+            <tbody><tr><td><p>CELL #{stem_pair("s5", "td")}</p></td></tr></tbody></table>
+        </clause></sections>
+      INNER
+      texts = nil
+      convert_and_extract(adapter, xml) do |pkg|
+        ns = { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main",
+               "m" => "http://schemas.openxmlformats.org/officeDocument/2006/math" }
+        doc = Nokogiri::XML(pkg.document.to_xml)
+        texts = doc.xpath("//w:p", ns).map { |p| p.xpath(".//m:t | .//w:t", ns).map(&:text).join }
+      end
+      texts
+    end
+
+    it "renders each symbol once", :aggregate_failures do
+      expect(texts).to include("PLAIN pa end", "SPLIT sp mid ", " tail sq", "th", "CELL td")
+      expect(texts.join).not_to match(/papa|spsp|sqsq|thth|tdtd/)
     end
   end
 end

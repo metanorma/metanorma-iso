@@ -83,8 +83,8 @@ RSpec.describe "table-attached note rendering" do
       expect(note_text).to include("This note follows the table."),
                            "the table-attached note must render after the table"
 
-      expect(note_paras.map { |p| para_style_value(p) }).to all(eq("Noteindent")),
-                                                            "the note body paragraphs use the Noteindent style"
+      expect(note_paras.map { |p| para_style_value(p) }).to all(eq("Note")),
+                                                            "the note body paragraphs use the Note style"
     end
   end
 

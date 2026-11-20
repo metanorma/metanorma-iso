@@ -33,7 +33,7 @@ module Metanorma
           def first_stem(source_formula)
             if source_formula.stem
               Array(source_formula.stem).first
-            elsif source_formula.formula
+            elsif source_formula.class.attributes.key?(:formula) && source_formula.formula
               formula_el = Array(source_formula.formula).first
               Array(formula_el.stem).first if formula_el
             end

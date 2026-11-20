@@ -113,7 +113,8 @@ RSpec.describe "Era C DOCX end-to-end", :slow do
     it "wraps no Noteindent/Exampleindent paragraphs in Era C boxes" do
       doc = unpacked.document_xml
       bodies = doc.xpath(
-        "//w:p[w:pPr/w:pStyle[@w:val='Noteindent']]" \
+        "//w:p[w:pPr/w:pStyle[@w:val='Note' or @w:val='Notecontinued']]" \
+        "|//w:p[w:pPr/w:pStyle[@w:val='Noteindent']]" \
         "|//w:p[w:pPr/w:pStyle[@w:val='Noteindentcontinued']]" \
         "|//w:p[w:pPr/w:pStyle[@w:val='Exampleindent']]" \
         "|//w:p[w:pPr/w:pStyle[@w:val='Exampleindentcontinued']]",
@@ -136,7 +137,7 @@ RSpec.describe "Era C DOCX end-to-end", :slow do
     it "carries the NOTE/EXAMPLE label inline in the first body paragraph" do
       doc = unpacked.document_xml
       label_paras = doc.xpath(
-        "//w:p[w:pPr/w:pStyle[@w:val='Noteindent'] or w:pPr/w:pStyle[@w:val='Example']]",
+        "//w:p[w:pPr/w:pStyle[@w:val='Note' or @w:val='Noteindent'] or w:pPr/w:pStyle[@w:val='Example']]",
         w_ns,
       ).select do |para|
         para.xpath(".//w:t", w_ns).map(&:text).join.start_with?("NOTE", "EXAMPLE")

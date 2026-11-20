@@ -7,8 +7,11 @@ module IsoDoc
 
       def use_dis?(input_filename, file, wordtemplate)
         file ||= File.read(input_filename, encoding: "utf-8")
-        stage = Nokogiri::XML(file, &:huge)
-          .at(ns("//bibdata/status/stage"))&.text
+        doc = Nokogiri::XML(file, &:huge)
+        # fixture fragments without the standoc namespace cannot carry a
+        # stage; treat them as non-DIS rather than raising on the prefix
+        return false unless doc.root&.namespace
+        stage = doc.at(ns("//bibdata/status/stage"))&.text
         (/^[4569].$/.match?(stage) && wordtemplate != "simple") ||
           (/^[0-3].$/.match?(stage) && wordtemplate == "dis")
       end

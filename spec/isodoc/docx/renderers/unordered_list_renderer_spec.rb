@@ -79,7 +79,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::UnorderedListRenderer do
     end
   end
 
-  it "renders multiple paragraphs inside a single list item" do
+  it "renders a following paragraph of a list item as an unnumbered sibling" do
     xml = minimal_iso_xml(<<~INNER)
       <sections>
         <clause id="c1">
@@ -105,8 +105,11 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::UnorderedListRenderer do
         "multi-paragraph item should still be one numbering paragraph"
 
       text = list_paras.first.runs.map { |r| r.text || "" }.join
-      expect(text).to include("First paragraph.")
-      expect(text).to include("Second paragraph.")
+      expect(text).to eq("First paragraph.")
+      texts = pkg.document.body.paragraphs.map do |p|
+        p.runs.map { |r| r.text || "" }.join
+      end
+      expect(texts).to include("Second paragraph.")
     end
   end
 
@@ -120,5 +123,23 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::UnorderedListRenderer do
 
     expect(registry.lookup(Metanorma::Document::Components::Lists::UnorderedList))
       .to eq(:unordered_renderer)
+  end
+
+  def numbered_rows(xml)
+    convert_and_extract(adapter, xml) do |pkg|
+      pkg.document.body.paragraphs.filter_map do |para|
+        num = para.properties&.numbering_properties
+        [para_style_value(para), num.num_id.value, num.ilvl&.value] if num&.num_id
+      end
+    end
+  end
+
+  # P2-013: a real document's bullets use the template's dash-bullet style.
+  it "gives every rice.presentation.xml bullet ListContinue1, dash numId, level 0" do
+    dash_id = adapter.resolver.numbering_id(:dash_list)
+    rows = numbered_rows(File.read("spec/examples/rice.presentation.xml"))
+    bullets = rows.select { |r| r[1] == dash_id && r[0] != "Tablebody" }
+
+    expect(bullets.tally).to eq(["ListContinue1", dash_id, 0] => 12)
   end
 end

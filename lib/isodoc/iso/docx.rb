@@ -20,6 +20,7 @@ module IsoDoc
     # New styles are added to style_mapping.yml (OCP).
     module Docx
       autoload :Adapter, "isodoc/iso/docx/adapter"
+      autoload :AmendmentDoctype, "isodoc/iso/docx/amendment_doctype"
       autoload :BibDataText, "isodoc/iso/docx/bibdata_text"
       autoload :BoilerplateRenderer, "isodoc/iso/docx/boilerplate_renderer"
       autoload :BoxWrapper, "isodoc/iso/docx/box_wrapper"

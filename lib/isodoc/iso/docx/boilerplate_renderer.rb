@@ -3,7 +3,7 @@
 module IsoDoc
   module Iso
     module Docx
-      # Renders boilerplate sections (copyright, license, legal) from the
+      # Renders copyright, license, legal, and feedback statements from the
       # document model's structured boilerplate attribute.
       #
       # Metanorma::Standoc::Document::Boilerplate holds each statement as a
@@ -27,22 +27,36 @@ module IsoDoc
         def render_license(boilerplate, doc)
           return unless boilerplate
 
+          return if Array(boilerplate.license_statement).empty?
+
           walk_statements(boilerplate.license_statement, doc,
                           :warning_header, :warning)
+          doc << spacer_paragraph
         end
 
-        # Render copyright statements on the copyright page.
+        # Render copyright, legal, and feedback statements on the copyright page.
         def render_copyright(boilerplate, doc)
           return unless boilerplate
 
           walk_statements(boilerplate.copyright_statement, doc,
-                          :copyright_hdr, :copyright)
+                          :copyright_hdr, :copyright_statement)
 
-          address = find_address_block(boilerplate)
-          render_address(doc, address) if address
+          walk_statements(boilerplate.legal_statement, doc,
+                          :copyright_hdr, :copyright)
+          walk_statements(boilerplate.feedback_statement, doc,
+                          :copyright_hdr, :copyright)
         end
 
         private
+
+        # The reference cover closes the warning box with a lone nbsp
+        # paragraph (no style) before the cover section break; without it
+        # the box border merges with whatever follows.
+        def spacer_paragraph
+          para = Uniword::Builder::ParagraphBuilder.new
+          para << "\u00A0"
+          para
+        end
 
         def walk_statements(statements, doc, title_style_key, body_style_key)
           Array(statements).each do |stmt|
@@ -54,7 +68,8 @@ module IsoDoc
         # any nested subsections (the boilerplate <clause> wrapper).
         def render_section(section, doc, title_style_key, body_style_key)
           render_title(section, doc, title_style_key)
-          render_paragraphs(section, doc, body_style_key)
+          first = render_paragraphs(section, doc, body_style_key).first
+          anchor(section, first) if first
 
           return unless section.class.attributes.key?(:subsection)
 
@@ -75,60 +90,58 @@ module IsoDoc
           doc << para
         end
 
-        def render_paragraphs(section, doc, style_key)
-          return unless section.class.attributes.key?(:paragraphs)
+        # Only the copyright statement carries the address block; legal and
+        # feedback paragraphs keep zzCopyright even if they name the office.
+        def paragraph_style_key(content, style_key)
+          return style_key unless style_key == :copyright_statement
+          return :copyright unless address_paragraph?(content)
 
-          Array(section.paragraphs).each do |content|
+          :copyright_address
+        end
+
+        def render_paragraphs(section, doc, style_key)
+          return [] unless section.class.attributes.key?(:paragraphs)
+
+          Array(section.paragraphs).map do |content|
             para = Uniword::Builder::ParagraphBuilder.new
-            para.style = @resolver.paragraph_style(style_key)
+            para.style = @resolver.paragraph_style(
+              paragraph_style_key(content, style_key),
+            )
 
             case content
             when String
               para << content
             when Lutaml::Model::Serializable
               @inline.render(content, para)
+              trim_after_breaks(para) if address_paragraph?(content)
+              anchor(content, para)
             else
               para << content.to_s
             end
 
             doc << para
+            para
           end
         end
 
-        def find_address_block(boilerplate)
-          Array(boilerplate.copyright_statement).each do |stmt|
-            text = find_address_in_section(stmt)
-            return text if text
+        # The source writes each address line as "<br/> line"; Word already
+        # starts the line after the break, so the space would indent it.
+        def trim_after_breaks(para)
+          para.model.runs.each_cons(2) do |previous, run|
+            run.substitute(/\A\s+/, "") if previous.break
           end
-          nil
         end
 
-        # In ISO XML, the address is typically the paragraph after the
-        # copyright message (contains "copyright office").
-        def find_address_in_section(section)
-          if section.class.attributes.key?(:paragraphs)
-            address_para = Array(section.paragraphs).find do |p|
-              collect_text(p).include?("copyright office")
-            end
-            return collect_text(address_para) if address_para
-          end
-
-          return nil unless section.class.attributes.key?(:subsection)
-
-          Array(section.subsection).each do |sub|
-            text = find_address_in_section(sub)
-            return text if text
-          end
-          nil
+        # Keep a statement's (or its paragraph's) id as a bookmark.
+        def anchor(node, para)
+          Renderers::Anchoring.anchor(@inline.context, node, para)
         end
 
-        def render_address(doc, address_text)
-          return unless address_text
-
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = @resolver.paragraph_style(:copyright_address)
-          para << address_text
-          doc << para
+        # The ISO copyright address paragraph (contains "copyright office")
+        # is rendered once, in the address style, from its own content so
+        # that line breaks and link text (email) are kept.
+        def address_paragraph?(content)
+          collect_text(content).include?("copyright office")
         end
       end
     end

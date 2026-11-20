@@ -120,6 +120,37 @@ RSpec.describe IsoDoc::Iso::Docx::CoverRenderer do
       expect(texts).to include("2nd edition")
     end
 
+    def localized_edition_cover(language, edition, unlocalized: 2)
+      xml = minimal_iso_xml(<<~INNER)
+        <bibdata type="standard">
+          <language>#{language}</language>
+          #{%(<edition language="">#{unlocalized}</edition>) if unlocalized}
+          <edition language="#{language}">#{edition}</edition>
+        </bibdata>
+        <sections/>
+      INNER
+      doc = adapter.send(:create_document)
+      renderer.render(parse_iso_document(xml).bibdata, doc)
+      doc.model.body.paragraphs.map do |paragraph|
+        paragraph.runs.map { |run| Array(run.text).join }.join
+      end
+    end
+
+    it "formats a numeric English edition as an ordinal" do
+      expect(localized_edition_cover("en", "2", unlocalized: nil))
+        .to include("2nd edition")
+    end
+
+    it "preserves capitalization of nouns in German edition labels" do
+      expect(localized_edition_cover("de", "zweite Ausgabe"))
+        .to include("Zweite Ausgabe")
+    end
+
+    it "preserves mixed case in localized English edition labels" do
+      expect(localized_edition_cover("en", "Second Edition"))
+        .to include("Second Edition")
+    end
+
     it "renders committee reference from ext model" do
       xml = minimal_iso_xml(<<~INNER)
         <bibdata type="standard">
@@ -181,6 +212,70 @@ RSpec.describe IsoDoc::Iso::Docx::CoverRenderer do
       renderer.render(nil, doc)
 
       expect(doc.model.body.paragraphs).to be_empty
+    end
+
+    describe "compact cover for stages before DIS" do
+      def cover_texts(stage:)
+        xml = minimal_iso_xml(<<~INNER)
+          <bibdata type="standard">
+            <title language="en" type="title-intro">Cereals and pulses</title>
+            <title language="en" type="title-main">Specifications and test methods</title>
+            <title language="en" type="title-part">Rice</title>
+            <title language="en" type="title-part-prefix">Part 1</title>
+            <title language="fr" type="title-main">Céréales et légumineuses</title>
+            <docidentifier type="ISO" primary="true">ISO/CD 17301-1:2016</docidentifier>
+            <docidentifier type="iso-undated">ISO/CD 17301-1</docidentifier>
+            <docidentifier type="iso-with-lang">ISO/CD 17301-1:2016(en)</docidentifier>
+            <docidentifier type="iso-tc">17301</docidentifier>
+            <docnumber>17301</docnumber>
+            <date type="updated"><on>2016-05-01</on></date>
+            <edition language="">2</edition>
+            <edition language="en">second edition</edition>
+            <version>2016-05-01</version>
+            <language>en</language>
+            <status><stage>#{stage}</stage></status>
+            <ext>
+              <editorial-group>
+                <technical-committee type="full">TC 34</technical-committee>
+                <subcommittee type="full">SC 4</subcommittee>
+                <workgroup type="full">WG 3</workgroup>
+              </editorial-group>
+            </ext>
+          </bibdata>
+          <sections/>
+        INNER
+
+        model = parse_iso_document(xml)
+        doc = adapter.send(:create_document)
+        renderer.render(model.bibdata, doc)
+        doc.model.body.paragraphs.map do |p|
+          p.runs.map { |r| Array(r.text).join }.join
+        end
+      end
+
+      let(:cd_cover) do
+        ["17301", "ISO/CD 17301-1 (draft 2016-05-01)", "TC 34/SC 4/WG 3",
+         "Second edition", "Date: 2016-05-01",
+         "Cereals and pulses — Specifications and test methods — Part 1: Rice",
+         "", "CD stage", ""]
+      end
+
+      it "renders the reference CD cover paragraph sequence" do
+        expect(cover_texts(stage: 30)).to eq(cd_cover)
+      end
+
+      it "keeps the labelled working-document line from stage 40" do
+        expect(cover_texts(stage: 40))
+          .to include("Reference number of working document: 17301")
+      end
+
+      it "keeps the DIS stage badge from stage 40" do
+        expect(cover_texts(stage: 40)).to include("DIS stage")
+      end
+
+      it "drops the standalone document number from stage 40" do
+        expect(cover_texts(stage: 40)).not_to include("17301")
+      end
     end
 
     describe "classic cover identity fields" do

@@ -1,45 +1,24 @@
 ---
 title: 108-018 - Fix note/example count mismatch
 priority: P2
-status: open
+status: done
 ---
 
 # 108-018: Fix Note/Example Count Mismatch
 
-## Problem
+Reference source: `spec/fixtures/iso/is/document-en.dis.presentation.xml`.
 
-### Notes:
-- Latest: 6 paragraphs with `Note` style
-- Reference: 15 paragraphs with `Note` style
+- 9 notes with `Note` or `Noteindent`: one clause note, three table notes,
+  and five term notes. The three table notes render inside table cells.
+- 1 figure note with `Figurenote`.
+- 2 examples with `Example` or `Exampleindent`: one term example and the
+  annex example titled “Sample Code”.
+- 15 definitions with `Definition`, all inside terms.
 
-### Examples:
-- Latest: 2 paragraphs with `Example` style
-- Reference: 4 paragraphs with `Example` style
+`spec/isodoc/docx/dis_note_example_spec.rb` matches each source element
+to a separate styled paragraph using text from its first paragraph
+or the Sample Code label. Bibliography status notes, footnotes, code
+callouts, and definition lists are outside these counts.
 
-### Definition:
-- Latest: 15 paragraphs with `Definition` style
-- Reference: 16 paragraphs with `Definition` style
-
-## Possible Causes
-
-1. **Note rendering**: The adapter renders notes via `visit_note`, but some notes may be:
-   - Inside terms (termnote) — rendered via `render_term_notes`
-   - Inside tables — not being rendered
-   - Inside examples — nested notes
-   - General notes in clause text
-
-2. **Example rendering**: Some examples may have a `name` (fmt_name) that gets its own paragraph with Example style, plus the example body. The count suggests some examples are missing.
-
-3. **Definition**: One definition paragraph is missing. Could be a term definition that's not being rendered.
-
-## Investigation Needed
-
-1. Count all `<note>` elements in the presentation XML
-2. Count all `<example>` elements in the presentation XML
-3. Trace which ones are rendered vs skipped in the adapter
-4. Check if table notes and example notes are being rendered
-
-## Files to Change
-
-- `lib/isodoc/iso/docx/adapter.rb` — visit_note, visit_example, render_term_notes
-- `lib/isodoc/iso/docx/inline.rb` — note/example rendering
+The historical `spec/examples/rice.docx` includes table footnotes and
+code callouts in its style totals and has different definition content.

@@ -1,10 +1,12 @@
 ---
 title: 108-006 - Fix missing image (5th image for Annex C subfigures)
 priority: P1
-status: open
+status: done
 ---
 
 # 108-006: Fix Missing Image
+
+Verified by `spec/isodoc/docx/renderers/figure_renderer_spec.rb` (one image part per subfigure a/b/c); the DIS fixture converted through `Metanorma::Iso::Processor#output(..., :docx)` produces all 5 image parts and placements, matching the reference count, with no renderer change needed.
 
 ## Problem
 

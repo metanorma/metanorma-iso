@@ -122,3 +122,19 @@ has TOC1..TOC9, so all level lookups succeed.
     `BiblioEntry` if at entry level).
 - `toc_builder_spec.rb` (extend):
   - TOC level 1 uses `TOC1` from YAML, no string fallback.
+
+## Status: DONE (2026-11-19)
+
+Re-located chains on base 6455ca2f; the table lines above are stale.
+- `grep -E 'paragraph_style\([^)]+\)\s*\|\|' lib/isodoc/iso/docx/` = 0 matches
+  (the `ref_norm`/`normref`, `biblio_entry`/`list_paragraph`, `normref`/`body_text`
+  and TOC chains were already gone).
+- Last chain removed: `StyleResolver#heading_style` (`annex_heading_style(level) ||
+  heading_style(level)`). Both templates now map `annex_heading1: Heading1`
+  explicitly (`data/iso-dis` and `data/iso-simple` style_mapping.yml). Rice never
+  reached the fallback (traced); level 1 inside an annex uses `:annex`.
+- Kept, not a fallback: `figure_title_annex`/`table_title_annex` are selected by
+  `in_annex` (iso-simple maps them to distinct AnnexFigureTitle/AnnexTableTitle;
+  DIS maps them equal) - a context key choice with one lookup, no `||`.
+- Output: rice `document.xml` before/after, DIS and Simple, identical except random
+  image `docPr` ids/names.

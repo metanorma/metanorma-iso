@@ -57,7 +57,8 @@ module Metanorma
             IsoAnnexSection AnnexSection
           ].freeze
 
-          # Typed attribute → handler method mapping for ContentSection.
+          # Typed attribute → handler method mapping for ContentSection and
+          # IsoTermsSection.
           # These are NOT yielded by each_mixed_content; we iterate them
           # explicitly to dispatch tables, lists, notes, etc.
           TYPED_ATTR_DISPATCH = {
@@ -77,26 +78,35 @@ module Metanorma
             quote_blocks: :dispatch_via_quote,
             definition_lists: :dispatch_via_dl,
             definitions: :dispatch_via_section,
+            # IsoTermsSection names its block collections by element
+            # (p, ul, example, admonition, dl) instead of the
+            # ContentSection names above.
+            p: :dispatch_via_paragraph,
+            ul: :dispatch_via_list,
+            example: :dispatch_via_note,
+            admonition: :dispatch_via_note,
+            dl: :dispatch_via_dl,
           }.freeze
 
+          # Blocks of a section in source order. Each typed collection
+          # maps to one handler; SourceOrder interleaves the collections
+          # by the element order recorded at parse time, so a formula
+          # keeps its place before its "where" paragraph and notes stay
+          # after the block they follow.
           def dispatch_section_blocks(section)
             results = []
-
-            # Walk typed collection attributes for all content types.
-            # each_mixed_content is NOT used because it overlaps with
-            # typed attributes (causing duplication) and misses some
-            # content types (tables, lists, notes).
-            TYPED_ATTR_DISPATCH.each do |attr, handler|
-              next unless section.class.attributes.key?(attr)
-              collection = section.public_send(attr)
-              Array(collection).each do |item|
-                result = send(handler, item)
-                Array(result).each { |r| results << r } if result
-                dispatch_paragraph_siblings(item, results)
-              end
+            SourceOrder.entries(section, TYPED_ATTR_DISPATCH.keys).each do |attr, item|
+              dispatch_block(attr, item, results)
             end
-
             results
+          end
+
+          # Dispatches one typed-collection item into +results+ together
+          # with the sibling blocks MN attaches to it.
+          def dispatch_block(attr, item, results)
+            result = send(TYPED_ATTR_DISPATCH.fetch(attr), item)
+            Array(result).each { |r| results << r } if result
+            dispatch_paragraph_siblings(item, results)
           end
 
           # MN's typed model attaches "block siblings" as attributes on

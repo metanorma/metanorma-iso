@@ -12,8 +12,8 @@ module IsoDoc
           class ListHandler
             include Base
 
-            def initialize(resolver:, inline_renderer:, num_id_key:)
-              super(resolver: resolver, inline_renderer: inline_renderer)
+            def initialize(num_id_key:, **dependencies)
+              super(**dependencies)
               @num_id_key = num_id_key
             end
 

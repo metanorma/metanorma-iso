@@ -1,4 +1,5 @@
 require "metanorma/processor"
+require_relative "../../isodoc/iso/word_convert"
 
 module Metanorma
   module Iso
@@ -76,7 +77,14 @@ module Metanorma
         when :html_alt
           IsoDoc::Iso::HtmlConvert.new(options.merge(alt: true))
             .convert(inname, isodoc_node, nil, outname)
-        when :doc, :docx
+        when :doc
+          # Rollout ladder (metanorma-iso#1728): DOC stays on the proven
+          # isodoc WordConvert (MHTML) chain through the transition; the
+          # uniword adapter owns DOC only in the end state, after the
+          # DOCX path passes round-trip acceptance.
+          IsoDoc::Iso::WordConvert.new(options)
+            .convert(inname, isodoc_node, nil, outname)
+        when :docx
           output_word(isodoc_node, inname, outname, options)
         when :pdf
           IsoDoc::Iso::PdfConvert.new(options)
@@ -107,7 +115,14 @@ module Metanorma
       private
 
       def output_word(isodoc_node, inname, outname, options)
-        # MHTML and DOCX use the same Uniword adapter.
+        # DOCX rollout ladder (metanorma-iso#1728): the uniword adapter is
+        # EXPERIMENTAL at this stage — the DOCX suite must be green and
+        # the output round-trip-validated against the submitted ISO
+        # artifacts before DOCX is production. Emit an explicit marker so
+        # every DOCX conversion announces the stage.
+        warn "metanorma-iso: DOCX output is EXPERIMENTAL (uniword path, " \
+             "rollout stage 2); the ISO-proven DOC (MHTML) output remains " \
+             "the submission-grade format"
         # When use_presentation_xml returns true, isodoc_node is nil
         # and inname is the presentation XML file path.
         xml_input = isodoc_node ? isodoc_node.to_xml : inname
@@ -146,9 +161,11 @@ module Metanorma
         xml = File.read(xml, encoding: "utf-8") if File.file?(xml)
         stage = Nokogiri::XML(xml, &:huge)
           .at("//*[local-name()='bibdata']/*[local-name()='status']/*[local-name()='stage']")&.text
+        # "20.20" or " 30 " -> "20" / "30": drop whitespace and the substage
+        stage = stage.to_s.strip.split(".").first.to_s.strip
 
         if wordtemplate == "simple" ||
-            (wordtemplate != "dis" && /^[0-3].$/.match?(stage))
+            (wordtemplate != "dis" && /\A[0-3]\d\z/.match?(stage))
           :simple
         else
           :dis

@@ -1,0 +1,1756 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metanorma xmlns="https://www.metanorma.org/ns/standoc" type="presentation" version="3.5.0" schema-version="v2.2.0" flavor="iso">
+<bibdata type="standard">
+<title language="en" type="main">Information technology — Document description and processing languages — Guidelines for translation between ISO/IEC 26300 and ISO/IEC 29500 document formats</title>
+
+<title language="en" type="title-intro">Information technology</title>
+
+<title language="en" type="title-main">Document description and processing languages — Guidelines for translation between ISO/IEC 26300 and ISO/IEC 29500 document formats</title>
+<docidentifier type="ISO" primary="true">ISO/FDTR 29166:2011</docidentifier><docidentifier type="iso-reference">ISO/FDTR 29166:2011(E)</docidentifier><docidentifier type="URN">urn:iso:std:iso:tr:29166:stage-50.60:en</docidentifier><docidentifier type="iso-undated">ISO/FDTR 29166</docidentifier><docidentifier type="iso-with-lang">ISO/FDTR 29166:2011(en)</docidentifier><docidentifier type="iso-tc">29166</docidentifier><docnumber>29166</docnumber><date type="published"><on>2011-12</on></date><date type="circulated"><on>2018-10-04</on></date><date type="updated"><on>2011-12</on></date><contributor><role type="author"/><organization>
+<name>International Organization for Standardization</name>
+<abbreviation>ISO</abbreviation></organization></contributor><contributor><role type="author"><description>committee</description></role><organization>
+<name>International Organization for Standardization</name>
+<subdivision type="Technical committee" subtype="JTC">
+<name>Information technology</name>
+<identifier id="_5d3cfc06-e45e-bd73-141e-cd863d3ea4d9">JTC 1</identifier><fmt-identifier><tt><semx element="identifier" source="_5d3cfc06-e45e-bd73-141e-cd863d3ea4d9">JTC 1</semx></tt></fmt-identifier><identifier type="full" id="_24f1897a-0d9a-291f-0726-bdb9c443549e">JTC 1/SC 34</identifier><fmt-identifier><tt><semx element="identifier" source="_24f1897a-0d9a-291f-0726-bdb9c443549e">JTC 1/SC 34</semx></tt></fmt-identifier></subdivision><subdivision type="Subcommittee" subtype="SC">
+<name>Document description and processing languages</name>
+<identifier id="_bbb32503-ec1d-8dd0-88dd-2fa398ff9555">SC 34</identifier><fmt-identifier><tt><semx element="identifier" source="_bbb32503-ec1d-8dd0-88dd-2fa398ff9555">SC 34</semx></tt></fmt-identifier></subdivision><abbreviation>ISO</abbreviation></organization></contributor><contributor><role type="authorizer"><description>Agency</description></role><organization>
+<name>International Organization for Standardization</name>
+<abbreviation>ISO</abbreviation></organization></contributor><contributor><role type="author"><description>secretariat</description></role><organization>
+<name>International Organization for Standardization</name>
+<subdivision type="Secretariat">
+<name>SAC</name>
+</subdivision><abbreviation>ISO</abbreviation></organization></contributor><contributor><role type="publisher"/><organization>
+<name>International Organization for Standardization</name>
+<abbreviation>ISO</abbreviation></organization></contributor><contributor><role type="authorizer"><description>committee</description></role><organization>
+<name>International Organization for Standardization</name>
+<subdivision type="Technical committee" subtype="JTC">
+<name>Information technology</name>
+<identifier id="_6b73555a-f032-3254-70a0-7be014a90220">JTC 1</identifier><fmt-identifier><tt><semx element="identifier" source="_6b73555a-f032-3254-70a0-7be014a90220">JTC 1</semx></tt></fmt-identifier><identifier type="full" id="_0ad92190-5675-3f99-d429-6f126e5e96c6">JTC 1/SC 34</identifier><fmt-identifier><tt><semx element="identifier" source="_0ad92190-5675-3f99-d429-6f126e5e96c6">JTC 1/SC 34</semx></tt></fmt-identifier></subdivision><subdivision type="Subcommittee" subtype="SC">
+<name>Document description and processing languages</name>
+<identifier id="_9f2d0359-cc73-7667-db51-2424ad7ea2a2">SC 34</identifier><fmt-identifier><tt><semx element="identifier" source="_9f2d0359-cc73-7667-db51-2424ad7ea2a2">SC 34</semx></tt></fmt-identifier></subdivision><abbreviation>ISO</abbreviation></organization></contributor><edition language="">1</edition><edition language="en">first edition</edition><version>2011-12</version><language current="true">en</language><script current="true">Latn</script><status><stage abbreviation="FDTR" language="">50</stage><stage abbreviation="FDTR" language="en">Final Draft Technical Report</stage><stage abbreviation="FDTR" language="en" type="firstpage">FINAL DRAFT Technical Report</stage><stage abbreviation="FDTR" language="en" type="coverpage">FINAL DRAFT<br/>Technical Report</stage><substage>60</substage></status><copyright><from>2011</from><owner><organization>
+<name>International Organization for Standardization</name>
+<abbreviation>ISO</abbreviation></organization></owner></copyright><ext><doctype language="">technical-report</doctype><doctype language="en">Technical Report</doctype><flavor>iso</flavor><ics><code>35.060</code><text>Languages used in information technology</text></ics><structuredidentifier><project-number>ISO 29166</project-number></structuredidentifier><stagename abbreviation="FDTR">Final Draft Technical Report</stagename></ext></bibdata><localized-strings><localized-string key="term_def_boilerplate" language="en">ISO and IEC maintain terminology databases for use in
+standardization at the following addresses:
+
+* ISO Online browsing platform: available at https://www.iso.org/obp[]
+* IEC Electropedia: available at https://www.electropedia.org[]
+</localized-string><localized-string key="scope" language="en">Scope</localized-string><localized-string key="symbolsabbrev" language="en">Symbols and abbreviated terms</localized-string><localized-string key="abbrev" language="en">Abbreviated terms</localized-string><localized-string key="symbols" language="en">Symbols</localized-string><localized-string key="table_of_contents" language="en">Contents</localized-string><localized-string key="introduction" language="en">Introduction</localized-string><localized-string key="foreword" language="en">Foreword</localized-string><localized-string key="abstract" language="en">Abstract</localized-string><localized-string key="acknowledgements" language="en">Acknowledgements</localized-string><localized-string key="executivesummary" language="en">Executive summary</localized-string><localized-string key="termsdef" language="en">Terms and definitions</localized-string><localized-string key="termsdefsymbolsabbrev" language="en">Terms, definitions, symbols and abbreviated terms</localized-string><localized-string key="termsdefsymbols" language="en">Terms, definitions and symbols</localized-string><localized-string key="termsdefabbrev" language="en">Terms, definitions and abbreviated terms</localized-string><localized-string key="normref" language="en">Normative references</localized-string><localized-string key="bibliography" language="en">Bibliography</localized-string><localized-string key="index" language="en">Index</localized-string><localized-string key="see" language="en">see</localized-string><localized-string key="see_also" language="en">see also</localized-string><localized-string key="preface" language="en">Preface</localized-string><localized-string key="section" language="en">Section</localized-string><localized-string key="clause" language="en">Clause</localized-string><localized-string key="annex" language="en">Annex</localized-string><localized-string key="appendix" language="en">Appendix</localized-string><localized-string key="continued" language="en">continued</localized-string><localized-string key="no_terms_boilerplate" language="en">No terms and definitions are listed in this document.
+</localized-string><localized-string key="internal_terms_boilerplate" language="en">For the purposes of this document, the following terms and definitions apply.
+</localized-string><localized-string key="norm_with_refs_pref" language="en">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</localized-string><localized-string key="norm_empty_pref" language="en">There are no normative references in this document.</localized-string><localized-string key="external_terms_boilerplate" language="en">For the purposes of this document, the terms and definitions given in % apply.
+</localized-string><localized-string key="internal_external_terms_boilerplate" language="en">For the purposes of this document, the terms and definitions given in % and the following apply.
+</localized-string><localized-string key="no_information_available" language="en">[NO INFORMATION AVAILABLE]</localized-string><localized-string key="term_defined_in" language="en">(%)</localized-string><localized-string key="binary_and" language="en">%1 <conn>and</conn> %2</localized-string><localized-string key="multiple_and" language="en">%1 <span class="fmt-conn">and</span> %2</localized-string><localized-string key="binary_or" language="en">%1 <conn>or</conn> %2</localized-string><localized-string key="multiple_or" language="en">%1 <span class="fmt-conn">or</span> %2</localized-string><localized-string key="chain_and" language="en">%1 <conn>and</conn> %2</localized-string><localized-string key="chain_or" language="en">%1 <conn>or</conn> %2</localized-string><localized-string key="chain_from" language="en">%1 <conn>from</conn> %2</localized-string><localized-string key="chain_to" language="en">%1 <conn>to</conn> %2</localized-string><localized-string key="nested_xref" language="en">%1<comma>,</comma> %2</localized-string><localized-string key="list_nested_xref" language="en">%1 %2</localized-string><localized-string key="SpelloutRules" language="en">spellout-ordinal</localized-string><localized-string key="OrdinalRules" language="en">digits-ordinal</localized-string><localized-string key="note" language="en">NOTE</localized-string><localized-string key="note_xref" language="en">Note</localized-string><localized-string key="termnote" language="en">Note % to entry</localized-string><localized-string key="para_xref" language="en">Paragraph</localized-string><localized-string key="list" language="en">List</localized-string><localized-string key="deflist" language="en">Definition List</localized-string><localized-string key="figure" language="en">Figure</localized-string><localized-string key="diagram" language="en">Diagram</localized-string><localized-string key="formula" language="en">Formula</localized-string><localized-string key="inequality" language="en">Formula</localized-string><localized-string key="table" language="en">Table</localized-string><localized-string key="requirement" language="en">Requirement</localized-string><localized-string key="recommendation" language="en">Recommendation</localized-string><localized-string key="permission" language="en">Permission</localized-string><localized-string key="box" language="en">Box</localized-string><localized-string key="no_identifier" language="en">(NO ID)</localized-string><localized-string key="recommendationtest" language="en">Recommendation test</localized-string><localized-string key="requirementtest" language="en">Requirement test</localized-string><localized-string key="permissiontest" language="en">Permission test</localized-string><localized-string key="recommendationclass" language="en">Recommendations class</localized-string><localized-string key="requirementclass" language="en">Requirements class</localized-string><localized-string key="permissionclass" language="en">Permissions class</localized-string><localized-string key="abstracttest" language="en">Abstract test</localized-string><localized-string key="conformanceclass" language="en">Conformance class</localized-string><localized-string key="key" language="en">Key</localized-string><localized-string key="example" language="en">EXAMPLE</localized-string><localized-string key="example_xref" language="en">Example</localized-string><localized-string key="where" language="en">where</localized-string><localized-string key="where_one" language="en">where</localized-string><localized-string key="wholeoftext" language="en">Whole of text</localized-string><localized-string key="draft_label" language="en">draft</localized-string><localized-string key="inform_annex" language="en">informative</localized-string><localized-string key="norm_annex" language="en">normative</localized-string><localized-string key="modified" language="en">modified</localized-string><localized-string key="adapted" language="en">adapted</localized-string><localized-string key="deprecated" language="en">DEPRECATED</localized-string><localized-string key="source" language="en">SOURCE</localized-string><localized-string key="and" language="en">and</localized-string><localized-string key="all_parts" language="en">All Parts</localized-string><localized-string key="edition_ordinal" language="en">{{ var1 | ordinal_word: '', '' }} edition</localized-string><localized-string key="edition_cardinal" language="en">edition {{ var1 }}</localized-string><localized-string key="edition" language="en">edition</localized-string><localized-string key="version" language="en">version</localized-string><localized-string key="toc_figures" language="en">List of figures</localized-string><localized-string key="toc_tables" language="en">List of tables</localized-string><localized-string key="toc_recommendations" language="en">List of recommendations</localized-string><localized-string key="toc_examples" language="en">List of examples</localized-string><localized-string key="month_january" language="en">January</localized-string><localized-string key="month_february" language="en">February</localized-string><localized-string key="month_march" language="en">March</localized-string><localized-string key="month_april" language="en">April</localized-string><localized-string key="month_may" language="en">May</localized-string><localized-string key="month_june" language="en">June</localized-string><localized-string key="month_july" language="en">July</localized-string><localized-string key="month_august" language="en">August</localized-string><localized-string key="month_september" language="en">September</localized-string><localized-string key="month_october" language="en">October</localized-string><localized-string key="month_november" language="en">November</localized-string><localized-string key="month_december" language="en">December</localized-string><localized-string key="obligation" language="en">Obligation</localized-string><localized-string key="admonition.danger" language="en">Danger</localized-string><localized-string key="admonition.warning" language="en">Warning</localized-string><localized-string key="admonition.caution" language="en">Caution</localized-string><localized-string key="admonition.important" language="en">Important</localized-string><localized-string key="admonition.safety_precautions" language="en">Safety Precautions</localized-string><localized-string key="admonition.editorial" language="en">Editorial Note</localized-string><localized-string key="title_prefixes.part" language="en">Part {{ var1 }}</localized-string><localized-string key="title_prefixes.amendment" language="en">AMENDMENT {{ var1 }}</localized-string><localized-string key="title_prefixes.corrigendum" language="en">TECHNICAL CORRIGENDUM {{ var1 }}</localized-string><localized-string key="title_prefixes.addendum" language="en">ADDENDUM {{ var1 }}</localized-string><localized-string key="title_prefixes.supplement" language="en">SUPPLEMENT {{ var1 }}</localized-string><localized-string key="title_prefixes.annex" language="en">Annex {{ var1 }}</localized-string><localized-string key="title_prefixes.appendix" language="en">Appendix {{ var1 }}</localized-string><localized-string key="title_prefixes.extract" language="en">EXTRACT {{ var1 }}</localized-string><localized-string key="locality.section" language="en">Section</localized-string><localized-string key="locality.clause" language="en">Clause</localized-string><localized-string key="locality.definition" language="en">Definition</localized-string><localized-string key="locality.part" language="en">Part</localized-string><localized-string key="locality.paragraph" language="en">Paragraph</localized-string><localized-string key="locality.chapter" language="en">Chapter</localized-string><localized-string key="locality.page" language="en">Page</localized-string><localized-string key="locality.table" language="en">Table</localized-string><localized-string key="locality.annex" language="en">Annex</localized-string><localized-string key="locality.figure" language="en">Figure</localized-string><localized-string key="locality.example" language="en">Example</localized-string><localized-string key="locality.note" language="en">Note</localized-string><localized-string key="locality.formula" language="en">Formula</localized-string><localized-string key="locality.appendix" language="en">Appendix</localized-string><localized-string key="grammar_abbrevs.masculine" language="en">m</localized-string><localized-string key="grammar_abbrevs.feminine" language="en">f</localized-string><localized-string key="grammar_abbrevs.neuter" language="en">n</localized-string><localized-string key="grammar_abbrevs.common" language="en">common</localized-string><localized-string key="grammar_abbrevs.singular" language="en">sg</localized-string><localized-string key="grammar_abbrevs.dual" language="en">dual</localized-string><localized-string key="grammar_abbrevs.pl" language="en">pl</localized-string><localized-string key="grammar_abbrevs.isPreposition" language="en">prep</localized-string><localized-string key="grammar_abbrevs.isParticiple" language="en">part</localized-string><localized-string key="grammar_abbrevs.isAdjective" language="en">adj</localized-string><localized-string key="grammar_abbrevs.isAdverb" language="en">adv</localized-string><localized-string key="grammar_abbrevs.isNoun" language="en">noun</localized-string><localized-string key="grammar_abbrevs.isVerb" language="en">verb</localized-string><localized-string key="relatedterms.deprecates" language="en">deprecates</localized-string><localized-string key="relatedterms.supersedes" language="en">supersedes</localized-string><localized-string key="relatedterms.narrower" language="en">narrower</localized-string><localized-string key="relatedterms.broader" language="en">broader</localized-string><localized-string key="relatedterms.equivalent" language="en">equivalent</localized-string><localized-string key="relatedterms.compare" language="en">compare</localized-string><localized-string key="relatedterms.contrast" language="en">contrast</localized-string><localized-string key="relatedterms.see" language="en">see</localized-string><localized-string key="relatedterms.seealso" language="en">see also</localized-string><localized-string key="Clause.sg" language="en">Clause</localized-string><localized-string key="Clause.pl" language="en">Clauses</localized-string><localized-string key="Definition.sg" language="en">Definition</localized-string><localized-string key="Definition.pl" language="en">Definitions</localized-string><localized-string key="Annex.sg" language="en">Annex</localized-string><localized-string key="Annex.pl" language="en">Annexes</localized-string><localized-string key="Appendix.sg" language="en">Appendix</localized-string><localized-string key="Appendix.pl" language="en">Appendixes</localized-string><localized-string key="Note.sg" language="en">Note</localized-string><localized-string key="Note.pl" language="en">Notes</localized-string><localized-string key="Note_%_to_entry.sg" language="en">Note % to entry</localized-string><localized-string key="Note_%_to_entry.pl" language="en">Notes % to entry</localized-string><localized-string key="List.sg" language="en">List</localized-string><localized-string key="List.pl" language="en">Lists</localized-string><localized-string key="Figure.sg" language="en">Figure</localized-string><localized-string key="Figure.pl" language="en">Figures</localized-string><localized-string key="Formula.sg" language="en">Formula</localized-string><localized-string key="Formula.pl" language="en">Formulas</localized-string><localized-string key="Table.sg" language="en">Table</localized-string><localized-string key="Table.pl" language="en">Tables</localized-string><localized-string key="Requirement.sg" language="en">Requirement</localized-string><localized-string key="Requirement.pl" language="en">Requirements</localized-string><localized-string key="Recommendation.sg" language="en">Recommendation</localized-string><localized-string key="Recommendation.pl" language="en">Recommendations</localized-string><localized-string key="Permission.sg" language="en">Permission</localized-string><localized-string key="Permission.pl" language="en">Permissions</localized-string><localized-string key="Example.sg" language="en">Example</localized-string><localized-string key="Example.pl" language="en">Examples</localized-string><localized-string key="Part.sg" language="en">Part</localized-string><localized-string key="Part.pl" language="en">Parts</localized-string><localized-string key="Section.sg" language="en">Section</localized-string><localized-string key="Section.pl" language="en">Sections</localized-string><localized-string key="Paragraph.sg" language="en">Paragraph</localized-string><localized-string key="Paragraph.pl" language="en">Paragraphs</localized-string><localized-string key="Chapter.sg" language="en">Chapter</localized-string><localized-string key="Chapter.pl" language="en">Chapters</localized-string><localized-string key="Page.sg" language="en">Page</localized-string><localized-string key="Page.pl" language="en">Pages</localized-string><localized-string key="Provision.sg" language="en">Provision</localized-string><localized-string key="Provision.pl" language="en">Provisions</localized-string><localized-string key="Statement.sg" language="en">Statement</localized-string><localized-string key="Statement.pl" language="en">Statements</localized-string><localized-string key="Descriptor.sg" language="en">Descriptor</localized-string><localized-string key="Descriptor.pl" language="en">Descriptors</localized-string><localized-string key="Reference.sg" language="en">Reference</localized-string><localized-string key="Reference.pl" language="en">References</localized-string><localized-string key="punct.colon" language="en">:</localized-string><localized-string key="punct.comma" language="en">,</localized-string><localized-string key="punct.enum-comma" language="en">,</localized-string><localized-string key="punct.semicolon" language="en">;</localized-string><localized-string key="punct.period" language="en">.</localized-string><localized-string key="punct.close-paren" language="en">)</localized-string><localized-string key="punct.open-paren" language="en">(</localized-string><localized-string key="punct.close-bracket" language="en">]</localized-string><localized-string key="punct.open-bracket" language="en">[</localized-string><localized-string key="punct.question-mark" language="en">?</localized-string><localized-string key="punct.exclamation-mark" language="en">!</localized-string><localized-string key="punct.em-dash" language="en">—</localized-string><localized-string key="punct.en-dash" language="en">–</localized-string><localized-string key="punct.number-en-dash" language="en">–</localized-string><localized-string key="punct.open-quote" language="en">“</localized-string><localized-string key="punct.close-quote" language="en">”</localized-string><localized-string key="punct.open-nested-quote" language="en">‘</localized-string><localized-string key="punct.close-nested-quote" language="en">’</localized-string><localized-string key="punct.ellipse" language="en">…</localized-string><localized-string key="all_rights_reserved" language="en">All rights reserved</localized-string><localized-string key="reference_number" language="en">Reference number</localized-string><localized-string key="reference_number_abbrev" language="en">Ref. No.</localized-string><localized-string key="price_based_on" language="en">Price based on % pages</localized-string><localized-string key="price" language="en">Price</localized-string><localized-string key="date_first_printing" language="en">Date of the first printing</localized-string><localized-string key="date_printing" language="en">Date of the {{ var1 | ordinal_word: '', '' }} printing</localized-string><localized-string key="descriptor" language="en">Descriptor</localized-string><localized-string key="reference" language="en">Reference</localized-string><localized-string key="under_preparation" language="en">Under preparation. Stage at the time of publication: %.</localized-string><localized-string key="withdrawn" language="en">Withdrawn.</localized-string><localized-string key="cancelled_and_replaced" language="en">Cancelled and replaced by %.</localized-string><localized-string key="date" language="en">Date</localized-string><localized-string key="secretariat" language="en">Secretariat</localized-string><localized-string key="edition_ordinal_old" language="en">{{ var1 | ordinal_num: 'edition', '' }} EDITION</localized-string><localized-string key="edition_replacement" language="en">This {{ var1 | ordinal_word: 'edition', '' }} edition supersedes the {{ var2 | ordinal_word: 'edition', '' }} edition</localized-string><localized-string key="termsrelated" language="en">Terms related to</localized-string><localized-string key="availablefrom" language="en">Available at</localized-string><localized-string key="voting_begins_on" language="en">Voting begins on</localized-string><localized-string key="voting_terminates_on" language="en">Voting terminates on</localized-string><localized-string key="corrected_version" language="en">Corrected version</localized-string><localized-string key="fast-track-procedure" language="en">Fast track procedure</localized-string><localized-string key="classification-UDC" language="en">UDC</localized-string><localized-string key="website" language="en">website</localized-string><localized-string key="formerly_id" language="en">(formerly %)</localized-string><localized-string key="was_developed_by" language="en">%1 was developed by %2</localized-string><localized-string key="iso-cen-parallel" language="en">ISO/CEN PARALLEL PROCESSING</localized-string><localized-string key="draft_comment_1" language="en">This document is a draft circulated for comments and approval. It is therefore subject to change and may not be referred to as an international standard until published as such.</localized-string><localized-string key="draft_comment_2" language="en">In addition to their evaluation as being acceptable for industrial, technological, commercial and user purposes, draft international standards may on occasion have to be considered in the light of their potential to become standards to which reference may be made in national regulations.</localized-string><localized-string key="draft_comment_3" language="en">Recipients of this draft are invited to submit, with their comments, notification of any relevant patent rights of which they are aware and to provide supporting documentation.</localized-string><localized-string key="doctype_dict.international-standard" language="en">International Standard</localized-string><localized-string key="doctype_dict.technical-specification" language="en">Technical Specification</localized-string><localized-string key="doctype_dict.technical-report" language="en">Technical Report</localized-string><localized-string key="doctype_dict.publicly-available-specification" language="en">Publicly Available Specification</localized-string><localized-string key="doctype_dict.international-workshop-agreement" language="en">International Workshop Agreement</localized-string><localized-string key="doctype_dict.guide" language="en">Guide</localized-string><localized-string key="doctype_dict.amendment" language="en">Amendment</localized-string><localized-string key="doctype_dict.addendum" language="en">Addendum</localized-string><localized-string key="doctype_dict.supplement" language="en">Supplement</localized-string><localized-string key="doctype_dict.extract" language="en">Extract</localized-string><localized-string key="doctype_dict.technical-corrigendum" language="en">Technical Corrigendum</localized-string><localized-string key="doctype_dict.directive" language="en">Directive</localized-string><localized-string key="doctype_dict.committee-document" language="en">Committee Document</localized-string><localized-string key="doctype_dict.recommendation" language="en">ISO Recommendation</localized-string><localized-string key="contributor_role_desc_dict.Technical_committee" language="en">Technical committee</localized-string><localized-string key="stage_dict.00" language="en">Preliminary work item</localized-string><localized-string key="stage_dict.10" language="en">New work item proposal</localized-string><localized-string key="stage_dict.20" language="en">Working draft</localized-string><localized-string key="stage_dict.30" language="en">Committee draft</localized-string><localized-string key="40.international-standard" language="en">Draft International Standard</localized-string><localized-string key="40.technical-specification" language="en">Draft Technical Specification</localized-string><localized-string key="40.technical-report" language="en">Draft Technical Report</localized-string><localized-string key="40.publicly-available-specification" language="en">Draft Publicly Available Specification</localized-string><localized-string key="40.international-workshop-agreement" language="en">Draft International Workshop Agreement</localized-string><localized-string key="40.guide" language="en">Draft Guide</localized-string><localized-string key="40.amendment" language="en">Draft Amendment</localized-string><localized-string key="40.technical-corrigendum" language="en">Draft Technical Corrigendum</localized-string><localized-string key="40.directive" language="en">Draft Directive</localized-string><localized-string key="50.international-standard" language="en">Final Draft International Standard</localized-string><localized-string key="50.technical-specification" language="en">Final Draft Technical Specification</localized-string><localized-string key="50.technical-report" language="en">Final Draft Technical Report</localized-string><localized-string key="50.publicly-available-specification" language="en">Final Draft Publicly Available Specification</localized-string><localized-string key="50.international-workshop-agreement" language="en">Final Draft International Workshop Agreement</localized-string><localized-string key="50.guide" language="en">Final Draft Guide</localized-string><localized-string key="50.amendment" language="en">Final Draft Amendment</localized-string><localized-string key="50.technical-corrigendum" language="en">Final Draft Technical Corrigendum</localized-string><localized-string key="50.directive" language="en">Final Draft Directive</localized-string><localized-string key="60.international-standard" language="en">International Standard</localized-string><localized-string key="60.technical-specification" language="en">Technical Specification</localized-string><localized-string key="60.technical-report" language="en">Technical Report</localized-string><localized-string key="60.publicly-available-specification" language="en">Publicly Available Specification</localized-string><localized-string key="60.international-workshop-agreement" language="en">International Workshop Agreement</localized-string><localized-string key="60.guide" language="en">Guide</localized-string><localized-string key="60.amendment" language="en">Amendment</localized-string><localized-string key="60.technical-corrigendum" language="en">Technical Corrigendum</localized-string><localized-string key="60.directive" language="en">Directive</localized-string><localized-string key="stage_dict.90" language="en">Review</localized-string><localized-string key="stage_dict.95" language="en">Withdrawal</localized-string><localized-string key="Draft_International_Standard.coverpage" language="en">DRAFT<br/>International Standard</localized-string><localized-string key="Draft_International_Standard.firstpage" language="en">DRAFT International Standard</localized-string><localized-string key="Draft_Technical_Specification.coverpage" language="en">DRAFT<br/>Technical Specification</localized-string><localized-string key="Draft_Technical_Specification.firstpage" language="en">DRAFT Technical Specification</localized-string><localized-string key="Draft_Technical_Report.coverpage" language="en">DRAFT<br/>Technical Report</localized-string><localized-string key="Draft_Technical_Report.firstpage" language="en">DRAFT Technical Report</localized-string><localized-string key="Draft_Publicly_Available_Specification.coverpage" language="en">DRAFT<br/>Publicly Available Specification</localized-string><localized-string key="Draft_Publicly_Available_Specification.firstpage" language="en">DRAFT Publicly Available Specification</localized-string><localized-string key="Draft_International_Workshop_Agreement.coverpage" language="en">DRAFT<br/>International Workshop Agreement</localized-string><localized-string key="Draft_International_Workshop_Agreement.firstpage" language="en">DRAFT International Workshop Agreement</localized-string><localized-string key="Draft_Guide.coverpage" language="en">DRAFT<br/>Guide</localized-string><localized-string key="Draft_Guide.firstpage" language="en">DRAFT Guide</localized-string><localized-string key="Draft_Amendment.coverpage" language="en">DRAFT<br/>Amendment</localized-string><localized-string key="Draft_Amendment.firstpage" language="en">DRAFT Amendment</localized-string><localized-string key="Draft_Technical_Corrigendum.coverpage" language="en">DRAFT<br/>Technical Corrigendum</localized-string><localized-string key="Draft_Technical_Corrigendum.firstpage" language="en">DRAFT Technical Corrigendum</localized-string><localized-string key="Draft_Directive.coverpage" language="en">DRAFT<br/>Directive</localized-string><localized-string key="Draft_Directive.firstpage" language="en">DRAFT Directive</localized-string><localized-string key="Final_Draft_International_Standard.coverpage" language="en">FINAL DRAFT<br/>International Standard</localized-string><localized-string key="Final_Draft_International_Standard.firstpage" language="en">FINAL DRAFT International Standard</localized-string><localized-string key="Final_Draft_Technical_Specification.coverpage" language="en">FINAL DRAFT<br/>Technical Specification</localized-string><localized-string key="Final_Draft_Technical_Specification.firstpage" language="en">FINAL DRAFT Technical Specification</localized-string><localized-string key="Final_Draft_Technical_Report.coverpage" language="en">FINAL DRAFT<br/>Technical Report</localized-string><localized-string key="Final_Draft_Technical_Report.firstpage" language="en">FINAL DRAFT Technical Report</localized-string><localized-string key="Final_Draft_Publicly_Available_Specification.coverpage" language="en">FINAL DRAFT<br/>Publicly Available Specification</localized-string><localized-string key="Final_Draft_Publicly_Available_Specification.firstpage" language="en">FINAL DRAFT Publicly Available Specification</localized-string><localized-string key="Final_Draft_International_Workshop_Agreement.coverpage" language="en">FINAL DRAFT<br/>International Workshop Agreement</localized-string><localized-string key="Final_Draft_International_Workshop_Agreement.firstpage" language="en">FINAL DRAFT International Workshop Agreement</localized-string><localized-string key="Final_Draft_Guide.coverpage" language="en">FINAL DRAFT<br/>Guide</localized-string><localized-string key="Final_Draft_Guide.firstpage" language="en">FINAL DRAFT Guide</localized-string><localized-string key="Final_Draft_Amendment.coverpage" language="en">FINAL DRAFT<br/>Amendment</localized-string><localized-string key="Final_Draft_Amendment.firstpage" language="en">FINAL DRAFT Amendment</localized-string><localized-string key="Final_Draft_Technical_Corrigendum.coverpage" language="en">FINAL DRAFT<br/>Technical Corrigendum</localized-string><localized-string key="Final_Draft_Technical_Corrigendum.firstpage" language="en">FINAL DRAFT Technical Corrigendum</localized-string><localized-string key="Final_Draft_Directive.coverpage" language="en">FINAL DRAFT<br/>Directive</localized-string><localized-string key="Final_Draft_Directive.firstpage" language="en">FINAL DRAFT Directive</localized-string><localized-string key="modspec.provision" language="en">Provision</localized-string><localized-string key="modspec.conformancetest" language="en">Conformance test</localized-string><localized-string key="language" language="en">en</localized-string><localized-string key="script" language="en">Latn</localized-string></localized-strings><metanorma-extension><semantic-metadata><stage-published>false</stage-published></semantic-metadata>
+<presentation-metadata><document-scheme>1989</document-scheme><toc-heading-levels>2</toc-heading-levels><html-toc-heading-levels>2</html-toc-heading-levels><doc-toc-heading-levels>3</doc-toc-heading-levels><pdf-toc-heading-levels>3</pdf-toc-heading-levels></presentation-metadata><source-highlighter-css>sourcecode table td { padding: 5px; }
+sourcecode table pre { margin: 0; }
+sourcecode, sourcecode .w {
+  color: #444444;
+}
+sourcecode .cp {
+  color: #CC00A3;
+}
+sourcecode .cs {
+  color: #CC00A3;
+}
+sourcecode .c, sourcecode .ch, sourcecode .cd, sourcecode .cm, sourcecode .cpf, sourcecode .c1 {
+  color: #FF0000;
+}
+sourcecode .kc {
+  color: #C34E00;
+}
+sourcecode .kd {
+  color: #0000FF;
+}
+sourcecode .kr {
+  color: #007575;
+}
+sourcecode .k, sourcecode .kn, sourcecode .kp, sourcecode .kt, sourcecode .kv {
+  color: #0000FF;
+}
+sourcecode .s, sourcecode .sb, sourcecode .sc, sourcecode .ld, sourcecode .sd, sourcecode .s2, sourcecode .se, sourcecode .sh, sourcecode .si, sourcecode .sx, sourcecode .sr, sourcecode .s1, sourcecode .ss {
+  color: #009C00;
+}
+sourcecode .sa {
+  color: #0000FF;
+}
+sourcecode .nb, sourcecode .bp {
+  color: #C34E00;
+}
+sourcecode .nt {
+  color: #0000FF;
+}
+
+</source-highlighter-css></metanorma-extension>
+<boilerplate><copyright-statement>
+
+<clause id="boilerplate-copyright-default" anchor="boilerplate-copyright-default" inline-header="true" obligation="normative" semx-id="_1ac749d8-50de-9e5a-be08-8e0bb1eef33f"><p id="boilerplate-year" anchor="boilerplate-year" semx-id="_bd68d22e-f082-3fc3-5fb4-7d4cd7473f6a">© <span class="std_publisher">ISO </span><span class="date">2011</span></p>
+
+<p id="boilerplate-message" anchor="boilerplate-message" semx-id="_aaacf7fa-c892-814c-07f7-828c740b8fd7">All rights reserved. Unless otherwise specified, no part of this publication may be reproduced or utilized in any form or by any means, electronic or mechanical, including photocopying and microfilm, without permission in writing from the publisher.</p>
+
+<p id="boilerplate-address" anchor="boilerplate-address" align="left" semx-id="_74b49292-c315-463f-d83f-af958be12ac1">International Organization for Standardization<br/> Case postale 56 • CH-1211 Genève 20 • Switzerland<br/> Internet   <link target="mailto:central@iso.ch" id="_457cc46e-8ca9-ec39-ee3b-64d05cd7e9c3"/><semx element="link" source="_457cc46e-8ca9-ec39-ee3b-64d05cd7e9c3"><fmt-link target="mailto:central@iso.ch"/></semx><br/> X.400     c=ch; a=400net; p=iso; o=isocs; s=central</p>
+
+<p id="boilerplate-place" anchor="boilerplate-place" semx-id="_de60c91e-f556-dc81-b6c0-208b0c74e4a3">Printed in Switzerland</p>
+</clause>
+</copyright-statement>
+</boilerplate><preface><clause type="toc" id="_13d7055e-30fc-845a-c60e-8972faf092d9" displayorder="1"><fmt-title depth="1" id="_b7371af6-75a1-52fa-2891-5c5f9a06aa7c">Contents</fmt-title></clause>
+<foreword id="_da83f1dc-73e8-7870-798d-2246061abf59" obligation="informative" semx-id="_da83f1dc-73e8-7870-798d-2246061abf59" displayorder="2">
+<title id="_39f555c2-f081-1181-eab4-26637491561a" semx-id="_41c9fad3-d4c1-eecc-4fad-f91704acc026">Foreword</title><fmt-title depth="1" id="_e21d5a0d-5d7c-f27a-d0d4-780199a274bb"><semx element="title" source="_39f555c2-f081-1181-eab4-26637491561a">Foreword</semx></fmt-title>
+<p id="_83357459-0501-9840-69bb-32542e9fafee" semx-id="_83357459-0501-9840-69bb-32542e9fafee">ISO (the International Organization for Standardization) and IEC (the International Electrotechnical Commission) form the specialized system for worldwide standardization. National bodies that are members of ISO or IEC participate in the development of International Standards through technical committees established by the respective organization to deal with particular fields of technical activity. ISO and IEC technical committees collaborate in fields of mutual interest. Other international organizations, governmental and non-governmental, in liaison with ISO and IEC, also take part in the work. In the field of information technology, ISO and IEC have established a joint technical committee, ISO/IEC JTC 1.</p>
+
+<p id="_04545cf9-30ad-3603-b982-e8951c3a13b2" semx-id="_04545cf9-30ad-3603-b982-e8951c3a13b2">International Standards are drafted in accordance with the rules given in the ISO/IEC Directives, Part 2.</p>
+
+<p id="_56380939-7e8c-aef3-dee6-f0791fdf0282" semx-id="_56380939-7e8c-aef3-dee6-f0791fdf0282">The main task of the joint technical committee is to prepare International Standards. Draft International Standards adopted by the joint technical committee are circulated to national bodies for voting. Publication as an International Standard requires approval by at least 75 % of the national bodies casting a vote.</p>
+
+<p id="_2408fd78-549b-b057-f525-49807be37baa" semx-id="_2408fd78-549b-b057-f525-49807be37baa">In exceptional circumstances, when the joint technical committee has collected data of a different kind from that which is normally published as an International Standard (“state of the art”, for example), it may decide to publish a Technical Report. A Technical Report is entirely informative in nature and shall be subject to review every five years in the same manner as an International Standard.</p>
+
+<p id="_3b03af41-2550-a89a-6888-76ac51a841be" semx-id="_3b03af41-2550-a89a-6888-76ac51a841be">Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights. ISO and IEC shall not be held responsible for identifying any or all such patent rights.</p>
+
+<p id="_76ee0bfa-ced0-6cf4-0092-68982bd47e01" semx-id="_76ee0bfa-ced0-6cf4-0092-68982bd47e01">ISO/IEC TR 29166 was prepared by Joint Technical Committee ISO/IEC JTC 1, Information technology, Subcommittee SC 34, Document description and processing languages.</p>
+</foreword><introduction id="introduction" anchor="introduction" obligation="informative" semx-id="_c02330b2-a208-f50c-a5cd-f13a618efd77" displayorder="3">
+<title id="_16dfa240-5da0-7fab-88e4-5f6086712be3" semx-id="_2b2e98d1-114a-3da4-8556-01ae0a724280">Introduction</title><fmt-title depth="1" id="_a9308b12-1a9d-9521-6b7d-acebab74aa90"><semx element="title" source="_16dfa240-5da0-7fab-88e4-5f6086712be3">Introduction</semx></fmt-title>
+<p id="_10a2ab67-45e2-311e-4012-c8c983c9b978" semx-id="_10a2ab67-45e2-311e-4012-c8c983c9b978">OASIS Open Document Format ODF 1.0 (<eref type="inline" bibitemid="iso-iec_26300" citeas="ISO/IEC 26300:2006" id="_110d0be9-7df8-a899-8886-837634f98446"/><semx element="eref" source="_110d0be9-7df8-a899-8886-837634f98446"><fmt-xref type="inline" target="iso-iec_26300"><span class="stdpublisher">ISO/IEC</span> <span class="stddocNumber">26300</span>:<span class="stdyear">2006</span></fmt-xref></semx>) and Office Open XML (ISO/IEC 29500) are both open document formats for saving and exchanging word processing documents, spreadsheets and presentations. Both formats are XML based but differ in design and scope.</p>
+
+<p id="_5fadfd3a-c841-fdaa-0413-fad7913b2f0b" semx-id="_5fadfd3a-c841-fdaa-0413-fad7913b2f0b">The following abbreviations are used throughout this Technical Report:</p>
+
+<ul id="_7541b390-b95c-883d-698f-9ae1d1a7ff78" semx-id="_7541b390-b95c-883d-698f-9ae1d1a7ff78"><li id="_ef06a396-09b9-db97-bdf4-7e41572b889b"><fmt-name id="_74bc2034-1759-002f-0bb3-c1dd33cd8441"><semx element="autonum" source="_ef06a396-09b9-db97-bdf4-7e41572b889b">—</semx></fmt-name><p id="_b1ea2b48-be3c-dd2d-0152-f7883b36becd" semx-id="_b1ea2b48-be3c-dd2d-0152-f7883b36becd">ODF, which stands for OpenDocument Format (<eref type="inline" bibitemid="iso-iec_26300" citeas="ISO/IEC 26300:2006" id="_f196beb6-0291-6754-249e-4e479328d4cf"/><semx element="eref" source="_f196beb6-0291-6754-249e-4e479328d4cf"><fmt-xref type="inline" target="iso-iec_26300"><span class="stdpublisher">ISO/IEC</span> <span class="stddocNumber">26300</span>:<span class="stdyear">2006</span></fmt-xref></semx>);</p>
+</li>
+<li id="_97f79392-031c-3a29-43bd-9c9b8dd25870"><fmt-name id="_0e18563e-00fb-1c94-610b-ee3a21e618c8"><semx element="autonum" source="_97f79392-031c-3a29-43bd-9c9b8dd25870">—</semx></fmt-name><p id="_7cb40076-e0f6-4298-8414-37cf2e6d1231" semx-id="_7cb40076-e0f6-4298-8414-37cf2e6d1231">OOXML, which stands for Office Open XML (ISO/IEC 29500:2008).</p>
+</li>
+</ul>
+
+<p id="_701f98ec-f239-ba6a-90b6-c26e37bfea18" semx-id="_701f98ec-f239-ba6a-90b6-c26e37bfea18">ISO/IEC 29500 is structured into four parts, each of which contains normative as well as informative material: Fundamentals and Markup Language Reference, Open Packaging Conventions, Markup Compatibility and Extensibility, and Transitional Migration Features.</p>
+
+<p id="_9605687d-c646-a8d1-82d9-97781c28d369" semx-id="_9605687d-c646-a8d1-82d9-97781c28d369">At the time of writing (June 2011) the following corrigenda and amendments have been published:</p>
+
+<ul id="_4ef7e326-15de-2eb8-22fd-81dae0392262" semx-id="_4ef7e326-15de-2eb8-22fd-81dae0392262"><li id="_44c911b7-94b9-fc65-3a6a-109c95a185e5"><fmt-name id="_40c62a77-7c9f-1265-4410-1ac34ff192dd"><semx element="autonum" source="_44c911b7-94b9-fc65-3a6a-109c95a185e5">—</semx></fmt-name><p id="_4cbbc6a3-3550-f236-f22c-33c934e253e7" semx-id="_4cbbc6a3-3550-f236-f22c-33c934e253e7">ISO/IEC 29500-1:2008/Cor.1:2010, ISO/IEC 29500-2:2008/Cor.1:2010, ISO/IEC 29500-3:2008/Cor.1:2010 and ISO/IEC 29500-4:2008/Cor.1:2010, containing minor technical corrections and editorial modifications;</p>
+</li>
+<li id="_e4cabedb-407d-4b6c-e8b3-67119116283d"><fmt-name id="_f2817859-dbaf-e397-233b-1fcb4812b946"><semx element="autonum" source="_e4cabedb-407d-4b6c-e8b3-67119116283d">—</semx></fmt-name><p id="_a877d2d6-ee7c-0f77-149d-eef16ee03650" semx-id="_a877d2d6-ee7c-0f77-149d-eef16ee03650">ISO/IEC 29500-1:2008/Amd.1:2010 and ISO/IEC 29500-4:2008/Amd.1:2010, containing namespace changes and modifications concerning the usage of percentage (%) values;</p>
+</li>
+<li id="_2e43c47f-5202-ae97-0b56-d10debc080b2"><fmt-name id="_25a936a2-553e-1531-bfc6-5a735f287051"><semx element="autonum" source="_2e43c47f-5202-ae97-0b56-d10debc080b2">—</semx></fmt-name><p id="_8f09aad9-badd-54a5-1983-6ef4b468a134" semx-id="_8f09aad9-badd-54a5-1983-6ef4b468a134">ISO/IEC 29500:2011 (ECMA 376 3rd edition) as a consolidated version of OOXML containing the above-mentioned corrigenda and amendments;</p>
+</li>
+<li id="_a6ebd2da-ef40-7d4a-4fe8-e19fcc386970"><fmt-name id="_1d6be3e1-18b1-5b7e-6bd8-6a1556fbb578"><semx element="autonum" source="_a6ebd2da-ef40-7d4a-4fe8-e19fcc386970">—</semx></fmt-name><p id="_88b93eb6-fdc8-d51a-260a-88f10ecaecc5" semx-id="_88b93eb6-fdc8-d51a-260a-88f10ecaecc5">ISO/IEC 26300:2006/Cor.1:2010, containing editorial modifications;</p>
+</li>
+<li id="_b4bc6f11-e249-d5c2-aa67-21995e335d3a"><fmt-name id="_6029671f-caa1-590e-d09d-09e5d5bd29b0"><semx element="autonum" source="_b4bc6f11-e249-d5c2-aa67-21995e335d3a">—</semx></fmt-name><p id="_4f68aad3-505e-cbbe-073d-5cfbc2582554" semx-id="_4f68aad3-505e-cbbe-073d-5cfbc2582554">ISO/IEC 26300:2006/Cor.2:2011, fixing editorial errors.</p>
+</li>
+</ul>
+
+<p id="_a893b08f-59cf-f002-3e84-fc1166229f13" semx-id="_a893b08f-59cf-f002-3e84-fc1166229f13">In addition, the following Amendments are under preparation:</p>
+
+<ul id="_d8e6016d-4ff4-bafc-b9a6-5f0cd38a74c5" semx-id="_d8e6016d-4ff4-bafc-b9a6-5f0cd38a74c5"><li id="_10e9f7e2-ef55-7cdc-b29f-01248367986f"><fmt-name id="_a81d2eb8-6118-f314-ceeb-b33b2a0616d6"><semx element="autonum" source="_10e9f7e2-ef55-7cdc-b29f-01248367986f">—</semx></fmt-name><p id="_c48482cb-52f5-8f72-df1c-6df69bee4dfc" semx-id="_c48482cb-52f5-8f72-df1c-6df69bee4dfc">Amendment 1 to ISO/IEC 29500-1:2011 and Amendment 1 to ISO/IEC 29500-4:2011 about ISO 8601 dates;</p>
+</li>
+<li id="_8e76e2a9-b29d-a6ae-311c-6d61a7e7ebe8"><fmt-name id="_c05ae0ba-4833-4a91-ee22-3cd2c5eaa8ed"><semx element="autonum" source="_8e76e2a9-b29d-a6ae-311c-6d61a7e7ebe8">—</semx></fmt-name><p id="_c8666d4e-9007-5001-ea7d-eb94c33509f9" semx-id="_c8666d4e-9007-5001-ea7d-eb94c33509f9">Amendment 1 to ISO/IEC 26300:2006 introducing ODF 1.1.</p>
+</li>
+</ul>
+</introduction></preface><sections><p class="zzSTDTitle1" displayorder="4"><span class="boldtitle">Information technology — Document description and processing languages — Guidelines for translation between ISO/IEC 26300 and ISO/IEC 29500 document formats</span></p>
+
+
+
+
+<clause id="_ed8581a7-8a74-8a10-4a5e-86c86d45a587" type="scope" inline-header="false" obligation="normative" semx-id="_ed8581a7-8a74-8a10-4a5e-86c86d45a587" displayorder="5">
+<title id="_ef5612fb-1e47-1246-b392-69a921308fcb" semx-id="_f70b6ff6-6131-0e24-81e1-850dbe94b63d">Scope</title><fmt-title depth="1" id="_58af5d1a-79fa-3676-3b52-26615cc3d4d7"><span class="fmt-caption-label"><semx element="autonum" source="_ed8581a7-8a74-8a10-4a5e-86c86d45a587">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_ef5612fb-1e47-1246-b392-69a921308fcb">Scope</semx></fmt-title><fmt-xref-label><span class="fmt-element-name">Clause</span> <semx element="autonum" source="_ed8581a7-8a74-8a10-4a5e-86c86d45a587">1</semx></fmt-xref-label>
+<p id="_1d6d3867-8c4c-48cd-5535-5a8897b1cc97" semx-id="_1d6d3867-8c4c-48cd-5535-5a8897b1cc97">This Technical Report provides guidelines for translation between ISO/IEC 26300 and ISO/IEC 29500 document formats. It starts by studying common use cases to identify how the most important functionalities of one document format can be represented in the other format. This is followed by a thorough review of the concepts, architectures and various features of the two document formats in order to provide a good understanding of the commonalities and differences. It is expected that functionalities will be able to be translated with different degrees of fidelity to the other format. As an illustrative sample of this functionality, detailed information is provided on the extent to which those functionalities can be translated. This Technical Report is a necessary step to the goal of helping achieve interoperability and harmonization between the two formats.</p>
+</clause>
+
+
+
+<terms id="terms" anchor="terms" obligation="normative" semx-id="_ea984b7d-4d08-a247-34fa-e255f801db3f" displayorder="7">
+<title id="_59e5fc26-1cc5-8aac-16af-e6c35f9dde7d" semx-id="_dfb2eab2-f980-6365-3c47-81d0eb272962">Terms and definitions</title><fmt-title depth="1" id="_62de78f7-9849-c7d0-ea0a-4a2a9f3e72ba"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_59e5fc26-1cc5-8aac-16af-e6c35f9dde7d">Terms and definitions</semx></fmt-title><fmt-xref-label><span class="fmt-element-name">Clause</span> <semx element="autonum" source="terms">3</semx></fmt-xref-label><p id="_dcc01114-4d03-3550-1347-4ba901bda94c" semx-id="_dcc01114-4d03-3550-1347-4ba901bda94c">For the purposes of this document, the following terms and definitions apply.</p><p id="_1df4aedb-297d-0c69-967f-f6a60db009d2" semx-id="_1df4aedb-297d-0c69-967f-f6a60db009d2">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
+
+<ul id="_e6ddc246-88cc-2222-8452-b939a5cefa0e" semx-id="_e6ddc246-88cc-2222-8452-b939a5cefa0e"><li id="_01c42259-6512-2b50-0a8b-163e53dacc2d"><fmt-name id="_50d02d2d-69b9-d9c6-8fa6-39b29d3f2dd0"><semx element="autonum" source="_01c42259-6512-2b50-0a8b-163e53dacc2d">—</semx></fmt-name><p id="_93880b15-0e52-9141-f887-d290dce89ffd" semx-id="_93880b15-0e52-9141-f887-d290dce89ffd">ISO Online browsing platform: available at <link target="https://www.iso.org/obp" id="_fbdceb70-92a8-24a6-39e9-a5a9511cb393"/><semx element="link" source="_fbdceb70-92a8-24a6-39e9-a5a9511cb393"><fmt-link target="https://www.iso.org/obp"/></semx></p>
+</li>
+<li id="_67773aa8-9043-8351-657b-25ca152b61c0"><fmt-name id="_c6823434-c8e9-9507-34ca-87ad35a4266a"><semx element="autonum" source="_67773aa8-9043-8351-657b-25ca152b61c0">—</semx></fmt-name><p id="_8a7ecb99-412c-1138-ae9d-76c4ac7b7d43" semx-id="_8a7ecb99-412c-1138-ae9d-76c4ac7b7d43">IEC Electropedia: available at <link target="https://www.electropedia.org" id="_4c3983c9-52ad-41ac-f63f-5b86efdba277"/><semx element="link" source="_4c3983c9-52ad-41ac-f63f-5b86efdba277"><fmt-link target="https://www.electropedia.org"/></semx></p>
+</li>
+</ul>
+<term id="term-translation-type" anchor="term-translation-type" semx-id="_e0ba1f12-9238-2f3b-ec4f-eb6cd2496b19"><fmt-name id="_443a83cb-1d97-55b2-2d5d-e4693487aa99"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-translation-type">1</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-translation-type">1</semx></fmt-xref-label><preferred id="_8075d700-6cec-b3ce-dc52-34954883dc7e"><expression>
+<name id="_dc3fc1e1-539a-280a-7c87-1a18c5a3b510">translation type</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_8075d700-6cec-b3ce-dc52-34954883dc7e"><strong><semx element="expression/name" source="_dc3fc1e1-539a-280a-7c87-1a18c5a3b510">translation type</semx></strong></semx></p></fmt-preferred>
+<definition id="_83d72630-79f8-881d-afa0-8f6724510b26" semx-id="_83d72630-79f8-881d-afa0-8f6724510b26"><verbal-definition semx-id="_f06f22ee-a0e6-99f8-5c37-671d8c26838f" id="_f06f22ee-a0e6-99f8-5c37-671d8c26838f"><p semx-id="_7739acbc-b308-e6a4-8492-40cb13d1e714" original-id="_7739acbc-b308-e6a4-8492-40cb13d1e714">methods used when translating between ODF and OOXML documents</p></verbal-definition></definition><fmt-definition id="_fbd6de88-f7fc-5d8a-2a29-e6006a8b603c"><semx element="definition" source="_83d72630-79f8-881d-afa0-8f6724510b26"><p id="_7739acbc-b308-e6a4-8492-40cb13d1e714" semx-id="_7739acbc-b308-e6a4-8492-40cb13d1e714">methods used when translating between ODF and OOXML documents</p></semx></fmt-definition>
+
+
+ <termnote id="_3c7377bf-eeac-f14e-df64-c0ba2f815074" semx-id="_3c7377bf-eeac-f14e-df64-c0ba2f815074" autonum="1"><fmt-name id="_ef07028b-46b3-8d3b-cead-993e53813357"><span class="fmt-caption-label">Note <semx element="autonum" source="_3c7377bf-eeac-f14e-df64-c0ba2f815074">1</semx> to entry</span><span class="fmt-label-delim">: </span></fmt-name><fmt-xref-label><span class="fmt-element-name">Note</span> <semx element="autonum" source="_3c7377bf-eeac-f14e-df64-c0ba2f815074">1</semx></fmt-xref-label><fmt-xref-label container="term-translation-type"><span class="fmt-xref-container"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-translation-type">1</semx></span><span class="fmt-comma">,</span> <span class="fmt-element-name">Note</span> <semx element="autonum" source="_3c7377bf-eeac-f14e-df64-c0ba2f815074">1</semx></fmt-xref-label><p id="_a59912f0-3a3e-a0d2-9164-5d39da3ca784" semx-id="_a59912f0-3a3e-a0d2-9164-5d39da3ca784">This Technical Report distinguishes four translation types: * one way ODF to OOXML translation; * one way OOXML to ODF translation; * round trip ODF to OOXML to ODF translation; * round trip OOXML to ODF to OOXML translation.</p>
+</termnote></term>
+
+<term id="term-translation-fidelity" anchor="term-translation-fidelity" semx-id="_2a84784c-f1f5-180b-3b0b-d73edc9a47b3"><fmt-name id="_555d7e69-c076-9b35-4c43-d0a500a0a27a"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-translation-fidelity">2</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-translation-fidelity">2</semx></fmt-xref-label><preferred id="_9757a2a5-4516-7055-0d45-67b20d6701b7"><expression>
+<name id="_c578a120-dc0c-4461-e790-82749f0bd6f7">translation fidelity</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_9757a2a5-4516-7055-0d45-67b20d6701b7"><strong><semx element="expression/name" source="_c578a120-dc0c-4461-e790-82749f0bd6f7">translation fidelity</semx></strong></semx></p></fmt-preferred>
+<definition id="_5d75a7a2-508b-5f79-b08d-9b5fadaeede2" semx-id="_5d75a7a2-508b-5f79-b08d-9b5fadaeede2"><verbal-definition semx-id="_eb2a3b01-9bf8-8dc5-78fa-424975e4b0e8" id="_eb2a3b01-9bf8-8dc5-78fa-424975e4b0e8"><p semx-id="_efe00b15-3342-a0a0-ee18-fc6f27a947fc" original-id="_efe00b15-3342-a0a0-ee18-fc6f27a947fc">quality of a translation process between the ODF and OOXML document formats</p></verbal-definition></definition><fmt-definition id="_ca72dc84-8e02-31fc-d404-a8a46873c6b2"><semx element="definition" source="_5d75a7a2-508b-5f79-b08d-9b5fadaeede2"><p id="_efe00b15-3342-a0a0-ee18-fc6f27a947fc" semx-id="_efe00b15-3342-a0a0-ee18-fc6f27a947fc">quality of a translation process between the ODF and OOXML document formats</p></semx></fmt-definition>
+
+
+
+
+ <termnote id="_09763c43-4f4e-ef64-205e-1cb5e9021275" semx-id="_09763c43-4f4e-ef64-205e-1cb5e9021275" autonum="1"><fmt-name id="_30eaecb0-d023-5591-be7f-39051b51dffc"><span class="fmt-caption-label">Note <semx element="autonum" source="_09763c43-4f4e-ef64-205e-1cb5e9021275">1</semx> to entry</span><span class="fmt-label-delim">: </span></fmt-name><fmt-xref-label><span class="fmt-element-name">Note</span> <semx element="autonum" source="_09763c43-4f4e-ef64-205e-1cb5e9021275">1</semx></fmt-xref-label><fmt-xref-label container="term-translation-fidelity"><span class="fmt-xref-container"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-translation-fidelity">2</semx></span><span class="fmt-comma">,</span> <span class="fmt-element-name">Note</span> <semx element="autonum" source="_09763c43-4f4e-ef64-205e-1cb5e9021275">1</semx></fmt-xref-label><p id="_2d50d275-e1a2-fc6d-1763-c9ab1858793e" semx-id="_2d50d275-e1a2-fc6d-1763-c9ab1858793e">Translation fidelity depends on document properties.</p>
+</termnote><termnote id="_1a60b851-120f-0fdd-6816-06fc72ac8473" semx-id="_1a60b851-120f-0fdd-6816-06fc72ac8473" autonum="2"><fmt-name id="_d1ab4f85-c4c3-aa6f-8663-5e077ed83fa5"><span class="fmt-caption-label">Note <semx element="autonum" source="_1a60b851-120f-0fdd-6816-06fc72ac8473">2</semx> to entry</span><span class="fmt-label-delim">: </span></fmt-name><fmt-xref-label><span class="fmt-element-name">Note</span> <semx element="autonum" source="_1a60b851-120f-0fdd-6816-06fc72ac8473">2</semx></fmt-xref-label><fmt-xref-label container="term-translation-fidelity"><span class="fmt-xref-container"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-translation-fidelity">2</semx></span><span class="fmt-comma">,</span> <span class="fmt-element-name">Note</span> <semx element="autonum" source="_1a60b851-120f-0fdd-6816-06fc72ac8473">2</semx></fmt-xref-label><p id="_d852bff5-1b05-4306-e0c8-6f8aa1978ed5" semx-id="_d852bff5-1b05-4306-e0c8-6f8aa1978ed5">Translation fidelity cannot be measured in an absolute manner; it depends on the intentions of the document’s authors.</p>
+</termnote></term>
+
+<term id="term-document-property" anchor="term-document-property" semx-id="_4cc4ed0f-1f26-3260-3370-03dd6d63f8cc"><fmt-name id="_a6ca3024-1a78-b9da-5d85-9a5c095268ee"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-document-property">3</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-document-property">3</semx></fmt-xref-label><preferred id="_e67596c8-639a-4184-7680-caff30ace8e9"><expression>
+<name id="_bb2b12be-bd25-54bb-e19b-31c5713e2b50">document property</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_e67596c8-639a-4184-7680-caff30ace8e9"><strong><semx element="expression/name" source="_bb2b12be-bd25-54bb-e19b-31c5713e2b50">document property</semx></strong></semx></p></fmt-preferred>
+<definition id="_1181e600-9125-65c6-39a9-fe5eb13cf6da" semx-id="_1181e600-9125-65c6-39a9-fe5eb13cf6da"><verbal-definition semx-id="_23c45823-e3b8-49d7-bc3c-8c676e770deb" id="_23c45823-e3b8-49d7-bc3c-8c676e770deb"><p semx-id="_7ff56689-1554-8431-c955-16ead15b934d" original-id="_7ff56689-1554-8431-c955-16ead15b934d">description of different yet independent dimensions within the specification of a document</p></verbal-definition></definition><fmt-definition id="_3a2a8938-c404-affa-b138-5f513903bf6e"><semx element="definition" source="_1181e600-9125-65c6-39a9-fe5eb13cf6da"><p id="_7ff56689-1554-8431-c955-16ead15b934d" semx-id="_7ff56689-1554-8431-c955-16ead15b934d">description of different yet independent dimensions within the specification of a document</p></semx></fmt-definition>
+
+
+
+
+ <termnote id="_ee0333ac-0562-1ade-9407-c8528a773219" semx-id="_ee0333ac-0562-1ade-9407-c8528a773219" autonum="1"><fmt-name id="_93a57fba-5a09-8d32-feec-c92f67d848ea"><span class="fmt-caption-label">Note <semx element="autonum" source="_ee0333ac-0562-1ade-9407-c8528a773219">1</semx> to entry</span><span class="fmt-label-delim">: </span></fmt-name><fmt-xref-label><span class="fmt-element-name">Note</span> <semx element="autonum" source="_ee0333ac-0562-1ade-9407-c8528a773219">1</semx></fmt-xref-label><fmt-xref-label container="term-document-property"><span class="fmt-xref-container"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-document-property">3</semx></span><span class="fmt-comma">,</span> <span class="fmt-element-name">Note</span> <semx element="autonum" source="_ee0333ac-0562-1ade-9407-c8528a773219">1</semx></fmt-xref-label><p id="_a401af82-68e5-19d4-c09a-7c9a4cc10b1a" semx-id="_a401af82-68e5-19d4-c09a-7c9a4cc10b1a">As defined in 4.2 this Technical Report distinguishes the following document properties: * presentation instructions; * content; * dynamic content; * meta data; * annotations and security; * document parts.</p>
+</termnote><termnote id="_8b725f57-0765-9c4e-c0e1-cdaaf393cd1f" semx-id="_8b725f57-0765-9c4e-c0e1-cdaaf393cd1f" autonum="2"><fmt-name id="_7a120f7d-a890-e749-34b8-930c632d4010"><span class="fmt-caption-label">Note <semx element="autonum" source="_8b725f57-0765-9c4e-c0e1-cdaaf393cd1f">2</semx> to entry</span><span class="fmt-label-delim">: </span></fmt-name><fmt-xref-label><span class="fmt-element-name">Note</span> <semx element="autonum" source="_8b725f57-0765-9c4e-c0e1-cdaaf393cd1f">2</semx></fmt-xref-label><fmt-xref-label container="term-document-property"><span class="fmt-xref-container"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-document-property">3</semx></span><span class="fmt-comma">,</span> <span class="fmt-element-name">Note</span> <semx element="autonum" source="_8b725f57-0765-9c4e-c0e1-cdaaf393cd1f">2</semx></fmt-xref-label><p id="_c41a94c4-df6e-bc06-6ac5-1752fa1302c9" semx-id="_c41a94c4-df6e-bc06-6ac5-1752fa1302c9">Document properties are implemented using document features.</p>
+</termnote></term>
+
+<terms id="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68" obligation="normative" semx-id="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">
+<title id="_e0f2d4fe-82d9-3262-04c2-0198158a28b3" semx-id="_1eb75df6-b289-5b8b-9f4a-fa2cb6641e82">General</title><fmt-title depth="2" id="_c08945d3-bee1-48b0-2f35-2b97d40f4947"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_e0f2d4fe-82d9-3262-04c2-0198158a28b3">General</semx></fmt-title><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx></fmt-xref-label>
+<term id="term-access" anchor="term-access" semx-id="_dbc6965a-a2a5-0a3f-0299-4360652a0eac"><fmt-name id="_8bb24bff-c394-6658-8302-a2c4d1883d39"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-access">1</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-access">1</semx></fmt-xref-label><preferred id="_a2711a30-8be5-e7c4-66f1-454c736daab5"><expression>
+<name id="_784204ba-fa22-4fd8-2754-ebff511d7d8e">access</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_a2711a30-8be5-e7c4-66f1-454c736daab5"><strong><semx element="expression/name" source="_784204ba-fa22-4fd8-2754-ebff511d7d8e">access</semx></strong></semx></p></fmt-preferred>
+<definition id="_6240dad6-2c30-05b4-fb0a-c82ef169b01f" semx-id="_6240dad6-2c30-05b4-fb0a-c82ef169b01f"><verbal-definition semx-id="_f05e2443-af28-e449-5fb2-19451643cfed" id="_f05e2443-af28-e449-5fb2-19451643cfed"><p semx-id="_2131df49-275a-d67e-a567-9d4e62a68f65" original-id="_2131df49-275a-d67e-a567-9d4e62a68f65">right, opportunity, means of finding, using or retrieving information</p></verbal-definition></definition><fmt-definition id="_d2bb484a-a143-2548-652c-f24a5282d9cb"><semx element="definition" source="_6240dad6-2c30-05b4-fb0a-c82ef169b01f"><p id="_2131df49-275a-d67e-a567-9d4e62a68f65" semx-id="_2131df49-275a-d67e-a567-9d4e62a68f65">right, opportunity, means of finding, using or retrieving information</p></semx></fmt-definition>
+
+
+ <source status="identical" type="authoritative" id="_441eefb0-6fef-62b7-5b43-81a89e8f500a"><origin bibitemid="iso15489_1" type="inline" citeas="ISO 15489-1:2016"><localityStack><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack></origin>
+</source><fmt-termsource status="identical" type="authoritative">[SOURCE: <semx element="source" source="_441eefb0-6fef-62b7-5b43-81a89e8f500a"><origin bibitemid="iso15489_1" type="inline" citeas="ISO 15489-1:2016" id="_c26b3c55-b8d8-04ed-5aa5-204f7cb803b8"><localityStack><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack></origin><semx element="origin" source="_c26b3c55-b8d8-04ed-5aa5-204f7cb803b8"><fmt-xref type="inline" target="iso15489_1"><span class="stdpublisher">ISO</span> <span class="stddocNumber">15489</span>-<span class="stddocPartNumber">1</span>:<span class="stdyear">2016</span>,  <span class="citesec">3.1</span></fmt-xref></semx></semx>]</fmt-termsource></term>
+
+<term id="term-asset" anchor="term-asset" semx-id="_ebef1abc-f9a3-8a27-54a2-ba4f1354e1a3"><fmt-name id="_f6be9a7a-6bc7-9183-c161-4e80446c3a5a"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-asset">2</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-asset">2</semx></fmt-xref-label><preferred id="_843924f5-9e08-f370-6d50-84567fb5a3c0"><expression>
+<name id="_137ab98a-430f-703a-90e7-329105efedaa">asset</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_843924f5-9e08-f370-6d50-84567fb5a3c0"><strong><semx element="expression/name" source="_137ab98a-430f-703a-90e7-329105efedaa">asset</semx></strong></semx></p></fmt-preferred>
+<definition id="_3d8363e2-1133-4144-d9f6-18a3fac55352" semx-id="_3d8363e2-1133-4144-d9f6-18a3fac55352"><verbal-definition semx-id="_c73afb54-7068-da08-96aa-6feb7fbf07ea" id="_c73afb54-7068-da08-96aa-6feb7fbf07ea"><p semx-id="_a1e1d702-091e-9a10-6d5c-c255e0d0f317" original-id="_a1e1d702-091e-9a10-6d5c-c255e0d0f317">anything that has value to the organization</p></verbal-definition></definition><fmt-definition id="_46ed2d43-5b19-0079-cae6-10cd9ee8825f"><semx element="definition" source="_3d8363e2-1133-4144-d9f6-18a3fac55352"><p id="_a1e1d702-091e-9a10-6d5c-c255e0d0f317" semx-id="_a1e1d702-091e-9a10-6d5c-c255e0d0f317">anything that has value to the organization</p></semx></fmt-definition>
+
+
+
+
+ <termnote id="_6de7450b-55a5-f5f6-d412-288a2bc66d1f" semx-id="_6de7450b-55a5-f5f6-d412-288a2bc66d1f" autonum="1"><fmt-name id="_f2247764-8f84-afcb-980c-6d74421ca3b1"><span class="fmt-caption-label">Note <semx element="autonum" source="_6de7450b-55a5-f5f6-d412-288a2bc66d1f">1</semx> to entry</span><span class="fmt-label-delim">: </span></fmt-name><fmt-xref-label><span class="fmt-element-name">Note</span> <semx element="autonum" source="_6de7450b-55a5-f5f6-d412-288a2bc66d1f">1</semx></fmt-xref-label><fmt-xref-label container="term-asset"><span class="fmt-xref-container"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-asset">2</semx></span><span class="fmt-comma">,</span> <span class="fmt-element-name">Note</span> <semx element="autonum" source="_6de7450b-55a5-f5f6-d412-288a2bc66d1f">1</semx></fmt-xref-label><p id="_dd30d287-9843-784f-064a-c1af0237c281" semx-id="_dd30d287-9843-784f-064a-c1af0237c281">There can be many types of assets, including:</p>
+
+<ol id="_9471fdd2-bb17-a908-583f-0670de6b3259" semx-id="_9471fdd2-bb17-a908-583f-0670de6b3259" type="alphabet"><li id="_bf1a56da-4c37-8c1d-996d-9a0b3700fe80"><fmt-name id="_135a749d-56ed-376d-c18b-b8597afc6db1"><semx element="autonum" source="_bf1a56da-4c37-8c1d-996d-9a0b3700fe80">a</semx><span class="fmt-label-delim">)</span></fmt-name><p id="_91313f64-e9f2-37ba-6a34-bd3ab7f8d915" semx-id="_91313f64-e9f2-37ba-6a34-bd3ab7f8d915">information (such as documents and databases);</p>
+</li>
+<li id="_eafaf092-6b9b-c802-2d3b-839e415c004a"><fmt-name id="_675ab5ce-477f-03d9-a752-d4bca600cfc2"><semx element="autonum" source="_eafaf092-6b9b-c802-2d3b-839e415c004a">b</semx><span class="fmt-label-delim">)</span></fmt-name><p id="_f0326f18-8471-6689-fa15-069c6e726b91" semx-id="_f0326f18-8471-6689-fa15-069c6e726b91">software, such as a computer program;</p>
+</li>
+<li id="_cf668770-32e3-d1e8-647a-c394c219e945"><fmt-name id="_bc594b67-8cdf-406d-d142-d6f73d5892ee"><semx element="autonum" source="_cf668770-32e3-d1e8-647a-c394c219e945">c</semx><span class="fmt-label-delim">)</span></fmt-name><p id="_25647e8d-0f00-fcc9-13e9-7283ca3c9fdb" semx-id="_25647e8d-0f00-fcc9-13e9-7283ca3c9fdb">physical, such as a computer;</p>
+</li>
+<li id="_3cc12d8d-ac81-2555-f8ba-ae939a3882b7"><fmt-name id="_03769a5a-ece6-8a9d-5839-0ede8cf882b9"><semx element="autonum" source="_3cc12d8d-ac81-2555-f8ba-ae939a3882b7">d</semx><span class="fmt-label-delim">)</span></fmt-name><p id="_15c184a6-2cdf-c7a0-4253-2527b2256eab" semx-id="_15c184a6-2cdf-c7a0-4253-2527b2256eab">services (meaning capabilities to deliver something);</p>
+</li>
+<li id="_ee03504c-6119-ebdf-7d67-edb97257fd98"><fmt-name id="_f4781ff0-a1d6-1803-887b-b262b37e6f24"><semx element="autonum" source="_ee03504c-6119-ebdf-7d67-edb97257fd98">e</semx><span class="fmt-label-delim">)</span></fmt-name><p id="_9eece547-8c32-a3db-8276-aee26e2fe742" semx-id="_9eece547-8c32-a3db-8276-aee26e2fe742">people, and their qualifications, skills, and experience; and</p>
+</li>
+<li id="_de2ca23d-6956-bada-37f6-d8c60e2e6be4"><fmt-name id="_d41ce68c-03ad-480f-2e46-90c2085b99dc"><semx element="autonum" source="_de2ca23d-6956-bada-37f6-d8c60e2e6be4">f</semx><span class="fmt-label-delim">)</span></fmt-name><p id="_8c46014b-676c-1bf4-1d0f-907f29eb8ce8" semx-id="_8c46014b-676c-1bf4-1d0f-907f29eb8ce8">intangibles, such as reputation and image.</p>
+</li>
+</ol>
+</termnote><source status="identical" type="authoritative" id="_90bdaf61-faca-1b41-5290-00f06f751128"><origin bibitemid="iso27000" type="inline" citeas="ISO/IEC 27000:2009"><localityStack><locality type="clause"><referenceFrom>2.3</referenceFrom></locality></localityStack></origin>
+</source><fmt-termsource status="identical" type="authoritative">[SOURCE: <semx element="source" source="_90bdaf61-faca-1b41-5290-00f06f751128"><origin bibitemid="iso27000" type="inline" citeas="ISO/IEC 27000:2009" id="_d8bbb363-a666-d9fa-4de5-c60dc745ec8a"><localityStack><locality type="clause"><referenceFrom>2.3</referenceFrom></locality></localityStack></origin><semx element="origin" source="_d8bbb363-a666-d9fa-4de5-c60dc745ec8a"><fmt-xref type="inline" target="iso27000"><span class="stdpublisher">ISO/IEC</span> <span class="stddocNumber">27000</span>:<span class="stdyear">2009</span>,  <span class="citesec">2.3</span></fmt-xref></semx></semx>]</fmt-termsource></term>
+
+<term id="term-record_s_" anchor="term-record_s_" semx-id="_5c2be116-1c4d-bc1e-593d-b70c094a85e7"><fmt-name id="_a1b10ab3-9fb0-2cb2-1115-798f5d89cc44"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-record_s_">3</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-record_s_">3</semx></fmt-xref-label><preferred id="_45ab9eaa-c11b-63f1-392f-14986494ce90"><expression>
+<name id="_308ed040-a788-e859-f134-1e003f13ded8">record(s)</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_45ab9eaa-c11b-63f1-392f-14986494ce90"><strong><semx element="expression/name" source="_308ed040-a788-e859-f134-1e003f13ded8">record(s)</semx></strong></semx></p></fmt-preferred>
+<definition id="_ad836e8d-711f-74b6-56ed-4082fa236ab2" semx-id="_ad836e8d-711f-74b6-56ed-4082fa236ab2"><verbal-definition semx-id="_f21b83ce-aa6c-622b-8ee1-b7401ab7c580" id="_f21b83ce-aa6c-622b-8ee1-b7401ab7c580"><p semx-id="_dec93414-c5d3-5d17-fb99-41cc3afe8b55" original-id="_dec93414-c5d3-5d17-fb99-41cc3afe8b55">information created, received and maintained as evidence and as an <concept><refterm>asset</refterm><renderterm>asset</renderterm><xref target="term-asset"/></concept> by an organization or person, in pursuit of legal obligations or in the transaction of business</p></verbal-definition></definition><fmt-definition id="_d24238d1-a3b3-358e-9eb6-91a2a8f0ddc5"><semx element="definition" source="_ad836e8d-711f-74b6-56ed-4082fa236ab2"><p id="_dec93414-c5d3-5d17-fb99-41cc3afe8b55" semx-id="_dec93414-c5d3-5d17-fb99-41cc3afe8b55">information created, received and maintained as evidence and as an <concept id="_26c20621-627b-39cc-b62d-5e1902e25b53"><refterm>asset</refterm><renderterm>asset</renderterm><xref target="term-asset" id="_1db051a6-1c3f-20b8-40d8-310341fbbaa2"/></concept><fmt-concept><semx element="concept" source="_26c20621-627b-39cc-b62d-5e1902e25b53"><em>asset</em> <semx element="xref" source="_1db051a6-1c3f-20b8-40d8-310341fbbaa2">(<fmt-xref target="term-asset"><span class="citesec"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-asset">2</semx></span></fmt-xref>)</semx></semx></fmt-concept> by an organization or person, in pursuit of legal obligations or in the transaction of business</p></semx></fmt-definition>
+
+
+
+
+ <termnote id="_9627b62a-9b91-d153-5dca-084e2c8f38b0" semx-id="_9627b62a-9b91-d153-5dca-084e2c8f38b0" autonum="1"><fmt-name id="_2dbded00-7149-214d-4266-8a1bf9022f93"><span class="fmt-caption-label">Note <semx element="autonum" source="_9627b62a-9b91-d153-5dca-084e2c8f38b0">1</semx> to entry</span><span class="fmt-label-delim">: </span></fmt-name><fmt-xref-label><span class="fmt-element-name">Note</span> <semx element="autonum" source="_9627b62a-9b91-d153-5dca-084e2c8f38b0">1</semx></fmt-xref-label><fmt-xref-label container="term-record_s_"><span class="fmt-xref-container"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-record_s_">3</semx></span><span class="fmt-comma">,</span> <span class="fmt-element-name">Note</span> <semx element="autonum" source="_9627b62a-9b91-d153-5dca-084e2c8f38b0">1</semx></fmt-xref-label><p id="_2d78d0b0-c41e-a62b-dcc1-0544b5a2973d" semx-id="_2d78d0b0-c41e-a62b-dcc1-0544b5a2973d">The viewpoint defined in this document is intended to be useful in any enterprise architecture scenario, and intended to prevent conflicting meanings in multiple viewpoints. The term used in the ArchiMate modelling of this viewpoint is “business record”. In this document the term “business record” has the same definition as the established definition for “record” in the records management domain.</p>
+</termnote><source status="identical" type="authoritative" id="_847bfcdc-9fb9-a074-9a69-fa8649a68576"><origin bibitemid="iso15489_1" type="inline" citeas="ISO 15489-1:2016"><localityStack><locality type="clause"><referenceFrom>3.14</referenceFrom></locality></localityStack></origin>
+</source><fmt-termsource status="identical" type="authoritative">[SOURCE: <semx element="source" source="_847bfcdc-9fb9-a074-9a69-fa8649a68576"><origin bibitemid="iso15489_1" type="inline" citeas="ISO 15489-1:2016" id="_99aa1f09-573c-c980-8bfc-34574a5d47ab"><localityStack><locality type="clause"><referenceFrom>3.14</referenceFrom></locality></localityStack></origin><semx element="origin" source="_99aa1f09-573c-c980-8bfc-34574a5d47ab"><fmt-xref type="inline" target="iso15489_1"><span class="stdpublisher">ISO</span> <span class="stddocNumber">15489</span>-<span class="stddocPartNumber">1</span>:<span class="stdyear">2016</span>,  <span class="citesec">3.14</span></fmt-xref></semx></semx>]</fmt-termsource></term>
+
+<term id="term-records-system" anchor="term-records-system" semx-id="_861829fd-7900-9b06-9804-bb426bdaa3d6"><fmt-name id="_327588c5-cc45-db34-a3cd-ffb47b8bca2f"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-records-system">4</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-records-system">4</semx></fmt-xref-label><preferred id="_7e42b12f-e672-e606-8ba6-029d8d80c272"><expression>
+<name id="_a4ca5a99-c5e7-8443-7c60-773b20d61a06">records system</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_7e42b12f-e672-e606-8ba6-029d8d80c272"><strong><semx element="expression/name" source="_a4ca5a99-c5e7-8443-7c60-773b20d61a06">records system</semx></strong></semx></p></fmt-preferred>
+<definition id="_72d2659f-b014-71eb-2fb0-e05859dd3c38" semx-id="_72d2659f-b014-71eb-2fb0-e05859dd3c38"><verbal-definition semx-id="_8f08f62b-4d7a-f6b0-d218-514be12cad45" id="_8f08f62b-4d7a-f6b0-d218-514be12cad45"><p semx-id="_dd527044-954d-de08-c807-e23bba53b935" original-id="_dd527044-954d-de08-c807-e23bba53b935">information system which captures, manages and provides <concept><refterm>access</refterm><renderterm>access</renderterm><xref target="term-access"/></concept> to <concept><errormsg>term <tt>records</tt>, display <tt>record(s)</tt> not resolved via ID <tt>records</tt></errormsg></concept> through time</p></verbal-definition></definition><fmt-definition id="_f7f5bd49-dc57-28ff-5cac-b7a383d0f9db"><semx element="definition" source="_72d2659f-b014-71eb-2fb0-e05859dd3c38"><p id="_dd527044-954d-de08-c807-e23bba53b935" semx-id="_dd527044-954d-de08-c807-e23bba53b935">information system which captures, manages and provides <concept id="_5324861c-c2df-518a-ed06-66a910e959ec"><refterm>access</refterm><renderterm>access</renderterm><xref target="term-access" id="_de8fb573-ae75-9764-b761-715fd8a0a07d"/></concept><fmt-concept><semx element="concept" source="_5324861c-c2df-518a-ed06-66a910e959ec"><em>access</em> <semx element="xref" source="_de8fb573-ae75-9764-b761-715fd8a0a07d">(<fmt-xref target="term-access"><span class="citesec"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-access">1</semx></span></fmt-xref>)</semx></semx></fmt-concept> to <concept id="_4fb2dbaa-30ef-2443-c808-feac04dcd595"><errormsg>term <tt>records</tt>, display <tt>record(s)</tt> not resolved via ID <tt>records</tt></errormsg></concept><fmt-concept><semx element="concept" source="_4fb2dbaa-30ef-2443-c808-feac04dcd595"><strong>term <tt>records</tt>, display <tt>record(s)</tt> not resolved via ID <tt>records</tt></strong></semx></fmt-concept> through time</p></semx></fmt-definition>
+
+
+
+
+ <termnote id="_bf060f5d-90b5-0167-5372-1b88dee4fe02" semx-id="_bf060f5d-90b5-0167-5372-1b88dee4fe02" autonum="1"><fmt-name id="_0ea1d792-1fe5-5c7f-52e6-df97816ce574"><span class="fmt-caption-label">Note <semx element="autonum" source="_bf060f5d-90b5-0167-5372-1b88dee4fe02">1</semx> to entry</span><span class="fmt-label-delim">: </span></fmt-name><fmt-xref-label><span class="fmt-element-name">Note</span> <semx element="autonum" source="_bf060f5d-90b5-0167-5372-1b88dee4fe02">1</semx></fmt-xref-label><fmt-xref-label container="term-records-system"><span class="fmt-xref-container"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_1e2cb8e7-3862-2e80-f76e-5e14b7000b68">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-records-system">4</semx></span><span class="fmt-comma">,</span> <span class="fmt-element-name">Note</span> <semx element="autonum" source="_bf060f5d-90b5-0167-5372-1b88dee4fe02">1</semx></fmt-xref-label><p id="_2e4fbf33-5167-8b6d-270b-5a868bc3e1a0" semx-id="_2e4fbf33-5167-8b6d-270b-5a868bc3e1a0">In the context of records management, “system” means a business system that is responsible for automating business activities and transactions.</p>
+</termnote><source status="modified" type="authoritative" id="_9821a9f9-e286-bfd8-7c71-c46861994df1"><origin bibitemid="iso15489_1" type="inline" citeas="ISO 15489-1:2016"><localityStack><locality type="clause"><referenceFrom>3.16</referenceFrom></locality></localityStack></origin>
+<modification id="_31f63f02-4638-9920-7a95-7de216643931"><p semx-id="_98865b06-a634-0785-39a2-a104a9d42130" id="_98865b06-a634-0785-39a2-a104a9d42130">In the definition, the word “over” has been replaced by “through” and Note 1 to entry has been replaced.</p>
+</modification>
+</source><fmt-termsource status="modified" type="authoritative">[SOURCE: <semx element="source" source="_9821a9f9-e286-bfd8-7c71-c46861994df1"><origin bibitemid="iso15489_1" type="inline" citeas="ISO 15489-1:2016" id="_19b1c92e-7af0-37f9-dd9b-e2e47fc3a561"><localityStack><locality type="clause"><referenceFrom>3.16</referenceFrom></locality></localityStack></origin><semx element="origin" source="_19b1c92e-7af0-37f9-dd9b-e2e47fc3a561"><fmt-xref type="inline" target="iso15489_1"><span class="stdpublisher">ISO</span> <span class="stddocNumber">15489</span>-<span class="stddocPartNumber">1</span>:<span class="stdyear">2016</span>,  <span class="citesec">3.16</span></fmt-xref></semx>, modified — <semx element="modification" source="_31f63f02-4638-9920-7a95-7de216643931">In the definition, the word “over” has been replaced by “through” and Note 1 to entry has been replaced.</semx></semx>]</fmt-termsource></term>
+</terms>
+</terms>
+
+<clause id="content" anchor="content" inline-header="false" obligation="normative" semx-id="_5bfdd5ed-ef58-7196-52bd-a318fa8eb549" displayorder="8">
+<title id="_3d4e1391-7458-0301-8215-dad6f436d463" semx-id="_ede0f0d3-8686-db2d-1a39-7e0254b0c3cc">Main content</title><fmt-title depth="1" id="_1ee83c3f-fb92-8e38-6ac2-48735283f142"><span class="fmt-caption-label"><semx element="autonum" source="content">4</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_3d4e1391-7458-0301-8215-dad6f436d463">Main content</semx></fmt-title><fmt-xref-label><span class="fmt-element-name">Clause</span> <semx element="autonum" source="content">4</semx></fmt-xref-label>
+<clause id="general" anchor="general" inline-header="false" obligation="normative" semx-id="_1b385437-d747-3b00-c269-e31bb0503a9d">
+<title id="_4814617b-7c4f-e869-0856-07ef0c5ce76a" semx-id="_53d82e48-1024-e16a-9901-40ceda1ab9b0">General</title><fmt-title depth="2" id="_038babd3-fa3a-0708-352c-302f7ebc1193"><span class="fmt-caption-label"><semx element="autonum" source="content">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="general">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_4814617b-7c4f-e869-0856-07ef0c5ce76a">General</semx></fmt-title><fmt-xref-label><semx element="autonum" source="content">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="general">1</semx></fmt-xref-label>
+<p id="_53b85594-82da-5614-8cf2-7a990d4e1c9c" semx-id="_53b85594-82da-5614-8cf2-7a990d4e1c9c">Here’s where you place your main content.</p>
+</clause>
+
+<clause id="_97d47042-fed1-ff75-2df2-20fbdf94fc30" inline-header="false" obligation="normative" semx-id="_97d47042-fed1-ff75-2df2-20fbdf94fc30">
+<title id="_fbb2c8f3-6551-15d9-6c4b-145c657bb181" semx-id="_56dab6fb-903f-a5f3-068a-1e14ae4f3cee">Data models</title><fmt-title depth="2" id="_312d49a5-90aa-0b0f-8ff1-2eb6fcc5505b"><span class="fmt-caption-label"><semx element="autonum" source="content">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_97d47042-fed1-ff75-2df2-20fbdf94fc30">2</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_fbb2c8f3-6551-15d9-6c4b-145c657bb181">Data models</semx></fmt-title><fmt-xref-label><semx element="autonum" source="content">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_97d47042-fed1-ff75-2df2-20fbdf94fc30">2</semx></fmt-xref-label>
+<p id="_788bdcde-d159-0322-f3b8-5103d5a27378" semx-id="_788bdcde-d159-0322-f3b8-5103d5a27378">The following data models are used by other data models specified in this document.</p>
+
+<clause id="_5cbff914-ea50-25b2-e87f-d58a24e6f1d4" inline-header="false" obligation="normative" semx-id="_5cbff914-ea50-25b2-e87f-d58a24e6f1d4">
+<title id="_45046dc0-5f5b-1dc6-8063-a6f15bd55033" semx-id="_e1f213ed-925a-7e63-24b1-b4bbe36b6ce4">Basic data types</title><fmt-title depth="3" id="_3548a7c5-c748-74a5-1ac3-b3853e73a789"><span class="fmt-caption-label"><semx element="autonum" source="content">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_97d47042-fed1-ff75-2df2-20fbdf94fc30">2</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_5cbff914-ea50-25b2-e87f-d58a24e6f1d4">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_45046dc0-5f5b-1dc6-8063-a6f15bd55033">Basic data types</semx></fmt-title><fmt-xref-label><semx element="autonum" source="content">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_97d47042-fed1-ff75-2df2-20fbdf94fc30">2</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_5cbff914-ea50-25b2-e87f-d58a24e6f1d4">1</semx></fmt-xref-label>
+<figure id="_9621f12f-0863-82f1-98c9-ce9c8d77f2d6" semx-id="_9621f12f-0863-82f1-98c9-ce9c8d77f2d6" autonum="1"><fmt-name id="_a7935c28-bc3d-7783-b72e-57b308bd629b"><span class="fmt-caption-label"><span class="fmt-element-name">Figure</span> <semx element="autonum" source="_9621f12f-0863-82f1-98c9-ce9c8d77f2d6">1</semx></span></fmt-name><fmt-xref-label><span class="fmt-element-name">Figure</span> <semx element="autonum" source="_9621f12f-0863-82f1-98c9-ce9c8d77f2d6">1</semx></fmt-xref-label><image id="_5e1d727f-b0ec-1812-550f-b11ac27ab349" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcAAAAEiCAIAAADhy5WtAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAIZaVRYdHBsYW50dW1sAAEAAAB4nM1UXU8bMRB8t5T/sI8gRHSXhAhOCEESKIWkQVxI++r4lsTFsSN7L21A/Pfu3TXKh6q2L5UqS5Zudjw79u7eZSDpKZ+bmihWeNF2Ib2cQ2+hIT6JtqGBs07NvJsjPEsTcDvW1xZHqwWC8zRzNTHTGYLSXpkdWg+fZW4I3moCYITf6croqZ2jJVC8oS/wG2fpk+Qst2iWSFrJmnjfVukaGUKlcUXk9SQn/KicTfUrQlTAHalept7lNus64zx8nmnCku+9+1ZhHcOkkux8hn4PLEyktDIIE2eyAknZHjriS5axIlcc7Tl7REXSTvnU27+ysUke/62r4eQr+/oPLG2burakaVWZ+t2JYqmy4Dq4+OSs0eo67q3z80ySLFru4qIQed/htZtnf2L1nZJGv0rSzo7ktDJyZLh6yZZCCQbl9YKSHQO/0sIs5W60a61QfiRQgSVEkr/3Mv9UukSblXMoHtgEPQ36sEQfmANxvRHFp/W4dZBK4hlS0GhAFCXNZhK34fZ+BEX8UBx8eOhDcLlXCJkO1WSwwKG4k0sJjzk/+RwTGC7Q3vXu1wCXYqm9K8dQ3I0HG0K7ddzRBCl6tgLjQaUzrmwlXO56VI+P4qbgA57vw1dPV4FwnsBAKhim8EXwtjnA9Fa9Kda/gWurXFa+0dPo5vhU9Pn1czlli2hFl5uU/IpjqfgBakV4SOhl+qkAAFX3SURBVHhe7Z15vE3V+8dPFIpkLlOGIgpJhq8hGRpUmnyTyKwihUhI0WDWTSRDA0mD/FAqV4ZKMnSl4ctFZjKULg2IEtm/93c/37ss+xzXddx7z97u8/7jvPZZe+21h/Wsz3qetfdeO+QoiqIoURHyJiiKoiipQwVUURQlSlRAFUVRokQFVFEUJUpUQBVFUaJEBVRRFCVKVEAVRVGiRAVUURQlSlRAFUVRokQFVFEUJUoySEDj4uL+rfgYKshbZ35C7Sdd8Xnt+5kMElAqKaT4mLvuustbZ35C7Sdd8Xnt+5kMFdCiRYvepfgMKsX/TUjtJ50IRO37mQwVUK0nHxKIqgnEQQYRvbCniQpoZicQVROIgwwiemFPExXQzI5UTd26dT/99NNFixYlJCR89913a9as2bx5886dO3/99deDBw96t8lw1H7SiUDUvp9RAc3sSNXUqlXr/fffj4+Pnz9/Pg1p+fLliYmJtKJdu3bt37/fu02Go/aTTgSi9v2MCmhmR6qmRo0a77zzzrRp02bOnDlnzpyFCxfSivBEtm3btnfvXu82GY7aTzoRiNr3MyqgmR2pmmrVqk2aNOnNN9+cOnUqzgitCE+EaA43hDjOu02Go/aTTgSi9v2MCmhmR6qmatWqr7/+umlFeCJEcwkJCWvXrk1KSvJuk+Go/aQTgah9P5NZBDQuLq5x48be1OM5ePDgli1bjhw54l1hsXLlypIn4F//+pc3dxCQqqlevTqNZ5ILC0Rz8fHxuCGJiYm7du3ybpPhpLf9LF68uFSpUimP9x09ehTz+OOPP7wrLMhToUIFr2Ukw+beDWJNIGrfz2QWAb3pppvuv/9+b+rxvPzyy+eee+7ff//tXWGBST2dzOWXX543b17zF+Pz5g4CUjWo///93//ReMQTeeeddwjlPv30U+K4nTt3erfJcNLbfoYOHVqmTBlv6vHgjnEMyIp3hQUSbOwBkyN/9+7d5e+zzz6LvHo3iDWBqH0/k1kENH/+/K+99po39Xjat29fq1Ytb+qJQUBvueUWb2rQCEQTSm/7adKkScuWLb2pxzN58uSzzz77wIED3hUnoHPnzrlz5/7nn3+8K/xEIGrfz5yxAvruu+9WrVo1V65chCfTp09n7ytWrCB93759jz32WIkSJUjJkycPVo7LKZEX7mfOnDkbNGhANiK1xx9/nLCObBdccAHe619//WWXv3fv3ixZsjzzzDMmJSEhgTANszMprGXvbNiqVasxY8Z06dKFPdII77nnHvN43Z9//vnkk09efPHF7Khy5cqzZ882m2cMgWhCaW4/33zzzY033kjNXnrppVOmTClWrNiLL77ouDE4NUVFULk5cuRo1KjRjh07SO/QoQPRRtasWanin3/+2XHjlSpVqpCSPXv266+/fuvWrZ5dYH5iS8KRI0fY1+DBg03K3LlzMbDVq1c///zzPXr0GDVqFIWH3HviGzZsMNneeOMNjod0DnL48OEmPU0IRO37mcAL6KFDh1auXCnLX3/9tSyMGDEC6ydoWrBgwaOPPpotWzaU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" mimetype="image/png" height="auto" width="auto" filename="images/datatypes.png" semx-id="_5e1d727f-b0ec-1812-550f-b11ac27ab349"/></figure>
+</clause>
+</clause>
+</clause>
+
+
+
+
+
+
+<references id="_4fff6ca0-278e-f8b8-9706-f69c9d1b8b8b" normative="true" obligation="informative" semx-id="_4fff6ca0-278e-f8b8-9706-f69c9d1b8b8b" displayorder="6">
+<title id="_708516f3-5914-33c4-8001-a64c25fdd45e" semx-id="_270c5ee6-077e-f285-ff95-287984a30140">Normative references</title><fmt-title depth="1" id="_b6f00105-d0ca-ae1d-d0a3-164021a1bf75"><span class="fmt-caption-label"><semx element="autonum" source="_4fff6ca0-278e-f8b8-9706-f69c9d1b8b8b">2</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_708516f3-5914-33c4-8001-a64c25fdd45e">Normative references</semx></fmt-title><fmt-xref-label><span class="fmt-element-name">Clause</span> <semx element="autonum" source="_4fff6ca0-278e-f8b8-9706-f69c9d1b8b8b">2</semx></fmt-xref-label><p id="_49996d2b-65c1-916b-9bbf-42b933aa0025" semx-id="_49996d2b-65c1-916b-9bbf-42b933aa0025">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+<bibitem id="iso-iec_26300" type="standard" schema-version="v1.5.6" anchor="iso-iec_26300" semx-id="_c0d659bf-b0d0-5454-da78-ff87bca6c250"><biblio-tag><span class="stdpublisher">ISO/IEC</span> <span class="stddocNumber">26300</span>:<span class="stdyear">2006</span>, </biblio-tag><formattedref><em><span class="stddocTitle">Information technology — Open Document Format for Office Applications (OpenDocument) v1.0</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Information technology</title>
+
+  
+<title language="en" script="Latn" type="title-main">Open Document Format for Office Applications (OpenDocument) v1.0</title>
+
+  
+<title language="en" script="Latn" type="main">Information technology — Open Document Format for Office Applications (OpenDocument) v1.0</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Technologies de l’information</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Format de document ouvert pour applications de bureau (OpenDocument) v1.0</title>
+
+  
+<title language="fr" script="Latn" type="main">Technologies de l’information — Format de document ouvert pour applications de bureau (OpenDocument) v1.0</title>
+
+  <uri type="src">https://www.iso.org/standard/43485.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:43485:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/04/34/43485.detail.rss</uri>
+  <docidentifier type="ISO" primary="true">ISO/IEC 26300:2006</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO/IEC 26300</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO/IEC 26300:2006(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso-iec:26300:stage-90.93</docidentifier><docidentifier scope="biblio-tag">ISO/IEC 26300:2006</docidentifier>
+  <docnumber>26300</docnumber>
+  <date type="published">
+    <on>2006-11-30</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Electrotechnical Commission</name>
+
+      <abbreviation>IEC</abbreviation>
+      <uri>www.iec.ch</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="IEC">
+        
+<name>Document description and processing languages</name>
+
+        <identifier id="_2156c0c3-d3b0-7a0d-4e02-9e7fad8e8d90">ISO/IEC JTC 1/SC 34</identifier><fmt-identifier><tt><semx element="identifier" source="_2156c0c3-d3b0-7a0d-4e02-9e7fad8e8d90">ISO/IEC JTC 1/SC 34</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>1</edition>
+  <language>en</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">ISO/IEC 26300:2006 defines an XML schema for office applications and its semantics. The schema is suitable for office documents, including text documents, spreadsheets, charts and graphical documents like drawings or presentations, but is not restricted to these kinds of documents. ISO/IEC 26300:2006 provides for high-level information suitable for editing documents. It defines suitable XML structures for office documents and is friendly to transformations using XSLT or similar XML-based tools. ISO/IEC 26300:2006 first provides an introduction to the OpenDocument format and explains the structure of documents that conform to the OpenDocument specification. It describes the meta information that can be contained in such documents, and their text and paragraph content. Text Fields and text indices are described. ISO/IEC 26300:2006 describes the table content of a document in OpenDocument format, its graphical content, its chart content and its form content. It also describes content that is common to all documents. It describes the integration of SMIL animation markup into the OpenDocument schema. It explains style information content and specifies formatting properties that can be used within styles. The data types used by the OpenDocument schema are described. The OpenDocument format makes use of a package concept; these packages are described.</abstract>
+  <status>
+    <stage>90</stage>
+    <substage>93</substage>
+  </status>
+  <copyright>
+    <from>2006</from>
+    <owner>
+      <organization>
+        
+<name>ISO/IEC</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 26300-1:2015</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 26300-1:2015</docidentifier>
+      <date type="published">
+        <on>2015-06-17</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="obsoletedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 26300-2:2015</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 26300-2:2015</docidentifier>
+      <date type="published">
+        <on>2015-06-17</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="obsoletedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 26300-3:2015</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 26300-3:2015</docidentifier>
+      <date type="published">
+        <on>2015-06-17</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 26300:2006/Cor 1:2010</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 26300:2006/Cor 1:2010</docidentifier>
+      <date type="published">
+        <on>2010-12-15</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 26300:2006/Cor 2:2011</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 26300:2006/Cor 2:2011</docidentifier>
+      <date type="published">
+        <on>2011-11-30</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 26300:2006/Amd 1:2012</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 26300:2006/Amd 1:2012</docidentifier>
+      <date type="published">
+        <on>2012-03-08</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 26300:2006/Cor 3:2014</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 26300:2006/Cor 3:2014</docidentifier>
+      <date type="published">
+        <on>2014-08-14</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem>
+<bibitem id="iso-iec_29500-1" type="standard" schema-version="v1.5.6" anchor="iso-iec_29500-1" semx-id="_3a6ec776-e5f7-6d94-a918-68765dd637bd"><biblio-tag><span class="stdpublisher">ISO/IEC</span> <span class="stddocNumber">29500</span>-<span class="stddocPartNumber">1</span>:<span class="stdyear">2008</span><fn id="_77f1bd37-a51d-992a-483f-32cc9c17ec82" reference="1" original-reference="_ce3d5d70-b9f0-490f-845c-8221c852d1da" target="_3c5916f3-871f-279d-eb94-a7dd424fa0c1"><p>Withdrawn.</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_77f1bd37-a51d-992a-483f-32cc9c17ec82">1</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>
+, </biblio-tag><formattedref><em><span class="stddocTitle">Information technology — Document description and processing languages — Office Open XML File Formats — Part 1: Fundamentals and Markup Language Reference</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Information technology</title>
+
+  
+<title language="en" script="Latn" type="title-main">Document description and processing languages</title>
+
+  
+<title language="en" script="Latn" type="title-part">Office Open XML File Formats — Part 1: Fundamentals and Markup Language Reference</title>
+
+  
+<title language="en" script="Latn" type="main">Information technology — Document description and processing languages — Office Open XML File Formats — Part 1: Fundamentals and Markup Language Reference</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Technologies de l’information</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Description des documents et langages de traitement</title>
+
+  
+<title language="fr" script="Latn" type="title-part">Formats de fichier “Office Open XML” — Partie 1: Principes essentiels et référence de langage de balisage</title>
+
+  
+<title language="fr" script="Latn" type="main">Technologies de l’information — Description des documents et langages de traitement — Formats de fichier “Office Open XML” — Partie 1: Principes essentiels et référence de langage de balisage</title>
+
+  <uri type="src">https://www.iso.org/standard/51463.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:51463:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/05/14/51463.detail.rss</uri>
+  <docidentifier type="ISO" primary="true">ISO/IEC 29500-1:2008</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO/IEC 29500-1</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO/IEC 29500-1:2008(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso-iec:29500:-1:stage-95.99</docidentifier><docidentifier scope="biblio-tag">ISO/IEC 29500-1:2008</docidentifier>
+  <docnumber>29500</docnumber>
+  <date type="published">
+    <on>2008-11-17</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Electrotechnical Commission</name>
+
+      <abbreviation>IEC</abbreviation>
+      <uri>www.iec.ch</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="IEC">
+        
+<name>Document description and processing languages</name>
+
+        <identifier id="_475dc973-230f-22b0-98ef-8aef37b3b8bb">ISO/IEC JTC 1/SC 34</identifier><fmt-identifier><tt><semx element="identifier" source="_475dc973-230f-22b0-98ef-8aef37b3b8bb">ISO/IEC JTC 1/SC 34</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>1</edition>
+  <note type="Unpublished-Status"><p id="_906e3a24-cc17-0fd2-999d-34c65e10e0fa" semx-id="_906e3a24-cc17-0fd2-999d-34c65e10e0fa">Withdrawn.</p></note><language>en</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">ISO/IEC 29500-1:2008 defines a set of XML vocabularies for representing word-processing documents, spreadsheets and presentations, based on the Microsoft Office 2008 applications. It specifies requirements for Office Open XML consumers and producers that comply to the strict conformance category.</abstract>
+  <status>
+    <stage>95</stage>
+    <substage>99</substage>
+  </status>
+  <copyright>
+    <from>2008</from>
+    <owner>
+      <organization>
+        
+<name>ISO/IEC</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 29500-1:2011</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 29500-1:2011</docidentifier>
+      <date type="published">
+        <on>2011-08-12</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 29500-1:2008/Amd 1:2010</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 29500-1:2008/Amd 1:2010</docidentifier>
+      <date type="published">
+        <on>2010-08-06</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 29500-1:2008/Cor 1:2010</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 29500-1:2008/Cor 1:2010</docidentifier>
+      <date type="published">
+        <on>2010-05-04</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 29500-1:2008/NP Amd 2</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 29500-1:2008/NP Amd 2</docidentifier>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem>
+<bibitem id="iso-iec_29500-2" type="standard" schema-version="v1.5.6" anchor="iso-iec_29500-2" semx-id="_e59e53e4-97a6-f39b-6fb6-3ba9d39c6e15"><biblio-tag><span class="stdpublisher">ISO/IEC</span> <span class="stddocNumber">29500</span>-<span class="stddocPartNumber">2</span>:<span class="stdyear">2008</span><fn id="_8ce57ac8-2dab-d516-63a7-57c9fd1ff649" reference="2" original-reference="_bc0abf48-e365-4fe4-8591-f47bce69675e" target="_0550e2d9-8799-7dd5-2e1d-9c3a6c7f7ae7"><p>Withdrawn.</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_8ce57ac8-2dab-d516-63a7-57c9fd1ff649">2</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>
+, </biblio-tag><formattedref><em><span class="stddocTitle">Information technology — Document description and processing languages — Office Open XML File Formats — Part 2: Open Packaging Conventions</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Information technology</title>
+
+  
+<title language="en" script="Latn" type="title-main">Document description and processing languages</title>
+
+  
+<title language="en" script="Latn" type="title-part">Office Open XML File Formats — Part 2: Open Packaging Conventions</title>
+
+  
+<title language="en" script="Latn" type="main">Information technology — Document description and processing languages — Office Open XML File Formats — Part 2: Open Packaging Conventions</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Technologies de l’information</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Description des documents et langages de traitement</title>
+
+  
+<title language="fr" script="Latn" type="title-part">Formats de fichier “Office Open XML” — Partie 2: Conventions de paquetage ouvert</title>
+
+  
+<title language="fr" script="Latn" type="main">Technologies de l’information — Description des documents et langages de traitement — Formats de fichier “Office Open XML” — Partie 2: Conventions de paquetage ouvert</title>
+
+  <uri type="src">https://www.iso.org/standard/51459.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:51459:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/05/14/51459.detail.rss</uri>
+  <docidentifier type="ISO" primary="true">ISO/IEC 29500-2:2008</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO/IEC 29500-2</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO/IEC 29500-2:2008(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso-iec:29500:-2:stage-95.99</docidentifier><docidentifier scope="biblio-tag">ISO/IEC 29500-2:2008</docidentifier>
+  <docnumber>29500</docnumber>
+  <date type="published">
+    <on>2008-11-17</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Electrotechnical Commission</name>
+
+      <abbreviation>IEC</abbreviation>
+      <uri>www.iec.ch</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="IEC">
+        
+<name>Document description and processing languages</name>
+
+        <identifier id="_c43d9215-6e86-bfe2-5d04-f3f714be599c">ISO/IEC JTC 1/SC 34</identifier><fmt-identifier><tt><semx element="identifier" source="_c43d9215-6e86-bfe2-5d04-f3f714be599c">ISO/IEC JTC 1/SC 34</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>1</edition>
+  <note type="Unpublished-Status"><p id="_30a7785c-1bcf-a472-26ab-02fc8bd65460" semx-id="_30a7785c-1bcf-a472-26ab-02fc8bd65460">Withdrawn.</p></note><language>en</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">ISO/IEC 29500-2:2008 defines a general-purpose file/component packaging facility, which is built on top of the widely used ZIP file structure.</abstract>
+  <status>
+    <stage>95</stage>
+    <substage>99</substage>
+  </status>
+  <copyright>
+    <from>2008</from>
+    <owner>
+      <organization>
+        
+<name>ISO/IEC</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 29500-2:2011</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 29500-2:2011</docidentifier>
+      <date type="published">
+        <on>2011-08-12</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 29500-2:2008/NP Amd 1</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 29500-2:2008/NP Amd 1</docidentifier>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 29500-2:2008/Cor 1:2010</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 29500-2:2008/Cor 1:2010</docidentifier>
+      <date type="published">
+        <on>2010-05-04</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem>
+<bibitem id="iso-iec_29500-3" type="standard" schema-version="v1.5.6" anchor="iso-iec_29500-3" semx-id="_ca84e475-42a4-e9dc-a84c-571eb144aa7e"><biblio-tag><span class="stdpublisher">ISO/IEC</span> <span class="stddocNumber">29500</span>-<span class="stddocPartNumber">3</span>:<span class="stdyear">2008</span><fn id="_b2a1416c-4f96-f648-c403-99c077dc2011" reference="3" original-reference="_f27b1df0-7a17-42eb-b476-1829874d9872" target="_90716004-1dbc-624f-9f15-6638514b6408"><p>Withdrawn.</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_b2a1416c-4f96-f648-c403-99c077dc2011">3</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>
+, </biblio-tag><formattedref><em><span class="stddocTitle">Information technology — Document description and processing languages — Office Open XML File Formats — Part 3: Markup Compatibility and Extensibility</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Information technology</title>
+
+  
+<title language="en" script="Latn" type="title-main">Document description and processing languages</title>
+
+  
+<title language="en" script="Latn" type="title-part">Office Open XML File Formats — Part 3: Markup Compatibility and Extensibility</title>
+
+  
+<title language="en" script="Latn" type="main">Information technology — Document description and processing languages — Office Open XML File Formats — Part 3: Markup Compatibility and Extensibility</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Technologies de l’information</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Description des documents et langages de traitement</title>
+
+  
+<title language="fr" script="Latn" type="title-part">Formats de fichier “Office Open XML” — Partie 3: Compatibilité et extensibilité du balisage</title>
+
+  
+<title language="fr" script="Latn" type="main">Technologies de l’information — Description des documents et langages de traitement — Formats de fichier “Office Open XML” — Partie 3: Compatibilité et extensibilité du balisage</title>
+
+  <uri type="src">https://www.iso.org/standard/51461.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:51461:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/05/14/51461.detail.rss</uri>
+  <docidentifier type="ISO" primary="true">ISO/IEC 29500-3:2008</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO/IEC 29500-3</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO/IEC 29500-3:2008(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso-iec:29500:-3:stage-95.99</docidentifier><docidentifier scope="biblio-tag">ISO/IEC 29500-3:2008</docidentifier>
+  <docnumber>29500</docnumber>
+  <date type="published">
+    <on>2008-11-17</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Electrotechnical Commission</name>
+
+      <abbreviation>IEC</abbreviation>
+      <uri>www.iec.ch</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="IEC">
+        
+<name>Document description and processing languages</name>
+
+        <identifier id="_0b0d9fa8-8ade-637c-f3df-5624d1165311">ISO/IEC JTC 1/SC 34</identifier><fmt-identifier><tt><semx element="identifier" source="_0b0d9fa8-8ade-637c-f3df-5624d1165311">ISO/IEC JTC 1/SC 34</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>1</edition>
+  <note type="Unpublished-Status"><p id="_a169f136-7d86-1901-971a-5b77648f00fb" semx-id="_a169f136-7d86-1901-971a-5b77648f00fb">Withdrawn.</p></note><language>en</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">ISO/IEC 29500-3:2008 defines a general-purpose mechanism to extend an XML vocabulary.</abstract>
+  <status>
+    <stage>95</stage>
+    <substage>99</substage>
+  </status>
+  <copyright>
+    <from>2008</from>
+    <owner>
+      <organization>
+        
+<name>ISO/IEC</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 29500-3:2011</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 29500-3:2011</docidentifier>
+      <date type="published">
+        <on>2011-08-12</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 29500-3:2008/Cor 1:2010</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 29500-3:2008/Cor 1:2010</docidentifier>
+      <date type="published">
+        <on>2010-05-10</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem>
+<bibitem id="iso-iec_29500-4" type="standard" schema-version="v1.5.6" anchor="iso-iec_29500-4" semx-id="_e2e73426-ac3d-0fdc-dfa7-0297ac63760b"><biblio-tag><span class="stdpublisher">ISO/IEC</span> <span class="stddocNumber">29500</span>-<span class="stddocPartNumber">4</span>:<span class="stdyear">2008</span><fn id="_82597f8b-7528-1457-af91-5d0397f06d97" reference="4" original-reference="_19337489-e0b8-4311-9a30-aac7f8177aa0" target="_4c7ecd3d-fea9-960f-5493-b534baaf7a32"><p>Withdrawn.</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_82597f8b-7528-1457-af91-5d0397f06d97">4</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>
+, </biblio-tag><formattedref><em><span class="stddocTitle">Information technology — Document description and processing languages — Office Open XML File Formats — Part 4: Transitional Migration Features</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Information technology</title>
+
+  
+<title language="en" script="Latn" type="title-main">Document description and processing languages</title>
+
+  
+<title language="en" script="Latn" type="title-part">Office Open XML File Formats — Part 4: Transitional Migration Features</title>
+
+  
+<title language="en" script="Latn" type="main">Information technology — Document description and processing languages — Office Open XML File Formats — Part 4: Transitional Migration Features</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Technologies de l’information</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Description des documents et langages de traitement</title>
+
+  
+<title language="fr" script="Latn" type="title-part">Formats de fichier “Office Open XML” — Partie 4: Caractéristiques de migration transitoire</title>
+
+  
+<title language="fr" script="Latn" type="main">Technologies de l’information — Description des documents et langages de traitement — Formats de fichier “Office Open XML” — Partie 4: Caractéristiques de migration transitoire</title>
+
+  <uri type="src">https://www.iso.org/standard/51462.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:51462:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/05/14/51462.detail.rss</uri>
+  <docidentifier type="ISO" primary="true">ISO/IEC 29500-4:2008</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO/IEC 29500-4</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO/IEC 29500-4:2008(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso-iec:29500:-4:stage-95.99</docidentifier><docidentifier scope="biblio-tag">ISO/IEC 29500-4:2008</docidentifier>
+  <docnumber>29500</docnumber>
+  <date type="published">
+    <on>2008-11-17</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Electrotechnical Commission</name>
+
+      <abbreviation>IEC</abbreviation>
+      <uri>www.iec.ch</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="IEC">
+        
+<name>Document description and processing languages</name>
+
+        <identifier id="_efc2ee45-f6c3-44d3-31c0-298c9878512f">ISO/IEC JTC 1/SC 34</identifier><fmt-identifier><tt><semx element="identifier" source="_efc2ee45-f6c3-44d3-31c0-298c9878512f">ISO/IEC JTC 1/SC 34</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>1</edition>
+  <note type="Unpublished-Status"><p id="_11d91064-502c-f3c0-425a-926d5fd1a636" semx-id="_11d91064-502c-f3c0-425a-926d5fd1a636">Withdrawn.</p></note><language>en</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">ISO/IEC 29500-4:2008 defines a set of XML elements and attributes, over and above those defined by ISO/IEC 29500-1, that provide support for legacy Microsoft Office applications; that is, those prior to the 2008 release. It specifies requirements for Office Open XML consumers and producers that comply to the transitional conformance category.</abstract>
+  <status>
+    <stage>95</stage>
+    <substage>99</substage>
+  </status>
+  <copyright>
+    <from>2008</from>
+    <owner>
+      <organization>
+        
+<name>ISO/IEC</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 29500-4:2011</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 29500-4:2011</docidentifier>
+      <date type="published">
+        <on>2011-08-12</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 29500-4:2008/Amd 1:2010</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 29500-4:2008/Amd 1:2010</docidentifier>
+      <date type="published">
+        <on>2010-08-06</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 29500-4:2008/Cor 1:2010</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 29500-4:2008/Cor 1:2010</docidentifier>
+      <date type="published">
+        <on>2010-05-04</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 29500-4:2008/NP Amd 2</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 29500-4:2008/NP Amd 2</docidentifier>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem>
+
+<bibitem id="ISO5127" type="standard" schema-version="v1.5.6" anchor="ISO5127" semx-id="_c1815b03-e014-8398-134b-dc7153ba7ac4"><biblio-tag><span class="stdpublisher">ISO</span> <span class="stddocNumber">5127</span>, </biblio-tag><formattedref><em><span class="stddocTitle">Information and documentation — Foundation and vocabulary</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Information and documentation</title>
+
+  
+<title language="en" script="Latn" type="title-main">Foundation and vocabulary</title>
+
+  
+<title language="en" script="Latn" type="main">Information and documentation — Foundation and vocabulary</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Information et documentation</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Fondations et vocabulaire</title>
+
+  
+<title language="fr" script="Latn" type="main">Information et documentation — Fondations et vocabulaire</title>
+
+  <uri type="src">https://www.iso.org/standard/59743.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:59743:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/05/97/59743.detail.rss</uri>
+  <docidentifier type="ISO" primary="true">ISO 5127</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO 5127</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO 5127(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso:5127:stage-90.92</docidentifier><docidentifier scope="biblio-tag">ISO 5127</docidentifier>
+  <docnumber>5127</docnumber>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="TC">
+        
+<name>Information and documentation</name>
+
+        <identifier id="_b8ec78d8-e050-de36-e9c4-dab73338392e">ISO/TC 46</identifier><fmt-identifier><tt><semx element="identifier" source="_b8ec78d8-e050-de36-e9c4-dab73338392e">ISO/TC 46</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>2</edition>
+  <language>en</language>
+  <script>Latn</script>
+  <status>
+    <stage>90</stage>
+    <substage>92</substage>
+  </status>
+  <copyright>
+    <from>2017</from>
+    <owner>
+      <organization>
+        
+<name>ISO</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletes">
+    <bibitem>
+      <formattedref>ISO 5127:2001</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 5127:2001</docidentifier>
+      <date type="published">
+        <on>2001-10-25</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="obsoletedBy">
+    <bibitem>
+      <formattedref>ISO/AWI 5127</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/AWI 5127</docidentifier>
+    </bibitem>
+
+  </relation>
+  <relation type="obsoletedBy">
+    <bibitem>
+      <formattedref>ISO/WD 5127</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/WD 5127</docidentifier>
+    </bibitem>
+
+  </relation>
+  <relation type="instanceOf">
+    <bibitem type="standard">
+      
+<title language="en" script="Latn" type="title-intro">Information and documentation</title>
+
+      
+<title language="en" script="Latn" type="title-main">Foundation and vocabulary</title>
+
+      
+<title language="en" script="Latn" type="main">Information and documentation — Foundation and vocabulary</title>
+
+      
+<title language="fr" script="Latn" type="title-intro">Information et documentation</title>
+
+      
+<title language="fr" script="Latn" type="title-main">Fondations et vocabulaire</title>
+
+      
+<title language="fr" script="Latn" type="main">Information et documentation — Fondations et vocabulaire</title>
+
+      <uri type="src">https://www.iso.org/standard/59743.html</uri>
+      <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:59743:en</uri>
+      <uri type="rss">https://www.iso.org/contents/data/standard/05/97/59743.detail.rss</uri>
+      <docidentifier type="ISO" primary="true">ISO 5127:2017</docidentifier>
+      <docidentifier type="iso-undated">ISO 5127</docidentifier>
+      <docidentifier type="iso-reference">ISO 5127:2017(E)</docidentifier>
+      <docidentifier type="URN">urn:iso:std:iso:5127:stage-90.92</docidentifier>
+      <docnumber>5127</docnumber>
+      <date type="published">
+        <on>2017-05-10</on>
+      </date>
+      <contributor>
+        <role type="publisher"/>
+        <organization>
+          
+<name>International Organization for Standardization</name>
+
+          <abbreviation>ISO</abbreviation>
+          <uri>www.iso.org</uri>
+        </organization>
+      </contributor>
+      <contributor>
+        <role type="author">
+          <description>committee</description>
+        </role>
+        <organization>
+          
+<name>International Organization for Standardization</name>
+
+          <subdivision type="technical-committee" subtype="TC">
+            
+<name>Information and documentation</name>
+
+            <identifier id="_6b5ec1b8-7808-eb92-6ad2-72f27522407d">ISO/TC 46</identifier><fmt-identifier><tt><semx element="identifier" source="_6b5ec1b8-7808-eb92-6ad2-72f27522407d">ISO/TC 46</semx></tt></fmt-identifier>
+          </subdivision>
+          <abbreviation>ISO</abbreviation>
+        </organization>
+      </contributor>
+      <edition>2</edition>
+      <language>en</language>
+      <script>Latn</script>
+      <abstract language="en" script="Latn">ISO 5127:2017 provides a concept system and general vocabulary for the field of documentation within the whole information field. It has been created with a balanced representation of major work areas in mind: documentation, libraries, archives, media, museums, records management, conservation as well as legal aspects of documentation. The scope of the vocabulary provided in this document corresponds to that of ISO/TC 46: standardization of practices relating to libraries, documentation and information centres, publishing, archives, records management, museum documentation, indexing and abstracting services, and information science.</abstract>
+      <status>
+        <stage>90</stage>
+        <substage>92</substage>
+      </status>
+      <copyright>
+        <from>2017</from>
+        <owner>
+          <organization>
+            
+<name>ISO</name>
+
+          </organization>
+        </owner>
+      </copyright>
+      <relation type="obsoletes">
+        <bibitem>
+          <formattedref>ISO 5127:2001</formattedref>
+          <docidentifier type="ISO" primary="true">ISO 5127:2001</docidentifier>
+          <date type="published">
+            <on>2001-10-25</on>
+          </date>
+        </bibitem>
+
+      </relation>
+      <relation type="obsoletedBy">
+        <bibitem>
+          <formattedref>ISO/AWI 5127</formattedref>
+          <docidentifier type="ISO" primary="true">ISO/AWI 5127</docidentifier>
+        </bibitem>
+
+      </relation>
+      <relation type="obsoletedBy">
+        <bibitem>
+          <formattedref>ISO/WD 5127</formattedref>
+          <docidentifier type="ISO" primary="true">ISO/WD 5127</docidentifier>
+        </bibitem>
+
+      </relation>
+      <place>
+        <city>Geneva</city>
+      </place>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem>
+<bibitem id="ISO15924" type="standard" schema-version="v1.5.6" anchor="ISO15924" semx-id="_40675e03-ad2d-a61a-8838-e2deb90f43ee"><biblio-tag><span class="stdpublisher">ISO</span> <span class="stddocNumber">15924</span>, </biblio-tag><formattedref><em><span class="stddocTitle">Information and documentation — Codes for the representation of names of scripts</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Information and documentation</title>
+
+  
+<title language="en" script="Latn" type="title-main">Codes for the representation of names of scripts</title>
+
+  
+<title language="en" script="Latn" type="main">Information and documentation — Codes for the representation of names of scripts</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Information et documentation</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Codes pour la représentation des noms d’écritures</title>
+
+  
+<title language="fr" script="Latn" type="main">Information et documentation — Codes pour la représentation des noms d’écritures</title>
+
+  <uri type="src">https://www.iso.org/standard/29546.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:29546:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/02/95/29546.detail.rss</uri>
+  <docidentifier type="ISO" primary="true">ISO 15924</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO 15924</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO 15924(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso:15924:stage-95.99</docidentifier><docidentifier scope="biblio-tag">ISO 15924</docidentifier>
+  <docnumber>15924</docnumber>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="TC">
+        
+<name>Information and documentation</name>
+
+        <identifier id="_43cc1b45-469e-ab7a-b349-e4318dc37f39">ISO/TC 46</identifier><fmt-identifier><tt><semx element="identifier" source="_43cc1b45-469e-ab7a-b349-e4318dc37f39">ISO/TC 46</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>1</edition>
+  <language>en</language>
+  <language>fr</language>
+  <script>Latn</script>
+  <status>
+    <stage>60</stage>
+    <substage>60</substage>
+  </status>
+  <copyright>
+    <from>2004</from>
+    <owner>
+      <organization>
+        
+<name>ISO</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="instanceOf">
+    <bibitem type="standard">
+      
+<title language="en" script="Latn" type="title-intro">Information and documentation</title>
+
+      
+<title language="en" script="Latn" type="title-main">Codes for the representation of names of scripts</title>
+
+      
+<title language="en" script="Latn" type="main">Information and documentation — Codes for the representation of names of scripts</title>
+
+      
+<title language="fr" script="Latn" type="title-intro">Information et documentation</title>
+
+      
+<title language="fr" script="Latn" type="title-main">Codes pour la représentation des noms d’écritures</title>
+
+      
+<title language="fr" script="Latn" type="main">Information et documentation — Codes pour la représentation des noms d’écritures</title>
+
+      <uri type="src">https://www.iso.org/standard/29546.html</uri>
+      <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:29546:en</uri>
+      <uri type="rss">https://www.iso.org/contents/data/standard/02/95/29546.detail.rss</uri>
+      <docidentifier type="ISO" primary="true">ISO 15924:2004</docidentifier>
+      <docidentifier type="iso-undated">ISO 15924</docidentifier>
+      <docidentifier type="iso-reference">ISO 15924:2004(E)</docidentifier>
+      <docidentifier type="URN">urn:iso:std:iso:15924:stage-95.99</docidentifier>
+      <docnumber>15924</docnumber>
+      <date type="published">
+        <on>2004-02-04</on>
+      </date>
+      <contributor>
+        <role type="publisher"/>
+        <organization>
+          
+<name>International Organization for Standardization</name>
+
+          <abbreviation>ISO</abbreviation>
+          <uri>www.iso.org</uri>
+        </organization>
+      </contributor>
+      <contributor>
+        <role type="author">
+          <description>committee</description>
+        </role>
+        <organization>
+          
+<name>International Organization for Standardization</name>
+
+          <subdivision type="technical-committee" subtype="TC">
+            
+<name>Information and documentation</name>
+
+            <identifier id="_96a3b2d8-c588-e5fb-af26-5cf6d42d8288">ISO/TC 46</identifier><fmt-identifier><tt><semx element="identifier" source="_96a3b2d8-c588-e5fb-af26-5cf6d42d8288">ISO/TC 46</semx></tt></fmt-identifier>
+          </subdivision>
+          <abbreviation>ISO</abbreviation>
+        </organization>
+      </contributor>
+      <edition>1</edition>
+      <language>en</language>
+      <language>fr</language>
+      <script>Latn</script>
+      <abstract language="en" script="Latn">ISO 15924:2004 provides a code for the presentation of names of scripts. The codes were devised for use in terminology, lexicography, bibliography and linguistics, but they may be used for any application requiring the expression of scripts in coded form. ISO 15924:2004 also includes guidance on the use of script codes in some of these applications.</abstract>
+      <status>
+        <stage>60</stage>
+        <substage>60</substage>
+      </status>
+      <copyright>
+        <from>2004</from>
+        <owner>
+          <organization>
+            
+<name>ISO</name>
+
+          </organization>
+        </owner>
+      </copyright>
+      <place>
+        <city>Geneva</city>
+      </place>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem>
+</references></sections><annex id="annex-1" anchor="annex-1" inline-header="false" obligation="normative" semx-id="_d11c1e50-8921-a9cc-eed2-87f17f24ef69" autonum="A" displayorder="9">
+<title id="_6c984eca-81d6-4841-bcd2-0b55550ea488" semx-id="_995e1016-e9d3-520d-70dc-9c33bf58245f">Annex One</title><fmt-title id="_603b3e75-42d7-d49e-31e8-4de5072853f5"><strong><span class="fmt-caption-label"><span class="fmt-element-name">Annex</span> <semx element="autonum" source="annex-1">A</semx></span></strong><br/><span class="fmt-obligation">(normative)</span><span class="fmt-caption-delim"><br/><br/></span><semx element="title" source="_6c984eca-81d6-4841-bcd2-0b55550ea488"><strong>Annex One</strong></semx></fmt-title><fmt-xref-label><span class="fmt-element-name">Annex</span> <semx element="autonum" source="annex-1">A</semx></fmt-xref-label><variant-title type="toc"><span class="fmt-caption-label"><span class="fmt-element-name">Annex</span> <semx element="autonum" source="annex-1">A</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_6c984eca-81d6-4841-bcd2-0b55550ea488">Annex One</semx></variant-title>
+<p id="_7ac12c35-b858-40ec-4fa3-e22ee31d4420" semx-id="_7ac12c35-b858-40ec-4fa3-e22ee31d4420">This is a normative annex.</p>
+</annex><annex id="annex-2" anchor="annex-2" inline-header="false" obligation="informative" semx-id="_375e8029-b2d2-cdfe-575d-1b463e9faef6" autonum="B" displayorder="10">
+<title id="_38912b60-070a-410d-615b-dd33dc647eef" semx-id="_4d4e0e87-0b14-2df0-e06f-b749ed5115f8">Annex Two</title><fmt-title id="_c442612f-1226-2c0b-05af-e8cda4b7077e"><strong><span class="fmt-caption-label"><span class="fmt-element-name">Annex</span> <semx element="autonum" source="annex-2">B</semx></span></strong><br/><span class="fmt-obligation">(informative)</span><span class="fmt-caption-delim"><br/><br/></span><semx element="title" source="_38912b60-070a-410d-615b-dd33dc647eef"><strong>Annex Two</strong></semx></fmt-title><fmt-xref-label><span class="fmt-element-name">Annex</span> <semx element="autonum" source="annex-2">B</semx></fmt-xref-label><variant-title type="toc"><span class="fmt-caption-label"><span class="fmt-element-name">Annex</span> <semx element="autonum" source="annex-2">B</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_38912b60-070a-410d-615b-dd33dc647eef">Annex Two</semx></variant-title>
+<p id="_eead8ae9-215f-c7ef-f9de-dbfad2afcaca" semx-id="_eead8ae9-215f-c7ef-f9de-dbfad2afcaca">This is an informative annex.</p>
+</annex><bibliography><references id="_3ebd84a2-b099-7224-b60c-64db8afa1431" normative="false" obligation="informative" semx-id="_3ebd84a2-b099-7224-b60c-64db8afa1431" displayorder="11">
+<title id="_f4c2bd32-4b9f-c7bf-65fa-4a5120f569d3" semx-id="_50ceb1e1-516f-2673-d73d-4f0c58b4d023">Bibliography</title><fmt-title depth="1" id="_f6fe7add-d1a9-0682-793c-fa2b1a09ca57"><semx element="title" source="_f4c2bd32-4b9f-c7bf-65fa-4a5120f569d3">Bibliography</semx></fmt-title><bibitem id="iso15489_1" type="standard" schema-version="v1.5.6" anchor="iso15489_1" semx-id="_a285d8e8-da0c-afa3-5a95-a5b27bdf2a47"><biblio-tag>[1]<tab/><span class="stdpublisher">ISO</span> <span class="stddocNumber">15489</span>-<span class="stddocPartNumber">1</span>:<span class="stdyear">2016</span>, </biblio-tag><formattedref><em><span class="stddocTitle">Information and documentation — Records management — Part 1: Concepts and principles</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Information and documentation</title>
+
+  
+<title language="en" script="Latn" type="title-main">Records management</title>
+
+  
+<title language="en" script="Latn" type="title-part">Part 1: Concepts and principles</title>
+
+  
+<title language="en" script="Latn" type="main">Information and documentation — Records management — Part 1: Concepts and principles</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Information et documentation</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Gestion des documents d’activité</title>
+
+  
+<title language="fr" script="Latn" type="title-part">Partie 1: Concepts et principes</title>
+
+  
+<title language="fr" script="Latn" type="main">Information et documentation — Gestion des documents d’activité — Partie 1: Concepts et principes</title>
+
+  <uri type="src">https://www.iso.org/standard/62542.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:62542:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/06/25/62542.detail.rss</uri><docidentifier type="metanorma-ordinal">[1]</docidentifier>
+  <docidentifier type="ISO" primary="true">ISO 15489-1:2016</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO 15489-1</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO 15489-1:2016(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso:15489:-1:stage-90.93</docidentifier><docidentifier scope="biblio-tag">ISO 15489-1:2016</docidentifier>
+  <docnumber>15489</docnumber>
+  <date type="published">
+    <on>2016-04-07</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="TC">
+        
+<name>Archives/records management</name>
+
+        <identifier id="_5bc0b979-7b77-1e58-4b42-bfc763831ac9">ISO/TC 46/SC 11</identifier><fmt-identifier><tt><semx element="identifier" source="_5bc0b979-7b77-1e58-4b42-bfc763831ac9">ISO/TC 46/SC 11</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>2</edition>
+  <language>en</language>
+  <language>fr</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">ISO 15489-1:2016 defines the concepts and principles from which approaches to the creation, capture and management of records are developed. This part of ISO 15489 describes concepts and principles relating to the following: a) records, metadata for records and records systems; b) policies, assigned responsibilities, monitoring and training supporting the effective management of records; c) recurrent analysis of business context and the identification of records requirements; d) records controls; e) processes for creating, capturing and managing records. ISO 15489-1:2016 applies to the creation, capture and management of records regardless of structure or form, in all types of business and technological environments, over time.</abstract>
+  <status>
+    <stage>90</stage>
+    <substage>93</substage>
+  </status>
+  <copyright>
+    <from>2016</from>
+    <owner>
+      <organization>
+        
+<name>ISO</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletes">
+    <bibitem>
+      <formattedref>ISO 15489-1:2001</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 15489-1:2001</docidentifier>
+      <date type="published">
+        <on>2001-09-28</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem><bibitem id="iso-iec_10746-1" type="standard" schema-version="v1.5.6" anchor="iso-iec_10746-1" semx-id="_3a8505d9-b049-3dff-5f26-9330d66a889c"><biblio-tag>[2]<tab/><span class="stdpublisher">ISO/IEC</span> <span class="stddocNumber">10746</span>-<span class="stddocPartNumber">1</span>:<span class="stdyear">1998</span>, </biblio-tag><formattedref><em><span class="stddocTitle">Information technology — Open Distributed Processing — Reference model: Overview — Part 1:</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Information technology</title>
+
+  
+<title language="en" script="Latn" type="title-main">Open Distributed Processing</title>
+
+  
+<title language="en" script="Latn" type="title-part">Reference model: Overview — Part 1:</title>
+
+  
+<title language="en" script="Latn" type="main">Information technology — Open Distributed Processing — Reference model: Overview — Part 1:</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Technologies de l’information</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Traitement réparti ouvert</title>
+
+  
+<title language="fr" script="Latn" type="title-part">Modèle de référence: Aperçu général — Partie 1:</title>
+
+  
+<title language="fr" script="Latn" type="main">Technologies de l’information — Traitement réparti ouvert — Modèle de référence: Aperçu général — Partie 1:</title>
+
+  <uri type="src">https://www.iso.org/standard/20696.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:20696:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/02/06/20696.detail.rss</uri><docidentifier type="metanorma-ordinal">[2]</docidentifier>
+  <docidentifier type="ISO" primary="true">ISO/IEC 10746-1:1998</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO/IEC 10746-1</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO/IEC 10746-1:1998(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso-iec:10746:-1:stage-90.93</docidentifier><docidentifier scope="biblio-tag">ISO/IEC 10746-1:1998</docidentifier>
+  <docnumber>10746</docnumber>
+  <date type="published">
+    <on>1998-12-20</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Electrotechnical Commission</name>
+
+      <abbreviation>IEC</abbreviation>
+      <uri>www.iec.ch</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="IEC">
+        
+<name>Software and systems engineering</name>
+
+        <identifier id="_70327a88-fb63-8154-ef75-5c5770a129b7">ISO/IEC JTC 1/SC 7</identifier><fmt-identifier><tt><semx element="identifier" source="_70327a88-fb63-8154-ef75-5c5770a129b7">ISO/IEC JTC 1/SC 7</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>1</edition>
+  <language>en</language>
+  <language>fr</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">This Recommendation | International Standard: ? gives an introduction and motivation for ODP; ? provides an overview of the Reference Model of Open Distributed Processing (RM-ODP) and an explanation of its key concepts; ? gives guidance on the application of the RM-ODP. This Recommendation | International Standard covers both overview and detailed explanation, and can be consulted in various ways when reading the standards: a) if you intend to read only this Recommendation | International Standard, to gain a general understanding of the importance of ODP to your organization, concentrate on clause 6; b) if you intend to study the whole RM-ODP, you should also read clause 6 before moving on to ITU-T Rec. X.902 | ISO/IEC 10746-2 and ITU-T Rec. X.903 | ISO/IEC 10746-3; c) as you read ITU-T Rec. X.902 | ISO/IEC 10746-2 and ITU-T Rec. X.903 | ISO/IEC 10746-3 you may wish to consult clauses 7 to 10, which give supporting explanation for the various concepts that these common texts define; d) when you have completed a first reading of ITU-T Rec. X.902 | ISO/IEC 10746-2 and ITU-T Rec. X.903 | ISO/IEC 10746-3, read clauses 11 and 12 which discuss the use of standards in ODP system specifications, and provide some examples of applying the ODP concepts in the specification of systems.</abstract>
+  <status>
+    <stage>90</stage>
+    <substage>93</substage>
+  </status>
+  <copyright>
+    <from>1998</from>
+    <owner>
+      <organization>
+        
+<name>ISO/IEC</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem><bibitem id="iso-iec_10746-3" type="standard" schema-version="v1.5.6" anchor="iso-iec_10746-3" semx-id="_0c825148-ddcc-c7ba-08e9-185edf0a6ef1"><biblio-tag>[3]<tab/><span class="stdpublisher">ISO/IEC</span> <span class="stddocNumber">10746</span>-<span class="stddocPartNumber">3</span>:<span class="stdyear">1996</span><fn id="_426d832e-0c41-a42d-58cf-ab56f14f40c1" reference="5" original-reference="_9c29c0e1-881e-4c0f-a021-e6c0280f7e33" target="_5deb2a4b-5ac7-e5a5-684a-f13765884f29"><p>Withdrawn.</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_426d832e-0c41-a42d-58cf-ab56f14f40c1">5</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>
+, </biblio-tag><formattedref><em><span class="stddocTitle">Information technology — Open Distributed Processing — Reference Model: Architecture</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Information technology</title>
+
+  
+<title language="en" script="Latn" type="title-main">Open Distributed Processing</title>
+
+  
+<title language="en" script="Latn" type="title-part">Reference Model: Architecture</title>
+
+  
+<title language="en" script="Latn" type="main">Information technology — Open Distributed Processing — Reference Model: Architecture</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Technologies de l’information</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Traitement réparti ouvert</title>
+
+  
+<title language="fr" script="Latn" type="title-part">Modèle de référence: Architecture</title>
+
+  
+<title language="fr" script="Latn" type="main">Technologies de l’information — Traitement réparti ouvert — Modèle de référence: Architecture</title>
+
+  <uri type="src">https://www.iso.org/standard/20697.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:20697:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/02/06/20697.detail.rss</uri><docidentifier type="metanorma-ordinal">[3]</docidentifier>
+  <docidentifier type="ISO" primary="true">ISO/IEC 10746-3:1996</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO/IEC 10746-3</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO/IEC 10746-3:1996(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso-iec:10746:-3:stage-95.99</docidentifier><docidentifier scope="biblio-tag">ISO/IEC 10746-3:1996</docidentifier>
+  <docnumber>10746</docnumber>
+  <date type="published">
+    <on>1996-09-12</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Electrotechnical Commission</name>
+
+      <abbreviation>IEC</abbreviation>
+      <uri>www.iec.ch</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="IEC">
+        
+<name>Software and systems engineering</name>
+
+        <identifier id="_04d6bf7f-42e8-7b91-fc18-6e2ccf3b2062">ISO/IEC JTC 1/SC 7</identifier><fmt-identifier><tt><semx element="identifier" source="_04d6bf7f-42e8-7b91-fc18-6e2ccf3b2062">ISO/IEC JTC 1/SC 7</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>1</edition>
+  <note type="Unpublished-Status"><p id="_c407dab9-1e35-3867-c718-408e1c669c01" semx-id="_c407dab9-1e35-3867-c718-408e1c669c01">Withdrawn.</p></note><language>en</language>
+  <language>fr</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">Defines how ODP systems are specified, making use of concepts in ITU-T Recommendation X.902 (ISO/IEC 10746-2); identifies the characteristics that qualify systems as ODP systems.</abstract>
+  <status>
+    <stage>95</stage>
+    <substage>99</substage>
+  </status>
+  <copyright>
+    <from>1996</from>
+    <owner>
+      <organization>
+        
+<name>ISO/IEC</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 10746-3:2009</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 10746-3:2009</docidentifier>
+      <date type="published">
+        <on>2009-12-15</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 10746-3:1996/PDAM 1</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 10746-3:1996/CD Amd 1</docidentifier>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem><bibitem id="iso27000" type="standard" schema-version="v1.5.6" anchor="iso27000" semx-id="_945700f8-76c7-901e-0e51-decbb711a253"><biblio-tag>[4]<tab/><span class="stdpublisher">ISO/IEC</span> <span class="stddocNumber">27000</span>:<span class="stdyear">2009</span><fn id="_d58c1fb4-35ce-7c3f-e25c-162934121132" reference="6" original-reference="_c3a25caf-f6a5-48be-9ad7-87fcce8f7825" target="_5e1661a2-2ffe-2502-e47b-8bbd6ae95f1a"><p>Withdrawn.</p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_d58c1fb4-35ce-7c3f-e25c-162934121132">6</semx><span class="fmt-label-delim">)</span></sup></span></fmt-fn-label></fn>
+, </biblio-tag><formattedref><em><span class="stddocTitle">Information technology — Security techniques — Information security management systems — Overview and vocabulary</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Information technology</title>
+
+  
+<title language="en" script="Latn" type="title-main">Security techniques</title>
+
+  
+<title language="en" script="Latn" type="title-part">Information security management systems — Overview and vocabulary</title>
+
+  
+<title language="en" script="Latn" type="main">Information technology — Security techniques — Information security management systems — Overview and vocabulary</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Technologies de l’information</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Techniques de sécurité</title>
+
+  
+<title language="fr" script="Latn" type="title-part">Systèmes de management de la sécurité de l’information — Vue d’ensemble et vocabulaire</title>
+
+  
+<title language="fr" script="Latn" type="main">Technologies de l’information — Techniques de sécurité — Systèmes de management de la sécurité de l’information — Vue d’ensemble et vocabulaire</title>
+
+  <uri type="src">https://www.iso.org/standard/41933.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:41933:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/04/19/41933.detail.rss</uri><docidentifier type="metanorma-ordinal">[4]</docidentifier>
+  <docidentifier type="ISO" primary="true">ISO/IEC 27000:2009</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO/IEC 27000</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO/IEC 27000:2009(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso-iec:27000:stage-95.99</docidentifier><docidentifier scope="biblio-tag">ISO/IEC 27000:2009</docidentifier>
+  <docnumber>27000</docnumber>
+  <date type="published">
+    <on>2009-04-30</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Electrotechnical Commission</name>
+
+      <abbreviation>IEC</abbreviation>
+      <uri>www.iec.ch</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="IEC">
+        
+<name>Information security, cybersecurity and privacy protection</name>
+
+        <identifier id="_88050ae8-5184-358b-d823-785e122ec7c6">ISO/IEC JTC 1/SC 27</identifier><fmt-identifier><tt><semx element="identifier" source="_88050ae8-5184-358b-d823-785e122ec7c6">ISO/IEC JTC 1/SC 27</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>1</edition>
+  <note type="Unpublished-Status"><p id="_7be12734-3f17-07c9-73a6-bbc6a26cab24" semx-id="_7be12734-3f17-07c9-73a6-bbc6a26cab24">Withdrawn.</p></note><language>en</language>
+  <language>fr</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">ISO/IEC 27000:2009 provides an overview of information security management systems, which form the subject of the information security management system (ISMS) family of standards, and defines related terms. As a result of implementing ISO/IEC 27000:2009, all types of organization (e.g. commercial enterprises, government agencies and non-profit organizations) are expected to obtain: an overview of the ISMS family of standards; an introduction to information security management systems (ISMS); a brief description of the Plan-Do-Check-Act (PDCA) process; and an understanding of terms and definitions in use throughout the ISMS family of standards. The objectives of ISO/IEC 27000:2009 are to provide terms and definitions, and an introduction to the ISMS family of standards that: define requirements for an ISMS and for those certifying such systems; provide direct support, detailed guidance and/or interpretation for the overall Plan-Do-Check-Act (PDCA) processes and requirements; address sector-specific guidelines for ISMS; and address conformity assessment for ISMS.</abstract>
+  <status>
+    <stage>95</stage>
+    <substage>99</substage>
+  </status>
+  <copyright>
+    <from>2009</from>
+    <owner>
+      <organization>
+        
+<name>ISO/IEC</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletedBy">
+    <bibitem>
+      <formattedref>ISO/IEC 27000:2012</formattedref>
+      <docidentifier type="ISO" primary="true">ISO/IEC 27000:2012</docidentifier>
+      <date type="published">
+        <on>2012-12-04</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem>
+
+
+
+
+
+</references></bibliography>
+<fmt-footnote-container><fmt-fn-body id="_3c5916f3-871f-279d-eb94-a7dd424fa0c1" target="_77f1bd37-a51d-992a-483f-32cc9c17ec82" reference="1"><semx element="fn" source="_77f1bd37-a51d-992a-483f-32cc9c17ec82"><p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_77f1bd37-a51d-992a-483f-32cc9c17ec82">1</semx></sup></span><span class="fmt-caption-delim"><tab/></span></fmt-fn-label>Withdrawn.</p></semx></fmt-fn-body><fmt-fn-body id="_0550e2d9-8799-7dd5-2e1d-9c3a6c7f7ae7" target="_8ce57ac8-2dab-d516-63a7-57c9fd1ff649" reference="2"><semx element="fn" source="_8ce57ac8-2dab-d516-63a7-57c9fd1ff649"><p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_8ce57ac8-2dab-d516-63a7-57c9fd1ff649">2</semx></sup></span><span class="fmt-caption-delim"><tab/></span></fmt-fn-label>Withdrawn.</p></semx></fmt-fn-body><fmt-fn-body id="_90716004-1dbc-624f-9f15-6638514b6408" target="_b2a1416c-4f96-f648-c403-99c077dc2011" reference="3"><semx element="fn" source="_b2a1416c-4f96-f648-c403-99c077dc2011"><p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_b2a1416c-4f96-f648-c403-99c077dc2011">3</semx></sup></span><span class="fmt-caption-delim"><tab/></span></fmt-fn-label>Withdrawn.</p></semx></fmt-fn-body><fmt-fn-body id="_4c7ecd3d-fea9-960f-5493-b534baaf7a32" target="_82597f8b-7528-1457-af91-5d0397f06d97" reference="4"><semx element="fn" source="_82597f8b-7528-1457-af91-5d0397f06d97"><p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_82597f8b-7528-1457-af91-5d0397f06d97">4</semx></sup></span><span class="fmt-caption-delim"><tab/></span></fmt-fn-label>Withdrawn.</p></semx></fmt-fn-body><fmt-fn-body id="_5deb2a4b-5ac7-e5a5-684a-f13765884f29" target="_426d832e-0c41-a42d-58cf-ab56f14f40c1" reference="5"><semx element="fn" source="_426d832e-0c41-a42d-58cf-ab56f14f40c1"><p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_426d832e-0c41-a42d-58cf-ab56f14f40c1">5</semx></sup></span><span class="fmt-caption-delim"><tab/></span></fmt-fn-label>Withdrawn.</p></semx></fmt-fn-body><fmt-fn-body id="_5e1661a2-2ffe-2502-e47b-8bbd6ae95f1a" target="_d58c1fb4-35ce-7c3f-e25c-162934121132" reference="6"><semx element="fn" source="_d58c1fb4-35ce-7c3f-e25c-162934121132"><p><fmt-fn-label><span class="fmt-caption-label"><sup><semx element="autonum" source="_d58c1fb4-35ce-7c3f-e25c-162934121132">6</semx></sup></span><span class="fmt-caption-delim"><tab/></span></fmt-fn-label>Withdrawn.</p></semx></fmt-fn-body></fmt-footnote-container></metanorma>

@@ -50,39 +50,32 @@ module Metanorma
           # clauses, and term entries. Shared with BackTransformer so the
           # annex body lands in the <app> in the same order.
           def content_of(source_clause)
-            content = dispatcher.dispatch_section_blocks(source_clause)
+            content = []
+            attrs = BlockDispatcher::TYPED_ATTR_DISPATCH.keys + NESTED_ATTRS
 
-            # Dispatch nested clauses for any section type carrying a
-            # clause collection (IsoClauseSection AND IsoAnnexSection —
-            # annex subsections like the Examples annex's entries).
-            if source_clause.respond_to?(:clause) && source_clause.class.attributes.key?(:clause)
-              Array(source_clause.clause).each do |sub|
-                sec = transform(sub)
-                content << sec if sec
-              end
-            end
-
-            # Dispatch terms sections (a top-level <terms> carries its
-            # entries directly in .term; a clause's nested terms section
-            # appears in .terms). Each nested terms-section (e.g.
-            # "3.1 General definitions") is preserved as its own Sec so
-            # its heading renders for parity; only the top-level section
-            # whose .term collection we're flattening skips the wrapper.
-            if source_clause.class.attributes.key?(:term) && Array(source_clause.term).any?
-              Array(source_clause.term).each do |term|
-                term_sec = term_transformer.transform(term)
-                content << term_sec if term_sec
-              end
-            end
-            if source_clause.class.attributes.key?(:terms) && source_clause.terms
-              Array(source_clause.terms).each do |terms_section|
-                terms_sec = transform_terms_section(terms_section)
-                content << terms_sec if terms_sec
+            SourceOrder.entries(source_clause, attrs).each do |attr, item|
+              case attr
+              when :clause then append(content, transform(item))
+              when :term then append(content, term_transformer.transform(item))
+              when :terms then append(content, transform_terms_section(item))
+              else dispatcher.dispatch_block(attr, item, content)
               end
             end
 
             content
           end
+
+          # Nested clauses (IsoClauseSection and IsoAnnexSection — annex
+          # subsections), a top-level <terms>' own term entries, and a
+          # clause's nested terms sections. Each nested terms-section
+          # (e.g. "3.1 General definitions") is preserved as its own Sec
+          # so its heading renders for parity.
+          NESTED_ATTRS = %i[clause term terms].freeze
+
+          def append(content, item)
+            content << item if item
+          end
+          private :append
 
           # Build a Sec for a nested terms-section (e.g. "3.1 General
           # definitions") that wraps its term entries. The wrapper's

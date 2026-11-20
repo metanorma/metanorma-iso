@@ -16,7 +16,40 @@ module IsoDoc
         #                       that walk mixed content)
         #
         # Subclasses MUST implement +render(node, doc)+.
+        # Empty-range bookmark placement shared by the renderers and the
+        # adapter's block dispatch.
+        module Anchoring
+          module_function
+
+          # Name a node's bookmark carries: its +anchor+ (what xrefs
+          # target) wins over its +id+.
+          def name_of(node)
+            attrs = node.class.attributes
+            (node.anchor if attrs.key?(:anchor)) ||
+              (node.id if attrs.key?(:id))
+          end
+
+          # Anchor +node+ at +para+ (builder or model) as an empty
+          # bookmark ahead of the content, as Word emits it. A name
+          # already bookmarked, or illegal for Word, is skipped.
+          def anchor(context, node, para)
+            name = name_of(node)
+            name = name && context.claim_bookmark_name(name)
+            return unless name
+
+            model = para.is_a?(Uniword::Builder::BaseBuilder) ? para.model : para
+            bm_id = context.next_bookmark_id.to_s
+            model.bookmark_starts <<
+              Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id,
+                                                           name: name)
+            model.bookmark_ends <<
+              Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id)
+          end
+        end
+
         module Base
+          include ModelUtils
+
           attr_reader :resolver, :context, :inline_renderer, :walker
 
           def initialize(resolver:, context:, inline_renderer:, walker:)
@@ -49,22 +82,55 @@ module IsoDoc
 
           # Wrap a paragraph's content with a bookmark range so Word can
           # scroll hyperlink targets to the right position. No-op when the
-          # node has no +id+ attribute.
-          def with_bookmark(node, para)
-            name = bookmark_name(node)
-            return yield unless name
+          # node has neither +anchor+ nor +id+. Xrefs link via +target+,
+          # which is the element's +anchor+, so the anchor wins over the
+          # (possibly different) +id+.
+          def with_bookmark(node, para, &)
+            id = bookmark_name(node)
+            return yield unless id
+
+            # An earlier inline bookmark may already hold the id; the
+            # heading still carries its _Toc twin, the ToC's target.
+            name = @context.claim_bookmark_name(id)
+            return with_toc_bookmark(id, para, &) unless name
 
             bm_id = @context.next_bookmark_id.to_s
-            para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, 
+            para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id,
                                                                  name: name)
-            yield
+            with_toc_bookmark(id, para, &)
             para << Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id)
           end
 
-          def bookmark_name(node)
-            return nil unless node.class.attributes.key?(:id)
+          # Anchor +node+ (by its id/anchor) at +para+, a paragraph
+          # builder or model, as an empty bookmark ahead of the content
+          # (as Word emits it). Used where the paragraph is built by a
+          # container renderer instead of passing through with_bookmark:
+          # list items, note/example lead paragraphs, definition list
+          # entries. A name already bookmarked, or illegal for Word, is
+          # skipped.
+          def anchor_paragraph(node, para)
+            Anchoring.anchor(@context, node, para)
+          end
 
-            node.id
+          # Headings the table of contents lists carry a second,
+          # Word-style +_Toc+ bookmark (the ToC entry's hyperlink and
+          # PAGEREF target). The id bookmark stays: xrefs link to it.
+          def with_toc_bookmark(name, para)
+            return yield unless @context.toc_targets.include?(name)
+
+            toc_name = @context.claim_bookmark_name(Context.toc_bookmark_name(name))
+            return yield unless toc_name
+
+            toc_id = @context.next_bookmark_id.to_s
+            para << Uniword::Wordprocessingml::BookmarkStart.new(
+              id: toc_id, name: toc_name,
+            )
+            yield
+            para << Uniword::Wordprocessingml::BookmarkEnd.new(id: toc_id)
+          end
+
+          def bookmark_name(node)
+            Anchoring.name_of(node)
           end
 
           # Whether a heading has no body text after autonum carriers are

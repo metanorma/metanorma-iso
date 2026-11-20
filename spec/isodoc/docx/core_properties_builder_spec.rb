@@ -146,20 +146,34 @@ RSpec.describe IsoDoc::Iso::Docx::CorePropertiesBuilder do
       expect(props.modified.type.to_s).to eq("dcterms:W3CDTF")
     end
 
-    it "sets cp:revision from version revision-date" do
+    def revision_for(version_xml)
       props = build_from_xml(<<~BIB)
         <bibdata type="standard">
           <title language="en" type="title-main">Test</title>
           <docidentifier type="ISO" primary="true">ISO 9001</docidentifier>
-          <version><revision-date>2016-05-01</revision-date></version>
+          <version>#{version_xml}</version>
           <copyright><from>2024</from><owner><organization>
             <name>ISO</name>
           </organization></owner></copyright>
         </bibdata>
       BIB
+      value = props.revision
+      (value.respond_to?(:value) ? value.value : value).to_s
+    end
 
-      revision_value = props.revision.respond_to?(:value) ? props.revision.value : props.revision
-      expect(revision_value.to_s).to eq("2016-05-01")
+    # Word reports "unreadable content" and refuses the file when
+    # cp:revision is not a positive integer.
+    it "keeps a revision-date out of cp:revision" do
+      expect(revision_for("<revision-date>2016-05-01</revision-date>")).to eq("1")
+    end
+
+    it "sets cp:revision from an integer draft number" do
+      expect(revision_for("<revision-date>2016-05-01</revision-date><draft>3</draft>"))
+        .to eq("3")
+    end
+
+    it "keeps a dotted draft number out of cp:revision" do
+      expect(revision_for("<draft>2.1</draft>")).to eq("1")
     end
 
     it "defaults cp:revision to 1 when version absent" do

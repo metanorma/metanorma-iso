@@ -38,6 +38,29 @@ RSpec.describe IsoDoc::Iso::Docx::MathConversion do
     expect(converter.number_only_stem_text(stem_with("<mn>12</mn>"))).to eq("12")
   end
 
+  it "extracts signed, grouped and decimal numbers like the flattener" do
+    ["-5", "−12,50", "101 325", "1.250E-6"].each do |value|
+      expect(converter.number_only_stem_text(
+        stem_with("<mn>#{value}</mn>")
+      )).to eq(value)
+    end
+  end
+
+  it "looks through an unstyled mstyle around the number" do
+    expect(converter.number_only_stem_text(
+      stem_with('<mstyle displaystyle="false"><mn>-5</mn></mstyle>')
+    )).to eq("-5")
+  end
+
+  it "keeps a styled mstyle or a non-number on the equation path" do
+    expect(converter.number_only_stem_text(
+      stem_with('<mstyle mathcolor="red"><mn>5</mn></mstyle>')
+    )).to be_nil
+    expect(converter.number_only_stem_text(
+      stem_with("<mn>1 2</mn>")
+    )).to be_nil
+  end
+
   it "keeps structured stems on the equation path" do
     expect(converter.number_only_stem_text(
       stem_with("<msup><mn>2</mn><mn>0</mn></msup>")

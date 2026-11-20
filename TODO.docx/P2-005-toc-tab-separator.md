@@ -1,3 +1,7 @@
+---
+status: done
+---
+
 # 07: TOC entries have section numbers stripped
 
 ## Symptom
@@ -67,3 +71,15 @@ ParagraphBuilder.
 Ensure the tab between autonum and title is preserved as a distinct
 `<w:r><w:tab/></w:r>` run, not merged with adjacent text. If the
 ParagraphBuilder's text normalization merges them, that's the bug.
+
+## Resolution
+
+Stale: not reproducible on grind/1609 (19c1878f). A real conversion of
+spec/fixtures/iso/is/document-en.dis.presentation.xml gives
+`TOC1 "1 " "Scope" <TAB> "1"`, `TOC2 "4" "." "1 " "General, ..." <TAB> "1"`:
+numbers present, a space between number and title, one tab (page number).
+`6b771179` made the label-to-title separator a space on purpose (a tab there
+overshoots the TOC style stop and jumps to the right-hand dot-leader stop,
+metanorma-pdfa#119), so a tab between number and title is NOT the target.
+Pinned by `spec/isodoc/docx/toc_entries_spec.rb` ("separates each entry's
+section number from its title with a space").

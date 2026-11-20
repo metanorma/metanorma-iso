@@ -6,7 +6,7 @@ module IsoDoc
       # Manages the three-section DOCX layout and header/footer lifecycle.
       #
       # ISO DIS documents have three distinct sections:
-      #   1. Cover page — no headers/footers, no page numbering
+      #   1. Cover page — blank header/footer parts, no page numbering
       #   2. Front matter — roman numeral page numbers, even/odd headers
       #   3. Body — arabic page numbers starting at 1, even/odd headers
       #
@@ -36,7 +36,8 @@ module IsoDoc
           header: 709, footer: 0, gutter: 567,
         }.freeze
 
-        # Body margins
+        # Fallback front matter and body margins, used only when the
+        # template carries no section properties for that section.
         BODY_MARGINS = {
           top: 794, bottom: 567, left: 1077, right: 1077,
           header: 720, footer: 720, gutter: 0,
@@ -54,9 +55,37 @@ module IsoDoc
         BODY_FOOTER_EVEN = "rId27"
         BODY_FOOTER_DEFAULT = "rId28"
 
+        # Set by the adapter from SectionManager.template_margins.
+        attr_writer :template_margins
+
+        MARGIN_NAMES = %i[top right bottom left header footer gutter].freeze
+
         def initialize(resolver, header_footer_renderer)
           @resolver = resolver
           @hf_renderer = header_footer_renderer
+          @template_margins = {}
+        end
+
+        # The page margins of the template's front matter and body
+        # sections, in document order, as { front:, body: }. Read this
+        # before the template content is cleared. The cover keeps its own
+        # layout: the template's cover section is a plain default page,
+        # not the ISO cover design.
+        def self.template_margins(root)
+          body = root&.body
+          return {} unless body
+
+          sections = body.paragraphs.filter_map { |para| para.properties&.section_properties }
+          sections << body.section_properties if body.section_properties
+          { front: margins_of(sections[1]), body: margins_of(sections[2]) }.compact
+        end
+
+        def self.margins_of(section)
+          page_margins = section&.page_margins
+          return unless page_margins
+
+          margins = MARGIN_NAMES.to_h { |name| [name, page_margins.public_send(name)] }
+          margins if margins.values.none?(&:nil?)
         end
 
         # The PageScheme for the front matter section.
@@ -72,9 +101,16 @@ module IsoDoc
         end
 
         # Insert a section break ending the cover page.
-        # Cover page: no headers/footers, no page numbering.
         def insert_cover_section(doc)
           sec = build_section(margins: COVER_MARGINS)
+          sec.header_references << Uniword::Wordprocessingml::HeaderReference.new(
+            type: "even", r_id: blank_cover_part(doc, :header, 0).r_id,
+          )
+          %w[even default].each_with_index do |type, index|
+            sec.footer_references << Uniword::Wordprocessingml::FooterReference.new(
+              type: type, r_id: blank_cover_part(doc, :footer, index).r_id,
+            )
+          end
           append_section_paragraph(doc, sec)
         end
 
@@ -88,7 +124,7 @@ module IsoDoc
           write_footer_part(doc, FRONT_FOOTER_DEFAULT, copyright_text, scheme)
 
           sec = build_section(
-            margins: BODY_MARGINS,
+            margins: @template_margins.fetch(:front, BODY_MARGINS),
             page_numbering: { format: scheme.format },
           )
           add_header_footer_refs(sec,
@@ -110,7 +146,7 @@ module IsoDoc
           write_footer_part(doc, BODY_FOOTER_DEFAULT, copyright_text, scheme)
 
           sec = build_section(
-            margins: BODY_MARGINS,
+            margins: @template_margins.fetch(:body, BODY_MARGINS),
             page_numbering: { start: 1 },
           )
           add_header_footer_refs(sec,
@@ -127,7 +163,6 @@ module IsoDoc
 
         def build_section(margins:, page_numbering: nil)
           sec = Uniword::Wordprocessingml::SectionProperties.new
-          sec.type = "nextPage"
           sec.page_size = Uniword::Wordprocessingml::PageSize.new(
             width: PAGE_WIDTH, height: PAGE_HEIGHT,
           )
@@ -138,7 +173,7 @@ module IsoDoc
           if page_numbering
             sec.page_numbering = Uniword::Wordprocessingml::PageNumbering.new
             sec.page_numbering.start = page_numbering[:start] if page_numbering[:start]
-            sec.page_numbering.format = page_numbering[:format] if page_numbering[:format]
+            sec.page_numbering.fmt = page_numbering[:format] if page_numbering[:format]
           end
 
           sec
@@ -160,6 +195,24 @@ module IsoDoc
           )
         end
 
+        def blank_cover_part(doc, kind, index)
+          parts = doc.model.header_footer_parts
+          # The adapter reuses the template model across conversions. These
+          # parts have no store-level type so Uniword leaves the body refs alone.
+          existing = parts.of_kind(kind).reject(&:loaded?).select { |part| part.type.nil? }
+          return existing[index] if existing[index]
+
+          definition = Uniword::Ooxml::PartRegistry.find_by_key(kind)
+          target = parts.next_target(kind)
+          content = definition.loader_model.new
+          content.paragraphs << Uniword::Wordprocessingml::Paragraph.new
+          parts << Uniword::Docx::HeaderFooterPart.new(
+            kind: kind, target: target, rel_type: definition.rel_type,
+            content_type: definition.content_type, content: content,
+            r_id: doc.allocator.alloc_rid(target: target, type: definition.rel_type)
+          )
+        end
+
         # Find a header/footer part from the template by its rId.
         def find_part(doc, r_id)
           parts = doc.model.header_footer_parts
@@ -172,7 +225,7 @@ module IsoDoc
           part = find_part(doc, r_id)
           return unless part
 
-          @hf_renderer.render_header(part[:content], text, align: :right)
+          @hf_renderer.render_header(part[:content], text)
         end
 
         def write_footer_part(doc, r_id, copyright_text, scheme)
@@ -185,6 +238,7 @@ module IsoDoc
         # Create a paragraph with section properties attached.
         # In OOXML, a sectPr inside a pPr creates a section break.
         def append_section_paragraph(doc, section_properties)
+          section_properties.rsid_r = "00000000"
           para = Uniword::Builder::ParagraphBuilder.new
           para << ""
           model = para.build

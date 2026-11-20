@@ -17,7 +17,7 @@ module IsoDoc
       # through the walker so they render via DefinitionListRenderer and
       # ParagraphRenderer respectively. All dispatch happens inside
       # +Context#with_formula+ so children pick up the formula zone via
-      # StyleResolver (e.g., KeyTitle / KeyText for the dl's items).
+      # StyleResolver and render symbol keys as formula_dl tables.
       class FormulaRenderer
         include ModelUtils
         include MathConversion
@@ -34,7 +34,8 @@ module IsoDoc
         # inside the formula zone.
         def render(formula, doc)
           if @context
-            @context.with_formula do
+            containers = Array(attribute_value(formula, :fmt_footnote_container))
+            @context.with_formula(containers.flat_map(&:fmt_fn_body)) do
               render_body(formula, doc)
               walk_extras(formula, doc)
             end
@@ -99,7 +100,9 @@ module IsoDoc
           if omml_para
             para << omml_para
             append_formula_name(formula, para)
-            doc << para.build
+            built = para.build
+            bookmark_paragraph(formula, built)
+            doc << built
           else
             render_formula_as_text(formula, doc)
           end
@@ -122,7 +125,25 @@ module IsoDoc
           name = attribute_value(formula, :fmt_name)
           append_formula_name_to_builder(name, para) if name
 
+          bookmark_paragraph(formula, para.model)
           doc << para
+        end
+
+        # Anchor target for xrefs to the formula. The bookmark range is
+        # empty and sits ahead of the content, as Word emits it.
+        def bookmark_paragraph(formula, para_model)
+          return unless @context
+
+          name = @context.claim_bookmark_name(
+            attribute_value(formula, :anchor) || attribute_value(formula, :id),
+          )
+          return unless name
+
+          bm_id = @context.next_bookmark_id.to_s
+          para_model.bookmark_starts <<
+            Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, name: name)
+          para_model.bookmark_ends <<
+            Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id)
         end
 
         # Append the formula name/label to a paragraph builder.

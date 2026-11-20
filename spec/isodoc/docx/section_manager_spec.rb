@@ -1,12 +1,109 @@
 # frozen_string_literal: true
 
 require_relative "spec_helper"
+require "metanorma-iso"
 
 RSpec.describe IsoDoc::Iso::Docx::SectionManager do
   let(:adapter) { build_adapter }
   let(:resolver) { adapter.resolver }
   let(:hf_renderer) { IsoDoc::Iso::Docx::HeaderFooterRenderer.new(resolver) }
   let(:section_mgr) { described_class.new(resolver, hf_renderer) }
+
+  it "writes the three DIS sections with the cover break before copyright" do
+    with_dis_package { |zip| expect_dis_sections(zip) }
+  end
+
+  it "serializes the DIS front matter page numbering as w:fmt" do
+    with_dis_package do |zip|
+      format = dis_front_matter_format(zip)
+      expect(format).to eq("lowerRoman")
+    end
+  end
+
+  def dis_front_matter_format(zip)
+    document = Nokogiri::XML(zip.read("word/document.xml"))
+    document.at_xpath("(//w:body/w:p/w:pPr/w:sectPr)[2]/w:pgNumType/@w:fmt")&.value
+  end
+
+  def with_dis_package(&block)
+    fixture = "spec/fixtures/iso/is/document-en.dis.presentation.xml"
+    Dir.mktmpdir do |dir|
+      output = File.join(dir, "dis.docx")
+      Metanorma::Iso::Processor.new.output(nil, fixture, output, :docx)
+      Zip::File.open(output, &block)
+    end
+  end
+
+  def expect_dis_sections(zip)
+    document = Nokogiri::XML(zip.read("word/document.xml"))
+    body = document.at_xpath("//w:body")
+    sections = body.xpath("w:p/w:pPr/w:sectPr | w:sectPr")
+    expect(sections.size).to eq(3)
+    expect(sections.last.parent).to eq(body)
+    expect_dis_layout(sections)
+    expect_cover_position(sections.first.parent.parent)
+    expect_section_references(zip, sections)
+  end
+
+  def expect_dis_layout(sections)
+    cover, front, body = sections
+    expect(sections.map { |sec| sec.xpath("w:pgSz/@w:w | w:pgSz/@w:h").map(&:value) })
+      .to eq([%w[11906 16838]] * 3)
+    margin_names = %w[top right bottom left header footer gutter]
+    margins = sections.map do |sec|
+      margin_names.map do |name|
+        sec.at_xpath("w:pgMar/@w:#{name}")&.value
+      end
+    end
+    expected_margins = [
+      %w[794 737 284 851 709 0 567],
+      %w[794 851 567 851 720 283 0],
+      %w[794 851 567 851 720 283 0],
+    ]
+    expect(margins).to eq(expected_margins)
+    expect(sections.xpath("w:cols/@w:space").map(&:value)).to eq(["720"] * 3)
+    expect(sections.xpath("w:docGrid/@w:linePitch").map(&:value)).to eq(["360"] * 3)
+    expect(cover.at_xpath("@w:rsidR")&.value).to eq("00000000")
+    expect(front.at_xpath("@w:rsidR")&.value).to eq("00000000")
+    expect(cover.at_xpath("w:pgNumType")).to be_nil
+    expect(cover.at_xpath("w:titlePg")).to be_nil
+    expect(body.at_xpath("w:pgNumType/@w:start")&.value).to eq("1")
+  end
+
+  def expect_cover_position(cover_break)
+    copyright = cover_break.at_xpath("following-sibling::w:p[contains(., '© ISO')]")
+    contents = copyright&.at_xpath("following-sibling::w:p[.//w:t = 'Contents']")
+    expect(cover_break.xpath("preceding-sibling::w:p[contains(., '© ISO')]")).to be_empty
+    expect(copyright).not_to be_nil
+    expect(contents&.previous_element&.at_xpath(".//w:br[@w:type = 'page']")).not_to be_nil
+  end
+
+  def expect_section_references(zip, sections)
+    rels = Nokogiri::XML(zip.read("word/_rels/document.xml.rels"))
+    targets = sections.map do |sec|
+      sec.xpath("w:headerReference | w:footerReference").map do |ref|
+        id = ref.at_xpath("@r:id").value
+        rel = rels.at_xpath("/*/*[@Id = $id]", nil, id: id)
+        kind = ref.name.delete_suffix("Reference")
+        expect(rel["Type"]).to end_with("/#{kind}")
+        expect(zip.find_entry("word/#{rel['Target']}")).not_to be_nil
+        [kind, ref.at_xpath("@w:type").value, rel["Target"]]
+      end
+    end
+    cover, *later = targets
+    cover_types = [%w[header even], %w[footer even], %w[footer default]]
+    later_types = [%w[header even], %w[header default], %w[footer even], %w[footer default]]
+    expect(cover.map { |kind, type, _| [kind, type] }).to eq(cover_types)
+    later.each do |refs|
+      expect(refs.map { |kind, type, _| [kind, type] }).to eq(later_types)
+    end
+    expect(targets.flatten(1).map(&:last).uniq.size).to eq(11)
+    cover.each do |_, _, target|
+      part = Nokogiri::XML(zip.read("word/#{target}"))
+      expect(part.root.element_children.map(&:name)).to eq(["p"])
+      expect(part.root.text).to be_empty
+    end
+  end
 
   describe "#insert_cover_section" do
     it "inserts a section break paragraph after cover page" do
@@ -57,7 +154,7 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
       sect_para = doc.model.body.paragraphs.last
       sec = sect_para.properties.section_properties
       expect(sec.page_numbering).not_to be_nil
-      expect(sec.page_numbering.format).to eq("lowerRoman")
+      expect(sec.page_numbering.fmt).to eq("lowerRoman")
     end
 
     it "includes header and footer references" do
@@ -151,7 +248,7 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
       )
 
       sec = doc.model.body.paragraphs.last.properties.section_properties
-      expect(sec.page_numbering.format).to eq(section_mgr.front_matter_scheme.format)
+      expect(sec.page_numbering.fmt).to eq(section_mgr.front_matter_scheme.format)
     end
   end
 
@@ -166,7 +263,8 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
         .find { |p| p[:r_id] == IsoDoc::Iso::Docx::SectionManager::FRONT_FOOTER_DEFAULT }
       expect(footer_part).not_to be_nil
 
-      para = footer_part[:content].paragraphs.first
+      # Line 1 is the copyright; the page number sits on line 2.
+      para = footer_part[:content].paragraphs.last
       style_value = para_style_value(para)
       expect(style_value).to eq("FooterPageRomanNumber"),
         "front matter footer should use FooterPageRomanNumber, got: #{style_value.inspect}"
@@ -182,7 +280,8 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
         .find { |p| p[:r_id] == IsoDoc::Iso::Docx::SectionManager::BODY_FOOTER_DEFAULT }
       expect(footer_part).not_to be_nil
 
-      para = footer_part[:content].paragraphs.first
+      # Line 1 is the copyright; the page number sits on line 2.
+      para = footer_part[:content].paragraphs.last
       style_value = para_style_value(para)
       expect(style_value).to eq("FooterPageNumber"),
         "body footer should use FooterPageNumber, got: #{style_value.inspect}"
@@ -196,7 +295,7 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
 
       footer_part = doc.model.header_footer_parts
         .find { |p| p[:r_id] == IsoDoc::Iso::Docx::SectionManager::FRONT_FOOTER_DEFAULT }
-      para = footer_part[:content].paragraphs.first
+      para = footer_part[:content].paragraphs.last
       # Field components live inside runs (bare <w:fldChar>/<w:instrText>
       # paragraph children are schema-invalid OOXML).
       fld_types = para.runs.filter_map { |r| r.field_char&.fldCharType }

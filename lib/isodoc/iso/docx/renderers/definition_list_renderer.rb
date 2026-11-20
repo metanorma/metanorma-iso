@@ -6,35 +6,21 @@ module IsoDoc
       module Renderers
         # Renders <dl> definition lists with context-aware styling.
         #
-        # Era C template provides three patterns:
-        #   1. Key lists (formula or figure zone) — <dt> as KeyTitle,
-        #      <dd> as KeyText. Used to define symbols in formulas and
-        #      figure keys.
-        #   2. Symbols-clause lists (:definitions zone) — a two-column
-        #      table, one row per dt/dd pair with the term in the first
-        #      cell and the definition in the second. This mirrors the
-        #      classic isodoc Word chain, which rendered every dl not
-        #      nested in a table as a table
-        #      (WordFunction::Body#dl_parse_table). Scoped to the
-        #      "Symbols and abbreviated terms" clause so general dls keep
-        #      their paragraph rendering.
-        #   3. General definition lists — both <dt> and <dd> as Definition
-        #      (used in terms sections and elsewhere)
-        #
-        # The renderer detects the zone via Context#zone (set by
-        # Context#with_formula / #with_figure / #with_definitions around
-        # the parent block's render) and picks the appropriate pattern.
+        # Formula keys use bordered tables. Figure keys use KeyTitle and
+        # KeyText; the Symbols clause uses a two-column table; other
+        # definition lists use Definition paragraphs.
         class DefinitionListRenderer
           include Base
           include ListAttachments
-
-          KEY_LIST_ZONES = %i[formula figure].freeze
-          SYMBOL_TABLE_ZONES = %i[definitions].freeze
+          include TableFootnotes
 
           def render(definition_list, doc)
-            if KEY_LIST_ZONES.include?(@context.zone)
+            case @context.zone
+            when :formula
               render_formula_key(definition_list, doc)
-            elsif SYMBOL_TABLE_ZONES.include?(@context.zone)
+            when :figure
+              render_figure_key(definition_list, doc)
+            when :definitions
               render_symbol_table(definition_list, doc)
             else
               render_general(definition_list, doc)
@@ -45,6 +31,60 @@ module IsoDoc
           private
 
           def render_formula_key(definition_list, doc)
+            terms = Array(definition_list.dt)
+            return if terms.empty?
+
+            table = formula_key_table
+            definitions = Array(definition_list.dd)
+            footnotes = collecting_table_footnotes do
+              terms.each_with_index do |term, index|
+                table.row do |row|
+                  formula_cell(row, term)
+                  formula_cell(row, definitions[index])
+                end
+              end
+            end
+            append_table_footnotes(table, footnotes, columns: 2, style_key: :table_footnote) unless footnotes.empty?
+            doc << table
+          end
+
+          def formula_key_table
+            table = Uniword::Builder::TableBuilder.new
+            # The submitted formula_dl table starts 20.15 points from the margin.
+            table.model.properties.table_indent =
+              Uniword::Properties::TableIndent.new(value: 403, type: "dxa")
+            line = Uniword::Wordprocessingml::Border.new(val: "single", sz: 4)
+            table.model.properties.table_borders =
+              Uniword::Wordprocessingml::TableBorders.new(
+                top: line, bottom: line, left: line, right: line,
+                inside_h: line, inside_v: line
+              )
+            table
+          end
+
+          def formula_cell(row, node)
+            row.cell do |cell|
+              formula_cell_content(node).each_with_index do |part, i|
+                para = build_paragraph(:table_body)
+                @inline_renderer.render(part, para) if part
+                anchor_entry(part, para) if part
+                anchor_paragraph(node, para) if i.zero? && !part.equal?(node)
+                cell << para
+              end
+            end
+          end
+
+          def formula_cell_content(node)
+            paragraphs = attribute_value(node, :p)
+            return [node] if paragraphs.nil? || paragraphs.empty?
+            return [node] unless Array(node.element_order).all? do |entry|
+              entry.element? ? entry.name == "p" : entry.text_content.to_s.strip.empty?
+            end
+
+            paragraphs
+          end
+
+          def render_figure_key(definition_list, doc)
             render_pairs(definition_list, doc,
                          term_key: :key_title,
                          definition_key: :key_text)
@@ -75,7 +115,17 @@ module IsoDoc
           def render_cell_paragraph(node, style_key)
             para = build_paragraph(style_key)
             @inline_renderer.render(node, para)
+            anchor_entry(node, para)
             para
+          end
+
+          # A dt/dd (and the p children rendered into the same paragraph)
+          # keep their id as a bookmark on the paragraph that carries them.
+          def anchor_entry(node, para)
+            anchor_paragraph(node, para)
+            Array(attribute_value(node, :p)).each do |p|
+              anchor_paragraph(p, para)
+            end
           end
 
           def render_general(definition_list, doc)
@@ -95,12 +145,14 @@ module IsoDoc
           def append_pair(doc, term, definition, term_key, definition_key)
             term_para = build_paragraph(term_key)
             @inline_renderer.render(term, term_para)
+            anchor_entry(term, term_para)
             doc << term_para
 
             return unless definition
 
             definition_para = build_paragraph(definition_key)
             @inline_renderer.render(definition, definition_para)
+            anchor_entry(definition, definition_para)
             doc << definition_para
           end
         end

@@ -1,0 +1,1448 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  MathML 4 (Presentation)
+  #######################
+-->
+<!--
+      Copyright 1998-2026 W3C (MIT, ERCIM, Keio, Beihang)
+  
+      Use and distribution of this code are permitted under the terms
+      W3C Software Notice and License
+      http://www.w3.org/Consortium/Legal/2002/copyright-software-20021231
+-->
+<grammar ns="http://www.w3.org/1998/Math/MathML" xmlns="http://relaxng.org/ns/structure/1.0" datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <!-- MathML Core -->
+  <include href="mathml4-core.rng">
+    <!-- named lengths -->
+    <define name="length-percentage">
+      <data type="string">
+        <param name="pattern">\s*((-?[0-9]*([0-9]\.?|\.[0-9])[0-9]*(r?em|ex|in|cm|mm|p[xtc]|Q|v[hw]|vmin|vmax|%))|0|(negative)?((very){0,2}thi(n|ck)|medium)mathspace)\s*</param>
+      </data>
+    </define>
+    <define name="mpadded-length-percentage">
+      <data type="string">
+        <param name="pattern">\s*([\+\-]?[0-9]*([0-9]\.?|\.[0-9])[0-9]*\s*((%?\s*(height|depth|width)?)|r?em|ex|in|cm|mm|p[xtc]|Q|v[hw]|vmin|vmax|%|((negative)?((very){0,2}thi(n|ck)|medium)mathspace))?)\s*</param>
+      </data>
+    </define>
+  </include>
+  <define name="NonMathMLAtt">
+    <attribute>
+      <anyName>
+        <except>
+          <nsName ns=""/>
+          <nsName/>
+        </except>
+      </anyName>
+      <data type="string"/>
+    </attribute>
+  </define>
+  <define name="MathMLPGlobalAttributes" combine="interleave">
+    <zeroOrMore>
+      <ref name="NonMathMLAtt"/>
+    </zeroOrMore>
+    <optional>
+      <attribute name="xref"/>
+    </optional>
+    <optional>
+      <attribute name="href">
+        <data type="anyURI"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="MathMalignExpression" combine="choice">
+    <ref name="MalignExpression"/>
+  </define>
+  <define name="MathExpression" combine="choice">
+    <ref name="PresentationExpression"/>
+  </define>
+  <define name="MstackExpression">
+    <choice>
+      <ref name="MathMalignExpression"/>
+      <ref name="mscarries"/>
+      <ref name="msline"/>
+      <ref name="msrow"/>
+      <ref name="msgroup"/>
+    </choice>
+  </define>
+  <define name="MsrowExpression">
+    <choice>
+      <ref name="MathMalignExpression"/>
+      <ref name="none"/>
+    </choice>
+  </define>
+  <define name="linestyle">
+    <choice>
+      <value>none</value>
+      <value>solid</value>
+      <value>dashed</value>
+    </choice>
+  </define>
+  <define name="verticalalign">
+    <choice>
+      <value>top</value>
+      <value>bottom</value>
+      <value>center</value>
+      <value>baseline</value>
+      <value>axis</value>
+    </choice>
+  </define>
+  <define name="columnalignstyle">
+    <choice>
+      <value>left</value>
+      <value>center</value>
+      <value>right</value>
+    </choice>
+  </define>
+  <define name="notationstyle">
+    <choice>
+      <value>longdiv</value>
+      <value>actuarial</value>
+      <value>radical</value>
+      <value>box</value>
+      <value>roundedbox</value>
+      <value>circle</value>
+      <value>left</value>
+      <value>right</value>
+      <value>top</value>
+      <value>bottom</value>
+      <value>updiagonalstrike</value>
+      <value>downdiagonalstrike</value>
+      <value>verticalstrike</value>
+      <value>horizontalstrike</value>
+      <value>madruwb</value>
+    </choice>
+  </define>
+  <define name="idref">
+    <text/>
+  </define>
+  <define name="unsigned-integer">
+    <data type="unsignedLong"/>
+  </define>
+  <define name="integer">
+    <data type="integer"/>
+  </define>
+  <define name="number">
+    <data type="decimal"/>
+  </define>
+  <define name="character">
+    <data type="string">
+      <param name="pattern">\s*\S\s*</param>
+    </data>
+  </define>
+  <define name="positive-integer">
+    <data type="positiveInteger"/>
+  </define>
+  <define name="token.content" combine="choice">
+    <choice>
+      <ref name="mglyph"/>
+      <text/>
+    </choice>
+  </define>
+  <define name="mo.attributes" combine="interleave">
+    <optional>
+      <attribute name="linebreak">
+        <choice>
+          <value>auto</value>
+          <value>newline</value>
+          <value>nobreak</value>
+          <value>goodbreak</value>
+          <value>badbreak</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="lineleading">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="linebreakstyle">
+        <choice>
+          <value>before</value>
+          <value>after</value>
+          <value>duplicate</value>
+          <value>infixlinebreakstyle</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="linebreakmultchar"/>
+    </optional>
+    <optional>
+      <attribute name="indentalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshift">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indenttarget">
+        <ref name="idref"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentalignfirst">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+          <value>indentalign</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshiftfirst">
+        <choice>
+          <ref name="length-percentage"/>
+          <value>indentshift</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentalignlast">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+          <value>indentalign</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshiftlast">
+        <choice>
+          <ref name="length-percentage"/>
+          <value>indentshift</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="accent">
+        <ref name="mathml-boolean"/>
+      </attribute>
+    </optional>
+  </define>
+  <!--
+    METANORMA MODIFICATION (basicdoc-models#39): upstream re-declared
+    `attribute maxsize {"infinity"}?` here to extend the core value space;
+    RELAX NG forbids duplicate attributes, so "infinity" is merged into the
+    core declaration (mathml4-core.rnc mo.attributes) instead.
+  -->
+  <define name="mspace.attributes" combine="interleave">
+    <optional>
+      <attribute name="linebreak">
+        <choice>
+          <value>auto</value>
+          <value>newline</value>
+          <value>nobreak</value>
+          <value>goodbreak</value>
+          <value>badbreak</value>
+          <value>indentingnewline</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshift">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indenttarget">
+        <ref name="idref"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentalignfirst">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+          <value>indentalign</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshiftfirst">
+        <choice>
+          <ref name="length-percentage"/>
+          <value>indentshift</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentalignlast">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+          <value>indentalign</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshiftlast">
+        <choice>
+          <ref name="length-percentage"/>
+          <value>indentshift</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="ms.attributes" combine="interleave">
+    <optional>
+      <attribute name="lquote"/>
+    </optional>
+    <optional>
+      <attribute name="rquote"/>
+    </optional>
+  </define>
+  <define name="mglyph">
+    <element name="mglyph">
+      <ref name="mglyph.attributes"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="mglyph.attributes">
+    <ref name="MathMLPGlobalAttributes"/>
+    <optional>
+      <attribute name="src">
+        <data type="anyURI"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="width">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="height">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="valign">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="alt"/>
+    </optional>
+  </define>
+  <define name="msline">
+    <element name="msline">
+      <ref name="msline.attributes"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="msline.attributes">
+    <ref name="MathMLPGlobalAttributes"/>
+    <optional>
+      <attribute name="position">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="length">
+        <ref name="unsigned-integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="leftoverhang">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rightoverhang">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="mslinethickness">
+        <choice>
+          <ref name="length-percentage"/>
+          <value>thin</value>
+          <value>medium</value>
+          <value>thick</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="MalignExpression">
+    <choice>
+      <ref name="maligngroup"/>
+      <ref name="malignmark"/>
+    </choice>
+  </define>
+  <define name="malignmark">
+    <element name="malignmark">
+      <ref name="malignmark.attributes"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="malignmark.attributes">
+    <ref name="MathMLPGlobalAttributes"/>
+  </define>
+  <define name="maligngroup">
+    <element name="maligngroup">
+      <ref name="maligngroup.attributes"/>
+      <empty/>
+    </element>
+  </define>
+  <define name="maligngroup.attributes">
+    <ref name="MathMLPGlobalAttributes"/>
+  </define>
+  <define name="PresentationExpression">
+    <choice>
+      <ref name="TokenExpression"/>
+      <ref name="mrow"/>
+      <ref name="mfrac"/>
+      <ref name="msqrt"/>
+      <ref name="mroot"/>
+      <ref name="mstyle"/>
+      <ref name="merror"/>
+      <ref name="mpadded"/>
+      <ref name="mphantom"/>
+      <ref name="mfenced"/>
+      <ref name="menclose"/>
+      <ref name="msub"/>
+      <ref name="msup"/>
+      <ref name="msubsup"/>
+      <ref name="munder"/>
+      <ref name="mover"/>
+      <ref name="munderover"/>
+      <ref name="mmultiscripts"/>
+      <ref name="mtable"/>
+      <ref name="mstack"/>
+      <ref name="mlongdiv"/>
+      <ref name="maction"/>
+    </choice>
+  </define>
+  <define name="mrow.attributes" combine="interleave">
+    <ref name="MathMLlink.attributes"/>
+  </define>
+  <define name="mfrac.attributes" combine="interleave">
+    <optional>
+      <attribute name="numalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="denomalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="bevelled">
+        <ref name="mathml-boolean"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mstyle.attributes" combine="interleave">
+    <ref name="mstyle.specificattributes"/>
+    <ref name="mstyle.generalattributes"/>
+  </define>
+  <define name="mstyle.specificattributes">
+    <optional>
+      <attribute name="scriptsizemultiplier">
+        <ref name="number"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="scriptminsize">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="infixlinebreakstyle">
+        <choice>
+          <value>before</value>
+          <value>after</value>
+          <value>duplicate</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="decimalpoint">
+        <ref name="character"/>
+      </attribute>
+    </optional>
+  </define>
+  <!--
+    METANORMA MODIFICATION (basicdoc-models#39): `dir`, `mathsize` and
+    `mathvariant` are removed from mstyle.generalattributes below — they are
+    already carried by MathMLPGlobalAttributes (mathml4-core.rnc), and since
+    math.attributes and mstyle.attributes combine both sets, RELAX NG's
+    duplicate-attribute restriction rejects the composed grammar (jing:
+    'duplicate attribute "dir"'). The attributes remain available on every
+    element via MathMLPGlobalAttributes.
+  -->
+  <define name="mstyle.generalattributes">
+    <optional>
+      <attribute name="accent">
+        <ref name="mathml-boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="accentunder">
+        <ref name="mathml-boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>center</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="bevelled">
+        <ref name="mathml-boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="charalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="charspacing">
+        <choice>
+          <ref name="length-percentage"/>
+          <value>loose</value>
+          <value>medium</value>
+          <value>tight</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="close"/>
+    </optional>
+    <optional>
+      <attribute name="columnalign">
+        <list>
+          <oneOrMore>
+            <ref name="columnalignstyle"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnlines">
+        <list>
+          <oneOrMore>
+            <ref name="linestyle"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnspacing">
+        <list>
+          <oneOrMore>
+            <ref name="length-percentage"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnspan">
+        <ref name="positive-integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnwidth">
+        <list>
+          <oneOrMore>
+            <choice>
+              <value>auto</value>
+              <ref name="length-percentage"/>
+              <value>fit</value>
+            </choice>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="crossout">
+        <list>
+          <zeroOrMore>
+            <choice>
+              <value>none</value>
+              <value>updiagonalstrike</value>
+              <value>downdiagonalstrike</value>
+              <value>verticalstrike</value>
+              <value>horizontalstrike</value>
+            </choice>
+          </zeroOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="denomalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="depth">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="equalcolumns">
+        <ref name="mathml-boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="equalrows">
+        <ref name="mathml-boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="form">
+        <choice>
+          <value>prefix</value>
+          <value>infix</value>
+          <value>postfix</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="frame">
+        <ref name="linestyle"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="framespacing">
+        <list>
+          <ref name="length-percentage"/>
+          <ref name="length-percentage"/>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="height">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentalignfirst">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+          <value>indentalign</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentalignlast">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>auto</value>
+          <value>id</value>
+          <value>indentalign</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshift">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshiftfirst">
+        <choice>
+          <ref name="length-percentage"/>
+          <value>indentshift</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indentshiftlast">
+        <choice>
+          <ref name="length-percentage"/>
+          <value>indentshift</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="indenttarget">
+        <ref name="idref"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="largeop">
+        <ref name="mathml-boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="leftoverhang">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="length">
+        <ref name="unsigned-integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="linebreak">
+        <choice>
+          <value>auto</value>
+          <value>newline</value>
+          <value>nobreak</value>
+          <value>goodbreak</value>
+          <value>badbreak</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="linebreakmultchar"/>
+    </optional>
+    <optional>
+      <attribute name="linebreakstyle">
+        <choice>
+          <value>before</value>
+          <value>after</value>
+          <value>duplicate</value>
+          <value>infixlinebreakstyle</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="lineleading">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="linethickness">
+        <choice>
+          <ref name="length-percentage"/>
+          <value>thin</value>
+          <value>medium</value>
+          <value>thick</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="location">
+        <choice>
+          <value>w</value>
+          <value>nw</value>
+          <value>n</value>
+          <value>ne</value>
+          <value>e</value>
+          <value>se</value>
+          <value>s</value>
+          <value>sw</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="longdivstyle">
+        <choice>
+          <value>lefttop</value>
+          <value>stackedrightright</value>
+          <value>mediumstackedrightright</value>
+          <value>shortstackedrightright</value>
+          <value>righttop</value>
+          <value>left/\right</value>
+          <value>left)(right</value>
+          <value>:right=right</value>
+          <value>stackedleftleft</value>
+          <value>stackedleftlinetop</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="lquote"/>
+    </optional>
+    <optional>
+      <attribute name="lspace">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="minlabelspacing">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="minsize">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="movablelimits">
+        <ref name="mathml-boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="mslinethickness">
+        <choice>
+          <ref name="length-percentage"/>
+          <value>thin</value>
+          <value>medium</value>
+          <value>thick</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="notation"/>
+    </optional>
+    <optional>
+      <attribute name="numalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="open"/>
+    </optional>
+    <optional>
+      <attribute name="position">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rightoverhang">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rowalign">
+        <list>
+          <oneOrMore>
+            <ref name="verticalalign"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rowlines">
+        <list>
+          <oneOrMore>
+            <ref name="linestyle"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rowspacing">
+        <list>
+          <oneOrMore>
+            <ref name="length-percentage"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rowspan">
+        <ref name="positive-integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rquote"/>
+    </optional>
+    <optional>
+      <attribute name="rspace">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="selection">
+        <ref name="positive-integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="separators"/>
+    </optional>
+    <optional>
+      <attribute name="shift">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="side">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>leftoverlap</value>
+          <value>rightoverlap</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="stackalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>decimalpoint</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="stretchy">
+        <ref name="mathml-boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="subscriptshift">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="superscriptshift">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="symmetric">
+        <ref name="mathml-boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="valign">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="width">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="math.attributes" combine="interleave">
+    <ref name="mstyle.specificattributes"/>
+  </define>
+  <define name="math.attributes" combine="interleave">
+    <ref name="mstyle.generalattributes"/>
+  </define>
+  <define name="math.attributes" combine="interleave">
+    <optional>
+      <attribute name="overflow">
+        <choice>
+          <value>linebreak</value>
+          <value>scroll</value>
+          <value>elide</value>
+          <value>truncate</value>
+          <value>scale</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mfenced">
+    <element name="mfenced">
+      <ref name="mfenced.attributes"/>
+      <ref name="ImpliedMrow"/>
+    </element>
+  </define>
+  <define name="mfenced.attributes">
+    <ref name="MathMLPGlobalAttributes"/>
+    <optional>
+      <attribute name="open"/>
+    </optional>
+    <optional>
+      <attribute name="close"/>
+    </optional>
+    <optional>
+      <attribute name="separators"/>
+    </optional>
+  </define>
+  <define name="menclose">
+    <element name="menclose">
+      <ref name="menclose.attributes"/>
+      <ref name="ImpliedMrow"/>
+    </element>
+  </define>
+  <define name="menclose.attributes">
+    <ref name="MathMLPGlobalAttributes"/>
+    <optional>
+      <attribute name="notation"/>
+    </optional>
+  </define>
+  <define name="munder.attributes" combine="interleave">
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>center</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mover.attributes" combine="interleave">
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>center</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="munderover.attributes" combine="interleave">
+    <optional>
+      <attribute name="align">
+        <choice>
+          <value>left</value>
+          <value>right</value>
+          <value>center</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="msub.attributes" combine="interleave">
+    <optional>
+      <attribute name="subscriptshift">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="msup.attributes" combine="interleave">
+    <optional>
+      <attribute name="superscriptshift">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="msubsup.attributes" combine="interleave">
+    <optional>
+      <attribute name="subscriptshift">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="superscriptshift">
+        <ref name="length-percentage"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mtable.attributes" combine="interleave">
+    <optional>
+      <attribute name="align">
+        <data type="string">
+          <param name="pattern">\s*(top|bottom|center|baseline|axis)(\s+-?[0-9]+)?\s*</param>
+        </data>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rowalign">
+        <list>
+          <oneOrMore>
+            <ref name="verticalalign"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnalign">
+        <list>
+          <oneOrMore>
+            <ref name="columnalignstyle"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnwidth">
+        <list>
+          <oneOrMore>
+            <choice>
+              <value>auto</value>
+              <ref name="length-percentage"/>
+              <value>fit</value>
+            </choice>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="width">
+        <choice>
+          <value>auto</value>
+          <ref name="length-percentage"/>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rowspacing">
+        <list>
+          <oneOrMore>
+            <ref name="length-percentage"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnspacing">
+        <list>
+          <oneOrMore>
+            <ref name="length-percentage"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="rowlines">
+        <list>
+          <oneOrMore>
+            <ref name="linestyle"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnlines">
+        <list>
+          <oneOrMore>
+            <ref name="linestyle"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="frame">
+        <ref name="linestyle"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="framespacing">
+        <list>
+          <ref name="length-percentage"/>
+          <ref name="length-percentage"/>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="equalrows">
+        <ref name="mathml-boolean"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="equalcolumns">
+        <ref name="mathml-boolean"/>
+      </attribute>
+    </optional>
+  </define>
+  <!--
+    METANORMA MODIFICATION (basicdoc-models#39): `attribute displaystyle`
+    removed from the mtable augmentation — MathMLPGlobalAttributes
+    (mathml4-core.rnc) already carries displaystyle on every element, and
+    RELAX NG's duplicate-attribute restriction rejects the re-declaration
+    (jing: 'duplicate attribute "displaystyle"').
+  -->
+  <define name="mtr.attributes" combine="interleave">
+    <optional>
+      <attribute name="rowalign">
+        <choice>
+          <value>top</value>
+          <value>bottom</value>
+          <value>center</value>
+          <value>baseline</value>
+          <value>axis</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnalign">
+        <list>
+          <oneOrMore>
+            <ref name="columnalignstyle"/>
+          </oneOrMore>
+        </list>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mtd.attributes" combine="interleave">
+    <optional>
+      <attribute name="rowalign">
+        <choice>
+          <value>top</value>
+          <value>bottom</value>
+          <value>center</value>
+          <value>baseline</value>
+          <value>axis</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="columnalign">
+        <ref name="columnalignstyle"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mstack">
+    <element name="mstack">
+      <ref name="mstack.attributes"/>
+      <zeroOrMore>
+        <ref name="MstackExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mstack.attributes">
+    <ref name="MathMLPGlobalAttributes"/>
+    <optional>
+      <attribute name="align">
+        <data type="string">
+          <param name="pattern">\s*(top|bottom|center|baseline|axis)(\s+-?[0-9]+)?\s*</param>
+        </data>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="stackalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+          <value>decimalpoint</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="charalign">
+        <choice>
+          <value>left</value>
+          <value>center</value>
+          <value>right</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="charspacing">
+        <choice>
+          <ref name="length-percentage"/>
+          <value>loose</value>
+          <value>medium</value>
+          <value>tight</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mlongdiv">
+    <element name="mlongdiv">
+      <ref name="mlongdiv.attributes"/>
+      <ref name="MstackExpression"/>
+      <ref name="MstackExpression"/>
+      <oneOrMore>
+        <ref name="MstackExpression"/>
+      </oneOrMore>
+    </element>
+  </define>
+  <define name="mlongdiv.attributes">
+    <ref name="msgroup.attributes"/>
+    <optional>
+      <attribute name="longdivstyle">
+        <choice>
+          <value>lefttop</value>
+          <value>stackedrightright</value>
+          <value>mediumstackedrightright</value>
+          <value>shortstackedrightright</value>
+          <value>righttop</value>
+          <value>left/\right</value>
+          <value>left)(right</value>
+          <value>:right=right</value>
+          <value>stackedleftleft</value>
+          <value>stackedleftlinetop</value>
+        </choice>
+      </attribute>
+    </optional>
+  </define>
+  <define name="msgroup">
+    <element name="msgroup">
+      <ref name="msgroup.attributes"/>
+      <zeroOrMore>
+        <ref name="MstackExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="msgroup.attributes">
+    <ref name="MathMLPGlobalAttributes"/>
+    <optional>
+      <attribute name="position">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="shift">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="msrow">
+    <element name="msrow">
+      <ref name="msrow.attributes"/>
+      <zeroOrMore>
+        <ref name="MsrowExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="msrow.attributes">
+    <ref name="MathMLPGlobalAttributes"/>
+    <optional>
+      <attribute name="position">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mscarries">
+    <element name="mscarries">
+      <ref name="mscarries.attributes"/>
+      <zeroOrMore>
+        <choice>
+          <ref name="MsrowExpression"/>
+          <ref name="mscarry"/>
+        </choice>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mscarries.attributes">
+    <ref name="MathMLPGlobalAttributes"/>
+    <optional>
+      <attribute name="position">
+        <ref name="integer"/>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="location">
+        <choice>
+          <value>w</value>
+          <value>nw</value>
+          <value>n</value>
+          <value>ne</value>
+          <value>e</value>
+          <value>se</value>
+          <value>s</value>
+          <value>sw</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="crossout">
+        <list>
+          <zeroOrMore>
+            <choice>
+              <value>none</value>
+              <value>updiagonalstrike</value>
+              <value>downdiagonalstrike</value>
+              <value>verticalstrike</value>
+              <value>horizontalstrike</value>
+            </choice>
+          </zeroOrMore>
+        </list>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="scriptsizemultiplier">
+        <ref name="number"/>
+      </attribute>
+    </optional>
+  </define>
+  <define name="mscarry">
+    <element name="mscarry">
+      <ref name="mscarry.attributes"/>
+      <zeroOrMore>
+        <ref name="MsrowExpression"/>
+      </zeroOrMore>
+    </element>
+  </define>
+  <define name="mscarry.attributes">
+    <ref name="MathMLPGlobalAttributes"/>
+    <optional>
+      <attribute name="location">
+        <choice>
+          <value>w</value>
+          <value>nw</value>
+          <value>n</value>
+          <value>ne</value>
+          <value>e</value>
+          <value>se</value>
+          <value>s</value>
+          <value>sw</value>
+        </choice>
+      </attribute>
+    </optional>
+    <optional>
+      <attribute name="crossout">
+        <list>
+          <zeroOrMore>
+            <choice>
+              <value>none</value>
+              <value>updiagonalstrike</value>
+              <value>downdiagonalstrike</value>
+              <value>verticalstrike</value>
+              <value>horizontalstrike</value>
+            </choice>
+          </zeroOrMore>
+        </list>
+      </attribute>
+    </optional>
+  </define>
+</grammar>

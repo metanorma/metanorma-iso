@@ -4,6 +4,8 @@
 
 Comparing elements found in reference STS XML vs sts-ruby model classes.
 
+Status: 16 "Verify mapping" rows checked against sts-ruby origin/main (8279d6b): 14 mapped, 2 gaps (`target`, `named-content` in `Paragraph`).
+
 ### Front (iso-meta) — Sts::IsoSts::IsoMeta
 
 | STS Element | sts-ruby Class | Status |
@@ -14,18 +16,18 @@ Comparing elements found in reference STS XML vs sts-ruby model classes.
 | `title-wrap/compl` | `TitleCompl` | Present |
 | `title-wrap/full` | `TitleFull` | Present |
 | `doc-ident` | `DocumentIdentification` | Present |
-| `doc-ident/sdo` | — | Verify mapping |
-| `doc-ident/proj-id` | — | Verify mapping |
-| `doc-ident/language` | — | Verify mapping |
-| `doc-ident/release-version` | — | Verify mapping |
-| `doc-ident/urn` | — | Verify mapping |
+| `doc-ident/sdo` | `Sdo` (lib/sts/iso_sts/document_identification.rb:18) | Mapped |
+| `doc-ident/proj-id` | `ProjId` (lib/sts/iso_sts/document_identification.rb:19) | Mapped |
+| `doc-ident/language` | `Language` (lib/sts/iso_sts/document_identification.rb:20) | Mapped |
+| `doc-ident/release-version` | `ReleaseVersion` (lib/sts/iso_sts/document_identification.rb:21) | Mapped |
+| `doc-ident/urn` | `Urn` (lib/sts/iso_sts/document_identification.rb:22) | Mapped |
 | `std-ident` | `StandardIdentification` | Present |
-| `std-ident/originator` | — | Verify mapping |
-| `std-ident/doc-type` | — | Verify mapping |
-| `std-ident/doc-number` | — | Verify mapping |
-| `std-ident/part-number` | — | Verify mapping |
+| `std-ident/originator` | `Originator` (lib/sts/iso_sts/standard_identification.rb:22) | Mapped |
+| `std-ident/doc-type` | `DocType` (lib/sts/iso_sts/standard_identification.rb:23) | Mapped |
+| `std-ident/doc-number` | `DocNumber` (lib/sts/iso_sts/standard_identification.rb:24) | Mapped |
+| `std-ident/part-number` | `PartNumber` (lib/sts/iso_sts/standard_identification.rb:25) | Mapped |
 | `std-ident/edition` | `Edition` | Present |
-| `std-ident/version` | — | Verify mapping |
+| `std-ident/version` | `Version` (lib/sts/iso_sts/standard_identification.rb:27) | Mapped |
 | `content-language` | `NisoSts::ContentLanguage` | Present |
 | `std-ref[@type]` | `StdRef` | Present |
 | `doc-ref` | `DocRef` | Present |
@@ -42,9 +44,9 @@ Comparing elements found in reference STS XML vs sts-ruby model classes.
 | `permissions/copyright-year` | `CopyrightYear` | Present |
 | `permissions/copyright-holder` | `CopyrightHolder` | Present |
 | `custom-meta-group` | `NisoSts::CustomMetaGroup` | Present |
-| `custom-meta-group/custom-meta` | — | Verify mapping |
-| `custom-meta/meta-name` | — | Verify mapping |
-| `custom-meta/meta-value` | — | Verify mapping |
+| `custom-meta-group/custom-meta` | `CustomMeta` (lib/sts/iso_sts/custom_meta_group.rb:14) | Mapped |
+| `custom-meta/meta-name` | `MetaName` (lib/sts/iso_sts/custom_meta.rb:31) | Mapped |
+| `custom-meta/meta-value` | `MetaValue` (lib/sts/iso_sts/custom_meta.rb:32) | Mapped |
 | `is-proof` | `NisoSts::IsProof` | Present |
 
 ### Body — Sts::IsoSts::Body / Sts::IsoSts::Sec
@@ -98,7 +100,7 @@ Comparing elements found in reference STS XML vs sts-ruby model classes.
 | `tbx:see` | `TbxIsoTml::See` | Present |
 | `tbx:entailedTerm` | `TbxIsoTml::EntailedTerm` | Present |
 | `tbx:subjectField` | `TbxIsoTml::SubjectField` | Present |
-| `tbx:usageNote` | — | Verify mapping |
+| `tbx:usageNote` | `TermInformationGroup#usage_note`, string (lib/sts/tbx_iso_tml/term_information_group.rb:26) | Mapped |
 | `tbx:grammaticalGender` | `TbxIsoTml::GrammaticalGender` | Present |
 | `tbx:grammaticalNumber` | `TbxIsoTml::GrammaticalNumber` | Present |
 | `tbx:pronunciation` | `TbxIsoTml::Pronunciation` | Present |
@@ -143,8 +145,8 @@ Comparing elements found in reference STS XML vs sts-ruby model classes.
 | `inline-formula` | `InlineFormula` | Present |
 | `fn` | `TbxIsoTml::Fn` | Present |
 | `break` | `Break` | Present |
-| `target` | — | Verify mapping |
-| `named-content` | — | Verify mapping |
+| `target` | `Target` class exists (lib/sts/iso_sts/target.rb), but not mapped in `Paragraph` (lib/sts/{iso,niso}_sts/paragraph.rb); dropped on round trip | Gap |
+| `named-content` | `NamedContent` class exists (lib/sts/iso_sts/named_content.rb), but not mapped in `Paragraph` (lib/sts/{iso,niso}_sts/paragraph.rb); dropped on round trip | Gap |
 | `graphic` (inline) | `Graphic` | Present |
 | `mml:math` | `Mathml2::Math` | Present |
 
@@ -173,3 +175,12 @@ Without proper ordered/mixed content support, the text nodes, bold, and xref wou
 3. For each failure: identify the missing/wrong model attribute
 4. Fix the model
 5. Re-run until all pass
+
+## Status (2026-11-20)
+
+CLOSED on the card's own scope, with one dependency follow-up outside this repo.
+
+- Execution order (harness, run, fix, rerun): 17 of 17 reference files round-trip in sts-ruby main (34 examples, 0 failures), as recorded under P3-001.
+- The 14 "Mapped" rows: every `lib/sts/...rb:LINE` reference in this card was read in sts-ruby origin/main (da0c5e6) and in the installed sts 0.6.14 gem; all 14 lines are the `map_element` for the named element, in both. Command: `grep -o 'lib/sts/[a-z_/]*\.rb:[0-9]*' <this card> | sort -u`, then `git show origin/main:<file> | sed -n <line>p`.
+- The 2 gaps (`target`, `named-content` in `Paragraph`): mapped in sts-ruby origin/main (da0c5e6): lib/sts/iso_sts/paragraph.rb:88-89 and lib/sts/niso_sts/paragraph.rb:76-77, commit 7fc8f84. NOT in a release: `git merge-base --is-ancestor 7fc8f84 v0.6.14` fails and `git tag --contains da0c5e6` lists no tag; the installed sts 0.6.14 (the version `metanorma-iso.gemspec` allows, `~> 0.6.14`) has no such mapping and drops both on a round trip: `Sts::IsoSts::Standard.from_xml('<standard><body><sec><p>a <named-content content-type="x">nc</named-content> <target id="t1"/> b</p></sec></body></standard>').to_xml` yields `<p>a   b</p>`.
+- Remaining outside this card: a sts release that includes 7fc8f84, then a dependency bump here (not done: no version bumps in a feature branch). The converter does not emit `target` or `named-content` today, so no output of this repo is affected.

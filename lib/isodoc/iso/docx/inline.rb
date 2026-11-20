@@ -2,6 +2,8 @@
 
 require "uniword"
 require "metanorma/document"
+require "plurimath"
+require "nokogiri"
 
 module IsoDoc
   module Iso
@@ -44,6 +46,8 @@ module IsoDoc
 
         # Render all inline content from a node into a ParagraphBuilder.
         def render(node, para)
+          emit_pending_clause_number(para) if paragraph_block?(node)
+
           if ordered?(node)
             render_ordered_inline(node, para)
           else
@@ -64,6 +68,10 @@ module IsoDoc
         # Stripping applies recursively — autonum carriers wrapped inside
         # other inline elements (e.g. <strong>) are also skipped.
         def render_heading(node, para)
+          render_heading_content(node, para)
+        end
+
+        def render_heading_content(node, para)
           unless strip_autonum_for?(para)
             render(node, para)
             return
@@ -99,10 +107,39 @@ module IsoDoc
           @strip_autonum
         end
 
+        # Run the block with +number+ (and the bookmark +name+ of its
+        # clause) queued for the next paragraph rendered through #render:
+        # an untitled inline-header clause emits no heading paragraph, so
+        # its number leads its first body paragraph instead (the way the
+        # ISO HTML output does). The queue is cleared on exit, so a clause
+        # whose first child is not a paragraph never leaks its number into
+        # a later sibling.
+        def with_clause_number(number, names)
+          previous = @pending_clause_number
+          @pending_clause_number = { number: number, names: names }
+          yield
+        ensure
+          @pending_clause_number = previous
+        end
+
+        # The visible clause number carried by a heading's
+        # <span class="fmt-caption-label">, or nil when it has none.
+        def heading_number_text(node)
+          return unless ordered?(node)
+
+          each_ordered_element(node) do |type, obj|
+            next unless type == :element && caption_label?(obj)
+
+            text = collect_all_text(obj).to_s.strip
+            return text unless text.empty?
+          end
+          nil
+        end
+
         # Whether a heading's body is empty after autonum carriers are
         # stripped. Untitled sub-clauses have <fmt-title> with only the
-        # section number + delimiter — they should skip the heading
-        # paragraph entirely so the body paragraph follows directly.
+        # section number + delimiter — they emit no heading paragraph;
+        # SectionRenderer queues the number onto the first body paragraph.
         def heading_body_empty?(node)
           text = collect_heading_body_text(node)
           text.nil? || text.strip.empty?
@@ -336,6 +373,12 @@ module IsoDoc
 
         def stem_fallback_text(element)
           text = stem_asciimath_text(element)
+          # UnitsML macros are source notation; the MathML carries the
+          # rendered unit in both heading and body stems.
+          if text&.include?("unitsml(")
+            rendered = stem_math_text(element, rendered_unit: true)
+            return rendered if rendered && !rendered.empty?
+          end
           return text if text && !text.empty?
 
           text = stem_math_text(element)
@@ -403,20 +446,86 @@ module IsoDoc
         # Some stems carry only MathML (e.g. table cells whose symbol is a
         # number with a unit row). Convert through Plurimath to a plain
         # AsciiMath text so the cell content survives.
-        def stem_math_text(element)
-          math = attribute_value(element, :math)
+        def stem_math_text(element, rendered_unit: false)
+          math = Array(attribute_value(element, :math)).first
           Array(attribute_value(element, :semx)).each do |child|
-            math ||= attribute_value(child, :math)
+            math ||= Array(attribute_value(child, :math)).first
             break if math
           end
           return nil unless math.is_a?(Lutaml::Model::Serializable)
 
+          unless rendered_unit
+            number = standalone_math_number(math)
+            return number if number
+          end
+
           xml = math.to_xml
           return nil if xml.nil? || xml.strip.empty?
+
+          return unit_mathml_text(xml) if rendered_unit
 
           Plurimath::Mathml::Parser.new(xml).parse.to_asciimath
         rescue StandardError
           nil
+        end
+
+        # Plurimath emits a lone numeric <mn> verbatim. Avoid serializing
+        # and reparsing MathML for each number in large data tables.
+        def standalone_math_number(math)
+          return unless math.is_a?(Mml::V3::Math)
+
+          order = math.element_order
+          return unless order&.one? && order.first.element? && order.first.name == "mn"
+
+          token = math.mn_value.first
+          token_order = token&.element_order
+          return unless token_order&.one? && token_order.first.text?
+
+          values = token.value
+          return unless values&.one?
+
+          value = values.first
+          value if NUMBER_PATTERN.match?(value)
+        end
+
+        # Keep unit scripts and fraction grouping while omitting style markup.
+        # Invisible multiplication separates the value from its unit.
+        def unit_mathml_text(xml)
+          unit_mathml_node_text(Nokogiri::XML(xml).root)
+            .tr("\u2062", " ").gsub(/[[:space:]]+/, " ").strip
+        end
+
+        def unit_mathml_node_text(node)
+          children = node.element_children
+          case node.name
+          when "mi", "mn", "mo", "mtext" then node.text
+          when "mspace" then " "
+          when "annotation", "annotation-xml" then ""
+          when "semantics" then unit_mathml_node_text(children.first)
+          when "msup", "msub", "msubsup" then unit_mathml_script_text(node)
+          when "mfrac"
+            "(#{children.map { |child| unit_mathml_node_text(child) }.join('/')})"
+          else children.map { |child| unit_mathml_node_text(child) }.join
+          end
+        end
+
+        def unit_mathml_script_text(node)
+          base, *scripts = node.element_children
+          text = unit_mathml_node_text(base)
+          text = "(#{text})" if base.name == "mrow" && base.element_children.size > 1
+          scripts.each_with_index do |script, index|
+            subscript = node.name == "msub" || (node.name == "msubsup" && index.zero?)
+            text += unit_mathml_script(unit_mathml_node_text(script), subscript)
+          end
+          text
+        end
+
+        def unit_mathml_script(text, subscript)
+          source = "0123456789+−=()-"
+          target = subscript ? "₀₁₂₃₄₅₆₇₈₉₊₋₌₍₎₋" : "⁰¹²³⁴⁵⁶⁷⁸⁹⁺⁻⁼⁽⁾⁻"
+          return text.tr(source, target) if text.each_char.all? { |char| source.include?(char) }
+
+          "#{subscript ? '_' : '^'}(#{text})"
         end
 
         def collect_callout_text(callout)
@@ -462,32 +571,113 @@ module IsoDoc
           return collect_all_text(paragraph) unless ordered?(paragraph)
 
           segments = []
+          twins = fmt_stem_source_ids(paragraph)
           each_ordered_element(paragraph) do |type, obj|
             case type
             when :text then segments << obj.to_s
             when :element
-              segments << (stem_asciimath_text(obj) || collect_all_text(obj))
+              next if fmt_twin_of_stem?(obj, twins)
+
+              segments << footnote_element_text(obj)
             end
           end
           segments.join
+        end
+
+        # A stem's asciimath, except that a UnitsML macro is source
+        # notation: the rendered unit is what the reader should see.
+        def footnote_element_text(element)
+          text = stem_asciimath_text(element)
+          return collect_all_text(element) unless text
+          return text unless text.include?("unitsml(")
+
+          stem_fallback_text(element)
         end
 
         # Create a footnote whose body paragraph carries the
         # FootnoteText style, so the body text matches the Era C
         # template's footnote typography rather than the document
         # default.
-        def build_footnote_with_style(text)
+        # +closing+ is the presentation label's closing delimiter (the ")" of
+        # ISO's "1)" footnote label). Word supplies the number through the
+        # footnoteRef marker; the delimiter follows it in the same
+        # superscript style, as the PDF lays the label out.
+        def build_footnote_with_style(text, closing: nil)
           style = @resolver.paragraph_style(:footnote_text)
-          @doc.footnote do |p|
+          run = @doc.footnote do |p|
             p.style = style if style
             p << text
           end
+          finish_footnote_body(@doc.model.footnotes.footnote_entries.last, closing)
+          run
+        end
+
+        # The builder prepends the number marker as the paragraph's first
+        # run, ahead of w:pPr, and leaves it in the body style. Put w:pPr
+        # first (CT_P order), superscript the marker with the template's
+        # FootnoteReference style, and append the label delimiter.
+        def finish_footnote_body(entry, closing)
+          para = entry.paragraphs.first
+          order = para.element_order
+          if order.is_a?(Array) && (ppr = order.find { |e| e.name == "pPr" })
+            order.delete(ppr)
+            order.unshift(ppr)
+          end
+          marker = para.runs.first
+          apply_run_char_style(marker, :footnote_reference)
+          add_footnote_closing(para, order, closing) if closing
+        end
+
+        def add_footnote_closing(para, order, closing)
+          closing_run = Uniword::Wordprocessingml::Run.new(text: closing)
+          apply_run_char_style(closing_run, :footnote_reference)
+          gap = Uniword::Wordprocessingml::Run.new(text: " ")
+          para.runs.insert(1, closing_run, gap)
+          return unless order.is_a?(Array)
+
+          at = order.index { |e| e.name == "r" }.to_i + 1
+          2.times { order.insert(at, Lutaml::Xml::Element.new("Element", "r")) }
         end
 
         def lookup_comment_id(annotation_target_id)
           return nil unless @comment_id_lookup
 
           @comment_id_lookup.call(annotation_target_id)
+        end
+
+        # Whether an untitled clause's number is still queued.
+        def pending_clause_number?
+          !@pending_clause_number.nil?
+        end
+
+        # Emit the queued clause number into +para+ (no-op when none is
+        # queued) and drop the queue. Used by renderers that build their
+        # paragraphs without going through #render (split paragraphs).
+        def emit_pending_clause_number(para)
+          pending = @pending_clause_number
+          return unless pending
+
+          @pending_clause_number = nil
+          emit_clause_number(para, pending[:number], pending[:names])
+        end
+
+        # Emit "<number><tab>" as bold runs wrapped in the bookmarks +names+
+        # (when given): the clause-number lead used on a paragraph. With
+        # no +number+ the bookmarks are emitted alone, as empty ranges.
+        def emit_clause_number(para, number, names)
+          bm_ids = Array(names).compact.map do |name|
+            bm_id = @context.next_bookmark_id.to_s
+            para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, name: name)
+            bm_id
+          end
+          if number
+            number_run = bold_clause_run(text: number)
+            # Templates without the :clause_number mapping (ISO Simple) keep bold only.
+            apply_run_char_style(number_run, :clause_number)
+            para << number_run
+            para << bold_clause_run(tab: Uniword::Wordprocessingml::Tab.new)
+          end
+          bm_ids.reverse_each { |id| para << Uniword::Wordprocessingml::BookmarkEnd.new(id: id) }
         end
 
         private
@@ -558,6 +748,24 @@ module IsoDoc
           end
         end
 
+        # ── Clause number on an untitled clause's first paragraph ─────
+
+        def paragraph_block?(node)
+          node.is_a?(Metanorma::Document::Components::Paragraphs::ParagraphBlock)
+        end
+
+        def caption_label?(element)
+          element.is_a?(Metanorma::Document::Components::Inline::SpanElement) &&
+            element.class_attr == "fmt-caption-label"
+        end
+
+        def bold_clause_run(**attrs)
+          run = Uniword::Wordprocessingml::Run.new(**attrs)
+          run.properties = Uniword::Wordprocessingml::RunProperties.new
+          apply_bold_to_run(run)
+          run
+        end
+
         # ── Heading rendering (autonum stripping) ─────────────────────
 
         def render_heading_ordered(node, para)
@@ -576,11 +784,25 @@ module IsoDoc
           case type
           when :text then para << obj
           when :element
+            return render_delim_breaks(obj, para) if caption_delim?(obj)
             return if autonum_carrier?(obj)
             return if fmt_twin_of_stem?(obj, twins)
 
             dispatch_inline(obj, para)
           end
+        end
+
+        def caption_delim?(element)
+          element.is_a?(Metanorma::Document::Components::Inline::SpanElement) &&
+            element.class_attr == "fmt-caption-delim"
+        end
+
+        # The delimiter after a numbered heading's label is a tab the
+        # style's numbering suffix already supplies, so it is dropped. An
+        # annex heading's delimiter is soft breaks (obligation line, gap,
+        # title) that nothing else supplies: keep them (metanorma-iso#1728).
+        def render_delim_breaks(delim, para)
+          Array(delim.br).each { |br| dispatch_inline(br, para) }
         end
 
         # Collect body text from a heading, skipping autonum carriers.

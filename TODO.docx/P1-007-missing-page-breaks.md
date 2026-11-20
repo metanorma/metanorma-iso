@@ -1,11 +1,13 @@
 ---
 title: 108-003 - Add page breaks before Contents, Foreword, Introduction
 priority: P1
-status: open
+status: done
 depends_on: [108-001]
 ---
 
 # 108-003: Add Page Breaks Before Contents, Foreword, Introduction
+
+Verified by `spec/isodoc/docx/preface_page_breaks_spec.rb` through `Processor#output(..., :docx)` on `spec/fixtures/iso/is/document-en.dis.presentation.xml`: the existing renderer supplies all three preface breaks, five annex breaks, and the ninth boundary through BiblioTitle's `pageBreakBefore`; no renderer change is needed.
 
 ## Problem
 

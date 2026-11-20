@@ -24,5 +24,8 @@ User reports `rice-dis-output-latest.docx` won't open in Word.
 1. Remove `docProps/custom.xml` and its content type override
 2. Test opening after each removal to isolate the cause
 
-## Status
-Requires user testing to confirm which specific Word error message appears. The file is structurally valid per OOXML spec — this may be a Word-specific issue rather than a spec violation.
+## Status: DONE (verified in Microsoft Word, 2026-11-19)
+
+## Verification (2026-11-19)
+- rice.presentation.xml rendered to DOCX at ac2393fb (lane/1728-cards-batch4), opened in Microsoft Word read-only: no "unreadable content" or repair dialog.
+- Table of contents entries clicked in Word jump to their headings.

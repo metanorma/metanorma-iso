@@ -79,7 +79,7 @@ module Metanorma
 
             ::Sts::NisoSts::Paragraph.new(id: first_id) do |p|
               paragraphs.each do |para|
-                paragraph_transformer.entries_for(para).each do |kind, value|
+                paragraph_transformer.entries_for(para, inline_std: true).each do |kind, value|
                   append_inline(p, kind, value)
                 end
               end
@@ -121,6 +121,7 @@ module Metanorma
             when :monospace then target.monospace value
             when :inline_formula then target.inline_formula value
             when :xref then target.xref value
+            when :std then target.std value
             when :ext_link then target.ext_link value
             when :fn then target.fn value
             end

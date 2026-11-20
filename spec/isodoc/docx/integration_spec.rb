@@ -286,7 +286,7 @@ RSpec.describe "DOCX integration", type: :integration do
 
       doc = extract_docx_xml(path, "word/document.xml")
 
-      hyperlink_el = doc.at_xpath("//w:hyperlink", ns)
+      hyperlink_el = doc.at_xpath("//w:hyperlink[not(@w:anchor)]", ns) # TOC entries are internal anchor links
       expect(hyperlink_el).not_to be_nil
 
       styled_run = hyperlink_el.at_xpath(".//w:r[w:rPr/w:rStyle[@w:val='Hyperlink']]", ns)
@@ -304,7 +304,7 @@ RSpec.describe "DOCX integration", type: :integration do
       INNER
 
       doc = extract_docx_xml(path, "word/document.xml")
-      hyperlink_el = doc.at_xpath("//w:hyperlink", ns)
+      hyperlink_el = doc.at_xpath("//w:hyperlink[not(@w:anchor)]", ns) # TOC entries are internal anchor links
       expect(hyperlink_el).not_to be_nil
       rid = hyperlink_el["r:id"]
       expect(rid).not_to be_nil
@@ -424,7 +424,7 @@ RSpec.describe "DOCX integration", type: :integration do
       expect(num_ids.uniq).to include("3")
     end
 
-    it "ordered arabic list uses decimal numId" do
+    it "ordered arabic list without presentation label falls back to decimal numId" do
       path = generate_docx(<<~INNER)
         <sections>
           <clause id="s1">
@@ -442,7 +442,7 @@ RSpec.describe "DOCX integration", type: :integration do
       expect(num_ids.uniq).to include("1")
     end
 
-    it "ordered alpha list uses decimal numId" do
+    it "ordered alpha list without presentation label falls back to decimal numId" do
       path = generate_docx(<<~INNER)
         <sections>
           <clause id="s1">
@@ -458,6 +458,29 @@ RSpec.describe "DOCX integration", type: :integration do
       doc = extract_docx_xml(path, "word/document.xml")
       num_ids = doc.xpath("//w:numPr/w:numId/@w:val", ns).map(&:to_s)
       expect(num_ids.uniq).to include("1")
+    end
+
+    it "presentation-labelled ordered list uses literal label plus tab, no numPr" do
+      lab = ->(l) { "<fmt-name><semx element=\"autonum\" source=\"x\">#{l}</semx><span class=\"fmt-label-delim\">)</span></fmt-name>" }
+      path = generate_docx(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <ol type="alphabet">
+              <li>#{lab.call('a')}<p>Item a</p></li>
+              <li>#{lab.call('b')}<p>Item b</p></li>
+            </ol>
+          </clause>
+        </sections>
+      INNER
+
+      doc = extract_docx_xml(path, "word/document.xml")
+      paras = doc.xpath("//w:p[w:pPr/w:pStyle/@w:val='ListNumber1']", ns)
+      shapes = paras.map do |p|
+        p.xpath(".//w:t | .//w:tab", ns).map { |n| n.name == "tab" ? "<TAB>" : n.text }.join
+      end
+      expect(shapes).to eq(["a)<TAB>Item a", "b)<TAB>Item b"])
+      expect(paras.map { |p| p.at_xpath("w:pPr/w:numPr", ns) }).to all(be_nil)
     end
   end
 
@@ -509,6 +532,21 @@ RSpec.describe "DOCX integration", type: :integration do
       expect(intro_title).not_to be_nil
     end
 
+    it "a body note's second paragraph uses Notecontinued, not an indented style" do
+      path = generate_docx(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <note id="n1"><fmt-name>NOTE</fmt-name><p>First.</p><p>Second.</p></note>
+          </clause>
+        </sections>
+      INNER
+
+      doc = extract_docx_xml(path, "word/document.xml")
+      styles = doc.xpath("//w:p[contains(., 'First.') or contains(., 'Second.')]/w:pPr/w:pStyle/@w:val", ns).map(&:value)
+      expect(styles).to eq(%w[Note Notecontinued])
+    end
+
     it "note runs the label inline with the body (XSL contract, no Era C box)" do
       path = generate_docx(<<~INNER)
         <sections>
@@ -521,7 +559,7 @@ RSpec.describe "DOCX integration", type: :integration do
 
       doc = extract_docx_xml(path, "word/document.xml")
       box_begin = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Box-begin']]", ns)
-      note_para = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Noteindent']]", ns)
+      note_para = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Note']]", ns)
       box_end = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Box-end']]", ns)
       expect(box_begin).to be_nil, "notes must not be wrapped in Box-begin"
       expect(box_end).to be_nil, "notes must not be wrapped in Box-end"

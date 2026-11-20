@@ -149,3 +149,18 @@ end
 - [ ] Each transformer has unit tests covering happy path and edge cases
 - [ ] At least 3 end-to-end tests with real documents
 - [ ] All tests pass in CI (`bundle exec rake`)
+
+## Status (2026-11-20)
+
+Phase 1 DONE: spec/round_trip/reference_docs_spec.rb exists in sts-ruby main and passes (34 examples, 0 failures; 17 files).
+
+Phase 2, measured on this branch:
+
+- Transformer files: 30 in lib/metanorma/iso/sts/transformer. 27 have a spec of the same name in spec/sts/transformer/ (28 spec files there; this change adds 7: footnote_collector, id_generator, nbsp_processor, provision_index, rendered_text_extractor, source_document, source_order). The other 3 are specified under a different file name: document_transformer in spec/sts/transformer/transformer_spec.rb:19, model_builder in spec/sts/std_meta_spec.rb:72 and :97, requirement_transformer in spec/sts/requirement_table_spec.rb:14.
+- The spec file names in the "Test Architecture" tree above (cross_ref_transformer_spec, bib_ref_transformer_spec, footnote_transformer_spec) were never created under those names; xref and eref handling sit in inline_transformer and reference_transformer and are specified there.
+- Happy path and edge cases for the 7 new specs: 72 examples, 0 failures, 1 pending (`bundle exec rspec` on those 8 files, with sts_schema_validation_spec from P3-004). The pending example is a real defect in `NbspProcessor`: the "Note N to entry" rule never fires, because the NOTE rule runs first and `\s` does not match U+00A0 (`"Note 1 to entry"` becomes `"Note\u00A01 to entry"`). Not fixed here (lib/ is outside this change).
+- End-to-end tests: 2 run, not 3. spec/sts/calendar_notation_e2e_a_spec.rb and spec/sts/sts_e2e_b_spec.rb convert a whole Metanorma XML document to STS (25 examples, 0 failures, 2 pending known gaps in the second). Both inputs are invented documents written for the spec, not ISO reference documents. spec/sts/rice_e2e_spec.rb is excluded by `--tag ~rice_e2e` in .rspec and its input spec/examples/rice.xml is gitignored and absent from a fresh checkout, so it contributes 0 examples. The iso_8601_1 input/expected pair was not created.
+- Found while checking the rice route: converting the public spec/examples/rice.presentation.xml raises `NoMethodError: undefined method 'ul' for ... AdmonitionBlock` at lib/metanorma/iso/sts/transformer/note_transformer.rb:93 (`extract_lists`). Reproduce: `Metanorma::Iso::Sts.convert(File.read("spec/examples/rice.presentation.xml"))`.
+- Full-suite CI status on this branch: NOT RUN here.
+
+Remaining: a third real-document end-to-end test (needs the rice crash fixed, or a public ISO document); the NbspProcessor rule fix.

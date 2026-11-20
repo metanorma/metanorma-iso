@@ -1,0 +1,1164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metanorma xmlns="https://www.metanorma.org/ns/standoc" type="presentation" version="3.5.0" schema-version="v2.2.0" flavor="iso">
+<bibdata type="standard">
+<title language="en" type="main">Petroleum products — Fuels (class F) — Considerations for fuel suppliers and users regarding marine fuel quality in view of the implementation of maximum 0,50 % sulfur in 2020</title>
+
+<title language="en" type="title-intro">Petroleum products — Fuels (class F)</title>
+
+<title language="en" type="title-main">Considerations for fuel suppliers and users regarding marine fuel quality in view of the implementation of maximum 0,50 % sulfur in 2020</title>
+
+<title language="fr" type="main">Produits pétroliers — Combustibles (classe F) — Considérations à l’usage des fournisseurs de combustibles et des utilisateurs pour la qualité des combustibles pour la marine en vue de la mise en application de la teneur maximale en soufre de 0,50 % en 2020</title>
+
+<title language="fr" type="title-intro">Produits pétroliers — Combustibles (classe F)</title>
+
+<title language="fr" type="title-main">Considérations à l’usage des fournisseurs de combustibles et des utilisateurs pour la qualité des combustibles pour la marine en vue de la mise en application de la teneur maximale en soufre de 0,50 % en 2020</title>
+<docidentifier type="ISO" primary="true">ISO/FDPAS 23263:2019</docidentifier><docidentifier type="iso-reference">ISO/FDPAS 23263:2019(E)</docidentifier><docidentifier type="URN">urn:iso:std:iso:pas:23263:stage-50.60:en</docidentifier><docidentifier type="iso-undated">ISO/FDPAS 23263</docidentifier><docidentifier type="iso-with-lang">ISO/FDPAS 23263:2019(en)</docidentifier><docidentifier type="iso-tc">23263</docidentifier><docnumber>23263</docnumber><date type="published"><on>2019-09</on></date><date type="circulated"/><date type="updated"/><contributor><role type="author"/><organization>
+<name>International Organization for Standardization</name>
+<abbreviation>ISO</abbreviation></organization></contributor><contributor><role type="author"><description>committee</description></role><organization>
+<name>International Organization for Standardization</name>
+<subdivision type="Technical committee" subtype="TC">
+<name>Petroleum and related products, fuels and lubricants from natural or synthetic sources</name>
+<identifier id="_8445568a-a24b-4c3e-74a3-4fae045bf2f8">TC 28</identifier><fmt-identifier><tt><semx element="identifier" source="_8445568a-a24b-4c3e-74a3-4fae045bf2f8">TC 28</semx></tt></fmt-identifier><identifier type="full" id="_cfa9b9c5-3733-9c76-e8fb-1745aba6aa02">TC 28/SC 4</identifier><fmt-identifier><tt><semx element="identifier" source="_cfa9b9c5-3733-9c76-e8fb-1745aba6aa02">TC 28/SC 4</semx></tt></fmt-identifier></subdivision><subdivision type="Subcommittee" subtype="SC">
+<name>Classifications and specifications</name>
+<identifier id="_658609ae-fc6d-6696-5f34-5d35f6d037d7">SC 4</identifier><fmt-identifier><tt><semx element="identifier" source="_658609ae-fc6d-6696-5f34-5d35f6d037d7">SC 4</semx></tt></fmt-identifier></subdivision><abbreviation>ISO</abbreviation></organization></contributor><contributor><role type="authorizer"><description>Agency</description></role><organization>
+<name>International Organization for Standardization</name>
+<abbreviation>ISO</abbreviation></organization></contributor><contributor><role type="author"><description>secretariat</description></role><organization>
+<name>International Organization for Standardization</name>
+<subdivision type="Secretariat">
+<name>SAC</name>
+</subdivision><abbreviation>ISO</abbreviation></organization></contributor><contributor><role type="publisher"/><organization>
+<name>International Organization for Standardization</name>
+<abbreviation>ISO</abbreviation></organization></contributor><contributor><role type="authorizer"><description>committee</description></role><organization>
+<name>International Organization for Standardization</name>
+<subdivision type="Technical committee" subtype="TC">
+<name>Petroleum and related products, fuels and lubricants from natural or synthetic sources</name>
+<identifier id="_75f5da4e-9e14-91cf-1f04-eeec0e347a86">TC 28</identifier><fmt-identifier><tt><semx element="identifier" source="_75f5da4e-9e14-91cf-1f04-eeec0e347a86">TC 28</semx></tt></fmt-identifier><identifier type="full" id="_1fa8e32f-f367-cc87-b118-844f95bcfde5">TC 28/SC 4</identifier><fmt-identifier><tt><semx element="identifier" source="_1fa8e32f-f367-cc87-b118-844f95bcfde5">TC 28/SC 4</semx></tt></fmt-identifier></subdivision><subdivision type="Subcommittee" subtype="SC">
+<name>Classifications and specifications</name>
+<identifier id="_7b3eb9bd-1e2e-0efb-d932-709e488970f6">SC 4</identifier><fmt-identifier><tt><semx element="identifier" source="_7b3eb9bd-1e2e-0efb-d932-709e488970f6">SC 4</semx></tt></fmt-identifier></subdivision><abbreviation>ISO</abbreviation></organization></contributor><edition language="">1</edition><edition language="en">first edition</edition><language current="true">en</language><script current="true">Latn</script><status><stage abbreviation="FDPAS" language="">50</stage><stage abbreviation="FDPAS" language="en">Final Draft Publicly Available Specification</stage><stage abbreviation="FDPAS" language="en" type="firstpage">FINAL DRAFT Publicly Available Specification</stage><stage abbreviation="FDPAS" language="en" type="coverpage">FINAL DRAFT<br/>Publicly Available Specification</stage><substage>60</substage></status><copyright><from>2019</from><owner><organization>
+<name>International Organization for Standardization</name>
+<abbreviation>ISO</abbreviation></organization></owner></copyright><ext><doctype language="">publicly-available-specification</doctype><doctype language="en">Publicly Available Specification</doctype><flavor>iso</flavor><ics><code>75.160.20</code><text>Liquid fuels</text></ics><structuredidentifier><project-number>ISO 23263</project-number></structuredidentifier><stagename abbreviation="FDPAS">Publicly Available Specification Final Draft</stagename></ext></bibdata><localized-strings><localized-string key="term_def_boilerplate" language="en">ISO and IEC maintain terminology databases for use in
+standardization at the following addresses:
+
+* ISO Online browsing platform: available at https://www.iso.org/obp[]
+* IEC Electropedia: available at https://www.electropedia.org[]
+</localized-string><localized-string key="scope" language="en">Scope</localized-string><localized-string key="symbolsabbrev" language="en">Symbols and abbreviated terms</localized-string><localized-string key="abbrev" language="en">Abbreviated terms</localized-string><localized-string key="symbols" language="en">Symbols</localized-string><localized-string key="table_of_contents" language="en">Contents</localized-string><localized-string key="introduction" language="en">Introduction</localized-string><localized-string key="foreword" language="en">Foreword</localized-string><localized-string key="abstract" language="en">Abstract</localized-string><localized-string key="acknowledgements" language="en">Acknowledgements</localized-string><localized-string key="executivesummary" language="en">Executive summary</localized-string><localized-string key="termsdef" language="en">Terms and definitions</localized-string><localized-string key="termsdefsymbolsabbrev" language="en">Terms, definitions, symbols and abbreviated terms</localized-string><localized-string key="termsdefsymbols" language="en">Terms, definitions and symbols</localized-string><localized-string key="termsdefabbrev" language="en">Terms, definitions and abbreviated terms</localized-string><localized-string key="normref" language="en">Normative references</localized-string><localized-string key="bibliography" language="en">Bibliography</localized-string><localized-string key="index" language="en">Index</localized-string><localized-string key="see" language="en">see</localized-string><localized-string key="see_also" language="en">see also</localized-string><localized-string key="preface" language="en">Preface</localized-string><localized-string key="section" language="en">Section</localized-string><localized-string key="clause" language="en">Clause</localized-string><localized-string key="annex" language="en">Annex</localized-string><localized-string key="appendix" language="en">Appendix</localized-string><localized-string key="continued" language="en">continued</localized-string><localized-string key="no_terms_boilerplate" language="en">No terms and definitions are listed in this document.
+</localized-string><localized-string key="internal_terms_boilerplate" language="en">For the purposes of this document, the following terms and definitions apply.
+</localized-string><localized-string key="norm_with_refs_pref" language="en">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</localized-string><localized-string key="norm_empty_pref" language="en">There are no normative references in this document.</localized-string><localized-string key="external_terms_boilerplate" language="en">For the purposes of this document, the terms and definitions given in % apply.
+</localized-string><localized-string key="internal_external_terms_boilerplate" language="en">For the purposes of this document, the terms and definitions given in % and the following apply.
+</localized-string><localized-string key="no_information_available" language="en">[NO INFORMATION AVAILABLE]</localized-string><localized-string key="term_defined_in" language="en">(%)</localized-string><localized-string key="binary_and" language="en">%1 <conn>and</conn> %2</localized-string><localized-string key="multiple_and" language="en">%1 <span class="fmt-conn">and</span> %2</localized-string><localized-string key="binary_or" language="en">%1 <conn>or</conn> %2</localized-string><localized-string key="multiple_or" language="en">%1 <span class="fmt-conn">or</span> %2</localized-string><localized-string key="chain_and" language="en">%1 <conn>and</conn> %2</localized-string><localized-string key="chain_or" language="en">%1 <conn>or</conn> %2</localized-string><localized-string key="chain_from" language="en">%1 <conn>from</conn> %2</localized-string><localized-string key="chain_to" language="en">%1 <conn>to</conn> %2</localized-string><localized-string key="nested_xref" language="en">%1<comma>,</comma> %2</localized-string><localized-string key="list_nested_xref" language="en">%1 %2</localized-string><localized-string key="SpelloutRules" language="en">spellout-ordinal</localized-string><localized-string key="OrdinalRules" language="en">digits-ordinal</localized-string><localized-string key="note" language="en">NOTE</localized-string><localized-string key="note_xref" language="en">Note</localized-string><localized-string key="termnote" language="en">Note % to entry</localized-string><localized-string key="para_xref" language="en">Paragraph</localized-string><localized-string key="list" language="en">List</localized-string><localized-string key="deflist" language="en">Definition List</localized-string><localized-string key="figure" language="en">Figure</localized-string><localized-string key="diagram" language="en">Diagram</localized-string><localized-string key="formula" language="en">Formula</localized-string><localized-string key="inequality" language="en">Formula</localized-string><localized-string key="table" language="en">Table</localized-string><localized-string key="requirement" language="en">Requirement</localized-string><localized-string key="recommendation" language="en">Recommendation</localized-string><localized-string key="permission" language="en">Permission</localized-string><localized-string key="box" language="en">Box</localized-string><localized-string key="no_identifier" language="en">(NO ID)</localized-string><localized-string key="recommendationtest" language="en">Recommendation test</localized-string><localized-string key="requirementtest" language="en">Requirement test</localized-string><localized-string key="permissiontest" language="en">Permission test</localized-string><localized-string key="recommendationclass" language="en">Recommendations class</localized-string><localized-string key="requirementclass" language="en">Requirements class</localized-string><localized-string key="permissionclass" language="en">Permissions class</localized-string><localized-string key="abstracttest" language="en">Abstract test</localized-string><localized-string key="conformanceclass" language="en">Conformance class</localized-string><localized-string key="key" language="en">Key</localized-string><localized-string key="example" language="en">EXAMPLE</localized-string><localized-string key="example_xref" language="en">Example</localized-string><localized-string key="where" language="en">where</localized-string><localized-string key="where_one" language="en">where</localized-string><localized-string key="wholeoftext" language="en">Whole of text</localized-string><localized-string key="draft_label" language="en">draft</localized-string><localized-string key="inform_annex" language="en">informative</localized-string><localized-string key="norm_annex" language="en">normative</localized-string><localized-string key="modified" language="en">modified</localized-string><localized-string key="adapted" language="en">adapted</localized-string><localized-string key="deprecated" language="en">DEPRECATED</localized-string><localized-string key="source" language="en">SOURCE</localized-string><localized-string key="and" language="en">and</localized-string><localized-string key="all_parts" language="en">All Parts</localized-string><localized-string key="edition_ordinal" language="en">{{ var1 | ordinal_word: '', '' }} edition</localized-string><localized-string key="edition_cardinal" language="en">edition {{ var1 }}</localized-string><localized-string key="edition" language="en">edition</localized-string><localized-string key="version" language="en">version</localized-string><localized-string key="toc_figures" language="en">List of figures</localized-string><localized-string key="toc_tables" language="en">List of tables</localized-string><localized-string key="toc_recommendations" language="en">List of recommendations</localized-string><localized-string key="toc_examples" language="en">List of examples</localized-string><localized-string key="month_january" language="en">January</localized-string><localized-string key="month_february" language="en">February</localized-string><localized-string key="month_march" language="en">March</localized-string><localized-string key="month_april" language="en">April</localized-string><localized-string key="month_may" language="en">May</localized-string><localized-string key="month_june" language="en">June</localized-string><localized-string key="month_july" language="en">July</localized-string><localized-string key="month_august" language="en">August</localized-string><localized-string key="month_september" language="en">September</localized-string><localized-string key="month_october" language="en">October</localized-string><localized-string key="month_november" language="en">November</localized-string><localized-string key="month_december" language="en">December</localized-string><localized-string key="obligation" language="en">Obligation</localized-string><localized-string key="admonition.danger" language="en">Danger</localized-string><localized-string key="admonition.warning" language="en">Warning</localized-string><localized-string key="admonition.caution" language="en">Caution</localized-string><localized-string key="admonition.important" language="en">Important</localized-string><localized-string key="admonition.safety_precautions" language="en">Safety Precautions</localized-string><localized-string key="admonition.editorial" language="en">Editorial Note</localized-string><localized-string key="title_prefixes.part" language="en">Part {{ var1 }}</localized-string><localized-string key="title_prefixes.amendment" language="en">AMENDMENT {{ var1 }}</localized-string><localized-string key="title_prefixes.corrigendum" language="en">TECHNICAL CORRIGENDUM {{ var1 }}</localized-string><localized-string key="title_prefixes.addendum" language="en">ADDENDUM {{ var1 }}</localized-string><localized-string key="title_prefixes.supplement" language="en">SUPPLEMENT {{ var1 }}</localized-string><localized-string key="title_prefixes.annex" language="en">Annex {{ var1 }}</localized-string><localized-string key="title_prefixes.appendix" language="en">Appendix {{ var1 }}</localized-string><localized-string key="title_prefixes.extract" language="en">EXTRACT {{ var1 }}</localized-string><localized-string key="locality.section" language="en">Section</localized-string><localized-string key="locality.clause" language="en">Clause</localized-string><localized-string key="locality.definition" language="en">Definition</localized-string><localized-string key="locality.part" language="en">Part</localized-string><localized-string key="locality.paragraph" language="en">Paragraph</localized-string><localized-string key="locality.chapter" language="en">Chapter</localized-string><localized-string key="locality.page" language="en">Page</localized-string><localized-string key="locality.table" language="en">Table</localized-string><localized-string key="locality.annex" language="en">Annex</localized-string><localized-string key="locality.figure" language="en">Figure</localized-string><localized-string key="locality.example" language="en">Example</localized-string><localized-string key="locality.note" language="en">Note</localized-string><localized-string key="locality.formula" language="en">Formula</localized-string><localized-string key="locality.appendix" language="en">Appendix</localized-string><localized-string key="grammar_abbrevs.masculine" language="en">m</localized-string><localized-string key="grammar_abbrevs.feminine" language="en">f</localized-string><localized-string key="grammar_abbrevs.neuter" language="en">n</localized-string><localized-string key="grammar_abbrevs.common" language="en">common</localized-string><localized-string key="grammar_abbrevs.singular" language="en">sg</localized-string><localized-string key="grammar_abbrevs.dual" language="en">dual</localized-string><localized-string key="grammar_abbrevs.pl" language="en">pl</localized-string><localized-string key="grammar_abbrevs.isPreposition" language="en">prep</localized-string><localized-string key="grammar_abbrevs.isParticiple" language="en">part</localized-string><localized-string key="grammar_abbrevs.isAdjective" language="en">adj</localized-string><localized-string key="grammar_abbrevs.isAdverb" language="en">adv</localized-string><localized-string key="grammar_abbrevs.isNoun" language="en">noun</localized-string><localized-string key="grammar_abbrevs.isVerb" language="en">verb</localized-string><localized-string key="relatedterms.deprecates" language="en">deprecates</localized-string><localized-string key="relatedterms.supersedes" language="en">supersedes</localized-string><localized-string key="relatedterms.narrower" language="en">narrower</localized-string><localized-string key="relatedterms.broader" language="en">broader</localized-string><localized-string key="relatedterms.equivalent" language="en">equivalent</localized-string><localized-string key="relatedterms.compare" language="en">compare</localized-string><localized-string key="relatedterms.contrast" language="en">contrast</localized-string><localized-string key="relatedterms.see" language="en">see</localized-string><localized-string key="relatedterms.seealso" language="en">see also</localized-string><localized-string key="Clause.sg" language="en">Clause</localized-string><localized-string key="Clause.pl" language="en">Clauses</localized-string><localized-string key="Definition.sg" language="en">Definition</localized-string><localized-string key="Definition.pl" language="en">Definitions</localized-string><localized-string key="Annex.sg" language="en">Annex</localized-string><localized-string key="Annex.pl" language="en">Annexes</localized-string><localized-string key="Appendix.sg" language="en">Appendix</localized-string><localized-string key="Appendix.pl" language="en">Appendixes</localized-string><localized-string key="Note.sg" language="en">Note</localized-string><localized-string key="Note.pl" language="en">Notes</localized-string><localized-string key="Note_%_to_entry.sg" language="en">Note % to entry</localized-string><localized-string key="Note_%_to_entry.pl" language="en">Notes % to entry</localized-string><localized-string key="List.sg" language="en">List</localized-string><localized-string key="List.pl" language="en">Lists</localized-string><localized-string key="Figure.sg" language="en">Figure</localized-string><localized-string key="Figure.pl" language="en">Figures</localized-string><localized-string key="Formula.sg" language="en">Formula</localized-string><localized-string key="Formula.pl" language="en">Formulas</localized-string><localized-string key="Table.sg" language="en">Table</localized-string><localized-string key="Table.pl" language="en">Tables</localized-string><localized-string key="Requirement.sg" language="en">Requirement</localized-string><localized-string key="Requirement.pl" language="en">Requirements</localized-string><localized-string key="Recommendation.sg" language="en">Recommendation</localized-string><localized-string key="Recommendation.pl" language="en">Recommendations</localized-string><localized-string key="Permission.sg" language="en">Permission</localized-string><localized-string key="Permission.pl" language="en">Permissions</localized-string><localized-string key="Example.sg" language="en">Example</localized-string><localized-string key="Example.pl" language="en">Examples</localized-string><localized-string key="Part.sg" language="en">Part</localized-string><localized-string key="Part.pl" language="en">Parts</localized-string><localized-string key="Section.sg" language="en">Section</localized-string><localized-string key="Section.pl" language="en">Sections</localized-string><localized-string key="Paragraph.sg" language="en">Paragraph</localized-string><localized-string key="Paragraph.pl" language="en">Paragraphs</localized-string><localized-string key="Chapter.sg" language="en">Chapter</localized-string><localized-string key="Chapter.pl" language="en">Chapters</localized-string><localized-string key="Page.sg" language="en">Page</localized-string><localized-string key="Page.pl" language="en">Pages</localized-string><localized-string key="Provision.sg" language="en">Provision</localized-string><localized-string key="Provision.pl" language="en">Provisions</localized-string><localized-string key="Statement.sg" language="en">Statement</localized-string><localized-string key="Statement.pl" language="en">Statements</localized-string><localized-string key="Descriptor.sg" language="en">Descriptor</localized-string><localized-string key="Descriptor.pl" language="en">Descriptors</localized-string><localized-string key="Reference.sg" language="en">Reference</localized-string><localized-string key="Reference.pl" language="en">References</localized-string><localized-string key="punct.colon" language="en">:</localized-string><localized-string key="punct.comma" language="en">,</localized-string><localized-string key="punct.enum-comma" language="en">,</localized-string><localized-string key="punct.semicolon" language="en">;</localized-string><localized-string key="punct.period" language="en">.</localized-string><localized-string key="punct.close-paren" language="en">)</localized-string><localized-string key="punct.open-paren" language="en">(</localized-string><localized-string key="punct.close-bracket" language="en">]</localized-string><localized-string key="punct.open-bracket" language="en">[</localized-string><localized-string key="punct.question-mark" language="en">?</localized-string><localized-string key="punct.exclamation-mark" language="en">!</localized-string><localized-string key="punct.em-dash" language="en">—</localized-string><localized-string key="punct.en-dash" language="en">–</localized-string><localized-string key="punct.number-en-dash" language="en">–</localized-string><localized-string key="punct.open-quote" language="en">“</localized-string><localized-string key="punct.close-quote" language="en">”</localized-string><localized-string key="punct.open-nested-quote" language="en">‘</localized-string><localized-string key="punct.close-nested-quote" language="en">’</localized-string><localized-string key="punct.ellipse" language="en">…</localized-string><localized-string key="all_rights_reserved" language="en">All rights reserved</localized-string><localized-string key="reference_number" language="en">Reference number</localized-string><localized-string key="reference_number_abbrev" language="en">Ref. No.</localized-string><localized-string key="price_based_on" language="en">Price based on % pages</localized-string><localized-string key="price" language="en">Price</localized-string><localized-string key="date_first_printing" language="en">Date of the first printing</localized-string><localized-string key="date_printing" language="en">Date of the {{ var1 | ordinal_word: '', '' }} printing</localized-string><localized-string key="descriptor" language="en">Descriptor</localized-string><localized-string key="reference" language="en">Reference</localized-string><localized-string key="under_preparation" language="en">Under preparation. Stage at the time of publication: %.</localized-string><localized-string key="withdrawn" language="en">Withdrawn.</localized-string><localized-string key="cancelled_and_replaced" language="en">Cancelled and replaced by %.</localized-string><localized-string key="date" language="en">Date</localized-string><localized-string key="secretariat" language="en">Secretariat</localized-string><localized-string key="edition_ordinal_old" language="en">{{ var1 | ordinal_num: 'edition', '' }} EDITION</localized-string><localized-string key="edition_replacement" language="en">This {{ var1 | ordinal_word: 'edition', '' }} edition supersedes the {{ var2 | ordinal_word: 'edition', '' }} edition</localized-string><localized-string key="termsrelated" language="en">Terms related to</localized-string><localized-string key="availablefrom" language="en">Available at</localized-string><localized-string key="voting_begins_on" language="en">Voting begins on</localized-string><localized-string key="voting_terminates_on" language="en">Voting terminates on</localized-string><localized-string key="corrected_version" language="en">Corrected version</localized-string><localized-string key="fast-track-procedure" language="en">Fast track procedure</localized-string><localized-string key="classification-UDC" language="en">UDC</localized-string><localized-string key="website" language="en">website</localized-string><localized-string key="formerly_id" language="en">(formerly %)</localized-string><localized-string key="was_developed_by" language="en">%1 was developed by %2</localized-string><localized-string key="iso-cen-parallel" language="en">ISO/CEN PARALLEL PROCESSING</localized-string><localized-string key="draft_comment_1" language="en">This document is a draft circulated for comments and approval. It is therefore subject to change and may not be referred to as an international standard until published as such.</localized-string><localized-string key="draft_comment_2" language="en">In addition to their evaluation as being acceptable for industrial, technological, commercial and user purposes, draft international standards may on occasion have to be considered in the light of their potential to become standards to which reference may be made in national regulations.</localized-string><localized-string key="draft_comment_3" language="en">Recipients of this draft are invited to submit, with their comments, notification of any relevant patent rights of which they are aware and to provide supporting documentation.</localized-string><localized-string key="doctype_dict.international-standard" language="en">International Standard</localized-string><localized-string key="doctype_dict.technical-specification" language="en">Technical Specification</localized-string><localized-string key="doctype_dict.technical-report" language="en">Technical Report</localized-string><localized-string key="doctype_dict.publicly-available-specification" language="en">Publicly Available Specification</localized-string><localized-string key="doctype_dict.international-workshop-agreement" language="en">International Workshop Agreement</localized-string><localized-string key="doctype_dict.guide" language="en">Guide</localized-string><localized-string key="doctype_dict.amendment" language="en">Amendment</localized-string><localized-string key="doctype_dict.addendum" language="en">Addendum</localized-string><localized-string key="doctype_dict.supplement" language="en">Supplement</localized-string><localized-string key="doctype_dict.extract" language="en">Extract</localized-string><localized-string key="doctype_dict.technical-corrigendum" language="en">Technical Corrigendum</localized-string><localized-string key="doctype_dict.directive" language="en">Directive</localized-string><localized-string key="doctype_dict.committee-document" language="en">Committee Document</localized-string><localized-string key="doctype_dict.recommendation" language="en">ISO Recommendation</localized-string><localized-string key="contributor_role_desc_dict.Technical_committee" language="en">Technical committee</localized-string><localized-string key="stage_dict.00" language="en">Preliminary work item</localized-string><localized-string key="stage_dict.10" language="en">New work item proposal</localized-string><localized-string key="stage_dict.20" language="en">Working draft</localized-string><localized-string key="stage_dict.30" language="en">Committee draft</localized-string><localized-string key="40.international-standard" language="en">Draft International Standard</localized-string><localized-string key="40.technical-specification" language="en">Draft Technical Specification</localized-string><localized-string key="40.technical-report" language="en">Draft Technical Report</localized-string><localized-string key="40.publicly-available-specification" language="en">Draft Publicly Available Specification</localized-string><localized-string key="40.international-workshop-agreement" language="en">Draft International Workshop Agreement</localized-string><localized-string key="40.guide" language="en">Draft Guide</localized-string><localized-string key="40.amendment" language="en">Draft Amendment</localized-string><localized-string key="40.technical-corrigendum" language="en">Draft Technical Corrigendum</localized-string><localized-string key="40.directive" language="en">Draft Directive</localized-string><localized-string key="50.international-standard" language="en">Final Draft International Standard</localized-string><localized-string key="50.technical-specification" language="en">Final Draft Technical Specification</localized-string><localized-string key="50.technical-report" language="en">Final Draft Technical Report</localized-string><localized-string key="50.publicly-available-specification" language="en">Final Draft Publicly Available Specification</localized-string><localized-string key="50.international-workshop-agreement" language="en">Final Draft International Workshop Agreement</localized-string><localized-string key="50.guide" language="en">Final Draft Guide</localized-string><localized-string key="50.amendment" language="en">Final Draft Amendment</localized-string><localized-string key="50.technical-corrigendum" language="en">Final Draft Technical Corrigendum</localized-string><localized-string key="50.directive" language="en">Final Draft Directive</localized-string><localized-string key="60.international-standard" language="en">International Standard</localized-string><localized-string key="60.technical-specification" language="en">Technical Specification</localized-string><localized-string key="60.technical-report" language="en">Technical Report</localized-string><localized-string key="60.publicly-available-specification" language="en">Publicly Available Specification</localized-string><localized-string key="60.international-workshop-agreement" language="en">International Workshop Agreement</localized-string><localized-string key="60.guide" language="en">Guide</localized-string><localized-string key="60.amendment" language="en">Amendment</localized-string><localized-string key="60.technical-corrigendum" language="en">Technical Corrigendum</localized-string><localized-string key="60.directive" language="en">Directive</localized-string><localized-string key="stage_dict.90" language="en">Review</localized-string><localized-string key="stage_dict.95" language="en">Withdrawal</localized-string><localized-string key="Draft_International_Standard.coverpage" language="en">DRAFT<br/>International Standard</localized-string><localized-string key="Draft_International_Standard.firstpage" language="en">DRAFT International Standard</localized-string><localized-string key="Draft_Technical_Specification.coverpage" language="en">DRAFT<br/>Technical Specification</localized-string><localized-string key="Draft_Technical_Specification.firstpage" language="en">DRAFT Technical Specification</localized-string><localized-string key="Draft_Technical_Report.coverpage" language="en">DRAFT<br/>Technical Report</localized-string><localized-string key="Draft_Technical_Report.firstpage" language="en">DRAFT Technical Report</localized-string><localized-string key="Draft_Publicly_Available_Specification.coverpage" language="en">DRAFT<br/>Publicly Available Specification</localized-string><localized-string key="Draft_Publicly_Available_Specification.firstpage" language="en">DRAFT Publicly Available Specification</localized-string><localized-string key="Draft_International_Workshop_Agreement.coverpage" language="en">DRAFT<br/>International Workshop Agreement</localized-string><localized-string key="Draft_International_Workshop_Agreement.firstpage" language="en">DRAFT International Workshop Agreement</localized-string><localized-string key="Draft_Guide.coverpage" language="en">DRAFT<br/>Guide</localized-string><localized-string key="Draft_Guide.firstpage" language="en">DRAFT Guide</localized-string><localized-string key="Draft_Amendment.coverpage" language="en">DRAFT<br/>Amendment</localized-string><localized-string key="Draft_Amendment.firstpage" language="en">DRAFT Amendment</localized-string><localized-string key="Draft_Technical_Corrigendum.coverpage" language="en">DRAFT<br/>Technical Corrigendum</localized-string><localized-string key="Draft_Technical_Corrigendum.firstpage" language="en">DRAFT Technical Corrigendum</localized-string><localized-string key="Draft_Directive.coverpage" language="en">DRAFT<br/>Directive</localized-string><localized-string key="Draft_Directive.firstpage" language="en">DRAFT Directive</localized-string><localized-string key="Final_Draft_International_Standard.coverpage" language="en">FINAL DRAFT<br/>International Standard</localized-string><localized-string key="Final_Draft_International_Standard.firstpage" language="en">FINAL DRAFT International Standard</localized-string><localized-string key="Final_Draft_Technical_Specification.coverpage" language="en">FINAL DRAFT<br/>Technical Specification</localized-string><localized-string key="Final_Draft_Technical_Specification.firstpage" language="en">FINAL DRAFT Technical Specification</localized-string><localized-string key="Final_Draft_Technical_Report.coverpage" language="en">FINAL DRAFT<br/>Technical Report</localized-string><localized-string key="Final_Draft_Technical_Report.firstpage" language="en">FINAL DRAFT Technical Report</localized-string><localized-string key="Final_Draft_Publicly_Available_Specification.coverpage" language="en">FINAL DRAFT<br/>Publicly Available Specification</localized-string><localized-string key="Final_Draft_Publicly_Available_Specification.firstpage" language="en">FINAL DRAFT Publicly Available Specification</localized-string><localized-string key="Final_Draft_International_Workshop_Agreement.coverpage" language="en">FINAL DRAFT<br/>International Workshop Agreement</localized-string><localized-string key="Final_Draft_International_Workshop_Agreement.firstpage" language="en">FINAL DRAFT International Workshop Agreement</localized-string><localized-string key="Final_Draft_Guide.coverpage" language="en">FINAL DRAFT<br/>Guide</localized-string><localized-string key="Final_Draft_Guide.firstpage" language="en">FINAL DRAFT Guide</localized-string><localized-string key="Final_Draft_Amendment.coverpage" language="en">FINAL DRAFT<br/>Amendment</localized-string><localized-string key="Final_Draft_Amendment.firstpage" language="en">FINAL DRAFT Amendment</localized-string><localized-string key="Final_Draft_Technical_Corrigendum.coverpage" language="en">FINAL DRAFT<br/>Technical Corrigendum</localized-string><localized-string key="Final_Draft_Technical_Corrigendum.firstpage" language="en">FINAL DRAFT Technical Corrigendum</localized-string><localized-string key="Final_Draft_Directive.coverpage" language="en">FINAL DRAFT<br/>Directive</localized-string><localized-string key="Final_Draft_Directive.firstpage" language="en">FINAL DRAFT Directive</localized-string><localized-string key="modspec.provision" language="en">Provision</localized-string><localized-string key="modspec.conformancetest" language="en">Conformance test</localized-string><localized-string key="language" language="en">en</localized-string><localized-string key="script" language="en">Latn</localized-string><localized-string key="term_def_boilerplate" language="fr">L'ISO et l'IEC tiennent à jour des bases de données terminologiques
+destinées à être utilisées en normalisation, consultables aux adresses
+suivantes:
+
+* ISO Online browsing platform: disponible à l'adresse https://www.iso.org/obp[]
+* IEC Electropedia: disponible à l'adresse https://www.electropedia.org[]
+</localized-string><localized-string key="scope" language="fr">Domaine d’application</localized-string><localized-string key="symbolsabbrev" language="fr">Symboles et termes abrégés</localized-string><localized-string key="abbrev" language="fr">Termes abrégés</localized-string><localized-string key="symbols" language="fr">Symboles</localized-string><localized-string key="table_of_contents" language="fr">Sommaire</localized-string><localized-string key="introduction" language="fr">Introduction</localized-string><localized-string key="foreword" language="fr">Avant-propos</localized-string><localized-string key="abstract" language="fr">Résumé</localized-string><localized-string key="acknowledgements" language="fr">Remerciements</localized-string><localized-string key="executivesummary" language="fr">Résumé exécutif</localized-string><localized-string key="termsdef" language="fr">Termes et définitions</localized-string><localized-string key="termsdefsymbolsabbrev" language="fr">Termes, définitions, symboles et termes abrégés</localized-string><localized-string key="termsdefsymbols" language="fr">Termes, définitions et symboles</localized-string><localized-string key="termsdefabbrev" language="fr">Termes, définitions et termes abrégés</localized-string><localized-string key="normref" language="fr">Références normatives</localized-string><localized-string key="bibliography" language="fr">Bibliographie</localized-string><localized-string key="index" language="fr">Index</localized-string><localized-string key="see" language="fr">voir</localized-string><localized-string key="see_also" language="fr">voir aussi</localized-string><localized-string key="preface" language="fr">Préface</localized-string><localized-string key="section" language="fr">Section</localized-string><localized-string key="clause" language="fr">Article</localized-string><localized-string key="annex" language="fr">Annexe</localized-string><localized-string key="appendix" language="fr">Appendice</localized-string><localized-string key="continued" language="fr">continué</localized-string><localized-string key="no_terms_boilerplate" language="fr">Aucun terme n’est défini dans le présent document.
+</localized-string><localized-string key="internal_terms_boilerplate" language="fr">Pour les besoins du présent document, les termes et définitions suivants s’appliquent.
+</localized-string><localized-string key="norm_with_refs_pref" language="fr">Les documents suivants cités dans le texte constituent, pour tout ou partie de leur contenu, des exigences du présent document. Pour les références datées, seule l’édition citée s’applique. Pour les références non datées, la dernière édition du document de référence s’applique (y compris les éventuels amendements).</localized-string><localized-string key="norm_empty_pref" language="fr">Le présent document ne contient aucune référence normative.</localized-string><localized-string key="external_terms_boilerplate" language="fr">Pour les besoins du présent document, les termes et définitions de % s’appliquent.
+</localized-string><localized-string key="internal_external_terms_boilerplate" language="fr">Pour les besoins du présent document, les termes et définitions de % ainsi que les suivants, s’appliquent.
+</localized-string><localized-string key="no_information_available" language="fr">[PAS D’INFORMATION DISPONIBLE]</localized-string><localized-string key="term_defined_in" language="fr">(%)</localized-string><localized-string key="binary_and" language="fr">%1 <conn>et</conn> %2</localized-string><localized-string key="multiple_and" language="fr">%1<enum-comma>,</enum-comma> <conn>et</conn> %2</localized-string><localized-string key="binary_or" language="fr">%1 <conn>ou</conn> %2</localized-string><localized-string key="multiple_or" language="fr">%1<enum-comma>,</enum-comma> <conn>ou</conn> %2</localized-string><localized-string key="chain_and" language="fr">%1 <conn>et</conn> %2</localized-string><localized-string key="chain_or" language="fr">%1 <conn>ou</conn> %2</localized-string><localized-string key="chain_from" language="fr">%1 <conn>de</conn> %2</localized-string><localized-string key="chain_to" language="fr">%1 <conn>à</conn> %2</localized-string><localized-string key="nested_xref" language="fr">%1<comma>,</comma> %2</localized-string><localized-string key="list_nested_xref" language="fr">%1 %2</localized-string><localized-string key="ordinal_keys.0" language="fr">gender</localized-string><localized-string key="ordinal_keys.1" language="fr">number</localized-string><localized-string key="SpelloutRules.m_sg" language="fr">spellout-ordinal-masculine</localized-string><localized-string key="SpelloutRules.f_sg" language="fr">spellout-ordinal-feminine</localized-string><localized-string key="SpelloutRules.m_pl" language="fr">spellout-ordinal-masculine-plural</localized-string><localized-string key="SpelloutRules.f_pl" language="fr">spellout-ordinal-feminine-plural</localized-string><localized-string key="OrdinalRules.m_sg" language="fr">digits-ordinal-masculine</localized-string><localized-string key="OrdinalRules.f_sg" language="fr">digits-ordinal-feminine</localized-string><localized-string key="OrdinalRules.m_pl" language="fr">digits-ordinal-masculine-plural</localized-string><localized-string key="OrdinalRules.f_pl" language="fr">digits-ordinal-feminine-plural</localized-string><localized-string key="note" language="fr">NOTE</localized-string><localized-string key="note_xref" language="fr">Note</localized-string><localized-string key="termnote" language="fr">Note % à l’article</localized-string><localized-string key="para_xref" language="fr">Alinéa</localized-string><localized-string key="figure" language="fr">Figure</localized-string><localized-string key="diagram" language="fr">Diagramme</localized-string><localized-string key="formula" language="fr">Formule</localized-string><localized-string key="inequality" language="fr">Formule</localized-string><localized-string key="list" language="fr">Liste</localized-string><localized-string key="deflist" language="fr">Liste de définitions</localized-string><localized-string key="table" language="fr">Tableau</localized-string><localized-string key="requirement" language="fr">Exigence</localized-string><localized-string key="recommendation" language="fr">Recommandation</localized-string><localized-string key="permission" language="fr">Autorisation</localized-string><localized-string key="box" language="fr">Encadré</localized-string><localized-string key="key" language="fr">Légende</localized-string><localized-string key="example" language="fr">EXEMPLE</localized-string><localized-string key="example_xref" language="fr">Exemple</localized-string><localized-string key="where" language="fr">où</localized-string><localized-string key="where_one" language="fr">où</localized-string><localized-string key="wholeoftext" language="fr">Ensemble du texte</localized-string><localized-string key="draft_label" language="fr">brouillon</localized-string><localized-string key="inform_annex" language="fr">informative</localized-string><localized-string key="norm_annex" language="fr">normative</localized-string><localized-string key="modified" language="fr">modifié</localized-string><localized-string key="adapted" language="fr">adapté</localized-string><localized-string key="deprecated" language="fr">DÉCONSEILLÉ</localized-string><localized-string key="source" language="fr">SOURCE</localized-string><localized-string key="edition" language="fr">édition</localized-string><localized-string key="version" language="fr">version</localized-string><localized-string key="and" language="fr">et</localized-string><localized-string key="no_identifier" language="fr">(PAS D'IDENTIFIANT)</localized-string><localized-string key="all_parts" language="fr">toutes les parties</localized-string><localized-string key="edition_ordinal" language="fr">{{ var1 | ordinal_word: 'edition', '' }} édition</localized-string><localized-string key="edition_cardinal" language="fr">édition {{ var1 }}</localized-string><localized-string key="toc_figures" language="fr">Table des figures</localized-string><localized-string key="toc_tables" language="fr">Table des tableaux</localized-string><localized-string key="toc_recommendations" language="fr">Table de recommandations</localized-string><localized-string key="toc_examples" language="fr">Table des exemples</localized-string><localized-string key="month_january" language="fr">Janvier</localized-string><localized-string key="month_february" language="fr">Février</localized-string><localized-string key="month_march" language="fr">Mars</localized-string><localized-string key="month_april" language="fr">Avril</localized-string><localized-string key="month_may" language="fr">Mai</localized-string><localized-string key="month_june" language="fr">Juin</localized-string><localized-string key="month_july" language="fr">Juillet</localized-string><localized-string key="month_august" language="fr">Août</localized-string><localized-string key="month_september" language="fr">Septembre</localized-string><localized-string key="month_october" language="fr">Octobre</localized-string><localized-string key="month_november" language="fr">Novembre</localized-string><localized-string key="month_december" language="fr">Décembre</localized-string><localized-string key="obligation" language="fr">Obligation</localized-string><localized-string key="admonition.danger" language="fr">Danger</localized-string><localized-string key="admonition.warning" language="fr">Avertissement</localized-string><localized-string key="admonition.caution" language="fr">Attention</localized-string><localized-string key="admonition.important" language="fr">Important</localized-string><localized-string key="admonition.safety_precautions" language="fr">Précautions de Sécurité</localized-string><localized-string key="admonition.editorial" language="fr">Note éditoriale</localized-string><localized-string key="title_prefixes.part" language="fr">Partie {{ var1 }}</localized-string><localized-string key="title_prefixes.amendment" language="fr">AMENDEMENT {{ var1 }}</localized-string><localized-string key="title_prefixes.corrigendum" language="fr">RECTIFICATIF TECHNIQUE {{ var1 }}</localized-string><localized-string key="title_prefixes.addendum" language="fr">ADDITIF {{ var1 }}</localized-string><localized-string key="title_prefixes.supplement" language="fr">SUPPLÉMENT {{ var1 }}</localized-string><localized-string key="title_prefixes.annex" language="fr">Annexe {{ var1 }}</localized-string><localized-string key="title_prefixes.appendix" language="fr">Appendice {{ var1 }}</localized-string><localized-string key="title_prefixes.extract" language="fr">EXTRAIT {{ var1 }}</localized-string><localized-string key="locality.section" language="fr">Section</localized-string><localized-string key="locality.clause" language="fr">Article</localized-string><localized-string key="locality.definition" language="fr">Définition</localized-string><localized-string key="locality.part" language="fr">Partie</localized-string><localized-string key="locality.paragraph" language="fr">Alinéa</localized-string><localized-string key="locality.chapter" language="fr">Chapitre</localized-string><localized-string key="locality.page" language="fr">Page</localized-string><localized-string key="locality.table" language="fr">Tableau</localized-string><localized-string key="locality.annex" language="fr">Annexe</localized-string><localized-string key="locality.figure" language="fr">Figure</localized-string><localized-string key="locality.example" language="fr">Exemple</localized-string><localized-string key="locality.note" language="fr">Note</localized-string><localized-string key="locality.formula" language="fr">Formule</localized-string><localized-string key="locality.appendix" language="fr">Appendice</localized-string><localized-string key="grammar_abbrevs.masculine" language="fr">masc</localized-string><localized-string key="grammar_abbrevs.feminine" language="fr">fem</localized-string><localized-string key="grammar_abbrevs.neuter" language="fr">neut</localized-string><localized-string key="grammar_abbrevs.common" language="fr">épicène</localized-string><localized-string key="grammar_abbrevs.singular" language="fr">sg</localized-string><localized-string key="grammar_abbrevs.dual" language="fr">duel</localized-string><localized-string key="grammar_abbrevs.plural" language="fr">pl</localized-string><localized-string key="grammar_abbrevs.isPreposition" language="fr">prép</localized-string><localized-string key="grammar_abbrevs.isParticiple" language="fr">part</localized-string><localized-string key="grammar_abbrevs.isAdjective" language="fr">adj</localized-string><localized-string key="grammar_abbrevs.isAdverb" language="fr">adv</localized-string><localized-string key="grammar_abbrevs.isNoun" language="fr">subst</localized-string><localized-string key="grammar_abbrevs.isVerb" language="fr">vb</localized-string><localized-string key="relatedterms.deprecates" language="fr">déprécie</localized-string><localized-string key="relatedterms.supersedes" language="fr">remplace</localized-string><localized-string key="relatedterms.narrower" language="fr">plus étroit</localized-string><localized-string key="relatedterms.broader" language="fr">plus large</localized-string><localized-string key="relatedterms.equivalent" language="fr">équivalent</localized-string><localized-string key="relatedterms.compare" language="fr">comparez</localized-string><localized-string key="relatedterms.contrast" language="fr">contrastez</localized-string><localized-string key="relatedterms.see" language="fr">voir</localized-string><localized-string key="relatedterms.seealso" language="fr">voir aussi</localized-string><localized-string key="Clause.sg" language="fr">Article</localized-string><localized-string key="Clause.pl" language="fr">Articles</localized-string><localized-string key="Definition.sg" language="fr">Définition</localized-string><localized-string key="Definition.pl" language="fr">Définitions</localized-string><localized-string key="Annex.sg" language="fr">Annexe</localized-string><localized-string key="Annex.pl" language="fr">Annexes</localized-string><localized-string key="Appendix.sg" language="fr">Appendice</localized-string><localized-string key="Appendix.pl" language="fr">Appendices</localized-string><localized-string key="Note.sg" language="fr">Note</localized-string><localized-string key="Note.pl" language="fr">Notes</localized-string><localized-string key="Note_%_à_l’article.sg" language="fr">Note % à l’article</localized-string><localized-string key="Note_%_à_l’article.pl" language="fr">Notes % à l’article</localized-string><localized-string key="List.sg" language="fr">Liste</localized-string><localized-string key="List.pl" language="fr">Listes</localized-string><localized-string key="Figure.sg" language="fr">Figure</localized-string><localized-string key="Figure.pl" language="fr">Figures</localized-string><localized-string key="Formula.sg" language="fr">Formule</localized-string><localized-string key="Formula.pl" language="fr">Formules</localized-string><localized-string key="Table.sg" language="fr">Tableau</localized-string><localized-string key="Table.pl" language="fr">Tableaux</localized-string><localized-string key="Requirement.sg" language="fr">Exigence</localized-string><localized-string key="Requirement.pl" language="fr">Exigences</localized-string><localized-string key="Recommendation.sg" language="fr">Recommandation</localized-string><localized-string key="Recommendation.pl" language="fr">Recommandations</localized-string><localized-string key="Permission.sg" language="fr">Autorisation</localized-string><localized-string key="Permission.pl" language="fr">Autorisations</localized-string><localized-string key="Example.sg" language="fr">Exemple</localized-string><localized-string key="Example.pl" language="fr">Exemples</localized-string><localized-string key="Part.sg" language="fr">Partie</localized-string><localized-string key="Part.pl" language="fr">Parties</localized-string><localized-string key="Section.sg" language="fr">Section</localized-string><localized-string key="Section.pl" language="fr">Sections</localized-string><localized-string key="Paragraph.sg" language="fr">Alinéa</localized-string><localized-string key="Paragraph.pl" language="fr">Alinéas</localized-string><localized-string key="Chapter.sg" language="fr">Chapitre</localized-string><localized-string key="Chapter.pl" language="fr">Chapitres</localized-string><localized-string key="Page.sg" language="fr">Page</localized-string><localized-string key="Page.pl" language="fr">Pages</localized-string><localized-string key="grammar.gender" language="fr">f</localized-string><localized-string key="Disposition.sg" language="fr">Disposition</localized-string><localized-string key="Disposition.pl" language="fr">Dispositions</localized-string><localized-string key="Déclaration.sg" language="fr">Déclaration</localized-string><localized-string key="Déclaration.pl" language="fr">Déclarations</localized-string><localized-string key="Descripteur.sg" language="fr">Descripteur</localized-string><localized-string key="Descripteur.pl" language="fr">Descripteurs</localized-string><localized-string key="Référence.sg" language="fr">Référence</localized-string><localized-string key="Référence.pl" language="fr">Références</localized-string><localized-string key="punct.colon" language="fr">:</localized-string><localized-string key="punct.comma" language="fr">,</localized-string><localized-string key="punct.enum-comma" language="fr">,</localized-string><localized-string key="punct.semicolon" language="fr">;</localized-string><localized-string key="punct.period" language="fr">.</localized-string><localized-string key="punct.close-paren" language="fr">)</localized-string><localized-string key="punct.open-paren" language="fr">(</localized-string><localized-string key="punct.close-bracket" language="fr">]</localized-string><localized-string key="punct.open-bracket" language="fr">[</localized-string><localized-string key="punct.question-mark" language="fr">?</localized-string><localized-string key="punct.exclamation-mark" language="fr">!</localized-string><localized-string key="punct.em-dash" language="fr">—</localized-string><localized-string key="punct.en-dash" language="fr">–</localized-string><localized-string key="punct.number-en-dash" language="fr">–</localized-string><localized-string key="punct.open-quote" language="fr">«</localized-string><localized-string key="punct.close-quote" language="fr">»</localized-string><localized-string key="punct.open-nested-quote" language="fr">“</localized-string><localized-string key="punct.close-nested-quote" language="fr">”</localized-string><localized-string key="punct.ellipse" language="fr">…</localized-string><localized-string key="all_rights_reserved" language="fr">Tous droits réservés</localized-string><localized-string key="reference_number" language="fr">Numéro de référence</localized-string><localized-string key="reference_number_abbrev" language="fr">Réf. №</localized-string><localized-string key="price_based_on" language="fr">Prix basé sur % pages</localized-string><localized-string key="price" language="fr">Prix</localized-string><localized-string key="date_first_printing" language="fr">Date de la première impression</localized-string><localized-string key="date_printing" language="fr">Date de la {{ var1 | ordinal_word: '', 'f' }} impression</localized-string><localized-string key="descriptor" language="fr">Descripteur</localized-string><localized-string key="reference" language="fr">Référence</localized-string><localized-string key="under_preparation" language="fr">En cours d'élaboration. Stade au moment de la publication: %.</localized-string><localized-string key="withdrawn" language="fr">Retiré.</localized-string><localized-string key="cancelled_and_replaced" language="fr">Annulé et remplacé par %.</localized-string><localized-string key="date" language="fr">Date</localized-string><localized-string key="secretariat" language="fr">Secrétariat</localized-string><localized-string key="edition_ordinal_old" language="fr">{{ var1 | ordinal_num: 'edition', '' }} ÉDITION</localized-string><localized-string key="edition_replacement" language="fr">Cette {{ var1 | ordinal_word: 'edition', '' }} édition annule et remplace la {{ var2 | ordinal_word: 'edition', '' }} édition</localized-string><localized-string key="termsrelated" language="fr">Termes liés</localized-string><localized-string key="availablefrom" language="fr">Disponible sur</localized-string><localized-string key="voting_begins_on" language="fr">Début de vote</localized-string><localized-string key="voting_terminates_on" language="fr">Vote clos le</localized-string><localized-string key="corrected_version" language="fr">Version corrigée</localized-string><localized-string key="fast-track-procedure" language="fr">Procédure accélérée</localized-string><localized-string key="classification-UDC" language="fr">CDU</localized-string><localized-string key="formerly_id" language="fr">(précédemment %)</localized-string><localized-string key="was_developed_by" language="fr">%1 a été élaboré par %2</localized-string><localized-string key="iso-cen-parallel" language="fr">TRAITEMENT PARALLÈLE ISO/CEN</localized-string><localized-string key="draft_comment_1" language="fr">Ce document est un projet diffusé pour observations et approbation. Il est donc susceptible de modification et ne peut être cité comme norme internationale avant sa publication en tant que telle.</localized-string><localized-string key="draft_comment_2" language="fr">Outre le fait d’être examinés pour établir s’ils sont acceptables à des fins industrielles, technologiques et commerciales, ainsi que du point de vue des utilisateurs, les projets de normes internationales doivent parfois être considérés du point de vue de leur possibilité de devenir des normes pouvant servir de référence dans la réglementation nationale.</localized-string><localized-string key="draft_comment_3" language="fr">Les destinataires du présent projet sont invités à présenter, avec leurs observations, notification des droits de propriété dont ils auraient éventuellement connaissance et à fournir une documentation explicative.</localized-string><localized-string key="website" language="fr">site web</localized-string><localized-string key="doctype_dict.international-standard" language="fr">Norme internationale</localized-string><localized-string key="doctype_dict.technical-specification" language="fr">Spécification technique</localized-string><localized-string key="doctype_dict.technical-report" language="fr">Rapport technique</localized-string><localized-string key="doctype_dict.publicly-available-specification" language="fr">Spécification disponible publiquement</localized-string><localized-string key="doctype_dict.international-workshop-agreement" language="fr">Accord internationale d’atelier</localized-string><localized-string key="doctype_dict.guide" language="fr">Guide</localized-string><localized-string key="doctype_dict.amendment" language="fr">Amendement</localized-string><localized-string key="doctype_dict.addendum" language="fr">Additif</localized-string><localized-string key="doctype_dict.supplement" language="fr">Supplément</localized-string><localized-string key="doctype_dict.extract" language="fr">Extrait</localized-string><localized-string key="doctype_dict.technical-corrigendum" language="fr">Rectificatif technique</localized-string><localized-string key="doctype_dict.directive" language="fr">Directive</localized-string><localized-string key="doctype_dict.committee-document" language="fr">Document du comité</localized-string><localized-string key="doctype_dict.recommendation" language="fr">Recommandation ISO</localized-string><localized-string key="contributor_role_desc_dict.Technical_committee" language="fr">Comité technique</localized-string><localized-string key="stage_dict.00" language="fr">Élément de travail préliminaire</localized-string><localized-string key="stage_dict.10" language="fr">Nouvelle proposition d'élément de travail</localized-string><localized-string key="stage_dict.20" language="fr">Brouillon de travail</localized-string><localized-string key="stage_dict.30" language="fr">Projet de comité</localized-string><localized-string key="40.international-standard" language="fr">Projet Norme internationale</localized-string><localized-string key="40.technical-specification" language="fr">Projet Spécification technique</localized-string><localized-string key="40.technical-report" language="fr">Projet Rapport technique</localized-string><localized-string key="40.publicly-available-specification" language="fr">Projet Spécification disponible publiquement</localized-string><localized-string key="40.international-workshop-agreement" language="fr">Projet Accord internationale d’atelier</localized-string><localized-string key="40.guide" language="fr">Projet Guide</localized-string><localized-string key="40.amendment" language="fr">Projet Amendement</localized-string><localized-string key="40.technical-corrigendum" language="fr">Projet Rectificatif technique</localized-string><localized-string key="40.directive" language="fr">Projet Directive</localized-string><localized-string key="50.international-standard" language="fr">Projet final Norme internationale</localized-string><localized-string key="50.technical-specification" language="fr">Projet final spécification technique</localized-string><localized-string key="50.technical-report" language="fr">Projet final rapport technique</localized-string><localized-string key="50.publicly-available-specification" language="fr">Projet final spécification disponible publiquement</localized-string><localized-string key="50.international-workshop-agreement" language="fr">Projet final l’accord internationale d’atelier</localized-string><localized-string key="50.guide" language="fr">Projet final guide</localized-string><localized-string key="50.amendment" language="fr">Projet final l’amendement</localized-string><localized-string key="50.technical-corrigendum" language="fr">Projet final rectificatif technique</localized-string><localized-string key="50.directive" language="fr">Projet final directive</localized-string><localized-string key="60.international-standard" language="fr">Norme internationale</localized-string><localized-string key="60.technical-specification" language="fr">Spécification technique</localized-string><localized-string key="60.technical-report" language="fr">Rapport technique</localized-string><localized-string key="60.publicly-available-specification" language="fr">Spécification disponible publiquement</localized-string><localized-string key="60.international-workshop-agreement" language="fr">Accord internationale d’atelier</localized-string><localized-string key="60.guide" language="fr">Guide</localized-string><localized-string key="60.amendment" language="fr">Amendement</localized-string><localized-string key="60.technical-corrigendum" language="fr">Rectificatif technique</localized-string><localized-string key="60.directive" language="fr">Directive</localized-string><localized-string key="stage_dict.90" language="fr">Révision</localized-string><localized-string key="stage_dict.95" language="fr">Retrait</localized-string><localized-string key="Projet_Norme_internationale.coverpage" language="fr">PROJET<br/>Norme internationale</localized-string><localized-string key="Projet_Norme_internationale.firstpage" language="fr">PROJET de Norme internationale</localized-string><localized-string key="Projet_Spécification_technique.coverpage" language="fr">PROJET<br/>Spécification technique</localized-string><localized-string key="Projet_Spécification_technique.firstpage" language="fr">PROJET de Spécification technique</localized-string><localized-string key="Projet_Rapport_technique.coverpage" language="fr">PROJET<br/>Rapport technique</localized-string><localized-string key="Projet_Rapport_technique.firstpage" language="fr">PROJET de Rapport technique</localized-string><localized-string key="Projet_Spécification_disponible_publiquement.coverpage" language="fr">PROJET<br/>Spécification disponible publiquement</localized-string><localized-string key="Projet_Spécification_disponible_publiquement.firstpage" language="fr">PROJET de Spécification disponible publiquement</localized-string><localized-string key="Projet_Accord_internationale_d’atelier.coverpage" language="fr">PROJET<br/>Accord internationale d’atelier</localized-string><localized-string key="Projet_Accord_internationale_d’atelier.firstpage" language="fr">PROJET de Accord internationale d’atelier</localized-string><localized-string key="Projet_Guide.coverpage" language="fr">PROJET<br/>Guide</localized-string><localized-string key="Projet_Guide.firstpage" language="fr">PROJET de Guide</localized-string><localized-string key="Projet_Amendement.coverpage" language="fr">PROJET<br/>Amendement</localized-string><localized-string key="Projet_Amendement.firstpage" language="fr">PROJET de Amendement</localized-string><localized-string key="Projet_Rectificatif_technique.coverpage" language="fr">PROJET<br/>Rectificatif technique</localized-string><localized-string key="Projet_Rectificatif_technique.firstpage" language="fr">PROJET de Rectificatif technique</localized-string><localized-string key="Projet_Directive.coverpage" language="fr">PROJET<br/>Directive</localized-string><localized-string key="Projet_Directive.firstpage" language="fr">PROJET de Directive</localized-string><localized-string key="Projet_final_Norme_internationale.coverpage" language="fr">PROJET FINAL<br/>Norme internationale</localized-string><localized-string key="Projet_final_Norme_internationale.firstpage" language="fr">PROJET FINAL de Norme internationale</localized-string><localized-string key="Projet_final_spécification_technique.coverpage" language="fr">PROJET FINAL<br/>Spécification technique</localized-string><localized-string key="Projet_final_spécification_technique.firstpage" language="fr">PROJET FINAL de Spécification technique</localized-string><localized-string key="Projet_final_rapport_technique.coverpage" language="fr">PROJET FINAL<br/>Rapport technique</localized-string><localized-string key="Projet_final_rapport_technique.firstpage" language="fr">PROJET FINAL de Rapport technique</localized-string><localized-string key="Projet_final_spécification_disponible_publiquement.coverpage" language="fr">PROJET FINAL<br/>Spécification disponible publiquement</localized-string><localized-string key="Projet_final_spécification_disponible_publiquement.firstpage" language="fr">PROJET FINAL de Spécification disponible publiquement</localized-string><localized-string key="Projet_final_l’accord_internationale_d’atelier.coverpage" language="fr">PROJET FINAL<br/>Spécification disponible publiquement</localized-string><localized-string key="Projet_final_l’accord_internationale_d’atelier.firstpage" language="fr">PROJET FINAL de Spécification disponible publiquement</localized-string><localized-string key="Projet_final_guide.coverpage" language="fr">PROJET<br/>Guide</localized-string><localized-string key="Projet_final_guide.firstpage" language="fr">PROJET FINAL de Guide</localized-string><localized-string key="Projet_final_l’amendement.coverpage" language="fr">PROJET FINAL<br/>Amendement</localized-string><localized-string key="Projet_final_l’amendement.firstpage" language="fr">PROJET FINAL de Amendement</localized-string><localized-string key="Projet_final_rectificatif_technique.coverpage" language="fr">PROJET FINAL<br/>Rectificatif technique</localized-string><localized-string key="Projet_final_rectificatif_technique.firstpage" language="fr">PROJET FINAL de Rectificatif technique</localized-string><localized-string key="Projet_final_directive.coverpage" language="fr">PROJET FINAL<br/>Directive</localized-string><localized-string key="Projet_final_directive.firstpage" language="fr">PROJET FINAL de Directive</localized-string><localized-string key="modspec.provision" language="fr">Disposition</localized-string><localized-string key="modspec.conformancetest" language="fr">Test de conformité</localized-string><localized-string key="language" language="fr">fr</localized-string><localized-string key="script" language="fr">Latn</localized-string></localized-strings><metanorma-extension><semantic-metadata><stage-published>false</stage-published></semantic-metadata>
+<presentation-metadata><document-scheme>2013</document-scheme><toc-heading-levels>2</toc-heading-levels><html-toc-heading-levels>2</html-toc-heading-levels><doc-toc-heading-levels>3</doc-toc-heading-levels><pdf-toc-heading-levels>3</pdf-toc-heading-levels></presentation-metadata><source-highlighter-css>sourcecode table td { padding: 5px; }
+sourcecode table pre { margin: 0; }
+sourcecode, sourcecode .w {
+  color: #444444;
+}
+sourcecode .cp {
+  color: #CC00A3;
+}
+sourcecode .cs {
+  color: #CC00A3;
+}
+sourcecode .c, sourcecode .ch, sourcecode .cd, sourcecode .cm, sourcecode .cpf, sourcecode .c1 {
+  color: #FF0000;
+}
+sourcecode .kc {
+  color: #C34E00;
+}
+sourcecode .kd {
+  color: #0000FF;
+}
+sourcecode .kr {
+  color: #007575;
+}
+sourcecode .k, sourcecode .kn, sourcecode .kp, sourcecode .kt, sourcecode .kv {
+  color: #0000FF;
+}
+sourcecode .s, sourcecode .sb, sourcecode .sc, sourcecode .ld, sourcecode .sd, sourcecode .s2, sourcecode .se, sourcecode .sh, sourcecode .si, sourcecode .sx, sourcecode .sr, sourcecode .s1, sourcecode .ss {
+  color: #009C00;
+}
+sourcecode .sa {
+  color: #0000FF;
+}
+sourcecode .nb, sourcecode .bp {
+  color: #C34E00;
+}
+sourcecode .nt {
+  color: #0000FF;
+}
+
+</source-highlighter-css></metanorma-extension>
+<boilerplate><copyright-statement>
+
+<clause id="boilerplate-copyright-default" anchor="boilerplate-copyright-default" inline-header="false" obligation="normative" semx-id="_aa705764-de78-2c83-46a4-9e648d4472ef">
+<title id="_121dd968-3fe1-c74e-7a20-d46cb5e5d79d" semx-id="_129fe8d3-7b32-3da5-a270-59bb0ef8173e">COPYRIGHT PROTECTED DOCUMENT</title><fmt-title depth="1" id="_97c5e32c-491f-357d-effc-b405174e6f3c"><semx element="title" source="_121dd968-3fe1-c74e-7a20-d46cb5e5d79d">COPYRIGHT PROTECTED DOCUMENT</semx></fmt-title>
+<p id="boilerplate-year" anchor="boilerplate-year" semx-id="_bd17e37d-7be9-266b-bfab-a8520b16f3bb">© <span class="std_publisher">ISO </span><span class="date">2019</span></p>
+
+<p id="boilerplate-message" anchor="boilerplate-message" semx-id="_dcd0efd0-9c2b-bcfd-6dcd-ce36b8143916">All rights reserved. Unless otherwise specified, or required in the context of its implementation, no part of this publication may be reproduced or utilized otherwise in any form or by any means, electronic or mechanical, including photocopying, or posting on the internet or an intranet, without prior written permission. Permission can be requested from either ISO at the address below or ISO’s member body in the country of the requester.</p>
+
+<p id="boilerplate-address" anchor="boilerplate-address" align="left" semx-id="_9b279b29-6760-9714-7fb3-2ca2038acedf">ISO copyright office<br/> CP 401 • Ch. de Blandonnet 8<br/> CH-1214 Vernier, Geneva<br/> Phone: +41 22 749 01 11<br/> Email:  <link target="mailto:copyright@iso.org" id="_c1898dcf-2dd6-8f92-08ce-de50d6683833"/><semx element="link" source="_c1898dcf-2dd6-8f92-08ce-de50d6683833"><fmt-link target="mailto:copyright@iso.org"/></semx><br/> Website: www.iso.org</p>
+
+<p id="boilerplate-place" anchor="boilerplate-place" semx-id="_93a0bcfe-1edb-b952-e8f5-db8ed91f8e23">Published in Switzerland</p>
+</clause>
+</copyright-statement>
+</boilerplate><preface><clause type="toc" id="_13d7055e-30fc-845a-c60e-8972faf092d9" displayorder="1"><fmt-title depth="1" id="_b7371af6-75a1-52fa-2891-5c5f9a06aa7c">Contents</fmt-title></clause>
+<foreword id="_79006b15-920b-fa30-a45c-4b5470126f20" obligation="informative" semx-id="_79006b15-920b-fa30-a45c-4b5470126f20" displayorder="2">
+<title id="_39f555c2-f081-1181-eab4-26637491561a" semx-id="_41c9fad3-d4c1-eecc-4fad-f91704acc026">Foreword</title><fmt-title depth="1" id="_e21d5a0d-5d7c-f27a-d0d4-780199a274bb"><semx element="title" source="_39f555c2-f081-1181-eab4-26637491561a">Foreword</semx></fmt-title>
+<p id="_fb666896-6223-7e03-ac2f-512f1314cc92" semx-id="_fb666896-6223-7e03-ac2f-512f1314cc92">ISO (the International Organization for Standardization) is a worldwide federation of national standards bodies (ISO member bodies). The work of preparing International Standards is normally carried out through ISO technical committees. Each member body interested in a subject for which a technical committee has been established has the right to be represented on that committee. International organizations, governmental and non-governmental, in liaison with ISO, also take part in the work. ISO collaborates closely with the International Electrotechnical Commission (IEC) on all matters of electrotechnical standardization.</p>
+
+<p id="_afeb2cad-f849-eee5-3e7e-1f824a3c987b" semx-id="_afeb2cad-f849-eee5-3e7e-1f824a3c987b">The procedures used to develop this document and those intended for its further maintenance are described in the ISO/IEC Directives, Part 1. In particular the different approval criteria needed for the different types of ISO documents should be noted. This document was drafted in accordance with the editorial rules of the ISO/IEC Directives, Part 2 (see www.iso.org/directives).</p>
+
+<p id="_51ac9d86-1831-a38e-0195-1aece8a9418a" semx-id="_51ac9d86-1831-a38e-0195-1aece8a9418a">Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights. ISO shall not be held responsible for identifying any or all such patent rights. Details of any patent rights identified during the development of the document will be in the Introduction and/or on the ISO list of patent declarations received (see www.iso.org/patents).</p>
+
+<p id="_75ef1066-fb8d-1337-8ec2-2c3f05c90540" semx-id="_75ef1066-fb8d-1337-8ec2-2c3f05c90540">Any trade name used in this document is information given for the convenience of users and does not constitute an endorsement. For an explanation on the voluntary nature of standards, the meaning of ISO specific terms and expressions related to conformity assessment, as well as information about ISO’s adherence to the World Trade Organization (WTO) principles in the Technical Barriers to Trade (TBT) see the following URL: www.iso.org/iso/foreword.html.</p>
+
+<p id="_46c391b4-8ee0-b391-d948-20955a5360de" semx-id="_46c391b4-8ee0-b391-d948-20955a5360de">This document was prepared by Technical Committee ISO/TC <em>28</em>, <em>Petroleum and related products, fuels and lubricants from natural or synthetic sources</em>, Subcommittee <em>SC</em> <em>4</em>, <em>Classifications and specifications</em>.</p>
+
+<p id="_ac158c08-ac7f-f171-fec0-427384c7114b" semx-id="_ac158c08-ac7f-f171-fec0-427384c7114b">Any feedback or questions on this document should be directed to the user’s national standards body. A complete listing of these bodies can be found at <link target="https://www.iso.org/members.html" id="_a0df21e4-e706-6b0b-0c84-71a4f03f7b46">www.iso.org/members.html</link><semx element="link" source="_a0df21e4-e706-6b0b-0c84-71a4f03f7b46"><fmt-link target="https://www.iso.org/members.html">www.iso.org/members.html</fmt-link></semx>.</p>
+</foreword><introduction id="introduction" anchor="introduction" obligation="informative" semx-id="_5f03e7ae-4833-64e6-a6f4-a4045d0e570c" displayorder="3">
+<title id="_16dfa240-5da0-7fab-88e4-5f6086712be3" semx-id="_2b2e98d1-114a-3da4-8556-01ae0a724280">Introduction</title><fmt-title depth="1" id="_a9308b12-1a9d-9521-6b7d-acebab74aa90"><semx element="title" source="_16dfa240-5da0-7fab-88e4-5f6086712be3">Introduction</semx></fmt-title>
+<p id="_322d7a75-4a7d-22e8-627b-a71747ded1b3" semx-id="_322d7a75-4a7d-22e8-627b-a71747ded1b3">This document was developed in cooperation with ship owners, ship operators, classification societies, fuel testing services, engine designers, marine fuel suppliers, traders, fuel additive suppliers and the petroleum industry, in view of the implementation of maximum 0,50 mass % S in marine fuels in 2020 for operation outside Emission Control Areas (ECAs).</p>
+</introduction></preface><sections><p class="zzSTDTitle1" displayorder="4"><span class="boldtitle">Petroleum products — Fuels (class F) — Considerations for fuel suppliers and users regarding marine fuel quality in view of the implementation of maximum 0,50 % sulfur in 2020</span></p>
+
+
+
+
+<clause id="_906b6fff-0392-94f0-80ff-310871e8be9c" type="scope" inline-header="false" obligation="normative" semx-id="_906b6fff-0392-94f0-80ff-310871e8be9c" displayorder="5">
+<title id="_ef5612fb-1e47-1246-b392-69a921308fcb" semx-id="_f70b6ff6-6131-0e24-81e1-850dbe94b63d">Scope</title><fmt-title depth="1" id="_58af5d1a-79fa-3676-3b52-26615cc3d4d7"><span class="fmt-caption-label"><semx element="autonum" source="_906b6fff-0392-94f0-80ff-310871e8be9c">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_ef5612fb-1e47-1246-b392-69a921308fcb">Scope</semx></fmt-title><fmt-xref-label><span class="fmt-element-name">Clause</span> <semx element="autonum" source="_906b6fff-0392-94f0-80ff-310871e8be9c">1</semx></fmt-xref-label>
+<p id="_556a72f9-03f2-ecf0-cc40-e9f7507442f8" semx-id="_556a72f9-03f2-ecf0-cc40-e9f7507442f8">This document addresses quality considerations that apply to marine fuels in view of the implementation of maximum 0,50 mass % S in 2020 and the range of marine fuels that will be placed on the market in response to the international statutory requirements to reduce exhaust gas emissions. It defines general requirements that apply to all 0,50 mass % sulfur (S) fuels and confirms the applicability of ISO 8217 for those fuels.</p>
+
+<p id="_6abb2aec-5c4a-b151-c513-3446f3536fc4" semx-id="_6abb2aec-5c4a-b151-c513-3446f3536fc4">…​</p>
+</clause>
+
+
+
+<terms id="terms" anchor="terms" obligation="normative" semx-id="_9d7bb984-3aff-7688-e64f-947e69c167b1" displayorder="7">
+<title id="_59e5fc26-1cc5-8aac-16af-e6c35f9dde7d" semx-id="_dfb2eab2-f980-6365-3c47-81d0eb272962">Terms and definitions</title><fmt-title depth="1" id="_62de78f7-9849-c7d0-ea0a-4a2a9f3e72ba"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_59e5fc26-1cc5-8aac-16af-e6c35f9dde7d">Terms and definitions</semx></fmt-title><fmt-xref-label><span class="fmt-element-name">Clause</span> <semx element="autonum" source="terms">3</semx></fmt-xref-label><p id="_dcc01114-4d03-3550-1347-4ba901bda94c" semx-id="_dcc01114-4d03-3550-1347-4ba901bda94c">For the purposes of this document, the following terms and definitions apply.</p><p id="_1df4aedb-297d-0c69-967f-f6a60db009d2" semx-id="_1df4aedb-297d-0c69-967f-f6a60db009d2">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
+
+<ul id="_e6ddc246-88cc-2222-8452-b939a5cefa0e" semx-id="_e6ddc246-88cc-2222-8452-b939a5cefa0e"><li id="_01c42259-6512-2b50-0a8b-163e53dacc2d"><fmt-name id="_50d02d2d-69b9-d9c6-8fa6-39b29d3f2dd0"><semx element="autonum" source="_01c42259-6512-2b50-0a8b-163e53dacc2d">—</semx></fmt-name><p id="_93880b15-0e52-9141-f887-d290dce89ffd" semx-id="_93880b15-0e52-9141-f887-d290dce89ffd">ISO Online browsing platform: available at <link target="https://www.iso.org/obp" id="_fbdceb70-92a8-24a6-39e9-a5a9511cb393"/><semx element="link" source="_fbdceb70-92a8-24a6-39e9-a5a9511cb393"><fmt-link target="https://www.iso.org/obp"/></semx></p>
+</li>
+<li id="_67773aa8-9043-8351-657b-25ca152b61c0"><fmt-name id="_c6823434-c8e9-9507-34ca-87ad35a4266a"><semx element="autonum" source="_67773aa8-9043-8351-657b-25ca152b61c0">—</semx></fmt-name><p id="_8a7ecb99-412c-1138-ae9d-76c4ac7b7d43" semx-id="_8a7ecb99-412c-1138-ae9d-76c4ac7b7d43">IEC Electropedia: available at <link target="https://www.electropedia.org" id="_4c3983c9-52ad-41ac-f63f-5b86efdba277"/><semx element="link" source="_4c3983c9-52ad-41ac-f63f-5b86efdba277"><fmt-link target="https://www.electropedia.org"/></semx></p>
+</li>
+</ul>
+<term id="term-stability" anchor="term-stability" semx-id="_db9cbf7e-ea36-cf16-5548-2ba0fbd3b182"><fmt-name id="_443a83cb-1d97-55b2-2d5d-e4693487aa99"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-stability">1</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-stability">1</semx></fmt-xref-label><preferred id="_c8d21091-d429-0928-64d4-969f4f1df828"><expression>
+<name id="_4b197cb2-100d-b83e-76f3-442e58f50c46">stability</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_c8d21091-d429-0928-64d4-969f4f1df828"><strong><semx element="expression/name" source="_4b197cb2-100d-b83e-76f3-442e58f50c46">stability</semx></strong></semx></p></fmt-preferred><admitted id="_02d04719-37d2-4a4c-393c-533dac23a406"><expression>
+<name id="_ef386688-1383-d0fc-a1a0-61c308cc1434">stability of a residual fuel</name>
+</expression>
+</admitted><fmt-admitted><p><semx element="admitted" source="_02d04719-37d2-4a4c-393c-533dac23a406"><semx element="expression/name" source="_ef386688-1383-d0fc-a1a0-61c308cc1434">stability of a residual fuel</semx></semx></p></fmt-admitted>
+
+
+
+<definition id="_c4c24597-14be-217c-40d5-4d34c7b965cc" semx-id="_c4c24597-14be-217c-40d5-4d34c7b965cc"><verbal-definition semx-id="_96fc6cc0-4fdf-b5c3-9402-1ef1a421278b" id="_96fc6cc0-4fdf-b5c3-9402-1ef1a421278b"><p semx-id="_eaa70a3a-3950-4ce8-7359-73caf1cbdcaf" original-id="_eaa70a3a-3950-4ce8-7359-73caf1cbdcaf">resistance to the breakdown and precipitation of asphaltenic sludge despite being subjected to forces, such as thermal and ageing stresses, while handled and stored under normal operating conditions</p></verbal-definition></definition><fmt-definition id="_26254637-e5d5-32e5-8121-867f109df4de"><semx element="definition" source="_c4c24597-14be-217c-40d5-4d34c7b965cc"><p id="_eaa70a3a-3950-4ce8-7359-73caf1cbdcaf" semx-id="_eaa70a3a-3950-4ce8-7359-73caf1cbdcaf">resistance to the breakdown and precipitation of asphaltenic sludge despite being subjected to forces, such as thermal and ageing stresses, while handled and stored under normal operating conditions</p></semx></fmt-definition>
+ </term>
+
+<term id="term-cold-filter-plugging-point" anchor="term-cold-filter-plugging-point" semx-id="_23a4994d-08c0-0671-9f21-4ce12bcf93fe"><fmt-name id="_555d7e69-c076-9b35-4c43-d0a500a0a27a"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-cold-filter-plugging-point">2</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-cold-filter-plugging-point">2</semx></fmt-xref-label><preferred id="_56a69a19-fd47-d8ec-b88d-1e15ec3a3e41"><expression>
+<name id="_5fa12169-8c8d-35af-bd2e-ffbb84817baa">cold filter plugging point</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_56a69a19-fd47-d8ec-b88d-1e15ec3a3e41"><strong><semx element="expression/name" source="_5fa12169-8c8d-35af-bd2e-ffbb84817baa">cold filter plugging point</semx></strong></semx></p></fmt-preferred><admitted id="_3cf5560c-3d7d-ea58-c183-9cdaa7a80f3b"><expression>
+<name id="_f9617798-8afa-5203-fa27-db93901b143e">CFPP</name>
+</expression>
+</admitted><fmt-admitted><p><semx element="admitted" source="_3cf5560c-3d7d-ea58-c183-9cdaa7a80f3b"><semx element="expression/name" source="_f9617798-8afa-5203-fa27-db93901b143e">CFPP</semx></semx></p></fmt-admitted>
+
+
+
+<definition id="_3ba46aa4-b23f-92dc-cf08-3eaca7baf3e0" semx-id="_3ba46aa4-b23f-92dc-cf08-3eaca7baf3e0"><verbal-definition semx-id="_6ca388bf-5f32-4c75-fbc9-e828ddc96f49" id="_6ca388bf-5f32-4c75-fbc9-e828ddc96f49"><p semx-id="_2fd25a7c-cc27-a8b8-b3a0-355611d98f9c" original-id="_2fd25a7c-cc27-a8b8-b3a0-355611d98f9c">highest temperature at which a given volume of distillate fuel fails to pass through a standardized filtration device in a specified time when cooled under standardized conditions</p></verbal-definition></definition><fmt-definition id="_16725267-8e71-96b6-8caa-68814f34dc10"><semx element="definition" source="_3ba46aa4-b23f-92dc-cf08-3eaca7baf3e0"><p id="_2fd25a7c-cc27-a8b8-b3a0-355611d98f9c" semx-id="_2fd25a7c-cc27-a8b8-b3a0-355611d98f9c">highest temperature at which a given volume of distillate fuel fails to pass through a standardized filtration device in a specified time when cooled under standardized conditions</p></semx></fmt-definition>
+
+
+ <source status="identical" type="authoritative" id="_94dab26a-033d-7476-2104-be2bafa62c2f"><origin bibitemid="ip_309" type="inline" citeas="IP 309"/></source><fmt-termsource status="identical" type="authoritative">[SOURCE: <semx element="source" source="_94dab26a-033d-7476-2104-be2bafa62c2f"><origin bibitemid="ip_309" type="inline" citeas="IP 309" id="_15dec8e7-7f4c-f7d8-4ae1-91e7bf16505b"/><semx element="origin" source="_15dec8e7-7f4c-f7d8-4ae1-91e7bf16505b"><fmt-xref type="inline" style="short" target="ip_309"><span class="stdpublisher">IP</span> <span class="stddocNumber">309</span></fmt-xref><fmt-xref target="ip_309"><sup>[7]</sup></fmt-xref>
+</semx></semx>]</fmt-termsource></term>
+
+<term id="term-cloud-point" anchor="term-cloud-point" semx-id="_a2d0815c-dfe8-bd2e-2ad7-2da8bdbde9c5"><fmt-name id="_a6ca3024-1a78-b9da-5d85-9a5c095268ee"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-cloud-point">3</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-cloud-point">3</semx></fmt-xref-label><preferred id="_433a53cf-4945-7b01-ef2c-ed73ba32e9da"><expression>
+<name id="_f68378f4-9436-6260-844c-b96f70012f51">cloud point</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_433a53cf-4945-7b01-ef2c-ed73ba32e9da"><strong><semx element="expression/name" source="_f68378f4-9436-6260-844c-b96f70012f51">cloud point</semx></strong></semx></p></fmt-preferred><admitted id="_dab52c65-5724-4850-131e-3618841f885e"><expression>
+<name id="_6e382c9a-9993-daff-ac35-ce479745b79e">CP</name>
+</expression>
+</admitted><fmt-admitted><p><semx element="admitted" source="_dab52c65-5724-4850-131e-3618841f885e"><semx element="expression/name" source="_6e382c9a-9993-daff-ac35-ce479745b79e">CP</semx></semx></p></fmt-admitted>
+
+
+
+<definition id="_9db0ade8-89f6-2ade-368f-55f2d3d19b40" semx-id="_9db0ade8-89f6-2ade-368f-55f2d3d19b40"><verbal-definition semx-id="_1a7da3f0-3adb-3d93-8c61-92a6fba3318d" id="_1a7da3f0-3adb-3d93-8c61-92a6fba3318d"><p semx-id="_3591f570-9de0-067d-7360-cd5dfab79dd8" original-id="_3591f570-9de0-067d-7360-cd5dfab79dd8">temperature at which a cloud of wax crystals first appears in a transparent liquid when it is cooled under specified conditions</p></verbal-definition></definition><fmt-definition id="_ccafdd9a-c21d-0532-ab28-8254eeac4c6f"><semx element="definition" source="_9db0ade8-89f6-2ade-368f-55f2d3d19b40"><p id="_3591f570-9de0-067d-7360-cd5dfab79dd8" semx-id="_3591f570-9de0-067d-7360-cd5dfab79dd8">temperature at which a cloud of wax crystals first appears in a transparent liquid when it is cooled under specified conditions</p></semx></fmt-definition>
+
+
+ <source status="modified" type="authoritative" id="_a2be2eac-c8af-7627-3877-40725ed83931"><origin bibitemid="iso_3015" type="inline" citeas="ISO 3015"><localityStack><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack></origin>
+<modification id="_a1a4c667-c628-f58c-32c7-136011288814"><p semx-id="_73fed872-1af2-7f3b-ed25-05700f24c6d9" id="_73fed872-1af2-7f3b-ed25-05700f24c6d9">In the definition, liquid has been specified to be “transparent”.</p>
+</modification>
+</source><fmt-termsource status="modified" type="authoritative">[SOURCE: <semx element="source" source="_a2be2eac-c8af-7627-3877-40725ed83931"><origin bibitemid="iso_3015" type="inline" citeas="ISO 3015" id="_49aac249-ead3-c6be-5bb4-87c8fc91a73b"><localityStack><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack></origin><semx element="origin" source="_49aac249-ead3-c6be-5bb4-87c8fc91a73b"><fmt-xref type="inline" target="iso_3015"><span class="stdpublisher">ISO</span> <span class="stddocNumber">3015</span>,  <span class="citesec">3.1</span></fmt-xref></semx>, modified — <semx element="modification" source="_a1a4c667-c628-f58c-32c7-136011288814">In the definition, liquid has been specified to be “transparent”.</semx></semx>]</fmt-termsource></term>
+
+<terms id="_e500adf2-8efd-1ddf-2bb0-6c0f54fa7acf" obligation="normative" semx-id="_e500adf2-8efd-1ddf-2bb0-6c0f54fa7acf">
+<title id="_0ecf392f-6839-548a-6052-279f7ac82820" semx-id="_5942a3bc-78db-9fd8-b06e-d78a07037384">Total sediment-aged</title><fmt-title depth="2" id="_cd798edb-7eca-11d7-0b65-cfec46413627"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_e500adf2-8efd-1ddf-2bb0-6c0f54fa7acf">4</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_0ecf392f-6839-548a-6052-279f7ac82820">Total sediment-aged</semx></fmt-title><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_e500adf2-8efd-1ddf-2bb0-6c0f54fa7acf">4</semx></fmt-xref-label>
+<term id="term-potential-total-sediment" anchor="term-potential-total-sediment" semx-id="_e43d32ba-fe81-6e8c-6ec9-975ca8406641"><fmt-name id="_8bb24bff-c394-6658-8302-a2c4d1883d39"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_e500adf2-8efd-1ddf-2bb0-6c0f54fa7acf">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-potential-total-sediment">1</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_e500adf2-8efd-1ddf-2bb0-6c0f54fa7acf">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-potential-total-sediment">1</semx></fmt-xref-label><preferred id="_3b95907e-4a72-9ccb-cfdf-844e9240b1e5"><expression>
+<name id="_74afb7a8-7382-d429-1e83-8161d7b5312b">potential total sediment</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_3b95907e-4a72-9ccb-cfdf-844e9240b1e5"><strong><semx element="expression/name" source="_74afb7a8-7382-d429-1e83-8161d7b5312b">potential total sediment</semx></strong></semx></p></fmt-preferred><admitted id="_54ef0a78-9987-bb2b-f03b-a9f6edcc720b"><expression>
+<name id="_38a01f2a-b275-0fe8-f264-f47b9dc68313">TSP</name>
+</expression>
+</admitted><fmt-admitted><p><semx element="admitted" source="_54ef0a78-9987-bb2b-f03b-a9f6edcc720b"><semx element="expression/name" source="_38a01f2a-b275-0fe8-f264-f47b9dc68313">TSP</semx></semx></p></fmt-admitted>
+
+
+
+<definition id="_13ce0444-1035-1d36-1642-0430512eb44d" semx-id="_13ce0444-1035-1d36-1642-0430512eb44d"><verbal-definition semx-id="_c85f1d33-d92b-72b8-6d1e-898ebd442871" id="_c85f1d33-d92b-72b8-6d1e-898ebd442871"><p semx-id="_0eb4b666-ccf1-bdd7-16bf-79227831c12f" original-id="_0eb4b666-ccf1-bdd7-16bf-79227831c12f">total sediment, determined by <eref type="inline" bibitemid="iso_10307-1" citeas="ISO 10307-1:2009"/>, after ageing a sample of residual fuel for 24 h at 100 °C under prescribed conditions</p></verbal-definition></definition><fmt-definition id="_365dd6cf-fdc5-4e25-4995-0795b2345d12"><semx element="definition" source="_13ce0444-1035-1d36-1642-0430512eb44d"><p id="_0eb4b666-ccf1-bdd7-16bf-79227831c12f" semx-id="_0eb4b666-ccf1-bdd7-16bf-79227831c12f">total sediment, determined by <eref type="inline" bibitemid="iso_10307-1" citeas="ISO 10307-1:2009" id="_22045b61-7a53-f786-1753-33b1235f21a5"/><semx element="eref" source="_22045b61-7a53-f786-1753-33b1235f21a5"><fmt-xref type="inline" target="iso_10307-1"><span class="stdpublisher">ISO</span> <span class="stddocNumber">10307</span>-<span class="stddocPartNumber">1</span>:<span class="stdyear">2009</span></fmt-xref></semx>, after ageing a sample of residual fuel for 24 h at 100 °C under prescribed conditions</p></semx></fmt-definition>
+
+
+ <source status="identical" type="authoritative" id="_9cef6232-0cf9-d908-b87f-fbc5095d8a17"><origin bibitemid="iso_10307-2" type="inline" citeas="ISO 10307-2:2009"><localityStack><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack></origin>
+</source><fmt-termsource status="identical" type="authoritative">[SOURCE: <semx element="source" source="_9cef6232-0cf9-d908-b87f-fbc5095d8a17"><origin bibitemid="iso_10307-2" type="inline" citeas="ISO 10307-2:2009" id="_ce8c04d7-1acd-79a9-c653-55fd42e1be66"><localityStack><locality type="clause"><referenceFrom>3.1</referenceFrom></locality></localityStack></origin><semx element="origin" source="_ce8c04d7-1acd-79a9-c653-55fd42e1be66"><fmt-xref type="inline" target="iso_10307-2"><span class="stdpublisher">ISO</span> <span class="stddocNumber">10307</span>-<span class="stddocPartNumber">2</span>:<span class="stdyear">2009</span>,  <span class="citesec">3.1</span></fmt-xref></semx></semx>]</fmt-termsource></term>
+
+<term id="term-accelerated-total-sediment" anchor="term-accelerated-total-sediment" semx-id="_a12ba303-1587-4d2b-d4c0-07527c88a985"><fmt-name id="_f6be9a7a-6bc7-9183-c161-4e80446c3a5a"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_e500adf2-8efd-1ddf-2bb0-6c0f54fa7acf">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-accelerated-total-sediment">2</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_e500adf2-8efd-1ddf-2bb0-6c0f54fa7acf">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-accelerated-total-sediment">2</semx></fmt-xref-label><preferred id="_4a8f0492-4459-13f1-e060-9669e5e60dbc"><expression>
+<name id="_3661c783-f0de-86cd-9836-458d91137983">accelerated total sediment</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_4a8f0492-4459-13f1-e060-9669e5e60dbc"><strong><semx element="expression/name" source="_3661c783-f0de-86cd-9836-458d91137983">accelerated total sediment</semx></strong></semx></p></fmt-preferred><admitted id="_ecddab3e-00e0-7f0f-c607-4d07637e8785"><expression>
+<name id="_c9bf7e3e-b8cb-464a-d9e8-b85431734d2d">TSA</name>
+</expression>
+</admitted><fmt-admitted><p><semx element="admitted" source="_ecddab3e-00e0-7f0f-c607-4d07637e8785"><semx element="expression/name" source="_c9bf7e3e-b8cb-464a-d9e8-b85431734d2d">TSA</semx></semx></p></fmt-admitted>
+
+
+
+<definition id="_1a55b68d-ff8a-c758-18a0-fe69bbb42f11" semx-id="_1a55b68d-ff8a-c758-18a0-fe69bbb42f11"><verbal-definition semx-id="_2505237e-fa9f-a79c-9877-894acbf5d7cf" id="_2505237e-fa9f-a79c-9877-894acbf5d7cf"><p semx-id="_cc430de1-6ea3-66f1-e01b-b937432ee241" original-id="_cc430de1-6ea3-66f1-e01b-b937432ee241">total sediment, determined by <eref type="inline" bibitemid="iso_10307-1" citeas="ISO 10307-1:2009"/>, after dilution of a sample of residual fuel with hexadecane in the ratio of 1 ml per 10 g of sample under carefully controlled conditions, followed by storage for 1h at 100 °C</p></verbal-definition></definition><fmt-definition id="_6f475dc7-b8da-77ed-582d-7f02db19c58b"><semx element="definition" source="_1a55b68d-ff8a-c758-18a0-fe69bbb42f11"><p id="_cc430de1-6ea3-66f1-e01b-b937432ee241" semx-id="_cc430de1-6ea3-66f1-e01b-b937432ee241">total sediment, determined by <eref type="inline" bibitemid="iso_10307-1" citeas="ISO 10307-1:2009" id="_9583efde-1297-4584-57b3-8da188fb9768"/><semx element="eref" source="_9583efde-1297-4584-57b3-8da188fb9768"><fmt-xref type="inline" target="iso_10307-1"><span class="stdpublisher">ISO</span> <span class="stddocNumber">10307</span>-<span class="stddocPartNumber">1</span>:<span class="stdyear">2009</span></fmt-xref></semx>, after dilution of a sample of residual fuel with hexadecane in the ratio of 1 ml per 10 g of sample under carefully controlled conditions, followed by storage for 1h at 100 °C</p></semx></fmt-definition>
+
+
+ <source status="identical" type="authoritative" id="_e148005e-697f-1904-2519-effbb13b0846"><origin bibitemid="iso_10307-2" type="inline" citeas="ISO 10307-2:2009"><localityStack><locality type="clause"><referenceFrom>3.2</referenceFrom></locality></localityStack></origin>
+</source><fmt-termsource status="identical" type="authoritative">[SOURCE: <semx element="source" source="_e148005e-697f-1904-2519-effbb13b0846"><origin bibitemid="iso_10307-2" type="inline" citeas="ISO 10307-2:2009" id="_1cf4997b-0b00-39dd-3bc0-12b74d1fc322"><localityStack><locality type="clause"><referenceFrom>3.2</referenceFrom></locality></localityStack></origin><semx element="origin" source="_1cf4997b-0b00-39dd-3bc0-12b74d1fc322"><fmt-xref type="inline" target="iso_10307-2"><span class="stdpublisher">ISO</span> <span class="stddocNumber">10307</span>-<span class="stddocPartNumber">2</span>:<span class="stdyear">2009</span>,  <span class="citesec">3.2</span></fmt-xref></semx></semx>]</fmt-termsource></term>
+</terms>
+
+<term id="term-microphone" anchor="term-microphone" semx-id="_f146b27e-ac10-9303-37f6-fc133240ad14"><fmt-name id="_f4e6cc19-c9d2-1cb3-9080-ecf789d7d783"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-microphone">5</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-microphone">5</semx></fmt-xref-label><preferred id="_8897db02-8117-5e79-8c65-77400cb97e89"><expression>
+<name id="_20ef5ea8-f495-93a8-36ad-c4be2dcf3deb">microphone</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_8897db02-8117-5e79-8c65-77400cb97e89"><strong><semx element="expression/name" source="_20ef5ea8-f495-93a8-36ad-c4be2dcf3deb">microphone</semx></strong></semx></p></fmt-preferred>
+<definition id="_61478300-941b-5533-b157-11695b4a8085" semx-id="_61478300-941b-5533-b157-11695b4a8085"><verbal-definition semx-id="_67be4b4f-cb5f-9320-528f-81d5e7a5f48f" id="_67be4b4f-cb5f-9320-528f-81d5e7a5f48f"><p semx-id="_fccbd5cd-0115-a928-a29d-a0ba8f01fa91" original-id="_fccbd5cd-0115-a928-a29d-a0ba8f01fa91">transducer that converts sound into an electrical signal</p></verbal-definition></definition><fmt-definition id="_33c846d2-7e9f-abb6-6bb5-b4d4d6ecf952"><semx element="definition" source="_61478300-941b-5533-b157-11695b4a8085"><p id="_fccbd5cd-0115-a928-a29d-a0ba8f01fa91" semx-id="_fccbd5cd-0115-a928-a29d-a0ba8f01fa91">transducer that converts sound into an electrical signal</p></semx></fmt-definition>
+
+
+ <source status="identical" type="authoritative" id="_537b4b89-9424-2e16-7242-441dcb68cd76"><origin bibitemid="iso22259" type="inline" citeas="ISO 22259:2019"><localityStack><locality type="clause"><referenceFrom>3.14</referenceFrom></locality></localityStack></origin>
+</source><fmt-termsource status="identical" type="authoritative">[SOURCE: <semx element="source" source="_537b4b89-9424-2e16-7242-441dcb68cd76"><origin bibitemid="iso22259" type="inline" citeas="ISO 22259:2019" id="_2efdd5cf-c203-c029-80d6-ad89575050b1"><localityStack><locality type="clause"><referenceFrom>3.14</referenceFrom></locality></localityStack></origin><semx element="origin" source="_2efdd5cf-c203-c029-80d6-ad89575050b1"><fmt-xref type="inline" target="iso22259"><span class="stdpublisher">ISO</span> <span class="stddocNumber">22259</span>:<span class="stdyear">2019</span>,  <span class="citesec">3.14</span></fmt-xref></semx></semx>]</fmt-termsource></term>
+
+<term id="term-headphone" anchor="term-headphone" semx-id="_c00e8110-dce9-7078-0a35-77aefbbfc01f"><fmt-name id="_b7859cec-b419-087b-c1c6-523a7fcdb226"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-headphone">6</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-headphone">6</semx></fmt-xref-label><preferred id="_4e78f1e5-657b-85a1-55b0-90fe2981a3ef"><expression>
+<name id="_ca9b800b-1fcd-be31-e156-f31a194f3ed7">headphone</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_4e78f1e5-657b-85a1-55b0-90fe2981a3ef"><strong><semx element="expression/name" source="_ca9b800b-1fcd-be31-e156-f31a194f3ed7">headphone</semx></strong></semx></p></fmt-preferred>
+<definition id="_4bbbc826-585f-457c-830f-aca52ffc6d0b" semx-id="_4bbbc826-585f-457c-830f-aca52ffc6d0b"><verbal-definition semx-id="_478467c4-0ea6-fcfd-d9ce-94bade56949b" id="_478467c4-0ea6-fcfd-d9ce-94bade56949b"><p semx-id="_6d5e6df7-ba49-29b3-1f2b-89a31817c9c5" original-id="_6d5e6df7-ba49-29b3-1f2b-89a31817c9c5">transducer that converts an electrical signal into sound, designed to be worn close to the ear</p></verbal-definition></definition><fmt-definition id="_41ed464f-e7f5-9aa5-cf16-2bd555370a1c"><semx element="definition" source="_4bbbc826-585f-457c-830f-aca52ffc6d0b"><p id="_6d5e6df7-ba49-29b3-1f2b-89a31817c9c5" semx-id="_6d5e6df7-ba49-29b3-1f2b-89a31817c9c5">transducer that converts an electrical signal into sound, designed to be worn close to the ear</p></semx></fmt-definition>
+
+
+ <source status="identical" type="authoritative" id="_78781dfe-3b45-180a-9a66-8ab482565892"><origin bibitemid="iso22259" type="inline" citeas="ISO 22259:2019"><localityStack><locality type="clause"><referenceFrom>3.17</referenceFrom></locality></localityStack></origin>
+</source><fmt-termsource status="identical" type="authoritative">[SOURCE: <semx element="source" source="_78781dfe-3b45-180a-9a66-8ab482565892"><origin bibitemid="iso22259" type="inline" citeas="ISO 22259:2019" id="_8bfbb3e6-b346-d4ad-e267-bee8605313eb"><localityStack><locality type="clause"><referenceFrom>3.17</referenceFrom></locality></localityStack></origin><semx element="origin" source="_8bfbb3e6-b346-d4ad-e267-bee8605313eb"><fmt-xref type="inline" target="iso22259"><span class="stdpublisher">ISO</span> <span class="stddocNumber">22259</span>:<span class="stdyear">2019</span>,  <span class="citesec">3.17</span></fmt-xref></semx></semx>]</fmt-termsource></term>
+
+<term id="term-headset" anchor="term-headset" semx-id="_a72da7a3-a495-5efb-f5e9-932e01c33f0a"><fmt-name id="_9719e010-2cc8-8e24-b0af-eff23400a299"><span class="fmt-caption-label"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-headset">7</semx></span></fmt-name><fmt-xref-label><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-headset">7</semx></fmt-xref-label><preferred id="_3eb8471e-9cd7-051e-2b3f-51997a6940a4"><expression>
+<name id="_b16f2956-bbd9-bdba-7e26-5deb0471fd33">headset</name>
+</expression>
+</preferred><fmt-preferred><p><semx element="preferred" source="_3eb8471e-9cd7-051e-2b3f-51997a6940a4"><strong><semx element="expression/name" source="_b16f2956-bbd9-bdba-7e26-5deb0471fd33">headset</semx></strong></semx></p></fmt-preferred>
+<definition id="_02443190-dc9a-ce01-d132-f52fcd07f7dc" semx-id="_02443190-dc9a-ce01-d132-f52fcd07f7dc"><verbal-definition semx-id="_0c24b245-1fba-91b4-6b02-0f80296a2e5d" id="_0c24b245-1fba-91b4-6b02-0f80296a2e5d"><p semx-id="_4c614cff-869d-0d7c-5aed-190cdb346d63" original-id="_4c614cff-869d-0d7c-5aed-190cdb346d63"><concept><errormsg>term <tt>headphones</tt>, display <tt>headphone</tt> not resolved via ID <tt>headphones</tt></errormsg></concept> combined with a <concept><refterm>microphone</refterm><renderterm>microphone</renderterm><xref target="term-microphone"/></concept></p></verbal-definition></definition><fmt-definition id="_94b3a6b5-5e00-01fa-4caf-d6bc44463461"><semx element="definition" source="_02443190-dc9a-ce01-d132-f52fcd07f7dc"><p id="_4c614cff-869d-0d7c-5aed-190cdb346d63" semx-id="_4c614cff-869d-0d7c-5aed-190cdb346d63"><concept id="_8871f9d7-29d3-1b31-9da9-9ab83f656529"><errormsg>term <tt>headphones</tt>, display <tt>headphone</tt> not resolved via ID <tt>headphones</tt></errormsg></concept><fmt-concept><semx element="concept" source="_8871f9d7-29d3-1b31-9da9-9ab83f656529"><strong>term <tt>headphones</tt>, display <tt>headphone</tt> not resolved via ID <tt>headphones</tt></strong></semx></fmt-concept> combined with a <concept id="_015a5786-dd8b-8059-b29b-37225ca82f32"><refterm>microphone</refterm><renderterm>microphone</renderterm><xref target="term-microphone" id="_080676fb-09ea-d30c-3ca3-e7f1f5ee9c80"/></concept><fmt-concept><semx element="concept" source="_015a5786-dd8b-8059-b29b-37225ca82f32"><em>microphone</em> <semx element="xref" source="_080676fb-09ea-d30c-3ca3-e7f1f5ee9c80">(<fmt-xref target="term-microphone"><span class="citesec"><semx element="autonum" source="terms">3</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="term-microphone">5</semx></span></fmt-xref>)</semx></semx></fmt-concept></p></semx></fmt-definition>
+
+
+ <source status="identical" type="authoritative" id="_0c04bf58-4cda-3008-eae2-bab13b20beaa"><origin bibitemid="iso20109" type="inline" citeas="ISO 20109:2016"><localityStack><locality type="clause"><referenceFrom>3.5</referenceFrom></locality></localityStack></origin>
+</source><fmt-termsource status="identical" type="authoritative">[SOURCE: <semx element="source" source="_0c04bf58-4cda-3008-eae2-bab13b20beaa"><origin bibitemid="iso20109" type="inline" citeas="ISO 20109:2016" id="_99a83528-505f-30b1-e574-22d6184fb4b2"><localityStack><locality type="clause"><referenceFrom>3.5</referenceFrom></locality></localityStack></origin><semx element="origin" source="_99a83528-505f-30b1-e574-22d6184fb4b2"><fmt-xref type="inline" target="iso20109"><span class="stdpublisher">ISO</span> <span class="stddocNumber">20109</span>:<span class="stdyear">2016</span>,  <span class="citesec">3.5</span></fmt-xref></semx></semx>]</fmt-termsource></term>
+</terms>
+
+<clause id="content" anchor="content" inline-header="false" obligation="normative" semx-id="_5bfdd5ed-ef58-7196-52bd-a318fa8eb549" displayorder="8">
+<title id="_3d4e1391-7458-0301-8215-dad6f436d463" semx-id="_ede0f0d3-8686-db2d-1a39-7e0254b0c3cc">Main content</title><fmt-title depth="1" id="_1ee83c3f-fb92-8e38-6ac2-48735283f142"><span class="fmt-caption-label"><semx element="autonum" source="content">4</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_3d4e1391-7458-0301-8215-dad6f436d463">Main content</semx></fmt-title><fmt-xref-label><span class="fmt-element-name">Clause</span> <semx element="autonum" source="content">4</semx></fmt-xref-label>
+<clause id="general" anchor="general" inline-header="false" obligation="normative" semx-id="_1b385437-d747-3b00-c269-e31bb0503a9d">
+<title id="_4814617b-7c4f-e869-0856-07ef0c5ce76a" semx-id="_53d82e48-1024-e16a-9901-40ceda1ab9b0">General</title><fmt-title depth="2" id="_038babd3-fa3a-0708-352c-302f7ebc1193"><span class="fmt-caption-label"><semx element="autonum" source="content">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="general">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_4814617b-7c4f-e869-0856-07ef0c5ce76a">General</semx></fmt-title><fmt-xref-label><semx element="autonum" source="content">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="general">1</semx></fmt-xref-label>
+<p id="_53b85594-82da-5614-8cf2-7a990d4e1c9c" semx-id="_53b85594-82da-5614-8cf2-7a990d4e1c9c">Here’s where you place your main content.</p>
+</clause>
+
+<clause id="_97d47042-fed1-ff75-2df2-20fbdf94fc30" inline-header="false" obligation="normative" semx-id="_97d47042-fed1-ff75-2df2-20fbdf94fc30">
+<title id="_fbb2c8f3-6551-15d9-6c4b-145c657bb181" semx-id="_56dab6fb-903f-a5f3-068a-1e14ae4f3cee">Data models</title><fmt-title depth="2" id="_312d49a5-90aa-0b0f-8ff1-2eb6fcc5505b"><span class="fmt-caption-label"><semx element="autonum" source="content">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_97d47042-fed1-ff75-2df2-20fbdf94fc30">2</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_fbb2c8f3-6551-15d9-6c4b-145c657bb181">Data models</semx></fmt-title><fmt-xref-label><semx element="autonum" source="content">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_97d47042-fed1-ff75-2df2-20fbdf94fc30">2</semx></fmt-xref-label>
+<p id="_788bdcde-d159-0322-f3b8-5103d5a27378" semx-id="_788bdcde-d159-0322-f3b8-5103d5a27378">The following data models are used by other data models specified in this document.</p>
+
+<clause id="_5cbff914-ea50-25b2-e87f-d58a24e6f1d4" inline-header="false" obligation="normative" semx-id="_5cbff914-ea50-25b2-e87f-d58a24e6f1d4">
+<title id="_45046dc0-5f5b-1dc6-8063-a6f15bd55033" semx-id="_e1f213ed-925a-7e63-24b1-b4bbe36b6ce4">Basic data types</title><fmt-title depth="3" id="_3548a7c5-c748-74a5-1ac3-b3853e73a789"><span class="fmt-caption-label"><semx element="autonum" source="content">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_97d47042-fed1-ff75-2df2-20fbdf94fc30">2</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_5cbff914-ea50-25b2-e87f-d58a24e6f1d4">1</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_45046dc0-5f5b-1dc6-8063-a6f15bd55033">Basic data types</semx></fmt-title><fmt-xref-label><semx element="autonum" source="content">4</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_97d47042-fed1-ff75-2df2-20fbdf94fc30">2</semx><span class="fmt-autonum-delim">.</span><semx element="autonum" source="_5cbff914-ea50-25b2-e87f-d58a24e6f1d4">1</semx></fmt-xref-label>
+<figure id="_9621f12f-0863-82f1-98c9-ce9c8d77f2d6" semx-id="_9621f12f-0863-82f1-98c9-ce9c8d77f2d6" autonum="1"><fmt-name id="_a7935c28-bc3d-7783-b72e-57b308bd629b"><span class="fmt-caption-label"><span class="fmt-element-name">Figure</span> <semx element="autonum" source="_9621f12f-0863-82f1-98c9-ce9c8d77f2d6">1</semx></span></fmt-name><fmt-xref-label><span class="fmt-element-name">Figure</span> <semx element="autonum" source="_9621f12f-0863-82f1-98c9-ce9c8d77f2d6">1</semx></fmt-xref-label><image id="_5e1d727f-b0ec-1812-550f-b11ac27ab349" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAcAAAAEiCAIAAADhy5WtAAAAKXRFWHRjb3B5bGVmdABHZW5lcmF0ZWQgYnkgaHR0cDovL3BsYW50dW1sLmNvbREwORwAAAIZaVRYdHBsYW50dW1sAAEAAAB4nM1UXU8bMRB8t5T/sI8gRHSXhAhOCEESKIWkQVxI++r4lsTFsSN7L21A/Pfu3TXKh6q2L5UqS5Zudjw79u7eZSDpKZ+bmihWeNF2Ib2cQ2+hIT6JtqGBs07NvJsjPEsTcDvW1xZHqwWC8zRzNTHTGYLSXpkdWg+fZW4I3moCYITf6croqZ2jJVC8oS/wG2fpk+Qst2iWSFrJmnjfVukaGUKlcUXk9SQn/KicTfUrQlTAHalept7lNus64zx8nmnCku+9+1ZhHcOkkux8hn4PLEyktDIIE2eyAknZHjriS5axIlcc7Tl7REXSTvnU27+ysUke/62r4eQr+/oPLG2burakaVWZ+t2JYqmy4Dq4+OSs0eo67q3z80ySLFru4qIQed/htZtnf2L1nZJGv0rSzo7ktDJyZLh6yZZCCQbl9YKSHQO/0sIs5W60a61QfiRQgSVEkr/3Mv9UukSblXMoHtgEPQ36sEQfmANxvRHFp/W4dZBK4hlS0GhAFCXNZhK34fZ+BEX8UBx8eOhDcLlXCJkO1WSwwKG4k0sJjzk/+RwTGC7Q3vXu1wCXYqm9K8dQ3I0HG0K7ddzRBCl6tgLjQaUzrmwlXO56VI+P4qbgA57vw1dPV4FwnsBAKhim8EXwtjnA9Fa9Kda/gWurXFa+0dPo5vhU9Pn1czlli2hFl5uU/IpjqfgBakV4SOhl+qkAAFX3SURBVHhe7Z15vE3V+8dPFIpkLlOGIgpJhq8hGRpUmnyTyKwihUhI0WDWTSRDA0mD/FAqV4ZKMnSl4ctFZjKULg2IEtm/93c/37ss+xzXddx7z97u8/7jvPZZe+21h/Wsz3qetfdeO+QoiqIoURHyJiiKoiipQwVUURQlSlRAFUVRokQFVFEUJUpUQBVFUaJEBVRRFCVKVEAVRVGiRAVUURQlSlRAFUVRokQFVFEUJUoySEDj4uL+rfgYKshbZ35C7Sdd8Xnt+5kMElAqKaT4mLvuustbZ35C7Sdd8Xnt+5kMFdCiRYvepfgMKsX/TUjtJ50IRO37mQwVUK0nHxKIqgnEQQYRvbCniQpoZicQVROIgwwiemFPExXQzI5UTd26dT/99NNFixYlJCR89913a9as2bx5886dO3/99deDBw96t8lw1H7SiUDUvp9RAc3sSNXUqlXr/fffj4+Pnz9/Pg1p+fLliYmJtKJdu3bt37/fu02Go/aTTgSi9v2MCmhmR6qmRo0a77zzzrRp02bOnDlnzpyFCxfSivBEtm3btnfvXu82GY7aTzoRiNr3MyqgmR2pmmrVqk2aNOnNN9+cOnUqzgitCE+EaA43hDjOu02Go/aTTgSi9v2MCmhmR6qmatWqr7/+umlFeCJEcwkJCWvXrk1KSvJuk+Go/aQTgah9P5NZBDQuLq5x48be1OM5ePDgli1bjhw54l1hsXLlypIn4F//+pc3dxCQqqlevTqNZ5ILC0Rz8fHxuCGJiYm7du3ybpPhpLf9LF68uFSpUimP9x09ehTz+OOPP7wrLMhToUIFr2Ukw+beDWJNIGrfz2QWAb3pppvuv/9+b+rxvPzyy+eee+7ff//tXWGBST2dzOWXX543b17zF+Pz5g4CUjWo///93//ReMQTeeeddwjlPv30U+K4nTt3erfJcNLbfoYOHVqmTBlv6vHgjnEMyIp3hQUSbOwBkyN/9+7d5e+zzz6LvHo3iDWBqH0/k1kENH/+/K+99po39Xjat29fq1Ytb+qJQUBvueUWb2rQCEQTSm/7adKkScuWLb2pxzN58uSzzz77wIED3hUnoHPnzrlz5/7nn3+8K/xEIGrfz5yxAvruu+9WrVo1V65chCfTp09n7ytWrCB93759jz32WIkSJUjJkycPVo7LKZEX7mfOnDkbNGhANiK1xx9/nLCObBdccAHe619//WWXv3fv3ixZsjzzzDMmJSEhgTANszMprGXvbNiqVasxY8Z06dKFPdII77nnHvN43Z9//vnkk09efPHF7Khy5cqzZ882m2cMgWhCaW4/33zzzY033kjNXnrppVOmTClWrNiLL77ouDE4NUVFULk5cuRo1KjRjh07SO/QoQPRRtasWanin3/+2XHjlSpVqpCSPXv266+/fuvWrZ5dYH5iS8KRI0fY1+DBg03K3LlzMbDVq1c///zzPXr0GDVqFIWH3HviGzZsMNneeOMNjod0DnL48OEmPU0IRO37mcAL6KFDh1auXCnLX3/9tSyMGDEC6ydoWrBgwaOPPpotWzaU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" mimetype="image/png" height="auto" width="auto" filename="images/datatypes.png" semx-id="_5e1d727f-b0ec-1812-550f-b11ac27ab349"/></figure>
+</clause>
+</clause>
+</clause>
+
+
+
+
+
+
+<references id="_704cdb6e-55b9-f073-754f-ac9c8b4d1eda" normative="true" obligation="informative" semx-id="_704cdb6e-55b9-f073-754f-ac9c8b4d1eda" displayorder="6">
+<title id="_708516f3-5914-33c4-8001-a64c25fdd45e" semx-id="_270c5ee6-077e-f285-ff95-287984a30140">Normative references</title><fmt-title depth="1" id="_b6f00105-d0ca-ae1d-d0a3-164021a1bf75"><span class="fmt-caption-label"><semx element="autonum" source="_704cdb6e-55b9-f073-754f-ac9c8b4d1eda">2</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_708516f3-5914-33c4-8001-a64c25fdd45e">Normative references</semx></fmt-title><fmt-xref-label><span class="fmt-element-name">Clause</span> <semx element="autonum" source="_704cdb6e-55b9-f073-754f-ac9c8b4d1eda">2</semx></fmt-xref-label><p id="_49996d2b-65c1-916b-9bbf-42b933aa0025" semx-id="_49996d2b-65c1-916b-9bbf-42b933aa0025">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document. For dated references, only the edition cited applies. For undated references, the latest edition of the referenced document (including any amendments) applies.</p>
+<bibitem id="iso8217" type="standard" schema-version="v1.5.6" anchor="iso8217" semx-id="_c202d1ae-408a-0175-b75e-74875a78f307"><biblio-tag><span class="stdpublisher">ISO</span> <span class="stddocNumber">8217</span>:<span class="stdyear">2017</span>, </biblio-tag><formattedref><em><span class="stddocTitle">Petroleum products — Fuels (class F) — Specifications of marine fuels</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Petroleum products</title>
+
+  
+<title language="en" script="Latn" type="title-main">Fuels (class F)</title>
+
+  
+<title language="en" script="Latn" type="title-part">Specifications of marine fuels</title>
+
+  
+<title language="en" script="Latn" type="main">Petroleum products — Fuels (class F) — Specifications of marine fuels</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Produits pétroliers</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Combustibles (classe F)</title>
+
+  
+<title language="fr" script="Latn" type="title-part">Spécifications des combustibles pour la marine</title>
+
+  
+<title language="fr" script="Latn" type="main">Produits pétroliers — Combustibles (classe F) — Spécifications des combustibles pour la marine</title>
+
+  <uri type="src">https://www.iso.org/standard/64247.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:64247:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/06/42/64247.detail.rss</uri>
+  <docidentifier type="ISO" primary="true">ISO 8217:2017</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO 8217</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO 8217:2017(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso:8217:stage-95.99</docidentifier><docidentifier scope="biblio-tag">ISO 8217:2017</docidentifier>
+  <docnumber>8217</docnumber>
+  <date type="published">
+    <on>2017-03-17</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="TC">
+        
+<name>Classifications and specifications</name>
+
+        <identifier id="_1eeb0298-7768-c0b9-891a-8c009c338e9b">ISO/TC 28/SC 4</identifier><fmt-identifier><tt><semx element="identifier" source="_1eeb0298-7768-c0b9-891a-8c009c338e9b">ISO/TC 28/SC 4</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>6</edition>
+  <language>en</language>
+  <language>fr</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">ISO 8217:2017 specifies the requirements for fuels for use in marine diesel engines and boilers, prior to conventional onboard treatment (settling, centrifuging, filtration) before use. The specifications for fuels in this document can also be applied to fuels used in stationary diesel engines of the same or similar type as those used for marine purposes. ISO 8217:2017 specifies seven categories of distillate fuels, one of which is for diesel engines used for emergency purposes. It also specifies six categories of residual fuels. For the purposes of this document, the term “fuels” is currently used to include the following: — hydrocarbons from petroleum crude oil, oil sands and shale; — hydrocarbons from synthetic or renewable sources, similar in composition to petroleum distillate fuels; — blends of the above with a fatty acid methyl ester(s) (FAME) component where permitted. NOTE 1 Appropriate guidance about fuel treatment systems for diesel engines is published by the International Council on Combustion Engines (CIMAC)[5]. NOTE 2 Requirements for gas turbine fuels used in marine applications are specified in ISO 4261[6]. NOTE 3 For the purposes of this document, the terms “mass %” and “volume %” are used to represent the mass and volume fractions respectively.</abstract>
+  <status>
+    <stage>60</stage>
+    <substage>60</substage>
+  </status>
+  <copyright>
+    <from>2017</from>
+    <owner>
+      <organization>
+        
+<name>ISO</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletes">
+    <bibitem>
+      <formattedref>ISO 8217:2012</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 8217:2012</docidentifier>
+      <date type="published">
+        <on>2012-08-07</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem>
+</references></sections><annex id="annex-1" anchor="annex-1" inline-header="false" obligation="normative" semx-id="_d11c1e50-8921-a9cc-eed2-87f17f24ef69" autonum="A" displayorder="9">
+<title id="_6c984eca-81d6-4841-bcd2-0b55550ea488" semx-id="_995e1016-e9d3-520d-70dc-9c33bf58245f">Annex One</title><fmt-title id="_603b3e75-42d7-d49e-31e8-4de5072853f5"><strong><span class="fmt-caption-label"><span class="fmt-element-name">Annex</span> <semx element="autonum" source="annex-1">A</semx></span></strong><br/><span class="fmt-obligation">(normative)</span><span class="fmt-caption-delim"><br/><br/></span><semx element="title" source="_6c984eca-81d6-4841-bcd2-0b55550ea488"><strong>Annex One</strong></semx></fmt-title><fmt-xref-label><span class="fmt-element-name">Annex</span> <semx element="autonum" source="annex-1">A</semx></fmt-xref-label><variant-title type="toc"><span class="fmt-caption-label"><span class="fmt-element-name">Annex</span> <semx element="autonum" source="annex-1">A</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_6c984eca-81d6-4841-bcd2-0b55550ea488">Annex One</semx></variant-title>
+<p id="_7ac12c35-b858-40ec-4fa3-e22ee31d4420" semx-id="_7ac12c35-b858-40ec-4fa3-e22ee31d4420">This is a normative annex.</p>
+</annex><annex id="annex-2" anchor="annex-2" inline-header="false" obligation="informative" semx-id="_375e8029-b2d2-cdfe-575d-1b463e9faef6" autonum="B" displayorder="10">
+<title id="_38912b60-070a-410d-615b-dd33dc647eef" semx-id="_4d4e0e87-0b14-2df0-e06f-b749ed5115f8">Annex Two</title><fmt-title id="_c442612f-1226-2c0b-05af-e8cda4b7077e"><strong><span class="fmt-caption-label"><span class="fmt-element-name">Annex</span> <semx element="autonum" source="annex-2">B</semx></span></strong><br/><span class="fmt-obligation">(informative)</span><span class="fmt-caption-delim"><br/><br/></span><semx element="title" source="_38912b60-070a-410d-615b-dd33dc647eef"><strong>Annex Two</strong></semx></fmt-title><fmt-xref-label><span class="fmt-element-name">Annex</span> <semx element="autonum" source="annex-2">B</semx></fmt-xref-label><variant-title type="toc"><span class="fmt-caption-label"><span class="fmt-element-name">Annex</span> <semx element="autonum" source="annex-2">B</semx></span><span class="fmt-caption-delim"><tab/></span><semx element="title" source="_38912b60-070a-410d-615b-dd33dc647eef">Annex Two</semx></variant-title>
+<p id="_eead8ae9-215f-c7ef-f9de-dbfad2afcaca" semx-id="_eead8ae9-215f-c7ef-f9de-dbfad2afcaca">This is an informative annex.</p>
+</annex><bibliography><references id="_6fd8c32c-6978-be1f-401d-793647716e95" normative="false" obligation="informative" semx-id="_6fd8c32c-6978-be1f-401d-793647716e95" displayorder="11">
+<title id="_f4c2bd32-4b9f-c7bf-65fa-4a5120f569d3" semx-id="_50ceb1e1-516f-2673-d73d-4f0c58b4d023">Bibliography</title><fmt-title depth="1" id="_f6fe7add-d1a9-0682-793c-fa2b1a09ca57"><semx element="title" source="_f4c2bd32-4b9f-c7bf-65fa-4a5120f569d3">Bibliography</semx></fmt-title><bibitem id="iso_3015" type="standard" schema-version="v1.5.6" anchor="iso_3015" semx-id="_a57564bc-6176-e955-7f31-39d69a30816f"><biblio-tag>[1]<tab/><span class="stdpublisher">ISO</span> <span class="stddocNumber">3015</span>, </biblio-tag><formattedref><em><span class="stddocTitle">Petroleum and related products from natural or synthetic sources — Determination of cloud point</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Petroleum and related products from natural or synthetic sources</title>
+
+  
+<title language="en" script="Latn" type="title-main">Determination of cloud point</title>
+
+  
+<title language="en" script="Latn" type="main">Petroleum and related products from natural or synthetic sources — Determination of cloud point</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Produits pétroliers et connexes d’origine naturelle ou synthétique</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Détermination du point de trouble</title>
+
+  
+<title language="fr" script="Latn" type="main">Produits pétroliers et connexes d’origine naturelle ou synthétique — Détermination du point de trouble</title>
+
+  <uri type="src">https://www.iso.org/standard/72765.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:72765:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/07/27/72765.detail.rss</uri><docidentifier type="metanorma-ordinal">[1]</docidentifier>
+  <docidentifier type="ISO" primary="true">ISO 3015</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO 3015</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO 3015(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso:3015:stage-90.93</docidentifier><docidentifier scope="biblio-tag">ISO 3015</docidentifier>
+  <docnumber>3015</docnumber>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="TC">
+        
+<name>Petroleum and related products, fuels and lubricants from natural or synthetic sources</name>
+
+        <identifier id="_9fbcf887-2984-5c59-bd5f-b0144fa72e30">ISO/TC 28</identifier><fmt-identifier><tt><semx element="identifier" source="_9fbcf887-2984-5c59-bd5f-b0144fa72e30">ISO/TC 28</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>3</edition>
+  <language>en</language>
+  <language>fr</language>
+  <script>Latn</script>
+  <status>
+    <stage>90</stage>
+    <substage>93</substage>
+  </status>
+  <copyright>
+    <from>2019</from>
+    <owner>
+      <organization>
+        
+<name>ISO</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletes">
+    <bibitem>
+      <formattedref>ISO 3015:1992</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 3015:1992</docidentifier>
+      <date type="published">
+        <on>1992-08-27</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="instanceOf">
+    <bibitem type="standard">
+      
+<title language="en" script="Latn" type="title-intro">Petroleum and related products from natural or synthetic sources</title>
+
+      
+<title language="en" script="Latn" type="title-main">Determination of cloud point</title>
+
+      
+<title language="en" script="Latn" type="main">Petroleum and related products from natural or synthetic sources — Determination of cloud point</title>
+
+      
+<title language="fr" script="Latn" type="title-intro">Produits pétroliers et connexes d’origine naturelle ou synthétique</title>
+
+      
+<title language="fr" script="Latn" type="title-main">Détermination du point de trouble</title>
+
+      
+<title language="fr" script="Latn" type="main">Produits pétroliers et connexes d’origine naturelle ou synthétique — Détermination du point de trouble</title>
+
+      <uri type="src">https://www.iso.org/standard/72765.html</uri>
+      <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:72765:en</uri>
+      <uri type="rss">https://www.iso.org/contents/data/standard/07/27/72765.detail.rss</uri>
+      <docidentifier type="ISO" primary="true">ISO 3015:2019</docidentifier>
+      <docidentifier type="iso-undated">ISO 3015</docidentifier>
+      <docidentifier type="iso-reference">ISO 3015:2019(E)</docidentifier>
+      <docidentifier type="URN">urn:iso:std:iso:3015:stage-90.93</docidentifier>
+      <docnumber>3015</docnumber>
+      <date type="published">
+        <on>2019-04-25</on>
+      </date>
+      <contributor>
+        <role type="publisher"/>
+        <organization>
+          
+<name>International Organization for Standardization</name>
+
+          <abbreviation>ISO</abbreviation>
+          <uri>www.iso.org</uri>
+        </organization>
+      </contributor>
+      <contributor>
+        <role type="author">
+          <description>committee</description>
+        </role>
+        <organization>
+          
+<name>International Organization for Standardization</name>
+
+          <subdivision type="technical-committee" subtype="TC">
+            
+<name>Petroleum and related products, fuels and lubricants from natural or synthetic sources</name>
+
+            <identifier id="_e443d0df-a9e1-af87-bec6-31735a2643e6">ISO/TC 28</identifier><fmt-identifier><tt><semx element="identifier" source="_e443d0df-a9e1-af87-bec6-31735a2643e6">ISO/TC 28</semx></tt></fmt-identifier>
+          </subdivision>
+          <abbreviation>ISO</abbreviation>
+        </organization>
+      </contributor>
+      <edition>3</edition>
+      <language>en</language>
+      <language>fr</language>
+      <script>Latn</script>
+      <abstract language="en" script="Latn">This document specifies a method for the determination of the cloud point of petroleum products which are transparent in layers 40 mm in thickness and have a cloud point below 49 °C, amongst which are diesel fuels with up to 30 % (V/V) of fatty acid methyl ester (FAME)[2], paraffinic diesel fuels with up to 7 % (V/V) FAME[3], 100 % FAME[5] and lubricants. NOTE For the purposes of this document, the term “% (V/V)” is used to represent the volume fraction (φ) of a material.</abstract>
+      <status>
+        <stage>90</stage>
+        <substage>93</substage>
+      </status>
+      <copyright>
+        <from>2019</from>
+        <owner>
+          <organization>
+            
+<name>ISO</name>
+
+          </organization>
+        </owner>
+      </copyright>
+      <relation type="obsoletes">
+        <bibitem>
+          <formattedref>ISO 3015:1992</formattedref>
+          <docidentifier type="ISO" primary="true">ISO 3015:1992</docidentifier>
+          <date type="published">
+            <on>1992-08-27</on>
+          </date>
+        </bibitem>
+
+      </relation>
+      <place>
+        <city>Geneva</city>
+      </place>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem><bibitem id="iso_3016" type="standard" schema-version="v1.5.6" anchor="iso_3016" semx-id="_6396f6eb-f9bf-4aa0-d1a4-34b1cde02aca"><biblio-tag>[2]<tab/><span class="stdpublisher">ISO</span> <span class="stddocNumber">3016</span>, </biblio-tag><formattedref><em><span class="stddocTitle">Petroleum and related products from natural or synthetic sources — Determination of pour point</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Petroleum and related products from natural or synthetic sources</title>
+
+  
+<title language="en" script="Latn" type="title-main">Determination of pour point</title>
+
+  
+<title language="en" script="Latn" type="main">Petroleum and related products from natural or synthetic sources — Determination of pour point</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Produits pétroliers et connexes d’origine naturelle ou synthétique</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Détermination du point d’écoulement</title>
+
+  
+<title language="fr" script="Latn" type="main">Produits pétroliers et connexes d’origine naturelle ou synthétique — Détermination du point d’écoulement</title>
+
+  <uri type="src">https://www.iso.org/standard/73386.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:73386:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/07/33/73386.detail.rss</uri><docidentifier type="metanorma-ordinal">[2]</docidentifier>
+  <docidentifier type="ISO" primary="true">ISO 3016</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO 3016</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO 3016(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso:3016:stage-90.93</docidentifier><docidentifier scope="biblio-tag">ISO 3016</docidentifier>
+  <docnumber>3016</docnumber>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="TC">
+        
+<name>Petroleum and related products, fuels and lubricants from natural or synthetic sources</name>
+
+        <identifier id="_53706cc4-c697-442a-88d9-cad1cefc9407">ISO/TC 28</identifier><fmt-identifier><tt><semx element="identifier" source="_53706cc4-c697-442a-88d9-cad1cefc9407">ISO/TC 28</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>3</edition>
+  <language>en</language>
+  <language>fr</language>
+  <script>Latn</script>
+  <status>
+    <stage>90</stage>
+    <substage>93</substage>
+  </status>
+  <copyright>
+    <from>2019</from>
+    <owner>
+      <organization>
+        
+<name>ISO</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletes">
+    <bibitem>
+      <formattedref>ISO 3016:1994</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 3016:1994</docidentifier>
+      <date type="published">
+        <on>1994-08-04</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="instanceOf">
+    <bibitem type="standard">
+      
+<title language="en" script="Latn" type="title-intro">Petroleum and related products from natural or synthetic sources</title>
+
+      
+<title language="en" script="Latn" type="title-main">Determination of pour point</title>
+
+      
+<title language="en" script="Latn" type="main">Petroleum and related products from natural or synthetic sources — Determination of pour point</title>
+
+      
+<title language="fr" script="Latn" type="title-intro">Produits pétroliers et connexes d’origine naturelle ou synthétique</title>
+
+      
+<title language="fr" script="Latn" type="title-main">Détermination du point d’écoulement</title>
+
+      
+<title language="fr" script="Latn" type="main">Produits pétroliers et connexes d’origine naturelle ou synthétique — Détermination du point d’écoulement</title>
+
+      <uri type="src">https://www.iso.org/standard/73386.html</uri>
+      <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:73386:en</uri>
+      <uri type="rss">https://www.iso.org/contents/data/standard/07/33/73386.detail.rss</uri>
+      <docidentifier type="ISO" primary="true">ISO 3016:2019</docidentifier>
+      <docidentifier type="iso-undated">ISO 3016</docidentifier>
+      <docidentifier type="iso-reference">ISO 3016:2019(E)</docidentifier>
+      <docidentifier type="URN">urn:iso:std:iso:3016:stage-90.93</docidentifier>
+      <docnumber>3016</docnumber>
+      <date type="published">
+        <on>2019-04-25</on>
+      </date>
+      <contributor>
+        <role type="publisher"/>
+        <organization>
+          
+<name>International Organization for Standardization</name>
+
+          <abbreviation>ISO</abbreviation>
+          <uri>www.iso.org</uri>
+        </organization>
+      </contributor>
+      <contributor>
+        <role type="author">
+          <description>committee</description>
+        </role>
+        <organization>
+          
+<name>International Organization for Standardization</name>
+
+          <subdivision type="technical-committee" subtype="TC">
+            
+<name>Petroleum and related products, fuels and lubricants from natural or synthetic sources</name>
+
+            <identifier id="_45c45615-8691-cbce-412e-5c8b08aab6fd">ISO/TC 28</identifier><fmt-identifier><tt><semx element="identifier" source="_45c45615-8691-cbce-412e-5c8b08aab6fd">ISO/TC 28</semx></tt></fmt-identifier>
+          </subdivision>
+          <abbreviation>ISO</abbreviation>
+        </organization>
+      </contributor>
+      <edition>3</edition>
+      <language>en</language>
+      <language>fr</language>
+      <script>Latn</script>
+      <abstract language="en" script="Latn">This document specifies a method for the determination of the pour point of petroleum products. A separate procedure suitable for the determination of the lower pour point of fuel oils, heavy lubricant base stock, and products containing residual fuel components is also described. The procedure described in this document is not suitable for crude oils. NOTE There is equipment available that uses an automated procedure similar to the one described in this document. However, the precision thereof has not been established[1]. [1] ISO develops an automated test method standard.</abstract>
+      <status>
+        <stage>90</stage>
+        <substage>93</substage>
+      </status>
+      <copyright>
+        <from>2019</from>
+        <owner>
+          <organization>
+            
+<name>ISO</name>
+
+          </organization>
+        </owner>
+      </copyright>
+      <relation type="obsoletes">
+        <bibitem>
+          <formattedref>ISO 3016:1994</formattedref>
+          <docidentifier type="ISO" primary="true">ISO 3016:1994</docidentifier>
+          <date type="published">
+            <on>1994-08-04</on>
+          </date>
+        </bibitem>
+
+      </relation>
+      <place>
+        <city>Geneva</city>
+      </place>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem><bibitem id="iso_10307-1" type="standard" schema-version="v1.5.6" anchor="iso_10307-1" semx-id="_f360e66b-f241-cdd0-cb11-65bf91258d8c"><biblio-tag>[3]<tab/><span class="stdpublisher">ISO</span> <span class="stddocNumber">10307</span>-<span class="stddocPartNumber">1</span>:<span class="stdyear">2009</span>, </biblio-tag><formattedref><em><span class="stddocTitle">Petroleum products — Total sediment in residual fuel oils — Part 1: Determination by hot filtration</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Petroleum products</title>
+
+  
+<title language="en" script="Latn" type="title-main">Total sediment in residual fuel oils</title>
+
+  
+<title language="en" script="Latn" type="title-part">Part 1: Determination by hot filtration</title>
+
+  
+<title language="en" script="Latn" type="main">Petroleum products — Total sediment in residual fuel oils — Part 1: Determination by hot filtration</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Produits pétroliers</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Insolubles existants dans les fuel-oils résiduels</title>
+
+  
+<title language="fr" script="Latn" type="title-part">Partie 1: Détermination par filtration à chaud</title>
+
+  
+<title language="fr" script="Latn" type="main">Produits pétroliers — Insolubles existants dans les fuel-oils résiduels — Partie 1: Détermination par filtration à chaud</title>
+
+  <uri type="src">https://www.iso.org/standard/44980.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:44980:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/04/49/44980.detail.rss</uri><docidentifier type="metanorma-ordinal">[3]</docidentifier>
+  <docidentifier type="ISO" primary="true">ISO 10307-1:2009</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO 10307-1</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO 10307-1:2009(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso:10307:-1:stage-90.93</docidentifier><docidentifier scope="biblio-tag">ISO 10307-1:2009</docidentifier>
+  <docnumber>10307</docnumber>
+  <date type="published">
+    <on>2009-02-05</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="TC">
+        
+<name>Petroleum and related products, fuels and lubricants from natural or synthetic sources</name>
+
+        <identifier id="_c848a0fc-1f36-fb2b-6292-d71dc19a8e95">ISO/TC 28</identifier><fmt-identifier><tt><semx element="identifier" source="_c848a0fc-1f36-fb2b-6292-d71dc19a8e95">ISO/TC 28</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>2</edition>
+  <language>en</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">ISO 10307-1:2009 specifies a method for the determination of total sediment in residual fuel oils having a maximum viscosity of 55 mm2/s at 100 °C, and for blends of distillate fuels containing residual components.</abstract>
+  <status>
+    <stage>90</stage>
+    <substage>93</substage>
+  </status>
+  <copyright>
+    <from>2009</from>
+    <owner>
+      <organization>
+        
+<name>ISO</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletes">
+    <bibitem>
+      <formattedref>ISO 10307-1:1993/Cor 1:1997</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 10307-1:1993/Cor 1:1997</docidentifier>
+      <date type="published">
+        <on>1997-11-27</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="obsoletes">
+    <bibitem>
+      <formattedref>ISO 10307-1:1993</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 10307-1:1993</docidentifier>
+      <date type="published">
+        <on>1993-09-16</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem><bibitem id="iso_10307-2" type="standard" schema-version="v1.5.6" anchor="iso_10307-2" semx-id="_5326a3f2-c2d4-df35-2b9c-77a13a8fbd8b"><biblio-tag>[4]<tab/><span class="stdpublisher">ISO</span> <span class="stddocNumber">10307</span>-<span class="stddocPartNumber">2</span>:<span class="stdyear">2009</span>, </biblio-tag><formattedref><em><span class="stddocTitle">Petroleum products — Total sediment in residual fuel oils — Part 2: Determination using standard procedures for ageing</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Petroleum products</title>
+
+  
+<title language="en" script="Latn" type="title-main">Total sediment in residual fuel oils</title>
+
+  
+<title language="en" script="Latn" type="title-part">Part 2: Determination using standard procedures for ageing</title>
+
+  
+<title language="en" script="Latn" type="main">Petroleum products — Total sediment in residual fuel oils — Part 2: Determination using standard procedures for ageing</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Produits pétroliers</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Insolubles existants dans les fuel-oils résiduels</title>
+
+  
+<title language="fr" script="Latn" type="title-part">Partie 2: Détermination à l’aide de méthodes de vieillissement de référence</title>
+
+  
+<title language="fr" script="Latn" type="main">Produits pétroliers — Insolubles existants dans les fuel-oils résiduels — Partie 2: Détermination à l’aide de méthodes de vieillissement de référence</title>
+
+  <uri type="src">https://www.iso.org/standard/44005.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:44005:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/04/40/44005.detail.rss</uri><docidentifier type="metanorma-ordinal">[4]</docidentifier>
+  <docidentifier type="ISO" primary="true">ISO 10307-2:2009</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO 10307-2</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO 10307-2:2009(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso:10307:-2:stage-90.93</docidentifier><docidentifier scope="biblio-tag">ISO 10307-2:2009</docidentifier>
+  <docnumber>10307</docnumber>
+  <date type="published">
+    <on>2009-02-05</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="TC">
+        
+<name>Petroleum and related products, fuels and lubricants from natural or synthetic sources</name>
+
+        <identifier id="_0c0c367a-f4f8-5cd8-6a26-1f02c15f5afc">ISO/TC 28</identifier><fmt-identifier><tt><semx element="identifier" source="_0c0c367a-f4f8-5cd8-6a26-1f02c15f5afc">ISO/TC 28</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>2</edition>
+  <language>en</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">ISO 10307-2:2009 specifies two procedures — A (thermal) and B (chemical) — for the accelerated ageing of residual fuel oils. When combined with the hot filtration method specified in ISO 10307-1, these procedures permit the prediction of fuel oil stability, as affected by sedimentation, during storage and handling of the fuel oils.</abstract>
+  <status>
+    <stage>90</stage>
+    <substage>93</substage>
+  </status>
+  <copyright>
+    <from>2009</from>
+    <owner>
+      <organization>
+        
+<name>ISO</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <relation type="obsoletes">
+    <bibitem>
+      <formattedref>ISO 10307-2:1993</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 10307-2:1993</docidentifier>
+      <date type="published">
+        <on>1993-09-16</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO 10307-2:2009/Cor 1:2010</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 10307-2:2009/Cor 1:2010</docidentifier>
+      <date type="published">
+        <on>2010-05-12</on>
+      </date>
+    </bibitem>
+
+  </relation>
+  <relation type="updatedBy">
+    <bibitem>
+      <formattedref>ISO 10307-2:2009/PWI Amd 1</formattedref>
+      <docidentifier type="ISO" primary="true">ISO 10307-2:2009/PWI Amd 1</docidentifier>
+    </bibitem>
+
+  </relation>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem><bibitem id="iso20109" type="standard" schema-version="v1.5.6" anchor="iso20109" semx-id="_7d939e5f-3f9b-1e82-dddf-1de0d3c07073"><biblio-tag>[5]<tab/><span class="stdpublisher">ISO</span> <span class="stddocNumber">20109</span>:<span class="stdyear">2016</span>, </biblio-tag><formattedref><em><span class="stddocTitle">Simultaneous interpreting — Equipment — Requirements</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Simultaneous interpreting</title>
+
+  
+<title language="en" script="Latn" type="title-main">Equipment</title>
+
+  
+<title language="en" script="Latn" type="title-part">Requirements</title>
+
+  
+<title language="en" script="Latn" type="main">Simultaneous interpreting — Equipment — Requirements</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Interprétation simultanée</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Équipement</title>
+
+  
+<title language="fr" script="Latn" type="title-part">Exigences</title>
+
+  
+<title language="fr" script="Latn" type="main">Interprétation simultanée — Équipement — Exigences</title>
+
+  <uri type="src">https://www.iso.org/standard/67063.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:67063:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/06/70/67063.detail.rss</uri><docidentifier type="metanorma-ordinal">[5]</docidentifier>
+  <docidentifier type="ISO" primary="true">ISO 20109:2016</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO 20109</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO 20109:2016(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso:20109:stage-95.99</docidentifier><docidentifier scope="biblio-tag">ISO 20109:2016</docidentifier>
+  <docnumber>20109</docnumber>
+  <date type="published">
+    <on>2016-12-02</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="TC">
+        
+<name>Translation, interpreting and related technology</name>
+
+        <identifier id="_4a1c606d-26fb-5d6f-6822-ddf3a06c6873">ISO/TC 37/SC 5</identifier><fmt-identifier><tt><semx element="identifier" source="_4a1c606d-26fb-5d6f-6822-ddf3a06c6873">ISO/TC 37/SC 5</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>1</edition>
+  <language>en</language>
+  <language>fr</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">ISO 20109:2016 specifies requirements for equipment used for simultaneous interpreting. Accessibility requirements are defined in Annex A. Requirements for booths furniture are defined in Annex B. Requirements on the system operation are defined in Annex C. In conjunction with either ISO 2603 or ISO 4043, ISO 20108 and this document provide the relevant requirements both for the quality and transmission of sound and image provided to interpreters and for the equipment needed in the booths.</abstract>
+  <status>
+    <stage>60</stage>
+    <substage>60</substage>
+  </status>
+  <copyright>
+    <from>2016</from>
+    <owner>
+      <organization>
+        
+<name>ISO</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem><bibitem id="iso22259" type="standard" schema-version="v1.5.6" anchor="iso22259" semx-id="_1b223ec0-bf55-1bf1-bb2d-df2b8d51df1c"><biblio-tag>[6]<tab/><span class="stdpublisher">ISO</span> <span class="stddocNumber">22259</span>:<span class="stdyear">2019</span>, </biblio-tag><formattedref><em><span class="stddocTitle">Conference systems — Equipment — Requirements</span></em></formattedref>
+  <fetched>2026-09-28</fetched>
+  
+<title language="en" script="Latn" type="title-intro">Conference systems</title>
+
+  
+<title language="en" script="Latn" type="title-main">Equipment</title>
+
+  
+<title language="en" script="Latn" type="title-part">Requirements</title>
+
+  
+<title language="en" script="Latn" type="main">Conference systems — Equipment — Requirements</title>
+
+  
+<title language="fr" script="Latn" type="title-intro">Systèmes de conférence</title>
+
+  
+<title language="fr" script="Latn" type="title-main">Équipement</title>
+
+  
+<title language="fr" script="Latn" type="title-part">Exigences</title>
+
+  
+<title language="fr" script="Latn" type="main">Systèmes de conférence — Équipement — Exigences</title>
+
+  <uri type="src">https://www.iso.org/standard/72988.html</uri>
+  <uri type="obp">https://www.iso.org/obp/ui/en/#!iso:std:72988:en</uri>
+  <uri type="rss">https://www.iso.org/contents/data/standard/07/29/72988.detail.rss</uri><docidentifier type="metanorma-ordinal">[6]</docidentifier>
+  <docidentifier type="ISO" primary="true">ISO 22259:2019</docidentifier>
+  <docidentifier type="iso-undated">iso-undated ISO 22259</docidentifier>
+  <docidentifier type="iso-reference">iso-reference ISO 22259:2019(E)</docidentifier>
+  <docidentifier type="URN">URN urn:iso:std:iso:22259:stage-90.93</docidentifier><docidentifier scope="biblio-tag">ISO 22259:2019</docidentifier>
+  <docnumber>22259</docnumber>
+  <date type="published">
+    <on>2019-04-05</on>
+  </date>
+  <contributor>
+    <role type="publisher"/>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <abbreviation>ISO</abbreviation>
+      <uri>www.iso.org</uri>
+    </organization>
+  </contributor>
+  <contributor>
+    <role type="author">
+      <description>committee</description>
+    </role>
+    <organization>
+      
+<name>International Organization for Standardization</name>
+
+      <subdivision type="technical-committee" subtype="TC">
+        
+<name>Translation, interpreting and related technology</name>
+
+        <identifier id="_f4606977-897e-4004-9332-d61ae3e09c27">ISO/TC 37/SC 5</identifier><fmt-identifier><tt><semx element="identifier" source="_f4606977-897e-4004-9332-d61ae3e09c27">ISO/TC 37/SC 5</semx></tt></fmt-identifier>
+      </subdivision>
+      <abbreviation>ISO</abbreviation>
+    </organization>
+  </contributor>
+  <edition>1</edition>
+  <language>en</language>
+  <language>fr</language>
+  <script>Latn</script>
+  <abstract language="en" script="Latn">This document specifies requirements for typical conference systems, the parts they are composed of, the auxiliary devices necessary for their use (such as microphones, headphones, and sound reinforcement equipment) and the environment in which they are used. These requirements ensure interoperability and optimum performance under conditions of normal operation. It is applicable to both wired and wireless systems. The environment and areas where events are held are described in Annex A. This document facilitates the determination of the quality of conference systems, the comparison of different systems and the assessment of their proper use by listing their characteristics. This document contains the technical backbone of ISO 20108 and ISO 20109.</abstract>
+  <status>
+    <stage>90</stage>
+    <substage>93</substage>
+  </status>
+  <copyright>
+    <from>2019</from>
+    <owner>
+      <organization>
+        
+<name>ISO</name>
+
+      </organization>
+    </owner>
+  </copyright>
+  <place>
+    <city>Geneva</city>
+  </place>
+</bibitem><bibitem anchor="ip_309" id="ip_309" semx-id="_15bf3cdc-7cf7-d8c7-297e-1793cf0d0cf9"><biblio-tag>[7]<tab/><span class="stdpublisher">IP</span> <span class="stddocNumber">309</span>, </biblio-tag>
+  <formattedref format="application/x-isodoc+xml">
+    <em>Diesel and domestic heating fuels — Determination of cold filter plugging point</em>
+  </formattedref><docidentifier type="metanorma-ordinal">[7]</docidentifier>
+  <docidentifier>IP 309</docidentifier><docidentifier scope="biblio-tag">IP 309</docidentifier>
+  <docnumber>309</docnumber>
+  <language>en</language>
+  <script>Latn</script>
+</bibitem><bibitem anchor="inter" id="inter" semx-id="_2a7babb9-f788-7d59-41dd-470153813133"><biblio-tag>[8]<tab/></biblio-tag>
+  <formattedref format="application/x-isodoc+xml">INTERNATIONAL MARITIME ORGANIZATION (IMO), Marine Pollution (MARPOL) Annex VI — as amended. IMO Protocol of 1997, as amended by resolution MEPC.176(58) in 2008, to amend the International Convention for the Prevention of Pollution from Ships, 1973, as modified by the Protocol of 1978 related thereto</formattedref><docidentifier type="metanorma-ordinal">[8]</docidentifier>
+  
+  <language>en</language>
+  <script>Latn</script>
+</bibitem>
+
+
+
+
+
+
+
+
+
+</references></bibliography>
+</metanorma>

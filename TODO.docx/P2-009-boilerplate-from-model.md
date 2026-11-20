@@ -1,15 +1,21 @@
 ---
 title: 108-016 - Render boilerplate from model (copyright, license, address)
 priority: P0
-status: open
+status: done
 depends_on: [108-001, 108-015]
 ---
 
 # 108-016: Render Boilerplate from Model
 
-## Problem
+## Resolution
 
-The adapter does not render the boilerplate (copyright-statement, license-statement). The boilerplate is available in `model.boilerplate` but `visit_root` never visits it.
+`BoilerplateRenderer` renders the model's license statements on the cover.
+After the cover section break it renders copyright statements and the
+copyright address, followed by legal and feedback statements. The adapter
+then inserts the page break before Contents.
+
+`spec/isodoc/docx/boilerplate_renderer_spec.rb` verifies the order in the
+saved DOCX and checks the layout when legal and feedback are absent.
 
 ## Model Structure
 
@@ -45,43 +51,7 @@ Para: [zzWarning] "This document is not..."
 Para: [zzWarning] "Recipients of this draft..."
 ```
 
-## Fix
-
-Add `visit_boilerplate` method:
-
-```ruby
-def visit_boilerplate(boilerplate, doc)
-  return unless boilerplate
-
-  # License/warning goes on cover page (before sectPr)
-  boilerplate.license_statement&.each do |stmt|
-    visit_boilerplate_clause(stmt, doc, :license)
-  end
-
-  # After cover page sectPr, start copyright page
-  doc.section_break  # New page for copyright
-
-  # Copyright block
-  boilerplate.copyright_statement&.each do |stmt|
-    visit_boilerplate_clause(stmt, doc, :copyright)
-  end
-end
-
-def visit_boilerplate_clause(clause, doc, type)
-  # Render title with appropriate style
-  if clause.title
-    style = type == :copyright ? :copyright_hdr : :warning_hdr
-    para = build_paragraph(style: @resolver.paragraph_style(style))
-    @inline_renderer.render(clause.title, para)
-    doc << para
-  end
-
-  # Render content paragraphs
-  walk_mixed_content(clause, doc)
-end
-```
-
 ## Files to Change
 
-- `lib/isodoc/iso/docx/adapter.rb` — add visit_boilerplate, visit_boilerplate_clause
-- `data/iso-dis/style_mapping.yml` — add zzCopyrightHdr, zzWarning, zzwarninghdr mappings
+- `lib/isodoc/iso/docx/boilerplate_renderer.rb`
+- `spec/isodoc/docx/boilerplate_renderer_spec.rb`

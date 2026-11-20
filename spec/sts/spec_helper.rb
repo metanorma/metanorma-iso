@@ -21,7 +21,7 @@ module TransformerTestHelpers
   end
 
   def rice_xml_path
-    File.expand_path("../examples/rice.xml", __dir__)
+    File.expand_path("../examples/rice.presentation.xml", __dir__)
   end
 
   class MockModel

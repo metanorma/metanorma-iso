@@ -34,7 +34,7 @@ RSpec.describe IsoDoc::Iso::Docx::SourcecodeRenderer do
       callout_run = para.runs.find { |r| r.properties&.vertical_align }
       expect(callout_run).not_to be_nil
       expect(callout_run.properties.vertical_align.value).to eq("superscript")
-      expect(callout_run.text.to_s).to eq("(1)")
+      expect(run_text(callout_run)).to eq("(1)")
     end
 
     it "preserves line breaks within code text" do
@@ -74,7 +74,9 @@ line two</fmt-sourcecode>
         </sourcecode>
       XML
 
-      sourcecode = Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock.from_xml(xml)
+      sourcecode = parse_model_with_ordering(
+        Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock, xml,
+      )
       renderer.render(sourcecode, doc)
 
       paragraphs = doc.model.body.paragraphs.to_a
@@ -87,7 +89,9 @@ line two</fmt-sourcecode>
   describe "#render falls back to body when no fmt_sourcecode" do
     it "renders body content as plain text" do
       xml = '<sourcecode id="_s1" lang="ruby"><body>plain code line</body></sourcecode>'
-      sourcecode = Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock.from_xml(xml)
+      sourcecode = parse_model_with_ordering(
+        Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock, xml,
+      )
 
       renderer.render(sourcecode, doc)
       para = doc.model.body.paragraphs.first
@@ -98,10 +102,12 @@ line two</fmt-sourcecode>
 
   def sourcecode_with_fmt(fmt_inner_xml)
     xml = "<sourcecode id=\"_s1\" lang=\"ruby\">#{fmt_inner_xml}</sourcecode>"
-    Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock.from_xml(xml)
+    parse_model_with_ordering(
+      Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock, xml,
+    )
   end
 
   def collect_text(para)
-    para.runs.map { |r| r.text.to_s }.join
+    para.runs.map { |r| run_text(r) }.join
   end
 end

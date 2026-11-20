@@ -1,0 +1,95 @@
+<metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic">
+  <bibdata type="standard">
+    <title language="en" type="title-intro">Gadget systems</title>
+    <title language="en" type="title-main">Coupling dimensions</title>
+    <title language="en" type="title-part">Rotary sockets</title>
+    <title language="en" type="main">Gadget systems - Coupling dimensions - Part 2: Rotary sockets</title>
+    <docidentifier type="ISO">ISO 99001-2:2025/Amd 1:2026</docidentifier>
+    <docnumber>99001</docnumber>
+    <contributor>
+      <role type="publisher"/>
+      <organization><name>International Organization for Standardization</name><abbreviation>ISO</abbreviation></organization>
+    </contributor>
+    <language>en</language>
+    <script>Latn</script>
+    <status><stage>60</stage><substage>60</substage></status>
+    <copyright><from>2026</from>
+      <owner><organization><name>ISO</name><abbreviation>ISO</abbreviation></organization></owner>
+    </copyright>
+    <ext>
+      <doctype>amendment</doctype>
+      <structuredidentifier type="ISO">
+        <project-number part="2" amendment="1" origyr="2026-03-01">ISO 99001</project-number>
+      </structuredidentifier>
+    </ext>
+  </bibdata>
+  <sections>
+    <clause id="_scope" type="scope" inline-header="false" obligation="normative">
+      <title>Scope</title>
+      <p id="_scope_p1">This document specifies the socket sizes of invented gadgets.<fn reference="1"><p id="_fn1p">The sizes are fictional and apply to no real product.</p></fn></p>
+    </clause>
+    <terms id="_terms" obligation="normative"><title>Terms and definitions</title>
+      <p id="_terms_p">No terms are listed.</p>
+    </terms>
+    <clause id="_req" inline-header="false" obligation="normative">
+      <title>Requirements</title>
+      <clause id="_req_gen" inline-header="false" obligation="normative">
+        <title>General</title>
+        <p id="_req_p1">A socket shall meet the dimensions in <xref target="_tab1"/> and the layout in <xref target="_fig1"/>. Test methods are in <xref target="_annA"/>; the informative sizing notes are in <xref target="_annB"/>.</p>
+        <ol id="_ol1">
+          <li><p id="_ol1_1">Material requirements:</p>
+            <ul id="_ul1">
+              <li><p id="_ul1_1">metal;</p></li>
+              <li><p id="_ul1_2">plastic, with the following grades:</p>
+                <ol id="_ol2" type="roman">
+                  <li><p id="_ol2_1">grade one;</p></li>
+                  <li><p id="_ol2_2">grade two.</p></li>
+                </ol>
+              </li>
+            </ul>
+          </li>
+          <li><p id="_ol1_2">Finish requirements.</p></li>
+        </ol>
+        <figure id="_fig1" anchor="fig1">
+          <name>Socket layout</name>
+          <image id="_img1" src="images/socket.svg" mimetype="image/svg+xml"/>
+          <dl id="_figkey">
+            <dt>a</dt><dd><p id="_figkey_a">mounting flange</p></dd>
+            <dt>b</dt><dd><p id="_figkey_b">drive opening</p></dd>
+          </dl>
+        </figure>
+        <table id="_tab1" anchor="tab1">
+          <name>Socket sizes</name>
+          <thead><tr><th>Size</th><th>Opening, mm</th></tr></thead>
+          <tbody>
+            <tr><td>S1</td><td>10</td></tr>
+            <tr><td>S2</td><td>12</td></tr>
+          </tbody>
+        </table>
+      </clause>
+    </clause>
+  </sections>
+  <annex id="_annA" obligation="normative" inline-header="false">
+    <title>Test methods</title>
+    <clause id="_annA1" inline-header="false" obligation="normative">
+      <title>Torque test</title>
+      <p id="_annA1_p">Apply the torque given in <xref target="_tab1"/> and check <xref target="_req_gen"/>.</p>
+    </clause>
+    <clause id="_annA2" inline-header="false" obligation="normative">
+      <title>Visual test</title>
+      <p id="_annA2_p">Inspect each socket.</p>
+    </clause>
+  </annex>
+  <annex id="_annB" obligation="informative" inline-header="false">
+    <title>Sizing notes</title>
+    <clause id="_annB1" inline-header="false" obligation="normative">
+      <title>Rationale</title>
+      <p id="_annB1_p">The sizes follow a geometric series.</p>
+      <figure id="_fig2" anchor="figB1">
+        <name>Size series</name>
+        <image id="_img2" src="images/series.svg" mimetype="image/svg+xml"/>
+        <dl id="_figkey2"><dt>n</dt><dd><p id="_figkey2_n">size index</p></dd></dl>
+      </figure>
+    </clause>
+  </annex>
+</metanorma>

@@ -36,7 +36,7 @@ module Metanorma
             pid = proj_id_for(bibdata)
             m.proj_id = pid if pid
             rv = release_version_for(bibdata)
-            m.release_version = rv if rv
+            m.release_version = Transformer::ModelBuilder.release_version(content: rv) if rv
             m.std_ident = std_ident_for(bibdata) if std_ident_for(bibdata)
             org = std_org_for(bibdata)
             m.std_org = [org] if org
@@ -287,24 +287,31 @@ module Metanorma
         end
 
         def doctype_abbreviation(bibdata)
-          dt = bibdata.ext&.doctype
+          dt = unlocalised(Array(bibdata.ext&.doctype_element))
           return nil unless dt
 
-          dt = Array(dt).first if dt.is_a?(Array)
-          value = dt.is_a?(String) ? dt : (dt.value || dt.abbreviation || dt.to_s)
+          value = dt.value.to_s.strip
+          return nil if value.empty?
+
           DOC_TYPE_MAP[value] || value
+        end
+
+        # Metadata repeats an element per language: the unlocalised
+        # (language="") entry holds the machine value ("60",
+        # "international-standard"), the localised ones its display text.
+        def unlocalised(elements)
+          elements.find { |e| e.language.to_s.empty? } || elements.first
         end
 
         def release_version_for(bibdata)
           status = bibdata.status
           return nil unless status
 
-          stage = status.stage
+          stage = unlocalised(Array(status.stage))
           return nil unless stage
 
-          stage_val = extract_text_value(stage)
-          stage_abbrev = status.stage_abbreviation
-          abbrev = extract_text_value(stage_abbrev) if stage_abbrev
+          stage_val = extract_text_value(stage)&.strip
+          abbrev = stage.abbreviation
 
           case stage_val
           when "60" then "IS"

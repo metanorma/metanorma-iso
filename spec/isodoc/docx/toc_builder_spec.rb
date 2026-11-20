@@ -21,7 +21,7 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       model = parse_iso_document(xml)
       toc_builder.render(model, doc)
 
-      texts = doc.model.body.paragraphs.map { |p| p.runs.map { |r| r.text || "" }.join }
+      texts = doc.model.body.paragraphs.map { |p| entry_runs(p).map { |r| r.text || "" }.join }
       expect(texts.first).to include("Contents")
     end
 
@@ -40,7 +40,7 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       model = parse_iso_document(xml)
       toc_builder.render(model, doc)
 
-      texts = doc.model.body.paragraphs.map { |p| p.runs.map { |r| r.text || "" }.join }
+      texts = doc.model.body.paragraphs.map { |p| entry_runs(p).map { |r| r.text || "" }.join }
       # Each entry trails the PAGEREF placeholder page number.
       expect(texts).to include(a_string_including("Foreword"))
       expect(texts).to include(a_string_including("Scope"))
@@ -88,10 +88,30 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       end
 
       # Each TOC entry should have field characters
-      field_chars = toc_paras.flat_map(&:runs).select do |r|
+      field_chars = toc_paras.flat_map { |p| entry_runs(p) }.select do |r|
         r.field_char || r.instr_text
       end
       expect(field_chars.length).to be > 0
+    end
+
+    it "selects the cached entry set on a Word field refresh" do
+      xml = minimal_iso_xml("<sections><clause id=\"s1\"><fmt-title>Scope</fmt-title></clause></sections>")
+      toc_builder.render(parse_iso_document(xml), doc)
+      instr = doc.model.body.paragraphs.flat_map { |p| entry_runs(p) }.filter_map(&:instr_text)
+        .map { |i| Array(i.text).join }.find { |t| t.include?("TOC") }
+
+      # \u would also select the annex sub-clause styles (a2/a3,
+      # outline levels 1/2), which the cached entries omit.
+      expect(instr).to eq(
+        ' TOC \\o "1-3" \\h \\z \\t "Foreword Title,1,Intro Title,1,ANNEX,1,Biblio Title,1" ',
+      )
+    end
+
+    it "asks Word to refresh the placeholder page numbers on open" do
+      xml = minimal_iso_xml("<sections><clause id=\"s1\"><fmt-title>Scope</fmt-title></clause></sections>")
+      toc_builder.render(parse_iso_document(xml), doc)
+
+      expect(doc.model.settings.update_fields).not_to be_nil
     end
 
     it "handles model with no sections gracefully" do
@@ -101,7 +121,7 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       toc_builder.render(model, doc)
 
       # Should at least have the heading
-      texts = doc.model.body.paragraphs.map { |p| p.runs.map { |r| r.text || "" }.join }
+      texts = doc.model.body.paragraphs.map { |p| entry_runs(p).map { |r| r.text || "" }.join }
       expect(texts).to include("Contents")
     end
 
@@ -125,7 +145,7 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
 
       # Should have entries but not duplicate the TOC clause
       scope_entries = toc_paras.select do |p|
-        p.runs.any? { |r| run_text(r).include?("Scope") }
+        entry_runs(p).any? { |r| run_text(r).include?("Scope") }
       end
       expect(scope_entries.length).to be >= 1
     end
@@ -150,7 +170,7 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       entry_texts = doc.model.body.paragraphs.select do |p|
         para_style_value(p)&.start_with?("TOC")
       end.map do |p|
-        p.runs.map { |r| Array(r.text).join }.join
+        entry_runs(p).map { |r| Array(r.text).join }.join
       end
       expect(entry_texts).not_to include(a_string_including("Contents")),
         "the type=toc Contents clause must not appear as a ToC entry"
@@ -173,16 +193,16 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
         para_style_value(p)&.start_with?("TOC")
       end
       annex_entry = toc_paras.find do |p|
-        p.runs.any? { |r| run_text(r) == "Annex text" }
+        entry_runs(p).any? { |r| run_text(r) == "Annex text" }
       end
       expect(annex_entry).not_to be_nil
 
       # The entry carries the variant-title composition: label + tab +
       # title, with no line breaks and no obligation line.
-      texts = annex_entry.runs.map { |r| run_text(r) }
+      texts = entry_runs(annex_entry).map { |r| run_text(r) }
       expect(texts).not_to include("(normative)")
-      expect(annex_entry.runs.map(&:break).compact).to be_empty
-      expect(annex_entry.runs.any?(&:tab)).to be(true)
+      expect(entry_runs(annex_entry).map(&:break).compact).to be_empty
+      expect(entry_runs(annex_entry).any?(&:tab)).to be(true)
     end
 
     it "falls back to fmt-title when no toc variant-title is present" do
@@ -196,7 +216,7 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       toc_builder.render(model, doc)
 
       texts = doc.model.body.paragraphs.flat_map do |p|
-        p.runs.map { |r| run_text(r) }
+        entry_runs(p).map { |r| run_text(r) }
       end
       expect(texts).to include("Scope")
     end
@@ -215,7 +235,7 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       toc_builder.render(model, doc)
 
       texts = doc.model.body.paragraphs.flat_map do |p|
-        p.runs.map { |r| run_text(r) }
+        entry_runs(p).map { |r| run_text(r) }
       end
 
       # The annex main entry is present…
@@ -346,7 +366,7 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
     end
 
     def run_kinds(para)
-      para.runs.map { |r| run_kind(r) }
+      entry_runs(para).map { |r| run_kind(r) }
     end
 
     def pageref_position(runs)
@@ -361,7 +381,7 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
     # tab. The TOC field opening that precedes the first entry's text
     # is skipped before the check.
     def assert_entry_run_order(para)
-      runs = para.runs
+      runs = entry_runs(para)
       kinds = run_kinds(para)
       start = kinds.index(:text)
       expect(start).not_to be_nil,
@@ -419,7 +439,7 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       toc_builder.render(model, doc)
 
       texts = toc_paras(doc).map do |p|
-        p.runs.map { |r| Array(r.text).join }.join
+        entry_runs(p).map { |r| Array(r.text).join }.join
       end
       # Each entry trails the PAGEREF placeholder page number.
       expect(texts).to include(a_string_including("Bibliography"))
@@ -440,7 +460,7 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
           expect(paras.length).to be >= 5
 
           paras.each do |p|
-            runs = p.xpath("./w:r", ns)
+            runs = p.xpath("./w:r | ./w:hyperlink/w:r", ns)
             kinds = runs.map do |r|
               if r.at_xpath("./w:instrText", ns)
                 :instr
