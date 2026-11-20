@@ -178,4 +178,9 @@ Without proper ordered/mixed content support, the text nodes, bold, and xref wou
 
 ## Status (2026-11-20)
 
-PARTIALLY VERIFIED, superseded by P3-001. The execution order here (harness, run, fix, rerun) is complete: 17 of 17 reference files round-trip in sts-ruby (34 examples, 0 failures), so every element present in those files is mapped well enough to survive. Not done: the table's "Verify mapping" rows (14 items, e.g. usageNote, target, named-content, custom-meta children) were not checked one by one; they are only covered where the 17 files exercise them. Remaining: 14 rows to confirm against sts-ruby lib/, or close as covered by the round-trip.
+CLOSED on the card's own scope, with one dependency follow-up outside this repo.
+
+- Execution order (harness, run, fix, rerun): 17 of 17 reference files round-trip in sts-ruby main (34 examples, 0 failures), as recorded under P3-001.
+- The 14 "Mapped" rows: every `lib/sts/...rb:LINE` reference in this card was read in sts-ruby origin/main (da0c5e6) and in the installed sts 0.6.14 gem; all 14 lines are the `map_element` for the named element, in both. Command: `grep -o 'lib/sts/[a-z_/]*\.rb:[0-9]*' <this card> | sort -u`, then `git show origin/main:<file> | sed -n <line>p`.
+- The 2 gaps (`target`, `named-content` in `Paragraph`): mapped in sts-ruby origin/main (da0c5e6): lib/sts/iso_sts/paragraph.rb:88-89 and lib/sts/niso_sts/paragraph.rb:76-77, commit 7fc8f84. NOT in a release: `git merge-base --is-ancestor 7fc8f84 v0.6.14` fails and `git tag --contains da0c5e6` lists no tag; the installed sts 0.6.14 (the version `metanorma-iso.gemspec` allows, `~> 0.6.14`) has no such mapping and drops both on a round trip: `Sts::IsoSts::Standard.from_xml('<standard><body><sec><p>a <named-content content-type="x">nc</named-content> <target id="t1"/> b</p></sec></body></standard>').to_xml` yields `<p>a   b</p>`.
+- Remaining outside this card: a sts release that includes 7fc8f84, then a dependency bump here (not done: no version bumps in a feature branch). The converter does not emit `target` or `named-content` today, so no output of this repo is affected.
