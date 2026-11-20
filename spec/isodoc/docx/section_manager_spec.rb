@@ -263,7 +263,8 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
         .find { |p| p[:r_id] == IsoDoc::Iso::Docx::SectionManager::FRONT_FOOTER_DEFAULT }
       expect(footer_part).not_to be_nil
 
-      para = footer_part[:content].paragraphs.first
+      # Line 1 is the copyright; the page number sits on line 2.
+      para = footer_part[:content].paragraphs.last
       style_value = para_style_value(para)
       expect(style_value).to eq("FooterPageRomanNumber"),
         "front matter footer should use FooterPageRomanNumber, got: #{style_value.inspect}"
@@ -279,7 +280,8 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
         .find { |p| p[:r_id] == IsoDoc::Iso::Docx::SectionManager::BODY_FOOTER_DEFAULT }
       expect(footer_part).not_to be_nil
 
-      para = footer_part[:content].paragraphs.first
+      # Line 1 is the copyright; the page number sits on line 2.
+      para = footer_part[:content].paragraphs.last
       style_value = para_style_value(para)
       expect(style_value).to eq("FooterPageNumber"),
         "body footer should use FooterPageNumber, got: #{style_value.inspect}"
@@ -293,7 +295,7 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
 
       footer_part = doc.model.header_footer_parts
         .find { |p| p[:r_id] == IsoDoc::Iso::Docx::SectionManager::FRONT_FOOTER_DEFAULT }
-      para = footer_part[:content].paragraphs.first
+      para = footer_part[:content].paragraphs.last
       # Field components live inside runs (bare <w:fldChar>/<w:instrText>
       # paragraph children are schema-invalid OOXML).
       fld_types = para.runs.filter_map { |r| r.field_char&.fldCharType }

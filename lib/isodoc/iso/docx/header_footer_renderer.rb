@@ -10,11 +10,14 @@ module IsoDoc
       # belong to which section; this renderer owns the *content* of each
       # part — the paragraph, style, runs, and page-number field.
       #
-      # Style selection is driven by the section's PageScheme:
+      # The layout follows the ISO DIS template's own header and footer
+      # parts: a centred header line, and a footer of two centred lines —
+      # the copyright statement (FooterCentered), then the page number on
+      # its own line below. The page-number style follows the section's
+      # PageScheme:
       #   - Roman scheme   → FooterPageRomanNumber
       #   - Arabic scheme  → FooterPageNumber
       #   - Otherwise      → FooterCentered (fallback)
-      # Headers always use HeaderCentered with right-aligned bold text.
       class HeaderFooterRenderer
         # OOXML field instruction for the current page number.
         PAGE_FIELD_INSTRUCTION = " PAGE "
@@ -23,45 +26,42 @@ module IsoDoc
           @resolver = resolver
         end
 
-        # Render a header part with right-aligned bold running title text.
-        # The header style is always HeaderCentered.
-        def render_header(part_content, text, align: :right)
+        # Render a header part with bold running title text. HeaderCentered
+        # centres it; no direct alignment overrides the style.
+        def render_header(part_content, text)
           part_content.paragraphs.clear
           para = Uniword::Builder::ParagraphBuilder.new
           para.style = @resolver.paragraph_style(:header_centered)
-          para.align = align
           run = Uniword::Builder::RunBuilder.new
           run.text(text.to_s).bold
           para << run.build
           part_content.paragraphs << para.build
         end
 
-        # Render a footer part: copyright text on the left, page-number
-        # field on the right (separated by a tab). The style follows the
-        # section's PageScheme — roman sections get FooterPageRomanNumber,
-        # arabic sections get FooterPageNumber.
+        # Render a footer part: the copyright statement on one centred
+        # line, the page-number field on a second centred line below it.
         def render_footer(part_content, copyright_text, scheme:)
           part_content.paragraphs.clear
-          style = footer_style_for(scheme)
+          copyright = styled_paragraph(@resolver.paragraph_style(:footer_centered))
+          copyright.runs << Uniword::Wordprocessingml::Run.new(text: copyright_text.to_s)
+          part_content.paragraphs << copyright
+
+          page_number = styled_paragraph(footer_style_for(scheme))
+          append_page_number_field(page_number)
+          part_content.paragraphs << page_number
+        end
+
+        private
+
+        def styled_paragraph(style)
           paragraph = Uniword::Wordprocessingml::Paragraph.new
           paragraph.properties = Uniword::Wordprocessingml::ParagraphProperties.new
           if style
             paragraph.properties.style =
               Uniword::Properties::StyleReference.new(value: style)
           end
-          paragraph.properties.alignment =
-            Uniword::Properties::Alignment.new(value: "center")
-
-          paragraph.runs << Uniword::Wordprocessingml::Run.new(text: copyright_text.to_s)
-          tab_run = Uniword::Wordprocessingml::Run.new
-          tab_run.tab = Uniword::Wordprocessingml::Tab.new
-          paragraph.runs << tab_run
-
-          append_page_number_field(paragraph)
-          part_content.paragraphs << paragraph
+          paragraph
         end
-
-        private
 
         def footer_style_for(scheme)
           return @resolver.paragraph_style(:footer_roman) if scheme.roman?

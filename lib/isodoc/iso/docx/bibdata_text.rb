@@ -6,7 +6,8 @@ module IsoDoc
       # Builds header/footer text strings from a document model's bibdata.
       #
       # Examples:
-      #   header_text   — "ISO/DIS 15926-100:2026(en)"
+      #   header_text   — "ISO/FDIS 5878:2026(en)" (the iso-with-lang
+      #                   identifier, as the ISO DIS template shows)
       #   copyright     — "© ISO 2026 – All rights reserved"
       #
       # Extracted from Adapter so header/footer composition is testable
@@ -26,15 +27,16 @@ module IsoDoc
           bib = bibdata
           return "" unless bib
 
+          reference = identifier_of_type(bib, "iso-with-lang")
+          return reference if reference
+
           primary = primary_identifier(bib)
           return "" unless primary
 
           id = extract_prop(primary, :value)
           return "" unless id
 
-          year = copyright_year(bib)
-          id_with_year = year ? "#{id}:#{year}" : id
-          "#{id_with_year}(#{language_code(bib)})"
+          "#{with_year(id, copyright_year(bib))}(#{language_code(bib)})"
         end
 
         def copyright
@@ -56,6 +58,23 @@ module IsoDoc
 
         def default_copyright
           "© #{DEFAULT_COPYRIGHT_HOLDER} #{DEFAULT_COPYRIGHT_YEAR} – All rights reserved"
+        end
+
+        def identifier_of_type(bib, type)
+          return nil unless bib.class.attributes.key?(:doc_identifier)
+
+          match = Array(bib.doc_identifier)
+            .find { |d| extract_prop(d, :type).to_s == type }
+          value = extract_prop(match, :value)
+          value unless value.to_s.empty?
+        end
+
+        # A dated identifier ("ISO/FDIS 5878:2026") already carries the
+        # year; appending it again gave "ISO/FDIS 5878:2026:2026".
+        def with_year(id, year)
+          return id if year.nil? || id.end_with?(":#{year}")
+
+          "#{id}:#{year}"
         end
 
         def primary_identifier(bib)
@@ -90,12 +109,24 @@ module IsoDoc
           owner = Array(first.owner).first
           org = organization_from_owner(owner)
           return nil unless org
+
+          abbreviation = organization_abbreviation(org)
+          return abbreviation if abbreviation
           return nil unless org.class.attributes.key?(:name)
 
           names = Array(org.name)
           return nil if names.empty?
 
           extract_prop(names.first) || DEFAULT_COPYRIGHT_HOLDER
+        end
+
+        # The footer names the publisher by its abbreviation ("© ISO"),
+        # as the Word (DOC) output and the ISO template do.
+        def organization_abbreviation(org)
+          return nil unless org.class.attributes.key?(:abbreviation)
+
+          value = extract_prop(Array(org.abbreviation).first)
+          value unless value.to_s.strip.empty?
         end
 
         # CopyrightOwner wraps the Organization in its +organization+

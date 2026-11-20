@@ -56,6 +56,40 @@ RSpec.describe IsoDoc::Iso::Docx::BibDataText do
       end
     end
 
+    context "with an iso-with-lang identifier" do
+      let(:body) do
+        <<~XML
+          <bibdata>
+            <docidentifier type="ISO" primary="true">ISO/FDIS 5878:2026</docidentifier>
+            <docidentifier type="iso-with-lang">ISO/FDIS 5878:2026(en)</docidentifier>
+            <docidentifier type="iso-reference">ISO/FDIS 5878:2026(E)</docidentifier>
+            <language>en</language>
+            <copyright><from>2026</from></copyright>
+          </bibdata>
+        XML
+      end
+
+      it "uses it as the running header" do
+        expect(described_class.new(model).header).to eq("ISO/FDIS 5878:2026(en)")
+      end
+    end
+
+    context "with a primary identifier that already carries the year" do
+      let(:body) do
+        <<~XML
+          <bibdata>
+            <docidentifier primary="true">ISO/FDIS 5878:2026</docidentifier>
+            <language>en</language>
+            <copyright><from>2026</from></copyright>
+          </bibdata>
+        XML
+      end
+
+      it "does not append the year a second time" do
+        expect(described_class.new(model).header).to eq("ISO/FDIS 5878:2026(en)")
+      end
+    end
+
     context "without bibdata returns empty string" do
       let(:body) { "" }
 
@@ -99,6 +133,27 @@ RSpec.describe IsoDoc::Iso::Docx::BibDataText do
       it "uses the provided holder" do
         expect(described_class.new(model).copyright)
           .to eq("© IEC 2024 – All rights reserved")
+      end
+    end
+
+    context "with an owner that has a full name and an abbreviation" do
+      let(:body) do
+        <<~XML
+          <bibdata>
+            <copyright>
+              <from>2026</from>
+              <owner><organization>
+                <name>International Organization for Standardization</name>
+                <abbreviation>ISO</abbreviation>
+              </organization></owner>
+            </copyright>
+          </bibdata>
+        XML
+      end
+
+      it "names the holder by its abbreviation" do
+        expect(described_class.new(model).copyright)
+          .to eq("© ISO 2026 – All rights reserved")
       end
     end
 
