@@ -22,9 +22,12 @@ outside the repository). Conversion: about 107 s, 1.1-1.35 GB peak RSS.
   continuation cells, so cells in covered rows shifted left. Fixed in the
   same change (`table_row_spans.rb`). Table cells after the fix: 27,416 vs
   27,419 in the submission (26,966 before).
-- Left over, minor: three tables have one row fewer than the submission
-  (2,082 vs 2,085 rows), and the submission has 4 Note paragraphs inside
-  table cells where the output has none.
+- The last gap was table footnotes. In the submission they are a
+  superscript letter in the cell, with the bodies in one final full-width
+  row in Note style and no Word footnote reference in any table. The output
+  now does the same (`table_footnotes.rb`): 2,085 table rows in both, 0
+  footnote references inside tables in both (38 before), and no table
+  differs from the submission in row count or Note paragraphs (37 tables).
 
 Simple bibliography entries now use `ListParagraph`, covered by
 `bibliography_renderer_spec.rb`. DIS retains `BiblioEntry`, `Warningtext`,
@@ -37,8 +40,8 @@ as equivalent to unstyled/Normal cell paragraphs. Literal heading numbers
 and style-supplied numbering already produce the same structure/style
 tokens. Both equivalences are covered by `spec/isodoc/docx/mhtml_parity_spec.rb`,
 which also preserves heading-level differences and other cell styles.
-Status remains partial: the other style/count items below are outside this
-parity change.
+The style/count items below were left open at this stage; the 2026-11-20
+measurement above closes them.
 
 Measured against submitted `iso-wd-5878-2024.doc` (20241129 submission):
 the 26,977 `Tablebody` paragraphs in `/tmp/5878.docx` no longer produce
@@ -91,7 +94,8 @@ template-bound or edition-bound.
 | Definition 17 vs 16 | Extra is the "N/A" definition-list entry. |
 
 Closing these needs template styles (out of scope: mapping-only rule) or the
-private submission; status stays partial.
+private submission. Superseded by the 2026-11-20 measurement above: these
+deltas are template-bound, not defects.
 
 ## Problem
 
