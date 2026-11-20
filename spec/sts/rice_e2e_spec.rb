@@ -3,19 +3,22 @@
 require_relative "spec_helper"
 
 # End-to-end coverage of the rice fixture through the full native STS
-# pipeline (PXML → ISO-STS XML → HTML). Tagged :rice_e2e and excluded by
-# default (see .rspec) because the source XML is ~1.2 MB and the typed
-# model walk is slow. Run explicitly with:
-#
-#   bundle exec rspec spec/sts/rice_e2e_spec.rb --tag rice_e2e
-RSpec.describe "rice.xml end-to-end STS pipeline", :rice_e2e do
+# pipeline (presentation XML → NISO STS XML → HTML).
+RSpec.describe "rice end-to-end STS pipeline", :aggregate_failures, :rice_e2e do
   let(:source_xml) { File.read(rice_xml_path) }
 
-  it "converts PXML to ISO-STS XML with iso-meta" do
+  it "converts presentation XML to STS XML with std-meta" do
     sts = Metanorma::Iso::Sts.convert(source_xml)
     expect(sts).to include("<standard")
-    expect(sts).to include("<iso-meta")
+    expect(sts).to include("<std-meta")
     expect(sts).to include("<body")
+  end
+
+  it "types every cross-reference to a formula as disp-formula" do
+    sts = Metanorma::Iso::Sts.convert(source_xml)
+    formula_xrefs = sts.scan(/<xref[^>]*rid="formula[^"]*"[^>]*>/)
+    expect(formula_xrefs).not_to be_empty
+    expect(formula_xrefs).to all(include('ref-type="disp-formula"'))
   end
 
   it "renders an HTML page from the STS XML" do

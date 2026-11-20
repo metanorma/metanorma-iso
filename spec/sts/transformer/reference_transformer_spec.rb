@@ -94,4 +94,43 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::ReferenceTransformer do
       expect(context.id_generator.kind_for("b1")).to eq("ref")
     end
   end
+
+  # Guidelines 4.4.2 (iso-gdg-4.4.2-5): each normative-reference <std> carries
+  # a direct <std-id @std-id-link-type="urn"> whose @std-id-type matches the
+  # std's dated/undated type, built from the bibitem's URN docidentifier.
+  describe "urn std-id on normative references", :aggregate_failures do
+    let(:back) do
+      <<~XML
+        <bibliography>
+          <references id="r1" normative="true"><title>Normative references</title>
+            <bibitem id="u1"><formattedref>Dated Title</formattedref><docidentifier>ISO 123:2012</docidentifier><docidentifier type="URN">URN&#160;urn:iso:std:iso:123:stage-90.93</docidentifier></bibitem>
+            <bibitem id="u2"><formattedref>Undated Title</formattedref><docidentifier>ISO 456</docidentifier><docidentifier type="URN">urn:iso:std:iso:456:stage-95.99</docidentifier></bibitem>
+            <bibitem id="u3"><formattedref>No URN</formattedref><docidentifier>ISO 789</docidentifier></bibitem>
+          </references>
+        </bibliography>
+      XML
+    end
+
+    let(:doc) { section_xml("r1") }
+
+    it "emits a direct std-id carrying the URN, typed dated for a dated reference" do
+      std_id = doc.at_xpath("//ref[@id='u1']/std/std-id")
+
+      expect(std_id["std-id-link-type"]).to eq("urn")
+      expect(std_id["std-id-type"]).to eq("dated")
+      expect(std_id.text).to eq("urn:iso:std:iso:123:stage-90.93")
+    end
+
+    it "types the std-id undated, matching the std, for an undated reference" do
+      std_id = doc.at_xpath("//ref[@id='u2']/std/std-id")
+
+      expect(std_id["std-id-type"]).to eq("undated")
+      expect(std_id.text).to eq("urn:iso:std:iso:456:stage-95.99")
+      expect(doc.at_xpath("//ref[@id='u2']/std/@type").value).to eq("undated")
+    end
+
+    it "emits no std-id when the bibitem carries no URN" do
+      expect(doc.at_xpath("//ref[@id='u3']/std/std-id")).to be_nil
+    end
+  end
 end

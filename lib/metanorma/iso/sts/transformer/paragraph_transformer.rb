@@ -16,7 +16,11 @@ module Metanorma
           # entries, consecutive text runs already merged. Shared by the
           # paragraph path and the TBX/def appenders
           # (InlineTransformer#apply_inline_content).
-          def entries_for(source_para)
+          #
+          # inline_std: true lets a citation of a normative reference
+          # come out as a [:std, model] entry (text-flow containers that
+          # carry <std>); other callers keep the <xref> form.
+          def entries_for(source_para, inline_std: false)
             @seen_nodes = {}
             @stem_mirrors = build_stem_mirror_map(source_para)
             entries = []
@@ -56,10 +60,10 @@ module Metanorma
                   current_text = (current_text || "") + text if text && !text.empty?
                 end
               when :xref
-                x = build_xref(node)
-                if x
+                citations = build_citation_entries(node, inline_std: inline_std)
+                unless citations.empty?
                   flush_text.call
-                  entries << [:xref, x]
+                  entries.concat(citations)
                 end
               when :link
                 l = build_link(node)
@@ -93,7 +97,7 @@ module Metanorma
           end
 
           def transform(source_para)
-            entries = entries_for(source_para)
+            entries = entries_for(source_para, inline_std: true)
 
             ::Sts::NisoSts::Paragraph.new(id: id_val_of(source_para)) do |p|
               entries.each do |kind, value|
@@ -106,6 +110,7 @@ module Metanorma
                 when :monospace then p.monospace value
                 when :inline_formula then p.inline_formula value
                 when :xref then p.xref value
+                when :std then p.std value
                 when :ext_link then p.ext_link value
                 when :fn then p.fn value
                 end
@@ -527,6 +532,59 @@ module Metanorma
             end
           end
 
+          # <xref> for a bibliography or other target; for a normative
+          # reference whose URN identity is known, an inline <std> (NISO STS
+          # idiom: guidelines 10.1.7 and 10.2) followed by the citation's
+          # locality as paragraph text. No bibr xref may target a norm-refs
+          # entry (guidelines 10.1.6).
+          def build_citation_entries(node, inline_std:)
+            x = build_xref(node)
+            return [] unless x
+
+            identity = inline_std && id_generator.normative_ref_for(x.rid)
+            return [[:xref, x]] unless identity
+
+            std, locality = build_inline_std(x, identity)
+            entries = [[:std, std]]
+            entries << [:text, clean_text(locality)] if locality
+            entries
+          end
+
+          # The inline <std> for a cited normative reference, and the
+          # locality after its designation (", Clause 5"), or nil. <std-ref>
+          # carries the designation as the reference names it; <std-id>
+          # carries the reference's own URN, the link that guidelines 10.1.7
+          # matches against the norm-refs <std-id>. The locality stays
+          # outside <std>: the sts model serializes a <std>'s mixed text
+          # before its child elements, which would reorder "Designation,
+          # Clause 5" to ", Clause 5Designation".
+          def build_inline_std(xref, identity)
+            designation = identity[:identifier]
+            visible = xref.value.to_s
+            plain_visible = visible.tr("\u00a0", " ")
+            plain_designation = designation.tr("\u00a0", " ")
+
+            if plain_visible.start_with?(plain_designation)
+              std_ref = designation
+              locality = plain_visible[plain_designation.length..]
+            else
+              std_ref = visible.empty? || visible == xref.rid ? designation : visible
+              locality = nil
+            end
+            locality = nil if locality.to_s.empty?
+
+            type = identity[:type]
+            std = ReferenceTransformer::ReferenceStandardWithId.new(
+              type: type,
+              std_ref: [::Sts::NisoSts::StandardRef.new(type: type, value: std_ref)],
+              std_id_element: [::Sts::NisoSts::StdId.new(
+                std_id_link_type: "urn", std_id_type: type,
+                content: identity[:urn]
+              )],
+            )
+            [std, locality]
+          end
+
           def build_xref(node)
             rid = nil
             [:target, :refid, :to].each do |attr|
@@ -567,7 +625,9 @@ module Metanorma
           def ref_type_for(node, rid)
             kind = id_generator.kind_for(rid)
             mapped = case kind
-                     when "ref" then "bibr"
+                     # "norm-ref" reaches here only when no inline <std>
+                     # is possible (no URN identity, or a TBX container).
+                     when "ref", "norm-ref" then "bibr"
                      when "annex" then "app"
                      when "table" then "table"
                      when "figure" then "fig"
