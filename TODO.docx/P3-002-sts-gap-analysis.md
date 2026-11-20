@@ -4,6 +4,8 @@
 
 Comparing elements found in reference STS XML vs sts-ruby model classes.
 
+Status: 16 "Verify mapping" rows checked against sts-ruby origin/main (8279d6b): 14 mapped, 2 gaps (`target`, `named-content` in `Paragraph`).
+
 ### Front (iso-meta) — Sts::IsoSts::IsoMeta
 
 | STS Element | sts-ruby Class | Status |
@@ -14,18 +16,18 @@ Comparing elements found in reference STS XML vs sts-ruby model classes.
 | `title-wrap/compl` | `TitleCompl` | Present |
 | `title-wrap/full` | `TitleFull` | Present |
 | `doc-ident` | `DocumentIdentification` | Present |
-| `doc-ident/sdo` | — | Verify mapping |
-| `doc-ident/proj-id` | — | Verify mapping |
-| `doc-ident/language` | — | Verify mapping |
-| `doc-ident/release-version` | — | Verify mapping |
-| `doc-ident/urn` | — | Verify mapping |
+| `doc-ident/sdo` | `Sdo` (lib/sts/iso_sts/document_identification.rb:18) | Mapped |
+| `doc-ident/proj-id` | `ProjId` (lib/sts/iso_sts/document_identification.rb:19) | Mapped |
+| `doc-ident/language` | `Language` (lib/sts/iso_sts/document_identification.rb:20) | Mapped |
+| `doc-ident/release-version` | `ReleaseVersion` (lib/sts/iso_sts/document_identification.rb:21) | Mapped |
+| `doc-ident/urn` | `Urn` (lib/sts/iso_sts/document_identification.rb:22) | Mapped |
 | `std-ident` | `StandardIdentification` | Present |
-| `std-ident/originator` | — | Verify mapping |
-| `std-ident/doc-type` | — | Verify mapping |
-| `std-ident/doc-number` | — | Verify mapping |
-| `std-ident/part-number` | — | Verify mapping |
+| `std-ident/originator` | `Originator` (lib/sts/iso_sts/standard_identification.rb:22) | Mapped |
+| `std-ident/doc-type` | `DocType` (lib/sts/iso_sts/standard_identification.rb:23) | Mapped |
+| `std-ident/doc-number` | `DocNumber` (lib/sts/iso_sts/standard_identification.rb:24) | Mapped |
+| `std-ident/part-number` | `PartNumber` (lib/sts/iso_sts/standard_identification.rb:25) | Mapped |
 | `std-ident/edition` | `Edition` | Present |
-| `std-ident/version` | — | Verify mapping |
+| `std-ident/version` | `Version` (lib/sts/iso_sts/standard_identification.rb:27) | Mapped |
 | `content-language` | `NisoSts::ContentLanguage` | Present |
 | `std-ref[@type]` | `StdRef` | Present |
 | `doc-ref` | `DocRef` | Present |
@@ -42,9 +44,9 @@ Comparing elements found in reference STS XML vs sts-ruby model classes.
 | `permissions/copyright-year` | `CopyrightYear` | Present |
 | `permissions/copyright-holder` | `CopyrightHolder` | Present |
 | `custom-meta-group` | `NisoSts::CustomMetaGroup` | Present |
-| `custom-meta-group/custom-meta` | — | Verify mapping |
-| `custom-meta/meta-name` | — | Verify mapping |
-| `custom-meta/meta-value` | — | Verify mapping |
+| `custom-meta-group/custom-meta` | `CustomMeta` (lib/sts/iso_sts/custom_meta_group.rb:14) | Mapped |
+| `custom-meta/meta-name` | `MetaName` (lib/sts/iso_sts/custom_meta.rb:31) | Mapped |
+| `custom-meta/meta-value` | `MetaValue` (lib/sts/iso_sts/custom_meta.rb:32) | Mapped |
 | `is-proof` | `NisoSts::IsProof` | Present |
 
 ### Body — Sts::IsoSts::Body / Sts::IsoSts::Sec
@@ -98,7 +100,7 @@ Comparing elements found in reference STS XML vs sts-ruby model classes.
 | `tbx:see` | `TbxIsoTml::See` | Present |
 | `tbx:entailedTerm` | `TbxIsoTml::EntailedTerm` | Present |
 | `tbx:subjectField` | `TbxIsoTml::SubjectField` | Present |
-| `tbx:usageNote` | — | Verify mapping |
+| `tbx:usageNote` | `TermInformationGroup#usage_note`, string (lib/sts/tbx_iso_tml/term_information_group.rb:26) | Mapped |
 | `tbx:grammaticalGender` | `TbxIsoTml::GrammaticalGender` | Present |
 | `tbx:grammaticalNumber` | `TbxIsoTml::GrammaticalNumber` | Present |
 | `tbx:pronunciation` | `TbxIsoTml::Pronunciation` | Present |
@@ -143,8 +145,8 @@ Comparing elements found in reference STS XML vs sts-ruby model classes.
 | `inline-formula` | `InlineFormula` | Present |
 | `fn` | `TbxIsoTml::Fn` | Present |
 | `break` | `Break` | Present |
-| `target` | — | Verify mapping |
-| `named-content` | — | Verify mapping |
+| `target` | `Target` class exists (lib/sts/iso_sts/target.rb), but not mapped in `Paragraph` (lib/sts/{iso,niso}_sts/paragraph.rb); dropped on round trip | Gap |
+| `named-content` | `NamedContent` class exists (lib/sts/iso_sts/named_content.rb), but not mapped in `Paragraph` (lib/sts/{iso,niso}_sts/paragraph.rb); dropped on round trip | Gap |
 | `graphic` (inline) | `Graphic` | Present |
 | `mml:math` | `Mathml2::Math` | Present |
 
