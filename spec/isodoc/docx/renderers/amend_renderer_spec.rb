@@ -139,7 +139,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::AmendRenderer do
     convert_and_extract(adapter, xml) do |pkg|
       styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
 
-      expect(styles).to include("Noteindent"),
+      expect(styles).to include("Note"),
         "note inside amend newcontent should be rendered via NoteRenderer, " \
         "got styles: #{styles.inspect}"
     end

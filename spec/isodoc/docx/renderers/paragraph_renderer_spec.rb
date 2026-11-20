@@ -165,13 +165,13 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ParagraphRenderer do
         "embedded note body text should be rendered"
 
       # The embedded note follows the XSL inline-label contract: the
-      # note body lands in a Noteindent paragraph and no Era C box is
+      # note body lands in a Note paragraph (Noteindent is only for notes inside an example) and no Era C box is
       # drawn around it.
       styles = paragraphs.map { |p| para_style_value(p).to_s }
       expect(styles).not_to include("Box-begin"),
         "embedded note must not be wrapped in Box-begin"
-      expect(styles).to include("Noteindent"),
-        "embedded note body should use Noteindent style"
+      expect(styles).to include("Note"),
+        "embedded note body should use the Note style"
       expect(styles).not_to include("Box-end"),
         "embedded note must not be wrapped in Box-end"
     end
