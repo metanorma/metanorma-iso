@@ -111,7 +111,7 @@ module IsoDoc
         # MathML with no text content (an empty <mi/>) would convert to
         # an empty oMath and drop the stem; callers fall back to text.
         def visibly_blank_mathml?(mathml)
-          mathml.gsub(/<[^>]*>/, "").strip.empty?
+          Nokogiri::XML.fragment(mathml).text.strip.empty?
         end
 
         # Children that draw something: <mspace/> is spacing only.
