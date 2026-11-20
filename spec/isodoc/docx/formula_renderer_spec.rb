@@ -151,7 +151,8 @@ RSpec.describe IsoDoc::Iso::Docx::FormulaRenderer do
     end
 
     let(:wired_renderer) do
-      described_class.new(resolver, inline, context: context, walker: walker)
+      described_class.new(resolver, inline, context: adapter.instance_variable_get(:@context),
+                                            walker: walker)
     end
 
     before do
@@ -181,7 +182,7 @@ RSpec.describe IsoDoc::Iso::Docx::FormulaRenderer do
 
       wired_renderer.render(formula, doc)
 
-      text = doc.model.body.paragraphs.map do |p|
+      text = formula_key_paragraphs.map do |p|
         p.runs.map { |r| run_text(r) }.join
       end.join("\n")
 
@@ -215,7 +216,7 @@ RSpec.describe IsoDoc::Iso::Docx::FormulaRenderer do
 
       wired_renderer.render(formula, doc)
 
-      text = doc.model.body.paragraphs.map do |p|
+      text = formula_key_paragraphs.map do |p|
         p.runs.map { |r| run_text(r) }.join
       end.join("\n")
 
@@ -247,12 +248,16 @@ RSpec.describe IsoDoc::Iso::Docx::FormulaRenderer do
 
       wired_renderer.render(formula, doc)
 
-      text = doc.model.body.paragraphs.map do |p|
+      text = (doc.model.body.paragraphs + formula_key_paragraphs).map do |p|
         p.runs.map { |r| run_text(r) }.join
       end.join("\n")
 
       expect(text).to include("is a value")
       expect(text).to include("where the value is dimensionless")
+    end
+
+    def formula_key_paragraphs
+      doc.model.body.tables.flat_map(&:rows).flat_map(&:cells).flat_map(&:paragraphs)
     end
   end
 end

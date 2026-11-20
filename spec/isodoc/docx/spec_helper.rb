@@ -33,8 +33,23 @@ RSpec.configure do |config|
   end
 end
 
+# Parse under an adapter that populates lutaml's mixed-content metadata
+# (element_order, map_all_content). lutaml-model 0.8.x's leptris adapter
+# populates neither, which makes spec results depend on whether some
+# earlier example happened to flip the engine; nokogiri is deterministic.
+# Mirrors ModelUtils#parse_model_with_ordering in lib code.
+def parse_model_with_ordering(model_class, xml)
+  if defined?(Lutaml::Model::AdapterScope)
+    Lutaml::Model::AdapterScope.with(xml: :nokogiri) do
+      model_class.from_xml(xml)
+    end
+  else
+    model_class.from_xml(xml)
+  end
+end
+
 def parse_iso_document(xml)
-  Metanorma::IsoDocument::Root.from_xml(xml)
+  parse_model_with_ordering(Metanorma::IsoDocument::Root, xml)
 end
 
 def minimal_iso_xml(body = "")
@@ -95,4 +110,17 @@ end
 # collection of Text objects, so substring checks must join first.
 def run_text(run)
   Array(run.text).join
+end
+
+# A ToC entry paragraph's runs in document order. The entry text, tab and
+# PAGEREF field sit inside a w:hyperlink; the TOC field begin/instr/
+# separate (first entry) and end (last entry) are direct paragraph runs.
+def entry_runs(para)
+  inner = para.hyperlinks.flat_map(&:runs)
+  return para.runs if inner.empty?
+
+  runs = para.runs
+  lead = runs.first&.field_char&.fldCharType == "begin" ? runs.first(3) : []
+  trail = runs.drop(lead.size)
+  lead + inner + trail
 end

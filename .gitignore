@@ -1,6 +1,7 @@
 .DS_Store
 .byebug_history
 .rspec_status
+.scratch/
 coverage/
 spec/relatondb/
 spec/examples/.byebug_history

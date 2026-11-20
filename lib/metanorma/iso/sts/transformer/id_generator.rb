@@ -28,6 +28,7 @@ module Metanorma
           def initialize
             @registry = {}
             @kinds = {}
+            @normative_refs = {}
             @entry_ids = {}
             @issued_ids = {}
             @annex_count = 0
@@ -40,10 +41,29 @@ module Metanorma
             @kinds[source_id] = kind if kind
           end
 
-          # Emission kind registered for the source id ("ref", "annex",
-          # "table", "figure", "formula", "clause"); nil when unknown.
+          # Emission kind registered for the source id ("ref", "norm-ref",
+          # "annex", "table", "figure", "formula", "clause"); nil when unknown.
           def kind_for(source_id)
             @kinds[source_id]
+          end
+
+          # Identity of a normative reference (<ref> in norm-refs), keyed by
+          # its source id: { identifier:, urn:, type: }. An in-text citation
+          # to it is emitted as an inline <std>, not a bibr <xref>.
+          def register_normative_ref(source_id, identity)
+            return unless source_id && identity
+
+            @normative_refs[source_id] = identity
+          end
+
+          def normative_ref_for(source_id)
+            @normative_refs[source_id]
+          end
+
+          # Records the kind of a block that keeps its source id
+          # (formula, table), so an xref to it gets the right @ref-type.
+          def mark_kind(source_id, kind)
+            @kinds[source_id] ||= kind if source_id && !source_id.empty?
           end
 
           def remap(source_id)
@@ -125,6 +145,14 @@ module Metanorma
           def figure_id(figure)
             key = figure_key(figure)
             @registry[key] ||= claim("fig_#{(@figure_count += 1)}")
+          end
+
+          # A sub-figure group with no image of its own is not emitted
+          # (FigureTransformer#sub_figure_models): its first sub-figure
+          # carries the group's fig id, so cross-references to the group
+          # (iso-gdg-10.1.2-1) and to that sub-figure both resolve.
+          def alias_figure(sub, group)
+            @registry[figure_key(sub)] = figure_id(group)
           end
 
           def id_for(obj, prefix: "sec")
@@ -255,9 +283,24 @@ module Metanorma
             def walk_item(item)
               case item.class.name&.split("::")&.last
               when "FigureBlock"
-                @generator.figure_id(item)
+                walk_figure(item)
+              when "FormulaBlock"
+                @generator.mark_kind(read_id(item), "formula")
               end
               walk_siblings(item)
+            end
+
+            # Sub-figures are claimed in document order too, so an xref
+            # that precedes its figure still resolves.
+            def walk_figure(figure)
+              @generator.figure_id(figure)
+              subs = Array(try(figure, :figure))
+              return if subs.empty?
+
+              unless FigureTransformer.own_graphic?(figure)
+                @generator.alias_figure(subs.first, figure)
+              end
+              subs.each { |sub| walk_figure(sub) }
             end
 
             def walk_siblings(item)

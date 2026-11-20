@@ -1,11 +1,13 @@
 ---
 title: 108-015 - Fix cover page rendering from model
 priority: P0
-status: open
+status: done
 depends_on: [108-001]
 ---
 
 # 108-015: Render Cover Page from Model (Not Template)
+
+The DIS fixture regression in `spec/isodoc/docx/adapter_spec.rb` verifies that the cover shows the document's own metadata, including “Second edition”, and that the generated DOCX omits the template's ISO 15926 cover text and ISO document variables.
 
 ## Problem
 

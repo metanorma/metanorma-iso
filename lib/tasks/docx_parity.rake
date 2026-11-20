@@ -23,7 +23,7 @@ task "docx:parity" do
     Dir.mktmpdir("docx-parity-") do |dir|
       output = entry["output"] && File.expand_path(entry["output"])
       unless output
-        require "metanorma/iso"
+        require "metanorma-iso"
         require "isodoc/iso/docx"
         source = File.expand_path(entry.fetch("source"))
         format = entry.fetch("format", "docx")
@@ -33,7 +33,11 @@ task "docx:parity" do
         xml = Nokogiri::XML(File.read(source)) { |config| config.strict.nonet }
         options = entry["template"] ? { isowordtemplate: entry["template"] } : {}
         # Use the normal processor's template selection and Uniword adapter.
-        Metanorma::Iso::Processor.new.output(xml, source, output, format.to_sym, options)
+        # The DOC route runs the isodoc WordConvert chain, which reads the
+        # presentation XML from disk; only the DOCX Uniword adapter accepts
+        # a parsed node.
+        node, inname = format == "doc" ? [nil, source] : [xml, source]
+        Metanorma::Iso::Processor.new.output(node, inname, output, format.to_sym, options)
         puts "Source: #{source}"
       end
       puts IsoDoc::Iso::Docx::MhtmlParity.new(submitted, output).report

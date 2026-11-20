@@ -138,6 +138,8 @@ module IsoDoc
                      SemxRenderer.new(parent))
             register(Metanorma::Document::Components::Paragraphs::ParagraphBlock,
                      MixedInlineFallbackRenderer.new(parent))
+            register(Metanorma::Document::Components::Inline::FmtConceptElement,
+                     MixedInlineFallbackRenderer.new(parent))
             register(Metanorma::Document::Components::Inline::FmtXrefElement,
                      FmtXrefRenderer.new(parent))
             register(Metanorma::Document::Components::Inline::FmtXrefLabelElement,

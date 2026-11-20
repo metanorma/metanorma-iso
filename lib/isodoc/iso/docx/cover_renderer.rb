@@ -34,9 +34,38 @@ module IsoDoc
           @context = context
         end
 
+        # Stages below DIS (PWI, NP, WD, CD) use the compact classic cover
+        # (the simple template); DIS and later use the labelled DIS cover.
+        FIRST_LABELLED_STAGE = 40
+
         def render(bibdata, doc)
           return unless bibdata
 
+          if early_stage?(bibdata)
+            render_early_stage(bibdata, doc)
+          else
+            render_labelled(bibdata, doc)
+          end
+        end
+
+        private
+
+        # Compact cover of the WD/CD template: standalone document number,
+        # full identifier with draft date, committee reference, edition,
+        # date, one-paragraph title, then the stage badge.
+        def render_early_stage(bibdata, doc)
+          [doc_number(bibdata), early_project_identifier(bibdata),
+           early_committee(bibdata), edition_text(bibdata),
+           date_text(bibdata)].each do |line|
+            render_cover_line(doc, line) if line && !line.empty?
+          end
+          render_cover_title(doc, full_title(bibdata))
+          render_cover_line(doc, "")
+          render_cover_line(doc, stage_label(bibdata))
+          render_cover_line(doc, "")
+        end
+
+        def render_labelled(bibdata, doc)
           render_cover_large(doc, identifier_with_language(bibdata))
           render_cover_line(doc, working_document_number(bibdata))
           render_cover_line(doc, date_text(bibdata))
@@ -53,7 +82,32 @@ module IsoDoc
           render_cover_line(doc, stage_label(bibdata))
         end
 
-        private
+        def early_stage?(bib)
+          stage = extract_stage_number(bib)
+          !stage.nil? && stage < FIRST_LABELLED_STAGE
+        end
+
+        # "ISO/CD 17301-1 (draft 2016-05-01)": the undated identifier plus
+        # the draft suffix, falling back to the primary identifier.
+        def early_project_identifier(bib)
+          id = docidentifier_of_type(bib, "iso-undated")
+          return doc_identifier(bib) unless id
+
+          "#{id}#{draft_info(bib)}"
+        end
+
+        def early_committee(bib)
+          committee_reference(bib) ||
+            approval_group_identifiers(bib).join(" and ").then do |ids|
+              ids.empty? ? nil : ids
+            end
+        end
+
+        # Main title and part title as one paragraph, em-dash separated.
+        def full_title(bib)
+          parts = [main_title(bib), subtitle(bib)].compact.reject(&:empty?)
+          parts.join(" — ") unless parts.empty?
+        end
 
         def render_cover_line(doc, text)
           para = Uniword::Builder::ParagraphBuilder.new
@@ -444,11 +498,17 @@ module IsoDoc
         end
 
         def edition_text(bib)
-          edition = bib.edition if bib.class.attributes.key?(:edition)
-          return nil unless edition
+          return nil unless bib.class.attributes.key?(:edition)
 
-          edition_val = edition.is_a?(Array) ? edition.first : edition
-          num = extract_value(edition_val).to_s.to_i
+          editions = Array(bib.edition)
+          language = language_code(bib) || "en"
+          localized = editions.find { |entry| entry.language == language }
+          text = extract_value(localized).to_s.strip
+          unless text.empty? || text.match?(/\A[0-9]+\z/)
+            return text.sub(/\A[[:lower:]]/, &:upcase)
+          end
+
+          num = text.empty? ? extract_value(editions.first).to_s.to_i : text.to_i
           return nil if num.zero?
 
           suffix = ORDINAL_SUFFIXES[num % 100] || ORDINAL_SUFFIXES[num % 10] || "th"

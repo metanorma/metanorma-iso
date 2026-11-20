@@ -143,6 +143,69 @@ RSpec.describe IsoDoc::Iso::Docx::ModelUtils do
     end
   end
 
+  describe "#parse_model_with_ordering" do
+    # lutaml-model's default (leptris) XML adapter leaves element_order
+    # unpopulated on a real presentation XML root (standoc-namespaced
+    # <metanorma>), and the bibdata titles come back empty with it
+    # (lutaml/lutaml-model#1163). The helper must not depend on
+    # whichever adapter is ambient.
+    let(:xml) do
+      <<~XML
+        <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="presentation" flavor="iso">
+        <bibdata type="standard">
+        <title language="en" type="title-main">Main T</title>
+        </bibdata>
+        <preface><foreword id="fw"><fmt-title>T</fmt-title><p>Hello <em>world</em> end</p></foreword></preface>
+        <sections><clause id="c1"><fmt-title>C</fmt-title><p>x</p></clause></sections>
+        </metanorma>
+      XML
+    end
+    let(:root_class) { Metanorma::Iso::Document::Root }
+
+    def under_leptris(&)
+      Lutaml::Model::AdapterScope.with(xml: :leptris, &)
+    end
+
+    def english_main_title(root)
+      root.bibdata.titles.for_language("en")&.title_main&.value
+    end
+
+    it "loses element_order and titles with a plain from_xml under leptris",
+       :aggregate_failures do
+      root = under_leptris { root_class.from_xml(xml) }
+
+      expect(utilizer.ordered?(root)).to be(false)
+      expect(english_main_title(root)).to be_nil
+    end
+
+    context "when parsed with ordering under leptris" do
+      let(:root) do
+        under_leptris { utilizer.parse_model_with_ordering(root_class, xml) }
+      end
+
+      it "populates element_order" do
+        expect(utilizer.ordered?(root)).to be(true)
+      end
+
+      it "walks bibdata and sections through element_order" do
+        elements = []
+        utilizer.each_ordered_element(root) do |type, obj|
+          elements << obj.class if type == :element
+        end
+        expect(elements).to include(root.bibdata.class, root.sections.class)
+      end
+
+      it "keeps the bibdata titles" do
+        expect(english_main_title(root)).to eq("Main T")
+      end
+
+      it "populates element_order on mixed inline paragraph content" do
+        paragraph = root.preface.foreword.paragraphs.first
+        expect(utilizer.ordered?(paragraph)).to be(true)
+      end
+    end
+  end
+
   describe "#parse_dimension" do
     it "converts pt to twips" do
       expect(utilizer.parse_dimension("10pt")).to eq(200)

@@ -58,7 +58,9 @@ module IsoDoc
             return unless name
 
             para = build_paragraph(@resolver.figure_title_style)
-            @inline_renderer.render(name, para)
+            with_bookmark(figure, para) do
+              @inline_renderer.render(name, para)
+            end
             doc << para
           end
 
@@ -70,6 +72,7 @@ module IsoDoc
             Array(figure.note).each do |note|
               para = build_paragraph(:figure_note)
               @inline_renderer.render(note, para)
+              anchor_paragraph(note, para)
               doc << para
             end
           end
@@ -94,7 +97,21 @@ module IsoDoc
             return unless figure.class.attributes.key?(:key)
             return unless figure.key
 
+            render_key_name(figure.key, doc)
             @walker.walk(figure.key, doc)
+          end
+
+          # The key's own name ("Key") is a bold keep-with-next paragraph
+          # ahead of its entries. It is not KeyTitle, which marks the
+          # dt of each dt/dd pair.
+          def render_key_name(key, doc)
+            return unless key.class.attributes.key?(:name)
+            return unless key.name
+
+            para = build_unstyled_paragraph
+            para.keep_next
+            para << Uniword::Builder::RunBuilder.new.text(collect_text(key.name)).bold
+            doc << para
           end
 
           def figure_name(figure)

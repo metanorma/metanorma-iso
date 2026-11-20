@@ -73,8 +73,8 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping do
       expect(mapping.annex_heading_style(4)).to eq("a4")
     end
 
-    it "returns nil for level 1 (no fallback — use :annex key)" do
-      expect(mapping.annex_heading_style(1)).to be_nil
+    it "maps level 1 explicitly to Heading1 (no resolver fallback)" do
+      expect(mapping.annex_heading_style(1)).to eq("Heading1")
       expect(mapping.paragraph_style(:annex)).to eq("ANNEX")
     end
   end
@@ -90,6 +90,30 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping do
 
     it "returns nil for unknown numbering keys" do
       expect(mapping.numbering_id(:nonexistent)).to be_nil
+    end
+  end
+end
+
+RSpec.describe IsoDoc::Iso::DocxStyleMapping, "#excluded?" do
+  subject(:mapping) { described_class.new }
+
+  {
+    "8601 lowercase family" => "bibyear",
+    "8601 author family" => "au1",
+    "8601 CamelCase extra" => "AdmittedTerm",
+    "Word builtin table" => "GridTable1Light",
+    "locale pollution" => "Code-einrck",
+    "Chinese Word numeric id" => "21103",
+    "collaboration noise" => "Mention1",
+  }.each do |category, style_id|
+    it "excludes #{style_id} (#{category})" do
+      expect(mapping.excluded?(style_id)).to be(true)
+    end
+  end
+
+  it "does not exclude mapped Era C styles" do
+    mapping.paragraph_styles.each_value do |style_id|
+      expect(mapping.excluded?(style_id)).to be(false), style_id
     end
   end
 end
@@ -113,9 +137,50 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping, "Simple template" do
     expect(mapping.numbering_id(:dash_list)).to eq(18)
   end
 
-  it "falls back to BodyText where Simple has no dedicated style" do
-    expect(mapping.paragraph_style(:biblio_entry)).to eq("BodyText")
+  it "falls back to BodyText for footnotes where Simple has no FootnoteText" do
     expect(mapping.paragraph_style(:footnote_text)).to eq("BodyText")
+  end
+
+  it "maps bibliography entries to ListParagraph, the accepted Simple output" do
+    expect(mapping.paragraph_style(:biblio_entry)).to eq("ListParagraph")
+  end
+end
+
+RSpec.describe IsoDoc::Iso::DocxStyleMapping, "Simple run styles (P2-003)" do
+  subject(:mapping) { described_class.new(template: :simple) }
+
+  let(:library) { IsoDoc::Iso::Docx::StyleLibrary.load_default(template: :simple) }
+
+  it "maps Hyperlink to a character style the Simple template defines" do
+    expect(mapping.character_style(:hyperlink)).to eq("Hyperlink")
+    expect(library.character_style?("Hyperlink")).to be(true)
+  end
+
+  it "maps every Simple character style to one the template defines" do
+    mapping.character_styles.each_value do |style_id|
+      expect(library.character_style?(style_id)).to be(true)
+    end
+  end
+
+  # The card's other rStyles are not character styles in the Simple
+  # template, so emitting them as rStyle would reference a style that
+  # is missing or of the wrong type.
+  %w[zzCover normref FootnoteReference EndnoteReference rptBold rptItalic].each do |id|
+    it "has no #{id} style, so no run style is mapped for it" do
+      expect(library.style?(id)).to be(false)
+    end
+  end
+
+  %w[a2 a3 ForewordText Source].each do |id|
+    it "defines #{id} as a paragraph style only, not a run style" do
+      expect(library.paragraph_style?(id)).to be(true)
+      expect(library.character_style?(id)).to be(false)
+    end
+  end
+
+  it "leaves footnote and stem run styles unmapped in Simple" do
+    expect(mapping.character_style(:footnote_reference)).to be_nil
+    expect(mapping.character_style(:stem)).to be_nil
   end
 end
 

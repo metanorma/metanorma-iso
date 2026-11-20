@@ -69,3 +69,14 @@ The cover page has wrong paragraph structure compared to reference. Multiple dif
 
 ## Location
 - `lib/isodoc/iso/docx/adapter.rb` — `render_cover`, `render_copyright_block`, `extract_edition_text`
+
+## Status (2026-11-20): DONE
+
+Measured by converting a stage-30 (CD) presentation XML built from `spec/examples/rice.adoc` with the iso-simple template (the one stages below 40 select).
+
+Cover paragraphs 0-12 (13 paragraphs, then the cover sectPr paragraph at 13) match the reference CD structure: `17301`, `ISO/CD 17301-1 (draft 2016-05-01)`, `TC 34/SC 4/WG 3`, `Second edition`, `Date: 2016-05-01`, one em-dash title paragraph, blank, `CD stage`, blank, `zzwarninghdr` (1), `zzwarning` (2), unstyled U+00A0 spacer. The copyright block (`zzCopyright`) starts after the cover sectPr.
+
+- Compact cover: `CoverRenderer`, spec `cover_renderer_spec.rb` "compact cover for stages before DIS".
+- Warning styles: `zzwarninghdr`/`zzwarning` in the iso-simple template (template.dotx, styles.yml, style_mapping.yml `warning_header`/`warning`). The iso-dis template has no such styles; DIS keeps Notice.
+- Spacer: `BoilerplateRenderer#render_license` appends one nbsp paragraph after a license statement (none when there is no statement). Spec: boilerplate_renderer_spec.rb "#render_license on the simple (WD/CD) template" (4 examples; removing the spacer line turns the spacer example red).
+- Copyright address consolidation is P1-005 (DONE).

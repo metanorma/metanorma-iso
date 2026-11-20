@@ -22,6 +22,7 @@ paragraph_styles:
 
   # ── Annex headings ──
   annex: ANNEX
+  annex_heading1: Heading1   # no distinct annex level-1 style; explicit, not a fallback
   annex_heading2: a2
   annex_heading3: a3
   annex_heading4: a4
@@ -42,6 +43,7 @@ paragraph_styles:
 
   # ── Content blocks (Box-wrapped) ──
   note: Note
+  note_continued: Notecontinued
   note_indent: Noteindent
   note_indent_continued: Noteindentcontinued
   example: Example
@@ -74,6 +76,7 @@ paragraph_styles:
   table_header: Tableheader
   table_body: Tablebody
   table_footer: Tablefooter
+  table_footnote: Tablefootnote
 
   # ── Footnotes ──
   footnote_text: FootnoteText
@@ -89,6 +92,7 @@ paragraph_styles:
   toc8: TOC8
   toc9: TOC9
   contents_title: zzContents
+  variant_title_toc: variant-title-toc
   toc_heading: TOCHeading
 
   # ── Terms ──
@@ -107,7 +111,6 @@ paragraph_styles:
 
   # ── Normative references ──
   normref: RefNorm
-  ref_norm: RefNorm
 
   # ── Cover page ──
   cover_large: zzCoverlarge
@@ -140,6 +143,13 @@ paragraph_styles:
 
   # ── Lists ──
   list_continue1: ListContinue1
+  list_continue2: ListContinue2
+  list_continue3: ListContinue3
+  list_continue4: ListContinue4
+  list_number1: ListNumber1
+  list_number2: ListNumber2
+  list_number3: ListNumber3
+  list_number4: ListNumber4
   list_paragraph: BodyText
 
   # ── Section breaks ──
@@ -169,6 +179,7 @@ character_styles:
   inline_code: InlineCode
   inline_code_bold: InlineCodeBold
   inline_code_italic: InlineCodeItalic
+  clause_number: zzmovetofollowing
 
 # Paragraph styles whose <w:pPr><w:numPr> in template styles.xml produces
 # the section/term number automatically. When rendering headings that use
@@ -215,6 +226,9 @@ numbering:
 # Styles excluded from output — known pollution from older ISO
 # templates, Word built-ins, locale variants, and collaboration tools.
 # StyleMappingValidator flags any mapping value that matches.
+# DocxStyleMapping#excluded_style_ids reads ONLY the `globs` and `style_ids`
+# keys; any other key here is silently ignored. Patterns are case-sensitive
+# File.fnmatch globs (no FNM_PATHNAME), so `*` also matches across `-`.
 excluded_styles:
   globs:
     # 8601-era pollution (lower-case + CamelCase variants)
@@ -244,3 +258,214 @@ excluded_styles:
     # Collaboration / track-changes
     - "*TrackChanges*"
     - "*Comment*"
+    # 8601-era semantic families (case-sensitive; Era C has Biblio*, no bib*)
+    - "bib*"
+    - "au[0-9]*"
+    - "cite*"
+    - "std*"
+    - "coverpage-*"
+    - "boilerplate-*"
+    # 8601-era CamelCase extras
+    - "AdmittedTerm"
+    - "AltTerms"
+    - "DeprecatedTerms"
+    - "AMENDHeading1Unnumbered"
+    - "BlockText"
+    - "CommentSubject*"
+    - "CommentText*"
+    - "FollowedHyperlink"
+    - "HTMLPreformatted*"
+    - "NormalIndent"
+    - "NormalWeb"
+    - "PlaceholderText"
+    - "TableISO"
+    # Word builtin table zoo
+    - "GridTable*"
+    - "ListTable*"
+    - "PlainTable*"
+    - "*-Accent[1-6]"
+    # Locale pollution
+    - "Code-einrck"
+    - "HTMLSchreibmaschine*"
+    - "HTMLZitat"
+    - "Listennummer*"
+    - "StdAbsatz-*"
+    - "[0-9]*"
+    # Word co-authoring noise
+    - "Hashtag*"
+    - "Mention*"
+    - "SmartHyperlink*"
+    - "UnresolvedMention*"
+    - "BalloonText*"
+# P2-016 (#1728): REF-001 Era A (8601, pre-Typefi) lowercase families and content styles
+    - "au*"
+    - "note"
+    - "example"
+    - "figuretitle"
+    - "tabletitle"
+    - "sourcecode"
+    - "stem1"
+    - "normref"
+    - "pseudocode"
+    - "sourcetitle"
+    - "sourcecode1"
+    - "zzwarning"
+    - "zzwarninghdr"
+    - "admonition"
+    - "addition"
+    - "content"
+    - "content1"
+    - "coverpage"
+    - "coverpagedocnumber"
+    - "coverpagedocstage"
+    - "coverpagetechcommittee"
+    - "coverpagewarning"
+    - "deletion"
+    - "dlnoindent"
+    - "figure"
+    - "h2annex"
+    - "h3annex"
+    - "h4annex"
+    - "h5annex"
+    - "msofooterlandscape"
+    - "msoheaderlandscape"
+    - "msonormal0"
+    - "msotoctextspan"
+    - "part"
+    - "partlabel"
+    - "quoteattribution"
+    - "recommendationtitle"
+    - "tablefootnoteref"
+    - "title-second"
+    - "title-second1"
+    - "title1"
+    - "title2"
+    - "zzCoverChar"
+    - "zzcopyrighthdr"
+# P2-016 (#1728): REF-001 8601 CamelCase extras and Era B/C leaks (not yet listed)
+    - "ListParagraph"
+    - "Figuretitle0"
+    - "Heading6Char"
+    - "ListContinue5"
+    - "MultiPar202106010710"
+    - "MultiPar202106010710Char"
+    - "PreformattedHTML"
+    - "PreformattedHTMLChar"
+    - "msotoctextspan1"
+    - "msofooterlandscapeChar"
+    - "msoheaderlandscapeChar"
+    - "BodyTextindent2"
+    - "BodyTextindent3"
+    - "AnnexLevel2"
+    - "AnnexNumbered"
+    - "Annexlevel3"
+    - "AnnexNumberedChar"
+    - "ANNEXChar"
+# P2-016 (#1728): REF-001 Word built-in table styles (not yet listed)
+    - "ColorfulGrid*"
+    - "ColorfulList*"
+    - "ColorfulShading*"
+    - "DarkList*"
+    - "LightGrid*"
+    - "LightList*"
+    - "LightShading*"
+    - "MediumGrid*"
+    - "MediumList*"
+    - "MediumShading*"
+    - "Table3Deffects*"
+    - "TableClassic*"
+    - "TableColorful*"
+    - "TableColumns*"
+    - "TableList*"
+    - "TableSimple*"
+    - "TableSubtle*"
+    - "TableWeb*"
+    - "TableContemporary"
+    - "TableElegant"
+    - "TableProfessional"
+    - "TableTheme"
+    - "TableContents"
+    - "TableFormula"
+# P2-016 (#1728): REF-001 numeric, *1 and *Char collision suffixes (*Char alone would hit BodyTextChar)
+    - "*Char[0-9]*"
+    - "Heading[1-6]1"
+    - "Heading[1-6]Char1"
+    - "h[2-5]annex1"
+    - "h[2-5]annexChar"
+    - "BodyTextIndent[0-9]*"
+    - "BaseTextChar"
+    - "TableheaderChar"
+    - "zzCoverlargeChar"
+    - "a2Char"
+    - "a3Char"
+    - "a3CharCharChar"
+    - "FiguretitleCharCharCharChar"
+    - "List2Char"
+# P2-016 (#1728): REF-001 author one-offs, OGC/MSO/EndNote/STS leaks, cell-format, BoldBold
+    - "Author"
+    - "Bibliography1"
+    - "Commands"
+    - "Default"
+    - "Defterms"
+    - "Figure"
+    - "FigureTitle0"
+    - "FootnoteCharacters"
+    - "Foreword"
+    - "Index"
+    - "Introduction"
+    - "Heading"
+    - "MainTitle"
+    - "ML"
+    - "MSDNFR"
+    - "MTConvertedEquation"
+    - "MethodDesc"
+    - "MethodDescCont"
+    - "PlainTextBlack"
+    - "Quote1"
+    - "Sourcecode"
+    - "Table"
+    - "Tablelineafter"
+    - "XML"
+    - "XMLSchema"
+    - "xmlCode"
+    - "Hangingindent"
+    - "graysmall"
+    - "hit"
+    - "nowrap"
+    - "a1"
+    - "b2"
+    - "b3"
+    - "b4"
+    - "m1"
+    - "t1"
+    - "List1"
+    - "ListItem"
+    - "ListItem0"
+    - "ListIte"
+    - "ListBulletLast"
+    - "ListLabel98"
+    - "Requirement"
+    - "RequirementBold"
+    - "RequirementBold1"
+    - "RequirementBold1BoldItalic"
+    - "OGCClause"
+    - "List2OGCbullets"
+    - "ISOMB"
+    - "ISOSecretObservations"
+    - "ISOforeword"
+    - "introelements"
+    - "HeadingCover"
+    - "EndNoteBibliography"
+    - "EndNoteBibliographyChar"
+    - "EndNoteBibliographyTitle"
+    - "EndNoteBibliographyTitleChar"
+    - "sts-tbx-entailedterm"
+    - "sts-tbx-entailedterm-num"
+    - "sts-tbx-note-label"
+    - "Admittedterm0"
+    - "cs1-format"
+    - "hgkelc"
+    - "reference-accessdate"
+    - "v-button-caption"
+    - "cell-format"
+    - "BoldBold"

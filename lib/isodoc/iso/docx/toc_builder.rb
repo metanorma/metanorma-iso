@@ -35,7 +35,14 @@ module IsoDoc
         # as the field RESULT (between the separate and the end), so a
         # Word field refresh replaces them wholesale instead of
         # duplicating them.
-        TOC_FIELD_INSTRUCTION = ' TOC \\o "1-3" \\h \\z \\u '.freeze
+        #
+        # \o "1-3" selects heading 1-3 and \t adds the unnumbered
+        # heading styles at level 1, so a refresh yields the entries
+        # cached here. \u is omitted: it also selects every paragraph
+        # style with an outline level, which pulls in the annex
+        # sub-clause styles (a2/a3) and the main-title style.
+        TOC_FIELD_INSTRUCTION = ' TOC \\o "1-3" \\h \\z \\t ' \
+                                '"Foreword Title,1,Intro Title,1,ANNEX,1,Biblio Title,1" '
 
         def initialize(resolver, inline_renderer, context)
           @resolver = resolver
@@ -67,9 +74,18 @@ module IsoDoc
                              open_field: index.zero?,
                              close_field: index == entries.size - 1)
           end
+
+          request_field_refresh(doc)
         end
 
         private
+
+        # The cached page numbers are placeholders; w:updateFields makes
+        # Word recompute them (and the TOC) when the document is opened.
+        def request_field_refresh(doc)
+          doc.model.settings ||= Uniword::Wordprocessingml::Settings.new
+          doc.model.settings.update_fields = Uniword::Wordprocessingml::UpdateFields.new
+        end
 
         def render_toc_heading(doc)
           para = Uniword::Builder::ParagraphBuilder.new
@@ -165,7 +181,8 @@ module IsoDoc
         def add_clause_entries(entries, clause, level)
           return if level > 3
 
-          entries << build_entry(clause, level)
+          title = section_heading(clause)
+          entries << build_entry(clause, level) if title && !@inline.heading_body_empty?(title)
 
           # Recurse into sub-clauses
           if clause.class.attributes.key?(:clause)
@@ -175,13 +192,38 @@ module IsoDoc
           end
         end
 
+        def section_heading(node)
+          fmt = node.fmt_title if node.class.attributes.key?(:fmt_title)
+          title = node.title if node.class.attributes.key?(:title)
+          fmt || title
+        end
+
         # The ToC lists the annex entry alone. Annex sub-clauses are
         # excluded (level >= 2 under an annex), matching the PDF engine's
         # rule — entries under an ancestor-or-self annex at level >= 2
         # are skipped — and the annex ToC composition ruling of
         # 2026-10-26, so both output engines agree.
+        #
+        # An annex with no heading text renders through the untitled
+        # path, which carries its _Toc twin on the clause number. A
+        # number-only title still lists the annex; with no visible
+        # number and no toc variant-title there is no text to list and
+        # no entry is written.
         def add_annex_entry(entries, annex)
-          entries << build_entry(annex, 1)
+          title = section_heading(annex)
+          if title && !@inline.heading_body_empty?(title)
+            entries << build_entry(annex, 1)
+          elsif (title && @inline.heading_number_text(title)) || toc_variant_title(annex)
+            entry = build_untitled_annex_entry(annex)
+            entries << entry if entry
+          end
+        end
+
+        def build_untitled_annex_entry(annex)
+          id = attribute_value(annex, :anchor) || attribute_value(annex, :id)
+          return unless id
+
+          TocEntry.new(source: annex, level: 1, bookmark_name: toc_bookmark_for(id, 1))
         end
 
         def add_bibliography_entry(entries, bib)
@@ -201,12 +243,22 @@ module IsoDoc
         end
 
         def build_entry(node, level)
-          id = node.id if node.class.attributes.key?(:id)
+          id = attribute_value(node, :anchor) || attribute_value(node, :id)
           TocEntry.new(
             source: node,
             level: level,
-            bookmark_name: id || "_Toc#{object_id}_#{level}",
+            bookmark_name: toc_bookmark_for(id, level),
           )
+        end
+
+        # The heading renderers bookmark the registered id with a _Toc
+        # twin; the entry points at the twin. A node with no id keeps a
+        # synthetic name (it has no heading bookmark to share).
+        def toc_bookmark_for(id, level)
+          return "_Toc#{object_id}_#{level}" unless id
+
+          @context.toc_targets << id
+          Context.toc_bookmark_name(id)
         end
 
         def has_title?(node)
@@ -244,19 +296,21 @@ module IsoDoc
             para << field_char_run("separate")
           end
 
-          render_toc_heading_text(entry.source, para)
-          append_tab(para)
+          # The text, tab and page number form one hyperlink to the
+          # heading's _Toc bookmark, so the entry is clickable.
+          runs = HyperlinkRuns.new(entry.bookmark_name, para)
+          render_toc_heading_text(entry.source, runs)
+          append_tab(runs)
 
           # PAGEREF field with a placeholder result: the static result
-          # shows the leader's landing value until Word refreshes the
-          # fields, when the entry's bookmark yields the real page
-          # number. The classic isodoc DOCX ToC carries the same "1"
-          # placeholder in every field result.
-          para << field_char_run("begin")
-          para << instr_text_run(" PAGEREF #{entry.bookmark_name} \\h ")
-          para << field_char_run("separate")
-          para << Uniword::Wordprocessingml::Run.new(text: "1")
-          para << field_char_run("end")
+          # is "1" until Word refreshes the fields (w:updateFields, see
+          # request_field_refresh), when the entry's bookmark yields the
+          # real page number.
+          runs << field_char_run("begin")
+          runs << instr_text_run(" PAGEREF #{entry.bookmark_name} \\h ")
+          runs << field_char_run("separate")
+          runs << Uniword::Wordprocessingml::Run.new(text: "1")
+          runs << field_char_run("end")
 
           para << field_char_run("end") if close_field
 
@@ -280,14 +334,52 @@ module IsoDoc
         # right margin behind a dot leader (metanorma-pdfa#119). The
         # separator is therefore flattened to a space, matching the
         # inline flow the PDF ToC composes.
-        def render_toc_heading_text(node, para)
-          sink = HeadingTextSink.new(para)
+        def render_toc_heading_text(node, runs)
+          sink = HeadingTextSink.new(runs)
+          render_toc_heading_source(node, sink)
+        end
+
+        def render_toc_heading_source(node, sink)
           if (variant = toc_variant_title(node))
             @inline.render(variant, sink)
           elsif node.class.attributes.key?(:fmt_title) && node.fmt_title
             @inline.render(node.fmt_title, sink)
           elsif node.class.attributes.key?(:title) && node.title
             @inline.render(node.title, sink)
+          end
+        end
+
+        # Collects an entry's runs into its hyperlink and appends the
+        # hyperlink to the paragraph on its first run. An element that is
+        # not a run (a bookmark, a nested link) goes to the paragraph in
+        # arrival order; hyperlinks cannot nest, so it closes the current
+        # hyperlink and the runs that follow open a new one to the same
+        # anchor. The text order of the entry is therefore preserved.
+        class HyperlinkRuns
+          def initialize(anchor, para)
+            @anchor = anchor
+            @para = para
+            @open_link = nil
+          end
+
+          def <<(element)
+            element = Uniword::Wordprocessingml::Run.new(text: element) if element.is_a?(String)
+            element = element.build if element.is_a?(Uniword::Builder::RunBuilder)
+            if element.is_a?(Uniword::Wordprocessingml::Run)
+              open_link.runs << element
+            else
+              @open_link = nil
+              @para << element
+            end
+            self
+          end
+
+          private
+
+          def open_link
+            @open_link ||= Uniword::Wordprocessingml::Hyperlink.new(
+              anchor: @anchor, history: "1",
+            ).tap { |link| @para << link }
           end
         end
 

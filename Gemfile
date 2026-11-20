@@ -20,7 +20,6 @@ gem "rubocop-rake"
 gem "simplecov"
 gem "timecop"
 gem "webmock"
-gem "uniword", path: "../uniword" if File.exist?(File.expand_path("../uniword/Gemfile", __dir__))
 gem "lutaml-model", "~> 0.8"
 # html2doc >= 1.12 is required for correct OMML math handling in Word output
 # (isodoc main also pins ~> 1.12).

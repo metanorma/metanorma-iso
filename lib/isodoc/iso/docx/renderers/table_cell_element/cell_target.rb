@@ -19,8 +19,9 @@ module IsoDoc
               @style_key = style_key
             end
 
-            def <<(paragraph)
-              @builder << paragraph
+            def <<(content)
+              content = content.model if content.is_a?(Uniword::Builder::TableBuilder)
+              @builder << content
             end
           end
         end

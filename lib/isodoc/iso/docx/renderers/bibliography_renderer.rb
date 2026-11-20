@@ -67,12 +67,12 @@ module IsoDoc
           end
 
           def bib_item_style
-            key = @context.in_normative ? :ref_norm : :biblio_entry
+            key = @context.in_normative ? :normref : :biblio_entry
             @resolver.paragraph_style(key)
           end
 
           def with_bibitem_bookmark(bibitem, para)
-            name = bibitem_bookmark_name(bibitem)
+            name = @context.claim_bookmark_name(bibitem_bookmark_name(bibitem))
             return yield unless name
 
             bm_id = @context.next_bookmark_id.to_s

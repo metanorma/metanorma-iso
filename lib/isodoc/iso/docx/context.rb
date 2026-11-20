@@ -9,19 +9,21 @@ module IsoDoc
       # tree is walked. Passed through the visitor chain to avoid global
       # mutable state on the adapter.
       class Context
-        attr_reader :footnote_counter, :bookmark_counter, :comment_counter
-        attr_accessor :in_note, :in_example, :in_table, :in_annex,
+        attr_reader :footnote_counter, :bookmark_counter, :comment_counter,
+                    :formula_footnote_bodies, :formula_key_footnote_handler
+        attr_accessor :in_note, :note_nested, :in_example, :in_table, :in_annex,
                       :in_normative, :in_foreword, :in_introduction,
                       :in_bibliography, :in_definition_dd, :in_formula,
-                      :in_figure, :in_definitions,
+                      :in_figure, :in_definitions, :list_depth,
                       :section_depth,
                       :term_counter, :section_counter, :body_width,
-                      :amend_zone
+                      :amend_zone, :in_amendment
         def initialize
           @footnote_counter = Counter.new
           @bookmark_counter = Counter.new
           @comment_counter = Counter.new
           @in_note = false
+          @note_nested = false
           @in_example = false
           @in_table = false
           @in_annex = false
@@ -33,11 +35,21 @@ module IsoDoc
           @in_formula = false
           @in_figure = false
           @in_definitions = false
+          @list_depth = 0
           @section_depth = 0
           @section_counter = Counter.new(0)
           @term_counter = Counter.new(0)
           @zone_paragraph_counts = Hash.new(0)
           @amend_zone = nil
+          @in_amendment = false
+        end
+
+        # Whether clause headings render unnumbered: an amendment-style
+        # document (doctype amendment / technical-corrigendum), except
+        # inside <newcontent>, which re-enables numbering for the clauses
+        # being inserted into the amended standard.
+        def suppress_heading_numbers?
+          (in_amendment && amend_zone != :newcontent) || false
         end
 
         def next_footnote_id
@@ -46,6 +58,55 @@ module IsoDoc
 
         def next_bookmark_id
           @bookmark_counter.next
+        end
+
+        # Word rejects bookmark names longer than this.
+        MAX_BOOKMARK_NAME = 40
+
+        # The bookmark name Word sees for element id +name+: the id
+        # itself when Word accepts it, otherwise a deterministic short
+        # form (sanitised prefix + digest of the id, MAX_BOOKMARK_NAME
+        # long). Bookmark emission and every xref/eref anchor go through
+        # this one mapping, so a long id stays resolvable. The result
+        # never starts with +_Toc+ (the digest is not in front and an
+        # id-derived prefix cannot lead with an underscore).
+        def bookmark_name(name)
+          name = name.to_s
+          return name if name.length <= MAX_BOOKMARK_NAME
+
+          digest = Digest::SHA1.hexdigest(name)[0, 12]
+          prefix = name.gsub(/[^A-Za-z0-9]/, "_").sub(/\A[^A-Za-z]+/, "")
+          "#{prefix[0, MAX_BOOKMARK_NAME - 13]}_#{digest}"
+        end
+
+        # Claim the bookmark for id +name+. Returns the name to emit
+        # (see #bookmark_name), or nil when the id is blank or already
+        # bookmarked, so bookmark names stay unique.
+        def claim_bookmark_name(name)
+          return if name.to_s.empty?
+
+          emitted = bookmark_name(name)
+          emitted if claimed_bookmark_names.add?(emitted)
+        end
+
+        # Bookmark names (clause ids) the table of contents links to.
+        # TocBuilder registers them before the body renders; the heading
+        # renderers then add a Word-style +_Toc+ bookmark beside the id
+        # bookmark, and the ToC entry hyperlinks / PAGEREFs to it.
+        def toc_targets
+          @toc_targets ||= Set.new
+        end
+
+        def claimed_bookmark_names
+          @claimed_bookmark_names ||= Set.new
+        end
+
+        # Stable +_Toc+ bookmark name for a clause id: Word-style prefix
+        # plus a digest of the (document-unique) id, so it is unique
+        # whenever the id is and never collides with an id bookmark
+        # (ids never start with _Toc).
+        def self.toc_bookmark_name(name)
+          "_Toc#{Digest::SHA1.hexdigest(name.to_s)[0, 12]}"
         end
 
         def next_comment_id
@@ -91,12 +152,15 @@ module IsoDoc
 
         def with_note
           old = @in_note
+          old_nested = @note_nested
           old_count = @zone_paragraph_counts[:note]
           @in_note = true
+          @note_nested = @in_example
           @zone_paragraph_counts[:note] = 0
           yield
         ensure
           @in_note = old
+          @note_nested = old_nested
           @zone_paragraph_counts[:note] = old_count
         end
 
@@ -151,12 +215,30 @@ module IsoDoc
           @in_bibliography = old
         end
 
-        def with_formula
+        def with_formula(footnote_bodies = nil)
           old = @in_formula
+          old_bodies = @formula_footnote_bodies
           @in_formula = true
+          @formula_footnote_bodies = footnote_bodies
           yield
         ensure
           @in_formula = old
+          @formula_footnote_bodies = old_bodies
+        end
+
+        def with_formula_key_footnotes(handler)
+          old = @formula_key_footnote_handler
+          @formula_key_footnote_handler = handler
+          yield
+        ensure
+          @formula_key_footnote_handler = old
+        end
+
+        def with_list
+          @list_depth += 1
+          yield
+        ensure
+          @list_depth -= 1
         end
 
         def with_figure

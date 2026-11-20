@@ -131,6 +131,53 @@ RSpec.describe "IsoDoc::Iso::Docx::MhtmlParity" do
       .to include("- 1: heading1|heading1", "+ 1: heading2|heading1")
   end
 
+  it "matches literal heading numbers to numbering supplied by the Word style" do
+    html = mhtml(matching_html.sub("<h1>Scope</h1>", "<h1>1 Scope</h1>"))
+    numbered_styles = styles.sub('<w:outlineLvl w:val="0"/>',
+                                 '<w:outlineLvl w:val="0"/><w:numPr><w:ilvl w:val="0"/><w:numId w:val="1"/></w:numPr>')
+    xml = document.sub("Different heading text", "Scope")
+
+    expect(parity_class.new(html, docx(xml, numbered_styles))).to be_match
+  end
+
+  %w[Tablebody Tableheader].each do |style|
+    it "matches #{style} cell paragraphs to unstyled HTML cells" do
+      xml = document.sub("<w:tc><w:p>", %(<w:tc><w:p><w:pPr><w:pStyle w:val="#{style}"/></w:pPr>))
+
+      expect(parity_class.new(submitted, docx(xml))).to be_match
+    end
+
+    it "matches HTML #{style} cell paragraphs to default Word paragraphs" do
+      html = mhtml(matching_html.sub("<p>Cell</p>", %(<p class="#{style}">Cell</p>)))
+
+      expect(parity_class.new(html, docx)).to be_match
+    end
+
+    it "preserves #{style} outside table cells in both formats" do
+      html = mhtml(matching_html.sub('class="BodyText"', %(class="#{style}")))
+      xml = document.sub('w:val="body-id"', %(w:val="#{style}"))
+
+      expect([html, docx(xml)].map { |path| parity_class.normalize(path) })
+        .to all(include("paragraph|#{style.downcase}"))
+    end
+  end
+
+  it "retains other cell styles and table structure" do
+    xml = document.sub("<w:tc><w:p>", '<w:tc><w:p><w:pPr><w:pStyle w:val="Tablebody-"/></w:pPr>')
+
+    expect(parity_class.new(submitted, docx(xml)).report)
+      .to include("- 8: paragraph|normal", "+ 8: paragraph|tablebody-")
+  end
+
+  it "normalizes styles in nested cells without losing their boundaries" do
+    html = mhtml('<table><tr><th><p class="Tableheader">A</p><table><tr><td><p class="Tablebody">B</p></td></tr></table></th></tr></table>')
+
+    expect(parity_class.normalize(html)).to eq(
+      %w[table row cell paragraph|normal table row cell
+         paragraph|normal /cell /row /table /cell /row /table],
+    )
+  end
+
   it "honors a direct body-text outline level over an inherited heading level" do
     xml = document.sub('<w:pStyle w:val="heading-id"/>', '<w:pStyle w:val="heading-id"/><w:outlineLvl w:val="9"/>')
 
