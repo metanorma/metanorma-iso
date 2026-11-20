@@ -784,11 +784,25 @@ module IsoDoc
           case type
           when :text then para << obj
           when :element
+            return render_delim_breaks(obj, para) if caption_delim?(obj)
             return if autonum_carrier?(obj)
             return if fmt_twin_of_stem?(obj, twins)
 
             dispatch_inline(obj, para)
           end
+        end
+
+        def caption_delim?(element)
+          element.is_a?(Metanorma::Document::Components::Inline::SpanElement) &&
+            element.class_attr == "fmt-caption-delim"
+        end
+
+        # The delimiter after a numbered heading's label is a tab the
+        # style's numbering suffix already supplies, so it is dropped. An
+        # annex heading's delimiter is soft breaks (obligation line, gap,
+        # title) that nothing else supplies: keep them (metanorma-iso#1728).
+        def render_delim_breaks(delim, para)
+          Array(delim.br).each { |br| dispatch_inline(br, para) }
         end
 
         # Collect body text from a heading, skipping autonum carriers.
