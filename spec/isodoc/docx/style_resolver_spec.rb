@@ -255,9 +255,24 @@ RSpec.describe IsoDoc::Iso::Docx::StyleResolver, "strict mode (TODO 021)" do
   end
 
   describe "context-aware dispatch (zone enum)" do
-    it "returns Noteindent body style in :note zone" do
+    it "returns Note body style in :note zone" do
       context.with_note do
-        expect(resolver.context_body_style).to eq("Noteindent")
+        expect(resolver.context_body_style).to eq("Note")
+      end
+    end
+
+    it "returns Notecontinued for the 2nd note paragraph" do
+      context.with_note do
+        context.mark_zone_paragraph
+        expect(resolver.context_body_style).to eq("Notecontinued")
+      end
+    end
+
+    it "returns Noteindent body style in a :note zone nested in an example" do
+      context.with_example do
+        context.with_note do
+          expect(resolver.context_body_style).to eq("Noteindent")
+        end
       end
     end
 
@@ -285,14 +300,25 @@ RSpec.describe IsoDoc::Iso::Docx::StyleResolver, "strict mode (TODO 021)" do
       end
     end
 
-    it "returns nil in :body zone (default)" do
-      expect(resolver.context_body_style).to be_nil
+    it "returns BodyText in :body zone (default)" do
+      expect(resolver.context_body_style).to eq("BodyText")
     end
 
-    it "does not chain fallbacks — :annex zone has no body override" do
+    it "returns BodyText in :annex zone" do
       context.with_annex do
-        expect(resolver.context_body_style).to be_nil
+        expect(resolver.context_body_style).to eq("BodyText")
       end
+    end
+
+    it "returns BodyText in :introduction zone" do
+      context.with_introduction do
+        expect(resolver.context_body_style).to eq("BodyText")
+      end
+    end
+
+    it "has no body style in :table and :figure zones" do
+      context.with_table { expect(resolver.context_body_style).to be_nil }
+      context.with_figure { expect(resolver.context_body_style).to be_nil }
     end
   end
 

@@ -5,7 +5,7 @@ require "tmpdir"
 require "nokogiri"
 
 # ISO table footnotes (<fn reference="a"> in a cell) stay inside the table:
-# a superscript letter in the cell, and one full-width Note row at the foot
+# a superscript letter in the cell, and one full-width Tablefootnote row at the foot
 # of the table holding each body once. They are not Word page footnotes.
 RSpec.describe "table footnote rendering" do
   let(:adapter) { build_adapter }
@@ -54,14 +54,14 @@ RSpec.describe "table footnote rendering" do
     expect(marks.map { |r| val(r.at_xpath("w:rPr/w:vertAlign", ns)) }.uniq).to eq(["superscript"])
   end
 
-  it "adds one full-width Note row with each body once" do
+  it "adds one full-width Tablefootnote row with each body once" do
     tbl = converted_table(body)
     last = tbl.xpath("w:tr", ns).last
     cells = last.xpath("w:tc", ns)
     expect(cells.size).to eq(1)
     expect(val(cells.first.at_xpath("w:tcPr/w:gridSpan", ns))).to eq("3")
     paras = cells.first.xpath("w:p", ns)
-    expect(paras.map { |p| val(p.at_xpath("w:pPr/w:pStyle", ns)) }.uniq).to eq(["Note"])
+    expect(paras.map { |p| val(p.at_xpath("w:pPr/w:pStyle", ns)) }.uniq).to eq(["Tablefootnote"])
     expect(paras.map(&:text)).to eq(["a Body A.", "b Body B."])
     expect(tbl.xpath("w:tblGrid/w:gridCol", ns).size).to eq(3)
   end

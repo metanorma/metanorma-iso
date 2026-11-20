@@ -23,7 +23,7 @@ module IsoDoc
               build_table_sections(table, tbl)
             end
             append_collected_footnotes(tbl, footnotes)
-            ensure_table_structure(tbl.model, table.width)
+            ensure_table_structure(tbl.model, table.width, colgroup_weights(table))
 
             if has_table_attachments?(table)
               render_wrapped_table(tbl.model, table, doc)
@@ -94,11 +94,11 @@ module IsoDoc
             end
           end
 
-          # The submitted ISO tables set table footnotes in Note style.
+          # The submitted ISO tables set table footnotes in Tablefootnote style.
           def append_collected_footnotes(tbl, footnotes)
             return if footnotes.empty?
 
-            append_table_footnotes(tbl, footnotes, columns: table_column_count(tbl.model), style_key: :note)
+            append_table_footnotes(tbl, footnotes, columns: table_column_count(tbl.model), style_key: :table_footnote)
           end
 
           # Era C tables in presentation XML carry <note>, <example>,
@@ -124,6 +124,9 @@ module IsoDoc
             no_v_band: 1,
           }.freeze
           DEFAULT_FALLBACK_WIDTH_TWIPS = 9000
+          # Border sizes in eighths of a point: 1 pt frame, 0.5 pt rules.
+          FRAME_SIZE = 8
+          RULE_SIZE = 4
 
           private
 
@@ -276,17 +279,39 @@ module IsoDoc
             )
           end
 
-          def ensure_table_structure(table_model, width)
+          def ensure_table_structure(table_model, width, weights = nil)
             ensure_table_properties(table_model)
+            ensure_table_borders(table_model)
             ensure_table_width(table_model, width)
             ensure_table_look(table_model)
-            ensure_table_grid(table_model, width)
+            ensure_table_grid(table_model, width, weights)
           end
 
           def ensure_table_properties(table_model)
             return if table_model.properties
 
             table_model.properties = Uniword::Wordprocessingml::TableProperties.new
+          end
+
+          # The ISO PDF draws a solid 1 pt frame and 0.5 pt rules between
+          # every row and column (iso.international-standard.xsl,
+          # table-border / table-cell-border).
+          def ensure_table_borders(table_model)
+            return if table_model.properties.table_borders
+
+            frame = table_border(FRAME_SIZE)
+            rule = table_border(RULE_SIZE)
+            table_model.properties.table_borders =
+              Uniword::Wordprocessingml::TableBorders.new(
+                top: frame, bottom: frame, left: frame, right: frame,
+                inside_h: rule, inside_v: rule
+              )
+          end
+
+          def table_border(size)
+            Uniword::Wordprocessingml::Border.new(
+              val: "single", sz: size, space: 0, color: "000000",
+            )
           end
 
           def ensure_table_width(table_model, width)
@@ -308,23 +333,48 @@ module IsoDoc
               )
           end
 
-          def ensure_table_grid(table_model, width)
-            cols = table_column_count(table_model)
-            return widen_grid(table_model.grid, cols) if table_model.grid
+          # Column sizes the author gave in a colgroup, or nil.
+          def colgroup_weights(table)
+            cols = table.colgroup&.col
+            return nil if cols.nil? || Array(cols).empty?
 
-            col_width = column_width(cols, width)
-            grid_cols = Array.new(cols) do
-              Uniword::Wordprocessingml::GridCol.new(width: col_width)
-            end
-            table_model.grid =
-              Uniword::Wordprocessingml::TableGrid.new(columns: grid_cols)
+            Array(cols).map(&:width)
           end
 
-          # Uniword sizes the grid by cell count, which undercounts rows
-          # that use gridSpan; add the missing columns.
-          def widen_grid(grid, cols)
-            (cols - grid.columns.size).times do
-              grid.columns << Uniword::Wordprocessingml::GridCol.new
+          def ensure_table_grid(table_model, width, weights)
+            cols = table_column_count(table_model)
+            return if cols.zero?
+
+            widths = TableColumnWidths.new(table_model, cols, weights: weights)
+              .twips(grid_total(table_model, width))
+            table_model.grid = Uniword::Wordprocessingml::TableGrid.new(
+              columns: widths.map { |w| Uniword::Wordprocessingml::GridCol.new(width: w) },
+            )
+            apply_cell_widths(table_model, widths)
+          end
+
+          def grid_total(table_model, width)
+            parse_twips(width) || existing_grid_total(table_model) ||
+              DEFAULT_FALLBACK_WIDTH_TWIPS
+          end
+
+          # Uniword sizes its own grid to the page's text width.
+          def existing_grid_total(table_model)
+            total = Array(table_model.grid&.columns).sum { |c| c.width.to_i }
+            total.positive? ? total : nil
+          end
+
+          def apply_cell_widths(table_model, widths)
+            table_model.rows.each do |row|
+              col = 0
+              Array(row.cells).each do |cell|
+                span = [cell.properties&.grid_span&.value.to_i, 1].max
+                cell.properties ||= Uniword::Wordprocessingml::TableCellProperties.new
+                cell.properties.cell_width = Uniword::Properties::CellWidth.new(
+                  w: widths[col, span].to_a.sum, type: "dxa",
+                )
+                col += span
+              end
             end
           end
 
@@ -336,13 +386,6 @@ module IsoDoc
             Array(row.cells).sum do |cell|
               [cell.properties&.grid_span&.value.to_i, 1].max
             end
-          end
-
-          def column_width(cols, width)
-            return 0 if cols.zero?
-
-            total_width = parse_twips(width) || DEFAULT_FALLBACK_WIDTH_TWIPS
-            total_width / cols
           end
         end
       end

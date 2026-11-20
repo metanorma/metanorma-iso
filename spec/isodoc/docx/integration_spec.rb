@@ -532,6 +532,21 @@ RSpec.describe "DOCX integration", type: :integration do
       expect(intro_title).not_to be_nil
     end
 
+    it "a body note's second paragraph uses Notecontinued, not an indented style" do
+      path = generate_docx(<<~INNER)
+        <sections>
+          <clause id="s1">
+            <fmt-title>Scope</fmt-title>
+            <note id="n1"><fmt-name>NOTE</fmt-name><p>First.</p><p>Second.</p></note>
+          </clause>
+        </sections>
+      INNER
+
+      doc = extract_docx_xml(path, "word/document.xml")
+      styles = doc.xpath("//w:p[contains(., 'First.') or contains(., 'Second.')]/w:pPr/w:pStyle/@w:val", ns).map(&:value)
+      expect(styles).to eq(%w[Note Notecontinued])
+    end
+
     it "note runs the label inline with the body (XSL contract, no Era C box)" do
       path = generate_docx(<<~INNER)
         <sections>
@@ -544,7 +559,7 @@ RSpec.describe "DOCX integration", type: :integration do
 
       doc = extract_docx_xml(path, "word/document.xml")
       box_begin = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Box-begin']]", ns)
-      note_para = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Noteindent']]", ns)
+      note_para = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Note']]", ns)
       box_end = doc.at_xpath("//w:p[w:pPr/w:pStyle[@w:val='Box-end']]", ns)
       expect(box_begin).to be_nil, "notes must not be wrapped in Box-begin"
       expect(box_end).to be_nil, "notes must not be wrapped in Box-end"

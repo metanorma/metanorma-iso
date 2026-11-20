@@ -225,7 +225,7 @@ module IsoDoc
           part = find_part(doc, r_id)
           return unless part
 
-          @hf_renderer.render_header(part[:content], text, align: :right)
+          @hf_renderer.render_header(part[:content], text)
         end
 
         def write_footer_part(doc, r_id, copyright_text, scheme)

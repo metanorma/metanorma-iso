@@ -598,12 +598,45 @@ module IsoDoc
         # FootnoteText style, so the body text matches the Era C
         # template's footnote typography rather than the document
         # default.
-        def build_footnote_with_style(text)
+        # +closing+ is the presentation label's closing delimiter (the ")" of
+        # ISO's "1)" footnote label). Word supplies the number through the
+        # footnoteRef marker; the delimiter follows it in the same
+        # superscript style, as the PDF lays the label out.
+        def build_footnote_with_style(text, closing: nil)
           style = @resolver.paragraph_style(:footnote_text)
-          @doc.footnote do |p|
+          run = @doc.footnote do |p|
             p.style = style if style
             p << text
           end
+          finish_footnote_body(@doc.model.footnotes.footnote_entries.last, closing)
+          run
+        end
+
+        # The builder prepends the number marker as the paragraph's first
+        # run, ahead of w:pPr, and leaves it in the body style. Put w:pPr
+        # first (CT_P order), superscript the marker with the template's
+        # FootnoteReference style, and append the label delimiter.
+        def finish_footnote_body(entry, closing)
+          para = entry.paragraphs.first
+          order = para.element_order
+          if order.is_a?(Array) && (ppr = order.find { |e| e.name == "pPr" })
+            order.delete(ppr)
+            order.unshift(ppr)
+          end
+          marker = para.runs.first
+          apply_run_char_style(marker, :footnote_reference)
+          add_footnote_closing(para, order, closing) if closing
+        end
+
+        def add_footnote_closing(para, order, closing)
+          closing_run = Uniword::Wordprocessingml::Run.new(text: closing)
+          apply_run_char_style(closing_run, :footnote_reference)
+          gap = Uniword::Wordprocessingml::Run.new(text: " ")
+          para.runs.insert(1, closing_run, gap)
+          return unless order.is_a?(Array)
+
+          at = order.index { |e| e.name == "r" }.to_i + 1
+          2.times { order.insert(at, Lutaml::Xml::Element.new("Element", "r")) }
         end
 
         def lookup_comment_id(annotation_target_id)
@@ -751,11 +784,25 @@ module IsoDoc
           case type
           when :text then para << obj
           when :element
+            return render_delim_breaks(obj, para) if caption_delim?(obj)
             return if autonum_carrier?(obj)
             return if fmt_twin_of_stem?(obj, twins)
 
             dispatch_inline(obj, para)
           end
+        end
+
+        def caption_delim?(element)
+          element.is_a?(Metanorma::Document::Components::Inline::SpanElement) &&
+            element.class_attr == "fmt-caption-delim"
+        end
+
+        # The delimiter after a numbered heading's label is a tab the
+        # style's numbering suffix already supplies, so it is dropped. An
+        # annex heading's delimiter is soft breaks (obligation line, gap,
+        # title) that nothing else supplies: keep them (metanorma-iso#1728).
+        def render_delim_breaks(delim, para)
+          Array(delim.br).each { |br| dispatch_inline(br, para) }
         end
 
         # Collect body text from a heading, skipping autonum carriers.

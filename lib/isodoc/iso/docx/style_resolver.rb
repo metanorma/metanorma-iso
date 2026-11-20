@@ -18,12 +18,14 @@ module IsoDoc
       # Context-aware dispatch rules:
       #   - :annex       → annex heading + annex figure/table titles
       #   - :foreword    → ForewordText body style
-      #   - :note        → Noteindent body style
+      #   - :note        → Note body style (Noteindent when nested in an example)
       #   - :example     → Exampleindent body style
       #   - :formula     → Formuladescription body style (e.g. "where:" text)
       #   - :bibliography → BiblioText body style
       #   - :normative   → normref body style
-      #   - :body        → default (nil)
+      #   - :body, :annex, :introduction → BodyText (the DOC chain's
+      #     body paragraph style; a paragraph with no class)
+      #   - :table, :figure, :definitions → default (nil)
       class StyleResolver
         attr_reader :mapping, :library, :context
 
@@ -70,7 +72,7 @@ module IsoDoc
           @mapping.paragraph_style(key)
         end
 
-        # Context-aware body text style. Returns nil in the default zone.
+        # Context-aware body text style. Returns nil in zones without a body style (table, figure, definitions).
         # Single dispatch via Context#zone — no boolean chain.
         #
         # For zones that publish a "continued" variant (note, example),
@@ -82,10 +84,9 @@ module IsoDoc
           return nil unless zone
 
           if continued_zone?(zone)
-            continued_key = ZONE_BODY_CONTINUED_STYLE.fetch(zone)
-            @mapping.paragraph_style(continued_key)
+            @mapping.paragraph_style(continued_key_for(zone))
           else
-            key = ZONE_BODY_STYLE.fetch(zone, nil)
+            key = body_key_for(zone)
             key && @mapping.paragraph_style(key)
           end
         end
@@ -188,6 +189,9 @@ module IsoDoc
         # Single dispatch table: zone → semantic paragraph-style key.
         # MECE: each zone maps to exactly one body-style key.
         ZONE_BODY_STYLE = {
+          body: :body_text,
+          annex: :body_text,
+          introduction: :body_text,
           note: :note_indent,
           example: :example_indent,
           formula: :formula_description,
@@ -217,6 +221,21 @@ module IsoDoc
         def normalize_class_key(class_attr)
           str = class_attr.to_s
           CLASS_ALIASES.key?(str) ? CLASS_ALIASES[str] : str.to_sym
+        end
+
+        # A note in the body runs in Note / Notecontinued, as the submitted
+        # ISO document does. Only a note nested in an example indents
+        # (Noteindent / Noteindentcontinued), as quote_style1 does there.
+        def body_key_for(zone)
+          return :note if zone == :note && !@context.note_nested
+
+          ZONE_BODY_STYLE.fetch(zone, nil)
+        end
+
+        def continued_key_for(zone)
+          return :note_continued if zone == :note && !@context.note_nested
+
+          ZONE_BODY_CONTINUED_STYLE.fetch(zone)
         end
 
         # True when the current paragraph is the 2nd+ in a zone that

@@ -254,7 +254,7 @@ RSpec.describe "Rice DOCX end-to-end" do
         ref = sect.at_xpath("w:footerReference[@w:type='default']/@r:id", RiceDocxE2E::NS)
         next unless ref
 
-        part("word/#{rels.fetch(ref.value)['Target']}").xpath("//w:pStyle/@w:val", RiceDocxE2E::NS).map(&:value).first
+        part("word/#{rels.fetch(ref.value)['Target']}").xpath("//w:pStyle/@w:val", RiceDocxE2E::NS).map(&:value).grep(/\AFooterPage/).first
       end
     end
 

@@ -29,7 +29,9 @@ module IsoDoc
             text = parent.extract_footnote_text(element)
             return if text.nil? || text.empty?
 
-            fn_run = parent.build_footnote_with_style(text)
+            fn_run = parent.build_footnote_with_style(
+              text, closing: label_closing(element)
+            )
             fn_id = fn_run.footnote_reference&.id
             parent.store_footnote_id(cache_key, fn_id) if cache_key && fn_id
             parent.apply_run_char_style(fn_run, :footnote_reference)
@@ -39,9 +41,17 @@ module IsoDoc
 
           private
 
+          # ISO labels a footnote "1)": the presentation XML carries the
+          # closing parenthesis in fmt-fn-label, in the text and in the
+          # footnote body alike (the PDF prints "1)" in both places).
+          def label_closing(element)
+            return unless element.fmt_fn_label
+
+            parent.collect_all_text(element.fmt_fn_label).rstrip.end_with?(")") ? ")" : nil
+          end
+
           def append_marker_suffix(element, para)
-            return unless context.in_normative && element.fmt_fn_label
-            return unless parent.collect_all_text(element.fmt_fn_label).rstrip.end_with?(")")
+            return unless label_closing(element)
 
             # Word supplies the number. Add the presentation label's closing
             # parenthesis before the separator that follows the fn element.
