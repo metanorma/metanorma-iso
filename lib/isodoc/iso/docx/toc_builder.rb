@@ -336,7 +336,7 @@ module IsoDoc
         # inline flow the PDF ToC composes.
         def render_toc_heading_text(node, runs)
           sink = HeadingTextSink.new(runs)
-          @inline.with_heading { render_toc_heading_source(node, sink) }
+          render_toc_heading_source(node, sink)
         end
 
         def render_toc_heading_source(node, sink)

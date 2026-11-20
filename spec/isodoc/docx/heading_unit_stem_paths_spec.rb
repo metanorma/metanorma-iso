@@ -2,9 +2,9 @@
 
 require_relative "spec_helper"
 
-# A UnitsML unit stem is plain text in every heading-like path (introduction
-# subclause titles, preface titles, ToC entries) and OMML in body text
-# (metanorma-iso#1765).
+# A UnitsML unit stem is inline OMML in every heading-like path (introduction
+# subclause titles, preface titles, ToC entries) and in body text, never the
+# raw unitsml(...) macro (metanorma-iso#1728; #1765 first kept it as text).
 RSpec.describe IsoDoc::Iso::Docx::Adapter, "unit stems in heading-like paths" do
   let(:adapter) { build_adapter }
   let(:stem_xml) do
@@ -17,7 +17,8 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "unit stems in heading-like paths" do
     convert_and_extract(adapter, minimal_iso_xml(body)) do |pkg|
       pkg.document.body.paragraphs.map do |p|
         { style: para_style_value(p), omaths: p.o_maths.length,
-          text: p.runs.map { |r| run_text(r) }.join }
+          text: p.runs.map { |r| run_text(r) }.join,
+          xml: p.to_xml }
       end
     end
   end
@@ -35,8 +36,8 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "unit stems in heading-like paths" do
       X
     end
 
-    it "renders the unit as text in the subclause title" do
-      expect(row("a2")).to include(omaths: 0, text: "0.1Alt 80 km")
+    it "renders the unit as OMML in the subclause title" do
+      expect(row("a2")).to include(omaths: 1, text: "0.1Alt ")
     end
 
     it "keeps body paragraphs as OMML" do
@@ -51,12 +52,18 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "unit stems in heading-like paths" do
       X
     end
 
-    it "renders the unit as text in the foreword title" do
-      expect(row("ForewordTitle")).to include(omaths: 0, text: "Fore 80 km")
+    it "renders the unit as OMML in the foreword title" do
+      expect(row("ForewordTitle")).to include(omaths: 1, text: "Fore ")
     end
 
-    it "renders the unit as text in the ToC entry" do
-      expect(row("TOC1")).to include(omaths: 0, text: "Fore 80 km1")
+    it "renders the unit as OMML in the ToC entry" do
+      toc = row("TOC1")
+      expect(toc[:omaths]).to eq(1)
+      expect(toc[:xml].scan(%r{<w:t[^>]*>([^<]*)</w:t>}).flatten.join).to eq("Fore 1")
+    end
+
+    it "leaves no unitsml macro text in any paragraph" do
+      expect(rows.map { |r| r[:xml] }).to all(satisfy { |x| !x.include?("unitsml(") })
     end
 
     it "keeps foreword body paragraphs as OMML" do

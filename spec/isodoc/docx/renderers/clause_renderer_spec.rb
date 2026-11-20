@@ -37,18 +37,22 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
       body.map { |p| p.runs.map { |run| run_text(run) }.join }
     end
 
-    it "renders the value and unit in heading runs" do
-      expect(heading_text).to eq("Altitude 80 km")
+    def math_tokens(para)
+      para.o_maths.map { |m| m.to_xml.scan(%r{<m:t[^>]*>([^<]*)</m:t>}).flatten }
+    end
+
+    let(:heading) { paragraphs.find { |p| para_style_value(p) == "Heading1" } }
+    let(:body_math_tokens) do
+      math_tokens(paragraphs.find { |p| p.o_maths.any? && para_style_value(p) != "Heading1" })
+    end
+
+    it "renders the value and unit in the heading as inline OMML" do
+      expect(math_tokens(heading)).to eq([%w[80 km]])
+      expect(heading_text).to eq("Altitude ")
     end
 
     it "omits the source unit macro from heading runs" do
-      expect(heading_text).not_to include("unitsml(")
-    end
-
-    # Body stems render as inline OMML (the heading stays text).
-    let(:body_math_tokens) do
-      body = paragraphs.find { |p| p.o_maths.any? }
-      body.o_maths.map { |m| m.to_xml.scan(%r{<m:t[^>]*>([^<]*)</m:t>}).flatten }
+      expect(heading.to_xml).not_to include("unitsml(")
     end
 
     it "renders the unit as an inline equation in body paragraphs" do
@@ -65,7 +69,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
       end
 
       it "preserves unit structure in the heading" do
-        expect(heading_text).to eq("Altitude 80 (m²/s)")
+        expect(math_tokens(heading).flatten).to eq(%w[80 m 2 s])
       end
 
       it "preserves unit structure in body paragraphs" do

@@ -46,9 +46,7 @@ module IsoDoc
 
             para = build_unstyled_paragraph
             para.style = style
-            @inline_renderer.with_heading do
-              @inline_renderer.render(variant, HiddenRuns.new(para))
-            end
+            @inline_renderer.render(variant, HiddenRuns.new(para))
             doc << para
           end
 

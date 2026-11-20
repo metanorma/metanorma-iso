@@ -72,9 +72,7 @@ module IsoDoc
             para = Uniword::Builder::ParagraphBuilder.new
             para.style = @resolver.paragraph_style(style_key)
             with_bookmark(section, para) do
-              @inline_renderer.with_heading do
-                @inline_renderer.render(title, para)
-              end
+              @inline_renderer.render(title, para)
             end
             doc << para
           end

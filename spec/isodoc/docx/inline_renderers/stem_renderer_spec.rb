@@ -169,11 +169,10 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::StemRenderer do
     expect(built.text).to eq("")
   end
 
-  it "renders a unit stem as text inside a heading", :aggregate_failures do
-    allow(inline).to receive(:in_heading?).and_return(true)
+  it "renders a unit stem as inline OMML with no macro text", :aggregate_failures do
     built = render_built(presentation_unit_stem)
-    expect(built.text).to eq("80 km")
-    expect(built.o_maths).to be_empty
+    expect(built.o_maths.length).to eq(1)
+    expect(built.to_xml).not_to include("unitsml(")
   end
 
   def structured_unit_stem(mathml)
