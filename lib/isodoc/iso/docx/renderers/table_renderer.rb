@@ -120,24 +120,57 @@ module IsoDoc
             rows = section.tr
             return unless rows
 
-            Array(rows).each { |tr| render_table_row(tr, tbl, row_type) }
+            spans = TableRowSpans.new
+            Array(rows).each { |tr| render_table_row(tr, tbl, row_type, spans) }
           end
 
-          def render_table_row(table_row, tbl, row_type)
+          def render_table_row(table_row, tbl, row_type, spans)
+            spans.start_row
             tbl.row do |row|
-              cells = Array(table_row.th) + Array(table_row.td)
-              cells.each { |cell| render_row_cell(cell, row, row_type) }
+              row_cells(table_row).each do |cell|
+                render_continuations(spans, row)
+                render_row_cell(cell, row, row_type, spans)
+              end
+              render_continuations(spans, row)
+              spans.each_trailing_continuation { |n| add_continuation(row, n) }
             end
           end
 
-          def render_row_cell(cell, row, row_type)
+          # Cells in source order; th and td may be mixed within a row.
+          def row_cells(table_row)
+            if ordered?(table_row)
+              cells = []
+              each_ordered_element(table_row, allow_filter: %i[th td]) do |type, obj|
+                cells << obj if type == :element
+              end
+              return cells unless cells.empty?
+            end
+            Array(table_row.th) + Array(table_row.td)
+          end
+
+          def render_continuations(spans, row)
+            spans.each_continuation_here { |n| add_continuation(row, n) }
+          end
+
+          def add_continuation(row, colspan)
+            row.cell do |c|
+              c.column_span(colspan) if colspan > 1
+              c.model.properties.v_merge = TableRowSpans.continuation
+              c << Uniword::Builder::ParagraphBuilder.new
+            end
+          end
+
+          def render_row_cell(cell, row, row_type, spans)
             return unless cell
 
-            col_span = cell.colspan
+            col_span = [cell.colspan.to_i, 1].max
+            row_span = [cell.rowspan.to_i, 1].max
             row.cell do |c|
-              c.column_span(col_span.to_i) if col_span
+              c.column_span(col_span) if col_span > 1
+              c.model.properties.v_merge = TableRowSpans.restart if row_span > 1
               render_cell_content(cell, c, row_type)
             end
+            spans.place(col_span, row_span)
           end
 
           def render_cell_content(cell, cell_builder, row_type)
@@ -256,7 +289,13 @@ module IsoDoc
           end
 
           def table_column_count(table_model)
-            table_model.rows.map { |r| r.cells&.count || 0 }.max || 0
+            table_model.rows.map { |r| row_grid_width(r) }.max || 0
+          end
+
+          def row_grid_width(row)
+            Array(row.cells).sum do |cell|
+              [cell.properties&.grid_span&.value.to_i, 1].max
+            end
           end
 
           def column_width(cols, width)
