@@ -17,10 +17,12 @@ module IsoDoc
           include TableFootnotes
 
           def render(table, doc)
-            render_table_name(table, doc)
-
             tbl = Uniword::Builder::TableBuilder.new
-            build_table_sections(table, tbl)
+            footnotes = collecting_table_footnotes do
+              render_table_name(table, doc)
+              build_table_sections(table, tbl)
+            end
+            append_collected_footnotes(tbl, footnotes)
             ensure_table_structure(tbl.model, table.width)
 
             if has_table_attachments?(table)
@@ -85,16 +87,17 @@ module IsoDoc
           end
 
           def build_table_sections(table, tbl)
-            footnotes = collecting_table_footnotes do
-              @context.with_table do
-                render_table_section(table.thead, tbl, :header)
-                render_table_section(table.tbody, tbl, :body)
-                render_table_section(table.tfoot, tbl, :footer)
-              end
+            @context.with_table do
+              render_table_section(table.thead, tbl, :header)
+              render_table_section(table.tbody, tbl, :body)
+              render_table_section(table.tfoot, tbl, :footer)
             end
+          end
+
+          # The submitted ISO tables set table footnotes in Note style.
+          def append_collected_footnotes(tbl, footnotes)
             return if footnotes.empty?
 
-            # The submitted ISO tables set table footnotes in Note style.
             append_table_footnotes(tbl, footnotes, columns: table_column_count(tbl.model), style_key: :note)
           end
 
@@ -105,6 +108,9 @@ module IsoDoc
           # standard block dispatcher so they pick up NoteRenderer,
           # ExampleRenderer, DefinitionListRenderer, etc.
           TABLE_ATTACHMENT_ATTRS = %i[note example sourcecode dl key].freeze
+
+          NESTED_TABLE = Metanorma::Document::Components::Tables::TableBlock
+          CELL_BLOCK_ELEMENTS = %w[note example p ol ul dl sourcecode quote table].freeze
 
           # OOXML default table look val 04A0: first-row + first-column
           # special formatting on, no banding. Matches Word's "Table Grid".
@@ -217,19 +223,24 @@ module IsoDoc
             cell.element_order.any? do |el|
               next false unless el.element?
 
-              %w[note example p ol ul dl sourcecode quote].include?(el.name)
+              CELL_BLOCK_ELEMENTS.include?(el.name)
             end
           end
 
           def render_cell_block_content(cell, cell_builder, style_key = nil)
+            nested = false
             each_ordered_element(cell) do |type, obj|
               case type
               when :text
                 append_text_to_cell(obj, cell_builder, style_key)
+                nested = false if obj && !obj.strip.empty?
               when :element
                 dispatch_cell_element(obj, cell_builder, style_key)
+                nested = obj.is_a?(NESTED_TABLE)
               end
             end
+            # OOXML: a w:tc must end with a w:p, not a nested w:tbl.
+            cell_builder << Uniword::Builder::ParagraphBuilder.new if nested
           end
 
           def append_text_to_cell(text, cell_builder, style_key)
@@ -249,6 +260,8 @@ module IsoDoc
 
           def dispatch_cell_element(element, cell_builder, style_key)
             target = TableCellElement::CellTarget.new(cell_builder, style_key)
+            return render(element, target) if element.is_a?(NESTED_TABLE)
+
             cell_registry.dispatch(element, target)
           end
 

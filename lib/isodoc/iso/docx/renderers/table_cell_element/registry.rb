@@ -62,6 +62,16 @@ module IsoDoc
               register_paragraph_handler
               register_note_handler
               register_list_handlers
+              register_definition_list_handler
+            end
+
+            def register_definition_list_handler
+              register(
+                Metanorma::Document::Components::Lists::DefinitionList,
+                DefinitionListHandler.new(
+                  resolver: @resolver, inline_renderer: @inline_renderer,
+                ),
+              )
             end
 
             def register_paragraph_handler
