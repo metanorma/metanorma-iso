@@ -228,21 +228,24 @@ module IsoDoc
           end
 
           def render_cell_block_content(cell, cell_builder, style_key = nil)
-            nested = false
             each_ordered_element(cell) do |type, obj|
               case type
               when :text
                 append_text_to_cell(obj, cell_builder, style_key)
-                nested = false if obj && !obj.strip.empty?
               when :element
                 # Word fuses two tables with no paragraph between them.
-                cell_builder << Uniword::Builder::ParagraphBuilder.new if nested && obj.is_a?(NESTED_TABLE)
+                cell_builder << Uniword::Builder::ParagraphBuilder.new if obj.is_a?(NESTED_TABLE) && ends_in_table?(cell_builder)
                 dispatch_cell_element(obj, TableCellElement::CellTarget.new(cell_builder, style_key))
-                nested = obj.is_a?(NESTED_TABLE)
               end
             end
             # OOXML: a w:tc must end with a w:p, not a nested w:tbl.
-            cell_builder << Uniword::Builder::ParagraphBuilder.new if nested
+            cell_builder << Uniword::Builder::ParagraphBuilder.new if ends_in_table?(cell_builder)
+          end
+
+          # Reads what the cell actually emitted, so an element that renders
+          # nothing (an empty list) cannot hide a trailing table.
+          def ends_in_table?(cell_builder)
+            Array(cell_builder.model.element_order).last&.name == "tbl"
           end
 
           def append_text_to_cell(text, cell_builder, style_key)

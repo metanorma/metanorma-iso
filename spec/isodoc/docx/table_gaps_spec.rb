@@ -189,5 +189,16 @@ RSpec.describe "table content gaps" do
       cell = cell_of("<dl><dd><p>orphan</p></dd></dl>")
       expect(cell.xpath("w:p", ns).map(&:text)).to eq(%w[orphan])
     end
+
+    it "ends a cell with a paragraph when an empty list follows its table" do
+      cell = cell_of('<table id="t2"><tbody><tr><td>inner</td></tr></tbody></table><ul/>')
+      expect(cell.element_children.last.name).to eq("p")
+    end
+
+    it "keeps two textless-link footnotes with one label apart" do
+      cells = %w[one two].map { |s| %(<td>x<fn reference="a"><p><link target="https://e.com/#{s}"/></p></fn></td>) }
+      doc = converted_document(%(<table id="t1"><tbody><tr>#{cells.join}</tr></tbody></table>))
+      expect(doc.at_xpath("//w:body/w:tbl", ns).text).to include("https://e.com/one").and include("https://e.com/two")
+    end
   end
 end
