@@ -11,7 +11,7 @@ module IsoDoc
       class Context
         attr_reader :footnote_counter, :bookmark_counter, :comment_counter,
                     :formula_footnote_bodies, :formula_key_footnote_handler
-        attr_accessor :in_note, :in_example, :in_table, :in_annex,
+        attr_accessor :in_note, :note_nested, :in_example, :in_table, :in_annex,
                       :in_normative, :in_foreword, :in_introduction,
                       :in_bibliography, :in_definition_dd, :in_formula,
                       :in_figure, :in_definitions, :list_depth,
@@ -23,6 +23,7 @@ module IsoDoc
           @bookmark_counter = Counter.new
           @comment_counter = Counter.new
           @in_note = false
+          @note_nested = false
           @in_example = false
           @in_table = false
           @in_annex = false
@@ -151,12 +152,15 @@ module IsoDoc
 
         def with_note
           old = @in_note
+          old_nested = @note_nested
           old_count = @zone_paragraph_counts[:note]
           @in_note = true
+          @note_nested = @in_example
           @zone_paragraph_counts[:note] = 0
           yield
         ensure
           @in_note = old
+          @note_nested = old_nested
           @zone_paragraph_counts[:note] = old_count
         end
 

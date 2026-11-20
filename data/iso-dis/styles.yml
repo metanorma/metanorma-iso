@@ -2209,6 +2209,25 @@ style_library:
       hidden: false
       semi_hidden: false
       unhide_when_used: false
+    Tablefootnote:
+      id: Tablefootnote
+      type: paragraph
+      name: Tablefootnote
+      based_on: Note
+      hidden: false
+      semi_hidden: false
+      unhide_when_used: false
+      paragraph_properties:
+        spacing:
+          before: '0'
+          after: '100'
+          line: '240'
+          line_rule: 'exact'
+        tabs:
+        - type: left
+          position: '403'
+      run_properties:
+        font_size: '18'
     Noteindent:
       id: Noteindent
       type: paragraph

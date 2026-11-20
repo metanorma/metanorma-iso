@@ -44,8 +44,7 @@ module IsoDoc
                 end
               end
             end
-            # The ISO templates have no tablefootnote paragraph style.
-            append_table_footnotes(table, footnotes, columns: 2, style_key: :footnote_text) unless footnotes.empty?
+            append_table_footnotes(table, footnotes, columns: 2, style_key: :table_footnote) unless footnotes.empty?
             doc << table
           end
 

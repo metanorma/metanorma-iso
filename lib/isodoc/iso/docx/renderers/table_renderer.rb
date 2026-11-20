@@ -94,11 +94,11 @@ module IsoDoc
             end
           end
 
-          # The submitted ISO tables set table footnotes in Note style.
+          # The submitted ISO tables set table footnotes in Tablefootnote style.
           def append_collected_footnotes(tbl, footnotes)
             return if footnotes.empty?
 
-            append_table_footnotes(tbl, footnotes, columns: table_column_count(tbl.model), style_key: :note)
+            append_table_footnotes(tbl, footnotes, columns: table_column_count(tbl.model), style_key: :table_footnote)
           end
 
           # Era C tables in presentation XML carry <note>, <example>,

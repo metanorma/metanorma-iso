@@ -6,8 +6,9 @@ module IsoDoc
       module Renderers
         # Renders a Note block with the XSL inline-label layout: the
         # note's label ("NOTE 1") runs inline at the head of the first
-        # body paragraph, and the body paragraphs pick up Noteindent
-        # (Noteindentcontinued for 2nd+) via Context#zone + StyleResolver.
+        # body paragraph, and the body paragraphs pick up Note
+        # (Notecontinued for 2nd+; Noteindent / Noteindentcontinued when the
+        # note sits inside an example) via Context#zone + StyleResolver.
         #
         # This mirrors iso.international-standard.xsl's note contract —
         # label inline (note-name-style), no border, no shading — where
@@ -23,8 +24,9 @@ module IsoDoc
           include BoxWrapper
 
           def render(note, doc)
+            style_key = @context.in_example ? :note_indent : :note
             @context.with_note do
-              with_inline_label(note, doc, :note_indent)
+              with_inline_label(note, doc, style_key)
             end
           end
         end

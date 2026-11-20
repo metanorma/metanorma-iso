@@ -43,6 +43,7 @@ paragraph_styles:
 
   # ── Content blocks (Box-wrapped) ──
   note: Note
+  note_continued: Notecontinued
   note_indent: Noteindent
   note_indent_continued: Noteindentcontinued
   example: Example
@@ -75,6 +76,7 @@ paragraph_styles:
   table_header: Tableheader
   table_body: Tablebody
   table_footer: Tablefooter
+  table_footnote: Tablefootnote
 
   # ── Footnotes ──
   footnote_text: FootnoteText
@@ -333,7 +335,6 @@ excluded_styles:
     - "partlabel"
     - "quoteattribution"
     - "recommendationtitle"
-    - "tablefootnote"
     - "tablefootnoteref"
     - "title-second"
     - "title-second1"

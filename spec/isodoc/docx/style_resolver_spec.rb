@@ -255,9 +255,24 @@ RSpec.describe IsoDoc::Iso::Docx::StyleResolver, "strict mode (TODO 021)" do
   end
 
   describe "context-aware dispatch (zone enum)" do
-    it "returns Noteindent body style in :note zone" do
+    it "returns Note body style in :note zone" do
       context.with_note do
-        expect(resolver.context_body_style).to eq("Noteindent")
+        expect(resolver.context_body_style).to eq("Note")
+      end
+    end
+
+    it "returns Notecontinued for the 2nd note paragraph" do
+      context.with_note do
+        context.mark_zone_paragraph
+        expect(resolver.context_body_style).to eq("Notecontinued")
+      end
+    end
+
+    it "returns Noteindent body style in a :note zone nested in an example" do
+      context.with_example do
+        context.with_note do
+          expect(resolver.context_body_style).to eq("Noteindent")
+        end
       end
     end
 
