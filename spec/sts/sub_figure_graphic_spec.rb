@@ -16,7 +16,8 @@ RSpec.describe "Sub-figure graphics" do
         </bibdata>
         <sections>
           <clause id="c1"><title>Scope</title>
-            <p id="_p1">See <xref target="_group_fig">the group</xref>.</p>
+            <p id="_p1">See <xref target="_group_fig">the group</xref>,
+              <xref target="_stage_a">a</xref> and <xref target="_stage_b">b</xref>.</p>
             <figure id="_group_fig" anchor="fig-group" autonum="1">
               <name>Stages overview</name>
               <figure id="_stage_a" anchor="fig-a" autonum="1 a">
@@ -28,6 +29,7 @@ RSpec.describe "Sub-figure graphics" do
                 <image id="_img_b" src="images/stage-b.png" mimetype="image/png"/>
               </figure>
             </figure>
+            <p id="_p2">Again <xref target="_stage_a">a</xref> and <xref target="_stage_b">b</xref>.</p>
           </clause>
         </sections>
       </metanorma>
@@ -59,5 +61,14 @@ RSpec.describe "Sub-figure graphics" do
 
   it "keeps the group's cross-reference resolvable" do
     expect(doc.xpath("//fig[@id = //xref[@ref-type='fig']/@rid]")).not_to be_empty
+  end
+
+  # The first sub-figure carries the group's id, so xrefs to the group and
+  # to that sub-figure share it; xrefs before and after the figure resolve.
+  it "resolves every xref to an emitted <fig>, before and after the figure" do
+    fig_ids = doc.xpath("//fig/@id").map(&:value)
+    rids = doc.xpath("//xref/@rid").map(&:value)
+    a, b = fig_ids
+    expect([fig_ids.uniq.size, rids]).to eq([2, [a, a, b, a, b]])
   end
 end

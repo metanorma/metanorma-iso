@@ -133,6 +133,14 @@ module Metanorma
             @registry[key] ||= claim("fig_#{(@figure_count += 1)}")
           end
 
+          # A sub-figure group with no image of its own is not emitted
+          # (FigureTransformer#sub_figure_models): its first sub-figure
+          # carries the group's fig id, so cross-references to the group
+          # (iso-gdg-10.1.2-1) and to that sub-figure both resolve.
+          def alias_figure(sub, group)
+            @registry[figure_key(sub)] = figure_id(group)
+          end
+
           def id_for(obj, prefix: "sec")
             return nil unless obj
             source_id = read_id(obj)
@@ -261,11 +269,24 @@ module Metanorma
             def walk_item(item)
               case item.class.name&.split("::")&.last
               when "FigureBlock"
-                @generator.figure_id(item)
+                walk_figure(item)
               when "FormulaBlock"
                 @generator.mark_kind(read_id(item), "formula")
               end
               walk_siblings(item)
+            end
+
+            # Sub-figures are claimed in document order too, so an xref
+            # that precedes its figure still resolves.
+            def walk_figure(figure)
+              @generator.figure_id(figure)
+              subs = Array(try(figure, :figure))
+              return if subs.empty?
+
+              unless FigureTransformer.own_graphic?(figure)
+                @generator.alias_figure(subs.first, figure)
+              end
+              subs.each { |sub| walk_figure(sub) }
             end
 
             def walk_siblings(item)
