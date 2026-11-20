@@ -173,3 +173,7 @@ Without proper ordered/mixed content support, the text nodes, bold, and xref wou
 3. For each failure: identify the missing/wrong model attribute
 4. Fix the model
 5. Re-run until all pass
+
+## Status (2026-11-20)
+
+PARTIALLY VERIFIED, superseded by P3-001. The execution order here (harness, run, fix, rerun) is complete: 17 of 17 reference files round-trip in sts-ruby (34 examples, 0 failures), so every element present in those files is mapped well enough to survive. Not done: the table's "Verify mapping" rows (14 items, e.g. usageNote, target, named-content, custom-meta children) were not checked one by one; they are only covered where the 17 files exercise them. Remaining: 14 rows to confirm against sts-ruby lib/, or close as covered by the round-trip.

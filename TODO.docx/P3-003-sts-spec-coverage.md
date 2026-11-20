@@ -149,3 +149,7 @@ end
 - [ ] Each transformer has unit tests covering happy path and edge cases
 - [ ] At least 3 end-to-end tests with real documents
 - [ ] All tests pass in CI (`bundle exec rake`)
+
+## Status (2026-11-20)
+
+Phase 1 DONE: spec/round_trip/reference_docs_spec.rb exists in sts-ruby main and passes (34 examples, 0 failures; 17 files). Phase 2 PARTIAL: on this branch spec/sts has 25 spec files and the transformer has 30 files under lib/metanorma/iso/sts/transformer. Per-transformer unit specs exist only for dl_transformer, standard and transformer (3 of the ~17 listed); the rest are covered through document_transformer_spec, annex_app_spec, def_list_spec, figure/graphic/note/term specs and rice_e2e_spec. End-to-end tests with real documents: 1 (rice) of the 3 required; the iso_8601_1 input/expected pair was not created. Full-suite CI status on this branch: NOT RUN here.

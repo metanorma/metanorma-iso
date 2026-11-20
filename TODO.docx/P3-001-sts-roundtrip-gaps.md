@@ -73,3 +73,7 @@ expect(generated).to be_xml_equivalent_to(doc)
 ```
 
 All 17+ reference files pass this test.
+
+## Status (2026-11-20)
+
+DONE (measured). In a worktree of metanorma/sts-ruby origin/main (8279d6b), `bundle exec rspec spec/round_trip/reference_docs_spec.rb` over the 17 reference files (2 ISO STS, 15 NISO STS) gave 34 examples, 0 failures, 0 pending (PENDING_FILES is empty); each file passes both "parses without error" and "round-trips without data loss". The harness (Steps 1-2) already exists on sts-ruby main; no open sts-ruby PRs. Caveats: the comparison strips processing instructions before comparing (lutaml-model drops them), so the PI sub-item (item 13) is waived, not proven; the 17 files came from a local mn-samples-iso-private checkout at a different commit than the submodule pointer in sts-ruby origin/main. Count of files: 17. Remaining: 0 files failing.
