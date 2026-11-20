@@ -32,16 +32,38 @@ module Metanorma
             end
           end
 
+          # A references section is normative (in-body norm-refs) when it
+          # carries intro paragraphs or a section number; otherwise it is
+          # the back-matter bibliography. Shared with DocumentTransformer's
+          # id pre-registration so both agree on each entry's kind.
+          def normative_section?(ref_section)
+            Array(ref_section.p).any? ||
+              !section_transformer.extract_autonum(ref_section).nil?
+          end
+
+          # The identity an in-text citation needs to reproduce a normative
+          # reference as <std>: designation, URN and dated/undated type.
+          def reference_identity(bibitem)
+            identifier = extract_docidentifier(bibitem)
+            urn = extract_urn(bibitem)
+            return nil unless identifier && urn
+
+            { identifier: identifier, urn: urn,
+              type: std_type_for(identifier) }
+          end
+
           def transform_section(ref_section)
             bibitems = extract_bibitems(ref_section)
             title_text = extract_title(ref_section)
 
             paragraphs = intro_paragraphs(ref_section)
             label = section_transformer.extract_autonum(ref_section)
-            normative = paragraphs.any? || !label.nil?
+            normative = normative_section?(ref_section)
             # Bibliography entries are numbered ([1], [2], …); normative
             # reference entries are not (ISO/Metanorma convention).
-            refs = bibitems.map.with_index { |b, i| transform_bibitem(b, normative ? nil : i + 1) }.compact
+            refs = bibitems.map.with_index do |b, i|
+              transform_bibitem(b, normative ? nil : i + 1, normative: normative)
+            end.compact
 
             unless normative
               # Back-matter bibliography: a bare ref-list.
@@ -61,7 +83,7 @@ module Metanorma
             ::Sts::NisoSts::Section.new(attrs)
           end
 
-          def transform_bibitem(bibitem, ordinal = nil)
+          def transform_bibitem(bibitem, ordinal = nil, normative: false)
             identifier = extract_docidentifier(bibitem)
             formattedref = extract_formattedref(bibitem)
             label_text = ordinal ? "[#{ordinal}]" : nil
@@ -71,7 +93,10 @@ module Metanorma
             content_parts << formattedref if formattedref
 
             rid = bibitem.id
-            id_generator.register(rid, rid, "ref") if rid
+            if rid
+              id_generator.register(rid, rid, normative ? "norm-ref" : "ref")
+              id_generator.register_normative_ref(rid, reference_identity(bibitem)) if normative
+            end
             ModelBuilder.ref(
               id: rid,
               label: label_text,
@@ -91,7 +116,7 @@ module Metanorma
           def build_std(identifier, formattedref, urn = nil)
             return nil unless identifier || formattedref
 
-            type = identifier.to_s.match?(/(:\d{4}|-\d{4}\b)/) ? "dated" : "undated"
+            type = std_type_for(identifier)
             attrs = { type: type }
             attrs[:std_ref] = ::Sts::NisoSts::StandardRef.new(type: type, value: identifier) if identifier
             attrs[:title] = formattedref.to_s if formattedref
@@ -100,6 +125,11 @@ module Metanorma
               attrs[:std_id_element] = [sid]
             end
             ReferenceStandardWithId.new(attrs)
+          end
+
+          # "dated" when the designation embeds a year, else "undated".
+          def std_type_for(identifier)
+            identifier.to_s.match?(/(:\d{4}|-\d{4}\b)/) ? "dated" : "undated"
           end
 
           # The URN carried by the bibitem's own <docidentifier type="URN">

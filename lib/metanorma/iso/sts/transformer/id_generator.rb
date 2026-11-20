@@ -28,6 +28,7 @@ module Metanorma
           def initialize
             @registry = {}
             @kinds = {}
+            @normative_refs = {}
             @entry_ids = {}
             @issued_ids = {}
             @annex_count = 0
@@ -40,10 +41,23 @@ module Metanorma
             @kinds[source_id] = kind if kind
           end
 
-          # Emission kind registered for the source id ("ref", "annex",
-          # "table", "figure", "formula", "clause"); nil when unknown.
+          # Emission kind registered for the source id ("ref", "norm-ref",
+          # "annex", "table", "figure", "formula", "clause"); nil when unknown.
           def kind_for(source_id)
             @kinds[source_id]
+          end
+
+          # Identity of a normative reference (<ref> in norm-refs), keyed by
+          # its source id: { identifier:, urn:, type: }. An in-text citation
+          # to it is emitted as an inline <std>, not a bibr <xref>.
+          def register_normative_ref(source_id, identity)
+            return unless source_id && identity
+
+            @normative_refs[source_id] = identity
+          end
+
+          def normative_ref_for(source_id)
+            @normative_refs[source_id]
           end
 
           # Records the kind of a block that keeps its source id
