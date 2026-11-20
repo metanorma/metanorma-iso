@@ -371,6 +371,11 @@ module Metanorma
 
             entries = []
             current_text = nil
+            # SubElement keeps its text in a plain +content+ string, not in
+            # mixed content, so the walk below never yields it.
+            if node.is_a?(Metanorma::Document::Components::Inline::SubElement)
+              current_text = node.content
+            end
 
             walk_inline(node) do |kind, child, payload|
               case kind
