@@ -1,0 +1,203 @@
+<standard xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:tbx="urn:iso:std:iso:30042:ed-1" xml:lang="en" dtd-version="1.0">
+  <processing-meta tagset-family="sts" base-tagset="interchange" table-model="xhtml" mathml-version="3.0" math-representation="mathml" terminology-model="tbx"><custom-meta-group><custom-meta><meta-name>iec_iso_coding_guidelines_edition</meta-name><meta-value>2.1</meta-value></custom-meta></custom-meta-group></processing-meta>
+  <front>
+    <std-meta>
+      <title-wrap xml:lang="en">
+        <intro>Date and time</intro>
+        <main>Representations for information interchange</main>
+        <compl>Basic rules</compl>
+        <full>Date and time — Representations for information interchange — Basic rules</full>
+      </title-wrap>
+      <proj-id>ISO 98765</proj-id>
+      <std-ident>
+        <originator>ISO</originator>
+        <doc-number>98765</doc-number>
+        <part-number>1</part-number>
+      </std-ident>
+      <std-org std-org-type="sdo">
+        <std-org-abbrev>ISO</std-org-abbrev>
+      </std-org>
+      <content-language>en</content-language>
+      <std-ref type="dated">ISO 98765-1:2030</std-ref>
+      <std-ref type="undated">ISO 98765-1</std-ref>
+      <doc-ref>ISO 98765-1:2030(E)</doc-ref>
+      <permissions>
+        <copyright-statement>© 2030 ISO</copyright-statement>
+        <copyright-year>2030</copyright-year>
+        <copyright-holder>ISO</copyright-holder>
+      </permissions>
+    </std-meta>
+    <sec sec-type="foreword">
+      <title>Foreword</title>
+      <p id="fwd-p1">This invented fixture describes a fictional notation for tallying lunar cycles.</p>
+    </sec>
+  </front>
+  <body>
+    <sec id="scope" sec-type="scope">
+      <title>Scope</title>
+      <p id="scope-p1">This document specifies a tally notation for counting lunar cycles.</p>
+      <non-normative-note>
+        <label>NOTE</label>
+        <p id="scope-n1p">The notation is intended for hand-written ledgers.</p>
+      </non-normative-note>
+    </sec>
+    <sec id="rules">
+      <title>Counting rules</title>
+      <sec id="rules-count">
+        <title>Counting</title>
+        <p id="rules-p1">Each lunar cycle shall be recorded as one tally mark.</p>
+        <p id="rules-p2">where</p>
+        <disp-formula id="rules-f1">
+          <mml:math>
+            <mml:mi>n</mml:mi>
+            <mml:mo>=</mml:mo>
+            <mml:mn>5</mml:mn>
+            <mml:mi>b</mml:mi>
+            <mml:mo>+</mml:mo>
+            <mml:mi>r</mml:mi>
+          </mml:math>
+        </disp-formula>
+        <non-normative-note>
+          <label>NOTE</label>
+          <p id="rules-n1p">The remainder <italic>r</italic> is always less than 5.</p>
+        </non-normative-note>
+        <non-normative-example>
+          <label>EXAMPLE</label>
+          <p id="rules-ex1p">Seven cycles are written as one bundle followed by two tally marks.</p>
+        </non-normative-example>
+        <def-list id="rules-dl1">
+          <def-item>
+            <term>n</term>
+            <def>
+              <p id="rules-dl1a">is the total number of cycles;</p>
+            </def>
+          </def-item>
+          <def-item>
+            <term>b</term>
+            <def>
+              <p id="rules-dl1b">is the number of bundles;</p>
+            </def>
+          </def-item>
+          <def-item>
+            <term>r</term>
+            <def>
+              <p id="rules-dl1c">is the number of remaining tally marks.</p>
+            </def>
+          </def-item>
+        </def-list>
+      </sec>
+      <sec id="rules-table">
+        <title>Worked values</title>
+        <p id="rules-tp">Table 1 gives the decomposition for selected totals.</p>
+        <table-wrap id="tbl1">
+          <caption>
+            <title>Decomposition of selected totals</title>
+          </caption>
+          <table>
+            <thead>
+              <tr>
+                <th>Total n</th>
+                <th>Bundles b</th>
+                <th>Remainder r</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>3</td>
+                <td>0</td>
+                <td>3</td>
+              </tr>
+              <tr>
+                <td>12</td>
+                <td>2</td>
+                <td>2</td>
+              </tr>
+            </tbody>
+          </table>
+        </table-wrap>
+      </sec>
+    </sec>
+    <sec id="sec_terms" sec-type="terms">
+      <title>Terms and definitions</title>
+      <term-sec id="sec_6c1f0a52-3b7e-4d10-9a11-0c5e1f7b2a01">
+        <tbx:termEntry id="term_6c1f0a52-3b7e-4d10-9a11-0c5e1f7b2a01">
+          <tbx:langSet xml:lang="en">
+            <tbx:definition>interval between two successive new moons</tbx:definition>
+            <tbx:note>A lunar cycle is shorter than a calendar month in the notation.</tbx:note>
+            <tbx:example>The interval from one new moon to the next.</tbx:example>
+            <tbx:tig>
+              <tbx:term>lunar cycle</tbx:term>
+            </tbx:tig>
+          </tbx:langSet>
+        </tbx:termEntry>
+      </term-sec>
+      <term-sec id="sec_6c1f0a52-3b7e-4d10-9a11-0c5e1f7b2a02">
+        <tbx:termEntry id="term_6c1f0a52-3b7e-4d10-9a11-0c5e1f7b2a02">
+          <tbx:langSet xml:lang="en">
+            <tbx:definition>single vertical line recording one lunar cycle</tbx:definition>
+            <tbx:tig>
+              <tbx:term>tally mark</tbx:term>
+              <tbx:normativeAuthorization value="preferredTerm"/>
+            </tbx:tig>
+            <tbx:tig>
+              <tbx:term>stroke</tbx:term>
+              <tbx:normativeAuthorization value="admittedTerm"/>
+            </tbx:tig>
+          </tbx:langSet>
+        </tbx:termEntry>
+      </term-sec>
+      <term-sec id="sec_6c1f0a52-3b7e-4d10-9a11-0c5e1f7b2a03">
+        <tbx:termEntry id="term_6c1f0a52-3b7e-4d10-9a11-0c5e1f7b2a03">
+          <tbx:langSet xml:lang="en">
+            <tbx:definition>group of five tally marks</tbx:definition>
+            <tbx:note>The fifth mark crosses the other four.</tbx:note>
+            <tbx:tig>
+              <tbx:term>bundle</tbx:term>
+            </tbx:tig>
+          </tbx:langSet>
+        </tbx:termEntry>
+      </term-sec>
+    </sec>
+    <sec id="norm-refs" sec-type="norm-refs">
+      <title>Normative references</title>
+      <p id="norm-refs-p">The following documents are referred to in the text in such a way that some or all of their content constitutes requirements of this document.</p>
+      <ref-list content-type="norm-refs">
+        <ref id="nref1">
+          <mixed-citation>ISO 44444:2028, Invented time units</mixed-citation>
+          <std type="dated">
+            <std-ref type="dated">ISO 44444:2028</std-ref>
+            <title>Invented time units</title>
+          </std>
+        </ref>
+      </ref-list>
+    </sec>
+  </body>
+  <back>
+    <app-group>
+      <app id="sec_A" content-type="informative">
+        <label>Annex A</label>
+        <title>Ledger layout</title>
+        <p id="annexA-p1">A ledger page has twelve rows.</p>
+      </app>
+    </app-group>
+    <ref-list content-type="bibl">
+      <title>Bibliography</title>
+      <ref id="ref1">
+        <label>[1]</label>
+        <mixed-citation>ISO 55555:2029, Invented ledger practice</mixed-citation>
+        <std type="dated">
+          <std-ref type="dated">ISO 55555:2029</std-ref>
+          <title>Invented ledger practice</title>
+        </std>
+      </ref>
+      <ref id="ref2">
+        <label>[2]</label>
+        <mixed-citation>HT-1, A Handbook of Tallies</mixed-citation>
+        <std type="undated">
+          <std-ref type="undated">HT-1</std-ref>
+          <title>A Handbook of Tallies</title>
+        </std>
+      </ref>
+    </ref-list>
+  </back>
+</standard>
