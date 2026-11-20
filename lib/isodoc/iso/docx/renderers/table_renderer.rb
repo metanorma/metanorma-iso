@@ -14,6 +14,7 @@ module IsoDoc
         class TableRenderer
           include Base
           include ModelUtils
+          include TableFootnotes
 
           def render(table, doc)
             render_table_name(table, doc)
@@ -84,11 +85,17 @@ module IsoDoc
           end
 
           def build_table_sections(table, tbl)
-            @context.with_table do
-              render_table_section(table.thead, tbl, :header)
-              render_table_section(table.tbody, tbl, :body)
-              render_table_section(table.tfoot, tbl, :footer)
+            footnotes = collecting_table_footnotes do
+              @context.with_table do
+                render_table_section(table.thead, tbl, :header)
+                render_table_section(table.tbody, tbl, :body)
+                render_table_section(table.tfoot, tbl, :footer)
+              end
             end
+            return if footnotes.empty?
+
+            # The submitted ISO tables set table footnotes in Note style.
+            append_table_footnotes(tbl, footnotes, columns: table_column_count(tbl.model), style_key: :note)
           end
 
           # Era C tables in presentation XML carry <note>, <example>,
