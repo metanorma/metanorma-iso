@@ -34,10 +34,15 @@ RSpec.describe "Era C DOCX end-to-end", :slow do
     File.join(dir, "output.docx")
   end
   let(:unpacked) { IsoDoc::Iso::Docx::DocxUnpacker.unpack(output_path) }
-
-  before do
+  # The lutaml-model XML adapter in effect around the conversion. The
+  # docx spec_helper pins nokogiri; an example tagged +xml_adapter:+
+  # overrides it to run the conversion the way production does.
+  before do |example|
     skip "Presentation XML fixture missing (#{fixture_path})" unless File.exist?(fixture_path)
-    adapter.convert(fixture_path, output_path)
+    ambient = example.metadata.fetch(:xml_adapter, SPEC_XML_ADAPTER)
+    Lutaml::Model::AdapterScope.with(xml: ambient) do
+      adapter.convert(fixture_path, output_path)
+    end
   end
 
   after do
@@ -146,6 +151,26 @@ RSpec.describe "Era C DOCX end-to-end", :slow do
 
       expect(label_paras).not_to be_empty
     end
+  end
+
+  # lutaml-model's default (leptris) XML adapter populates no
+  # element_order (lutaml/lutaml-model#1163), so ordered walks find
+  # nothing and the middle title page disappears unless the adapter
+  # parses the document with ordering.
+  def styled_texts(doc, style)
+    doc.xpath("//w:p[w:pPr/w:pStyle[@w:val='#{style}']]", w_ns)
+      .map { |para| para.xpath(".//w:t", w_ns).map(&:text).join }
+  end
+
+  it "renders the MainTitle1/MainTitle2 middle title paragraphs under " \
+     "lutaml-model's default (leptris) XML adapter",
+     :aggregate_failures, xml_adapter: :leptris do
+    doc = unpacked.document_xml
+
+    expect(styled_texts(doc, "MainTitle1"))
+      .to include(a_string_including("Specifications and test methods"))
+    expect(styled_texts(doc, "MainTitle2"))
+      .to include(a_string_including("Rice (DIS)"))
   end
 
   describe "formula key lists" do

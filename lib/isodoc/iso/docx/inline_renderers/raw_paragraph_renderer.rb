@@ -18,6 +18,7 @@ module IsoDoc
         # symptom.
         class RawParagraphRenderer
           include Base
+          include ModelUtils
 
           def render(element, para)
             content = element.content
