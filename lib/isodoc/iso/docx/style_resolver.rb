@@ -23,7 +23,9 @@ module IsoDoc
       #   - :formula     → Formuladescription body style (e.g. "where:" text)
       #   - :bibliography → BiblioText body style
       #   - :normative   → normref body style
-      #   - :body        → default (nil)
+      #   - :body, :annex, :introduction → BodyText (the DOC chain's
+      #     body paragraph style; a paragraph with no class)
+      #   - :table, :figure, :definitions → default (nil)
       class StyleResolver
         attr_reader :mapping, :library, :context
 
@@ -70,7 +72,7 @@ module IsoDoc
           @mapping.paragraph_style(key)
         end
 
-        # Context-aware body text style. Returns nil in the default zone.
+        # Context-aware body text style. Returns nil in zones without a body style (table, figure, definitions).
         # Single dispatch via Context#zone — no boolean chain.
         #
         # For zones that publish a "continued" variant (note, example),
@@ -188,6 +190,9 @@ module IsoDoc
         # Single dispatch table: zone → semantic paragraph-style key.
         # MECE: each zone maps to exactly one body-style key.
         ZONE_BODY_STYLE = {
+          body: :body_text,
+          annex: :body_text,
+          introduction: :body_text,
           note: :note_indent,
           example: :example_indent,
           formula: :formula_description,
