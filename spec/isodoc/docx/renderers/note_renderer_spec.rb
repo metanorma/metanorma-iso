@@ -20,10 +20,10 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       paras = pkg.document.body.paragraphs
-      note_para = paras.find { |p| para_style_value(p) == "Noteindent" }
+      note_para = paras.find { |p| para_style_value(p) == "Note" }
 
       expect(note_para).not_to be_nil,
-        "note body should use Noteindent, got: #{paras.map { |p| para_style_value(p) }.inspect}"
+        "note body should use Note, got: #{paras.map { |p| para_style_value(p) }.inspect}"
 
       texts = note_para.runs.map { |r| run_text(r) }.join
       expect(texts).to start_with("NOTE"),
@@ -57,7 +57,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
     end
   end
 
-  it "keeps 2nd+ note paragraphs in the note zone (Noteindentcontinued)" do
+  it "keeps 2nd+ note paragraphs in the note zone (Notecontinued)" do
     xml = minimal_iso_xml(<<~INNER)
       <sections>
         <clause id="c1">
@@ -74,13 +74,13 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
 
     convert_and_extract(adapter, xml) do |pkg|
       styles = pkg.document.body.paragraphs.map { |p| para_style_value(p) }
-      initial_count = styles.count("Noteindent")
-      continued_count = styles.count("Noteindentcontinued")
+      initial_count = styles.count("Note")
+      continued_count = styles.count("Notecontinued")
 
       expect(initial_count).to eq(1),
-        "label-carrying first paragraph should use Noteindent, got: #{styles.inspect}"
+        "label-carrying first paragraph should use Note, got: #{styles.inspect}"
       expect(continued_count).to eq(2),
-        "2nd+ paragraphs should use Noteindentcontinued, got: #{styles.inspect}"
+        "2nd+ paragraphs should use Notecontinued, got: #{styles.inspect}"
     end
   end
 
@@ -99,11 +99,11 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
     convert_and_extract(adapter, xml) do |pkg|
       paras = pkg.document.body.paragraphs
       styles = paras.map { |p| para_style_value(p) }
-      note_index = styles.index("Noteindent")
+      note_index = styles.index("Note")
       after = paras[note_index + 1..]
 
-      expect(after.map { |p| para_style_value(p) }).not_to include("Noteindentcontinued"),
-        "Noteindentcontinued must not leak past the note"
+      expect(after.map { |p| para_style_value(p) }).not_to include("Notecontinued"),
+        "Notecontinued must not leak past the note"
     end
   end
 

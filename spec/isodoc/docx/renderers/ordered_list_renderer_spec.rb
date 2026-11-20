@@ -93,7 +93,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::OrderedListRenderer do
       convert_and_extract(adapter, xml) do |pkg|
         return pkg.document.body.paragraphs.select do |p|
           para_style_value(p).to_s.start_with?("ListNumber") ||
-              para_style_value(p) == "Noteindent"
+              %w[Note Noteindent].include?(para_style_value(p))
         end
       end
     end

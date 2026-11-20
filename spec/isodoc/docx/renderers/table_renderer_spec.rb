@@ -184,9 +184,8 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
     INNER
 
     convert_and_extract(adapter, xml) do |pkg|
-      # Era C wraps the table and its note attachments in an outer table,
-      # so the notes live in the wrapper's second-row cell, not in
-      # body-level paragraphs.
+      # Table-level <note> attachments dispatch through NoteRenderer like
+      # body notes: one Note-styled paragraph per note, label inline.
       cell_texts = table_paragraphs(pkg).map do |p|
         p.runs.map(&:text).join
       end
@@ -198,9 +197,9 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
         "second table note body should be rendered after the table"
 
       styles = table_paragraphs(pkg).map { |p| para_style_value(p).to_s }
-      noteindent_count = styles.count("Noteindent")
-      expect(noteindent_count).to eq(2),
-        "expected 2 Noteindent paragraphs (one per table note), got #{noteindent_count}"
+      note_count = styles.count("Note")
+      expect(note_count).to eq(2),
+        "expected 2 Note paragraphs (one per table note), got #{note_count}"
     end
   end
 
