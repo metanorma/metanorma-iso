@@ -53,10 +53,6 @@ module IsoDoc
               target << para
             end
 
-            def definition?(node)
-              node.is_a?(Metanorma::Document::Components::Lists::Definition)
-            end
-
             def table?(child)
               child.is_a?(Metanorma::Document::Components::Tables::TableBlock)
             end
@@ -67,11 +63,14 @@ module IsoDoc
             end
 
             # A dd of several <p> becomes one paragraph each, not one run-on
-            # paragraph.
+            # paragraph. The dd model carries its paragraphs on +p+ whatever
+            # class the parse minted for it (Lists::Definition in the basic
+            # document model, DdElement in the ISO component model), so the
+            # split keys on the attribute's presence, not on one class.
             def paragraphs_of(node)
               return [] unless node
 
-              parts = definition?(node) ? Array(node.p) : []
+              parts = node.class.method_defined?(:p) ? Array(node.p) : []
               only_paragraphs = Array(node.element_order).all? do |entry|
                 entry.element? ? entry.name == "p" : entry.text_content.to_s.strip.empty?
               end
