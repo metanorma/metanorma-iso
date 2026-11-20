@@ -172,8 +172,8 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::AmendRenderer do
       last_style = para_style_value(paragraphs.last)
       expect(last_style).not_to eq("a3"),
         "amend newcontent style should not bleed into following body paragraph"
-      expect(last_style).not_to eq("BodyText"),
-        "amend description style should not bleed into following body paragraph"
+      expect(last_style).to eq("BodyText"),
+        "body paragraph after amend should use the body style"
     end
   end
 end
