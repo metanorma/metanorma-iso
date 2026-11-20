@@ -56,10 +56,10 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "unit stems in heading-like paths" do
       expect(row("ForewordTitle")).to include(omaths: 1, text: "Fore ")
     end
 
-    it "renders the unit as OMML in the ToC entry" do
+    it "renders the unit as OMML in the ToC entry", :aggregate_failures do
       toc = row("TOC1")
       expect(toc[:omaths]).to eq(1)
-      expect(toc[:xml].scan(%r{<w:t[^>]*>([^<]*)</w:t>}).flatten.join).to eq("Fore 1")
+      expect(toc[:xml].scan(%r{<w:t[^>]*>([^<]*)</w:t>}).join).to eq("Fore 1")
     end
 
     it "leaves no unitsml macro text in any paragraph" do

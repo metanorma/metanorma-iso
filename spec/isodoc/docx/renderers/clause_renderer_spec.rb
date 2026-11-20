@@ -41,12 +41,15 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::ClauseRenderer do
       para.o_maths.map { |m| m.to_xml.scan(%r{<m:t[^>]*>([^<]*)</m:t>}).flatten }
     end
 
-    let(:heading) { paragraphs.find { |p| para_style_value(p) == "Heading1" } }
+    def heading
+      paragraphs.find { |p| para_style_value(p) == "Heading1" }
+    end
+
     let(:body_math_tokens) do
       math_tokens(paragraphs.find { |p| p.o_maths.any? && para_style_value(p) != "Heading1" })
     end
 
-    it "renders the value and unit in the heading as inline OMML" do
+    it "renders the value and unit in the heading as inline OMML", :aggregate_failures do
       expect(math_tokens(heading)).to eq([%w[80 km]])
       expect(heading_text).to eq("Altitude ")
     end
