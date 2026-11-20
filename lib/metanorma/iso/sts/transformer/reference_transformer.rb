@@ -4,6 +4,34 @@ module Metanorma
     module Sts
       module Transformer
         class ReferenceTransformer < Base
+          # The sts gem's ReferenceStandard maps the URN only inside
+          # <std-id-group>; Guidelines 4.4.2 (iso-gdg-4.4.2-5) want a direct
+          # <std-id @std-id-link-type="urn" @std-id-type="dated|undated">
+          # child of <std>. The XSD content model is an unordered choice, so
+          # the added element needs no particular position.
+          class ReferenceStandardWithId < ::Sts::NisoSts::ReferenceStandard
+            attribute :std_id_element, ::Sts::NisoSts::StdId, collection: true
+
+            xml do
+              element "std"
+              mixed_content
+
+              map_attribute "id", to: :id
+              map_attribute "type", to: :type
+              map_attribute "std-id", to: :std_id
+
+              map_element "std-id", to: :std_id_element
+              map_element "std-ref", to: :std_ref
+              map_element "fn", to: :fn
+              map_element "title", to: :title
+              map_element "std-id-group", to: :std_id_group
+              map_element "xref", to: :xref
+              map_element "bold", to: :bold
+
+              map_content to: :content
+            end
+          end
+
           def transform_section(ref_section)
             bibitems = extract_bibitems(ref_section)
             title_text = extract_title(ref_section)
@@ -48,7 +76,7 @@ module Metanorma
               id: rid,
               label: label_text,
               mixed_citation: content_parts.join(", "),
-              std: build_std(identifier, formattedref)
+              std: build_std(identifier, formattedref, extract_urn(bibitem))
             )
           end
 
@@ -60,14 +88,30 @@ module Metanorma
           # embeds a year ("…:2012", "…-2022") and "undated" otherwise
           # (NISO STS idiom — <std> has no <pub-date> in the base tag
           # suite).
-          def build_std(identifier, formattedref)
+          def build_std(identifier, formattedref, urn = nil)
             return nil unless identifier || formattedref
 
             type = identifier.to_s.match?(/(:\d{4}|-\d{4}\b)/) ? "dated" : "undated"
             attrs = { type: type }
             attrs[:std_ref] = ::Sts::NisoSts::StandardRef.new(type: type, value: identifier) if identifier
             attrs[:title] = formattedref.to_s if formattedref
-            ::Sts::NisoSts::ReferenceStandard.new(attrs)
+            if urn
+              sid = ::Sts::NisoSts::StdId.new(std_id_link_type: "urn", std_id_type: type, content: urn)
+              attrs[:std_id_element] = [sid]
+            end
+            ReferenceStandardWithId.new(attrs)
+          end
+
+          # The URN carried by the bibitem's own <docidentifier type="URN">
+          # (the value may be prefixed with the literal "URN ").
+          def extract_urn(bibitem)
+            urn = Array(bibitem.docidentifier).find { |i| i.type.to_s.casecmp?("URN") }
+            return nil unless urn
+
+            # The prefix may be separated by a no-break space (U+00A0),
+            # which \s does not match; [[:space:]] does.
+            value = (urn.id || urn.to_s).to_s.strip.sub(/\AURN[[:space:]]+/i, "")
+            value.empty? ? nil : value
           end
 
           def extract_bibitems(ref_section)
