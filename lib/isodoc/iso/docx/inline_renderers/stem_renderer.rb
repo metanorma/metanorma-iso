@@ -17,7 +17,6 @@ module IsoDoc
 
           def render(element, para)
             return if render_number_as_text(element, para)
-            return render_as_text(element, para) if heading_unit_stem?(element)
             return if render_as_omml(element, para)
 
             render_as_text(element, para)
@@ -35,14 +34,6 @@ module IsoDoc
 
             parent.add_text(para, digits)
             true
-          end
-
-          # A UnitsML unit stem inside a heading stays text ("80 km"):
-          # heading text is plain-text consumed (#1765); body stems render
-          # as OMML.
-          def heading_unit_stem?(element)
-            parent.in_heading? &&
-              parent.stem_asciimath_text(element).to_s.include?("unitsml(")
           end
 
           # Append the stem's MathML as inline OMML equation models.

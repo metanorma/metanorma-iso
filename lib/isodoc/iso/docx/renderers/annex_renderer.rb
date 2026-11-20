@@ -46,13 +46,14 @@ module IsoDoc
 
             para = build_unstyled_paragraph
             para.style = style
-            @inline_renderer.with_heading do
-              @inline_renderer.render(variant, HiddenRuns.new(para))
-            end
+            @inline_renderer.render(variant, HiddenRuns.new(para))
             doc << para
           end
 
           # Marks every run it forwards to the paragraph as hidden text.
+          # An inline equation (OMML) cannot carry w:vanish, so it is
+          # dropped: the paragraph is hidden and the heading and ToC
+          # entry already show the equation.
           class HiddenRuns
             def initialize(para)
               @para = para
@@ -61,6 +62,8 @@ module IsoDoc
             def <<(element)
               element = Uniword::Wordprocessingml::Run.new(text: element) if element.is_a?(String)
               element = element.build if element.is_a?(Uniword::Builder::RunBuilder)
+              return self if element.is_a?(Omml::Models::CTOMath)
+
               hide(element)
               if @after_link && element.is_a?(Uniword::Wordprocessingml::Run)
                 append_after_link(element)

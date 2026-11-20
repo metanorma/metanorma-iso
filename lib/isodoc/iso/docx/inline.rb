@@ -68,26 +68,7 @@ module IsoDoc
         # Stripping applies recursively — autonum carriers wrapped inside
         # other inline elements (e.g. <strong>) are also skipped.
         def render_heading(node, para)
-          with_heading { render_heading_content(node, para) }
-        end
-
-        # Run the block with the heading flag set, restoring it on exit
-        # (including on raise). For heading-like paths (ToC entries,
-        # preface titles) that must not use render_heading's autonum
-        # stripping but still need plain-text unit stems.
-        def with_heading
-          was_heading = @in_heading
-          @in_heading = true
-          yield
-        ensure
-          @in_heading = was_heading
-        end
-
-        # Whether a heading is being rendered. Headings feed the TOC and
-        # cross-reference text, so a stem carrying a UnitsML unit renders
-        # as text ("80 km") there, not as an inline OMML object (#1765).
-        def in_heading?
-          @in_heading ? true : false
+          render_heading_content(node, para)
         end
 
         def render_heading_content(node, para)

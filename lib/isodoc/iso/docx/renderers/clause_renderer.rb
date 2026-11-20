@@ -32,9 +32,7 @@ module IsoDoc
 
             # numId 0 cancels the annex numbering inherited from a2.
             para.numbering(0)
-            @inline_renderer.with_heading do
-              @inline_renderer.render(title, para)
-            end
+            @inline_renderer.render(title, para)
           end
         end
       end
