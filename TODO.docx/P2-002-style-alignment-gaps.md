@@ -1,10 +1,30 @@
 ---
 title: 108-007 - Align paragraph styles with reference
 priority: P2
-status: partial
+status: done
 ---
 
 # 108-007: Align Paragraph Styles with Reference
+
+## Closed (2026-11-20): measured against the submitted 5878 WD DOCX
+
+The private 5878 WD source was converted with the default DIS template and
+compared per `w:pStyle` with the submitted `.docx` (private content stays
+outside the repository). Conversion: about 107 s, 1.1-1.35 GB peak RSS.
+
+- Outside tables, every style delta is template-bound, the same pattern as
+  rice: ListParagraph/BiblioEntry, TOC1 depth, Tabletitle/AnnexTableTitle,
+  ListContinue1/ListNumber1, Formula, FigureGraphic, Figuretitle/FigureTitle.
+  `zzCover`, `CoverTitleA1`, `Formula` and `Notice` are DIS template styles;
+  the DIS mapping sends the cover warning to `Notice` by design (the Simple
+  mapping uses zzwarninghdr/zzwarning). `PAGEBREAK` shows no delta.
+- One real defect came out of it: table `rowspan` produced no vertical-merge
+  continuation cells, so cells in covered rows shifted left. Fixed in the
+  same change (`table_row_spans.rb`). Table cells after the fix: 27,416 vs
+  27,419 in the submission (26,966 before).
+- Left over, minor: three tables have one row fewer than the submission
+  (2,082 vs 2,085 rows), and the submission has 4 Note paragraphs inside
+  table cells where the output has none.
 
 Simple bibliography entries now use `ListParagraph`, covered by
 `bibliography_renderer_spec.rb`. DIS retains `BiblioEntry`, `Warningtext`,
