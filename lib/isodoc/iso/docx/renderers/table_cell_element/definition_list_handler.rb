@@ -14,20 +14,32 @@ module IsoDoc
             def render(element, target)
               terms = Array(element.dt)
               definitions = Array(element.dd)
+              append_paragraph(nil, target) if terms.empty? && definitions.empty?
               terms.each_with_index do |term, index|
                 append_paragraph(term, target)
-                append_paragraph(definitions[index], target)
+                paragraphs_of(definitions[index]).each { |part| append_paragraph(part, target) }
               end
             end
 
             private
 
-            def append_paragraph(node, target)
-              return unless node
+            # A dd of several <p> becomes one paragraph each, not one run-on
+            # paragraph.
+            def paragraphs_of(node)
+              return [] unless node
 
+              parts = node.respond_to?(:p) ? Array(node.p) : []
+              only_paragraphs = Array(node.element_order).all? do |entry|
+                entry.element? ? entry.name == "p" : entry.text_content.to_s.strip.empty?
+              end
+              parts.size > 1 && only_paragraphs ? parts : [node]
+            end
+
+            # A nil node gives an empty paragraph: a w:tc needs one w:p.
+            def append_paragraph(node, target)
               para = Uniword::Builder::ParagraphBuilder.new
               para.style = @resolver.paragraph_style(target.style_key) if target.style_key
-              @inline_renderer.render(node, para)
+              @inline_renderer.render(node, para) if node
               target << para
             end
           end

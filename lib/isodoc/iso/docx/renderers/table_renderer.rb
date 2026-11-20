@@ -235,6 +235,8 @@ module IsoDoc
                 append_text_to_cell(obj, cell_builder, style_key)
                 nested = false if obj && !obj.strip.empty?
               when :element
+                # Word fuses two tables with no paragraph between them.
+                cell_builder << Uniword::Builder::ParagraphBuilder.new if nested && obj.is_a?(NESTED_TABLE)
                 dispatch_cell_element(obj, cell_builder, style_key)
                 nested = obj.is_a?(NESTED_TABLE)
               end

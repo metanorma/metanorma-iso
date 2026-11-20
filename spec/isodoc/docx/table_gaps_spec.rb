@@ -101,4 +101,34 @@ RSpec.describe "table content gaps" do
       expect(doc.xpath("//w:footnoteReference", ns)).to be_empty
     end
   end
+
+  context "with two tables side by side in one cell" do
+    let(:doc) do
+      converted_document(<<~XML)
+        <table id="t1"><tbody><tr><td><table id="t2"><tbody><tr><td>one</td></tr></tbody></table><table id="t3"><tbody><tr><td>two</td></tr></tbody></table></td></tr></tbody></table>
+      XML
+    end
+
+    it "separates them with a paragraph so Word does not fuse them" do
+      cell = doc.at_xpath("//w:body/w:tbl/w:tr/w:tc", ns)
+      expect(cell.element_children.map(&:name).reject { |n| n == "tcPr" }).to eq(%w[tbl p tbl p])
+    end
+  end
+
+  context "with a dl of several paragraphs per dd, and an empty dl, in cells" do
+    let(:doc) do
+      converted_document(<<~XML)
+        <table id="t1"><tbody><tr><td><dl><dt>term</dt><dd><p>first</p><p>second</p></dd></dl></td><td><dl></dl></td></tr></tbody></table>
+      XML
+    end
+    let(:cells) { doc.at_xpath("//w:body/w:tbl/w:tr", ns).xpath("w:tc", ns) }
+
+    it "gives each dd paragraph its own paragraph" do
+      expect(cells.first.xpath("w:p", ns).map(&:text)).to eq(%w[term first second])
+    end
+
+    it "keeps a paragraph in the cell of an empty dl" do
+      expect(cells.last.xpath("w:p", ns).size).to eq(1)
+    end
+  end
 end
