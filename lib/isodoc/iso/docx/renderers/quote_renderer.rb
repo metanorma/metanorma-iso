@@ -39,6 +39,7 @@ module IsoDoc
           def render_quote_paragraph(paragraph, doc)
             para = build_paragraph(:quote)
             @inline_renderer.render(paragraph, para)
+            anchor_paragraph(paragraph, para)
             doc << para
           end
 
@@ -49,6 +50,7 @@ module IsoDoc
             Array(quote_attr(attribution, :p)).each do |p|
               para = build_paragraph(:quote_attributor)
               @inline_renderer.render(p, para)
+              anchor_paragraph(p, para)
               doc << para
             end
           end

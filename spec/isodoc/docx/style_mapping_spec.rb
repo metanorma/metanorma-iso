@@ -73,8 +73,8 @@ RSpec.describe IsoDoc::Iso::DocxStyleMapping do
       expect(mapping.annex_heading_style(4)).to eq("a4")
     end
 
-    it "returns nil for level 1 (no fallback — use :annex key)" do
-      expect(mapping.annex_heading_style(1)).to be_nil
+    it "maps level 1 explicitly to Heading1 (no resolver fallback)" do
+      expect(mapping.annex_heading_style(1)).to eq("Heading1")
       expect(mapping.paragraph_style(:annex)).to eq("ANNEX")
     end
   end

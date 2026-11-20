@@ -52,17 +52,29 @@ module IsoDoc
 
             para = build_unstyled_paragraph
             para.style = title_style_for(section)
+            suppress_number(para)
             with_bookmark(section, para) do
               render_title_content(title, para)
             end
             doc << para
           end
 
-          # A title holding only the autonum + delimiter (an untitled
-          # inline-header sub-clause).
+          # Amendment documents run with unnumbered clause titles. The
+          # number comes from the heading style's numPr, so numId 0 on
+          # the paragraph cancels it (as ClauseRenderer does for the
+          # introduction's a2 headings).
+          def suppress_number(para)
+            return unless @context.suppress_heading_numbers?
+            return unless @resolver.auto_numbered_style?(para.style&.value)
+
+            para.numbering(0)
+          end
+
+          # A clause with no title, or a title holding only the autonum +
+          # delimiter (an untitled inline-header sub-clause).
           def untitled?(section)
             title = section_title(section)
-            !title.nil? && heading_body_empty?(title)
+            title.nil? || heading_body_empty?(title)
           end
 
           # No heading paragraph: the clause number and its id bookmark
@@ -71,20 +83,39 @@ module IsoDoc
           # is no paragraph to lead, so the number gets its own paragraph
           # ahead of that child (as in Word's reference rendering) rather
           # than landing on whichever paragraph happens to come next, or
-          # being dropped.
+          # being dropped. A clause without a number (unnumbered, or
+          # untitled) leads with an empty id bookmark alone, so xrefs to
+          # it still resolve.
           def render_untitled_section(section, doc)
-            number = @inline_renderer.heading_number_text(section_title(section))
-            return walk_children(section, doc) unless number
+            title = section_title(section)
+            number = title && @inline_renderer.heading_number_text(title)
+            names = untitled_bookmark_names(section)
+            return walk_children(section, doc) unless number || names.any?
 
-            name = bookmark_name(section)
             if first_child_paragraph?(section)
-              @inline_renderer.with_clause_number(number, name) do
+              @inline_renderer.with_clause_number(number, names) do
                 walk_children(section, doc)
               end
             else
-              render_number_paragraph(number, name, doc)
+              render_number_paragraph(number, names, doc)
               walk_children(section, doc)
             end
+          end
+
+          # The id bookmark, unless an earlier inline bookmark took the
+          # name, and the _Toc twin of a ToC-listed clause, which the ToC
+          # entry targets even when the id bookmark went elsewhere.
+          def untitled_bookmark_names(section)
+            name = bookmark_name(section)
+            return [] unless name
+
+            [@context.claim_bookmark_name(name), untitled_toc_twin(name)].compact
+          end
+
+          def untitled_toc_twin(name)
+            return unless @context.toc_targets.include?(name)
+
+            @context.claim_bookmark_name(Context.toc_bookmark_name(name))
           end
 
           def first_child_paragraph?(section)
@@ -98,11 +129,11 @@ module IsoDoc
             first.is_a?(Metanorma::Document::Components::Paragraphs::ParagraphBlock)
           end
 
-          def render_number_paragraph(number, name, doc)
+          def render_number_paragraph(number, names, doc)
             para = build_unstyled_paragraph
             style = @resolver.context_body_style
             para.style = style if style
-            @inline_renderer.emit_clause_number(para, number, name)
+            @inline_renderer.emit_clause_number(para, number, names)
             @context.mark_zone_paragraph
             doc << para
           end

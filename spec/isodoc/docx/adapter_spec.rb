@@ -924,6 +924,8 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
           </clause>
         </sections>
       INNER
+      # Entries point at the heading's _Toc twin bookmark (P1-009).
+      s1_toc = IsoDoc::Iso::Docx::Context.toc_bookmark_name("s1")
       Dir.mktmpdir do |dir|
         path = File.join(dir, "output.docx")
         adapter.convert(xml, path)
@@ -932,7 +934,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
           expect(toc_paras.length).to be >= 2
 
           clause_toc = toc_paras.find do |p|
-            p.xpath(".//w:instrText", ns).text.include?("s1")
+            p.xpath(".//w:instrText", ns).text.include?(s1_toc)
           end
           expect(clause_toc).not_to be_nil
 
@@ -950,7 +952,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
           expect(joined).to include("1 Scope")
 
           # And the PAGEREF field machinery is present
-          expect(clause_toc.xpath(".//w:instrText", ns).text).to include("PAGEREF s1")
+          expect(clause_toc.xpath(".//w:instrText", ns).text).to include("PAGEREF #{s1_toc}")
         end
       end
     end
@@ -985,7 +987,8 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
       targets = toc_paras.xpath(".//w:instrText", namespaces).filter_map do |field|
         field.text[/\bPAGEREF\s+(\S+)/, 1]
       end
-      expect(targets).not_to include("s1-1")
+      context_class = IsoDoc::Iso::Docx::Context
+      expect(targets).not_to include(context_class.toc_bookmark_name("s1-1"))
 
       toc2 = toc_paras.xpath("self::w:p[w:pPr/w:pStyle[@w:val='TOC2']]", namespaces)
       expect(toc2.map { |para| para.xpath(".//w:t", namespaces).text })
@@ -993,7 +996,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter do
 
       scope = toc_paras.find do |para|
         para.xpath(".//w:t", namespaces).text.include?("Scope") &&
-          para.xpath(".//w:instrText", namespaces).any? { |field| field.text.match?(/\bPAGEREF\s+s1\s/) }
+          para.xpath(".//w:instrText", namespaces).any? { |field| field.text.match?(/\bPAGEREF\s+#{context_class.toc_bookmark_name('s1')}\s/) }
       end
       expect(scope).not_to be_nil
     end

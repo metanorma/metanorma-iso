@@ -27,8 +27,11 @@ module IsoDoc
         def render_license(boilerplate, doc)
           return unless boilerplate
 
+          return if Array(boilerplate.license_statement).empty?
+
           walk_statements(boilerplate.license_statement, doc,
                           :warning_header, :warning)
+          doc << spacer_paragraph
         end
 
         # Render copyright, legal, and feedback statements on the copyright page.
@@ -46,6 +49,15 @@ module IsoDoc
 
         private
 
+        # The reference cover closes the warning box with a lone nbsp
+        # paragraph (no style) before the cover section break; without it
+        # the box border merges with whatever follows.
+        def spacer_paragraph
+          para = Uniword::Builder::ParagraphBuilder.new
+          para << "\u00A0"
+          para
+        end
+
         def walk_statements(statements, doc, title_style_key, body_style_key)
           Array(statements).each do |stmt|
             render_section(stmt, doc, title_style_key, body_style_key)
@@ -56,7 +68,8 @@ module IsoDoc
         # any nested subsections (the boilerplate <clause> wrapper).
         def render_section(section, doc, title_style_key, body_style_key)
           render_title(section, doc, title_style_key)
-          render_paragraphs(section, doc, body_style_key)
+          first = render_paragraphs(section, doc, body_style_key).first
+          anchor(section, first) if first
 
           return unless section.class.attributes.key?(:subsection)
 
@@ -87,9 +100,9 @@ module IsoDoc
         end
 
         def render_paragraphs(section, doc, style_key)
-          return unless section.class.attributes.key?(:paragraphs)
+          return [] unless section.class.attributes.key?(:paragraphs)
 
-          Array(section.paragraphs).each do |content|
+          Array(section.paragraphs).map do |content|
             para = Uniword::Builder::ParagraphBuilder.new
             para.style = @resolver.paragraph_style(
               paragraph_style_key(content, style_key),
@@ -100,12 +113,28 @@ module IsoDoc
               para << content
             when Lutaml::Model::Serializable
               @inline.render(content, para)
+              trim_after_breaks(para) if address_paragraph?(content)
+              anchor(content, para)
             else
               para << content.to_s
             end
 
             doc << para
+            para
           end
+        end
+
+        # The source writes each address line as "<br/> line"; Word already
+        # starts the line after the break, so the space would indent it.
+        def trim_after_breaks(para)
+          para.model.runs.each_cons(2) do |previous, run|
+            run.substitute(/\A\s+/, "") if previous.break
+          end
+        end
+
+        # Keep a statement's (or its paragraph's) id as a bookmark.
+        def anchor(node, para)
+          Renderers::Anchoring.anchor(@inline.context, node, para)
         end
 
         # The ISO copyright address paragraph (contains "copyright office")

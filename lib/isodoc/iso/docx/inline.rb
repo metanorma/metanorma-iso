@@ -133,9 +133,9 @@ module IsoDoc
         # ISO HTML output does). The queue is cleared on exit, so a clause
         # whose first child is not a paragraph never leaks its number into
         # a later sibling.
-        def with_clause_number(number, name)
+        def with_clause_number(number, names)
           previous = @pending_clause_number
-          @pending_clause_number = { number: number, name: name }
+          @pending_clause_number = { number: number, names: names }
           yield
         ensure
           @pending_clause_number = previous
@@ -644,24 +644,26 @@ module IsoDoc
           return unless pending
 
           @pending_clause_number = nil
-          emit_clause_number(para, pending[:number], pending[:name])
+          emit_clause_number(para, pending[:number], pending[:names])
         end
 
-        # Emit "<number><tab>" as bold runs wrapped in the bookmark +name+
-        # (when given): the clause-number lead used on a paragraph.
-        def emit_clause_number(para, number, name)
-          bm_id = @context.next_bookmark_id.to_s if name
-          if bm_id
-            para << Uniword::Wordprocessingml::BookmarkStart.new(
-              id: bm_id, name: name,
-            )
+        # Emit "<number><tab>" as bold runs wrapped in the bookmarks +names+
+        # (when given): the clause-number lead used on a paragraph. With
+        # no +number+ the bookmarks are emitted alone, as empty ranges.
+        def emit_clause_number(para, number, names)
+          bm_ids = Array(names).compact.map do |name|
+            bm_id = @context.next_bookmark_id.to_s
+            para << Uniword::Wordprocessingml::BookmarkStart.new(id: bm_id, name: name)
+            bm_id
           end
-          number_run = bold_clause_run(text: number)
-          # Templates without the :clause_number mapping (ISO Simple) keep bold only.
-          apply_run_char_style(number_run, :clause_number)
-          para << number_run
-          para << bold_clause_run(tab: Uniword::Wordprocessingml::Tab.new)
-          para << Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id) if bm_id
+          if number
+            number_run = bold_clause_run(text: number)
+            # Templates without the :clause_number mapping (ISO Simple) keep bold only.
+            apply_run_char_style(number_run, :clause_number)
+            para << number_run
+            para << bold_clause_run(tab: Uniword::Wordprocessingml::Tab.new)
+          end
+          bm_ids.reverse_each { |id| para << Uniword::Wordprocessingml::BookmarkEnd.new(id: id) }
         end
 
         private

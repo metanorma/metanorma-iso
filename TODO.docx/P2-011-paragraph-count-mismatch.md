@@ -6,6 +6,45 @@ status: partial
 
 # P2-011: Paragraph count mismatch
 
+## Re-measurement on base 6455ca2f (2026-11-19, batches 3-4)
+
+Same method (rice.presentation.xml through `Processor#output(..., :docx)`,
+reference `spec/examples/rice.docx`, body children plus `w:tc` paragraphs).
+
+| | 7774b78e output | 6455ca2f output | reference | delta now |
+|---|---|---|---|---|
+| body paragraphs | 353 | 365 | 349 | +16 |
+| table-cell paragraphs | 150 | 150 | 166 | -16 |
+| total | 503 | 515 | 515 | 0 |
+
+The totals now match, but by cancellation, not by correctness: the body
+excess (+16) and the table deficit (-16) are the same structural choices
+listed below. Batches 3-4 added 12 body paragraphs since 7774b78e; the
+diff of the paragraph sequences (text, 243 differing paragraphs each way)
+shows they are the items already classified, not new defects:
+
+- Annex C figure key and legend: output emits KeyTitle/KeyText body
+  paragraphs, the reference puts them in a table (about +10 body, -10 table);
+  the reference table-cell paragraphs also hold the Annex E callout key
+  (3) and the Table 2/3 footnote bodies (`aOrganic ...`, `b`, `c`, `d`,
+  `aParboiled rice.`; text is in `footnotes.xml` in the output, -5).
+- Admonition wrappers (Box-begin, Warningtitle, Warningtext, Box-end) +6 vs
+  one reference paragraph.
+- Edition content (CD 2016 vs DIS 2023): reference-only patent notice (6
+  paragraphs), cover warning block (4), third IEC Electropedia link block,
+  two more bibliography entries; output-only 5 list items, DIS cover
+  metadata lines, bilingual title (P2-007), the extra `brown rice`
+  admitted-term paragraph and the Foreword feedback paragraph.
+- Empty body paragraphs: output 28, reference 19 (Box-begin/Box-end,
+  formula spacers, KeyTitle for stem-only terms), unchanged judgement.
+
+Verdict: no bounded renderer bug found in an unowned area, so no code was
+changed. The belief "remaining gap is edition difference plus known design
+choices" holds for the paragraph count; the count is not an oracle. The
+remaining actionable items stay with their cards: P1-003 (figure key and
+sub-figures), P2-007 (cover/title), P1-005 (copyright address), P2-010
+(example label), and the BUG 020 judgement item below.
+
 ## Re-measurement on base 7774b78e (2026-11-19)
 
 Source `spec/examples/rice.presentation.xml` converted with

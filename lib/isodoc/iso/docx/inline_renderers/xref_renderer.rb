@@ -14,7 +14,7 @@ module IsoDoc
 
             target = element.target
             if target
-              link = Uniword::Hyperlink.new(anchor: target, text: text)
+              link = Uniword::Hyperlink.new(anchor: context.bookmark_name(target), text: text)
               link_model = link.to_model(allocator: doc.allocator)
               parent.apply_hyperlink_style(link_model)
               para << link_model

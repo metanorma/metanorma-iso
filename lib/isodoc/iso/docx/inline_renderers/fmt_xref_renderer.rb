@@ -29,7 +29,7 @@ module IsoDoc
 
           def build_hyperlink_with_runs(element, target)
             link_model = Uniword::Wordprocessingml::Hyperlink.new
-            link_model.anchor = target
+            link_model.anchor = context.bookmark_name(target)
 
             temp = Uniword::Builder::ParagraphBuilder.new
             parent.render_mixed_inline_fallback(element, temp)

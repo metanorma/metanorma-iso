@@ -65,9 +65,11 @@ module IsoDoc
 
           def formula_cell(row, node)
             row.cell do |cell|
-              formula_cell_content(node).each do |part|
+              formula_cell_content(node).each_with_index do |part, i|
                 para = build_paragraph(:table_body)
                 @inline_renderer.render(part, para) if part
+                anchor_entry(part, para) if part
+                anchor_paragraph(node, para) if i.zero? && !part.equal?(node)
                 cell << para
               end
             end
@@ -150,7 +152,17 @@ module IsoDoc
           def render_cell_paragraph(node, style_key)
             para = build_paragraph(style_key)
             @inline_renderer.render(node, para)
+            anchor_entry(node, para)
             para
+          end
+
+          # A dt/dd (and the p children rendered into the same paragraph)
+          # keep their id as a bookmark on the paragraph that carries them.
+          def anchor_entry(node, para)
+            anchor_paragraph(node, para)
+            Array(attribute_value(node, :p)).each do |p|
+              anchor_paragraph(p, para)
+            end
           end
 
           def render_general(definition_list, doc)
@@ -170,12 +182,14 @@ module IsoDoc
           def append_pair(doc, term, definition, term_key, definition_key)
             term_para = build_paragraph(term_key)
             @inline_renderer.render(term, term_para)
+            anchor_entry(term, term_para)
             doc << term_para
 
             return unless definition
 
             definition_para = build_paragraph(definition_key)
             @inline_renderer.render(definition, definition_para)
+            anchor_entry(definition, definition_para)
             doc << definition_para
           end
         end

@@ -1,6 +1,11 @@
 # TODO 005: Add Doctype Amendment Awareness
 
-## Status: PENDING
+## Status: DONE (lane/1728-amendment-doctype). Doctype read from bibdata ext in
+`Docx::AmendmentDoctype`; `Context#in_amendment` + `suppress_heading_numbers?`
+(off inside amend newcontent); TOC skipped; clause titles get numId 0 (Word
+numbering comes from the style numPr). zzSTDTitle2 is in neither template: the
+amendment title line stays on MainTitle2 (already done earlier, #1728).
+Not covered: references/bibliography headings (own render path).
 
 ### What
 

@@ -17,7 +17,7 @@ module IsoDoc
                       :in_figure, :in_definitions, :list_depth,
                       :section_depth,
                       :term_counter, :section_counter, :body_width,
-                      :amend_zone
+                      :amend_zone, :in_amendment
         def initialize
           @footnote_counter = Counter.new
           @bookmark_counter = Counter.new
@@ -40,6 +40,15 @@ module IsoDoc
           @term_counter = Counter.new(0)
           @zone_paragraph_counts = Hash.new(0)
           @amend_zone = nil
+          @in_amendment = false
+        end
+
+        # Whether clause headings render unnumbered: an amendment-style
+        # document (doctype amendment / technical-corrigendum), except
+        # inside <newcontent>, which re-enables numbering for the clauses
+        # being inserted into the amended standard.
+        def suppress_heading_numbers?
+          (in_amendment && amend_zone != :newcontent) || false
         end
 
         def next_footnote_id
@@ -48,6 +57,55 @@ module IsoDoc
 
         def next_bookmark_id
           @bookmark_counter.next
+        end
+
+        # Word rejects bookmark names longer than this.
+        MAX_BOOKMARK_NAME = 40
+
+        # The bookmark name Word sees for element id +name+: the id
+        # itself when Word accepts it, otherwise a deterministic short
+        # form (sanitised prefix + digest of the id, MAX_BOOKMARK_NAME
+        # long). Bookmark emission and every xref/eref anchor go through
+        # this one mapping, so a long id stays resolvable. The result
+        # never starts with +_Toc+ (the digest is not in front and an
+        # id-derived prefix cannot lead with an underscore).
+        def bookmark_name(name)
+          name = name.to_s
+          return name if name.length <= MAX_BOOKMARK_NAME
+
+          digest = Digest::SHA1.hexdigest(name)[0, 12]
+          prefix = name.gsub(/[^A-Za-z0-9]/, "_").sub(/\A[^A-Za-z]+/, "")
+          "#{prefix[0, MAX_BOOKMARK_NAME - 13]}_#{digest}"
+        end
+
+        # Claim the bookmark for id +name+. Returns the name to emit
+        # (see #bookmark_name), or nil when the id is blank or already
+        # bookmarked, so bookmark names stay unique.
+        def claim_bookmark_name(name)
+          return if name.to_s.empty?
+
+          emitted = bookmark_name(name)
+          emitted if claimed_bookmark_names.add?(emitted)
+        end
+
+        # Bookmark names (clause ids) the table of contents links to.
+        # TocBuilder registers them before the body renders; the heading
+        # renderers then add a Word-style +_Toc+ bookmark beside the id
+        # bookmark, and the ToC entry hyperlinks / PAGEREFs to it.
+        def toc_targets
+          @toc_targets ||= Set.new
+        end
+
+        def claimed_bookmark_names
+          @claimed_bookmark_names ||= Set.new
+        end
+
+        # Stable +_Toc+ bookmark name for a clause id: Word-style prefix
+        # plus a digest of the (document-unique) id, so it is unique
+        # whenever the id is and never collides with an id bookmark
+        # (ids never start with _Toc).
+        def self.toc_bookmark_name(name)
+          "_Toc#{Digest::SHA1.hexdigest(name.to_s)[0, 12]}"
         end
 
         def next_comment_id

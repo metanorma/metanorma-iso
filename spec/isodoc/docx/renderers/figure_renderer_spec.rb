@@ -113,4 +113,22 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::FigureRenderer do
         .to eq(["Fig ", [%w[80 km]]])
     end
   end
+
+  def key_xml
+    minimal_iso_xml(<<~INNER)
+      <sections><clause id="c1"><title>Scope</title>
+        <figure id="f1"><name>Figure 1</name>
+          <key><name>Key</name><dl><dt>X</dt><dd><p>the x axis</p></dd></dl></key>
+        </figure>
+      </clause></sections>
+    INNER
+  end
+
+  it "renders the figure key's name as a bold paragraph before its entries" do
+    convert_and_extract(adapter, key_xml) do |pkg|
+      texts = pkg.document.body.paragraphs.map { |x| x.runs.map { |r| run_text(r) }.join }
+
+      expect(texts.each_cons(2)).to include(%w[Key X])
+    end
+  end
 end

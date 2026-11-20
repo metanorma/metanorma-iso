@@ -169,3 +169,8 @@ end
     excluded pattern.
 
 ## Status: DONE — `DocxStyleMapping#excluded?`, `StyleMappingValidator#excluded_styles_in_mapping`, globs added to iso-dis style_mapping.yml, `excluded_styles_ref` header; specs in style_mapping_spec.rb and style_mapping_validator_spec.rb green, integrity spec confirms zero leaks.
+
+Follow-up (#1728 P2-016 pass): the loader reads only `excluded_styles` `globs` and `style_ids`, so the nested category layout above is inert and was NOT used. Audit-listed names were added as flat globs under `globs`, grouped by category, excluding any name that matches a currently mapped style. Not added: `BodyTextindent[0-9]+` (lowercase; matches mapped `BodyTextindent1`) and bare `*Char` (matches universal `BodyTextChar`). New spec: `spec/isodoc/docx/style_mapping_excluded_styles_spec.rb` (red proof: mapping `note` to `GridTable1Light` fails it; restored, green).
+
+## Known follow-up (2026-11-19)
+- StyleResolver::SPAN_CLASS_TO_STYLE still emits span style ids that match excluded globs: stdpublisher0, stddocnumber, stdyear, stddoctitle, stddocpartnumber, stdpublisher, citesec, citeapp, citefig, citetbl, notelabel, termnotelabel, examplelabel, boldtitle, nonboldtitle. None is defined in the DIS template, so these runs get no rStyle today and output is unchanged. The exclusion list is only checked against mapping values, not this table. "stem" alone was removed from the globs (commit "restore annex heading fallback, unexclude stem").
