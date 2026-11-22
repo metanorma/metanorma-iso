@@ -7612,6 +7612,7 @@
 				<xsl:if test="position() = 1 and $add_continue = 'true'"> continue="true"</xsl:if>
 				<xsl:if test="$add_continue = 'true'"> role="NonStruct"</xsl:if><!-- the condition 'xsl:if' to prevent the attribute role for math -->
 				<xsl:if test="position() = 1 and $xmlns != ''"> xmlns="<xsl:value-of select="$xmlns"/>"</xsl:if>
+				<xsl:if test="starts-with(., 'mn:')"> xmlns:mn="<xsl:value-of select="$namespace_full"/>"</xsl:if>
 			<xsl:text disable-output-escaping="yes">&gt;</xsl:text>
 			<xsl:if test="$debug = 'true'">
 				<xsl:message>&lt;<xsl:value-of select="."/>&gt;</xsl:message>
