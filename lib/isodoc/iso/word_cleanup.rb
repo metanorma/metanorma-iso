@@ -157,8 +157,25 @@ module IsoDoc
       def word_cleanup(docxml)
         authority_hdr_cleanup(docxml)
         super
+        # The HTML TOC has already consumed these variants. Word ignores
+        # display:none on the paragraphs and prints them above annex titles.
+        docxml.xpath("//h1[@class = 'Annex']/following-sibling::" \
+                     "p[@class = 'variant-title-toc'][1]").each(&:remove)
         style_cleanup(docxml)
         docxml
+      end
+
+      def word_fn_cleanup(docxml)
+        super
+        # Html2Doc inserts the footnote anchor directly before this content.
+        docxml.xpath("//a[@class = 'FootnoteRef']/@href").each do |href|
+          note = docxml.at("//*[@id = $id]", nil,
+                           id: href.value.delete_prefix("#")) or next
+          para = note.at(".//p") || note
+          next if para.text.match?(/\A[[:space:]]/)
+
+          para.prepend_child(Nokogiri::XML::Text.new(" ", docxml))
+        end
       end
 
       # supply missing annex title
