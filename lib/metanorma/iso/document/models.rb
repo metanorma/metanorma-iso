@@ -20,7 +20,7 @@ module Metanorma
     autoload :Boilerplate, "#{__dir__}/boilerplate"
     autoload :DdElement, "#{__dir__}/dd_element"
     autoload :Metadata, "#{__dir__}/metadata"
-    autoload :IsoParagraphBlock, "#{__dir__}/paragraph_block"
+    autoload :ParagraphBlock, "#{__dir__}/paragraph_block"
     autoload :Root, "#{__dir__}/root"
     autoload :Sections, "#{__dir__}/sections"
     autoload :Terms, "#{__dir__}/terms"

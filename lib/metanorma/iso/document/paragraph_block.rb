@@ -3,7 +3,7 @@
 module Metanorma
   module Iso::Document
     # ISO paragraphs can contain termnotes emitted by the DOCX compatibility path.
-    class IsoParagraphBlock < Metanorma::Document::Components::Paragraphs::ParagraphBlock
+    class ParagraphBlock < Metanorma::Document::Components::Paragraphs::ParagraphBlock
       attribute :termnote, Terms::TermNote, collection: true
 
       xml do
