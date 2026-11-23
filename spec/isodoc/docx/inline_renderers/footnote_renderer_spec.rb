@@ -173,7 +173,7 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::FootnoteRenderer do
     let(:ns) { { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" } }
     let(:adapter) { build_adapter }
 
-    it "uses bare reference numbers including collapsed references", :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+    it "keeps the closing parenthesis on body references including collapsed ones", :aggregate_failures do # rubocop:disable RSpec/ExampleLength
       xml = labelled_xml('<span class="fmt-label-delim">)</span>')
       xml = xml.sub(" more.</p>", ' more.<fn target="f1" reference="1"><p>Footnote body.</p><fmt-fn-label>1)</fmt-fn-label></fn></p>')
       convert_parts(xml) do |document, footnotes|
@@ -181,12 +181,21 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::FootnoteRenderer do
         expect(refs.size).to eq(2)
         expect(refs.uniq.size).to eq(1)
         paragraph = document.at_xpath("//w:p[w:r/w:footnoteReference]", ns)
-        expect(paragraph.xpath("w:r/w:t", ns).text).to eq("Body text more.")
+        expect(paragraph.xpath("w:r/w:t", ns).text).to eq("Body text) more.)")
+        suffix = paragraph.at_xpath("w:r[w:footnoteReference]/following-sibling::w:r[1]", ns)
+        expect(suffix.at_xpath("w:rPr/w:rStyle/@w:val", ns).value).to eq("FootnoteReference")
         expect(footnotes.xpath("//w:footnote[not(@w:type)]", ns).size).to eq(1)
       end
     end
 
-    it "keeps the body marker style and space before text", :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+    it "adds no closing parenthesis when the presentation label has none" do
+      convert_parts(labelled_xml("")) do |document, _|
+        paragraph = document.at_xpath("//w:p[w:r/w:footnoteReference]", ns)
+        expect(paragraph.xpath("w:r/w:t", ns).text).to eq("Body text more.")
+      end
+    end
+
+    it "keeps the footnote-area marker bare with a space before text", :aggregate_failures do # rubocop:disable RSpec/ExampleLength
       convert_parts(labelled_xml('<span class="fmt-label-delim">)</span>')) do |_, footnotes|
         para = body_footnote(footnotes).at_xpath("w:p", ns)
         expect(para.element_children.first.name).to eq("pPr")
