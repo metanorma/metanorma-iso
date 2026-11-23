@@ -14,7 +14,7 @@ module Metanorma
 
         def add_issue(code:, location:, params: [], issue: nil)
           issue ||= Issue.from_finding(code: code, location: location, params: params)
-          issues << issue
+          self.issues = issues + [issue]
           self.valid = false if issue.error?
           issue
         end
