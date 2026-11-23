@@ -75,6 +75,28 @@ RSpec.describe "rich content inside tt" do
     expect(run.at_xpath("./w:rPr/w:i", ns)).not_to be_nil
   end
 
+  { "keyword" => [], "smallcap" => ["w:smallCaps"],
+    "underline" => ["w:u"], "strike" => ["w:strike"] }.each do |tag, properties|
+    it "keeps #{tag} in order in monospace" do
+      para = code_para(body("pre <tt>a<#{tag}>rich</#{tag}>b</tt> post"))
+      runs = runs_in(para)
+      expect(runs.map(&:first).join).to eq("pre arichb post")
+      expect(runs[1...-1].map(&:last).uniq).to eq(["InlineCode"])
+      run = para.xpath(".//w:r", ns).find { |r| r.xpath("./w:t", ns).text == "rich" }
+      properties.each do |property|
+        expect(run.at_xpath("./w:rPr/#{property}", ns)).not_to be_nil
+      end
+    end
+  end
+
+  it "keeps a line break between monospace text runs" do
+    para = code_para(body("pre <tt>a<br/>b</tt> post"))
+    expect(runs_in(para)).to eq([["pre ", nil], ["a", "InlineCode"],
+                                 ["b", "InlineCode"], [" post", nil]])
+    expect(para.xpath(".//w:r/w:t | .//w:r/w:br", ns).map(&:name))
+      .to eq(%w[t t br t t])
+  end
+
   it "keeps a link in order, resolvable" do
     parts = body('pre <tt>a <link target="https://example.org/x">site</link> c</tt>')
     para = code_para(parts)

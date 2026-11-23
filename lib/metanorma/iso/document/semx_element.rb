@@ -2,8 +2,18 @@
 
 module Metanorma
   module Iso::Document
-    # Presentation notes and term definitions wrap block bodies in semx.
+    # Presentation blocks and rich monospace content are wrapped in semx.
     class SemxElement < Metanorma::Document::Components::Inline::SemxElement
+      attribute :keyword, :string, collection: true
+      attribute :smallcap,
+                Metanorma::Document::Components::Inline::SmallCapElement,
+                collection: true
+      attribute :underline,
+                Metanorma::Document::Components::TextElements::UnderlineElement,
+                collection: true
+      attribute :strike,
+                Metanorma::Document::Components::TextElements::StrikeElement,
+                collection: true
       attribute :table, Metanorma::Document::Components::Tables::TableBlock,
                 collection: true
       attribute :dl, Metanorma::Document::Components::Lists::DefinitionList,
@@ -15,6 +25,10 @@ module Metanorma
                 collection: true
 
       xml do
+        map_element "keyword", to: :keyword
+        map_element "smallcap", to: :smallcap
+        map_element "underline", to: :underline
+        map_element "strike", to: :strike
         map_element "table", to: :table
         map_element "dl", to: :dl
         map_element "quote", to: :quote
