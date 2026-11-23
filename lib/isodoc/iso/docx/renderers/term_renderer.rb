@@ -36,7 +36,13 @@ module IsoDoc
             Metanorma::Document::Components::MultiParagraph::QuoteBlock,
             Metanorma::Document::Components::MultiParagraph::AdmonitionBlock,
           ].freeze
-          private_constant :DEFINITION_PARAGRAPH, :DEFINITION_BLOCKS
+          DEFINITION_LIST_LEAD = [
+            Metanorma::Document::Components::Lists::OrderedList,
+            Metanorma::Document::Components::Lists::UnorderedList,
+            Metanorma::Document::Components::Lists::DefinitionList,
+          ].freeze
+          private_constant :DEFINITION_PARAGRAPH, :DEFINITION_BLOCKS,
+                           :DEFINITION_LIST_LEAD
 
           def render(term, doc)
             render_term_number(term, doc)
@@ -185,10 +191,28 @@ prefix: nil)
             blocks.each_with_index do |block, index|
               if block.is_a?(DEFINITION_PARAGRAPH)
                 render_definition_paragraph(block, doc, index.zero? ? defn : nil)
+              elsif index.zero? && leading_list?(block)
+                render_leading_list(block, doc)
               else
                 @walker.dispatch(block, doc)
               end
             end
+          end
+
+          def leading_list?(block)
+            DEFINITION_LIST_LEAD.any? { |klass| block.is_a?(klass) }
+          end
+
+          # A list opening a definition takes the same gap below the
+          # designations as a Definition paragraph would.
+          def render_leading_list(list, doc)
+            first = Anchoring.first_paragraph_added(doc) do
+              @walker.dispatch(list, doc)
+            end
+            return unless first
+
+            builder = first.is_a?(Uniword::Builder::ParagraphBuilder) ? first : Uniword::Builder::ParagraphBuilder.new(first)
+            builder.spacing(before: 240)
           end
 
           def render_definition_paragraph(paragraph, doc, owner)
@@ -300,6 +324,10 @@ prefix: nil)
                 render_example_inline(pending, doc)
                 pending.clear
                 render_term_note(child, doc)
+              elsif type == :element && child.is_a?(Metanorma::Iso::Document::Terms::TermExample)
+                render_example_inline(pending, doc)
+                pending.clear
+                render_term_example(child, doc)
               elsif type == :element && DEFINITION_BLOCKS.any? { |klass| child.is_a?(klass) }
                 render_example_inline(pending, doc)
                 pending.clear

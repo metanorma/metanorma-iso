@@ -13,11 +13,11 @@ module IsoDoc
       # rendering when conversion fails.
       #
       # When +walker+ is supplied, the renderer also dispatches the formula's
-      # +:dl+ (symbol key list) and +:p+ (accompanying paragraphs) children
-      # through the walker so they render via DefinitionListRenderer and
-      # ParagraphRenderer respectively. All dispatch happens inside
-      # +Context#with_formula+ so children pick up the formula zone via
-      # StyleResolver and render symbol keys as formula_dl tables.
+      # +:dl+ (symbol key list), +:p+ (accompanying paragraphs) and +:note+
+      # children through the walker so they render via
+      # DefinitionListRenderer, ParagraphRenderer and NoteRenderer. All dispatch happens
+      # inside +Context#with_formula+ so children pick up the formula zone
+      # via StyleResolver and render symbol keys as formula_dl tables.
       class FormulaRenderer
         include ModelUtils
         include MathConversion
@@ -53,6 +53,7 @@ module IsoDoc
           @walker.walk_attribute(formula, :dl, doc)
           @walker.walk_attribute(formula, :p, doc)
           walk_key(formula, doc)
+          @walker.walk_attribute(formula, :note, doc)
         end
 
         # Presentation XML wraps the formula's symbol list in <key>
