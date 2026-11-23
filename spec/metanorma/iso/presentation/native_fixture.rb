@@ -30,7 +30,10 @@ module NativeIsoFixture
     ordered(body, "title", "p")
     container = ordered(sections::IsoSections.new(clause: [lead, body]), "clause", "clause")
     metadata = Metanorma::Iso::Document::Metadata
-    bib = metadata::IsoBibliographicItem.new(language: [metadata::LanguageElement.new(value: ["en"])])
+    bib = metadata::IsoBibliographicItem.new(type: "standard",
+      titles: [metadata::TitleFull.new(value: "Native ISO presentation", language: "en", _type: "main")],
+      doc_identifier: [metadata::DocIdentifier.new(value: "ISO 99999:2026", type: "ISO", primary: true)],
+      language: [metadata::LanguageElement.new(value: "en")])
     Metanorma::Iso::Document::Root.new(type: "semantic", flavor: "iso", bibdata: bib, sections: container)
   end
 

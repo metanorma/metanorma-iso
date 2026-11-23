@@ -23,11 +23,15 @@ RSpec.describe Metanorma::Iso::Presentation::Transformer do
     expect(semantic.sections.clause.first.fmt_title).to be_nil
     expect(result.sections.clause.first.title.em.first.text).to eq(["rich"])
     expect(result.sections.clause.first.fmt_title.span.last.em.first.text).to eq(["rich"])
-    html = Metanorma::Iso::Html::Renderer.new.generate_body(result)
+    renderer = Metanorma::Core::Flavors.renderer_for(result, format: :html, flavor: :iso)
+    expect(renderer).to eq(Metanorma::Iso::Html::Renderer)
+    html = renderer.new.generate_body(result)
     expect(html).to include("A <em>rich</em> title", "Retained body.", 'href="#method"', "Clause 2", "the procedure")
     expect(html.scan('href="#method"').length).to eq(2)
     expect(html.index("rich")).to be < html.index("Retained body.")
     expect(result.sections.clause.map(&:displayorder)).to eq([1, 2])
+    expect(result.bibdata.doc_identifier.first.value).to eq("ISO 99999:2026")
+    expect(result.bibdata.titles.items.first.value).to eq("Native ISO presentation")
   end
 
   it "preserves authored identifiers and generates repeatable missing identifiers" do
