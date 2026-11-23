@@ -21,6 +21,11 @@ module Metanorma
         attribute :note, :string, collection: true
         attribute :admonition, Metanorma::Document::Components::MultiParagraph::AdmonitionBlock,
                   collection: true
+        attribute :sourcecode,
+                  Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock,
+                  collection: true
+        attribute :quote, Metanorma::Document::Components::MultiParagraph::QuoteBlock,
+                  collection: true
         attribute :term, IsoTerm, collection: true
         attribute :related, Metanorma::Standoc::Document::Terms::RelatedTerm,
                   collection: true
@@ -39,6 +44,7 @@ module Metanorma
 
         xml do
           element "term"
+          ordered
           map_attribute "id", to: :id
           map_attribute "anchor", to: :anchor
           map_attribute "semx-id", to: :semx_id
@@ -55,6 +61,7 @@ module Metanorma
           map_element "termsource", to: :termsource
           map_element "note", to: :note
           map_element "admonition", to: :admonition
+          %i[sourcecode quote].each { |name| map_element name.to_s, to: name }
           map_element "term", to: :term
           map_element "related", to: :related
           map_element "fmt-name", to: :fmt_name

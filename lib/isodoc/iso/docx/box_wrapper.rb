@@ -33,6 +33,8 @@ module IsoDoc
           Metanorma::Document::Components::Lists::DefinitionList,
         ].freeze
 
+        QUOTE_CLASS = Metanorma::Document::Components::MultiParagraph::QuoteBlock
+
         PLAIN_PARAGRAPH_CLASS =
           Metanorma::Document::Components::Paragraphs::ParagraphBlock
 
@@ -105,6 +107,7 @@ module IsoDoc
         def inline_label_paragraph?(children)
           first = children.first
           return false unless first.is_a?(PLAIN_PARAGRAPH_CLASS)
+          return false if first.is_a?(QUOTE_CLASS)
           return false if embedded_block_child?(first)
           return false if block_forcing_child?(children)
 

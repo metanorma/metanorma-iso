@@ -7,14 +7,21 @@ module IsoDoc
         # Notes can carry their blocks directly or inside presentation semx.
         # Nested notes parsed in mixed paragraphs have no element_order.
         module NoteContent
-          NOTE_BODY_ATTRS = %i[content p ul ol dl formula quote semx table figure example].freeze
+          NOTE_BODY_ATTRS = %i[content p ul ol dl formula quote sourcecode admonition semx table figure example termexample].freeze
           NOTE_LABEL_ATTRS = %i[name fmt_name fmt_xref_label].freeze
 
           private
 
           def single_note_paragraph?(note)
             children = block_children(note)
-            children.one? && children.first.is_a?(Metanorma::Document::Components::Paragraphs::ParagraphBlock)
+            children.one? && plain_paragraph?(children.first)
+          end
+
+          # A quote is a paragraph subclass but keeps its own block style,
+          # so it never takes the inline note label.
+          def plain_paragraph?(node)
+            node.is_a?(Metanorma::Document::Components::Paragraphs::ParagraphBlock) &&
+              !node.is_a?(Metanorma::Document::Components::MultiParagraph::QuoteBlock)
           end
 
           def block_children(node)
