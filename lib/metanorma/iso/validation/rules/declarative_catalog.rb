@@ -105,13 +105,31 @@ module Metanorma
             def findings_for(klass, context)
               raise ProjectionError, "standoc declarative engine is unavailable" unless available?
 
-              projection = projection_for(context)
               set = context.registry ? context.registry.declarative_rule_set_for([klass]) : rule_set_for([klass])
               if klass.respond_to?(:active_declarative_rule_ids)
                 ids = klass.active_declarative_rule_ids(context)
                 set = api::RuleSet.new(set.rules.select { |rule| ids.include?(rule.id) },
                                        namespaces: set.namespaces)
               end
+              findings_for_set(set, context)
+            end
+
+            def validate_root!(root)
+              return if root.nil? || supported_root?(root)
+
+              raise ProjectionError, "unsupported validation model root #{root.class}"
+            end
+
+            def findings_for_set(set, context)
+              return [] if set.rules.empty?
+
+              model_checks = set.rules.map { |rule| rule.check.name.start_with?("iso.model_") }.uniq
+              if model_checks.size > 1
+                return set.rules.flat_map do |rule|
+                  findings_for_set(api::RuleSet.new([rule], namespaces: set.namespaces), context)
+                end
+              end
+              projection = model_checks.first ? model_projection_for(context) : projection_for(context)
               api::Engine.new(set).findings(projection)
             end
 
@@ -124,6 +142,11 @@ module Metanorma
               @check_registry ||= api::CheckRegistry.default.dup.tap do |registry|
                 registry.register("iso.model_required", needs_target: true) { |node, _, _| node.nil? }
                 registry.register("iso.model_forbidden", needs_target: true) { |node, _, _| !node.nil? }
+                registry.register("iso.model_attribute_in", required: %w[attribute values],
+                  validate_args: api::Checks.method(:validate_attribute_in)) do |node, args, _|
+                  value = node && node[args.fetch("attribute")]
+                  !value.nil? && !args.fetch("values").include?(value)
+                end
                 registry.register("iso.model_selected", required: ["select"],
                   validate_args: lambda { |args|
                     selected = Nokogiri::XML("<probe/>").xpath(args.fetch("select"), PROJECTION_NAMESPACES)
@@ -146,12 +169,33 @@ module Metanorma
               end
             end
 
-            public :projection_for
+            # Model-context declarations consume typed facts directly, so a
+            # malformed, unserializable field unrelated to those facts cannot
+            # prevent their evaluation. This is explicitly not semantic XML.
+            def model_projection_for(context)
+              context.walk_cache.model_projection(context.root) do
+                root = context.root
+                unless supported_root?(root) || (root.nil? && context.state.is_a?(ConverterState))
+                  raise ProjectionError, "unsupported model root for projection facts"
+                end
+
+                xml = Nokogiri::XML::Document.new
+                element = Nokogiri::XML::Node.new(ROOT_NAME, xml)
+                element.namespace = element.add_namespace_definition(nil, NAMESPACE)
+                xml.root = element
+                annotate_order_facts(root, xml, state: context.state)
+                api::DocumentProjection.new(xml, source_model: root)
+              end
+            rescue StandardError => e
+              raise ProjectionError, "model fact projection failed: #{e.message}"
+            end
+
+            public :projection_for, :model_projection_for
 
             # An explicit validation-only fact projection preserves model
             # order/cardinality that semantic serialization can normalize (for
             # example repeated references to a singular definitions model).
-            def annotate_order_facts(root, xml)
+            def annotate_order_facts(root, xml, state: nil)
               namespaces = xml.collect_namespaces
               if namespaces.key?("xmlns:v") && namespaces["xmlns:v"] != PROJECTION_NAMESPACE
                 raise ProjectionError, "validation projection namespace collision for v"
@@ -160,16 +204,20 @@ module Metanorma
                 raise ProjectionError, "validation projection metadata already exists"
               end
               namespace = xml.root.add_namespace_definition("v", PROJECTION_NAMESPACE)
-              sequence = Nokogiri::XML::Node.new("sequence", xml)
-              sequence.namespace = namespace
-              xml.root.add_child(sequence)
-              SectionSequenceRule.new.projection_sequence(root).each do |kind, location|
-                item = Nokogiri::XML::Node.new("item", xml)
-                item.namespace = namespace
-                item["kind"] = kind.to_s
-                item["location"] = location if location
-                sequence.add_child(item)
-              end
+              ProjectionFacts.new(root, xml, namespace, state: state).append
+            end
+
+            def supported_root?(root)
+              return true if root.is_a?(::Metanorma::Iso::Document::Root)
+              return false unless Metanorma.const_defined?(:Bsi, false) && !Metanorma.autoload?(:Bsi)
+
+              flavor = Metanorma.const_get(:Bsi, false)
+              return false unless flavor.const_defined?(:Document, false) && !flavor.autoload?(:Document)
+
+              document = flavor.const_get(:Document, false)
+              return false unless document.const_defined?(:Root, false) && !document.autoload?(:Root)
+
+              root.is_a?(document.const_get(:Root, false))
             end
 
             # A root outside the expected namespace would match no context
@@ -178,7 +226,7 @@ module Metanorma
               # ISO uses a Serializable root with RootAttributes rather than
               # inheriting Metanorma::Document::Root. Adapt that explicit type
               # through the public strict E2 parser and preserve source identity.
-              projection = if root.is_a?(::Metanorma::Iso::Document::Root)
+              projection = if supported_root?(root)
                              api::DocumentProjection.new(
                                api::DocumentProjection.parse_model(root),
                                source_model: root,
@@ -186,7 +234,9 @@ module Metanorma
                            else
                              api::DocumentProjection.for(root)
                            end
-              annotate_order_facts(root, projection.xml) if root.is_a?(::Metanorma::Iso::Document::Root)
+              if projection.xml.collect_namespaces.fetch("xmlns:v", PROJECTION_NAMESPACE) != PROJECTION_NAMESPACE
+                raise ProjectionError, "validation projection namespace collision for v"
+              end
               element = projection.xml.root
               return projection if element&.name == ROOT_NAME &&
                 element.namespace&.href == NAMESPACE

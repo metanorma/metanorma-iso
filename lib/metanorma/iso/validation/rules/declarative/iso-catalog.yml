@@ -1,21 +1,23 @@
 # Explicit ISO corpus registration; safe data only.
 # Concrete rule classes retain profile, suppression and citation identities.
 schema: metanorma-iso-validation-catalog/1
-rulesets: [iso-structure.yml, iso-sequence.yml]
+rulesets: [iso-structure.yml, iso-sequence.yml, iso-model-references.yml]
 registrations:
   - class: AbbrevFirstUseRule
     code: ISO_53
     implementation: code
   - class: AssetCitedFirstRule
     code: ISO_54
-    implementation: code
+    implementation: declarative
+    rules: [iso.asset.cited-before-placement]
   - class: BrokenXrefRule
     code: ISO_56
     implementation: declarative
     rules: [iso.xref.target]
   - class: DoctypeRule
     code: ISO_5
-    implementation: code
+    implementation: declarative
+    rules: [iso.state.doctype]
   - class: ForewordPresenceRule
     code: ISO_57
     implementation: declarative
@@ -293,10 +295,12 @@ registrations:
     rules: [iso.committee.technical-type]
   - class: TermSourceCompleteRule
     code: ISO_55
-    implementation: code
+    implementation: declarative
+    rules: [iso.term-source.origin, iso.term-source.identifier, iso.term-source.listed]
   - class: TermXrefsRule
     code: ISO_50
-    implementation: code
+    implementation: declarative
+    rules: [iso.term-xref.from-terms, iso.term-xref.to-terms]
   - class: TermdefStyleRule
     code: ISO_4
     implementation: code
@@ -321,10 +325,12 @@ registrations:
     rules: [iso.title.siblings]
   - class: UniqueIdRule
     code: ISO_122
-    implementation: code
+    implementation: declarative
+    rules: [iso.identity.unique]
   - class: UnreferencedAssetsRule
     code: ISO_21
-    implementation: code
+    implementation: declarative
+    rules: [iso.asset.referenced, iso.formula.referenced]
   - class: VocabTermsTitlesRule
     code: ISO_44
     implementation: code

@@ -40,10 +40,8 @@ module Metanorma
 
           private
 
-          def declarative_issue(finding, _context)
-            id = finding.node["id"]
-            location = id.nil? || id.empty? ? "AdmonitionBlock" : "AdmonitionBlock##{id}"
-            build_issue(location: location, params: [LABEL])
+          def declarative_issue(finding, context)
+            build_issue(location: projected_location(finding.node, context), params: [LABEL])
           end
 
           def exempt_type?(admonition)

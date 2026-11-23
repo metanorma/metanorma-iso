@@ -31,10 +31,10 @@ module Metanorma
 
           private
 
-          def declarative_issue(finding, _context)
+          def declarative_issue(finding, context)
             node = finding.node
             title = node.at_xpath("./m:title", DeclarativeCatalog::NAMESPACES)&.text.to_s.strip
-            label = title.empty? ? projected_location(node) : title
+            label = title.empty? ? projected_location(node, context) : title
             build_issue(location: label, params: [label])
           end
 

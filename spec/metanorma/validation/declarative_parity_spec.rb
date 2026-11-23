@@ -18,9 +18,9 @@ RSpec.describe "declarative ISO rule parity (issues #1732, #1733)" do
     XML
   end
 
-  def context_for(xml, registry: nil, vocab: false)
+  def context_for(xml, registry: nil, vocab: false, doctype: nil, amd: false)
     root = Metanorma::Iso::Document::Root.from_xml(xml)
-    state = validation::ConverterState.new(document: "spec", amd: false,
+    state = validation::ConverterState.new(document: "spec", amd: amd, doctype: doctype,
                                            vocab: vocab)
     validation::Context.new(root: root, log: nil, state: state, shared: nil,
                             registry: registry)
@@ -36,6 +36,12 @@ RSpec.describe "declarative ISO rule parity (issues #1732, #1733)" do
 
   # rule class => [[label, body, expected finding count, options]]
   fixtures = {
+    "DoctypeRule" => [
+      ["unknown", "<sections/>", 1, { doctype: "pizza" }],
+      ["known", "<sections/>", 0, { doctype: "technical-report" }],
+      ["empty", "<sections/>", 0, { doctype: "" }],
+      ["amendment opt-out", "<sections/>", 0, { doctype: "pizza", amd: true }],
+    ],
     "IterationRule" => [
       ["number", '<bibdata><status><iteration>3</iteration></status></bibdata>', 0],
       ["negative", '<bibdata><status><iteration>-1</iteration></status></bibdata>', 1],
@@ -181,10 +187,10 @@ RSpec.describe "declarative ISO rule parity (issues #1732, #1733)" do
           rule = klass.new
           expect(catalog.findings_for(klass, context)).not_to be_nil
 
-          issues = rule.check(context)
+          issues = rule.applicable?(context) ? rule.check(context) : []
+          retained = rule.applicable?(context) ? rule.send(:legacy_check, context) : []
           expect(issues.size).to eq(count)
-          expect(signature(issues))
-            .to eq(signature(rule.send(:legacy_check, context)))
+          expect(signature(issues)).to eq(signature(retained))
         end
       end
     end
@@ -294,7 +300,7 @@ RSpec.describe "declarative ISO rule parity (issues #1732, #1733)" do
       export = Metanorma::Standoc::Validate::Rules::Schematron
         .export(composed.declarative_rule_set)
 
-      expect(export.code_backed).to all(start_with("iso.sequence."))
+      expect(export.code_backed).to include("iso.sequence.initial", "iso.asset.referenced")
       expect(export.xml).to include("iso.scope.presence")
       expect(export.xml).not_to include("iso.clause.no-only-child")
     end

@@ -103,7 +103,32 @@ RSpec.describe "composed declarative validation assets" do
       rules: []
     YAML
       registry = compose(rulesets: [path])
+      expect(registry.declarative_metadata).not_to have_key("iso.scope.presence")
       expect(registry.execute(context_for("<sections/>", registry), validation::Profile::DEFAULT)).to eq([])
+    end
+  end
+
+  it "executes a flavor-local declarative shadow supplied by its own asset" do
+    stub_const("Metanorma::SpecDeclarativeShadow", Module.new)
+    stub_const("Metanorma::SpecDeclarativeShadow::Validation", Module.new)
+    stub_const("Metanorma::SpecDeclarativeShadow::Validation::Rules", Module.new)
+    shadow = Class.new(rules::ScopePresenceRule) { declarative_rule "spec.scope.presence" }
+    stub_const("Metanorma::SpecDeclarativeShadow::Validation::Rules::ScopePresenceRule", shadow)
+    asset(<<~YAML) do |path|
+      schema: metanorma-validation-rules/1
+      namespaces: {m: https://www.metanorma.org/ns/standoc}
+      rules:
+        - id: spec.scope.presence
+          code: ISO_29
+          context: /m:metanorma
+          target: ./m:sections/m:clause[@type='scope']
+          check: required
+    YAML
+      registry = validation::ComposedRegistry.compose(flavor: "spec_declarative_shadow",
+        imports: [{ "class" => ["ScopePresenceRule"] }], rulesets: [path])
+      expect(registry.all).to eq([shadow])
+      expect(registry.declarative_rule_set.rules.map(&:id)).to eq(["spec.scope.presence"])
+      expect(registry.execute(context_for("<sections/>", registry), validation::Profile::DEFAULT).map(&:code)).to eq(["ISO_29"])
     end
   end
 
@@ -179,11 +204,33 @@ RSpec.describe "composed declarative validation assets" do
     expect { compose("banana") }.to raise_error(ArgumentError, /severity/)
   end
 
+  it "retains genuine model-context findings when an unrelated field cannot serialize" do
+    registry = validation::ComposedRegistry.compose(flavor: "bsi", imports: [
+      { "class" => ["AssetCitedFirstRule", "ScopePresenceRule"] },
+    ])
+    context = context_for('<sections><clause id="c"><table id="a"><name>A</name></table><table id="b"><tbody><tr><td>Cell</td></tr></tbody></table></clause></sections>', registry)
+    cell = rules::Base.new.each_instance_of(context.root,
+      Metanorma::Document::Components::Tables::TableCell).first
+    cell.xref = [Metanorma::Document::Components::Inline::XrefElement.new(target: "a"), "a"]
+    original = cell.xref
+    expect { context.root.to_xml }.to raise_error(NoMethodError)
+    findings = rules::DeclarativeCatalog.findings_for(rules::AssetCitedFirstRule, context)
+    expect(findings.map(&:code)).to eq(["ISO_54"])
+    expect(findings.first.source_model).to equal(context.root)
+    # This is ModelValidator's complete Layer 3 dispatch seam, on the real
+    # partially cast model used by the #1819 regression.
+    issues = validation::ModelValidator.send(:run_layer3_rules, context, validation::Profile::DEFAULT)
+    expect(issues.map(&:code)).to include("ISO_54", "STANDOC_7")
+    expect(issues.find { |issue| issue.code == "STANDOC_7" }.error?).to be(true)
+    expect(cell.xref).to equal(original)
+  end
+
   it "fails explicitly for an unsupported model root" do
     registry = compose
     context = context_for("<sections/>", registry)
     context.root = Object.new
-    expect { registry.execute(context, validation::Profile::DEFAULT) }
-      .to raise_error(rules::DeclarativeCatalog::ProjectionError)
+    issues = registry.execute(context, validation::Profile::DEFAULT)
+    expect(issues.map(&:code)).to include("STANDOC_7")
+    expect(issues.any?(&:error?)).to be(true)
   end
 end

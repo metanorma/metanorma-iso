@@ -37,10 +37,10 @@ module Metanorma
 
           private
 
-          def declarative_issue(finding, _context)
+          def declarative_issue(finding, context)
             node = finding.node
             depth = projected_list_depth(node)
-            build_issue(location: projected_location(node.parent),
+            build_issue(location: projected_location(node.parent, context),
               params: ["List more than #{MAX_DEPTH} levels deep: #{depth}"])
           end
 

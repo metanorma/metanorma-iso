@@ -189,8 +189,15 @@ module Metanorma
         # The schematron-layer rule set of this composition.
         def declarative_rule_set
           @declarative_rule_set ||= begin
-            base = Rules::DeclarativeCatalog.rule_set_for(declarative_classes)
-            merged = asset_rule_sets.reduce(base) { |lower, layer| lower.merge(layer) }.resolved
+            api = ::Metanorma::Standoc::Validate::Rules
+            catalog = Rules::DeclarativeCatalog.rule_set
+            requested = declarative_classes.flat_map(&:declarative_rule_ids)
+            base = api::RuleSet.new(catalog.rules.select { |rule| requested.include?(rule.id) },
+                                    namespaces: catalog.namespaces)
+            layers = asset_rule_sets
+            merged = layers.reduce(base) { |lower, layer| lower.merge(layer) }.resolved
+            missing = requested - merged.rules.map(&:id) - layers.flat_map(&:disabled)
+            raise ArgumentError, "undeclared composed rule ids: #{missing.join(', ')}" unless missing.empty?
             # Import exceptions and flavor class shadowing cannot be undone
             # accidentally by a layer reintroducing the old ISO rule id.
             excluded = Rules::DeclarativeCatalog.rule_set.rules.map(&:id) - base.rules.map(&:id)
@@ -225,18 +232,29 @@ module Metanorma
 
         # The one dispatch point for declared code and portable checks.
         def execute(context, profile)
+          begin
+            Rules::DeclarativeCatalog.validate_root!(context.root)
+          rescue Rules::DeclarativeCatalog::ProjectionError => e
+            return [projection_issue(e)]
+          end
           selected = profile.select_rules(all.map(&:new))
+          projection_errors = {}
           issues = selected.flat_map do |rule|
             next [] unless rule.applicable?(context)
 
             rule.check(context).map { |issue| apply_metadata(rule.class, issue) }
-          rescue Rules::DeclarativeCatalog::ProjectionError
-            raise
+          rescue Rules::DeclarativeCatalog::ProjectionError => e
+            next [] if projection_errors[e.message]
+
+            projection_errors[e.message] = true
+            [projection_issue(e)]
           rescue StandardError => e
             warn "Metanorma::Iso::ModelValidator: rule #{rule.class} raised: #{e.message}"
             []
           end
           issues + asset_findings(context, profile)
+        rescue Rules::DeclarativeCatalog::ProjectionError => e
+          issues + [projection_issue(e)]
         end
 
         def apply_metadata(klass, issue)
@@ -263,7 +281,10 @@ module Metanorma
           declarative_classes.each_with_object({}) do |klass, result|
             entry = entry_for(klass)
             klass.declarative_rule_ids.each do |id|
-              result[id] = { code: declarative_rule_set.rules.find { |rule| rule.id == id }&.code, rule_class: klass,
+              declaration = declarative_rule_set.rules.find { |rule| rule.id == id }
+              next unless declaration
+
+              result[id] = { code: declaration.code, rule_class: klass,
                              severity: entry.severity, cite_as: entry.cite_as,
                              source: entry.source }
             end
@@ -271,6 +292,11 @@ module Metanorma
         end
 
         private
+
+        def projection_issue(error)
+          Issue.from_finding(code: "STANDOC_7", location: nil,
+            params: ["Declarative validation projection failed: #{error.message}"])
+        end
 
         def replace_citation(text, original, replacement)
           text = text.delete_suffix(" #{original}") if original
@@ -292,11 +318,19 @@ module Metanorma
           return [] if extra.empty?
 
           api = ::Metanorma::Standoc::Validate::Rules
-          projection = Rules::DeclarativeCatalog.projection_for(context)
-          api::Engine.new(api::RuleSet.new(extra, namespaces: set.namespaces))
-            .findings(projection).map do |finding|
-              Issue.from_finding(code: finding.code,
+          Rules::DeclarativeCatalog.findings_for_set(
+            api::RuleSet.new(extra, namespaces: set.namespaces), context,
+          ).map do |finding|
+              issue = Issue.from_finding(code: finding.code,
                 location: "XML projection #{finding.node.path}", params: finding.params)
+              entry = @entries.find { |candidate| candidate.rule_class.code_value == finding.code }
+              if entry
+                suffix = Citation.suffix(entry.rule_class.policy_metadata)
+                issue.message = "#{issue.message} #{suffix}" if suffix
+                apply_metadata(entry.rule_class, issue)
+              else
+                issue
+              end
             end
         end
 

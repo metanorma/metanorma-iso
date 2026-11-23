@@ -38,11 +38,11 @@ module Metanorma
 
           private
 
-          def declarative_issue(finding, _context)
+          def declarative_issue(finding, context)
             outer = finding.node.parent.parent
             kind = outer.name == "ol" ? "ordered" : "unordered"
             nested = kind == "ordered" ? "unordered" : "ordered"
-            build_issue(location: projected_location(outer),
+            build_issue(location: projected_location(outer, context),
               params: ["mixed lists: #{nested} list nested in #{kind} list (House Style forbids mixed lists)"])
           end
 

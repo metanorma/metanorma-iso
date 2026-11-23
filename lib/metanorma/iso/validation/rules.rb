@@ -12,6 +12,7 @@ module Metanorma
         autoload :StyleRule, "metanorma/iso/validation/rules/style_rule"
         autoload :DeclarativeCatalog,
                  "metanorma/iso/validation/rules/declarative_catalog"
+        autoload :ProjectionFacts, "metanorma/iso/validation/rules/projection_facts"
         autoload :DeclarativeDispatch,
                  "metanorma/iso/validation/rules/declarative_dispatch"
         autoload :DoctypeRule, "metanorma/iso/validation/rules/doctype_rule"

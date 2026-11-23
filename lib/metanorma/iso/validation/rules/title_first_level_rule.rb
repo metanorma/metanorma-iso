@@ -37,12 +37,12 @@ module Metanorma
 
           private
 
-          def declarative_issue(finding, _context)
+          def declarative_issue(finding, context)
             node = finding.node
             parent = node.parent
             title = parent.at_xpath("./m:title", DeclarativeCatalog::NAMESPACES)&.text.to_s.strip
-            label = title.empty? ? projected_location(parent).split("#").first : title
-            build_issue(location: projected_location(node), params: [label])
+            label = title.empty? ? projected_location(parent, context).split("#").first : title
+            build_issue(location: projected_location(node, context), params: [label])
           end
 
           def each_top_level_container(root)

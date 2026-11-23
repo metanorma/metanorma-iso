@@ -37,10 +37,10 @@ module Metanorma
 
           private
 
-          def declarative_issue(finding, _context)
+          def declarative_issue(finding, context)
             holder = finding.node.parent
             count = holder.xpath("./m:ol", DeclarativeCatalog::NAMESPACES).size
-            build_issue(location: projected_location(holder),
+            build_issue(location: projected_location(holder, context),
               params: ["More than 1 ordered list in a numbered clause: #{count}"])
           end
 

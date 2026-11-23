@@ -47,7 +47,7 @@ module Metanorma
 
           private
 
-          def declarative_issue(finding, _context)
+          def declarative_issue(finding, context)
             node = finding.node
             note = node.name != "sections" && node.at_xpath("./m:note", DeclarativeCatalog::NAMESPACES)
             message = if note
@@ -57,7 +57,7 @@ module Metanorma
                         "empty clause: no content beyond the title; " \
                         "House Style forbids empty clauses and annexes"
                       end
-            build_issue(location: projected_location(node), params: [message])
+            build_issue(location: projected_location(node, context), params: [message])
           end
 
           # Yield every clause and annex, recursively.

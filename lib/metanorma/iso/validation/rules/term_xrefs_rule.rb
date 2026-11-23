@@ -15,6 +15,9 @@ module Metanorma
         # is in a terms clause and whether the xref's containing clause is
         # also a terms clause.
         class TermXrefsRule < Base
+          include DeclarativeDispatch
+          declarative_rule "iso.term-xref.from-terms", "iso.term-xref.to-terms"
+
           code "ISO_50" # default; ISO_51 emitted explicitly.
 
           policy category: "Referencing > References in Clause 3 (Terms and definitions)",
@@ -25,7 +28,7 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             terms_anchors = collect_terms_anchors(context.root)
             issues = []
 
@@ -43,7 +46,32 @@ module Metanorma
             issues
           end
 
+          def self.declarative_codes
+            %w[ISO_50 ISO_51]
+          end
+
+          def projection_term_xrefs(root)
+            references = []
+            WalkCache.new.paragraphs_with_parent(root).each do |paragraph, parent|
+              each_inline_with_preceding_text(paragraph) do |item, _|
+                next unless item.is_a?(Metanorma::Document::Components::Inline::XrefElement)
+
+                references << [item.target.to_s, model_location(item), terms_container?(parent)]
+              end
+            end
+            [references, collect_terms_anchors(root).to_a]
+          end
+
           private
+
+          def order_declarative_findings(findings)
+            findings.sort_by { |finding| finding.node["order"].to_i }
+          end
+
+          def declarative_issue(finding, _context)
+            Issue.from_finding(code: finding.code, location: finding.node["location"],
+              params: finding.params)
+          end
 
           # Collect all id/anchor values from terms sections and clauses
           # containing nested terms sections.

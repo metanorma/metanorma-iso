@@ -67,7 +67,7 @@ RSpec.describe "declarative section sequence on real ISO models" do
     context = context_for('<preface><foreword id="f"><p>F</p></foreword></preface><sections><clause id="s" type="scope"><title>S</title></clause><terms id="t"><title>T</title></terms><definitions id="a"><title>A</title></definitions><definitions id="b"><title>B</title></definitions><clause id="c"><title>C</title></clause></sections>')
     before = context.root.to_xml
     catalog = validation::Rules::DeclarativeCatalog
-    projection = catalog.projection_for(context)
+    projection = catalog.model_projection_for(context)
     records = projection.xml.xpath("/m:metanorma/v:sequence/v:item[@kind='definitions']", catalog::PROJECTION_NAMESPACES)
     expect(records.size).to eq(2)
     expect(signature(klass.new.check(context))).to eq(signature(klass.new.send(:legacy_check, context)))
@@ -81,7 +81,7 @@ RSpec.describe "declarative section sequence on real ISO models" do
       context.root.bibliography.element_order = order
       before = context.root.to_xml
       catalog = validation::Rules::DeclarativeCatalog
-      records = catalog.projection_for(context).xml.xpath("/m:metanorma/v:sequence/v:item[@kind='normative_references']", catalog::PROJECTION_NAMESPACES)
+      records = catalog.model_projection_for(context).xml.xpath("/m:metanorma/v:sequence/v:item[@kind='normative_references']", catalog::PROJECTION_NAMESPACES)
       expect(records.size).to eq(order.nil? ? 0 : 1)
       expect(signature(klass.new.check(context))).to eq(signature(klass.new.send(:legacy_check, context)))
       expect(context.root.to_xml).to eq(before)
@@ -94,7 +94,7 @@ RSpec.describe "declarative section sequence on real ISO models" do
     xml = Nokogiri::XML(context.root.to_xml)
     xml.root.add_namespace_definition("v", "urn:another-vocabulary")
     allow(api::DocumentProjection).to receive(:parse_model).with(context.root).and_return(xml)
-    expect { klass.new.check(context) }
+    expect { validation::Rules::ScopePresenceRule.new.check(context) }
       .to raise_error(validation::Rules::DeclarativeCatalog::ProjectionError, /namespace collision/)
   end
 
