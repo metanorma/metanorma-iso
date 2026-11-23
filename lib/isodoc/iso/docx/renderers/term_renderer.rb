@@ -274,7 +274,7 @@ prefix: nil)
           def render_term_example(example, doc)
             @context.with_example do
               render_example_name(example, doc)
-              @walker&.walk(example, doc)
+              block_children(example).each { |child| @walker.dispatch(child, doc) }
             end
           end
 
