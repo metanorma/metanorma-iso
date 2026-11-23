@@ -34,8 +34,15 @@ paragraph_styles:
   bibliography: BiblioTitle
 
   # Content blocks
+  # Simple has no continuation or indent variants of Note and Example;
+  # every paragraph of a note or example, nested or not, uses the base style.
   note: Note
+  note_continued: Note
+  note_indent: Note
+  note_indent_continued: Note
   example: Example
+  example_indent: Example
+  example_indent_continued: Example
   sourcecode: Code
   formula: Formula
   figure_title: FigureTitle
