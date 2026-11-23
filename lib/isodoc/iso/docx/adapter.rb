@@ -173,6 +173,7 @@ module IsoDoc
         def build_zone_renderers
           @middle_title_renderer = MiddleTitleRenderer.new(
             resolver: @resolver, inline_renderer: @inline_renderer,
+            color: @template == :dis ? MiddleTitleRenderer::DIS_COLOR : nil,
           )
           @preface_renderer = new_renderer(PrefaceRenderer)
           @indexsect_renderer = IndexsectRenderer.new(

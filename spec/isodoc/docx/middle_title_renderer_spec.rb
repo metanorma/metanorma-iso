@@ -297,4 +297,41 @@ RSpec.describe IsoDoc::Iso::Docx::MiddleTitleRenderer do
         "non-amendment documents must not gain an amendment title line"
     end
   end
+
+  describe "title colour" do
+    let(:coloured_xml) do
+      minimal_iso_xml(<<~INNER)
+        <bibdata>
+          <title language="en" type="intro">Cereals</title>
+          <title language="en" type="main">Rice</title>
+          <title language="en" type="title-part">Storage</title>
+          <title language="en" type="title-part-prefix">Part 1</title>
+          <title language="en" type="title-amd">Corrections</title>
+          <title language="en" type="title-amendment-prefix">AMENDMENT 1</title>
+        </bibdata>
+        <sections><clause id="c1"><title>Scope</title><p>Body.</p></clause></sections>
+      INNER
+    end
+
+    def title_run_colours(template)
+      Dir.mktmpdir do |dir|
+        path = File.join(dir, "output.docx")
+        build_adapter(template: template).convert(coloured_xml, path)
+        extract_docx(path) do |doc, ns|
+          doc.xpath("//w:body//w:p[.//w:t[contains(., 'Rice') or contains(., 'Storage') " \
+                    "or contains(., 'Corrections')]]/w:r", ns)
+            .map { |run| run.at_xpath("w:rPr/w:color/@w:val", ns)&.value }
+            .last(3) # the cover page repeats the title before the middle title
+        end
+      end
+    end
+
+    it "renders every DIS title line blue, as the DOC title is" do
+      expect(title_run_colours(:dis)).to eq(%w[0000FF 0000FF 0000FF])
+    end
+
+    it "leaves the Simple title uncoloured" do
+      expect(title_run_colours(:simple)).to eq([nil, nil, nil])
+    end
+  end
 end
