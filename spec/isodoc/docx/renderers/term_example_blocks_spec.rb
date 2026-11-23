@@ -40,6 +40,14 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermRenderer do
       "<math xmlns='http://www.w3.org/1998/Math/MathML'><mi>FORMX</mi></math></semx></fmt-stem></formula>"
   end
 
+  blocks_by_name = {
+    "figure" => ["<figure id='fg'><fmt-name>FIGNAME</fmt-name><pre id='pr'>FIGTEXT</pre></figure>", "FIGNAME"],
+    "quote" => ["<quote id='q'><p>QUOTETEXT</p></quote>", "QUOTETEXT"],
+    "note" => ["<note id='n'><fmt-name>NOTE</fmt-name><p>NOTETEXT</p></note>", "NOTETEXT"],
+    "admonition" => ["<admonition id='a' type='caution'><p>ADMONTEXT</p></admonition>", "ADMONTEXT"],
+    "nested example" => ["<example id='ne'><fmt-name>EXAMPLE 2</fmt-name><p>NESTTEXT</p></example>", "NESTTEXT"],
+  }.freeze
+
   def example(body)
     "<termexample id='e'><fmt-name>EXAMPLE</fmt-name>#{body}</termexample>"
   end
@@ -58,6 +66,19 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermRenderer do
       it "renders the formula between the sourcecode and the last paragraph" do
         styles = convert(adapter, example(blocks)).map(&:first)
         expect(styles.last(3).first(2)).to eq(%w[Code Formula])
+      end
+
+      blocks_by_name.each do |name, (xml, marker)|
+        it "renders a #{name} in a term example between paragraphs" do
+          text = convert(adapter, example("<p>BEFORE</p>#{xml}<p>AFTER</p>")).map(&:last).join(" ")
+          expect(text.scan(/BEFORE|#{marker}|AFTER/)).to eq(["BEFORE", marker, "AFTER"])
+        end
+      end
+
+      it "renders both definition lists of a term example once, in order" do
+        xml = "<dl id='d1'><dt>T1</dt><dd><p>DDONE</p></dd></dl><dl id='d2'><dt>T2</dt><dd><p>DDTWO</p></dd></dl>"
+        text = convert(adapter, example(xml)).map(&:last).join(" ")
+        expect(text.scan(/DDONE|DDTWO/)).to eq(%w[DDONE DDTWO])
       end
 
       it "keeps the example label" do
