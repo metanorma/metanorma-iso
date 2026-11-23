@@ -66,6 +66,12 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "#convert block content-loss edges", 
     expect(out.join).to include("DDPARA", "DDEXAMPLE")
   end
 
+  it "keeps a termexample inside a definition list item in a table cell" do
+    out = cell("<dl id='d'><dt>KEYT</dt><dd><p>DDPARA</p>" \
+               "<termexample id='e'><p>DDEXAMPLE</p></termexample></dd></dl>")
+    expect(out.join).to include("DDPARA", "DDEXAMPLE")
+  end
+
   it "prints a table cell example label once and not the hidden name" do
     out = cell(cell_example).join
     expect(out).to include("CELLEX")

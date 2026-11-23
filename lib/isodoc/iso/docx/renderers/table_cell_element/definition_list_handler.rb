@@ -14,7 +14,7 @@ module IsoDoc
             include Base
             include ModelUtils
 
-            NESTED_BLOCKS = %w[ul ol dl table note termnote example sourcecode figure formula quote].freeze
+            NESTED_BLOCKS = %w[ul ol dl table note termnote example termexample sourcecode figure formula quote].freeze
 
             def render(element, target)
               terms = Array(element.dt)
