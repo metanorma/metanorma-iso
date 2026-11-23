@@ -16,9 +16,13 @@ module IsoDoc
         TITLE_SEPARATOR = " — "
         private_constant :TITLE_SEPARATOR
 
-        def initialize(resolver:, inline_renderer:)
+        # The DIS Word stylesheet sets zzSTDTitle to blue.
+        DIS_COLOR = "0000FF"
+
+        def initialize(resolver:, inline_renderer:, color: nil)
           @resolver = resolver
           @inline_renderer = inline_renderer
+          @color = color
         end
 
         def render(model, doc)
@@ -52,19 +56,23 @@ module IsoDoc
           text = main_text(localized)
           return if text.nil? || text.empty?
 
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = @resolver.paragraph_style(:main_title1)
-          para << text
-          doc << para
+          append_title(doc, :main_title1, text)
         end
 
         def render_part(localized, doc)
           text = part_text(localized)
           return if text.nil? || text.empty?
 
+          append_title(doc, :main_title2, text)
+        end
+
+        def append_title(doc, style_key, text)
+          run = Uniword::Builder::RunBuilder.new
+          run.text(text)
+          run.color(@color) if @color
           para = Uniword::Builder::ParagraphBuilder.new
-          para.style = @resolver.paragraph_style(:main_title2)
-          para << text
+          para.style = @resolver.paragraph_style(style_key)
+          para << run.build
           doc << para
         end
 
@@ -82,10 +90,7 @@ module IsoDoc
           return if label.empty? && description.empty?
 
           text = label.empty? ? description : "#{label}: #{description}"
-          para = Uniword::Builder::ParagraphBuilder.new
-          para.style = @resolver.paragraph_style(:main_title2)
-          para << text
-          doc << para
+          append_title(doc, :main_title2, text)
         end
 
         def main_text(localized)
