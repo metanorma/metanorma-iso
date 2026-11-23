@@ -25,6 +25,7 @@ module IsoDoc
             cache_key = parent.footnote_cache_key(element)
             if cache_key && parent.cached_footnote_id(cache_key)
               append_cached_reference(para, cache_key)
+              append_marker_suffix(element, para)
               return
             end
 
@@ -36,9 +37,32 @@ module IsoDoc
             parent.store_footnote_id(cache_key, fn_id) if cache_key && fn_id
             parent.apply_run_char_style(fn_run, :footnote_reference)
             para << fn_run
+            append_marker_suffix(element, para)
           end
 
           private
+
+          # ISO marks a body reference "1)", as the DOC output does. The
+          # presentation XML carries the parenthesis in fmt-fn-label. The
+          # mark in the footnote area stays a bare number, also as in DOC.
+          def label_closing?(element)
+            return false unless element.fmt_fn_label
+
+            parent.collect_all_text(element.fmt_fn_label).rstrip.end_with?(")")
+          end
+
+          # Word supplies the number, so the parenthesis is its own run,
+          # placed before the separator that follows the fn element.
+          def append_marker_suffix(element, para)
+            return unless label_closing?(element)
+
+            properties = Uniword::Wordprocessingml::RunProperties.new(
+              vertical_align: Uniword::Properties::VerticalAlign.new(value: "superscript"),
+            )
+            run = Uniword::Wordprocessingml::Run.new(text: ")", properties: properties)
+            parent.apply_run_char_style(run, :footnote_reference)
+            para << run
+          end
 
           # Word cannot nest a footnote in a footnote body, so the inner
           # footnote's content is kept inline in the outer body.
