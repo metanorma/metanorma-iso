@@ -24,7 +24,8 @@ module IsoDoc
             COMPONENTS::AncillaryBlocks::FormulaBlock,
             COMPONENTS::MultiParagraph::QuoteBlock,
             COMPONENTS::MultiParagraph::AdmonitionBlock,
-            Metanorma::Iso::Document::Terms::TermNote
+            Metanorma::Iso::Document::Terms::TermNote,
+            Metanorma::Iso::Document::Terms::TermExample
           ].freeze
 
           def render(definition_list, doc)
@@ -246,6 +247,13 @@ module IsoDoc
             )
           end
 
+          def term_example_renderer
+            @term_example_renderer ||= TermRenderer.new(
+              resolver: @resolver, context: @context,
+              inline_renderer: @inline_renderer, walker: @walker
+            )
+          end
+
           def stream_definition(definition, doc, key, &dispatch)
             state = { loose: nil, anchors: [definition], key: key, doc: doc,
                       dispatch: dispatch }
@@ -266,6 +274,8 @@ module IsoDoc
                 flush_loose(state)
                 if child.is_a?(Metanorma::Iso::Document::Terms::TermNote)
                   term_note_renderer.render(child, state[:doc])
+                elsif child.is_a?(Metanorma::Iso::Document::Terms::TermExample)
+                  term_example_renderer.render_example(child, state[:doc])
                 else
                   state[:dispatch].call(child, state[:doc])
                 end

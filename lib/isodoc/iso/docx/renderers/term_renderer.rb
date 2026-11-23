@@ -46,6 +46,11 @@ module IsoDoc
             render_term_sources(term, doc)
           end
 
+          # A term example met outside a term, such as in a dd.
+          def render_example(example, doc)
+            render_term_example(example, doc)
+          end
+
           private
 
           def render_term_number(term, doc)
@@ -291,7 +296,11 @@ prefix: nil)
             each_ordered_element(example) do |type, child|
               next if type == :element && labels.any? { |label| label.equal?(child) }
 
-              if type == :element && DEFINITION_BLOCKS.any? { |klass| child.is_a?(klass) }
+              if type == :element && child.is_a?(Metanorma::Iso::Document::Terms::TermNote)
+                render_example_inline(pending, doc)
+                pending.clear
+                render_term_note(child, doc)
+              elsif type == :element && DEFINITION_BLOCKS.any? { |klass| child.is_a?(klass) }
                 render_example_inline(pending, doc)
                 pending.clear
                 @walker.dispatch(child, doc)

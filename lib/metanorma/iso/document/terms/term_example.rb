@@ -32,6 +32,7 @@ module Metanorma
                   collection: true
         attribute :dl, Metanorma::Document::Components::Lists::DefinitionList,
                   collection: true
+        attribute :termnote, TermNote, collection: true
 
         xml do
           mixed_content
@@ -43,6 +44,7 @@ module Metanorma
           map_element "note", to: :note
           map_element "example", to: :example
           map_element "dl", to: :dl
+          map_element "termnote", to: :termnote
           map_element "table", to: :table
           map_element "sourcecode", to: :sourcecode
           map_element "formula", to: :formula
