@@ -60,18 +60,19 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "#convert definition block preservati
       context "with a figure key" do
         let(:inner) { "<clause id='c'><title>Scope</title><figure><pre>x</pre>#{dl}</figure></clause>" }
 
-        it_behaves_like "a styled term note", ["KEY", "FIRST", "Note 1 to entry:\tNOTEBODY"],
-                        "requires dispatching the figure dl in non-owned figure_renderer.rb"
+        it_behaves_like "a styled term note", ["KEY", "FIRST", "Note 1 to entry:\tNOTEBODY"], nil
       end
 
       context "with a figure key without blocks" do
         let(:inner) { "<clause id='c'><title>Scope</title><figure><pre>x</pre>#{dl}</figure></clause>" }
         let(:dd) { "<p>FIRST</p>" }
 
-        it "preserves the existing plain figure definition paragraph" do
-          expect(output[:marked]).to eq(["FIRST"])
-          para = output[:paragraphs].find { |p| p.text == "FIRST" }
-          expect(para.at_xpath("w:pPr/w:pStyle", output[:ns])).to be_nil
+        it "keeps the key term and definition as key paragraphs" do
+          expect(output[:marked]).to eq(%w[KEY FIRST])
+          styles = %w[KEY FIRST].map do |text|
+            output[:paragraphs].find { |p| p.text == text }.at_xpath("w:pPr/w:pStyle", output[:ns])&.[]("w:val")
+          end
+          expect(styles).to eq(variant == :dis ? %w[KeyTitle KeyText] : [nil, nil])
         end
       end
 

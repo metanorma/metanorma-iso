@@ -110,7 +110,7 @@ module IsoDoc
             return unless figure.class.attributes.key?(:dl)
             return unless figure.dl
 
-            @walker.walk(figure.dl, doc)
+            @walker.dispatch(figure.dl, doc)
           end
 
           def render_key_element(figure, doc)
