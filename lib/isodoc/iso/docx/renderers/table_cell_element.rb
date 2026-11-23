@@ -24,6 +24,7 @@ module IsoDoc
           autoload :SourcecodeHandler, "#{ROOT}/sourcecode_handler"
           autoload :DefinitionListHandler, "#{ROOT}/definition_list_handler"
           autoload :ExampleHandler, "#{ROOT}/example_handler"
+          autoload :FigureHandler, "#{ROOT}/figure_handler"
         end
       end
     end

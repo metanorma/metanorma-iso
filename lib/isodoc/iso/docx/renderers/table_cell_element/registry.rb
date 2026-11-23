@@ -68,6 +68,17 @@ module IsoDoc
               register_definition_list_handler
               register_sourcecode_handler
               register_example_handler
+              register_figure_handler
+            end
+
+            def register_figure_handler
+              register(
+                Metanorma::Document::Components::AncillaryBlocks::FigureBlock,
+                FigureHandler.new(
+                  resolver: @resolver, inline_renderer: @inline_renderer,
+                  dispatcher: @dispatcher
+                ),
+              )
             end
 
             def register_sourcecode_handler

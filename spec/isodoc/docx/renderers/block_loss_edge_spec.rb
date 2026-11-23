@@ -23,4 +23,9 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "#convert block content-loss edges", 
     expect(out).to include("one  three")
     expect(out.join).not_to include("[", "#<")
   end
+
+  it "keeps a figure caption and key in a table cell" do
+    out = texts("<table id='t'><tbody><tr><td><figure id='f'><fmt-name>FIGCAP</fmt-name><pre>PRETXT</pre></figure></td></tr></tbody></table>")
+    expect(out.join).to include("FIGCAP", "PRETXT")
+  end
 end

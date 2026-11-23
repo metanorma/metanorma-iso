@@ -113,7 +113,7 @@ module IsoDoc
           TABLE_ATTACHMENT_ATTRS = %i[note example sourcecode dl key].freeze
 
           NESTED_TABLE = Metanorma::Document::Components::Tables::TableBlock
-          CELL_BLOCK_ELEMENTS = %w[note example p ol ul dl sourcecode quote table].freeze
+          CELL_BLOCK_ELEMENTS = %w[note example p ol ul dl sourcecode quote table figure].freeze
 
           # OOXML default table look val 04A0: first-row + first-column
           # special formatting on, no banding. Matches Word's "Table Grid".
