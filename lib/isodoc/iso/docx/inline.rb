@@ -100,6 +100,16 @@ module IsoDoc
           @resolver.auto_numbered_style?(style.value)
         end
 
+        # Runs the block with autonum stripping off. A cross-reference's
+        # label ("Clause 1") is its own content, not the heading's number.
+        def without_autonum_stripping
+          was_stripping = @strip_autonum
+          @strip_autonum = false
+          yield
+        ensure
+          @strip_autonum = was_stripping
+        end
+
         # Whether the renderer is currently stripping autonum carriers
         # (i.e., inside a heading render where the paragraph style
         # carries numPr). Handlers consult this to skip autonum content.
@@ -891,8 +901,25 @@ module IsoDoc
             when :element
               next if autonum_carrier?(obj)
 
-              segments << collect_text(obj).to_s
+              segments << collect_heading_element_text(obj)
             end
+          end
+          segments.join
+        end
+
+        # Text of a heading child at any depth. collect_text reads only an
+        # element's own strings, so a title holding only <tt> read empty.
+        # A cross-reference's label is its own content, so its autonum
+        # spans count.
+        def collect_heading_element_text(element)
+          return collect_all_text(element) if element.is_a?(Metanorma::Document::Components::Inline::FmtXrefElement)
+          return collect_text(element).to_s unless ordered?(element)
+
+          segments = []
+          each_ordered_element(element) do |type, obj|
+            next if type == :element && autonum_carrier?(obj)
+
+            segments << (type == :text ? obj.to_s : collect_heading_element_text(obj))
           end
           segments.join
         end
