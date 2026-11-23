@@ -212,8 +212,17 @@ module IsoDoc
         end
       end
 
+      # Whitespace inside MathML (m:oMath once converted) is markup, not text
+      # before the math.
+      FOOTNOTE_FIRST_CONTENT = <<~XPATH.gsub(/\s+/, " ").strip.freeze
+        (.//text()[not(ancestor::*[local-name() = 'math' or
+        local-name() = 'oMath'])] | .//img |
+        .//*[local-name() = 'math' or local-name() = 'oMath'])[1]
+      XPATH
+      private_constant :FOOTNOTE_FIRST_CONTENT
+
       def footnote_starts_with_space?(para)
-        first = para.at_xpath("(.//text() | .//img)[1]")
+        first = para.at_xpath(FOOTNOTE_FIRST_CONTENT)
         first&.text? && first.text.match?(/\A[[:space:]]/)
       end
 
