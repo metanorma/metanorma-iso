@@ -75,6 +75,13 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermRenderer do
         end
       end
 
+      it "keeps the literal text of a figure in a term example" do
+        xml = "<figure id='fg'><fmt-name>FIGNAME</fmt-name><pre id='pr'>FIGTEXT</pre></figure>"
+        paras = convert(adapter, example("<p>BEFORE</p>#{xml}<p>AFTER</p>"))
+        expect(texts_of(paras, "BEFORE", "FIGTEXT", "FIGNAME", "AFTER"))
+          .to eq(%w[BEFORE FIGTEXT FIGNAME AFTER])
+      end
+
       it "renders both definition lists of a term example once, in order" do
         xml = "<dl id='d1'><dt>T1</dt><dd><p>DDONE</p></dd></dl><dl id='d2'><dt>T2</dt><dd><p>DDTWO</p></dd></dl>"
         text = convert(adapter, example(xml)).map(&:last).join(" ")
