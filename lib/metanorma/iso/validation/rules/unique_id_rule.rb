@@ -16,7 +16,9 @@ module Metanorma
         # repeat_anchor_validate1 to skip duplicate detection (avoiding
         # double-reporting with this rule).
         class UniqueIdRule < Base
+          include DeclarativeDispatch
           code "ISO_122"
+          declarative_rule "iso.identity.unique"
 
           policy category: "Referencing > References within the document",
                  rule: "identifiers must be unique so that cross-references are unambiguous",
@@ -45,10 +47,29 @@ module Metanorma
 
           def check(context)
             populate_shared_state(context)
+            super
+          end
+
+          def legacy_check(context)
             collect_duplicate_issues(context)
           end
 
+          # Typed identity facts retain the existing BFS order and mirror /
+          # bibliographic-content exclusions. Uniqueness is decided in YAML.
+          def projection_identities(root)
+            each_node_with_id_or_anchor(root).flat_map do |node, id, anchor|
+              records = []
+              records << ["id", id, model_location(node)] if id
+              records << ["anchor", anchor, model_location(node)] if anchor
+              records
+            end
+          end
+
           private
+
+          def declarative_issue(finding, _context)
+            build_issue(location: finding.node["location"], params: finding.params)
+          end
 
           def populate_shared_state(context)
             shared = context.shared

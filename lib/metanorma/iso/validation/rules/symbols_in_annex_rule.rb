@@ -7,7 +7,10 @@ module Metanorma
         # ISO_27: in vocabulary documents, Symbols and Abbreviated Terms
         # sections are only permitted in annexes.
         class SymbolsInAnnexRule < Base
+          include DeclarativeDispatch
+
           code "ISO_27"
+          declarative_rule "iso.symbols.annex-only"
 
           policy category: "Vocabulary documents",
                  rule: "in vocabulary documents, Symbols and Abbreviated Terms sections are permitted in annexes only",
@@ -17,7 +20,15 @@ module Metanorma
             !context.root.nil? && context.state.vocab
           end
 
-          def check(context)
+          private
+
+          def declarative_issue(finding, _context)
+            id = finding.node["id"]
+            location = id.nil? || id.empty? ? "definitions" : "definitions##{id}"
+            build_issue(location: location, params: [])
+          end
+
+          def legacy_check(context)
             issues = []
             each_definitions_section(context.root) do |definitions, parent|
               next if parent == :annex
@@ -25,8 +36,6 @@ module Metanorma
             end
             issues
           end
-
-          private
 
           def location_of(definitions)
             id = definitions.id if definitions.class.method_defined?(:id)

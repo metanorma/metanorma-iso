@@ -18,7 +18,9 @@ module Metanorma
         # - a source origin whose bibitemid matches no bibliography entry.
         # Cross-document identity of the cited source is not validated.
         class TermSourceCompleteRule < Base
+          include DeclarativeDispatch
           code "ISO_55"
+          declarative_rule "iso.term-source.origin", "iso.term-source.identifier", "iso.term-source.listed"
 
           policy category: "Referencing > References in Clause 3",
                  rule: "reproduced term entries carry their source citation in the SOURCE line and the cited source document appears in the Bibliography",
@@ -36,7 +38,7 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             root = context.root
             bibitem_ids = bibliography_ids(root)
             issues = []
@@ -60,7 +62,34 @@ module Metanorma
             issues
           end
 
+          def projection_term_sources(root)
+            terms = []
+            each_document_node(root) do |node, _|
+              next unless node.is_a?(ISO_TERM_CLASS)
+
+              sources = term_sources(node).map do |source|
+                [!source.origin.nil?, source.origin&.bibitemid.to_s.strip]
+              end
+              terms << [model_location(node), term_label(node), sources]
+            end
+            [terms, bibliography_ids(root).to_a]
+          end
+
           private
+
+          def order_declarative_findings(findings)
+            findings.sort_by { |finding| finding.node["order"].to_i }
+          end
+
+          def declarative_issue(finding, _context)
+            detail = case finding.rule_id
+                     when "iso.term-source.origin" then NO_ORIGIN
+                     when "iso.term-source.identifier" then NO_BIBITEMID
+                     else UNLISTED % finding.node["bibitemid"]
+                     end
+            build_issue(location: finding.node["location"],
+              params: [finding.node["label"], detail])
+          end
 
           # Source elements of a term entry: term-level <source> and
           # <termsource>, plus designation-level sources.

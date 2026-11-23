@@ -7,7 +7,10 @@ module Metanorma
         # ISO_25: at most one Symbols and Abbreviated Terms section, unless
         # this is a vocabulary document (which may have multiple).
         class SymbolsSectionCountRule < Base
+          include DeclarativeDispatch
+
           code "ISO_25"
+          declarative_rule "iso.symbols.at-most-one"
 
           policy category: "Document structure",
                  rule: "at most one Symbols and Abbreviated Terms section (vocabulary documents excepted)",
@@ -19,14 +22,24 @@ module Metanorma
           end
 
           def check(context)
+            return [] if context.state&.vocab
+
+            super
+          end
+
+          private
+
+          def declarative_issue(_finding, _context)
+            build_issue(location: "DefinitionSection", params: [])
+          end
+
+          def legacy_check(context)
             count = enum_count(each_definitions_section(context.root))
             return [] if count <= 1
             return [] if context.state.vocab
 
             [build_issue(location: "DefinitionSection", params: [])]
           end
-
-          private
 
           def enum_count(enumerator)
             count = 0

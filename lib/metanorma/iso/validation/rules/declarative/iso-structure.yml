@@ -1,0 +1,169 @@
+# Declarative structural rules (issue #1732), run by the standoc rule
+# engine through the rule classes named in each comment. Severity, citation
+# and suppression stay with the rule class and log registry.
+schema: metanorma-validation-rules/1
+namespaces:
+  m: https://www.metanorma.org/ns/standoc
+rules:
+  # ForewordStructureRule
+  - id: iso.foreword.no-subclauses
+    code: ISO_23
+    context: /m:metanorma/m:preface/m:foreword
+    target: ./m:clause
+    check: forbidden
+  # SymbolsSectionCountRule (the vocabulary exemption is on the class)
+  - id: iso.symbols.at-most-one
+    code: ISO_25
+    context: "/m:metanorma[count(m:sections/m:definitions | m:sections/m:definitions/m:definitions | m:annex/m:definitions | m:annex/m:definitions/m:definitions) > 1]"
+    target: .
+    check: forbidden
+  # SymbolsInAnnexRule (applies to vocabulary documents, gated on the class)
+  - id: iso.symbols.annex-only
+    code: ISO_27
+    context: "/m:metanorma/m:sections/m:definitions | /m:metanorma/m:sections/m:definitions/m:definitions"
+    target: .
+    check: forbidden
+  # ScopePresenceRule
+  - id: iso.scope.presence
+    code: ISO_29
+    context: /m:metanorma
+    target: "./m:sections/m:clause[@type='scope']"
+    check: required
+  # NormativeReferencesPresenceRule
+  - id: iso.normative-references.presence
+    code: ISO_30
+    context: /m:metanorma/m:bibliography
+    target: "./m:references[@normative='true']"
+    check: required
+  # TermsPresenceRule (amendments are excluded on the class)
+  - id: iso.terms.presence
+    code: ISO_31
+    context: /m:metanorma/m:sections
+    target: ./m:terms
+    check: required
+  # ScopeSubclausesRule
+  - id: iso.scope.no-subclauses
+    code: ISO_39
+    context: "/m:metanorma/m:sections/m:clause[@type='scope']"
+    target: ./m:clause
+    check: forbidden
+  # OnlyChildClauseRule: lone subclauses reached only through clauses from
+  # a top-level sections or annex container.
+  - id: iso.clause.no-only-child
+    code: ISO_43
+    context: "//m:clause[/m:metanorma/m:sections][parent::m:clause][count(../m:clause) = 1][ancestor::*[not(self::m:clause)][1][(self::m:sections or self::m:annex) and parent::m:metanorma]]"
+    target: .
+    check: forbidden
+  # ForewordPresenceRule
+  - id: iso.foreword.presence
+    code: ISO_57
+    context: /m:metanorma/m:preface
+    target: ./m:foreword
+    check: required
+  # TechnicalCommitteeTypeRule; missing subtype is invalid too.
+  - id: iso.committee.technical-type
+    code: ISO_2
+    context: "/m:metanorma/m:bibdata/m:contributor[m:role/m:description='committee']/m:organization/m:subdivision[@type='Technical committee'][not(@subtype='TC' or @subtype='PC' or @subtype='JTC' or @subtype='JPC')]"
+    target: .
+    check: forbidden
+  - id: iso.committee.subcommittee-type
+    code: ISO_3
+    context: "/m:metanorma/m:bibdata/m:contributor[m:role/m:description='committee']/m:organization/m:subdivision[@type='Subcommittee'][not(@subtype='SC' or @subtype='JSC')]"
+    target: .
+    check: forbidden
+  - id: iso.symbols.content
+    code: ISO_26
+    context: "/m:metanorma/m:sections/m:definitions | /m:metanorma/m:sections/m:definitions/m:definitions | /m:metanorma/m:annex/m:definitions | /m:metanorma/m:annex/m:definitions/m:definitions"
+    target: "./m:p | ./m:ul | ./m:table | ./m:example"
+    check: forbidden
+  # XPath 1 compares the target against the complete document identity set.
+  - id: iso.xref.target
+    code: ISO_56
+    context: "//m:xref[string-length(@target) > 0][not(@target = //@id or @target = //@anchor)]"
+    target: .
+    check: forbidden
+  - id: iso.list.count
+    code: ISO_58
+    context: "/m:metanorma/m:sections | /m:metanorma/m:annex | //m:clause[ancestor::*[not(self::m:clause)][1][(self::m:sections or self::m:annex) and parent::m:metanorma]]"
+    target: "./m:ol[count(../m:ol)>1]"
+    check: forbidden
+  - id: iso.list.no-mixed
+    code: ISO_101
+    context: "//m:ol | //m:ul"
+    target: "./m:li/m:ul[parent::m:li/parent::m:ol] | ./m:li/m:ol[parent::m:li/parent::m:ul]"
+    check: forbidden
+  - id: iso.title.first-level
+    code: ISO_19
+    context: "/m:metanorma/m:sections/*[self::m:clause or self::m:terms or self::m:references] | /m:metanorma/m:annex/*[self::m:clause or self::m:terms or self::m:references]"
+    target: "./self::*[not(m:title[normalize-space(.) != \"\"])]"
+    check: forbidden
+  - id: iso.title.siblings
+    code: ISO_20
+    context: "/m:metanorma/m:sections | /m:metanorma/m:annex | //m:*[self::m:clause or self::m:terms or self::m:references][ancestor::*[not(self::m:clause or self::m:terms or self::m:references)][1][(self::m:sections or self::m:annex) and parent::m:metanorma]]"
+    target: "./self::*[*[self::m:clause or self::m:terms or self::m:references][m:title[normalize-space(.) != \"\"]] and *[self::m:clause or self::m:terms or self::m:references][not(m:title[normalize-space(.) != \"\"])]]"
+    check: forbidden
+  - id: iso.boxes.discouraged
+    code: ISO_103
+    context: "//m:admonition[not(@type='note')]"
+    target: .
+    check: forbidden
+  - id: iso.title.pair.title-intro.en
+    code: ISO_10
+    context: "/m:metanorma/m:bibdata[m:title[@type=\"title-intro\" and @language=\"fr\"]]"
+    target: "./m:title[@type=\"title-intro\" and @language=\"en\"]"
+    check: required
+  - id: iso.title.pair.title-intro.fr
+    code: ISO_11
+    context: "/m:metanorma/m:bibdata[m:title[@type=\"title-intro\" and @language=\"en\"]]"
+    target: "./m:title[@type=\"title-intro\" and @language=\"fr\"]"
+    check: required
+  - id: iso.title.pair.title-main.en
+    code: ISO_12
+    context: "/m:metanorma/m:bibdata[m:title[@type=\"title-main\" and @language=\"fr\"]]"
+    target: "./m:title[@type=\"title-main\" and @language=\"en\"]"
+    check: required
+  - id: iso.title.pair.title-main.fr
+    code: ISO_13
+    context: "/m:metanorma/m:bibdata[m:title[@type=\"title-main\" and @language=\"en\"]]"
+    target: "./m:title[@type=\"title-main\" and @language=\"fr\"]"
+    check: required
+  - id: iso.title.pair.title-part.en
+    code: ISO_14
+    context: "/m:metanorma/m:bibdata[m:title[@type=\"title-part\" and @language=\"fr\"]]"
+    target: "./m:title[@type=\"title-part\" and @language=\"en\"]"
+    check: required
+  - id: iso.title.pair.title-part.fr
+    code: ISO_15
+    context: "/m:metanorma/m:bibdata[m:title[@type=\"title-part\" and @language=\"en\"]]"
+    target: "./m:title[@type=\"title-part\" and @language=\"fr\"]"
+    check: required
+  - id: iso.clause.empty-sections
+    code: ISO_87
+    context: "/m:metanorma/m:sections"
+    target: "./self::*[not(*[self::m:clause or self::m:terms or self::m:definitions or self::m:references or self::m:floating-title])]"
+    check: forbidden
+  - id: iso.clause.empty
+    code: ISO_87
+    context: "/m:metanorma/m:annex | //m:*[self::m:clause or self::m:appendix][ancestor::*[not(self::m:clause or self::m:appendix)][1][(self::m:sections or self::m:annex) and parent::m:metanorma]]"
+    target: "./self::*[not(*[self::m:p or self::m:ol or self::m:ul or self::m:dl or self::m:table or self::m:figure or self::m:formula or self::m:example or self::m:sourcecode or self::m:quote or self::m:admonition or self::m:terms or self::m:definitions or self::m:references or self::m:clause or self::m:appendix or self::m:term or self::m:form or self::m:requirement or self::m:recommendation or self::m:permission or self::m:amend or self::m:svgmap or self::m:imagemap or self::m:termsource or self::m:floating-title])]"
+    check: forbidden
+  - id: iso.list.depth
+    code: ISO_59
+    context: "/m:metanorma/m:sections/*[self::m:ol or self::m:ul] | /m:metanorma/m:annex/*[self::m:ol or self::m:ul] | //m:clause[ancestor::*[not(self::m:clause)][1][(self::m:sections or self::m:annex) and parent::m:metanorma]]/*[self::m:ol or self::m:ul]"
+    target: "./self::*[./m:li/*[self::m:ol or self::m:ul]/m:li/*[self::m:ol or self::m:ul]/m:li/*[self::m:ol or self::m:ul]/m:li/*[self::m:ol or self::m:ul]]"
+    check: forbidden
+  - id: iso.metadata.iteration
+    code: ISO_6
+    context: "/m:metanorma/m:bibdata/m:status/m:iteration[string-length(.) = 0 or not(contains(\"0123456789\",substring(.,1,1)))]"
+    target: "."
+    check: forbidden
+  - id: iso.eref.dated-locality
+    code: ISO_49
+    context: "//m:eref[m:localityStack][starts-with(@citeas,\"ISO\") or starts-with(@citeas,\"IEC\")][not(((substring(@citeas, string-length(@citeas) - 4, 1) = \":\" or substring(@citeas, string-length(@citeas) - 5, 2) = \": \") and (string-length(@citeas) >= 5 and translate(substring(@citeas, string-length(@citeas) - 3), \"0123456789\", \"\") = \"\")) or (substring(@citeas, string-length(@citeas) - 1) = \":\u2013\" or substring(@citeas, string-length(@citeas) - 2) = \": \u2013\"))]"
+    target: "."
+    check: forbidden
+  - id: iso.references.publisher
+    code: ISO_42
+    context: "/m:metanorma/m:bibliography/m:references[@normative=\"true\"]/m:bibitem"
+    target: "./self::*[not(m:contributor[m:role[@type=\"publisher\"]]/m:organization[m:abbreviation=\"ISO\" or m:abbreviation=\"IEC\" or m:name[1]=\"International Organization for Standardization\" or m:name[1]=\"International Electrotechnical Commission\"])]"
+    check: forbidden

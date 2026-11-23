@@ -9,7 +9,9 @@ module Metanorma
         # with ISO/IEC, doesn't end with year or en-dash, AND has a
         # locality stack.
         class LocalityErefsRule < Base
+          include DeclarativeDispatch
           code "ISO_49"
+          declarative_rule "iso.eref.dated-locality"
 
           policy category: "Referencing",
                  rule: "undated references must not cite specific elements",
@@ -23,7 +25,7 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             issues = []
             each_eref(context.root) do |eref|
               next unless has_locality?(eref)
@@ -38,6 +40,12 @@ module Metanorma
           end
 
           private
+
+          def declarative_issue(finding, context)
+            id = finding.node["id"]
+            location = id.nil? || id.empty? ? "ErefElement" : "ErefElement##{id}"
+            build_issue(location: location, params: [finding.node["citeas"].to_s])
+          end
 
           def has_locality?(eref)
             return false unless eref.class.method_defined?(:locality_stack)

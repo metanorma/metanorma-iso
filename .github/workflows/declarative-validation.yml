@@ -1,0 +1,152 @@
+name: Declarative validation
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validation:
+    name: Validation Ruby ${{ matrix.ruby }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['3.4', '4.0']
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@be3c7df29b3349ec6bcfc6b4792f1cf9f5237d18 # v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Run the complete validation component
+        run: |
+          mkdir -p test-results
+          touch test-results/rspec-options
+          bundle exec rspec --options test-results/rspec-options --format progress \
+            spec/metanorma/validation \
+            spec/metanorma/validate_spec.rb \
+            spec/metanorma/validate_section_spec.rb \
+            spec/metanorma/validate_style_spec.rb \
+            spec/exe/metanorma_iso_validate_spec.rb \
+            --format json --out test-results/declarative-validation.json
+      - name: Prove feature and component coverage
+        if: always()
+        run: |
+          ruby <<'RUBY'
+          # frozen_string_literal: true
+
+          require "json"
+
+          manifest = JSON.parse(<<~JSON)
+          {
+            "schema": "metanorma-iso-declarative-feature-coverage/1",
+            "minimum_feature_examples": 342,
+            "feature_files": {
+              "spec/metanorma/validation/composed_registry_spec.rb": 20,
+              "spec/metanorma/validation/declarative_flavor_assets_spec.rb": 12,
+              "spec/metanorma/validation/declarative_model_facts_spec.rb": 35,
+              "spec/metanorma/validation/declarative_parity_spec.rb": 83,
+              "spec/metanorma/validation/declarative_sequence_spec.rb": 48,
+              "spec/metanorma/validation/issue_translator_spec.rb": 5,
+              "spec/metanorma/validation/model_validator_spec.rb": 8,
+              "spec/metanorma/validation/report_spec.rb": 5,
+              "spec/metanorma/validation/rules/asset_cited_first_rule_spec.rb": 17,
+              "spec/metanorma/validation/rules/broken_xref_rule_spec.rb": 3,
+              "spec/metanorma/validation/rules/doctype_rule_spec.rb": 18,
+              "spec/metanorma/validation/rules/iteration_rule_spec.rb": 3,
+              "spec/metanorma/validation/rules/list_rules_spec.rb": 4,
+              "spec/metanorma/validation/rules/normative_bibitem_rule_spec.rb": 5,
+              "spec/metanorma/validation/rules/section_sequence_rule_spec.rb": 5,
+              "spec/metanorma/validation/rules/see_term_xrefs_rules_spec.rb": 4,
+              "spec/metanorma/validation/rules/style_empty_clause_rule_spec.rb": 6,
+              "spec/metanorma/validation/rules/style_mixed_lists_rule_spec.rb": 4,
+              "spec/metanorma/validation/rules/style_no_boxes_rule_spec.rb": 4,
+              "spec/metanorma/validation/rules/subcommittee_types_rule_spec.rb": 12,
+              "spec/metanorma/validation/rules/symbols_rules_spec.rb": 9,
+              "spec/metanorma/validation/rules/term_source_complete_rule_spec.rb": 10,
+              "spec/metanorma/validation/rules/title_pairing_rule_spec.rb": 7,
+              "spec/metanorma/validation/rules/title_siblings_rules_spec.rb": 4,
+              "spec/metanorma/validation/rules/unique_id_rule_spec.rb": 7,
+              "spec/metanorma/validation/rules/xref_rules_spec.rb": 4
+            },
+            "component_paths": [
+              "spec/metanorma/validation",
+              "spec/metanorma/validate_spec.rb",
+              "spec/metanorma/validate_section_spec.rb",
+              "spec/metanorma/validate_style_spec.rb",
+              "spec/exe/metanorma_iso_validate_spec.rb"
+            ],
+            "allowed_legacy_pending": [
+              {
+                "file": "spec/metanorma/validate_spec.rb",
+                "description": "Metanorma::Iso Warns of illegal iteration"
+              },
+              {
+                "file": "spec/metanorma/validate_style_spec.rb",
+                "description": "Metanorma::Iso warns that foreword may contain recommendation"
+              },
+              {
+                "file": "spec/metanorma/validate_style_spec.rb",
+                "description": "Metanorma::Iso warns that foreword may contain permission"
+              }
+            ]
+          }
+          JSON
+          report = JSON.parse(File.read("test-results/declarative-validation.json"))
+          normalize = ->(path) { path.tr("\\", "/").sub(%r{\A\./}, "") }
+          examples = report.fetch("examples")
+          raise "RSpec report contains no examples" if examples.empty?
+
+          summary = report.fetch("summary")
+          raise "RSpec summary does not match its examples" unless summary.fetch("example_count") == examples.size
+          raise "RSpec reports failures" unless summary.fetch("failure_count").zero?
+          raise "RSpec has load errors" unless summary.fetch("errors_outside_of_examples_count", 0).zero?
+
+          by_file = examples.group_by { |example| normalize.call(example.fetch("file_path")) }
+          component_files = manifest.fetch("component_paths").flat_map do |path|
+            File.directory?(path) ? Dir.glob("#{path}/**/*_spec.rb") : [path]
+          end
+          missing = component_files.reject { |path| by_file.key?(path) }
+          raise "Validation component files did not execute: #{missing.join(', ')}" unless missing.empty?
+
+          feature_total = 0
+          manifest.fetch("feature_files").each do |path, minimum|
+            actual = by_file.fetch(path) { raise "Feature file did not execute: #{path}" }
+            raise "Feature examples missing in #{path}: #{actual.size} < #{minimum}" if actual.size < minimum
+            raise "Feature pending/failure in #{path}" unless actual.all? { |example| example.fetch("status") == "passed" }
+            feature_total += actual.size
+          end
+          raise "Feature example floor not met" if feature_total < manifest.fetch("minimum_feature_examples")
+
+          allowed = manifest.fetch("allowed_legacy_pending").map { |item| [item.fetch("file"), item.fetch("description")] }
+          pending = examples.select { |example| example.fetch("status") == "pending" }
+          pending.each do |example|
+            key = [normalize.call(example.fetch("file_path")), example.fetch("full_description")]
+            raise "Unapproved pending validation example: #{key.inspect}" unless allowed.include?(key)
+          end
+          raise "A validation example failed" if examples.any? { |example| example.fetch("status") == "failed" }
+          raise "Pending summary mismatch" unless summary.fetch("pending_count") == pending.size
+
+          puts JSON.pretty_generate(
+            schema: "metanorma-iso-validation-ci-receipt/1",
+            component_files: component_files.size,
+            component_examples: examples.size,
+            feature_files: manifest.fetch("feature_files").size,
+            feature_examples: feature_total,
+            feature_failures: 0,
+            feature_pending: 0,
+            legacy_pending: pending.map { |example| example.slice("file_path", "full_description", "pending_message") },
+          )
+          RUBY

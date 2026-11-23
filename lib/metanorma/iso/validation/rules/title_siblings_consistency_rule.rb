@@ -9,7 +9,9 @@ module Metanorma
         # forbidden. Walks the entire clause tree recursively.
         # ISO/IEC DIR 2, 22.2.
         class TitleSiblingsConsistencyRule < Base
+          include DeclarativeDispatch
           code "ISO_20"
+          declarative_rule "iso.title.siblings"
 
           policy category: "Document structure",
                  rule: "sibling subclauses must be uniformly titled or uniformly untitled",
@@ -20,7 +22,7 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             issues = []
             visit_holder(context.root.sections) { |label| issues << issue_for(label) } if context.root.sections
             Array(context.root.annex).each { |a| visit_holder(a) { |label| issues << issue_for(label) } }
@@ -28,6 +30,13 @@ module Metanorma
           end
 
           private
+
+          def declarative_issue(finding, context)
+            node = finding.node
+            title = node.at_xpath("./m:title", DeclarativeCatalog::NAMESPACES)&.text.to_s.strip
+            label = title.empty? ? projected_location(node, context) : title
+            build_issue(location: label, params: [label])
+          end
 
           # Yields once for each holder whose children have inconsistent titling.
           def visit_holder(holder, &block)

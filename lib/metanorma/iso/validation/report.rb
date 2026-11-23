@@ -12,8 +12,8 @@ module Metanorma
         attribute :valid, :boolean, default: -> { true }
         attribute :issues, Issue, collection: true, default: -> { [] }
 
-        def add_issue(code:, location:, params: [])
-          issue = Issue.from_finding(code: code, location: location, params: params)
+        def add_issue(code:, location:, params: [], issue: nil)
+          issue ||= Issue.from_finding(code: code, location: location, params: params)
           issues << issue
           self.valid = false if issue.error?
           issue

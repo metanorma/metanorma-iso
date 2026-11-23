@@ -20,6 +20,25 @@ module Metanorma
       # hands to translate_layer1. Neither rules nor Layer 1 know about
       # @log or Report — only this class does (DRY).
       class IssueTranslator
+        # Utils::Log documents create_entry as a public flavor extension
+        # surface. Change this entry before its existing suppression hook,
+        # without mutating the logger's shared message registry.
+        module ComposedLogEntry
+          attr_accessor :validation_issue
+
+          def create_entry(loc, msg, severity, error_id, params)
+            entry = super
+            if validation_issue && validation_issue.code == error_id.to_s
+              entry[:error] = validation_issue.message
+              if validation_issue.composition_severity
+                entry[:severity] = { "error" => 2, "warning" => 1, "info" => 3 }
+                  .fetch(validation_issue.composition_severity)
+              end
+            end
+            entry
+          end
+        end
+
         def initialize(log:, report:)
           @log = log
           @report = report
@@ -38,12 +57,29 @@ module Metanorma
         # ISO_LOG_MESSAGES (single source of truth — DRY).
         def translate_layer3(layer3_issues)
           layer3_issues.each do |issue|
-            add(code: issue.code, location: issue.location,
-                params: issue.params.to_a)
+            log_issue(issue)
+            @report.add_issue(code: issue.code, location: issue.location,
+                              params: issue.params.to_a, issue: issue)
           end
         end
 
         private
+
+        def log_issue(issue)
+          return unless @log
+          unless @log.is_a?(Metanorma::Utils::Log)
+            return @log.add(issue.code, issue.location, params: issue.params.to_a)
+          end
+
+          @log.extend(ComposedLogEntry) unless @log.is_a?(ComposedLogEntry)
+          previous = @log.validation_issue
+          @log.validation_issue = issue
+          begin
+            @log.add(issue.code, issue.location, params: issue.params.to_a)
+          ensure
+            @log.validation_issue = previous
+          end
+        end
 
         def add(code:, location:, params: [])
           return unless code

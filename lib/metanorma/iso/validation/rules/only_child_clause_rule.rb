@@ -9,7 +9,10 @@ module Metanorma
         # whose parent has exactly one subclause. Walks the entire clause
         # tree (sections + annexes + nested subclauses).
         class OnlyChildClauseRule < Base
+          include DeclarativeDispatch
+
           code "ISO_43"
+          declarative_rule "iso.clause.no-only-child"
 
           policy category: "Document structure",
                  rule: "a subclause must not be the only child at its level",
@@ -20,7 +23,15 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          private
+
+          def declarative_issue(finding, _context)
+            id = finding.node["id"]
+            location = id.nil? || id.empty? ? "clause" : "clause##{id}"
+            build_issue(location: location, params: [])
+          end
+
+          def legacy_check(context)
             issues = []
             visit_subclause_holders(context.root) do |_parent, subclauses|
               next unless subclauses.size == 1
@@ -30,8 +41,6 @@ module Metanorma
             end
             issues
           end
-
-          private
 
           # Yields (parent_clause, subclauses_array) for every CLAUSE that
           # contains subclauses. Top-level sections.clause and annex.clause
