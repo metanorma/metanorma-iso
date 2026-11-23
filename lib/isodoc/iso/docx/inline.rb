@@ -259,7 +259,8 @@ module IsoDoc
         # or equation intervenes. Keep that boundary in the mixed sequence.
         def append_formatted_child(para, child)
           if child.is_a?(Uniword::Wordprocessingml::Run) &&
-              !child.tab && !child.break && para.respond_to?(:model) &&
+              !child.tab && !child.break &&
+              para.is_a?(Uniword::Builder::ParagraphBuilder) &&
               para.model.element_order&.last &&
               para.model.element_order.last.name != "r"
             para.model.runs << child

@@ -43,7 +43,7 @@ module IsoDoc
 
         def document_language(bib)
           language = Array(bib.language).first if bib.class.attributes.key?(:language)
-          value = language.respond_to?(:value) ? language.value : language
+          value = language.is_a?(String) ? language : language&.value
           code = value.to_s.split(/[-_]/).first.to_s
           code.empty? ? "en" : code
         end

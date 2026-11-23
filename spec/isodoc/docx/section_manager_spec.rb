@@ -253,7 +253,14 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
   end
 
   describe "footer content via HeaderFooterRenderer" do
-    it "writes a roman footer with FooterPageRomanNumber style" do
+    def footer_page_look(footer_part)
+      paragraphs = footer_part[:content].paragraphs
+      field_run = paragraphs.last.runs.find(&:field_char)
+      [para_style_value(paragraphs.last), !field_run.properties.bold.nil?,
+       field_run.properties.size.value]
+    end
+
+    it "writes a roman page number with the FooterPageRomanNumber look on one line" do
       doc = adapter.send(:create_document)
       section_mgr.insert_front_matter_section(
         doc, header_text: "ISO/CD 17301-1:2016(en)", copyright_text: "© ISO 2016"
@@ -263,14 +270,10 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
         .find { |p| p[:r_id] == IsoDoc::Iso::Docx::SectionManager::FRONT_FOOTER_DEFAULT }
       expect(footer_part).not_to be_nil
 
-      # Line 1 is the copyright; the page number sits on line 2.
-      para = footer_part[:content].paragraphs.last
-      style_value = para_style_value(para)
-      expect(style_value).to eq("FooterPageRomanNumber"),
-        "front matter footer should use FooterPageRomanNumber, got: #{style_value.inspect}"
+      expect(footer_page_look(footer_part)).to eq(["FooterCentered", false, 22])
     end
 
-    it "writes an arabic footer with FooterPageNumber style" do
+    it "writes an arabic page number with the FooterPageNumber look on one line" do
       doc = adapter.send(:create_document)
       section_mgr.apply_body_section(
         doc, header_text: "ISO/CD 17301-1:2016(en)", copyright_text: "© ISO 2024"
@@ -280,11 +283,7 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do
         .find { |p| p[:r_id] == IsoDoc::Iso::Docx::SectionManager::BODY_FOOTER_DEFAULT }
       expect(footer_part).not_to be_nil
 
-      # Line 1 is the copyright; the page number sits on line 2.
-      para = footer_part[:content].paragraphs.last
-      style_value = para_style_value(para)
-      expect(style_value).to eq("FooterPageNumber"),
-        "body footer should use FooterPageNumber, got: #{style_value.inspect}"
+      expect(footer_page_look(footer_part)).to eq(["FooterCentered", true, 22])
     end
 
     it "embeds a complete PAGE field in every footer" do
