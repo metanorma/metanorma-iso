@@ -223,8 +223,14 @@ module IsoDoc
           def render_cell_blocks(definition, cell)
             target = TableCellElement::CellTarget.new(cell, :table_body)
             stream_definition(definition, target, :table_body) do |child, doc|
-              cell_registry.dispatch(child, doc)
+              if child.is_a?(COMPONENTS::Tables::TableBlock)
+                @walker.dispatch(child, doc)
+              else
+                cell_registry.dispatch(child, doc)
+              end
             end
+            # A nested table must be followed by a paragraph in its cell.
+            target << Uniword::Builder::ParagraphBuilder.new if Array(cell.model.element_order).last&.name == "tbl"
           end
 
           def cell_registry

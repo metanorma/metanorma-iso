@@ -31,6 +31,10 @@ module Metanorma
           to_type: iso::DdElement,
         )
         reg.register_global_type_substitution(
+          from_type: Metanorma::Document::Components::Paragraphs::ParagraphBlock,
+          to_type: iso::IsoParagraphBlock,
+        )
+        reg.register_global_type_substitution(
           from_type: sd::Sections::ClauseSection,
           to_type: iso::Sections::IsoClauseSection,
         )
