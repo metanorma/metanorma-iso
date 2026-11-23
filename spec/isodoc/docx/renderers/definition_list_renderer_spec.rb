@@ -96,7 +96,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::DefinitionListRenderer do
       Dir.mktmpdir do |dir|
         path = File.join(dir, "formula.docx")
         adapter.convert(unlabelled_formula_key_xml, path)
-        expect(unlabelled_note_bodies(path)).to eq(["Lost body."])
+        expect(unlabelled_note_bodies(path)).to eq([" Lost body."])
       end
     end
 

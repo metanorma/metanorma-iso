@@ -24,12 +24,6 @@ module IsoDoc
       module BoxWrapper
         include ModelUtils
 
-        # Gap between the label and the body. The XSL reserves
-        # padding-right on the label inline (6mm for notes, 5mm for
-        # examples); a single space keeps the ragged inline flow —
-        # wrapped lines return to the left margin, as in the PDF.
-        LABEL_GAP = " "
-
         # Model classes whose presence anywhere in a block forces the
         # XSL "block" mode for EXAMPLES (.//table or .//dl) and makes a
         # paragraph unsuitable for inline-label merging. Sourcecode as
@@ -70,7 +64,7 @@ module IsoDoc
 
           if inline_label_paragraph?(children)
             para = build_paragraph(style_key)
-            append_label(para, label_text(node))
+            append_label(para, label_text(node), inline: true)
             @inline_renderer.render(first, para)
             anchor_paragraph(first, para)
             @context.mark_zone_paragraph
@@ -144,10 +138,15 @@ module IsoDoc
           text.empty? ? nil : text
         end
 
-        def append_label(para, text)
+        def append_label(para, text, inline: false)
           return unless text
 
-          para << (text + LABEL_GAP)
+          para << text
+          return unless inline
+
+          para << Uniword::Wordprocessingml::Run.new(
+            tab: Uniword::Wordprocessingml::Tab.new,
+          )
         end
 
         # Element children of +node+ in document order (text nodes and
