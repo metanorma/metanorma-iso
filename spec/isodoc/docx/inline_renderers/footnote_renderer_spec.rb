@@ -76,6 +76,64 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::FootnoteRenderer do
         "(got first=#{first_id.inspect}, second=#{second_id.inspect})"
     end
 
+    it "preserves separate source footnotes with identical text", :aggregate_failures do
+      renderer.render(fn(target: "first", text: "Same."), para)
+      renderer.render(fn(target: "second", text: "Same."), para)
+
+      expect(footnote_bodies).to eq(["Same.", "Same."])
+      expect(built_runs.map { |r| r.footnote_reference.id }).to eq(%w[1 2])
+    end
+
+    it "keeps distinct bodies when presentation targets collide", :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      renderer.render(fn(target: "shared", text: "Term example."), para)
+      renderer.render(fn(target: "shared", text: "Definition list."), para)
+      renderer.render(fn(target: "shared", text: "Term example."), para)
+
+      expect(footnote_bodies).to eq(["Term example.", "Definition list."])
+      expect(built_runs.map { |r| r.footnote_reference.id }).to eq(%w[1 2 1])
+    end
+
+    it "preserves emphasis and native math in the footnote body", :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      element = Metanorma::Document::Components::Inline::FnElement.from_xml(
+        '<fn target="rich"><p>Value <em>italic</em> and <strong>bold</strong> ' \
+        '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math><asciimath>x</asciimath></stem> here.</p></fn>',
+      )
+      renderer.render(element, para)
+      xml = Nokogiri::XML(doc.model.footnotes.to_xml)
+
+      expect(xml.xpath("//*[local-name()='t']").map(&:text))
+        .to eq(["Value ", "italic", " and ", "bold", " ", "x", " here."])
+      expect(xml.xpath("//*[local-name()='r'][*[local-name()='rPr']/*[local-name()='i']]/*[local-name()='t']").text).to eq("italic")
+      expect(xml.xpath("//*[local-name()='r'][*[local-name()='rPr']/*[local-name()='b']]/*[local-name()='t']").text).to eq("bold")
+      expect(xml.xpath("//*[local-name()='oMath']").size).to eq(1)
+    end
+
+    it "distinguishes rich bodies with identical text under the same target", :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      %w[em strong].each do |tag|
+        element = Metanorma::Document::Components::Inline::FnElement.from_xml(
+          "<fn target=\"shared\"><p><#{tag}>same</#{tag}></p></fn>",
+        )
+        renderer.render(element, para)
+      end
+
+      expect(footnote_bodies).to eq(%w[same same])
+      expect(built_runs.map { |r| r.footnote_reference.id }).to eq(%w[1 2])
+    end
+
+    it "suppresses footnote creation and restores rendering after an error", :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+      expect do
+        parent.with_heading_annotations_suppressed do
+          renderer.render(fn(target: "silent", text: "Hidden."), para)
+          raise "stop"
+        end
+      end.to raise_error("stop")
+      expect(built_runs).to be_empty
+      expect(doc.model.footnotes).to be_nil
+
+      renderer.render(fn(target: "visible", text: "Visible."), para)
+      expect(footnote_bodies).to eq(["Visible."])
+    end
+
     it "skips the reference when the footnote text is empty" do
       empty = fn(target: "t2", text: "")
       renderer.render(empty, para)
@@ -85,12 +143,14 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderers::FootnoteRenderer do
         "an empty <fn> must not create a footnoteReference"
     end
 
-    it "collects mixed-content fn bodies including stem segments" do
+    it "collects mixed-content fn bodies including stem segments", :aggregate_failures do # rubocop:disable RSpec/ExampleLength
       renderer.render(fn_with_stem(target: "t90"), para)
 
       bodies = footnote_bodies.join(" ")
       expect(bodies).to include("The time")
-      expect(bodies).to include("t_90")
+      xml = Nokogiri::XML(doc.model.footnotes.to_xml)
+      expect(xml.xpath("//*[local-name()='oMath']").size).to eq(1)
+      expect(xml.xpath("//*[local-name()='t']").map(&:text).join).to include("t90")
       expect(bodies).to include("18,2 min")
     end
 

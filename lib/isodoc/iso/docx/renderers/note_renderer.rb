@@ -22,6 +22,7 @@ module IsoDoc
         class NoteRenderer
           include Base
           include BoxWrapper
+          include NoteContent
 
           def render(note, doc)
             style_key = @context.in_example ? :note_indent : :note

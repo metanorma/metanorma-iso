@@ -16,6 +16,8 @@ module IsoDoc
           include Base
 
           def render(element, para)
+            return if parent.heading_annotations_suppressed?
+
             handler = context.formula_key_footnote_handler
             return handler.call(element, para) if handler && !element.reference.to_s.strip.empty?
 
@@ -30,7 +32,7 @@ module IsoDoc
             return if text.nil? || text.empty?
 
             fn_run = parent.build_footnote_with_style(
-              text, closing: label_closing(element)
+              text, closing: label_closing(element), element: element
             )
             fn_id = fn_run.footnote_reference&.id
             parent.store_footnote_id(cache_key, fn_id) if cache_key && fn_id

@@ -62,7 +62,7 @@ module IsoDoc
           return unless model
 
           # Render "Contents" heading
-          render_toc_heading(doc)
+          render_toc_heading(model, doc)
 
           # Collect entries by walking the model
           entries = collect_entries(model)
@@ -87,10 +87,16 @@ module IsoDoc
           doc.model.settings.update_fields = Uniword::Wordprocessingml::UpdateFields.new
         end
 
-        def render_toc_heading(doc)
+        def render_toc_heading(model, doc)
           para = Uniword::Builder::ParagraphBuilder.new
           para.style = @resolver.paragraph_style(:contents_title)
-          para << "Contents"
+          clause = model.preface && Array(model.preface.clause).find { |node| toc_clause?(node) }
+          title = clause && section_heading(clause)
+          if title
+            @inline.with_heading_annotations_suppressed { @inline.render(title, para) }
+          else
+            para << "Contents"
+          end
           doc << para
         end
 
@@ -130,13 +136,13 @@ module IsoDoc
         def add_preface_entries(entries, preface)
           if preface.foreword
             entries << build_entry(
-              preface.foreword, 1,
+              preface.foreword, 1
             )
           end
 
           if preface.introduction
             entries << build_entry(
-              preface.introduction, 1,
+              preface.introduction, 1
             )
           end
 
@@ -158,16 +164,7 @@ module IsoDoc
           top_level += Array(sections.definitions) if sections.class.attributes.key?(:definitions)
 
           top_level.sort_by { |node| display_order_of(node) }.each do |node|
-            case node
-            when Metanorma::Iso::Document::Sections::IsoClauseSection,
-                 Metanorma::Standoc::Document::Sections::StandardReferencesSection,
-                 Metanorma::Document::Components::Sections::ReferencesSection
-              add_clause_entries(entries, node, 1)
-            when Metanorma::Iso::Document::Sections::IsoTermsSection
-              entries << build_entry(node, 1)
-            else
-              entries << build_entry(node, 1)
-            end
+            add_clause_entries(entries, node, 1)
           end
         end
 
@@ -184,12 +181,26 @@ module IsoDoc
           title = section_heading(clause)
           entries << build_entry(clause, level) if title && !@inline.heading_body_empty?(title)
 
-          # Recurse into sub-clauses
-          if clause.class.attributes.key?(:clause)
-            Array(clause.clause).each do |sub|
-              add_clause_entries(entries, sub, level + 1)
-            end
+          section_children(clause).each do |sub|
+            add_clause_entries(entries, sub, level + 1)
           end
+        end
+
+        def section_children(node)
+          attrs = %i[clause terms definitions references]
+          children = []
+          each_ordered_element(node, allow_filter: attrs) do |type, child|
+            children << child if type == :element && !bibliographic_item?(child)
+          end
+          return children unless children.empty?
+
+          attrs.flat_map do |attr|
+            node.class.attributes.key?(attr) ? Array(node.public_send(attr)).reject { |child| bibliographic_item?(child) } : []
+          end.sort_by { |child| display_order_of(child) }
+        end
+
+        def bibliographic_item?(node)
+          node.is_a?(Metanorma::Document::Components::BibData::BibliographicItem)
         end
 
         def section_heading(node)
@@ -235,10 +246,8 @@ module IsoDoc
           # entry; skip the wrapper when it cannot render a title.
           entries << build_entry(bib, 1) if has_title?(bib)
 
-          if bib.class.attributes.key?(:references)
-            Array(bib.references).each do |refs|
-              entries << build_entry(refs, 1) if has_title?(refs)
-            end
+          section_children(bib).each do |child|
+            add_clause_entries(entries, child, has_title?(bib) ? 2 : 1)
           end
         end
 
@@ -334,7 +343,7 @@ module IsoDoc
                    else
                      toc_variant_title(node) || section_heading(node)
                    end
-          @inline.render(source, sink) if source
+          @inline.with_heading_annotations_suppressed { @inline.render(source, sink) } if source
         end
 
         # Collects an entry's runs into its hyperlink and appends the

@@ -73,6 +73,7 @@ module IsoDoc
             append_label(para, label_text(node))
             @inline_renderer.render(first, para)
             anchor_paragraph(first, para)
+            anchor_paragraph(node, para)
             @context.mark_zone_paragraph
             doc << para
             children.drop(1).each { |child| @walker.dispatch(child, doc) }
@@ -81,6 +82,7 @@ module IsoDoc
             # body content follows (indented via the zone body styles).
             label_para = build_paragraph(style_key)
             append_label(label_para, label_text(node))
+            anchor_paragraph(node, label_para)
             label_para.keep_next
             doc << label_para
             children.each { |child| @walker.dispatch(child, doc) }

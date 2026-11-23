@@ -227,16 +227,7 @@ module IsoDoc
         # MixedInlineFallbackRenderer, FmtXrefRenderer).
         def render_mixed_inline_fallback(element, para)
           if ordered?(element)
-            twins = fmt_stem_source_ids(element)
-            element.each_mixed_content do |child|
-              case child
-              when String then add_text(para, child)
-              else
-                next if fmt_twin_of_stem?(child, twins)
-
-                dispatch_inline(child, para)
-              end
-            end
+            render_ordered_inline(element, para)
           else
             text = collect_text(element)
             add_text(para, text) if text && !text.empty?
@@ -250,20 +241,31 @@ module IsoDoc
         def render_with_run_format(element, para)
           temp = Uniword::Builder::ParagraphBuilder.new
           render_mixed_inline_fallback(element, temp)
-          temp.model.runs.each do |run|
-            run.properties ||= Uniword::Wordprocessingml::RunProperties.new
-            yield run
-            para << run
-          end
-          temp.model.o_maths.each do |omath|
-            para << omath
-          end
-          temp.model.hyperlinks.each do |link|
-            link.runs.each do |run|
+          each_ordered_element(temp.model) do |type, child|
+            next unless type == :element
+
+            runs = child.is_a?(Uniword::Wordprocessingml::Hyperlink) ? child.runs : [child]
+            runs.each do |run|
+              next unless run.is_a?(Uniword::Wordprocessingml::Run)
+
               run.properties ||= Uniword::Wordprocessingml::RunProperties.new
               yield run
             end
-            para << link
+            append_formatted_child(para, child)
+          end
+        end
+
+        # Uniword merges a new run with its last run even when a hyperlink
+        # or equation intervenes. Keep that boundary in the mixed sequence.
+        def append_formatted_child(para, child)
+          if child.is_a?(Uniword::Wordprocessingml::Run) &&
+              !child.tab && !child.break && para.respond_to?(:model) &&
+              para.model.element_order&.last &&
+              para.model.element_order.last.name != "r"
+            para.model.runs << child
+            para.model.element_order << Lutaml::Xml::Element.new("Element", "r")
+          else
+            para << child
           end
         end
 
@@ -429,16 +431,16 @@ module IsoDoc
         # TextElements::Asciiml carries :value, the presentation
         # Inline::AsciimathElement carries :text. Prefer whichever the
         # model declares.
-        def stem_asciimath_content(am)
-          return am if am.is_a?(String)
+        def stem_asciimath_content(asciimath)
+          return asciimath if asciimath.is_a?(String)
 
-          return nil unless am.is_a?(Lutaml::Model::Serializable)
+          return nil unless asciimath.is_a?(Lutaml::Model::Serializable)
 
-          if am.class.attributes.key?(:value)
-            value = attribute_value(am, :value)
+          if asciimath.class.attributes.key?(:value)
+            value = attribute_value(asciimath, :value)
             return value if value.is_a?(String) && !value.empty?
           end
-          return attribute_value(am, :text) if am.class.attributes.key?(:text)
+          return attribute_value(asciimath, :text) if asciimath.class.attributes.key?(:text)
 
           nil
         end
@@ -536,14 +538,31 @@ module IsoDoc
           segments.join
         end
 
-        # Cache key is the source footnote identity (target → id → reference),
-        # NOT the text. Two footnotes with the same text but different source
-        # identities are distinct footnotes in OOXML.
+        # Presentation targets can be reused across numbering scopes. Include
+        # the body to distinguish collisions while repeated references still
+        # share one definition. Ignore source IDs, which differ between copies.
         def footnote_cache_key(element)
-          return element.target if element.class.attributes.key?(:target) && element.target
-          return element.id if element.class.attributes.key?(:id) && element.id
+          identity = element.target || element.id
+          return unless identity
 
-          nil
+          bodies = Array(element.p).map do |paragraph|
+            xml = Nokogiri::XML(paragraph.to_xml)
+            xml.xpath("//@id | //@semx-id | //@original-id | //@source").remove
+            xml.root.to_xml
+          end
+          [identity, bodies]
+        end
+
+        def with_heading_annotations_suppressed
+          previous = @heading_annotations_suppressed
+          @heading_annotations_suppressed = true
+          yield
+        ensure
+          @heading_annotations_suppressed = previous
+        end
+
+        def heading_annotations_suppressed?
+          @heading_annotations_suppressed
         end
 
         def cached_footnote_id(cache_key)
@@ -602,11 +621,18 @@ module IsoDoc
         # ISO's "1)" footnote label). Word supplies the number through the
         # footnoteRef marker; the delimiter follows it in the same
         # superscript style, as the PDF lays the label out.
-        def build_footnote_with_style(text, closing: nil)
+        def build_footnote_with_style(text, closing: nil, element: nil)
           style = @resolver.paragraph_style(:footnote_text)
           run = @doc.footnote do |p|
             p.style = style if style
-            p << text
+            if element && Array(element.p).any? { |body| has_rich_children?(body) }
+              Array(element.p).each_with_index do |body, index|
+                p << " " unless index.zero?
+                render(body, p)
+              end
+            else
+              p << text
+            end
           end
           finish_footnote_body(@doc.model.footnotes.footnote_entries.last, closing)
           run
@@ -700,7 +726,8 @@ module IsoDoc
           return if walked
 
           node.each_mixed_content do |child|
-            case child when String then add_text(para, child)
+            case child
+            when String then add_text(para, child)
             else dispatch_inline(child, para)
             end
           end

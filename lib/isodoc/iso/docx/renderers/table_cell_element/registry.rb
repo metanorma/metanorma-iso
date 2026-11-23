@@ -94,6 +94,7 @@ module IsoDoc
                 Metanorma::Document::Components::Blocks::NoteBlock,
                 NoteHandler.new(
                   resolver: @resolver, inline_renderer: @inline_renderer,
+                  dispatcher: @dispatcher
                 ),
               )
             end

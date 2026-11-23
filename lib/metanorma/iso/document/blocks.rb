@@ -3,6 +3,7 @@
 module Metanorma
   module Iso::Document
     module Blocks
+      autoload :NoteBlock, "#{__dir__}/blocks/note_block"
       autoload :IsoAdmonitionBlock,
                "#{__dir__}/blocks/iso_admonition_block"
       autoload :IsoAdmonitionType,
