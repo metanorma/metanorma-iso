@@ -27,7 +27,7 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer do # rubocop:disable RSpec
   let(:parts) { copyright_docx_parts(xml, template) }
   let(:paragraphs) { copyright_paragraphs(parts.first) }
 
-  { simple: "0000FF", dis: nil }.each do |template_name, colour|
+  { simple: "0000FF", dis: "0000FF" }.each do |template_name, colour|
     context "with the #{template_name} template" do
       let(:template) { template_name }
 
@@ -43,16 +43,22 @@ RSpec.describe IsoDoc::Iso::Docx::BoilerplateRenderer do # rubocop:disable RSpec
         expect(parts.last.at_xpath("//w:style[@w:styleId='zzCopyright']/w:rPr/w:color/@w:val", ns)&.value).to eq(colour)
       end
 
+      it "renders the statement unboxed and left-aligned like DOC" do
+        style = parts.last.at_xpath("//w:style[@w:styleId='zzCopyright']", ns)
+        expect(style.at_xpath("w:pPr/w:pBdr", ns)).to be_nil
+        expect(style.at_xpath("w:pPr/w:jc/@w:val", ns)&.value).to eq("left")
+      end
+
       it "inherits text colour without direct colour overrides" do
         expect(paragraphs.flat_map { |p| p.xpath(".//w:rPr/w:color", ns) }).to be_empty
       end
 
-      it "preserves the copyright box and justification from the template" do
+      it "takes copyright borders and alignment from the template" do
         expect(copyright_style_snapshot(parts.last))
           .to eq(copyright_style_snapshot(copyright_template_styles(template)))
       end
 
-      it "inherits the box and justification without paragraph overrides" do
+      it "inherits borders and alignment without paragraph overrides" do
         expect(paragraphs.flat_map { |p| p.xpath("w:pPr/w:jc | w:pPr/w:pBdr", ns) }).to be_empty
       end
     end

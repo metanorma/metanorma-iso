@@ -481,27 +481,6 @@ style_library:
       next_style: Normal
       semi_hidden: true
       paragraph_properties:
-        borders:
-        - type: top
-          val: single
-          sz: '4'
-          space: '1'
-          color: 0000FF
-        - type: bottom
-          val: single
-          sz: '4'
-          space: '1'
-          color: 0000FF
-        - type: left
-          val: single
-          sz: '4'
-          space: '4'
-          color: 0000FF
-        - type: right
-          val: single
-          sz: '4'
-          space: '4'
-          color: 0000FF
         tabs:
         - type: left
           position: '0.91'
@@ -510,6 +489,7 @@ style_library:
         indent:
           left: '0.5'
           right: '0.5'
+        alignment: left
       run_properties:
         color: 0000FF
     zzSTDTitle:
