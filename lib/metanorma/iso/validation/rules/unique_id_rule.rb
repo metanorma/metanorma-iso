@@ -126,6 +126,15 @@ module Metanorma
           def mirrored_content_section?(node)
             node.class.name == MIRRORED_CONTENT_SECTION
           end
+
+          # The mirrored render copy of a front-matter clause ingests the
+          # same ids a second time; under lutaml-model 0.8.176+ the mirror
+          # subtree is materialized as its own objects on every parse after
+          # the first, so the descendants surface as duplicates even though
+          # the document XML itself is clean. Skip the mirror subtree.
+          def skip_descendants?(node)
+            mirrored_content_section?(node)
+          end
         end
       end
     end

@@ -201,8 +201,16 @@ module Metanorma
                 yield(node, read_id_attr(node), read_anchor_attr(node))
               end
 
-              enqueue_children(node, queue)
+              enqueue_children(node, queue) unless skip_descendants?(node)
             end
+          end
+
+          # Subtrees whose descendants must not be walked at all: the node
+          # itself stays visible to the walk, but everything under it is a
+          # non-identity mirror of content reached elsewhere. Override in
+          # rules that mirror content sections.
+          def skip_descendants?(node)
+            false
           end
 
           def has_id_or_anchor?(node)
