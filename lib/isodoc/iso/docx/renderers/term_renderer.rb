@@ -14,17 +14,35 @@ module IsoDoc
         #                 the source doesn't already include that prefix)
         class TermRenderer
           include Base
+          include ModelUtils
           include BoxWrapper
+          include NoteContent
 
           DEPRECATED_PREFIX = "DEPRECATED: "
           private_constant :DEPRECATED_PREFIX
+
+          DEFINITION_PARAGRAPH = Metanorma::Document::Components::Paragraphs::ParagraphBlock
+          DEFINITION_BLOCKS = [
+            DEFINITION_PARAGRAPH,
+            Metanorma::Document::Components::Lists::OrderedList,
+            Metanorma::Document::Components::Lists::UnorderedList,
+            Metanorma::Document::Components::Lists::DefinitionList,
+            Metanorma::Document::Components::Tables::TableBlock,
+            Metanorma::Document::Components::AncillaryBlocks::FigureBlock,
+            Metanorma::Document::Components::AncillaryBlocks::FormulaBlock,
+            Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock,
+            Metanorma::Document::Components::AncillaryBlocks::ExampleBlock,
+            Metanorma::Document::Components::Blocks::NoteBlock,
+            Metanorma::Document::Components::MultiParagraph::QuoteBlock,
+            Metanorma::Document::Components::MultiParagraph::AdmonitionBlock,
+          ].freeze
+          private_constant :DEFINITION_PARAGRAPH, :DEFINITION_BLOCKS
 
           def render(term, doc)
             render_term_number(term, doc)
             render_designations(term, doc)
             render_term_definitions(term, doc)
-            render_term_notes(term, doc)
-            render_term_examples(term, doc)
+            render_term_trailing_blocks(term, doc)
             render_term_sources(term, doc)
           end
 
@@ -153,55 +171,49 @@ prefix: nil)
             definitions.each { |defn| render_definition(defn, doc) }
           end
 
-          # Render each <p> of a definition with the Definition paragraph
-          # style applied. Walking the definition anonymously would let
-          # each <p> inherit the document default style instead.
+          # Definition paragraphs take the Definition style. Lists, tables,
+          # formulas and other blocks go through normal dispatch, in order.
           def render_definition(defn, doc)
-            paragraphs = definition_paragraphs(defn)
-            if paragraphs.empty?
-              @context.with_note do
-                para = build_paragraph(:definition)
-                apply_definition_spacing(para)
-                @inline_renderer.render(defn, para)
-                anchor_paragraph(defn, para)
-                semx_paragraphs(defn).each { |p| anchor_paragraph(p, para) }
-                doc << para
-              end
-              return
-            end
+            blocks = definition_blocks(defn)
+            return render_inline_definition(defn, doc) if blocks.empty?
 
-            paragraphs.each do |p|
+            blocks.each_with_index do |block, index|
+              if block.is_a?(DEFINITION_PARAGRAPH)
+                render_definition_paragraph(block, doc, index.zero? ? defn : nil)
+              else
+                @walker.dispatch(block, doc)
+              end
+            end
+          end
+
+          def render_definition_paragraph(paragraph, doc, owner)
+            @context.with_note do
               para = build_paragraph(:definition)
               apply_definition_spacing(para)
-              @inline_renderer.render(p, para)
-              anchor_paragraph(p, para)
-              anchor_paragraph(defn, para) if p.equal?(paragraphs.first)
+              @inline_renderer.render(paragraph, para)
+              anchor_paragraph(paragraph, para)
+              anchor_paragraph(owner, para) if owner
               doc << para
             end
           end
 
-          # <p>s one <semx> level down (fmt-definition > semx > p).
-          def semx_paragraphs(node)
-            return [] unless node.class.attributes.key?(:semx)
-
-            Array(node.semx).flat_map do |semx|
-              semx.class.attributes.key?(:p) ? Array(semx.p) : []
+          def render_inline_definition(defn, doc)
+            @context.with_note do
+              para = build_paragraph(:definition)
+              apply_definition_spacing(para)
+              @inline_renderer.render(defn, para)
+              anchor_paragraph(defn, para)
+              doc << para
             end
           end
 
-          def definition_paragraphs(defn)
+          def definition_blocks(defn)
             return [] unless defn.is_a?(Lutaml::Model::Serializable)
 
-            # fmt-definition has direct <p> children
-            return Array(defn.p) if defn.class.attributes.key?(:p) && defn.p
-
-            # definition → verbal-definition → p
-            if defn.class.attributes.key?(:verbal_definition)
-              vd = defn.verbal_definition
-              return Array(vd.p) if vd && vd.class.attributes.key?(:p) && vd.p
+            source = attribute_value(defn, :verbal_definition) || defn
+            block_children(source).select do |child|
+              DEFINITION_BLOCKS.any? { |klass| child.is_a?(klass) }
             end
-
-            []
           end
 
           def pick_definition_source(term)
@@ -211,29 +223,99 @@ prefix: nil)
             Array(attribute_value(term, :definition))
           end
 
-          def render_term_notes(term, doc)
-            Array(attribute_value(term, :termnote)).each do |tn|
-              @context.with_note do
-                para = build_paragraph(:note)
-                children = block_children(tn)
-                append_label(para, label_text(tn), inline: children.any?)
-                children.each { |child| @inline_renderer.render(child, para) }
-                anchor_paragraph(tn, para)
-                Array(attribute_value(tn, :p)).each do |p|
-                  anchor_paragraph(p, para)
-                end
-                doc << para
+          TRAILING_ATTRS = %i[termnote termexample sourcecode quote admonition].freeze
+          private_constant :TRAILING_ATTRS
+
+          # Notes, examples and term-level blocks follow the definition in
+          # source order. A term parsed without element order falls back to
+          # notes, examples, then the other blocks.
+          def render_term_trailing_blocks(term, doc)
+            trailing_blocks(term).each do |block|
+              case block
+              when Metanorma::Iso::Document::Terms::TermNote
+                render_term_note(block, doc)
+              when Metanorma::Iso::Document::Terms::TermExample
+                render_term_example(block, doc)
+              else
+                @walker.dispatch(block, doc)
               end
             end
           end
 
-          def render_term_examples(term, doc)
-            Array(attribute_value(term, :termexample)).each do |te|
-              @context.with_example do
-                render_example_name(te, doc)
-                @walker&.walk(te, doc)
+          def trailing_blocks(term)
+            return TRAILING_ATTRS.flat_map { |attr| Array(attribute_value(term, attr)) } unless ordered?(term)
+
+            blocks = []
+            each_ordered_element(term, allow_filter: TRAILING_ATTRS) do |_type, child|
+              blocks << child
+            end
+            blocks
+          end
+
+          def render_term_note(note, doc)
+            @context.with_note do
+              unless single_note_paragraph?(note)
+                with_inline_label(note, doc, :note)
+                next
+              end
+
+              para = build_paragraph(:note)
+              children = block_children(note)
+              append_label(para, label_text(note), inline: children.any?)
+              children.each { |child| @inline_renderer.render(child, para) }
+              anchor_paragraph(note, para)
+              Array(attribute_value(note, :p)).each do |p|
+                anchor_paragraph(p, para)
+              end
+              doc << para
+            end
+          end
+
+          def render_term_example(example, doc)
+            @context.with_example do
+              render_example_name(example, doc)
+              render_example_body(example, doc)
+            end
+          end
+
+          # Loose inline content forms paragraphs between the existing blocks.
+          # Delay opening a paragraph until there is more than XML indentation.
+          def render_example_body(example, doc)
+            unless ordered?(example)
+              block_children(example).each { |child| @walker.dispatch(child, doc) }
+              return
+            end
+
+            labels = NOTE_LABEL_ATTRS.flat_map { |attr| Array(attribute_value(example, attr)) }
+            pending = []
+            each_ordered_element(example) do |type, child|
+              next if type == :element && labels.any? { |label| label.equal?(child) }
+
+              if type == :element && DEFINITION_BLOCKS.any? { |klass| child.is_a?(klass) }
+                render_example_inline(pending, doc)
+                pending.clear
+                @walker.dispatch(child, doc)
+              else
+                pending << [type, child]
               end
             end
+            render_example_inline(pending, doc)
+          end
+
+          def render_example_inline(content, doc)
+            return if content.all? { |type, child| type == :text && child.strip.empty? }
+
+            para = build_unstyled_paragraph
+            para.style = @resolver.context_body_style
+            content.each do |type, child|
+              if type == :text
+                @inline_renderer.add_text(para, child)
+              else
+                @inline_renderer.dispatch_inline(child, para)
+              end
+            end
+            @context.mark_zone_paragraph
+            doc << para
           end
 
           def render_term_sources(term, doc)

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "lutaml/model"
+require_relative "document/semx_element"
 
 module Metanorma
   module Iso
@@ -17,6 +18,22 @@ module Metanorma
         reg = Lutaml::Model::Register.new(:iso_document)
         Lutaml::Model::GlobalRegister.register(reg)
 
+        reg.register_global_type_substitution(
+          from_type: Metanorma::Document::Components::Inline::SemxElement,
+          to_type: iso::SemxElement,
+        )
+        reg.register_global_type_substitution(
+          from_type: Metanorma::Document::Components::Blocks::NoteBlock,
+          to_type: iso::Blocks::NoteBlock,
+        )
+        reg.register_global_type_substitution(
+          from_type: Metanorma::Document::Components::Lists::DdElement,
+          to_type: iso::DdElement,
+        )
+        reg.register_global_type_substitution(
+          from_type: Metanorma::Document::Components::Paragraphs::ParagraphBlock,
+          to_type: iso::ParagraphBlock,
+        )
         reg.register_global_type_substitution(
           from_type: sd::Sections::ClauseSection,
           to_type: iso::Sections::IsoClauseSection,

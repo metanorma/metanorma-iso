@@ -16,6 +16,8 @@ module IsoDoc
           include Base
 
           def render(element, para)
+            return if parent.heading_annotations_suppressed?
+
             handler = context.formula_key_footnote_handler
             return handler.call(element, para) if handler && !element.reference.to_s.strip.empty?
 
@@ -26,9 +28,9 @@ module IsoDoc
             end
 
             text = parent.extract_footnote_text(element)
-            return if text.nil? || text.empty?
+            return if (text.nil? || text.empty?) && !has_bare_link?(element)
 
-            fn_run = parent.build_footnote_with_style(text)
+            fn_run = parent.build_footnote_with_style(text, element: element)
             fn_id = fn_run.footnote_reference&.id
             parent.store_footnote_id(cache_key, fn_id) if cache_key && fn_id
             parent.apply_run_char_style(fn_run, :footnote_reference)
@@ -36,6 +38,12 @@ module IsoDoc
           end
 
           private
+
+          def has_bare_link?(element)
+            element.p&.any? do |paragraph|
+              Array(paragraph.link).any? { |link| !link.target.to_s.empty? }
+            end
+          end
 
           def append_cached_reference(para, cache_key)
             id = parent.cached_footnote_id(cache_key)

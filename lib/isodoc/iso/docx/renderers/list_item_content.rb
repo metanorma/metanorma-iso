@@ -16,14 +16,37 @@ module IsoDoc
 
           def render_item_content(item, doc, para)
             lead = Array(item.paragraphs).first
+            return render_split_item(item, lead, doc, para) if lead && embedded_item_block?(lead)
+
             if lead
               @inline_renderer.render(lead, para)
             else
               render_bare_item_inline(item, para)
             end
+
             anchor_paragraph(item, para)
             anchor_paragraph(lead, para) if lead
             doc << para
+            render_item_blocks(item, doc, lead)
+          end
+
+          def embedded_item_block?(paragraph)
+            each_ordered_element(paragraph) do |type, child|
+              next unless type == :element
+
+              return true if ParagraphRenderer::BLOCK_ELEMENT_CLASSES.any? { |klass| child.is_a?(klass) }
+            end
+            false
+          end
+
+          def render_split_item(item, lead, doc, para)
+            anchor_paragraph(item, para)
+            anchor_paragraph(lead, para)
+            renderer = ParagraphRenderer.new(resolver: @resolver, context: @context,
+                                             inline_renderer: @inline_renderer, walker: @walker)
+            @context.with_list do
+              renderer.render_with_leading_paragraph(lead, doc, para)
+            end
             render_item_blocks(item, doc, lead)
           end
 
