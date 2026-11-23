@@ -941,7 +941,6 @@ p.zzCopyright, li.zzCopyright, div.zzCopyright {
   font-family: {{bodyfont}};
   mso-fareast-font-family: "MS Mincho";
   mso-bidi-font-family: "Times New Roman";
-  color: blue;
   mso-ansi-language: EN-GB;
   mso-fareast-language: JA;
 }
@@ -963,7 +962,6 @@ p.zzAddress {
   text-autospace: none;
   padding: 0cm;
   mso-padding-alt: 0cm 4pt 0cm 4pt;
-  color: blue;
   font-size: 10pt;
   font-family: {{bodyfont}};
 }

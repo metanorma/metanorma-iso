@@ -166,6 +166,27 @@ class Html2Doc
       end
     end
 
+    # The list label sits between the footnote anchor and the note text, so
+    # the space that follows the anchor moves ahead of the label.
+    def footnote_cleanup(docxml)
+      super
+      docxml.xpath("//div[@style = 'mso-element:footnote']/p/a" \
+                   "[following-sibling::node()[2]" \
+                   "[self::span[@style = 'mso-tab-count:1']]]").each do |anchor|
+        footnote_label_space(anchor)
+      end
+      docxml
+    end
+
+    def footnote_label_space(anchor)
+      text = anchor.next_sibling.next_sibling.next_sibling
+      return unless text&.text? && text.content.start_with?(" ")
+
+      text.content = text.content.delete_prefix(" ")
+      label = anchor.next_sibling
+      label.content = " #{label.content}" if label.text?
+    end
+
     def cleanup(docxml)
       super
       docxml.xpath("//div[@class = 'Quote' or @class = 'Example' or " \
