@@ -42,7 +42,7 @@ RSpec.describe IsoDoc::Iso::Docx::BoxWrapper do
      ["NOTE 2", :tab, "Numbered note body."],
      ["EXAMPLE", :tab, "Example body."],
      ["EXAMPLE 2", :tab, "Numbered example body."],
-     ["Note 1 to entry:", :tab, "Term note body."]]
+     ["Note 1 to entry: ", "Term note body."]]
   end
   let(:block_paragraphs) do
     paragraphs.select do |para|

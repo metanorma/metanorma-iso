@@ -295,7 +295,8 @@ module IsoDoc
         def save_mhtml(model, output_path)
           mhtml_doc = Uniword::Transformation::OoxmlToMhtmlConverter
             .document_to_mht(model, model.core_properties,
-                             merged_document_relationships(model))
+                             with_footnote_relationships(model,
+                                                         merged_document_relationships(model)))
           Uniword::Infrastructure::MimePackager
             .from_document(mhtml_doc).package(output_path)
         end
@@ -330,6 +331,36 @@ module IsoDoc
               )
             end
           Uniword::Ooxml::Relationships::PackageRelationships.new(relationships: rels)
+        end
+
+        # MHTML resolves every hyperlink against one relationships part,
+        # while DOCX keeps footnote links in word/_rels/footnotes.xml.rels,
+        # whose ids restart at rId1. Give each footnote hyperlink a fresh id
+        # that is unique across both parts and register its relationship.
+        def with_footnote_relationships(model, rels)
+          fn_rels = model.footnotes_rels&.relationships
+          links = footnote_hyperlinks(model)
+          return rels if Array(fn_rels).empty? || links.empty?
+
+          merged = Array(rels&.relationships).dup
+          links.each_with_index do |link, index|
+            rel = Array(fn_rels).find { |r| r.id == link.id }
+            next unless rel
+
+            link.id = "rIdFn#{index + 1}"
+            merged << Uniword::Ooxml::Relationships::PackageRelationship.new(
+              id: link.id, type: rel.type, target: rel.target,
+              target_mode: rel.target_mode
+            )
+          end
+          Uniword::Ooxml::Relationships::PackageRelationships.new(relationships: merged)
+        end
+
+        def footnote_hyperlinks(model)
+          entries = model.footnotes&.footnote_entries
+          Array(entries).flat_map do |entry|
+            Array(entry.paragraphs).flat_map { |p| Array(p.hyperlinks) }
+          end.select(&:id)
         end
 
         def mhtml_output?(path)

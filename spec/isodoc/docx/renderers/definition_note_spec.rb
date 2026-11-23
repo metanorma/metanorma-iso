@@ -33,7 +33,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "#convert definition list term notes"
       end
 
       it "keeps a term note after its dd content with its label, tab and note style" do
-        expect(output[:marked]).to eq(["KEY", "FIRST", "Note 1 to entry:\tNOTEBODY"])
+        expect(output[:marked]).to eq(["KEY", "FIRST", "Note 1 to entry: NOTEBODY"])
         para = output[:paragraphs].find { |p| p.text.include?("NOTEBODY") }
         expect(para&.at_xpath("w:pPr/w:pStyle", output[:ns])&.[]("w:val")).to eq("Note")
       end
@@ -42,7 +42,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "#convert definition list term notes"
         let(:dd) { "<p>FIRST</p><p>LAST</p>#{note}" }
 
         it "keeps the note after all paragraphs" do
-          expect(output[:marked]).to eq(["KEY", "FIRST", "LAST", "Note 1 to entry:\tNOTEBODY"])
+          expect(output[:marked]).to eq(["KEY", "FIRST", "LAST", "Note 1 to entry: NOTEBODY"])
         end
       end
 
@@ -52,7 +52,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "#convert definition list term notes"
         end
 
         it "keeps both notes once in order" do
-          expect(output[:marked]).to eq(["KEY", "FIRST", "Note 1 to entry:\tNOTEBODY", "Note 2 to entry:\tSECONDNOTE"])
+          expect(output[:marked]).to eq(["KEY", "FIRST", "Note 1 to entry: NOTEBODY", "Note 2 to entry: SECONDNOTE"])
         end
       end
 
@@ -60,7 +60,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "#convert definition list term notes"
         let(:dd) { "<p>FIRST</p>#{note}<p>LAST</p>" }
 
         it "keeps source order" do
-          expect(output[:marked]).to eq(["KEY", "FIRST", "Note 1 to entry:\tNOTEBODY", "LAST"])
+          expect(output[:marked]).to eq(["KEY", "FIRST", "Note 1 to entry: NOTEBODY", "LAST"])
         end
       end
 
@@ -75,7 +75,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "#convert definition list term notes"
           end
 
           it "keeps the labeled styled note and ends every cell with a paragraph" do
-            expect(output[:marked]).to eq(["KEY", "FIRST", "Note 1 to entry:\tNOTEBODY"])
+            expect(output[:marked]).to eq(["KEY", "FIRST", "Note 1 to entry: NOTEBODY"])
             para = output[:paragraphs].find { |p| p.text.include?("NOTEBODY") }
             expect(para&.at_xpath("w:pPr/w:pStyle", output[:ns])&.[]("w:val")).to eq("Note")
             expect(output[:document].xpath("//w:tc", output[:ns]).map { |tc| tc.element_children.last.name }.uniq).to eq(["p"])

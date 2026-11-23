@@ -17,6 +17,7 @@ module IsoDoc
 
           def render(element, para)
             return if parent.heading_annotations_suppressed?
+            return render_nested(element, para) if parent.in_footnote_body?
 
             handler = context.formula_key_footnote_handler
             return handler.call(element, para) if handler && !element.reference.to_s.strip.empty?
@@ -38,6 +39,15 @@ module IsoDoc
           end
 
           private
+
+          # Word cannot nest a footnote in a footnote body, so the inner
+          # footnote's content is kept inline in the outer body.
+          def render_nested(element, para)
+            Array(element.p).each_with_index do |body, index|
+              para << " " unless index.zero?
+              parent.render(body, para)
+            end
+          end
 
           def has_bare_link?(element)
             element.p&.any? do |paragraph|
