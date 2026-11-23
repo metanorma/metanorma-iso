@@ -66,6 +66,14 @@ module IsoDoc
               register_note_handler
               register_list_handlers
               register_definition_list_handler
+              register_sourcecode_handler
+            end
+
+            def register_sourcecode_handler
+              register(
+                Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock,
+                SourcecodeHandler.new(resolver: @resolver, inline_renderer: @inline_renderer),
+              )
             end
 
             def register_definition_list_handler
