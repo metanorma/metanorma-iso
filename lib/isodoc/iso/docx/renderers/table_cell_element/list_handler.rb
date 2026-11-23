@@ -44,8 +44,14 @@ module IsoDoc
             end
 
             def nested_blocks?(item)
-              ordered?(item) && item.element_order.any? do |entry|
+              ordered?(item) && (item.element_order.any? do |entry|
                 entry.element? && NESTED_BLOCKS.include?(entry.name)
+              end || Array(item.paragraphs).any? { |lead| embeds_note?(lead) })
+            end
+
+            def embeds_note?(paragraph)
+              ordered?(paragraph) && paragraph.element_order.any? do |entry|
+                entry.element? && entry.name == "note"
               end
             end
 
@@ -63,11 +69,11 @@ module IsoDoc
                 if type == :text
                   @inline_renderer.add_text(para, child)
                 else
-                  @inline_renderer.render(child, para)
+                  para = render_lead(child, para, target)
                   break
                 end
               end
-              target << para
+              target << para if para
               children.each do |type, child|
                 if type == :text
                   text_para = Uniword::Builder::ParagraphBuilder.new
@@ -77,6 +83,35 @@ module IsoDoc
                 else
                   dispatcher.call(child, target)
                 end
+              end
+            end
+
+            # A note embedded in the item's paragraph cannot sit inside a
+            # w:p: the text before it closes the numbered paragraph, the
+            # note follows as a block, and any text after it starts an
+            # unnumbered paragraph. Returns the paragraph still to append.
+            def render_lead(lead, para, target)
+              unless embeds_note?(lead)
+                @inline_renderer.render(lead, para)
+                return para
+              end
+
+              each_ordered_element(lead) do |type, child|
+                if type == :element && child.is_a?(Metanorma::Document::Components::Blocks::NoteBlock)
+                  target << para if para
+                  para = nil
+                  dispatcher.call(child, target)
+                else
+                  para ||= plain_paragraph(target)
+                  type == :text ? @inline_renderer.add_text(para, child) : @inline_renderer.dispatch_inline(child, para)
+                end
+              end
+              para
+            end
+
+            def plain_paragraph(target)
+              Uniword::Builder::ParagraphBuilder.new.tap do |para|
+                para.style = @resolver.paragraph_style(target.style_key) if target.style_key
               end
             end
 

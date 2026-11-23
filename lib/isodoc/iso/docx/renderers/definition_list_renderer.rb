@@ -76,6 +76,8 @@ module IsoDoc
 
           def formula_cell(row, node)
             row.cell do |cell|
+              next render_cell_blocks(node, cell) if block_definition?(node)
+
               formula_cell_content(node).each_with_index do |part, i|
                 para = build_paragraph(:table_body)
                 @inline_renderer.render(part, para) if part
@@ -115,13 +117,18 @@ module IsoDoc
                 row.cell do |cell|
                   cell << render_cell_paragraph(dt, :table_body)
                 end
-                row.cell do |cell|
-                  dd = definitions[i]
-                  cell << render_cell_paragraph(dd, :table_body) if dd
-                end
+                row.cell { |cell| symbol_definition_cell(definitions[i], cell) }
               end
             end
             doc << tbl
+          end
+
+          def symbol_definition_cell(definition, cell)
+            if block_definition?(definition)
+              render_cell_blocks(definition, cell)
+            elsif definition
+              cell << render_cell_paragraph(definition, :table_body)
+            end
           end
 
           def render_cell_paragraph(node, style_key)
@@ -206,7 +213,28 @@ module IsoDoc
           # elements between blocks share one paragraph; the dd's and each
           # paragraph's bookmark lands on the next paragraph emitted.
           def render_definition_blocks(definition, doc, key)
-            state = { loose: nil, anchors: [definition], key: key, doc: doc }
+            stream_definition(definition, doc, key) do |child, target|
+              @walker.dispatch(child, target)
+            end
+          end
+
+          # Blocks in a table cell take the cell handlers' styling.
+          def render_cell_blocks(definition, cell)
+            target = TableCellElement::CellTarget.new(cell, :table_body)
+            stream_definition(definition, target, :table_body) do |child, doc|
+              cell_registry.dispatch(child, doc)
+            end
+          end
+
+          def cell_registry
+            @cell_registry ||= TableCellElement::Registry.new(
+              resolver: @resolver, inline_renderer: @inline_renderer,
+            )
+          end
+
+          def stream_definition(definition, doc, key, &dispatch)
+            state = { loose: nil, anchors: [definition], key: key, doc: doc,
+                      dispatch: dispatch }
             stream_children(definition, state)
             flush_loose(state)
           end
@@ -222,7 +250,7 @@ module IsoDoc
                 flush_loose(state)
               elsif block_child?(child)
                 flush_loose(state)
-                @walker.dispatch(child, state[:doc])
+                state[:dispatch].call(child, state[:doc])
               else
                 add_loose(state) { |para| @inline_renderer.dispatch_inline(child, para) }
               end
