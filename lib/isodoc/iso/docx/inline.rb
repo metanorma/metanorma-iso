@@ -625,9 +625,11 @@ module IsoDoc
           run = @doc.footnote do |p|
             p.style = style if style
             if element && Array(element.p).any? { |body| has_rich_children?(body) }
-              Array(element.p).each_with_index do |body, index|
-                p << " " unless index.zero?
-                render(body, p)
+              with_footnote_body do
+                Array(element.p).each_with_index do |body, index|
+                  p << " " unless index.zero?
+                  render(body, p)
+                end
               end
             else
               p << text
@@ -635,6 +637,52 @@ module IsoDoc
           end
           finish_footnote_body(@doc.model.footnotes.footnote_entries.last)
           run
+        end
+
+        # True while a footnote body is being rendered: its hyperlinks live
+        # in word/footnotes.xml, so their rIds belong to the footnotes part.
+        def in_footnote_body?
+          @in_footnote_body ? true : false
+        end
+
+        def with_footnote_body
+          previous = @in_footnote_body
+          @in_footnote_body = true
+          yield
+        ensure
+          @in_footnote_body = previous
+        end
+
+        # The rId of an external hyperlink for +url+ in
+        # word/_rels/footnotes.xml.rels, registered once per target.
+        # Ids are allocated in their own allocator scope, seeded from any
+        # relationships the footnotes part already carries.
+        def footnote_hyperlink_rid(url)
+          rels = footnote_rels
+          type = Uniword::Docx::IdAllocator::HYPERLINK_REL_TYPE
+          rid = @doc.allocator.alloc_rid(target: url, type: type,
+                                         target_mode: "External",
+                                         scope: :footnotes)
+          unless rels.relationships.any? { |r| r.id == rid }
+            rels.relationships << Uniword::Ooxml::Relationships::PackageRelationship.new(
+              id: rid, type: type, target: url, target_mode: "External",
+            )
+          end
+          rid
+        end
+
+        # The footnotes relationships part being built (the adapter resets
+        # it per conversion), seeded once into the allocator so new ids
+        # cannot collide with relationships it already carries.
+        def footnote_rels
+          model = @doc.model
+          rels = (model.footnotes_rels ||=
+                    Uniword::Ooxml::Relationships::PackageRelationships.new)
+          unless @seeded_footnote_rels.equal?(rels)
+            @doc.allocator.seed_from_rels(rels.relationships, scope: :footnotes)
+            @seeded_footnote_rels = rels
+          end
+          rels
         end
 
         # The builder prepends the number marker as the paragraph's first

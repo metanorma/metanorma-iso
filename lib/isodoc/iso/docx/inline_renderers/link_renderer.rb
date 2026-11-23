@@ -22,7 +22,7 @@ module IsoDoc
 
             if target
               link = Uniword::Hyperlink.new(url: target, text: text)
-              model = link.to_model(allocator: doc.allocator)
+              model = hyperlink_model(link, target)
               parent.apply_hyperlink_style(model)
               para << model
             else
@@ -30,6 +30,16 @@ module IsoDoc
               run.text(text).underline.color("0000FF")
               para << run.build
             end
+          end
+
+          private
+
+          # A footnote body is written to word/footnotes.xml, whose
+          # relationships are separate from the document's.
+          def hyperlink_model(link, target)
+            return link.to_model(allocator: doc.allocator) unless parent.in_footnote_body?
+
+            link.to_model.tap { |m| m.id = parent.footnote_hyperlink_rid(target) }
           end
         end
       end

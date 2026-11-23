@@ -502,6 +502,7 @@ module IsoDoc
               root.body.element_order = [] if root.body.element_order
               root.body.section_properties = nil
             end
+            reset_footnotes_rels(root)
             clear_user_footnotes(root)
             clear_user_endnotes(root)
             root.custom_properties = nil
@@ -528,6 +529,20 @@ module IsoDoc
             allocator.seed_from_rels(root.document_rels.relationships)
           end
           root.allocator = allocator
+        end
+
+        # The loaded template is reused across conversions, so the footnotes
+        # relationships (which footnote hyperlinks add to) restart from the
+        # template's own on every conversion.
+        def reset_footnotes_rels(root)
+          @template_footnotes_rels ||= Array(root.footnotes_rels&.relationships).dup
+          root.footnotes_rels = if @template_footnotes_rels.empty?
+                                  nil
+                                else
+                                  Uniword::Ooxml::Relationships::PackageRelationships.new(
+                                    relationships: @template_footnotes_rels.dup,
+                                  )
+                                end
         end
 
         def clear_user_footnotes(root)
