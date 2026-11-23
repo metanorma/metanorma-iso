@@ -18,6 +18,7 @@ module Metanorma
     autoload :AnnotationContainer, "#{__dir__}/annotation_container"
     autoload :Blocks, "#{__dir__}/blocks"
     autoload :Boilerplate, "#{__dir__}/boilerplate"
+    autoload :DdElement, "#{__dir__}/dd_element"
     autoload :Metadata, "#{__dir__}/metadata"
     autoload :Root, "#{__dir__}/root"
     autoload :Sections, "#{__dir__}/sections"
