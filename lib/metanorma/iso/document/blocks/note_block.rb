@@ -12,10 +12,19 @@ module Metanorma
         attribute :example, Metanorma::Document::Components::AncillaryBlocks::ExampleBlock,
                   collection: true
 
+        attribute :sourcecode,
+                  Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock,
+                  collection: true
+        attribute :admonition,
+                  Metanorma::Document::Components::MultiParagraph::AdmonitionBlock,
+                  collection: true
+
         xml do
           map_element "table", to: :table
           map_element "figure", to: :figure
           map_element "example", to: :example
+          map_element "sourcecode", to: :sourcecode
+          map_element "admonition", to: :admonition
         end
       end
     end

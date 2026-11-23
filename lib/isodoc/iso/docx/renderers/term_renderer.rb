@@ -42,8 +42,7 @@ module IsoDoc
             render_term_number(term, doc)
             render_designations(term, doc)
             render_term_definitions(term, doc)
-            render_term_notes(term, doc)
-            render_term_examples(term, doc)
+            render_term_trailing_blocks(term, doc)
             render_term_sources(term, doc)
           end
 
@@ -224,33 +223,58 @@ prefix: nil)
             Array(attribute_value(term, :definition))
           end
 
-          def render_term_notes(term, doc)
-            Array(attribute_value(term, :termnote)).each do |tn|
-              @context.with_note do
-                unless single_note_paragraph?(tn)
-                  with_inline_label(tn, doc, :note)
-                  next
-                end
+          TRAILING_ATTRS = %i[termnote termexample sourcecode quote admonition].freeze
+          private_constant :TRAILING_ATTRS
 
-                para = build_paragraph(:note)
-                children = block_children(tn)
-                append_label(para, label_text(tn), inline: children.any?)
-                children.each { |child| @inline_renderer.render(child, para) }
-                anchor_paragraph(tn, para)
-                Array(attribute_value(tn, :p)).each do |p|
-                  anchor_paragraph(p, para)
-                end
-                doc << para
+          # Notes, examples and term-level blocks follow the definition in
+          # source order. A term parsed without element order falls back to
+          # notes, examples, then the other blocks.
+          def render_term_trailing_blocks(term, doc)
+            trailing_blocks(term).each do |block|
+              case block
+              when Metanorma::Iso::Document::Terms::TermNote
+                render_term_note(block, doc)
+              when Metanorma::Iso::Document::Terms::TermExample
+                render_term_example(block, doc)
+              else
+                @walker.dispatch(block, doc)
               end
             end
           end
 
-          def render_term_examples(term, doc)
-            Array(attribute_value(term, :termexample)).each do |te|
-              @context.with_example do
-                render_example_name(te, doc)
-                @walker&.walk(te, doc)
+          def trailing_blocks(term)
+            return TRAILING_ATTRS.flat_map { |attr| Array(attribute_value(term, attr)) } unless ordered?(term)
+
+            blocks = []
+            each_ordered_element(term, allow_filter: TRAILING_ATTRS) do |_type, child|
+              blocks << child
+            end
+            blocks
+          end
+
+          def render_term_note(note, doc)
+            @context.with_note do
+              unless single_note_paragraph?(note)
+                with_inline_label(note, doc, :note)
+                next
               end
+
+              para = build_paragraph(:note)
+              children = block_children(note)
+              append_label(para, label_text(note), inline: children.any?)
+              children.each { |child| @inline_renderer.render(child, para) }
+              anchor_paragraph(note, para)
+              Array(attribute_value(note, :p)).each do |p|
+                anchor_paragraph(p, para)
+              end
+              doc << para
+            end
+          end
+
+          def render_term_example(example, doc)
+            @context.with_example do
+              render_example_name(example, doc)
+              @walker&.walk(example, doc)
             end
           end
 
