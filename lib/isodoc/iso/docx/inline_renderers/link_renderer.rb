@@ -11,7 +11,7 @@ module IsoDoc
           include Base
 
           def render(element, para)
-            text = parent.collect_text(element)
+            text = parent.collect_all_text(element)
             target = element.target
 
             if text.nil? || text.empty?

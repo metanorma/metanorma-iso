@@ -81,6 +81,13 @@ RSpec.describe "links inside footnotes" do
     expect(fn_rels(parts)[link_ids(parts).first]["Target"]).to eq("https://example.org/c")
   end
 
+  it "keeps formatted link text in a footnote and in the body" do
+    parts = convert('<p>Go <link target="https://example.org/body">body <strong>bold</strong> end</link>.' \
+                    '<fn reference="1"><p><link target="https://example.org/fn">note <em>styled</em> end</link></p></fn></p>')
+    expect(parts["word/document.xml"].xpath("//w:hyperlink", ns).map(&:text)).to include("body bold end")
+    expect(fn_body(parts).xpath(".//w:hyperlink", ns).text).to eq("note styled end")
+  end
+
   it "keeps body hyperlinks on the document rels" do
     parts = convert('<p>Go <link target="https://example.org/body"/>.' \
                     '<fn reference="1"><p>x <link target="https://example.org/fn"/></p></fn></p>')
