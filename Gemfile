@@ -8,7 +8,12 @@ gem "canon"
 gem "isodoc", "~> 3.7.9" # carries the relaton-render range #846
 gem "metanorma-plugin-lutaml", "~> 0.7"
 gem "metanorma-utils", "~> 2.0" # GcBudget + the array-join table cell buffer
-gem "metanorma-standoc", "~> 3.5.7" # Standoc::Document split + the pubid-dispatch refs world
+gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc.git",
+    ref: "38133f98ab62f5bcbc93851b6b06792f49239c71"
+gem "metanorma-core", git: "https://github.com/metanorma/metanorma-core.git",
+    ref: "231ea6e236a6ccb199ff236df675b6a1edc0240a"
+gem "metanorma-taste", git: "https://github.com/metanorma/metanorma-taste.git",
+    ref: "d0c26613f78bf44fb10c07290b38b7e87aeaf544"
 gem "metanorma-document", git: "https://github.com/metanorma/metanorma-document.git",
     ref: "3911acbb4ce9d8497a94579610a42d663b8a78cd"
 # Native presentation integration uses the shared LADL profile and typed adapter.
