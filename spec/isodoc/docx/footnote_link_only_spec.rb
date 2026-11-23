@@ -42,14 +42,14 @@ RSpec.describe "link-only footnote content" do
     expect(
       references: document.xpath("//w:footnoteReference", ns).size,
       footnotes: parts["word/footnotes.xml"].xpath("//w:footnote[not(@w:type)]", ns).size,
-      visible_url: footnote&.text&.include?("https://e.org/s"),
+      visible_url: link&.text,
       link_target: relationship&.[]("Target"),
       target_mode: relationship&.[]("TargetMode"),
       body_text: document.text.include?("Body text") && document.text.include?("remains."),
     ).to eq(
       references: 1,
       footnotes: 1,
-      visible_url: true,
+      visible_url: "https://e.org/s",
       link_target: "https://e.org/s",
       target_mode: "External",
       body_text: true,
