@@ -55,13 +55,9 @@ RSpec.describe Metanorma::Iso::Validation::Rules::SectionSequenceRule do
   end
 
   describe "#check with a BSI-shaped document" do
-    # metanorma-bsi#664: BSI bibliographies nest the bibliography clause
-    # (carrying its references) inside <bibliography>. The standoc
-    # BibliographySection mapping is not `ordered`, so XML adapters that
-    # only record element_order for ordered mappings (leptris, the
-    # lutaml-model default) parse that node with element_order == nil.
-    # The walk used to call `nil.filter_map` there and crash the whole
-    # validation run; a missing order must skip the subtree instead.
+    # metanorma-bsi#664 originally exposed nil element_order under leptris.
+    # The SDK now retains bibliography order; both the real parsed document
+    # and explicitly absent order remain regression boundaries.
     let(:bsi_shaped) do
       <<~XML
         <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="bsi">
@@ -87,23 +83,26 @@ RSpec.describe Metanorma::Iso::Validation::Rules::SectionSequenceRule do
       XML
     end
 
-    it "parses with a nil bibliography element_order under the leptris adapter" do
+    it "retains bibliography element order under the leptris adapter" do
       root = Lutaml::Model::AdapterScope.with(xml: :leptris) do
         Metanorma::IsoDocument::Root.from_xml(bsi_shaped)
       end
-      expect(root.bibliography.element_order).to be_nil
+      expect(root.bibliography.element_order.map(&:name).select { |name| %w(references clause).include?(name) }).to eq(%w(references clause))
     end
 
-    it "does not raise; the unordered bibliography subtree is skipped" do
+    it "recognizes the ordered normative references without a false missing-tail finding" do
       ctx = Lutaml::Model::AdapterScope.with(xml: :leptris) do
         context_with(bsi_shaped)
       end
       issues = rule.check(ctx)
-      # The bibliography contributes no sequenced items, so the walk ends
-      # after the body clauses and ISO_36 flags the missing annex/refs
-      # tail: a finding, never a crash.
-      expect(issues.map(&:code)).to eq(["ISO_36"])
+      expect(issues).to be_empty
     end
+  end
+
+  it "does not crash when a bibliography has explicitly absent order" do
+    ctx = context_with('<metanorma xmlns="https://www.metanorma.org/ns/standoc"><bibliography><references normative="true"/></bibliography></metanorma>')
+    ctx.root.bibliography.element_order = nil
+    expect { rule.check(ctx) }.not_to raise_error
   end
 
   describe "code" do
