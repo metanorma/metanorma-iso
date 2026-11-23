@@ -274,8 +274,48 @@ prefix: nil)
           def render_term_example(example, doc)
             @context.with_example do
               render_example_name(example, doc)
-              block_children(example).each { |child| @walker.dispatch(child, doc) }
+              render_example_body(example, doc)
             end
+          end
+
+          # Loose inline content forms paragraphs between the existing blocks.
+          # Delay opening a paragraph until there is more than XML indentation.
+          def render_example_body(example, doc)
+            unless ordered?(example)
+              block_children(example).each { |child| @walker.dispatch(child, doc) }
+              return
+            end
+
+            labels = NOTE_LABEL_ATTRS.flat_map { |attr| Array(attribute_value(example, attr)) }
+            pending = []
+            each_ordered_element(example) do |type, child|
+              next if type == :element && labels.any? { |label| label.equal?(child) }
+
+              if type == :element && DEFINITION_BLOCKS.any? { |klass| child.is_a?(klass) }
+                render_example_inline(pending, doc)
+                pending.clear
+                @walker.dispatch(child, doc)
+              else
+                pending << [type, child]
+              end
+            end
+            render_example_inline(pending, doc)
+          end
+
+          def render_example_inline(content, doc)
+            return if content.all? { |type, child| type == :text && child.strip.empty? }
+
+            para = build_unstyled_paragraph
+            para.style = @resolver.context_body_style
+            content.each do |type, child|
+              if type == :text
+                @inline_renderer.add_text(para, child)
+              else
+                @inline_renderer.dispatch_inline(child, para)
+              end
+            end
+            @context.mark_zone_paragraph
+            doc << para
           end
 
           def render_term_sources(term, doc)

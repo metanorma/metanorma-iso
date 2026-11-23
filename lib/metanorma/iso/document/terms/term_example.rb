@@ -7,6 +7,8 @@ module Metanorma
       # table, sourcecode and formula blocks ISO examples admit, kept in
       # source order.
       class TermExample < Metanorma::Standoc::Document::Terms::TermExample
+        include Metanorma::Document::Components::Inline::Vocabulary
+
         attribute :table, Metanorma::Document::Components::Tables::TableBlock,
                   collection: true
         attribute :sourcecode,
@@ -32,7 +34,9 @@ module Metanorma
                   collection: true
 
         xml do
-          ordered
+          mixed_content
+          map_content to: :text
+          Metanorma::Document::Components::Inline::Vocabulary::VocabularyXmlMapping.apply_inline_mappings(self)
           map_element "figure", to: :figure
           map_element "quote", to: :quote
           map_element "admonition", to: :admonition
