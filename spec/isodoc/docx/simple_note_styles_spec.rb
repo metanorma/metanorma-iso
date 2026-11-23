@@ -5,7 +5,7 @@ require "tmpdir"
 
 # Keep with the DOCX specs that render through the adapter.
 # rubocop:disable-next RSpec/SpecFilePathFormat
-RSpec.describe IsoDoc::Iso::Docx::Adapter, "note and example styles" do
+RSpec.describe IsoDoc::Iso::Docx::Adapter, "#convert" do
   let(:body) do
     <<~INNER
       <sections>
