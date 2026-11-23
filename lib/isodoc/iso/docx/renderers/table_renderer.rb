@@ -38,7 +38,6 @@ module IsoDoc
           # contains the rendered attachments as paragraphs.
           def render_wrapped_table(inner_table_model, table, doc)
             outer = Uniword::Builder::TableBuilder.new
-            outer.width(table.width) if table.width
 
             outer.row do |row|
               row.cell do |c|
@@ -51,6 +50,8 @@ module IsoDoc
               row.cell { |c| append_attachments_to_cell(c, table) }
             end
 
+            ensure_table_width(outer.model, table.width)
+            ensure_table_grid(outer.model, table.width, nil)
             doc << outer
           end
 
@@ -123,7 +124,13 @@ module IsoDoc
             no_h_band: 0,
             no_v_band: 1,
           }.freeze
-          DEFAULT_FALLBACK_WIDTH_TWIPS = 9000
+          # A4 width (11906) minus the ISO templates' two 851-twip margins.
+          DEFAULT_FALLBACK_WIDTH_TWIPS = 10204
+          WIDTH_UNITS_TO_TWIPS = {
+            "%" => DEFAULT_FALLBACK_WIDTH_TWIPS / 100.0,
+            "pt" => 20, "px" => 15, "in" => 1440,
+            "cm" => 1440 / 2.54, "mm" => 1440 / 25.4
+          }.freeze
           # Border sizes in eighths of a point: 1 pt frame, 0.5 pt rules.
           FRAME_SIZE = 8
           RULE_SIZE = 4
@@ -315,12 +322,12 @@ module IsoDoc
           end
 
           def ensure_table_width(table_model, width)
-            return if table_model.properties.table_width
-
             table_model.properties.table_width =
               Uniword::Properties::TableWidth.new(
-                w: parse_twips(width) || 0, type: "dxa",
+                w: grid_total(width), type: "dxa",
               )
+            table_model.properties.table_layout =
+              Uniword::Properties::TableLayout.new(type: "fixed")
           end
 
           def ensure_table_look(table_model)
@@ -346,22 +353,18 @@ module IsoDoc
             return if cols.zero?
 
             widths = TableColumnWidths.new(table_model, cols, weights: weights)
-              .twips(grid_total(table_model, width))
+              .twips(grid_total(width))
             table_model.grid = Uniword::Wordprocessingml::TableGrid.new(
               columns: widths.map { |w| Uniword::Wordprocessingml::GridCol.new(width: w) },
             )
             apply_cell_widths(table_model, widths)
           end
 
-          def grid_total(table_model, width)
-            parse_twips(width) || existing_grid_total(table_model) ||
-              DEFAULT_FALLBACK_WIDTH_TWIPS
-          end
+          def grid_total(width)
+            factor = WIDTH_UNITS_TO_TWIPS[width.to_s[/[a-z%]+\z/]]
+            return (width.to_f * factor).round if factor
 
-          # Uniword sizes its own grid to the page's text width.
-          def existing_grid_total(table_model)
-            total = Array(table_model.grid&.columns).sum { |c| c.width.to_i }
-            total.positive? ? total : nil
+            parse_twips(width) || DEFAULT_FALLBACK_WIDTH_TWIPS
           end
 
           def apply_cell_widths(table_model, widths)

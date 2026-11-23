@@ -11,7 +11,7 @@ module IsoDoc
       #   - MainTitle2 paragraph for title part (with optional prefix)
       #
       # Title text is sourced from bibdata.titles (TitleCollection)
-      # for English followed by French. No hardcoded title strings.
+      # for the document's language. No hardcoded title strings.
       class MiddleTitleRenderer
         TITLE_SEPARATOR = " — "
         private_constant :TITLE_SEPARATOR
@@ -25,14 +25,12 @@ module IsoDoc
           bib = bibdata(model)
           return unless bib
 
-          %w[en fr].each do |language|
-            localized = localized_title(bib, language)
-            next unless localized
+          localized = localized_title(bib, document_language(bib))
+          return unless localized
 
-            render_main(localized, doc)
-            render_part(localized, doc)
-            render_amd(localized, doc)
-          end
+          render_main(localized, doc)
+          render_part(localized, doc)
+          render_amd(localized, doc)
         end
 
         private
@@ -41,6 +39,13 @@ module IsoDoc
           return nil unless model.class.attributes.key?(:bibdata)
 
           model.bibdata
+        end
+
+        def document_language(bib)
+          language = Array(bib.language).first if bib.class.attributes.key?(:language)
+          value = language.respond_to?(:value) ? language.value : language
+          code = value.to_s.split(/[-_]/).first.to_s
+          code.empty? ? "en" : code
         end
 
         def render_main(localized, doc)
