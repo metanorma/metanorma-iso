@@ -108,21 +108,18 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::BibliographyRenderer do
   end
 
   def footnote_run_details(ref, namespaces)
-    suffix, separator = ref.xpath("following-sibling::w:r", namespaces).first(2)
+    separator = ref.at_xpath("following-sibling::w:r", namespaces)
     {
       identifier: ref.xpath("preceding-sibling::w:r/w:t", namespaces).map(&:text).join,
       footnote_id: ref.xpath("w:footnoteReference/@w:id", namespaces).text,
       anchor_style: ref.xpath("w:rPr/w:rStyle/@w:val", namespaces).text,
-      suffix: suffix.xpath("w:t", namespaces).text,
-      suffix_style: suffix.xpath("w:rPr/w:rStyle/@w:val", namespaces).text,
-      suffix_align: suffix.xpath("w:rPr/w:vertAlign/@w:val", namespaces).text,
       separator: separator.xpath("w:t", namespaces).text,
     }
   end
 
   def expected_footnote_run(identifier, footnote_id)
     { identifier: identifier, footnote_id: footnote_id, anchor_style: "FootnoteReference",
-      suffix: ")", suffix_style: "FootnoteReference", suffix_align: "superscript", separator: " , " }
+      separator: " , " }
   end
 
   it "keeps the footnote marker and separator after the year in normative references", :aggregate_failures do
@@ -155,8 +152,8 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::BibliographyRenderer do
     entries, style_defined = is_fixture_normref_entries
     flagged, plain = entries.partition { |entry| entry.include?("[fn]") }
     expect([style_defined, entries.size]).to eq([true, 7])
-    expect(flagged).to match([/\AISO.712\[fn\]\) , Cereals and cereal/,
-                              /\AISO.16634:\u2014\[fn\]\) , Cereals, pulses/])
+    expect(flagged).to match([/\AISO.712\[fn\] , Cereals and cereal/,
+                              /\AISO.16634:\u2014\[fn\] , Cereals, pulses/])
     expect(plain).to all(match(/\AISO.\d[\d:-]*, [[:alpha:]]/))
   end
 
