@@ -65,6 +65,19 @@ RSpec.describe "Word template paragraph spacing" do # rubocop:disable RSpec/Desc
     end
   end
 
+  def simple_toc2_children
+    template_path = IsoDoc::Iso::DocxTemplates.template_path(:simple)
+    styles = Zip::File.open(template_path) do |zip|
+      Nokogiri::XML(zip.find_entry("word/styles.xml").get_input_stream.read)
+    end
+    ns = { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" }
+    styles.xpath("//w:style[@w:styleId='TOC2']/w:pPr/*", ns).map(&:name)
+  end
+
+  it "orders TOC2 spacing before indent in the Simple template" do
+    expect(simple_toc2_children).to eq(%w[spacing ind])
+  end
+
   context "when a definition follows its term designation" do
     let(:converter) { IsoDoc::Iso::WordConvert.allocate }
 

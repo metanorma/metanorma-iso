@@ -39,8 +39,7 @@ module IsoDoc
                 render_item_blocks(item, para, target)
                 return
               end
-              append_item_content(item, para)
-              target << para
+              append_item_content(item, para, target)
             end
 
             def nested_blocks?(item)
@@ -115,12 +114,22 @@ module IsoDoc
               end
             end
 
-            def append_item_content(item, para)
-              paragraphs = item.paragraphs
-              if paragraphs && !paragraphs.empty?
-                paragraphs.each { |p| @inline_renderer.render(p, para) }
-              else
+            # The first paragraph shares the numbered paragraph; each later
+            # one is its own unnumbered paragraph, as in the body list.
+            def append_item_content(item, para, target)
+              paragraphs = Array(item.paragraphs)
+              if paragraphs.empty?
                 @inline_renderer.render(item, para)
+                target << para
+                return
+              end
+
+              @inline_renderer.render(paragraphs.first, para)
+              target << para
+              paragraphs.drop(1).each do |extra|
+                extra_para = plain_paragraph(target)
+                @inline_renderer.render(extra, extra_para)
+                target << extra_para
               end
             end
           end
