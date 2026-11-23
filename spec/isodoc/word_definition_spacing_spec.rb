@@ -50,7 +50,7 @@ RSpec.describe "Word template paragraph spacing" do # rubocop:disable RSpec/Desc
         expect(template_state[:spacing_before]).to eq([nil, nil, nil])
       end
 
-      it "sets effective Definition space-before to zero" do
+      it "keeps the Definition stylesheet margin at zero" do
         expect(template_state[:definition_css]).to match(/margin-top:\s*0cm;/)
       end
 
@@ -63,6 +63,33 @@ RSpec.describe "Word template paragraph spacing" do # rubocop:disable RSpec/Desc
         expected = template == "simple" ? "0000FF" : "auto"
         expect(template_state[:border_colors]).to eq([expected])
       end
+    end
+  end
+
+  context "when a definition follows its term designation" do
+    let(:converter) { IsoDoc::Iso::WordConvert.allocate }
+
+    def spaced(html)
+      doc = Nokogiri::HTML.fragment("<div>#{html}</div>")
+      converter.send(:definition_spacing, doc)
+      doc.css("p.Definition").map { |para| para["style"] }
+    end
+
+    %w[Terms AltTerms AdmittedTerm DeprecatedTerms].each do |designation|
+      it "adds the DOCX gap after #{designation}" do
+        html = "<p class='#{designation}'>term</p> <p class='Definition'>text</p>"
+        expect(spaced(html)).to eq(["margin-top:12.0pt;"])
+      end
+    end
+
+    it "keeps an existing inline style" do
+      html = "<p class='Terms'>term</p><p class='Definition' style='text-align:left;'>text</p>"
+      expect(spaced(html)).to eq(["text-align:left;margin-top:12.0pt;"])
+    end
+
+    it "leaves a second definition paragraph unchanged" do
+      html = "<p class='Terms'>term</p><p class='Definition'>one</p><p class='Definition'>two</p>"
+      expect(spaced(html)).to eq(["margin-top:12.0pt;", nil])
     end
   end
 

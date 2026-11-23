@@ -161,8 +161,20 @@ module IsoDoc
         # display:none on the paragraphs and prints them above annex titles.
         docxml.xpath("//h1[@class = 'Annex']/following-sibling::" \
                      "p[@class = 'variant-title-toc'][1]").each(&:remove)
+        definition_spacing(docxml)
         style_cleanup(docxml)
         docxml
+      end
+
+      # Matches the 12pt gap the DOCX term renderer puts before a definition.
+      def definition_spacing(docxml)
+        docxml.xpath(".//p[@class = 'Definition'][preceding-sibling::*[1]" \
+                     "[self::p[@class = 'Terms' or @class = 'AltTerms' or " \
+                     "@class = 'AdmittedTerm' or @class = 'DeprecatedTerms']]]")
+          .each do |para|
+          style = para["style"]&.sub(/;?\s*\z/, ";")
+          para["style"] = "#{style}margin-top:12.0pt;"
+        end
       end
 
       def word_fn_cleanup(docxml)
