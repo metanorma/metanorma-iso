@@ -13,6 +13,7 @@ module IsoDoc
           def render(element, para)
             text = parent.collect_all_text(element)
             target = element.target
+            target = nil if target.to_s.strip.empty?
 
             if text.nil? || text.empty?
               text = target
