@@ -11,11 +11,14 @@ module IsoDoc
           # paragraph carrying the Note paragraph style.
           class NoteHandler
             include Base
+            include BoxWrapper
 
             def render(element, target)
               cell_para = Uniword::Builder::ParagraphBuilder.new
               cell_para.style = @resolver.paragraph_style(:note)
-              @inline_renderer.render(element, cell_para)
+              children = block_children(element)
+              append_label(cell_para, label_text(element), inline: children.any?)
+              children.each { |child| @inline_renderer.render(child, cell_para) }
               target << cell_para
             end
           end

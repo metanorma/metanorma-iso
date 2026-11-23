@@ -14,7 +14,7 @@ module IsoDoc
         #                 the source doesn't already include that prefix)
         class TermRenderer
           include Base
-          include ModelUtils
+          include BoxWrapper
 
           DEPRECATED_PREFIX = "DEPRECATED: "
           private_constant :DEPRECATED_PREFIX
@@ -42,6 +42,7 @@ module IsoDoc
             end
             doc << para
           end
+
           def render_designations(term, doc)
             render_preferred_designations(term, doc)
             render_admitted_designations(term, doc)
@@ -214,7 +215,9 @@ prefix: nil)
             Array(attribute_value(term, :termnote)).each do |tn|
               @context.with_note do
                 para = build_paragraph(:note)
-                @inline_renderer.render(tn, para)
+                children = block_children(tn)
+                append_label(para, label_text(tn), inline: children.any?)
+                children.each { |child| @inline_renderer.render(child, para) }
                 anchor_paragraph(tn, para)
                 Array(attribute_value(tn, :p)).each do |p|
                   anchor_paragraph(p, para)
