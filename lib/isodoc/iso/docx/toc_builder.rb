@@ -317,36 +317,24 @@ module IsoDoc
           doc << para
         end
 
-        # Render the source node's title content inline. ToC entries use
-        # the single-line composition: the presentation XML carries
-        # variant-title[@type='toc'] (label + tab + title, with no line
-        # breaks), which is what the PDF engine consumes for its ToC.
-        # fmt-title carries the display form — for annexes it embeds
-        # <br/> breaks and the obligation line, which would render the
-        # ToC entry as a multi-line paragraph — so it is only a fallback
-        # for nodes that carry no ToC variant title.
-        #
-        # The composition is rendered through a HeadingTextSink: the
-        # label → title separator must not reach Word as a tab. The ToC
-        # styles carry a single tab stop (the right-hand page-number
-        # stop), and a tab with no stop ahead of the pen jumps to the
-        # next one in order — carrying the entire heading text to the
-        # right margin behind a dot leader (metanorma-pdfa#119). The
-        # separator is therefore flattened to a space, matching the
-        # inline flow the PDF ToC composes.
+        # Annex fmt-title includes the obligation omitted by the ToC
+        # variant. Flatten its soft breaks for the cached single-line
+        # entry; Word rebuilds from the same complete ANNEX heading.
+        # Other headings use the ToC variant when available. The label
+        # separator becomes a space, leaving only the page-number tab.
         def render_toc_heading_text(node, runs)
           sink = HeadingTextSink.new(runs)
           render_toc_heading_source(node, sink)
         end
 
         def render_toc_heading_source(node, sink)
-          if (variant = toc_variant_title(node))
-            @inline.render(variant, sink)
-          elsif node.class.attributes.key?(:fmt_title) && node.fmt_title
-            @inline.render(node.fmt_title, sink)
-          elsif node.class.attributes.key?(:title) && node.title
-            @inline.render(node.title, sink)
-          end
+          source = if node.is_a?(Metanorma::Iso::Document::Sections::IsoAnnexSection) && node.fmt_title &&
+              !@inline.heading_body_empty?(node.fmt_title)
+                     node.fmt_title
+                   else
+                     toc_variant_title(node) || section_heading(node)
+                   end
+          @inline.render(source, sink) if source
         end
 
         # Collects an entry's runs into its hyperlink and appends the
@@ -383,9 +371,8 @@ module IsoDoc
           end
         end
 
-        # Inline renderer sink for ToC entry headings. Forwards runs to
-        # the entry paragraph, rewriting tab runs into a single space:
-        # the only tab in a ToC entry paragraph is the page-number tab.
+        # Inline renderer sink for single-line ToC entry headings. Tabs
+        # and soft breaks become spaces; only the page-number tab remains.
         class HeadingTextSink
           SPACE = " "
 
@@ -394,15 +381,15 @@ module IsoDoc
           end
 
           def <<(element)
-            @para << flatten_tab(element)
+            @para << flatten_separator(element)
             self
           end
 
           private
 
-          def flatten_tab(element)
+          def flatten_separator(element)
             return element unless element.is_a?(Uniword::Wordprocessingml::Run)
-            return element unless element.tab
+            return element unless element.tab || element.break
 
             Uniword::Wordprocessingml::Run.new(text: SPACE)
           end

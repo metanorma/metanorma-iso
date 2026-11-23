@@ -440,6 +440,9 @@ style_library:
       paragraph_properties:
         spacing:
           before: '0.0'
+        indent:
+          left: '1.905'
+          hanging: '0.635'
     TOC3:
       id: TOC3
       type: paragraph
@@ -447,6 +450,10 @@ style_library:
       based_on: TOC2
       next_style: Normal
       ui_priority: '39'
+      paragraph_properties:
+        indent:
+          left: '2.54'
+          hanging: '0.635'
     zzContents:
       id: zzContents
       type: paragraph
