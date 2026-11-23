@@ -39,6 +39,16 @@ module Metanorma
           @texts = Hash.new { |hash, node| hash[node] = {} }.compare_by_identity
           @xrefs = {}.compare_by_identity
           @terms = {}.compare_by_identity
+          @projections = {}.compare_by_identity
+        end
+
+        # The declarative engine's XML projection of +root+, built once per
+        # run by the block. Projection failure raises; a failed document
+        # never becomes an empty, apparently successful validation.
+        def document_projection(root)
+          return @projections[root] if @projections.key?(root)
+
+          @projections[root] = yield
         end
 
         # Every (paragraph, immediate container) pair in the document, in

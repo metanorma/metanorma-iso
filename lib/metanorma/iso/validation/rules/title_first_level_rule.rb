@@ -9,7 +9,9 @@ module Metanorma
         # each direct child clause/terms/references that lacks a title.
         # ISO/IEC DIR 2, 22.2.
         class TitleFirstLevelRule < Base
+          include DeclarativeDispatch
           code "ISO_19"
+          declarative_rule "iso.title.first-level"
 
           policy category: "Document structure",
                  rule: "every first-level subclause must have a title",
@@ -20,7 +22,7 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             issues = []
             each_top_level_container(context.root) do |container|
               parent_label = title_text_of(container)
@@ -34,6 +36,14 @@ module Metanorma
           end
 
           private
+
+          def declarative_issue(finding, _context)
+            node = finding.node
+            parent = node.parent
+            title = parent.at_xpath("./m:title", DeclarativeCatalog::NAMESPACES)&.text.to_s.strip
+            label = title.empty? ? projected_location(parent).split("#").first : title
+            build_issue(location: projected_location(node), params: [label])
+          end
 
           def each_top_level_container(root)
             return enum_for(__method__, root) unless block_given?

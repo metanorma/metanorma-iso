@@ -7,7 +7,9 @@ module Metanorma
         # Style warning: no more than one ordered list per clause/annex
         # (ISO house style). Source: validate_list.rb#ol_count_validate.
         class ListCountRule < Base
+          include DeclarativeDispatch
           code "ISO_58"
+          declarative_rule "iso.list.count"
 
           policy category: "Lists",
                  rule: "avoid more than one numbered list in a clause/subclause",
@@ -19,7 +21,7 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             issues = []
             each_clause_with_lists(context.root) do |holder|
               ols = direct_ordered_lists(holder)
@@ -34,6 +36,13 @@ module Metanorma
           end
 
           private
+
+          def declarative_issue(finding, _context)
+            holder = finding.node.parent
+            count = holder.xpath("./m:ol", DeclarativeCatalog::NAMESPACES).size
+            build_issue(location: projected_location(holder),
+              params: ["More than 1 ordered list in a numbered clause: #{count}"])
+          end
 
           def each_clause_with_lists(root)
             return enum_for(__method__, root) unless block_given?

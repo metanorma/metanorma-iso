@@ -12,7 +12,9 @@ module Metanorma
         # norm_bibitem_style which used Nokogiri XPath via
         # Metanorma::Iso::PublisherIdentity.
         class NormativeBibitemRule < Base
+          include DeclarativeDispatch
           code "ISO_42"
+          declarative_rule "iso.references.publisher"
 
           policy category: "Referencing",
                  rule: "normative references must be ISO or IEC publications (others only under DIR 2 10.2 conditions)",
@@ -28,7 +30,7 @@ module Metanorma
             !context.root.nil? && !context.root.bibliography.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             issues = []
             each_normative_bibitem(context.root.bibliography) do |bibitem|
               next if iso_iec_publisher?(bibitem)
@@ -40,6 +42,17 @@ module Metanorma
           end
 
           private
+
+          def declarative_issue(finding, context)
+            nodes = finding.node.document.xpath(
+              "/m:metanorma/m:bibliography/m:references[@normative='true']/m:bibitem",
+              DeclarativeCatalog::NAMESPACES,
+            )
+            model = each_normative_bibitem(context.root.bibliography).to_a[nodes.index(finding.node)]
+            raise DeclarativeCatalog::ProjectionError, "normative bibitem projection mismatch" unless model
+
+            build_issue(location: bibitem_location(model), params: [bibitem_text(model)])
+          end
 
           def each_normative_bibitem(bibliography)
             return enum_for(__method__, bibliography) unless block_given?

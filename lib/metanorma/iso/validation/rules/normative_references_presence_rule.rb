@@ -7,7 +7,10 @@ module Metanorma
         # ISO_30: document must contain normative references
         # (bibliography/references[@normative = 'true']).
         class NormativeReferencesPresenceRule < Base
+          include DeclarativeDispatch
+
           code "ISO_30"
+          declarative_rule "iso.normative-references.presence"
 
           policy category: "Document structure",
                  rule: "the document must contain a Normative references clause",
@@ -18,7 +21,13 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          private
+
+          def declarative_issue(_finding, _context)
+            build_issue(location: "BibliographySection[normative]", params: [])
+          end
+
+          def legacy_check(context)
             bibliography = context.root.bibliography
             return [] unless bibliography
 
@@ -28,8 +37,6 @@ module Metanorma
             [build_issue(location: "BibliographySection[normative]",
                         params: [])]
           end
-
-          private
 
           # The vendored IsoDocument model types `normative` as :boolean.
           # In the metanorma-internal XML it is the string "true"; lutaml-model

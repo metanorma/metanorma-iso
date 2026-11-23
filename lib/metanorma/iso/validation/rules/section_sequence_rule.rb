@@ -15,7 +15,23 @@ module Metanorma
         # Different ISO_N keys fire for each kind of violation. Faithful
         # port of the legacy sections_sequence_validate state machine.
         class SectionSequenceRule < Base
+          include DeclarativeDispatch
           code "ISO_28"
+          declarative_rule "iso.sequence.initial",
+                           "iso.sequence.prefatory",
+                           "iso.sequence.after-introduction",
+                           "iso.sequence.terms",
+                           "iso.sequence.normal.body-required",
+                           "iso.sequence.normal.body-kind",
+                           "iso.sequence.normal.extra-scope",
+                           "iso.sequence.normal.tail-required",
+                           "iso.sequence.normal.normative-tail",
+                           "iso.sequence.normal.bibliography-tail",
+                           "iso.sequence.normal.final-tail",
+                           "iso.sequence.vocab.tail-required",
+                           "iso.sequence.vocab.normative-tail",
+                           "iso.sequence.vocab.bibliography-tail",
+                           "iso.sequence.vocab.final-tail"
 
           policy category: "Document structure",
                  rule: "sections follow the DIR 2 arrangement (Foreword, Introduction, Scope, Terms, Clauses, Annexes, Normative References, Bibliography)",
@@ -28,14 +44,36 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             items = build_ordered_items(context.root)
             issues = []
             run_state_machine(items, context.state, issues)
             issues
           end
 
+          def self.active_declarative_rule_ids(context)
+            variant = context.state.vocab ? ".normal." : ".vocab."
+            declarative_rule_ids.reject { |id| id.include?(variant) }
+          end
+
+          def self.declarative_codes
+            %w[ISO_28 ISO_32 ISO_33 ISO_34 ISO_36 ISO_37 ISO_38 ISO_40 ISO_41]
+          end
+
+          # Public fact extraction used only by the validation projection;
+          # no sequence requirement is evaluated here.
+          def projection_sequence(root)
+            build_ordered_items(root).map { |item| [item.kind, model_location(item.node)] }
+          end
+
           private
+
+          def declarative_issue(finding, _context)
+            selector, *params = finding.params
+            node = finding.node.at_xpath(selector, DeclarativeCatalog::PROJECTION_NAMESPACES)
+            location = node && node["location"]
+            Issue.from_finding(code: finding.code, location: location, params: params)
+          end
 
           def build_ordered_items(root)
             items = []

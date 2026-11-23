@@ -18,6 +18,14 @@ module Metanorma
         # Walks bibdata.title.items (collection of AbstractTitle) and groups
         # by (_type, language).
         class TitlePairingRule < Base
+          include DeclarativeDispatch
+          declarative_rule "iso.title.pair.title-intro.en",
+                           "iso.title.pair.title-intro.fr",
+                           "iso.title.pair.title-main.en",
+                           "iso.title.pair.title-main.fr",
+                           "iso.title.pair.title-part.en",
+                           "iso.title.pair.title-part.fr"
+
           code "ISO_10" # default; other codes emitted explicitly.
 
           policy category: "Document structure",
@@ -39,7 +47,7 @@ module Metanorma
             !context.root.nil? && !context.root.bibdata.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             items = title_items(context.root.bibdata)
             return [] if items.empty?
 
@@ -47,7 +55,17 @@ module Metanorma
             build_issues_for_missing(present)
           end
 
+          def self.declarative_codes
+            %w[ISO_10 ISO_11 ISO_12 ISO_13 ISO_14 ISO_15]
+          end
+
           private
+
+          def declarative_issue(finding, _context)
+            component, lang = finding.rule_id.delete_prefix("iso.title.pair.").split(".")
+            Issue.from_finding(code: finding.code,
+              location: "AbstractTitle[type=#{component},language=#{lang}]", params: [])
+          end
 
           def title_items(bibdata)
             titles = bibdata.titles if bibdata.class.method_defined?(:titles)

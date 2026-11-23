@@ -12,7 +12,9 @@ module Metanorma
         # not happen with the current integer typing, but preserves the
         # original ISO_6 contract for any future string-typed iteration).
         class IterationRule < Base
+          include DeclarativeDispatch
           code "ISO_6"
+          declarative_rule "iso.metadata.iteration"
 
           policy category: "Document structure",
                  rule: "bibdata/status/iteration must be a number",
@@ -22,7 +24,7 @@ module Metanorma
             !context.root.nil? && context.state&.document
           end
 
-          def check(context)
+          def legacy_check(context)
             iteration = context.root.bibdata&.status&.iteration
             return [] if iteration.nil?
             return [] if iteration.to_s.match?(/\A\d+/)
@@ -30,6 +32,12 @@ module Metanorma
             status = context.root.bibdata.status
             [build_issue(location: model_location(status),
                          params: [iteration.to_s])]
+          end
+          private
+
+          def declarative_issue(finding, context)
+            build_issue(location: model_location(context.root.bibdata.status),
+              params: [finding.node.text])
           end
         end
       end

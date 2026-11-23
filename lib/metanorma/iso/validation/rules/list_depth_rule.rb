@@ -7,7 +7,9 @@ module Metanorma
         # Style warning: lists deeper than 4 levels are discouraged.
         # Source: validate_list.rb#li_depth_validate.
         class ListDepthRule < Base
+          include DeclarativeDispatch
           code "ISO_59"
+          declarative_rule "iso.list.depth"
 
           policy category: "Lists",
                  rule: "a list can be subdivided up to four levels",
@@ -19,7 +21,7 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             issues = []
             each_top_level_list(context.root) do |list, parent|
               depth = max_descendant_depth(list)
@@ -34,6 +36,18 @@ module Metanorma
           end
 
           private
+
+          def declarative_issue(finding, _context)
+            node = finding.node
+            depth = projected_list_depth(node)
+            build_issue(location: projected_location(node.parent),
+              params: ["List more than #{MAX_DEPTH} levels deep: #{depth}"])
+          end
+
+          def projected_list_depth(node)
+            nested = node.xpath("./m:li/m:ol | ./m:li/m:ul", DeclarativeCatalog::NAMESPACES)
+            1 + (nested.map { |child| projected_list_depth(child) }.max || 0)
+          end
 
           def each_top_level_list(root)
             return enum_for(__method__, root) unless block_given?

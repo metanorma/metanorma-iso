@@ -1,0 +1,330 @@
+# Explicit ISO corpus registration; safe data only.
+# Concrete rule classes retain profile, suppression and citation identities.
+schema: metanorma-iso-validation-catalog/1
+rulesets: [iso-structure.yml, iso-sequence.yml]
+registrations:
+  - class: AbbrevFirstUseRule
+    code: ISO_53
+    implementation: code
+  - class: AssetCitedFirstRule
+    code: ISO_54
+    implementation: code
+  - class: BrokenXrefRule
+    code: ISO_56
+    implementation: declarative
+    rules: [iso.xref.target]
+  - class: DoctypeRule
+    code: ISO_5
+    implementation: code
+  - class: ForewordPresenceRule
+    code: ISO_57
+    implementation: declarative
+    rules: [iso.foreword.presence]
+  - class: ForewordStructureRule
+    code: ISO_23
+    implementation: declarative
+    rules: [iso.foreword.no-subclauses]
+  - class: IterationRule
+    code: ISO_6
+    implementation: declarative
+    rules: [iso.metadata.iteration]
+  - class: ListCountRule
+    code: ISO_58
+    implementation: declarative
+    rules: [iso.list.count]
+  - class: ListDepthRule
+    code: ISO_59
+    implementation: declarative
+    rules: [iso.list.depth]
+  - class: ListPunctuationRule
+    code: ISO_60
+    implementation: code
+  - class: LocalityErefsRule
+    code: ISO_49
+    implementation: declarative
+    rules: [iso.eref.dated-locality]
+  - class: ModalInClauseRule
+    code: ISO_61
+    implementation: code
+  - class: NormativeBibitemRule
+    code: ISO_42
+    implementation: declarative
+    rules: [iso.references.publisher]
+  - class: NormativeReferencesPresenceRule
+    code: ISO_30
+    implementation: declarative
+    rules: [iso.normative-references.presence]
+  - class: OnlyChildClauseRule
+    code: ISO_43
+    implementation: declarative
+    rules: [iso.clause.no-only-child]
+  - class: ScopePresenceRule
+    code: ISO_29
+    implementation: declarative
+    rules: [iso.scope.presence]
+  - class: ScopeSubclausesRule
+    code: ISO_39
+    implementation: declarative
+    rules: [iso.scope.no-subclauses]
+  - class: SectionSequenceRule
+    code: ISO_28
+    implementation: declarative
+    rules: [iso.sequence.initial, iso.sequence.prefatory, iso.sequence.after-introduction, iso.sequence.terms, iso.sequence.normal.body-required, iso.sequence.normal.body-kind, iso.sequence.normal.extra-scope, iso.sequence.normal.tail-required, iso.sequence.normal.normative-tail, iso.sequence.normal.bibliography-tail, iso.sequence.normal.final-tail, iso.sequence.vocab.tail-required, iso.sequence.vocab.normative-tail, iso.sequence.vocab.bibliography-tail, iso.sequence.vocab.final-tail]
+  - class: SeeXrefsRule
+    code: ISO_46
+    implementation: code
+  - class: StyleAOrAnRule
+    code: ISO_62
+    implementation: code
+  - class: StyleAbbrevArticlesRule
+    code: ISO_63
+    implementation: code
+  - class: StyleAbbrevPluralRule
+    code: ISO_64
+    implementation: code
+  - class: StyleAbbrevTablesOnlyRule
+    code: ISO_65
+    implementation: code
+  - class: StyleAbbrevUppercaseRule
+    code: ISO_66
+    implementation: code
+  - class: StyleAcDcRfRule
+    code: ISO_67
+    implementation: code
+  - class: StyleAffectEffectRule
+    code: ISO_68
+    implementation: code
+  - class: StyleAmbigWordsRule
+    code: ISO_69
+    implementation: code
+  - class: StyleApostrophePluralsRule
+    code: ISO_70
+    implementation: code
+  - class: StyleAssureEnsureRule
+    code: ISO_71
+    implementation: code
+  - class: StyleBarKnotFootnoteRule
+    code: ISO_72
+    implementation: code
+  - class: StyleBareSlashRule
+    code: ISO_73
+    implementation: code
+  - class: StyleBoxedValuesRule
+    code: ISO_74
+    implementation: code
+  - class: StyleCaCfRule
+    code: ISO_75
+    implementation: code
+  - class: StyleChemPrefixRule
+    code: ISO_145
+    implementation: code
+  - class: StyleComplianceRule
+    code: ISO_76
+    implementation: code
+  - class: StyleContractionsRule
+    code: ISO_77
+    implementation: code
+  - class: StyleCountryNamesRule
+    code: ISO_78
+    implementation: code
+  - class: StyleCurrencyCodeOrderRule
+    code: ISO_79
+    implementation: code
+  - class: StyleCurrencySymbolsRule
+    code: ISO_80
+    implementation: code
+  - class: StyleCvNotRsdRule
+    code: ISO_81
+    implementation: code
+  - class: StyleDateDurationRule
+    code: ISO_82
+    implementation: code
+  - class: StyleDateFormatsRule
+    code: ISO_83
+    implementation: code
+  - class: StyleDecimalCommaRule
+    code: ISO_143
+    implementation: code
+  - class: StyleDirectivesRefsRule
+    code: ISO_84
+    implementation: code
+  - class: StyleEgEtcRule
+    code: ISO_85
+    implementation: code
+  - class: StyleEgPlacementRule
+    code: ISO_86
+    implementation: code
+  - class: StyleEmptyClauseRule
+    code: ISO_87
+    implementation: declarative
+    rules: [iso.clause.empty-sections, iso.clause.empty]
+  - class: StyleEnDashRangesRule
+    code: ISO_88
+    implementation: code
+  - class: StyleFamilySuiteRule
+    code: ISO_89
+    implementation: code
+  - class: StyleFewerLessRule
+    code: ISO_90
+    implementation: code
+  - class: StyleFormulaeRule
+    code: ISO_91
+    implementation: code
+  - class: StyleGuidelinesRule
+    code: ISO_92
+    implementation: code
+  - class: StyleImpersonalRule
+    code: ISO_93
+    implementation: code
+  - class: StyleImpreciseRefsRule
+    code: ISO_94
+    implementation: code
+  - class: StyleInAccordanceRule
+    code: ISO_95
+    implementation: code
+  - class: StyleInclusiveLanguageRule
+    code: ISO_96
+    implementation: code
+  - class: StyleInformativeNormativeRule
+    code: ISO_97
+    implementation: code
+  - class: StyleInterlabRule
+    code: ISO_98
+    implementation: code
+  - class: StyleIsoDatesRule
+    code: ISO_99
+    implementation: code
+  - class: StyleLatinPluralsRule
+    code: ISO_100
+    implementation: code
+  - class: StyleMixedListsRule
+    code: ISO_101
+    implementation: declarative
+    rules: [iso.list.no-mixed]
+  - class: StyleNestedParensRule
+    code: ISO_102
+    implementation: code
+  - class: StyleNoBoxesRule
+    code: ISO_103
+    implementation: declarative
+    rules: [iso.boxes.discouraged]
+  - class: StyleNoNosRule
+    code: ISO_104
+    implementation: code
+  - class: StyleNonSiOrderRule
+    code: ISO_146
+    implementation: code
+  - class: StyleNumberRule
+    code: ISO_105
+    implementation: code
+  - class: StyleOrdinalsRule
+    code: ISO_106
+    implementation: code
+  - class: StyleOxfordSpellingRule
+    code: ISO_107
+    implementation: code
+  - class: StylePenultimateListRule
+    code: ISO_108
+    implementation: code
+  - class: StylePerCentRule
+    code: ISO_109
+    implementation: code
+  - class: StylePluralSTermRule
+    code: ISO_110
+    implementation: code
+  - class: StyleQuotationPunctuationRule
+    code: ISO_111
+    implementation: code
+  - class: StyleRespectivelyRule
+    code: ISO_112
+    implementation: code
+  - class: StyleSelfReferenceRule
+    code: ISO_113
+    implementation: code
+  - class: StyleSentenceStartNumberRule
+    code: ISO_114
+    implementation: code
+  - class: StyleStemSymbolRule
+    code: ISO_144
+    implementation: code
+  - class: StyleThatWhichRule
+    code: ISO_115
+    implementation: code
+  - class: StyleUnitsRule
+    code: ISO_116
+    implementation: code
+  - class: StyleVagueTimeRule
+    code: ISO_117
+    implementation: code
+  - class: StyleVerbalFormsRule
+    code: ISO_118
+    implementation: code
+  - class: StyleVocabTitleRule
+    code: ISO_119
+    implementation: code
+  - class: StyleWikipediaRule
+    code: ISO_120
+    implementation: code
+  - class: StyleWordsDigitsRule
+    code: ISO_121
+    implementation: code
+  - class: SubcommitteeTypeRule
+    code: ISO_3
+    implementation: declarative
+    rules: [iso.committee.subcommittee-type]
+  - class: SubpartIecRule
+    code: ISO_16
+    implementation: code
+  - class: SymbolsInAnnexRule
+    code: ISO_27
+    implementation: declarative
+    rules: [iso.symbols.annex-only]
+  - class: SymbolsSectionContentRule
+    code: ISO_26
+    implementation: declarative
+    rules: [iso.symbols.content]
+  - class: SymbolsSectionCountRule
+    code: ISO_25
+    implementation: declarative
+    rules: [iso.symbols.at-most-one]
+  - class: TechnicalCommitteeTypeRule
+    code: ISO_2
+    implementation: declarative
+    rules: [iso.committee.technical-type]
+  - class: TermSourceCompleteRule
+    code: ISO_55
+    implementation: code
+  - class: TermXrefsRule
+    code: ISO_50
+    implementation: code
+  - class: TermdefStyleRule
+    code: ISO_4
+    implementation: code
+  - class: TermsPresenceRule
+    code: ISO_31
+    implementation: declarative
+    rules: [iso.terms.presence]
+  - class: TitleFirstLevelRule
+    code: ISO_19
+    implementation: declarative
+    rules: [iso.title.first-level]
+  - class: TitleNamesDoctypeRule
+    code: ISO_17
+    implementation: code
+  - class: TitlePairingRule
+    code: ISO_10
+    implementation: declarative
+    rules: [iso.title.pair.title-intro.en, iso.title.pair.title-intro.fr, iso.title.pair.title-main.en, iso.title.pair.title-main.fr, iso.title.pair.title-part.en, iso.title.pair.title-part.fr]
+  - class: TitleSiblingsConsistencyRule
+    code: ISO_20
+    implementation: declarative
+    rules: [iso.title.siblings]
+  - class: UniqueIdRule
+    code: ISO_122
+    implementation: code
+  - class: UnreferencedAssetsRule
+    code: ISO_21
+    implementation: code
+  - class: VocabTermsTitlesRule
+    code: ISO_44
+    implementation: code

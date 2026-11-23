@@ -70,22 +70,31 @@ module Metanorma
             spec = flavor_gem_spec(flavor)
             return fallback_registry unless spec
 
+            for_gem(flavor: flavor, spec: spec)
+          end
+
+          # Flavor assets live with the flavor gem; composition uses both
+          # its existing profile imports and safe E2 rule layers. Explicit
+          # gem metadata is also useful before an archive is installed.
+          def for_gem(flavor:, spec:)
             dir = File.join(spec.gem_dir, "lib", "metanorma", flavor,
                             "validation_profile")
             # Sorted parse order: later declarations override earlier
             # ones in imported_entries, so composition is deterministic.
             files = Dir[File.join(dir, "*.yml")].sort
-            return fallback_registry if files.empty?
+            rulesets = Dir[File.join(spec.gem_dir, "lib", "metanorma", flavor,
+                                     "validation", "rulesets", "*.yml")].sort
+            return fallback_registry if files.empty? && rulesets.empty?
 
             imports = files.flat_map { |f| parse_declaration(f, flavor) }
-            compose(flavor: flavor, imports: imports, declared_at: dir)
+            compose(flavor: flavor, imports: imports, declared_at: dir, rulesets: rulesets)
           end
 
           # Core composition over already-parsed import declaration
           # hashes. The seam used by {ComposedRegistry.for} and exercised
           # directly by specs (no gem lookup needed).
-          def compose(flavor:, imports:, declared_at: nil)
-            new(flavor: flavor, imports: imports, declared_at: declared_at)
+          def compose(flavor:, imports:, declared_at: nil, rulesets: [])
+            new(flavor: flavor, imports: imports, declared_at: declared_at, rulesets: rulesets)
           end
 
           # Parse one import declaration file. Public: declaration
@@ -125,10 +134,11 @@ module Metanorma
         # +imports+: parsed declaration hashes (profile:/class:/except:/
         # severity:/cite_as:). +declared_at+: the declaration directory,
         # when composed through {ComposedRegistry.for}.
-        def initialize(flavor:, imports:, declared_at: nil)
+        def initialize(flavor:, imports:, declared_at: nil, rulesets: [])
           @flavor = flavor
           @imports = imports
           @declared_at = declared_at
+          @rulesets = rulesets
           @entries = build_entries
         end
 
@@ -163,7 +173,144 @@ module Metanorma
           entry_for(klass)&.source
         end
 
+        # Composed classes whose structural check runs on the declarative
+        # engine (issue #1733). Imports, exceptions and shadowing have
+        # already been applied to the entries.
+        def declarative_classes
+          all.select { |klass| declarative?(klass) }
+        end
+
+        # Composed classes that remain code-backed (prose and other checks
+        # with no exact declarative form).
+        def code_backed_classes
+          all.reject { |klass| declarative?(klass) }
+        end
+
+        # The schematron-layer rule set of this composition.
+        def declarative_rule_set
+          @declarative_rule_set ||= begin
+            base = Rules::DeclarativeCatalog.rule_set_for(declarative_classes)
+            merged = asset_rule_sets.reduce(base) { |lower, layer| lower.merge(layer) }.resolved
+            # Import exceptions and flavor class shadowing cannot be undone
+            # accidentally by a layer reintroducing the old ISO rule id.
+            excluded = Rules::DeclarativeCatalog.rule_set.rules.map(&:id) - base.rules.map(&:id)
+            api = ::Metanorma::Standoc::Validate::Rules
+            api::RuleSet.new(merged.rules.reject { |rule| excluded.include?(rule.id) },
+                             namespaces: merged.namespaces)
+          end
+        end
+
+        # Runtime uses the active flavor layer, including replacements and
+        # disabled ids, rather than returning to the uncomposed ISO catalog.
+        def declarative_rule_set_for(classes)
+          ids = classes.flat_map(&:declarative_rule_ids)
+          api = ::Metanorma::Standoc::Validate::Rules
+          api::RuleSet.new(declarative_rule_set.rules.select { |rule| ids.include?(rule.id) },
+                           namespaces: declarative_rule_set.namespaces)
+        end
+
+        # Portable declarations and explicit code registrations are exported
+        # together; prose checks are listed without fabricated XPath tests.
+        def schematron
+          api = ::Metanorma::Standoc::Validate::Rules
+          exported = api::Schematron.export(declarative_rule_set)
+          api::Schematron::Export.new(xml: exported.xml,
+            code_backed: exported.code_backed + code_backed_classes.map { |klass| registration_id(klass) })
+        end
+
+        def registration_id(klass)
+          owner = klass.name.start_with?("Metanorma::Iso::Validation::Rules::") ? "iso" : flavor
+          "#{owner}.code.#{klass.name.split('::').last}"
+        end
+
+        # The one dispatch point for declared code and portable checks.
+        def execute(context, profile)
+          selected = profile.select_rules(all.map(&:new))
+          issues = selected.flat_map do |rule|
+            next [] unless rule.applicable?(context)
+
+            rule.check(context).map { |issue| apply_metadata(rule.class, issue) }
+          rescue Rules::DeclarativeCatalog::ProjectionError
+            raise
+          rescue StandardError => e
+            warn "Metanorma::Iso::ModelValidator: rule #{rule.class} raised: #{e.message}"
+            []
+          end
+          issues + asset_findings(context, profile)
+        end
+
+        def apply_metadata(klass, issue)
+          severity = severity_override_for(klass)
+          if severity
+            issue.severity = severity
+            issue.composition_severity = severity
+          end
+          citation = attribution_for(klass)
+          return issue unless citation
+
+          original = Citation.suffix(klass.policy_metadata)
+          replacement = "(#{citation})"
+          issue.message = replace_citation(issue.message, original, replacement)
+          issue.params = issue.params.map do |param|
+            original && param.end_with?(original) ? replace_citation(param, original, replacement) : param
+          end
+          issue
+        end
+
+        # Declarative rule id => the composition metadata of its class.
+        # Severity and citation stay here and are not written to rule files.
+        def declarative_metadata
+          declarative_classes.each_with_object({}) do |klass, result|
+            entry = entry_for(klass)
+            klass.declarative_rule_ids.each do |id|
+              result[id] = { code: declarative_rule_set.rules.find { |rule| rule.id == id }&.code, rule_class: klass,
+                             severity: entry.severity, cite_as: entry.cite_as,
+                             source: entry.source }
+            end
+          end
+        end
+
         private
+
+        def replace_citation(text, original, replacement)
+          text = text.delete_suffix(" #{original}") if original
+          "#{text} #{replacement}"
+        end
+
+        def asset_findings(context, profile)
+          return [] if @rulesets.empty?
+
+          owned = declarative_classes.flat_map(&:declarative_rule_ids)
+          set = declarative_rule_set
+          extra = set.rules.reject { |rule| owned.include?(rule.id) }
+          extra = extra.select { |rule| profile.only_codes.include?(rule.code) } if profile.only_codes
+          extra = extra.reject { |rule| profile.except_codes.include?(rule.code) }
+          if profile.is_a?(Profile::Published)
+            codes = profile.select(self).map(&:code_value)
+            extra = extra.select { |rule| codes.include?(rule.code) }
+          end
+          return [] if extra.empty?
+
+          api = ::Metanorma::Standoc::Validate::Rules
+          projection = Rules::DeclarativeCatalog.projection_for(context)
+          api::Engine.new(api::RuleSet.new(extra, namespaces: set.namespaces))
+            .findings(projection).map do |finding|
+              Issue.from_finding(code: finding.code,
+                location: "XML projection #{finding.node.path}", params: finding.params)
+            end
+        end
+
+        def asset_rule_sets
+          @asset_rule_sets ||= @rulesets.map do |path|
+            ::Metanorma::Standoc::Validate::Rules::RuleSet.load_file(path,
+              registry: Rules::DeclarativeCatalog.check_registry)
+          end
+        end
+
+        def declarative?(klass)
+          klass.include?(Rules::DeclarativeDispatch) &&
+            klass.declarative_rule_ids.any?
+        end
 
         def entry_for(klass)
           @entries.find { |e| e.rule_class == klass }
@@ -187,7 +334,7 @@ module Metanorma
         # import metadata. Used when a flavor (or composition) declares
         # no imports.
         def fallback_entries
-          RuleRegistry.new.all.map do |klass|
+          Rules::DeclarativeCatalog.registered_classes.map do |klass|
             Entry.new(rule_class: klass, severity: nil, cite_as: nil,
                       source: :registry)
           end.sort_by { |e| e.rule_class.name }
@@ -197,8 +344,9 @@ module Metanorma
         # Shadowing is applied in {build_entries}: a flavor-local class
         # with the same code replaces the imported entry.
         def imported_entries
-          pool = RuleRegistry.new.all
+          pool = Rules::DeclarativeCatalog.registered_classes
           imports.each_with_object({}) do |imp, h|
+            validate_import_metadata!(imp, pool)
             classes = classes_for_import(imp, pool) - excepted_classes(imp, pool)
             classes.each do |klass|
               h[klass] = Entry.new(
@@ -257,22 +405,45 @@ module Metanorma
           end
         end
 
+        def validate_import_metadata!(imp, pool)
+          severity = imp["severity"]
+          if severity.is_a?(Hash)
+            allowed = pool.flat_map { |klass| [short_name(klass), klass.code_value] } + ["*"]
+            unknown = severity.keys - allowed
+            raise ArgumentError, "unknown severity keys: #{unknown.join(', ')}" unless unknown.empty?
+            severity.each_value { |value| validate_severity!(value) }
+          end
+          citation = imp["cite_as"]
+          if citation && (!citation.is_a?(String) || citation.strip.empty?)
+            raise ArgumentError, "cite_as must be a nonempty string"
+          end
+        end
+
         # severity: a scalar applies to every class of the import entry;
         # a hash cherry-picks per class name or code (unknown keys are an
         # error).
         def severity_for(imp, klass)
           severity = imp["severity"]
           case severity
-          when String then severity
+          when String
+            validate_severity!(severity)
           when Hash
             value = severity[short_name(klass)] || severity[klass.code_value]
-            value || severity["*"]
+            value = value || severity["*"]
+            value.nil? ? nil : validate_severity!(value)
           when nil then nil
           else
             raise ArgumentError,
                   "unsupported severity #{severity.inspect} in import " \
                   "declaration #{declared_at.inspect}"
           end
+        end
+
+        def validate_severity!(severity)
+          unless %w[error warning info].include?(severity)
+            raise ArgumentError, "unsupported severity #{severity.inspect}"
+          end
+          severity
         end
 
         # Flavor-attributed reporting: the import entry's cite_as, or

@@ -14,8 +14,9 @@ module Metanorma
       #   5. IssueTranslator translates both layers into @log + Report.
       #   6. Optionally render the Report via a Reporter.
       #
-      # Zero Nokogiri. The XML string is the only XML representation; from
-      # here on every rule operates on the typed model.
+      # Rules receive the typed model. Portable structural declarations use
+      # one strict, in-memory XML projection retaining the source model;
+      # model-order declarations explicitly consume derived validation facts.
       class ModelValidator
         OUTPUT_FORMATS = {
           log: nil,
@@ -89,17 +90,7 @@ module Metanorma
             # flavor's declared imports composed with flavor-local rules
             # (ComposedRegistry). For flavors without declarations this
             # is exactly the plain RuleRegistry set — a behavioral no-op.
-            instances = context.registry.all.map(&:new)
-            instances = profile.select_rules(instances)
-
-            instances.flat_map do |rule|
-              next [] unless rule.applicable?(context)
-
-              rule.check(context)
-            rescue StandardError => e
-              warn "Metanorma::Iso::ModelValidator: rule #{rule.class} raised: #{e.message}"
-              []
-            end
+            context.registry.execute(context, profile)
           end
 
           def reporter_for(output_format)

@@ -10,7 +10,9 @@ module Metanorma
         # are both forbidden. A clause containing only subclauses is NOT
         # empty: the subclauses carry the content.
         class StyleEmptyClauseRule < Base
+          include DeclarativeDispatch
           code "ISO_87"
+          declarative_rule "iso.clause.empty-sections", "iso.clause.empty"
 
           policy category: "Document structure",
                  rule: "no clause or annex without content beyond its title; note-only clauses are forbidden",
@@ -33,7 +35,7 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             issues = []
             each_clause_holder(context.root) do |holder|
               next unless content_present?(holder).empty?
@@ -44,6 +46,19 @@ module Metanorma
           end
 
           private
+
+          def declarative_issue(finding, _context)
+            node = finding.node
+            note = node.name != "sections" && node.at_xpath("./m:note", DeclarativeCatalog::NAMESPACES)
+            message = if note
+                        "empty clause: the only content is a note; " \
+                        "House Style forbids note-only clauses"
+                      else
+                        "empty clause: no content beyond the title; " \
+                        "House Style forbids empty clauses and annexes"
+                      end
+            build_issue(location: projected_location(node), params: [message])
+          end
 
           # Yield every clause and annex, recursively.
           def each_clause_holder(root, &block)

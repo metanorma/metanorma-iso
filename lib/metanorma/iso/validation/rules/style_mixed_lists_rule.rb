@@ -9,7 +9,9 @@ module Metanorma
         # nested inside a numbered list, must be restructured (ISO House
         # Style). Same-type nesting (ol in ol, ul in ul) is permitted.
         class StyleMixedListsRule < Base
+          include DeclarativeDispatch
           code "ISO_101"
+          declarative_rule "iso.list.no-mixed"
 
           policy category: "Lists",
                  rule: "mixed lists (numbered nested in unnumbered or vice versa) are not permitted",
@@ -19,7 +21,7 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             issues = []
             each_list(context.root) do |list, kind|
               nested_kind = offending_nested_kind(list, kind)
@@ -35,6 +37,14 @@ module Metanorma
           end
 
           private
+
+          def declarative_issue(finding, _context)
+            outer = finding.node.parent.parent
+            kind = outer.name == "ol" ? "ordered" : "unordered"
+            nested = kind == "ordered" ? "unordered" : "ordered"
+            build_issue(location: projected_location(outer),
+              params: ["mixed lists: #{nested} list nested in #{kind} list (House Style forbids mixed lists)"])
+          end
 
           # Yield every list in the document with its kind (:ordered or
           # :unordered). OrderedList subclasses UnorderedList in the model,

@@ -10,6 +10,10 @@ module Metanorma
         autoload :Base, "metanorma/iso/validation/rules/base"
         autoload :TreeTraversal, "metanorma/iso/validation/rules/tree_traversal"
         autoload :StyleRule, "metanorma/iso/validation/rules/style_rule"
+        autoload :DeclarativeCatalog,
+                 "metanorma/iso/validation/rules/declarative_catalog"
+        autoload :DeclarativeDispatch,
+                 "metanorma/iso/validation/rules/declarative_dispatch"
         autoload :DoctypeRule, "metanorma/iso/validation/rules/doctype_rule"
         autoload :IterationRule, "metanorma/iso/validation/rules/iteration_rule"
         autoload :TechnicalCommitteeTypeRule,
