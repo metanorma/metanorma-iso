@@ -38,7 +38,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermRenderer do
 
         it "uses the example body paragraph style" do
           style = example_paragraphs.last.at_xpath("w:pPr/w:pStyle/@w:val")&.value
-          expect(style).to eq(template == :dis ? "Exampleindent" : nil)
+          expect(style).to eq(template == :dis ? "Exampleindent" : "Example")
         end
       end
 
@@ -54,7 +54,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TermRenderer do
         end
 
         it "styles loose content like the explicit example paragraph" do
-          expected = template == :dis ? ["Exampleindent", *Array.new(3, "Exampleindentcontinued")] : Array.new(4)
+          expected = template == :dis ? ["Exampleindent", *Array.new(3, "Exampleindentcontinued")] : Array.new(4, "Example")
           expect(example_paragraphs.values_at(1, 2, 3, 5).map { |p| p.at_xpath("w:pPr/w:pStyle/@w:val")&.value })
             .to eq(expected)
         end
