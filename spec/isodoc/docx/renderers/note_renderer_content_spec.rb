@@ -3,6 +3,8 @@
 require_relative "../spec_helper"
 
 # Integration assertions pair changed content with single-paragraph preservation.
+# The label's tab separator has no w:t text, so a label and its body join
+# directly in these text extractions; label_separator_spec asserts the tab.
 # rubocop:disable RSpec/ExampleLength, RSpec/MultipleExpectations, RSpec/SpecFilePathFormat
 
 RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
@@ -17,7 +19,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
     XML
     convert_and_extract(adapter, xml) do |pkg|
       texts = pkg.document.body.paragraphs.map { |p| p.runs.map { |r| run_text(r) }.join }
-      expect(texts.grep(/Para [AB]/)).to eq(["Note 1 to entry: Para A.", "Para B."])
+      expect(texts.grep(/Para [AB]/)).to eq(["Note 1 to entry:Para A.", "Para B."])
       expect(texts.grep(/Single/)).to eq(["Note 2 to entry:Single bold."])
     end
   end
@@ -34,7 +36,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
       adapter.convert(xml, path)
       extract_docx(path) do |doc, ns|
         texts = doc.xpath("//w:tc//w:p", ns).map { |p| p.xpath(".//w:t", ns).map(&:text).join }
-        expect(texts.grep(/Para [AB]/)).to eq(["NOTE 1 Para A.", "Para B."])
+        expect(texts.grep(/Para [AB]/)).to eq(["NOTE 1Para A.", "Para B."])
         expect(texts.grep(/Single/)).to eq(["NOTE 2Single bold."])
       end
     end
@@ -46,7 +48,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
     XML
     convert_and_extract(adapter, xml) do |pkg|
       texts = pkg.document.body.paragraphs.map { |p| p.runs.map { |r| run_text(r) }.join }
-      expect(texts.grep(/Item\.|Note body|Inside list|Note tail|After note/)).to eq(["Item.", "NOTE Note body.", "Inside list.", "Note tail.", "After note."])
+      expect(texts.grep(/Item\.|Note body|Inside list|Note tail|After note/)).to eq(["Item.", "NOTENote body.", "Inside list.", "Note tail.", "After note."])
     end
   end
 
@@ -66,7 +68,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
       extract_docx(path) do |doc, ns|
         texts = doc.xpath("//w:body//w:p", ns).map { |p| p.xpath(".//w:t", ns).map(&:text).join }
         expect(texts.grep(/Before\.|Listed\.|Cell\.|Nested\.|After\./))
-          .to eq(["Before.", "Listed.", "Cell.", "EXAMPLE Nested.", "After."])
+          .to eq(["Before.", "Listed.", "Cell.", "EXAMPLENested.", "After."])
       end
     end
   end
@@ -88,7 +90,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
         expect(doc.xpath("//w:body//w:drawing", ns).size).to eq(1)
         texts = doc.xpath("//w:body//w:p", ns).map { |p| p.xpath(".//w:t", ns).map(&:text).join }
         expect(texts.grep(/Before\.|Wrapped cell\.|Nested\.|After\./))
-          .to eq(["Before.", "Wrapped cell.", "EXAMPLE Nested.", "After."])
+          .to eq(["Before.", "Wrapped cell.", "EXAMPLENested.", "After."])
       end
     end
   end
@@ -127,7 +129,7 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
         expect(doc.xpath("//w:tc/w:tbl", ns).size).to eq(1)
         texts = doc.xpath("//w:tc//w:p", ns).map { |p| p.xpath(".//w:t", ns).map(&:text).join }
         expect(texts.grep(/Before\.|Nested\.|Example tail\.|Inner cell\.|After\./))
-          .to eq(["NOTE Before.", "EXAMPLE Nested.", "Example tail.", "Inner cell.", "After."])
+          .to eq(["NOTEBefore.", "EXAMPLENested.", "Example tail.", "Inner cell.", "After."])
       end
     end
   end

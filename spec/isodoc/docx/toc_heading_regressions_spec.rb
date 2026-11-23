@@ -46,7 +46,7 @@ RSpec.describe "DOCX localized contents and heading footnotes" do # rubocop:disa
     expect(document.xpath("//w:footnoteReference", ns).size).to eq(1)
     expect(entries.flat_map { |p| p.xpath(".//w:footnoteReference", ns) }).to be_empty
     expect(document.xpath("//w:t", ns).map(&:text)).not_to include("Heading note.")
-    expect(parts.fetch("footnotes").xpath("//w:t", ns).map(&:text).join).to eq("Heading note.")
+    expect(parts.fetch("footnotes").xpath("//w:t", ns).map(&:text).join).to eq(" Heading note.")
   end
 
   it "preserves ordinary heading, body, and contents text", :aggregate_failures do

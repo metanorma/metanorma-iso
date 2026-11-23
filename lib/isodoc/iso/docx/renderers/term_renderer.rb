@@ -233,7 +233,9 @@ prefix: nil)
                 end
 
                 para = build_paragraph(:note)
-                @inline_renderer.render(tn, para)
+                children = block_children(tn)
+                append_label(para, label_text(tn), inline: children.any?)
+                children.each { |child| @inline_renderer.render(child, para) }
                 anchor_paragraph(tn, para)
                 Array(attribute_value(tn, :p)).each do |p|
                   anchor_paragraph(p, para)

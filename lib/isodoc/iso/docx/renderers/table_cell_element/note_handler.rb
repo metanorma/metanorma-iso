@@ -12,11 +12,15 @@ module IsoDoc
           class NoteHandler
             include Base
             include ModelUtils
+            include BoxWrapper
             include NoteContent
 
             def render(element, target)
               if single_note_paragraph?(element)
-                return render_paragraph(element, target)
+                return render_paragraph(
+                  block_children(element).first, target,
+                  label: attribute_value(element, :fmt_name)
+                )
               end
 
               children = block_children(element)
@@ -65,13 +69,16 @@ module IsoDoc
               end
             end
 
+            # The label's text, or nil when it is blank.
+            def label_string(label)
+              text = collect_all_text(label).to_s.strip
+              text.empty? ? nil : text
+            end
+
             def render_paragraph(element, target, label: nil)
               cell_para = Uniword::Builder::ParagraphBuilder.new
               cell_para.style = @resolver.paragraph_style(:note)
-              if label
-                @inline_renderer.render(label, cell_para)
-                cell_para << " "
-              end
+              append_label(cell_para, label_string(label), inline: true) if label
               @inline_renderer.render(element, cell_para)
               target << cell_para
             end
