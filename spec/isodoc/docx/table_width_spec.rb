@@ -53,6 +53,39 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
     end
   end
 
+  %w[0 0% -50% -1000 -2in auto abc 10em 12junk abcpt].each do |width|
+    context "with an invalid author width #{width}" do
+      let(:width_attribute) { %(width="#{width}") }
+
+      it "uses the full available width" do
+        expect([table_width_values(table), grid]).to eq([["dxa", "10204"], [2551, 7653]])
+      end
+    end
+  end
+
+  %w[150% 100000 9000px 500mm].each do |width|
+    context "with an oversized author width #{width}" do
+      let(:width_attribute) { %(width="#{width}") }
+
+      it "clamps the table and its grid to the text width" do
+        expect([table_width_values(table), grid]).to eq([["dxa", "10204"], [2551, 7653]])
+      end
+    end
+  end
+
+  { "360pt" => 7200, "480px" => 7200, "12.7cm" => 7200,
+    "127mm" => 7200, "5000.5" => 5000 }.each do |width, twips|
+    context "with a supported author width #{width}" do
+      let(:width_attribute) { %(width="#{width}") }
+
+      it "preserves the converted width and cell widths" do
+        cells = table.xpath("w:tr/w:tc/w:tcPr/w:tcW/@w:w", layout_ns).map { |w| w.value.to_i }
+        expect([table_width_values(table), grid.sum, cells])
+          .to eq([["dxa", twips.to_s], twips, [twips / 4, twips - (twips / 4), twips]])
+      end
+    end
+  end
+
   context "with a table in Simple front matter" do
     let(:table) { converted_width_table(width_attribute, attachments, template: :simple, zone: :front) }
 
@@ -105,6 +138,26 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
       it "resolves the percentage against the cell" do
         inner = table.at_xpath("w:tr/w:tc/w:tbl", layout_ns)
         expect([table_width_values(inner), table_grid_values(inner)]).to eq([["pct", "2500"], [1276]])
+      end
+    end
+
+    %w[150% 0% -50% abc 10em].each do |width|
+      context "with an invalid or oversized nested width #{width}" do
+        let(:nested_width) { %(width="#{width}") }
+
+        it "uses a full cell relative width and fits its grid to the cell" do
+          inner = table.at_xpath("w:tr/w:tc/w:tbl", layout_ns)
+          expect([table_width_values(inner), table_grid_values(inner)]).to eq([["pct", "5000"], [2551]])
+        end
+      end
+    end
+
+    context "with an oversized absolute width" do
+      let(:nested_width) { 'width="100000"' }
+
+      it "clamps its width and grid to the containing cell" do
+        inner = table.at_xpath("w:tr/w:tc/w:tbl", layout_ns)
+        expect([table_width_values(inner), table_grid_values(inner)]).to eq([["dxa", "2551"], [2551]])
       end
     end
 

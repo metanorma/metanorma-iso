@@ -64,4 +64,42 @@ module LayoutDocxHelper
     end
     [part_properties(part), runs.count(&:tab), order]
   end
+
+  def converted_header_texts(adapter, identifier)
+    bib = if identifier.empty?
+            ""
+          else
+            %(<bibdata><docidentifier type="iso-with-lang">#{identifier}</docidentifier></bibdata>)
+          end
+    xml = minimal_iso_xml(<<~XML)
+      #{bib}
+      <sections><clause id="scope"><title>Scope</title><p>Body.</p></clause></sections>
+    XML
+    Dir.mktmpdir do |dir|
+      path = File.join(dir, "headers.docx")
+      adapter.convert(xml, path)
+      Zip::File.open(path) do |zip|
+        document = Nokogiri::XML(zip.read("word/document.xml"))
+        relationships = Nokogiri::XML(zip.read("word/_rels/document.xml.rels"))
+        texts = document.xpath("//w:headerReference[@w:type!='first']", layout_ns).map do |reference|
+          id = reference["r:id"]
+          target = relationships.at_xpath("//*[@Id='#{id}']")["Target"]
+          Nokogiri::XML(zip.read("word/#{target}")).xpath("//w:t", layout_ns).map(&:text).join
+        end.uniq
+        identifier.empty? ? texts : texts.reject(&:empty?)
+      end
+    end
+  end
+
+  def middle_title_lines(xml)
+    styles = %w[MainTitle1 MainTitle2]
+    convert_and_extract(adapter, xml) do |pkg|
+      return pkg.document.body.paragraphs.filter_map do |paragraph|
+        style = para_style_value(paragraph)
+        next unless styles.include?(style)
+
+        [style, paragraph.runs.map { |run| run_text(run) }.join]
+      end
+    end
+  end
 end

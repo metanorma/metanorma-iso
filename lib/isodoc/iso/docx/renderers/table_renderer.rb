@@ -323,9 +323,10 @@ module IsoDoc
           end
 
           def ensure_table_width(table_model, width, nested: false)
-            relative = nested && (width.to_s.empty? || width.to_s.end_with?("%"))
+            width = valid_table_width(width)
+            relative = nested && (width.nil? || width.end_with?("%"))
             value = if relative
-                      width.to_s.empty? ? 5000 : (width.to_f * 50).round
+                      width.nil? ? 5000 : ([width.to_f, 100].min * 50).round.clamp(1, 5000)
                     else
                       grid_total(width)
                     end
@@ -369,12 +370,26 @@ module IsoDoc
 
           def grid_total(width)
             available = @context.text_width || DEFAULT_FALLBACK_WIDTH_TWIPS
-            return (width.to_f * available / 100).round if width.to_s.end_with?("%")
+            width = valid_table_width(width)
+            return available unless width
 
-            factor = WIDTH_UNITS_TO_TWIPS[width.to_s[/[a-z%]+\z/]]
-            return (width.to_f * factor).round if factor
+            factor = if width.end_with?("%")
+                       available / 100.0
+                     else
+                       WIDTH_UNITS_TO_TWIPS[width[/[a-z]+\z/]]
+                     end
+            return available if factor && width.to_f >= available / factor
 
-            parse_twips(width) || available
+            total = factor ? (width.to_f * factor).round : width.to_i
+            total.clamp(1, available)
+          end
+
+          def valid_table_width(width)
+            value = width.to_s.strip
+            return unless value.match?(/\A\+?(?:\d+(?:\.\d+)?|\.\d+)(?:%|pt|px|in|cm|mm)?\z/)
+            return unless value.to_f.positive? && value.to_f.finite?
+
+            value
           end
 
           def apply_cell_widths(table_model, widths)

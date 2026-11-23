@@ -93,7 +93,7 @@ module IsoDoc
           parts << localized.title_intro.value if localized.title_intro
           parts << localized.title_main.value if localized.title_main
           parts << localized.title_full.value if localized.title_full && !localized.title_main
-          parts.empty? ? nil : parts.join(TITLE_SEPARATOR)
+          parts.reject { |text| text.to_s.strip.empty? }.join(TITLE_SEPARATOR)
         end
 
         def part_text(localized)
@@ -101,13 +101,13 @@ module IsoDoc
 
           prefix = localized.title_part_prefix&.value.to_s.strip
           part_val = localized.title_part.value
-          return nil if part_val.nil? || part_val.to_s.empty?
+          return nil if part_val.nil? || part_val.to_s.strip.empty?
 
-          if !prefix.empty?
+          if prefix.empty?
+            part_val.to_s
+          else
             sep = prefix.end_with?(":") ? " " : ": "
             "#{prefix}#{sep}#{part_val}"
-          else
-            part_val.to_s
           end
         end
 
@@ -117,9 +117,11 @@ module IsoDoc
           titles = bib.titles
           return nil unless titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
 
-          titles.for_language(language) ||
-            titles.for_language("en") ||
-            Array(titles.per_language).first
+          candidates = [titles.for_language(language), titles.for_language("en")]
+          candidates.concat(Array(titles.per_language)).compact.find do |title|
+            [main_text(title), part_text(title), title.title_amd&.value,
+             title.title_amendment_prefix&.value].any? { |text| !text.to_s.strip.empty? }
+          end
         rescue StandardError
           nil
         end

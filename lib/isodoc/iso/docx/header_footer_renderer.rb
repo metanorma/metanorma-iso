@@ -65,7 +65,15 @@ module IsoDoc
         # odd/even part, rather than the DIS template's centered styles.
         def render_template_header(content, text)
           content.paragraphs.each do |paragraph|
-            run = paragraph.runs.find { |r| !Array(r.text).join.empty? }
+            field_depth = 0
+            run = paragraph.runs.find do |candidate|
+              case candidate.field_char&.fldCharType
+              when "begin" then field_depth += 1
+              when "end" then field_depth -= 1
+              end
+              field_depth.zero? && !candidate.field_char &&
+                !candidate.instr_text && !candidate.tab && !candidate.text.nil?
+            end
             run.text = text.to_s if run
           end
         end

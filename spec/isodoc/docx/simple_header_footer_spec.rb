@@ -48,4 +48,52 @@ RSpec.describe IsoDoc::Iso::Docx::HeaderFooterRenderer do
       expect(footer_parts(root).map { |p| footer_layout(p) }).to eq(layouts[:footers])
     end
   end
+
+  context "with fields and tabs before the header text" do
+    let(:header_result) do
+      part = header_parts(root).first
+      run_class = Uniword::Wordprocessingml::Run
+      protected_runs = [
+        run_class.new(field_char: Uniword::Wordprocessingml::FieldChar.new(fldCharType: "begin")),
+        run_class.new(instr_text: Uniword::Wordprocessingml::InstrText.new(text: " PAGE ")),
+        run_class.new(field_char: Uniword::Wordprocessingml::FieldChar.new(fldCharType: "separate")),
+        run_class.new(text: "1"),
+        run_class.new(field_char: Uniword::Wordprocessingml::FieldChar.new(fldCharType: "end")),
+        run_class.new(tab: Uniword::Wordprocessingml::Tab.new),
+      ]
+      part.content.paragraphs.first.runs.unshift(*protected_runs)
+      original_runs = protected_runs.map(&:to_xml)
+      original_footers = footer_parts(root).map { |footer| footer.content.to_xml }
+      texts = ["", "A", "B", "", "A"].map do |text|
+        renderer.render_header(part.content, text)
+        part_text(part)
+      end
+      {
+        texts: texts,
+        runs_preserved: protected_runs.map(&:to_xml) == original_runs,
+        footers_preserved: footer_parts(root).map { |footer| footer.content.to_xml } == original_footers,
+      }
+    end
+
+    it "updates empty and nonempty headers on every render" do
+      expect(header_result[:texts]).to eq(["1", "1A", "1B", "1", "1A"])
+    end
+
+    it "preserves fields and tabs" do
+      expect(header_result[:runs_preserved]).to be(true)
+    end
+
+    it "leaves the footers untouched" do
+      expect(header_result[:footers_preserved]).to be(true)
+    end
+  end
+
+  %i[simple dis].each do |template|
+    it "reuses a #{template} adapter after documents with empty headers" do
+      adapter = build_adapter(template: template)
+      identifiers = ["", "ISO A", "ISO B", "", "ISO A"]
+      actual = identifiers.map { |identifier| converted_header_texts(adapter, identifier) }
+      expect(actual).to eq(identifiers.zip)
+    end
+  end
 end
