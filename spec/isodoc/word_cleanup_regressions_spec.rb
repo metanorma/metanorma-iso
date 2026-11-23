@@ -96,10 +96,9 @@ RSpec.describe IsoDoc::Iso::WordConvert do
             .to be_nil
         end
 
-        it "preserves non-annex TOC variants" do
+        it "removes non-annex TOC variants that Word would print" do
           converter.word_cleanup(doc)
-          expect(doc.at("//p[@class='variant-title-toc']").text)
-            .to eq("Clause TOC title")
+          expect(doc.at("//p[@class='variant-title-toc']")).to be_nil
         end
 
         it "preserves the annex heading and body" do
