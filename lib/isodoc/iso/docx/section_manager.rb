@@ -15,16 +15,9 @@ module IsoDoc
       # page size, margins, headers, footers, and page numbering.
       #
       # Header/footer parts are reused from the loaded DOCX template.
-      # The DIS template provides 8 pre-allocated parts (4 headers, 4 footers)
-      # with valid rIds in the package relationships. The SectionManager
-      # rewrites their content for each section's needs via the
-      # HeaderFooterRenderer.
-      #
-      # Layout:
-      #   Front matter: rId16 (header even), rId17 (header default),
-      #                 rId18 (footer even), rId19 (footer default)
-      #   Body:         rId25 (header even), rId26 (header default),
-      #                 rId27 (footer even), rId28 (footer default)
+      # Template section references select the parts for each section.
+      # Missing body references inherit the front matter's parts, as in Word.
+      # HeaderFooterRenderer updates the selected parts' content.
       class SectionManager
         # ISO A4 page dimensions in twips
         PAGE_WIDTH = 11_906
@@ -55,8 +48,19 @@ module IsoDoc
         BODY_FOOTER_EVEN = "rId27"
         BODY_FOOTER_DEFAULT = "rId28"
 
-        # Set by the adapter from SectionManager.template_margins.
-        attr_writer :template_margins
+        DEFAULT_REFERENCES = {
+          front: {
+            header_even: FRONT_HEADER_EVEN, header_default: FRONT_HEADER_DEFAULT,
+            footer_even: FRONT_FOOTER_EVEN, footer_default: FRONT_FOOTER_DEFAULT
+          }.freeze,
+          body: {
+            header_even: BODY_HEADER_EVEN, header_default: BODY_HEADER_DEFAULT,
+            footer_even: BODY_FOOTER_EVEN, footer_default: BODY_FOOTER_DEFAULT
+          }.freeze,
+        }.freeze
+
+        # Captured by the adapter before it clears the template's body.
+        attr_writer :template_margins, :template_references
 
         MARGIN_NAMES = %i[top right bottom left header footer gutter].freeze
 
@@ -64,6 +68,7 @@ module IsoDoc
           @resolver = resolver
           @hf_renderer = header_footer_renderer
           @template_margins = {}
+          @template_references = {}
         end
 
         # The page margins of the template's front matter and body
@@ -86,6 +91,36 @@ module IsoDoc
 
           margins = MARGIN_NAMES.to_h { |name| [name, page_margins.public_send(name)] }
           margins if margins.values.none?(&:nil?)
+        end
+
+        def self.template_references(root)
+          body = root&.body
+          return {} unless body
+
+          sections = body.paragraphs.filter_map { |para| para.properties&.section_properties }
+          sections << body.section_properties if body.section_properties
+          return {} unless sections[1]
+
+          front = references_of(sections[1])
+          { front: front, body: front.merge(references_of(sections[2])) }
+        end
+
+        def self.references_of(section)
+          return {} unless section
+
+          { header: section.header_references, footer: section.footer_references }
+            .each_with_object({}) do |(kind, refs), result|
+            refs.each { |ref| result[:"#{kind}_#{ref.type}"] = ref.r_id }
+          end
+        end
+
+        # The tables use the same margins as the section they appear in.
+        # Leave fallback sizing to the renderer when no template was loaded.
+        def text_width(section)
+          margins = @template_margins[section]
+          return unless margins
+
+          PAGE_WIDTH - margins[:left] - margins[:right] - margins[:gutter]
         end
 
         # The PageScheme for the front matter section.
@@ -118,20 +153,14 @@ module IsoDoc
         # Front matter: roman numeral page numbers, even/odd headers.
         def insert_front_matter_section(doc, header_text:, copyright_text:)
           scheme = front_matter_scheme
-          write_header_part(doc, FRONT_HEADER_EVEN, header_text)
-          write_header_part(doc, FRONT_HEADER_DEFAULT, header_text)
-          write_footer_part(doc, FRONT_FOOTER_EVEN, copyright_text, scheme)
-          write_footer_part(doc, FRONT_FOOTER_DEFAULT, copyright_text, scheme)
+          refs = @template_references.fetch(:front, DEFAULT_REFERENCES[:front])
+          write_header_footer_parts(doc, refs, header_text, copyright_text, scheme)
 
           sec = build_section(
             margins: @template_margins.fetch(:front, BODY_MARGINS),
             page_numbering: { format: scheme.format },
           )
-          add_header_footer_refs(sec,
-            header_even: FRONT_HEADER_EVEN,
-            header_default: FRONT_HEADER_DEFAULT,
-            footer_even: FRONT_FOOTER_EVEN,
-            footer_default: FRONT_FOOTER_DEFAULT)
+          add_header_footer_refs(sec, refs)
 
           append_section_paragraph(doc, sec)
         end
@@ -140,20 +169,14 @@ module IsoDoc
         # Body: arabic page numbers starting at 1.
         def apply_body_section(doc, header_text:, copyright_text:)
           scheme = body_scheme
-          write_header_part(doc, BODY_HEADER_EVEN, header_text)
-          write_header_part(doc, BODY_HEADER_DEFAULT, header_text)
-          write_footer_part(doc, BODY_FOOTER_EVEN, copyright_text, scheme)
-          write_footer_part(doc, BODY_FOOTER_DEFAULT, copyright_text, scheme)
+          refs = @template_references.fetch(:body, DEFAULT_REFERENCES[:body])
+          write_header_footer_parts(doc, refs, header_text, copyright_text, scheme)
 
           sec = build_section(
             margins: @template_margins.fetch(:body, BODY_MARGINS),
             page_numbering: { start: 1 },
           )
-          add_header_footer_refs(sec,
-            header_even: BODY_HEADER_EVEN,
-            header_default: BODY_HEADER_DEFAULT,
-            footer_even: BODY_FOOTER_EVEN,
-            footer_default: BODY_FOOTER_DEFAULT)
+          add_header_footer_refs(sec, refs)
 
           body = doc.model&.body
           body.section_properties = sec if body
@@ -179,20 +202,25 @@ module IsoDoc
           sec
         end
 
-        def add_header_footer_refs(sec, header_even:, header_default:,
-                                   footer_even:, footer_default:)
-          sec.header_references << Uniword::Wordprocessingml::HeaderReference.new(
-            type: "even", r_id: header_even,
-          )
-          sec.header_references << Uniword::Wordprocessingml::HeaderReference.new(
-            type: "default", r_id: header_default,
-          )
-          sec.footer_references << Uniword::Wordprocessingml::FooterReference.new(
-            type: "even", r_id: footer_even,
-          )
-          sec.footer_references << Uniword::Wordprocessingml::FooterReference.new(
-            type: "default", r_id: footer_default,
-          )
+        def add_header_footer_refs(sec, references)
+          references.each do |key, r_id|
+            kind, type = key.to_s.split("_", 2)
+            if kind == "header"
+              sec.header_references << Uniword::Wordprocessingml::HeaderReference.new(type: type, r_id: r_id)
+            else
+              sec.footer_references << Uniword::Wordprocessingml::FooterReference.new(type: type, r_id: r_id)
+            end
+          end
+        end
+
+        def write_header_footer_parts(doc, references, header_text, copyright_text, scheme)
+          references.each do |key, r_id|
+            if key.to_s.start_with?("header_")
+              write_header_part(doc, r_id, header_text)
+            else
+              write_footer_part(doc, r_id, copyright_text, scheme)
+            end
+          end
         end
 
         def blank_cover_part(doc, kind, index)

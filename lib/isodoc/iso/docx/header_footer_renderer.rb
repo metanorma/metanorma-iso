@@ -26,9 +26,13 @@ module IsoDoc
           @resolver = resolver
         end
 
-        # Render a header part with bold running title text. HeaderCentered
-        # centres it; no direct alignment overrides the style.
+        # DIS uses HeaderCentered; Simple keeps the template part's own
+        # paragraph and run formatting.
         def render_header(part_content, text)
+          unless @resolver.paragraph_style(:header_centered)
+            return render_template_header(part_content, text)
+          end
+
           part_content.paragraphs.clear
           para = Uniword::Builder::ParagraphBuilder.new
           para.style = @resolver.paragraph_style(:header_centered)
@@ -38,9 +42,13 @@ module IsoDoc
           part_content.paragraphs << para.build
         end
 
-        # Render a footer part: the copyright statement on one centred
-        # line, the page-number field on a second centred line below it.
+        # DIS has two centered lines. Simple keeps each odd/even part's
+        # paragraph layout, tab stops and page-field position.
         def render_footer(part_content, copyright_text, scheme:)
+          unless @resolver.paragraph_style(:footer_centered)
+            return render_template_footer(part_content, copyright_text)
+          end
+
           part_content.paragraphs.clear
           copyright = styled_paragraph(@resolver.paragraph_style(:footer_centered))
           copyright.runs << Uniword::Wordprocessingml::Run.new(text: copyright_text.to_s)
@@ -52,6 +60,38 @@ module IsoDoc
         end
 
         private
+
+        # The Simple template uses different direct formatting on each
+        # odd/even part, rather than the DIS template's centered styles.
+        def render_template_header(content, text)
+          content.paragraphs.each do |paragraph|
+            field_depth = 0
+            run = paragraph.runs.find do |candidate|
+              case candidate.field_char&.fldCharType
+              when "begin" then field_depth += 1
+              when "end" then field_depth -= 1
+              end
+              field_depth.zero? && !candidate.field_char &&
+                !candidate.instr_text && !candidate.tab && !candidate.text.nil?
+            end
+            run.text = text.to_s if run
+          end
+        end
+
+        def render_template_footer(content, text)
+          content.paragraphs.each do |paragraph|
+            in_field = false
+            paragraph.runs.each do |run|
+              case run.field_char&.fldCharType
+              when "begin" then in_field = true
+              when "end" then in_field = false
+              end
+              # Drop the template's cached page value; Word computes PAGE.
+              run.text = nil if in_field
+              run.text = text.to_s if Array(run.text).join.include?("©")
+            end
+          end
+        end
 
         def styled_paragraph(style)
           paragraph = Uniword::Wordprocessingml::Paragraph.new

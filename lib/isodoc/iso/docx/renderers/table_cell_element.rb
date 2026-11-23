@@ -22,6 +22,7 @@ module IsoDoc
           autoload :NoteHandler, "#{ROOT}/note_handler"
           autoload :ListHandler, "#{ROOT}/list_handler"
           autoload :DefinitionListHandler, "#{ROOT}/definition_list_handler"
+          autoload :ExampleHandler, "#{ROOT}/example_handler"
         end
       end
     end
