@@ -101,6 +101,58 @@ RSpec.describe IsoDoc::Iso::Docx::MiddleTitleRenderer do
     end
   end
 
+  context "when the document language has no title" do
+    let(:french_document_english_title_only) do
+      minimal_iso_xml(<<~INNER)
+        <bibdata>
+          <language>fr</language>
+          <title language="en" type="main">English title only</title>
+        </bibdata>
+        <sections><clause id="c1"><title>Scope</title><p>Body.</p></clause></sections>
+      INNER
+    end
+
+    let(:french_document_english_title) do
+      minimal_iso_xml(<<~INNER)
+        <bibdata>
+          <language>fr</language>
+          <title language="de" type="main">Deutscher Titel</title>
+          <title language="en" type="main">English fallback</title>
+        </bibdata>
+        <sections><clause id="c1"><title>Scope</title><p>Body.</p></clause></sections>
+      INNER
+    end
+
+    let(:french_document_non_english_titles) do
+      minimal_iso_xml(<<~INNER)
+        <bibdata>
+          <language>fr</language>
+          <title language="de" type="main">Deutscher Titel</title>
+          <title language="it" type="main">Titolo italiano</title>
+        </bibdata>
+        <sections><clause id="c1"><title>Scope</title><p>Body.</p></clause></sections>
+      INNER
+    end
+
+    it "uses the English title when it is the only title for a French document" do
+      expect(middle_title_lines(french_document_english_title_only)).to eq(
+        [["MainTitle1", "English title only"]],
+      )
+    end
+
+    it "falls back to English when an English title is available" do
+      expect(middle_title_lines(french_document_english_title)).to eq(
+        [["MainTitle1", "English fallback"]],
+      )
+    end
+
+    it "falls back to the first available title language when English is absent" do
+      expect(middle_title_lines(french_document_non_english_titles)).to eq(
+        [["MainTitle1", "Deutscher Titel"]],
+      )
+    end
+  end
+
   ["en", "fr"].each do |document_language|
     context "with bilingual titles and document language #{document_language}" do
       let(:xml) do

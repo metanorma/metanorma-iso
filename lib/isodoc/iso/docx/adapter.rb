@@ -612,6 +612,13 @@ module IsoDoc
         #   Index
         #   [SECTPR — body section, arabic page numbers]
 
+        def start_front_matter(doc)
+          @section_manager.template_margins = @template_margins || {}
+          @section_manager.template_references = @template_references || {}
+          @section_manager.insert_cover_section(doc)
+          @context.text_width = @section_manager.text_width(:front)
+        end
+
         def visit_root(model, doc)
           @context.in_amendment = AmendmentDoctype.amendment?(model)
 
@@ -624,9 +631,7 @@ module IsoDoc
           # ── Section 1: Cover page ──
           @cover_renderer.render(model.bibdata, doc)
           @boilerplate_renderer.render_license(model.boilerplate, doc)
-          @section_manager.template_margins = @template_margins || {}
-          @section_manager.template_references = @template_references || {}
-          @section_manager.insert_cover_section(doc)
+          start_front_matter(doc)
 
           # ── Copyright page (still cover section's next page) ──
           @boilerplate_renderer.render_copyright(model.boilerplate, doc)
@@ -653,6 +658,7 @@ module IsoDoc
           # separate page between front matter and body, using the
           # MainTitle1 (intro+main) and MainTitle2 (title-part) paragraph
           # styles. Delegated to MiddleTitleRenderer.
+          @context.text_width = @section_manager.text_width(:body)
           @middle_title_renderer.render(model, doc)
           visit_sections(model.sections, doc) if model.sections
           model.annex&.each { |a| dispatch(a, doc) }

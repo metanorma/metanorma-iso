@@ -1,20 +1,24 @@
 # frozen_string_literal: true
 
 module LayoutDocxHelper
-  def converted_width_table(width_attribute, attachments)
+  def converted_width_table(width_attribute, attachments, template: :dis, zone: :body, cell_content: "a")
     xml = minimal_iso_xml(<<~XML)
       <sections><clause id="scope"><title>Scope</title>
         <table id="t1" #{width_attribute}>
           <colgroup><col width="25%"/><col width="75%"/></colgroup>
-          <tbody><tr><td>a</td><td>b</td></tr>
+          <tbody><tr><td>#{cell_content}</td><td>b</td></tr>
             <tr><td colspan="2">spanning cell</td></tr></tbody>
           #{attachments}
         </table>
       </clause></sections>
     XML
+    if zone == :front
+      xml = xml.sub('<sections><clause id="scope">', '<preface><foreword id="scope">')
+        .sub("</clause></sections>", "</foreword></preface>")
+    end
     Dir.mktmpdir do |dir|
       path = File.join(dir, "table.docx")
-      build_adapter.convert(xml, path)
+      build_adapter(template: template).convert(xml, path)
       Zip::File.open(path) do |zip|
         Nokogiri::XML(zip.read("word/document.xml")).at_xpath("//w:tbl", layout_ns)
       end

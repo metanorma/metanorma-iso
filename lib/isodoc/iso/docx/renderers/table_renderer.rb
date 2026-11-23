@@ -23,10 +23,11 @@ module IsoDoc
               build_table_sections(table, tbl)
             end
             append_collected_footnotes(tbl, footnotes)
-            ensure_table_structure(tbl.model, table.width, colgroup_weights(table))
+            nested = doc.is_a?(TableCellElement::CellTarget)
+            ensure_table_structure(tbl.model, table.width, colgroup_weights(table), nested: nested)
 
             if has_table_attachments?(table)
-              render_wrapped_table(tbl.model, table, doc)
+              render_wrapped_table(tbl.model, table, doc, nested: nested)
             else
               doc << tbl
             end
@@ -36,7 +37,7 @@ module IsoDoc
           # an outer 2-row 1-column table so the annotations visually
           # belong to the table. Row 1 contains the actual table; row 2
           # contains the rendered attachments as paragraphs.
-          def render_wrapped_table(inner_table_model, table, doc)
+          def render_wrapped_table(inner_table_model, table, doc, nested: false)
             outer = Uniword::Builder::TableBuilder.new
 
             outer.row do |row|
@@ -50,7 +51,8 @@ module IsoDoc
               row.cell { |c| append_attachments_to_cell(c, table) }
             end
 
-            ensure_table_width(outer.model, table.width)
+            ensure_table_width(inner_table_model, nil, nested: true)
+            ensure_table_width(outer.model, table.width, nested: nested)
             ensure_table_grid(outer.model, table.width, nil)
             doc << outer
           end
@@ -124,10 +126,9 @@ module IsoDoc
             no_h_band: 0,
             no_v_band: 1,
           }.freeze
-          # A4 width (11906) minus the ISO templates' two 851-twip margins.
+          # Used only when no template section margins are available.
           DEFAULT_FALLBACK_WIDTH_TWIPS = 10204
           WIDTH_UNITS_TO_TWIPS = {
-            "%" => DEFAULT_FALLBACK_WIDTH_TWIPS / 100.0,
             "pt" => 20, "px" => 15, "in" => 1440,
             "cm" => 1440 / 2.54, "mm" => 1440 / 25.4
           }.freeze
@@ -286,10 +287,10 @@ module IsoDoc
             )
           end
 
-          def ensure_table_structure(table_model, width, weights = nil)
+          def ensure_table_structure(table_model, width, weights = nil, nested: false)
             ensure_table_properties(table_model)
             ensure_table_borders(table_model)
-            ensure_table_width(table_model, width)
+            ensure_table_width(table_model, width, nested: nested)
             ensure_table_look(table_model)
             ensure_table_grid(table_model, width, weights)
           end
@@ -321,10 +322,16 @@ module IsoDoc
             )
           end
 
-          def ensure_table_width(table_model, width)
+          def ensure_table_width(table_model, width, nested: false)
+            relative = nested && (width.to_s.empty? || width.to_s.end_with?("%"))
+            value = if relative
+                      width.to_s.empty? ? 5000 : (width.to_f * 50).round
+                    else
+                      grid_total(width)
+                    end
             table_model.properties.table_width =
               Uniword::Properties::TableWidth.new(
-                w: grid_total(width), type: "dxa",
+                w: value, type: relative ? "pct" : "dxa",
               )
             table_model.properties.table_layout =
               Uniword::Properties::TableLayout.new(type: "fixed")
@@ -361,10 +368,13 @@ module IsoDoc
           end
 
           def grid_total(width)
+            available = @context.text_width || DEFAULT_FALLBACK_WIDTH_TWIPS
+            return (width.to_f * available / 100).round if width.to_s.end_with?("%")
+
             factor = WIDTH_UNITS_TO_TWIPS[width.to_s[/[a-z%]+\z/]]
             return (width.to_f * factor).round if factor
 
-            parse_twips(width) || DEFAULT_FALLBACK_WIDTH_TWIPS
+            parse_twips(width) || available
           end
 
           def apply_cell_widths(table_model, widths)
@@ -376,8 +386,25 @@ module IsoDoc
                 cell.properties.cell_width = Uniword::Properties::CellWidth.new(
                   w: widths[col, span].to_a.sum, type: "dxa",
                 )
+                fit_nested_tables(cell, widths[col, span].to_a.sum)
                 col += span
               end
+            end
+          end
+
+          # Nested tables are built before the parent grid is known. Scale
+          # their grids after assigning the containing cell's actual width.
+          def fit_nested_tables(cell, available)
+            Array(cell.tables).each do |table|
+              width = table.properties.table_width
+              total = if width.type == "pct"
+                        (available * width.w.to_i / 5000.0).round
+                      else
+                        [width.w.to_i, available].min
+                      end
+              width.w = total unless width.type == "pct"
+              weights = Array(table.grid&.columns).map(&:width)
+              ensure_table_grid(table, total.to_s, weights)
             end
           end
 

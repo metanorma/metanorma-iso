@@ -53,13 +53,88 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::TableRenderer do
     end
   end
 
+  context "with a table in Simple front matter" do
+    let(:table) { converted_width_table(width_attribute, attachments, template: :simple, zone: :front) }
+
+    it "uses the front section text width" do
+      expect([table_width_values(table), grid]).to eq([["dxa", "9638"], [2409, 7229]])
+    end
+
+    context "with a percentage width" do
+      let(:width_attribute) { 'width="50%"' }
+
+      it "resolves the percentage against the front section" do
+        expect([table_width_values(table), grid]).to eq([["dxa", "4819"], [1204, 3615]])
+      end
+    end
+
+    context "with an explicit author width" do
+      let(:width_attribute) { 'width="8000"' }
+
+      it "preserves the explicit width" do
+        expect([table_width_values(table), grid]).to eq([["dxa", "8000"], [2000, 6000]])
+      end
+    end
+  end
+
+  [[:simple, :body], [:dis, :front]].each do |template, zone|
+    context "with a table in #{template} #{zone}" do
+      let(:table) { converted_width_table(width_attribute, attachments, template: template, zone: zone) }
+
+      it "uses the section text width" do
+        expect([table_width_values(table), grid]).to eq([["dxa", "10204"], [2551, 7653]])
+      end
+    end
+  end
+
+  context "with a table nested in a cell" do
+    let(:nested_width) { "" }
+    let(:table) do
+      nested = %(<table id="nested" #{nested_width}><tbody><tr><td>Inner</td></tr></tbody></table>)
+      converted_width_table(width_attribute, attachments, cell_content: nested)
+    end
+
+    it "scales the nested grid to its containing column" do
+      inner = table.at_xpath("w:tr/w:tc/w:tbl", layout_ns)
+      expect([table_width_values(inner), table_grid_values(inner)]).to eq([["pct", "5000"], [2551]])
+    end
+
+    context "with an explicit percentage width" do
+      let(:nested_width) { 'width="50%"' }
+
+      it "resolves the percentage against the cell" do
+        inner = table.at_xpath("w:tr/w:tc/w:tbl", layout_ns)
+        expect([table_width_values(inner), table_grid_values(inner)]).to eq([["pct", "2500"], [1276]])
+      end
+    end
+
+    context "with an explicit absolute width" do
+      let(:nested_width) { 'width="1000"' }
+
+      it "preserves a width that fits the cell" do
+        inner = table.at_xpath("w:tr/w:tc/w:tbl", layout_ns)
+        expect([table_width_values(inner), table_grid_values(inner)]).to eq([["dxa", "1000"], [1000]])
+      end
+    end
+  end
+
   context "with attached notes" do
     let(:attachments) { '<note id="n1"><p>Table note.</p></note>' }
 
-    it "sizes the outer wrapper and inner table to the text width" do
+    it "sizes the wrapper to the section and the inner table to its cell" do
       inner = table.at_xpath("w:tr/w:tc/w:tbl", layout_ns)
-      expect([grid, table_width_values(table), table_grid_values(inner)])
-        .to eq([[10204], ["dxa", "10204"], [2551, 7653]])
+      expect([grid, table_width_values(table), table_width_values(inner), table_grid_values(inner)])
+        .to eq([[10204], ["dxa", "10204"], ["pct", "5000"], [2551, 7653]])
+    end
+
+    context "with an explicit percentage width" do
+      let(:width_attribute) { 'width="50%"' }
+
+      it "applies the author width once to the wrapper" do
+        inner = table.at_xpath("w:tr/w:tc/w:tbl", layout_ns)
+        expect([grid, table_width_values(inner), table_grid_values(inner)])
+          .to eq([[5102], ["pct", "5000"], [1275, 3827]])
+      end
     end
 
     it "keeps the wrapper borderless" do

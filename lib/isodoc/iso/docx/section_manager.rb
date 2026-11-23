@@ -26,14 +26,14 @@ module IsoDoc
         # Cover page margins (different from body — narrower left)
         COVER_MARGINS = {
           top: 794, bottom: 284, left: 851, right: 737,
-          header: 709, footer: 0, gutter: 567
+          header: 709, footer: 0, gutter: 567,
         }.freeze
 
         # Fallback front matter and body margins, used only when the
         # template carries no section properties for that section.
         BODY_MARGINS = {
           top: 794, bottom: 567, left: 1077, right: 1077,
-          header: 720, footer: 720, gutter: 0
+          header: 720, footer: 720, gutter: 0,
         }.freeze
 
         # Template header/footer part rIds for front matter section
@@ -112,6 +112,15 @@ module IsoDoc
             .each_with_object({}) do |(kind, refs), result|
             refs.each { |ref| result[:"#{kind}_#{ref.type}"] = ref.r_id }
           end
+        end
+
+        # The tables use the same margins as the section they appear in.
+        # Leave fallback sizing to the renderer when no template was loaded.
+        def text_width(section)
+          margins = @template_margins[section]
+          return unless margins
+
+          PAGE_WIDTH - margins[:left] - margins[:right] - margins[:gutter]
         end
 
         # The PageScheme for the front matter section.

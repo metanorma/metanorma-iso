@@ -117,7 +117,9 @@ module IsoDoc
           titles = bib.titles
           return nil unless titles.is_a?(Metanorma::Iso::Document::Metadata::TitleCollection)
 
-          titles.for_language(language)
+          titles.for_language(language) ||
+            titles.for_language("en") ||
+            Array(titles.per_language).first
         rescue StandardError
           nil
         end
