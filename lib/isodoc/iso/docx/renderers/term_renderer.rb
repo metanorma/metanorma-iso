@@ -21,6 +21,23 @@ module IsoDoc
           DEPRECATED_PREFIX = "DEPRECATED: "
           private_constant :DEPRECATED_PREFIX
 
+          DEFINITION_PARAGRAPH = Metanorma::Document::Components::Paragraphs::ParagraphBlock
+          DEFINITION_BLOCKS = [
+            DEFINITION_PARAGRAPH,
+            Metanorma::Document::Components::Lists::OrderedList,
+            Metanorma::Document::Components::Lists::UnorderedList,
+            Metanorma::Document::Components::Lists::DefinitionList,
+            Metanorma::Document::Components::Tables::TableBlock,
+            Metanorma::Document::Components::AncillaryBlocks::FigureBlock,
+            Metanorma::Document::Components::AncillaryBlocks::FormulaBlock,
+            Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock,
+            Metanorma::Document::Components::AncillaryBlocks::ExampleBlock,
+            Metanorma::Document::Components::Blocks::NoteBlock,
+            Metanorma::Document::Components::MultiParagraph::QuoteBlock,
+            Metanorma::Document::Components::MultiParagraph::AdmonitionBlock,
+          ].freeze
+          private_constant :DEFINITION_PARAGRAPH, :DEFINITION_BLOCKS
+
           def render(term, doc)
             render_term_number(term, doc)
             render_designations(term, doc)
@@ -155,55 +172,49 @@ prefix: nil)
             definitions.each { |defn| render_definition(defn, doc) }
           end
 
-          # Render each <p> of a definition with the Definition paragraph
-          # style applied. Walking the definition anonymously would let
-          # each <p> inherit the document default style instead.
+          # Definition paragraphs take the Definition style. Lists, tables,
+          # formulas and other blocks go through normal dispatch, in order.
           def render_definition(defn, doc)
-            paragraphs = definition_paragraphs(defn)
-            if paragraphs.empty?
-              @context.with_note do
-                para = build_paragraph(:definition)
-                apply_definition_spacing(para)
-                @inline_renderer.render(defn, para)
-                anchor_paragraph(defn, para)
-                semx_paragraphs(defn).each { |p| anchor_paragraph(p, para) }
-                doc << para
-              end
-              return
-            end
+            blocks = definition_blocks(defn)
+            return render_inline_definition(defn, doc) if blocks.empty?
 
-            paragraphs.each do |p|
+            blocks.each_with_index do |block, index|
+              if block.is_a?(DEFINITION_PARAGRAPH)
+                render_definition_paragraph(block, doc, index.zero? ? defn : nil)
+              else
+                @walker.dispatch(block, doc)
+              end
+            end
+          end
+
+          def render_definition_paragraph(paragraph, doc, owner)
+            @context.with_note do
               para = build_paragraph(:definition)
               apply_definition_spacing(para)
-              @inline_renderer.render(p, para)
-              anchor_paragraph(p, para)
-              anchor_paragraph(defn, para) if p.equal?(paragraphs.first)
+              @inline_renderer.render(paragraph, para)
+              anchor_paragraph(paragraph, para)
+              anchor_paragraph(owner, para) if owner
               doc << para
             end
           end
 
-          # <p>s one <semx> level down (fmt-definition > semx > p).
-          def semx_paragraphs(node)
-            return [] unless node.class.attributes.key?(:semx)
-
-            Array(node.semx).flat_map do |semx|
-              semx.class.attributes.key?(:p) ? Array(semx.p) : []
+          def render_inline_definition(defn, doc)
+            @context.with_note do
+              para = build_paragraph(:definition)
+              apply_definition_spacing(para)
+              @inline_renderer.render(defn, para)
+              anchor_paragraph(defn, para)
+              doc << para
             end
           end
 
-          def definition_paragraphs(defn)
+          def definition_blocks(defn)
             return [] unless defn.is_a?(Lutaml::Model::Serializable)
 
-            # fmt-definition has direct <p> children
-            return Array(defn.p) if defn.class.attributes.key?(:p) && defn.p
-
-            # definition → verbal-definition → p
-            if defn.class.attributes.key?(:verbal_definition)
-              vd = defn.verbal_definition
-              return Array(vd.p) if vd && vd.class.attributes.key?(:p) && vd.p
+            source = attribute_value(defn, :verbal_definition) || defn
+            block_children(source).select do |child|
+              DEFINITION_BLOCKS.any? { |klass| child.is_a?(klass) }
             end
-
-            []
           end
 
           def pick_definition_source(term)
