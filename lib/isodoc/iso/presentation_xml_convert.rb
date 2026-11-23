@@ -264,6 +264,8 @@ module IsoDoc
       # (no designation) are left as the base renders them.
       # https://github.com/metanorma/iso-10303/issues/717
       def biblio_ref_entry_code(ordinal, ids, _standard, datefn, _bib)
+        # Footnote templates end in a newline, which renders before the comma.
+        datefn = datefn.to_s.gsub(%r{</fn>\s+}, "</fn>")
         ret = esc(ids[:ordinal]) || esc(ids[:content]) || esc(ids[:metanorma]) ||
           "[#{esc ordinal.to_s}]"
         if ids[:sdo] && !ids[:sdo].empty?

@@ -23,6 +23,7 @@ module IsoDoc
           autoload :ListHandler, "#{ROOT}/list_handler"
           autoload :SourcecodeHandler, "#{ROOT}/sourcecode_handler"
           autoload :DefinitionListHandler, "#{ROOT}/definition_list_handler"
+          autoload :ExampleHandler, "#{ROOT}/example_handler"
         end
       end
     end

@@ -73,6 +73,7 @@ RSpec.describe IsoDoc::Iso::Docx::MiddleTitleRenderer do
       minimal_iso_xml(<<~INNER)
         <bibdata>
           <docidentifier primary="true">ISO 1</docidentifier>
+          <language>fr</language>
           <title language="fr" type="main">Titre en français</title>
         </bibdata>
         <sections><clause id="c1"><title>Scope</title><p>Body.</p></clause></sections>
@@ -84,8 +85,97 @@ RSpec.describe IsoDoc::Iso::Docx::MiddleTitleRenderer do
     end
   end
 
+  context "with only English titles" do
+    let(:xml) do
+      minimal_iso_xml(<<~INNER)
+        <bibdata>
+          <docidentifier primary="true">ISO 1</docidentifier>
+          <title language="en" type="main">English title</title>
+        </bibdata>
+        <sections><clause id="c1"><title>Scope</title><p>Body.</p></clause></sections>
+      INNER
+    end
+
+    it "renders the English title once" do
+      expect(middle_title_lines(xml)).to eq([["MainTitle1", "English title"]])
+    end
+  end
+
+  context "when the document language has no title" do
+    let(:french_document_english_title_only) do
+      minimal_iso_xml(<<~INNER)
+        <bibdata>
+          <language>fr</language>
+          <title language="en" type="main">English title only</title>
+        </bibdata>
+        <sections><clause id="c1"><title>Scope</title><p>Body.</p></clause></sections>
+      INNER
+    end
+
+    let(:french_document_english_title) do
+      minimal_iso_xml(<<~INNER)
+        <bibdata>
+          <language>fr</language>
+          <title language="de" type="main">Deutscher Titel</title>
+          <title language="en" type="main">English fallback</title>
+        </bibdata>
+        <sections><clause id="c1"><title>Scope</title><p>Body.</p></clause></sections>
+      INNER
+    end
+
+    let(:french_document_non_english_titles) do
+      minimal_iso_xml(<<~INNER)
+        <bibdata>
+          <language>fr</language>
+          <title language="de" type="main">Deutscher Titel</title>
+          <title language="it" type="main">Titolo italiano</title>
+        </bibdata>
+        <sections><clause id="c1"><title>Scope</title><p>Body.</p></clause></sections>
+      INNER
+    end
+
+    it "uses the English title when it is the only title for a French document" do
+      expect(middle_title_lines(french_document_english_title_only)).to eq(
+        [["MainTitle1", "English title only"]],
+      )
+    end
+
+    it "falls back to English when an English title is available" do
+      expect(middle_title_lines(french_document_english_title)).to eq(
+        [["MainTitle1", "English fallback"]],
+      )
+    end
+
+    it "falls back to the first available title language when English is absent" do
+      expect(middle_title_lines(french_document_non_english_titles)).to eq(
+        [["MainTitle1", "Deutscher Titel"]],
+      )
+    end
+  end
+
+  ["en", "fr"].each do |document_language|
+    context "with bilingual titles and document language #{document_language}" do
+      let(:xml) do
+        minimal_iso_xml(<<~INNER)
+          <bibdata>
+            <docidentifier primary="true">ISO 1</docidentifier>
+            <language>#{document_language}</language>
+            <title language="en" type="main">English title</title>
+            <title language="fr" type="main">Titre français</title>
+          </bibdata>
+          <sections><clause id="c1"><title>Scope</title><p>Body.</p></clause></sections>
+        INNER
+      end
+
+      it "renders only the matching localized title" do
+        expected = document_language == "en" ? "English title" : "Titre français"
+        expect(middle_title_lines(xml)).to eq([["MainTitle1", expected]])
+      end
+    end
+  end
+
   [false, true].each do |amendment|
-    context "with English and French titles#{' and amendment lines' if amendment}" do
+    context "with bilingual titles defaulting to English#{' and amendment lines' if amendment}" do
       let(:titles) do
         <<~XML
           <title language="en" type="title-intro">Cereals and pulses</title>
@@ -120,15 +210,10 @@ RSpec.describe IsoDoc::Iso::Docx::MiddleTitleRenderer do
           ["MainTitle2", "Part 1: Storage"],
         ]
         lines << ["MainTitle2", "AMENDMENT 1: Storage conditions"] if amendment
-        lines.push(
-          ["MainTitle1", "Céréales et légumineuses — Riz"],
-          ["MainTitle2", "Partie 1: Stockage"],
-        )
-        lines << ["MainTitle2", "AMENDEMENT 1: Conditions de stockage"] if amendment
         lines
       end
 
-      it "renders the complete English block before the French block" do
+      it "renders only the English block" do
         expect(middle_title_lines(xml)).to eq(expected)
       end
     end

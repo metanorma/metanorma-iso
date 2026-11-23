@@ -11,6 +11,9 @@ module IsoDoc
           # by the +num_id_key+ constructor parameter.
           class ListHandler
             include Base
+            include ModelUtils
+
+            NESTED_BLOCKS = %w[ul ol dl table note example sourcecode figure formula quote].freeze
 
             def initialize(num_id_key:, **dependencies)
               super(**dependencies)
@@ -32,8 +35,49 @@ module IsoDoc
                 para.style = @resolver.paragraph_style(target.style_key)
               end
               para.numbering(num_id, 0) if num_id
+              if nested_blocks?(item)
+                render_item_blocks(item, para, target)
+                return
+              end
               append_item_content(item, para)
               target << para
+            end
+
+            def nested_blocks?(item)
+              ordered?(item) && item.element_order.any? do |entry|
+                entry.element? && NESTED_BLOCKS.include?(entry.name)
+              end
+            end
+
+            def render_item_blocks(item, para, target)
+              lead = Array(item.paragraphs).first
+              children = []
+              each_ordered_element(item) do |type, child|
+                next if type == :text && child.strip.empty?
+                next if Array(item.fmt_name).any? { |label| label.equal?(child) }
+
+                children << [type, child]
+              end
+              while children.first && (children.first.first == :text || children.first.last.equal?(lead))
+                type, child = children.shift
+                if type == :text
+                  @inline_renderer.add_text(para, child)
+                else
+                  @inline_renderer.render(child, para)
+                  break
+                end
+              end
+              target << para
+              children.each do |type, child|
+                if type == :text
+                  text_para = Uniword::Builder::ParagraphBuilder.new
+                  text_para.style = @resolver.paragraph_style(target.style_key) if target.style_key
+                  @inline_renderer.add_text(text_para, child)
+                  target << text_para
+                else
+                  dispatcher.call(child, target)
+                end
+              end
             end
 
             def append_item_content(item, para)

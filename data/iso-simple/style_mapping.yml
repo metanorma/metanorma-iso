@@ -73,6 +73,9 @@ paragraph_styles:
 
   # Colophon
   colophon: zzCopyright
+  copyright: zzCopyright
+  copyright_hdr: zzCopyright
+  copyright_address: zzCopyright
   std_title: zzSTDTitle
 
   # Body text

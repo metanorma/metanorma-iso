@@ -21,6 +21,10 @@ module IsoDoc
 
             def <<(content)
               content = content.model if content.is_a?(Uniword::Builder::TableBuilder)
+              if content.is_a?(Uniword::Wordprocessingml::Table) &&
+                  Array(@builder.model.element_order).last&.name == "tbl"
+                @builder << Uniword::Builder::ParagraphBuilder.new
+              end
               @builder << content
             end
           end
