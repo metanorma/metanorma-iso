@@ -55,13 +55,12 @@ RSpec.describe "Word template paragraph spacing" do # rubocop:disable RSpec/Desc
       end
 
       it "applies the required copyright text colors in source and compiled CSS" do
-        expected = template == "simple" ? Array.new(3, "blue") : [nil, nil]
+        expected = Array.new(template == "simple" ? 3 : 2, "blue")
         expect(template_state[:copyright_colors]).to eq([expected, expected])
       end
 
-      it "preserves the template copyright border color" do
-        expected = template == "simple" ? "0000FF" : "auto"
-        expect(template_state[:border_colors]).to eq([expected])
+      it "leaves the template copyright statement unboxed" do
+        expect(template_state[:border_colors]).to eq([])
       end
     end
   end

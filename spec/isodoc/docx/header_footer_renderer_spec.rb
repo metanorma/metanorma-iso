@@ -11,8 +11,17 @@ RSpec.describe IsoDoc::Iso::Docx::HeaderFooterRenderer do
   # shape of HeaderFooterPart#content used by SectionManager.
   let(:part_content) { Struct.new(:paragraphs).new([]) }
 
+  def footer_layout(para)
+    para.runs.filter_map do |run|
+      next :tab if run.position_tab
+      next :page if run.instr_text
+
+      [run.text].join unless run.field_char
+    end
+  end
+
   describe "#render_header" do
-    it "produces a HeaderCentered paragraph with bold text and no alignment override" do
+    it "produces a right-aligned bold HeaderCentered paragraph by default" do
       renderer.render_header(part_content, "ISO/CD 17301-1:2016(en)")
 
       para = part_content.paragraphs.first
@@ -22,14 +31,19 @@ RSpec.describe IsoDoc::Iso::Docx::HeaderFooterRenderer do
       expect(style_value).to eq("HeaderCentered"),
         "header should use HeaderCentered style, got: #{style_value.inspect}"
 
-      # The ISO template centres the header through the style alone.
-      expect(para.properties&.alignment).to be_nil
+      expect(para.properties.alignment.value).to eq("right")
 
       text = para.runs.map(&:text).join
       expect(text).to include("ISO/CD 17301-1:2016(en)")
 
       bold = para.runs.first&.properties&.bold&.value
       expect(bold).to be(true), "header run should be bold"
+    end
+
+    it "aligns even-page headers left" do
+      renderer.render_header(part_content, "Title", parity: :even)
+
+      expect(part_content.paragraphs.first.properties.alignment.value).to eq("left")
     end
 
     it "clears any prior content in the part" do
@@ -43,14 +57,16 @@ RSpec.describe IsoDoc::Iso::Docx::HeaderFooterRenderer do
   describe "#render_footer with roman scheme" do
     let(:scheme) { IsoDoc::Iso::Docx::PageScheme.roman }
 
-    it "puts the page number on a FooterPageRomanNumber line below the copyright" do
+    it "keeps copyright and an unbolded 11pt page number on one left-aligned line" do
       renderer.render_footer(part_content, "© ISO 2016", scheme: scheme)
 
-      expect(part_content.paragraphs.length).to eq(2)
-      para = part_content.paragraphs.last
-      style_value = para_style_value(para)
-      expect(style_value).to eq("FooterPageRomanNumber"),
-        "roman footer should use FooterPageRomanNumber, got: #{style_value.inspect}"
+      expect(part_content.paragraphs.length).to eq(1)
+      para = part_content.paragraphs.first
+      expect(para_style_value(para)).to eq("FooterCentered")
+      expect(para.properties.alignment.value).to eq("left")
+      field = para.runs.find(&:field_char)
+      expect(field.properties.size.value).to eq(22)
+      expect(field.properties.bold).to be_nil
     end
 
     it "embeds the page-number field as run-wrapped fldChars" do
@@ -91,29 +107,36 @@ RSpec.describe IsoDoc::Iso::Docx::HeaderFooterRenderer do
         "instrText must include PAGE, got: #{instr_text.inspect}"
     end
 
-    it "puts the copyright alone on a FooterCentered first line, with no tab" do
+    it "puts copyright, margin tab, then page number on odd pages" do
       renderer.render_footer(part_content, "© ISO 2016", scheme: scheme)
 
-      copyright, page_number = part_content.paragraphs
-      expect(para_style_value(copyright)).to eq("FooterCentered")
-      expect(copyright.runs.map(&:text).join).to eq("© ISO 2016")
-      expect(copyright.runs.map(&:field_char).compact).to be_empty
-      expect(page_number.runs.map(&:text).compact.join).not_to include("ISO")
-      expect(part_content.paragraphs.flat_map(&:runs).map(&:tab).compact).to be_empty
+      expect(footer_layout(part_content.paragraphs.first)).to eq(["© ISO 2016", :tab, :page])
+    end
+
+    it "puts page number, margin tab, then copyright on even pages" do
+      renderer.render_footer(part_content, "© ISO 2016", scheme: scheme, parity: :even)
+
+      expect(footer_layout(part_content.paragraphs.first)).to eq([:page, :tab, "© ISO 2016"])
+    end
+
+    it "right-aligns the tab against the margin so any section width works" do
+      renderer.render_footer(part_content, "© ISO 2016", scheme: scheme)
+
+      tab = part_content.paragraphs.first.runs.filter_map(&:position_tab).first
+      expect([tab.relative_to, tab.alignment, tab.leader]).to eq(%w[margin right none])
     end
   end
 
   describe "#render_footer with arabic scheme" do
     let(:scheme) { IsoDoc::Iso::Docx::PageScheme.arabic }
 
-    it "puts the page number on a FooterPageNumber line below the copyright" do
+    it "keeps a bold 11pt page number on the shared footer line" do
       renderer.render_footer(part_content, "© ISO 2024", scheme: scheme)
 
-      expect(part_content.paragraphs.length).to eq(2)
-      para = part_content.paragraphs.last
-      style_value = para_style_value(para)
-      expect(style_value).to eq("FooterPageNumber"),
-        "arabic footer should use FooterPageNumber, got: #{style_value.inspect}"
+      expect(part_content.paragraphs.length).to eq(1)
+      field = part_content.paragraphs.first.runs.find(&:field_char)
+      expect(field.properties.size.value).to eq(22)
+      expect(field.properties.bold).not_to be_nil
     end
 
     it "embeds the page-number field as run-wrapped fldChars" do

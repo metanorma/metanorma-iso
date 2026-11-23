@@ -27,11 +27,10 @@ RSpec.describe IsoDoc::Iso::Docx::SectionManager do # rubocop:disable RSpec/Spec
       end
     end
 
-    it "keeps the centered copyright and roman or arabic footer styles" do
+    it "keeps each footer on one FooterCentered line" do
       with_generated_header_footer_package(:dis) do |zip|
         expect(generated_part_styles(zip).map { |refs| refs.select { |(kind, _), _| kind == "footer" }.values })
-          .to eq([[["FooterCentered", "FooterPageRomanNumber"]] * 2,
-                  [["FooterCentered", "FooterPageNumber"]] * 2])
+          .to eq([[["FooterCentered"]] * 2, [["FooterCentered"]] * 2])
       end
     end
 

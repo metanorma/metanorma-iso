@@ -19,8 +19,8 @@ RSpec.describe IsoDoc::Iso::Docx::Renderers::NoteRenderer do
     XML
     convert_and_extract(adapter, xml) do |pkg|
       texts = pkg.document.body.paragraphs.map { |p| p.runs.map { |r| run_text(r) }.join }
-      expect(texts.grep(/Para [AB]/)).to eq(["Note 1 to entry:Para A.", "Para B."])
-      expect(texts.grep(/Single/)).to eq(["Note 2 to entry:Single bold."])
+      expect(texts.grep(/Para [AB]/)).to eq(["Note 1 to entry: Para A.", "Para B."])
+      expect(texts.grep(/Single/)).to eq(["Note 2 to entry: Single bold."])
     end
   end
 

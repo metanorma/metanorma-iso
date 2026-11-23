@@ -215,10 +215,11 @@ module IsoDoc
 
         def write_header_footer_parts(doc, references, header_text, copyright_text, scheme)
           references.each do |key, r_id|
+            parity = key.to_s.end_with?("_even") ? :even : :odd
             if key.to_s.start_with?("header_")
-              write_header_part(doc, r_id, header_text)
+              write_header_part(doc, r_id, header_text, parity)
             else
-              write_footer_part(doc, r_id, copyright_text, scheme)
+              write_footer_part(doc, r_id, copyright_text, scheme, parity)
             end
           end
         end
@@ -249,18 +250,18 @@ module IsoDoc
           parts.find { |p| p[:r_id] == r_id }
         end
 
-        def write_header_part(doc, r_id, text)
+        def write_header_part(doc, r_id, text, parity)
           part = find_part(doc, r_id)
           return unless part
 
-          @hf_renderer.render_header(part[:content], text)
+          @hf_renderer.render_header(part[:content], text, parity: parity)
         end
 
-        def write_footer_part(doc, r_id, copyright_text, scheme)
+        def write_footer_part(doc, r_id, copyright_text, scheme, parity)
           part = find_part(doc, r_id)
           return unless part
 
-          @hf_renderer.render_footer(part[:content], copyright_text, scheme: scheme)
+          @hf_renderer.render_footer(part[:content], copyright_text, scheme: scheme, parity: parity)
         end
 
         # Create a paragraph with section properties attached.

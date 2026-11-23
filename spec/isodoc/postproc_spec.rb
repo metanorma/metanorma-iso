@@ -178,7 +178,7 @@ RSpec.describe IsoDoc do
              1.1
            </p>
            <p class='Terms' style='text-align:left;'>paddy</p>
-           <p class='Definition'>
+           <p class='Definition' style='margin-top:12.0pt;'>
              <a name='_eb29b35e-123e-4d1c-b50b-2714d41e747f' id='_eb29b35e-123e-4d1c-b50b-2714d41e747f'/>
              rice retaining its husk after threshing
            </p>
