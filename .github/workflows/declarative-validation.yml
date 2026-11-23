@@ -36,9 +36,6 @@ jobs:
           touch test-results/rspec-options
           bundle exec rspec --options test-results/rspec-options --format progress \
             spec/metanorma/validation \
-            spec/metanorma/validate_spec.rb \
-            spec/metanorma/validate_section_spec.rb \
-            spec/metanorma/validate_style_spec.rb \
             spec/exe/metanorma_iso_validate_spec.rb \
             --format json --out test-results/declarative-validation.json
       - name: Prove feature and component coverage
@@ -83,25 +80,9 @@ jobs:
             },
             "component_paths": [
               "spec/metanorma/validation",
-              "spec/metanorma/validate_spec.rb",
-              "spec/metanorma/validate_section_spec.rb",
-              "spec/metanorma/validate_style_spec.rb",
               "spec/exe/metanorma_iso_validate_spec.rb"
             ],
-            "allowed_legacy_pending": [
-              {
-                "file": "spec/metanorma/validate_spec.rb",
-                "description": "Metanorma::Iso Warns of illegal iteration"
-              },
-              {
-                "file": "spec/metanorma/validate_style_spec.rb",
-                "description": "Metanorma::Iso warns that foreword may contain recommendation"
-              },
-              {
-                "file": "spec/metanorma/validate_style_spec.rb",
-                "description": "Metanorma::Iso warns that foreword may contain permission"
-              }
-            ]
+            "allowed_legacy_pending": []
           }
           JSON
           report = JSON.parse(File.read("test-results/declarative-validation.json"))
