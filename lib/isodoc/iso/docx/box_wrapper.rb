@@ -66,7 +66,7 @@ module IsoDoc
 
           if inline_label_paragraph?(children)
             para = build_paragraph(style_key)
-            append_label(para, label_text(node), inline: true)
+            append_label(para, label_text(node), inline: true, spaced: term_note?(node))
             @inline_renderer.render(first, para)
             anchor_paragraph(first, para)
             anchor_paragraph(node, para)
@@ -143,15 +143,21 @@ module IsoDoc
           text.empty? ? nil : text
         end
 
-        def append_label(para, text, inline: false)
+        # Term notes take a space after "Note 1 to entry:", as DOC and the
+        # published ISO documents do; notes and examples take a tab.
+        def append_label(para, text, inline: false, spaced: false)
           return unless text
 
-          para << text
-          return unless inline
+          para << (spaced ? "#{text} " : text)
+          return if spaced || !inline
 
           para << Uniword::Wordprocessingml::Run.new(
             tab: Uniword::Wordprocessingml::Tab.new,
           )
+        end
+
+        def term_note?(node)
+          node.is_a?(Metanorma::Iso::Document::Terms::TermNote)
         end
 
         # Element children of +node+ in document order (text nodes and

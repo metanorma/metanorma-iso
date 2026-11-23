@@ -60,7 +60,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "#convert definition block preservati
       context "with a figure key" do
         let(:inner) { "<clause id='c'><title>Scope</title><figure><pre>x</pre>#{dl}</figure></clause>" }
 
-        it_behaves_like "a styled term note", ["KEY", "FIRST", "Note 1 to entry:\tNOTEBODY"], nil
+        it_behaves_like "a styled term note", ["KEY", "FIRST", "Note 1 to entry: NOTEBODY"], nil
       end
 
       context "with a figure key without blocks" do
@@ -90,7 +90,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "#convert definition block preservati
             end
           end
 
-          it_behaves_like "a styled term note", ["KEY", "FIRST", "Note 1 to entry:\tNOTEBODY", "TAIL"], nil
+          it_behaves_like "a styled term note", ["KEY", "FIRST", "Note 1 to entry: NOTEBODY", "TAIL"], nil
         end
       end
     end
