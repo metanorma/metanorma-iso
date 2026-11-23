@@ -10,7 +10,7 @@ gem "metanorma-plugin-lutaml", "~> 0.7"
 gem "metanorma-utils", "~> 2.0" # GcBudget + the array-join table cell buffer
 # Declarative rules backend, pending release of Standoc PR #1398.
 gem "metanorma-standoc", github: "metanorma/metanorma-standoc",
-    ref: "c59995be3f5976d873e764b571222549df1e9bc2"
+    ref: "734d190f7b6c483fb6f2ffe5ab400311dc41cb0b"
 gem "metanorma-document", "~> 0.5.3" # relaton 3.1 line; relaton-bib retired
 gem "rake"
 # relaton-bib is retired; its successors ship in the relaton 3.1 line.

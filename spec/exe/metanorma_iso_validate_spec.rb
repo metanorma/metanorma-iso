@@ -15,9 +15,9 @@ RSpec.describe "metanorma-iso-validate CLI" do
           <foreword id="fw"><p>foreword</p></foreword>
         </preface>
         <sections>
-          <clause type="scope" id="scope"><title>Scope</title></clause>
+          <clause type="scope" id="scope"><title>Scope</title><p id="scope-p">This document specifies a useful method.</p></clause>
           <terms id="terms"><title>Terms</title></terms>
-          <clause id="c1"><title>Body</title></clause>
+          <clause id="c1"><title>Body</title><p id="body-p">The method applies to the complete sample.</p></clause>
         </sections>
         <bibliography>
           <references normative="true"><title>Norm Refs</title></references>
