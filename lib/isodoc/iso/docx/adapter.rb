@@ -846,26 +846,12 @@ module IsoDoc
         ].freeze
 
         def render_anchored(renderer, node, doc)
-          paragraphs = container_paragraphs(doc)
-          before = paragraphs&.size
-          result = renderer.render(node, doc)
-          first = paragraphs && paragraphs.drop(before).find do |element|
-            element.is_a?(Uniword::Wordprocessingml::Paragraph) ||
-              element.is_a?(Uniword::Builder::ParagraphBuilder)
+          result = nil
+          first = Renderers::Anchoring.first_paragraph_added(doc) do
+            result = renderer.render(node, doc)
           end
           Renderers::Anchoring.anchor(@context, node, first) if first
           result
-        end
-
-        # The paragraph list of +doc+: document body, table cell, or the
-        # table attachment buffer (which holds paragraphs and tables).
-        def container_paragraphs(doc)
-          return doc.paragraphs if doc.is_a?(Renderers::TableAttachmentBuffer)
-
-          return unless doc.is_a?(Uniword::Builder::BaseBuilder)
-          return doc.model.body&.paragraphs if doc.is_a?(Uniword::Builder::DocumentBuilder)
-
-          doc.model.paragraphs
         end
 
         # ── Tree walking ───────────────────────────────────────────────

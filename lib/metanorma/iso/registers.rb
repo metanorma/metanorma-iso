@@ -52,6 +52,10 @@ module Metanorma
           to_type: iso::Blocks::NoteBlock,
         )
         reg.register_global_type_substitution(
+          from_type: Metanorma::Document::Components::AncillaryBlocks::FormulaBlock,
+          to_type: iso::Blocks::FormulaBlock,
+        )
+        reg.register_global_type_substitution(
           from_type: Metanorma::Document::Components::Lists::DdElement,
           to_type: iso::DdElement,
         )

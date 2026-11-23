@@ -47,6 +47,7 @@ module IsoDoc
             para = build_paragraph(:admonition)
             @inline_renderer.render(admonition, para)
             doc << para
+            @walker.walk_attribute(admonition, :note, doc)
           end
 
           def render_body_paragraph(paragraph, doc)
@@ -54,6 +55,7 @@ module IsoDoc
             @inline_renderer.render(paragraph, para)
             anchor_paragraph(paragraph, para)
             doc << para
+            @walker.walk_attribute(paragraph, :note, doc)
           end
 
           def attribute_value(node, attr)
