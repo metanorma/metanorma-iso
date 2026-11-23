@@ -44,9 +44,7 @@ RSpec.describe IsoDoc::Iso::Docx::Adapter, "#convert block content-loss edges", 
 
   it "prints figure preformatted text with child markup as text, not an Array literal" do
     out = clause("<figure id='f'><pre>one <strong>two</strong> three</pre></figure>")
-    # The model maps only the <pre> text nodes, so the child's own text is
-    # not recoverable; the surviving text must still print as plain text.
-    expect(out).to include("one  three")
+    expect(out).to include("one two three")
     expect(out.join).not_to include("[", "#<")
   end
 

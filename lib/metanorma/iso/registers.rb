@@ -22,18 +22,7 @@ module Metanorma
           from_type: Metanorma::Document::Components::Inline::SemxElement,
           to_type: iso::SemxElement,
         )
-        reg.register_global_type_substitution(
-          from_type: Metanorma::Document::Components::Blocks::NoteBlock,
-          to_type: iso::Blocks::NoteBlock,
-        )
-        reg.register_global_type_substitution(
-          from_type: Metanorma::Document::Components::Lists::DdElement,
-          to_type: iso::DdElement,
-        )
-        reg.register_global_type_substitution(
-          from_type: Metanorma::Document::Components::Paragraphs::ParagraphBlock,
-          to_type: iso::ParagraphBlock,
-        )
+        register_block_substitutions(reg)
         reg.register_global_type_substitution(
           from_type: sd::Sections::DefinitionSection,
           to_type: iso::DefinitionSection,
@@ -55,6 +44,27 @@ module Metanorma
           to_type: iso::Sections::IsoPreface,
         )
       end
+
+      def register_block_substitutions(reg)
+        iso = Metanorma::Iso::Document
+        reg.register_global_type_substitution(
+          from_type: Metanorma::Document::Components::Blocks::NoteBlock,
+          to_type: iso::Blocks::NoteBlock,
+        )
+        reg.register_global_type_substitution(
+          from_type: Metanorma::Document::Components::Lists::DdElement,
+          to_type: iso::DdElement,
+        )
+        reg.register_global_type_substitution(
+          from_type: Metanorma::Document::Components::AncillaryBlocks::LiteralBlock,
+          to_type: iso::LiteralBlock,
+        )
+        reg.register_global_type_substitution(
+          from_type: Metanorma::Document::Components::Paragraphs::ParagraphBlock,
+          to_type: iso::ParagraphBlock,
+        )
+      end
+      private_class_method :register_block_substitutions
     end
   end
 end

@@ -55,7 +55,7 @@ module IsoDoc
 
             Array(figure.pre).each do |literal|
               para = build_paragraph(:sourcecode)
-              with_preserved_whitespace { @inline_renderer.add_text(para, Array(literal.content).join) }
+              with_preserved_whitespace { @inline_renderer.render(literal, para) }
               doc << para
             end
           end
