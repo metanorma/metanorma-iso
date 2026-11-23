@@ -74,6 +74,33 @@ RSpec.describe Metanorma::Iso::Validation::Rules::UniqueIdRule do
       expect(rule.check(context_with(xml))).to eq([])
     end
 
+    # On the second parse in one process, lutaml-model 0.8.176+ materializes
+    # the IsoPreface clause/content render mirror as its own objects: the
+    # mirrored subtree's ids are distinct objects carrying the same values.
+    # The id walk must skip the mirror subtree, or in-memory-only duplicates
+    # (the document XML is clean) abort the compile.
+    it "does not flag mirror descendants deep-copied by a later parse" do
+      xml = <<~XML
+        <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="iso">
+          <bibdata><docidentifier>ISO 1</docidentifier></bibdata>
+          <preface>
+            <clause id="corr_01" type="corrigenda">
+              <title>Corrigenda</title>
+              <table id="tab_01">
+                <name id="tab_01_name">T1</name>
+              </table>
+            </clause>
+          </preface>
+        </metanorma>
+      XML
+      Metanorma::IsoDocument::Root.from_xml(xml)
+      root = Metanorma::IsoDocument::Root.from_xml(xml)
+      shared = Metanorma::Iso::Validation::SharedState.new
+      context = Metanorma::Iso::Validation::Context.new(root: root, log: nil,
+                                                        state: state, shared: shared)
+      expect(rule.check(context)).to eq([])
+    end
+
     it "does not flag IsoPreface clause/content mirror pairs" do
       xml = <<~XML
         <metanorma xmlns="https://www.metanorma.org/ns/standoc" type="semantic" flavor="iso">
