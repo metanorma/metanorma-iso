@@ -17,7 +17,14 @@ module Metanorma
       # them. Warning-level rules live in the catalog only and are not
       # encoded here.
       class Validator
-        TBX_NS = { "tbx" => "urn:iso:std:iso:30042:ed-1" }.freeze
+        # Prefixes used in the rule selectors, bound to the namespace URIs the
+        # schematron declares, so documents are matched by URI whatever
+        # prefixes they choose.
+        NS = {
+          "tbx" => "urn:iso:std:iso:30042:ed-1",
+          "mml" => "http://www.w3.org/1998/Math/MathML",
+          "xlink" => "http://www.w3.org/1999/xlink",
+        }.freeze
 
         SCHEMATRON_PATH = File.expand_path("../schematron/iso-sts.sch", __dir__).freeze
 
@@ -32,7 +39,7 @@ module Metanorma
           doc = parse(xml)
           report = ValidationReport.new
           rules.each do |rule|
-            doc.xpath(absolute_context(rule.context), TBX_NS).each do |node|
+            doc.xpath(absolute_context(rule.context), NS).each do |node|
               # A check returns nil/true (pass), a message, or a list of
               # messages (one per offending child, e.g. absence_check).
               Array(rule.check.call(node, doc)).each do |msg|
@@ -74,9 +81,12 @@ module Metanorma
         # -- check helpers -------------------------------------------------
         # Moxml has no at_xpath; first-match helper over #xpath.
         def at(node, selector)
-          node.xpath(selector).first
+          node.xpath(selector, NS).first
         end
 
+        def xlink_href(node)
+          at(node, "@xlink:href")&.value.to_s
+        end
 
         def nbsp_strip(text)
           case text
@@ -85,10 +95,12 @@ module Metanorma
           end
         end
 
-        def enum_check(attr, allowed, label:)
+        # required: true mirrors `@a = (...)` (absent fails); otherwise
+        # `not(@a) or @a = (...)`. An empty value fails either way.
+        def enum_check(attr, allowed, label:, required: false)
           lambda do |node, *_|
             v = node[attr]
-            return nil if v.nil? || v.empty?
+            return nil if v.nil? && !required
             return nil if allowed.include?(v)
 
             "#{label} @#{attr}='#{v}' is not one of: #{allowed.join(', ')}"
@@ -103,7 +115,7 @@ module Metanorma
 
         def absence_check(selector, what)
           lambda do |node, *_|
-            node.xpath(selector, TBX_NS).map do |bad|
+            node.xpath(selector, NS).map do |bad|
               "#{what}: <#{bad.name}> is not permitted"
             end
           end
@@ -113,7 +125,7 @@ module Metanorma
           lambda do |node, *_|
             title = nbsp_strip(at(node, "./title"))
             return "The <legend> <title> carries '#{word}'" unless
-              title.match?(/\A#{word}\b/i)
+              title.match?(/#{Regexp.escape(word)}/i)
             return "The <legend> carries a <def-list>" unless at(node, "./def-list")
 
             bad = node.xpath("./def-list/def-item").find do |d|
@@ -227,11 +239,12 @@ module Metanorma
                  end)
           r.call("iso-gdg-4.3.2-7", "Guidelines 4.3.2", "standard",
                  lambda do |node, *_|
-                   pm = at(node, "./processing-meta") or return nil
-                   cm = at(pm, "./custom-meta-group/custom-meta" \
-                                    "[meta-name='iec_iso_coding_guidelines_edition']")
-                   return nil if cm &&
-                     !at(cm, "./meta-value").to_s.strip.empty?
+                   cms = node.xpath("./processing-meta/custom-meta-group/" \
+                                    "custom-meta[meta-name=" \
+                                    "'iec_iso_coding_guidelines_edition']", NS)
+                   return nil if cms.any? do |cm|
+                     !nbsp_strip(at(cm, "./meta-value")).empty?
+                   end
 
                    "<processing-meta> shall carry a <custom-meta> with " \
                      "meta-name iec_iso_coding_guidelines_edition and the " \
@@ -356,10 +369,6 @@ module Metanorma
 
           r.call("iso-gdg-4.4.2-1", "Guidelines 4.4.2", "sec",
                  lambda do |node, *_|
-                   # Unnumbered front sections (foreword, introduction)
-                   # carry no clause number — the rule targets numbered
-                   # clauses.
-                   return nil if %w[intro foreword].include?(node["sec-type"])
                    return nil if !node.xpath("./sec").any? ||
                      at(node, "./label")
 
@@ -374,12 +383,12 @@ module Metanorma
                    "numbered paragraphs carry <label> and no <title>"
                  end)
           r.call("iso-gdg-9.1-1", "Guidelines 9.1", "sec[@sec-type='terms']",
-                 absence_check("./sec//tbx:termEntry",
+                 absence_check("./sec/tbx:termEntry",
                                "terminological entries coded as subclauses " \
                                "of the terms clause (use term-sec/TBX)"))
           r.call("iso-gdg-4.5.1-1", "Guidelines 4.5.1", "app",
                  enum_check("content-type", %w[informative normative],
-                            label: "annex"))
+                            label: "annex", required: true))
           r.call("iso-gdg-4.5.1-2", "Guidelines 4.5.1, B.2.6", "app",
                  lambda do |node, *_|
                    problems = []
@@ -504,7 +513,7 @@ module Metanorma
                    rid = node["rid"]
                    is_term = doc.xpath("//term-sec[@id='#{rid}'] | " \
                                        "//tbx:termEntry[@id='#{rid}']",
-                                       TBX_NS).any?
+                                       NS).any?
                    return nil unless is_term
                    return nil if node["ref-type"] == "custom" &&
                      node["custom-type"] == "term-entry"
@@ -550,7 +559,7 @@ module Metanorma
           r.call("iso-gdg-5.7-2", "Guidelines 5.7", "//list",
                  enum_check("list-type",
                             %w[alpha-lower arabic roman-lower dash bullet],
-                            label: "OSD list"))
+                            label: "OSD list", required: true))
           r.call("iso-gdg-5.7-3", "Guidelines 5.7", "//p",
                  absence_check("./list", "lists are coded outside the " \
                                "preceding <p>"))
@@ -630,7 +639,7 @@ module Metanorma
                          "paragraphs" })
           r.call("iso-gdg-5.10-2", "Guidelines 5.10", "graphic | inline-graphic",
                  lambda do |node, *_|
-                   href = node["xlink:href"].to_s
+                   href = xlink_href(node)
                    return nil if href.start_with?("data:")
                    return nil unless href.match?(/\.(png|gif|jpe?g|svg|tiff?|eps|pdf)\z/i)
 
@@ -639,13 +648,12 @@ module Metanorma
                  end)
           r.call("iso-gdg-5.10-3", "Guidelines 5.10", "graphic | inline-graphic",
                  lambda do |node, doc|
-                   href = node["xlink:href"].to_s
-                   return nil if href.start_with?("data:")
+                   href = xlink_href(node)
                    if doc.xpath("//std-meta//originator[normalize-space()='ISO']").any? &&
                      href.include?("/")
                      "ISO graphic references carry no asset-folder prefix: '#{href}'"
                    elsif doc.xpath("//std-meta//originator[normalize-space()='IEC']").any? &&
-                     !href.include?("/") && !href.empty?
+                     !href.include?("/")
                      "IEC graphic references carry the asset folder name: '#{href}'"
                    end
                  end)
@@ -780,7 +788,7 @@ module Metanorma
           r.call("iso-gdg-7.4-1", "Guidelines 7.4",
                  "disp-formula | inline-formula",
                  lambda do |node, *_|
-                   c = node.xpath("./mml:math", TBX_NS).size
+                   c = node.xpath("./mml:math", NS).size
                    return nil if c == 1
 
                    "the mathematical expression is coded with exactly one " \
@@ -798,7 +806,7 @@ module Metanorma
           r.call("iso-gdg-7.2-1", "Guidelines 7.2", "disp-formula",
                  lambda do |node, *_|
                    bad = node.xpath("./non-normative-note").find do |n|
-                     n.xpath("./preceding-sibling::mml:math", TBX_NS).empty?
+                     n.xpath("./preceding-sibling::mml:math", NS).empty?
                    end
                    bad && "<disp-formula> notes follow the <mml:math> element"
                  end)
@@ -822,9 +830,9 @@ module Metanorma
                  "ref-list[@content-type='norm-refs']/ref/std",
                  lambda do |node, *_|
                    problems = []
-                   unless node.xpath("./std-id[@std-id-link-type='urn']").any? &&
-                     node.xpath("./std-id[@std-id-type='dated'] | " \
-                                "./std-id[@std-id-type='undated']").any?
+                   unless node.xpath("./std-id[@std-id-link-type='urn']" \
+                                     "[@std-id-type='dated' or " \
+                                     "@std-id-type='undated']", NS).any?
                      problems << "<std-id @std-id-link-type='urn'> with " \
                        "@std-id-type dated/undated"
                    end
@@ -903,21 +911,21 @@ module Metanorma
                  end)
           r.call("iso-gdg-9.2.3-1", "Guidelines 9.2.3", "tbx:tig",
                  lambda do |node, *_|
-                   c = node.xpath("./tbx:term", TBX_NS).size
+                   c = node.xpath("./tbx:term", NS).size
                    return nil if c == 1
 
                    "each <tbx:tig> contains exactly one <tbx:term>; got #{c}"
                  end)
           r.call("iso-gdg-9.2.3-2", "Guidelines 9.2.3", "tbx:partOfSpeech",
                  enum_check("value", %w[noun verb adj adv],
-                            label: "<tbx:partOfSpeech>"))
+                            label: "<tbx:partOfSpeech>", required: true))
           r.call("iso-gdg-9.2.3-3", "Guidelines 9.2.3", "tbx:termType",
                  enum_check("value", %w[fullForm abbreviation symbol formula],
-                            label: "<tbx:termType>"))
+                            label: "<tbx:termType>", required: true))
           r.call("iso-gdg-9.2.3-4", "Guidelines 9.2.3", "tbx:normativeAuthorization",
                  enum_check("value",
                             %w[preferredTerm admittedTerm deprecatedTerm],
-                            label: "<tbx:normativeAuthorization>"))
+                            label: "<tbx:normativeAuthorization>", required: true))
           r.call("iso-gdg-9.2.4-1", "Guidelines 9.2.4", "tbx:example",
                  lambda do |node, *_|
                    nbsp_strip(node.text).match?(/\Aexample/i) &&
@@ -940,7 +948,7 @@ module Metanorma
                    return "@target is required" if target.nil? || target.empty?
                    return nil if doc.xpath("//term-sec[@id='#{target}'] | " \
                                            "//tbx:termEntry[@id='#{target}']",
-                                           TBX_NS).any?
+                                           NS).any?
 
                    "@target='#{target}' does not resolve to a terminological entry"
                  end)
