@@ -84,7 +84,7 @@ RULE_FIXTURES = {
   ],
 }.freeze
 
-RSpec.describe Metanorma::Iso::Sts::Validator, "ISO guidelines ed 2.1" do
+RSpec.describe Metanorma::Iso::Sts::Validator do # ISO guidelines ed 2.1
   let(:validator) { described_class.new }
 
   # A document conforming to the structural rules (Guidelines 4.1-4.4);
