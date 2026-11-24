@@ -46,7 +46,7 @@ RSpec.describe StsSiblingParity do # rubocop:disable RSpec/MultipleMemoizedHelpe
     expect(described_class.manifest(sibling_root)).to eq(expected)
   end
 
-  describe ".normalise" do
+  describe ".normalise" do # rubocop:disable RSpec/MultipleMemoizedHelpers
     it "collapses flavour names symmetrically" do
       oiml = described_class.normalise("module Oiml; oiml OIML; end")
       iso = described_class.normalise("module Iso; iso ISO; end")
@@ -54,7 +54,7 @@ RSpec.describe StsSiblingParity do # rubocop:disable RSpec/MultipleMemoizedHelpe
     end
   end
 
-  describe ".drift" do
+  describe ".drift" do # rubocop:disable RSpec/MultipleMemoizedHelpers
     let(:dir) { Dir.mktmpdir }
     let(:manifest) do
       { "a.rb" => { "iso" => "stale" }, "gone.rb" => { "iso" => "x" } }
