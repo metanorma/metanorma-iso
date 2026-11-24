@@ -19,6 +19,8 @@ module IsoDoc
           include NoteContent
 
           DEPRECATED_PREFIX = "DEPRECATED: "
+          # Gap (twips) between the designations and the definition (DOC: 12pt).
+          DESIGNATION_GAP = 240
           private_constant :DEPRECATED_PREFIX
 
           DEFINITION_PARAGRAPH = Metanorma::Document::Components::Paragraphs::ParagraphBlock
@@ -145,14 +147,17 @@ prefix: nil)
           end
 
           # Compact (no before/after) spacing so TermNum → Terms → AltTerms
-          # form one tight block. Definition gets a "before" gap to
-          # visually separate it from the designations.
+          # form one tight block.
           def apply_compact_spacing(para)
             para.spacing(before: 0, after: 0)
           end
 
-          def apply_definition_spacing(para)
-            para.spacing(before: 240, after: 0)
+          # As the DOC chain: only the definition's lead paragraph takes a
+          # 12pt gap below the designations; each keeps the template's
+          # Definition gap after it.
+          def apply_definition_spacing(para, lead)
+            para.spacing(before: lead ? DESIGNATION_GAP : 0,
+                         after: @resolver.spacing_for(:definition_after) || 0)
           end
 
           def append_prefix(para, prefix)
@@ -179,19 +184,22 @@ prefix: nil)
 
           def render_term_definitions(term, doc)
             definitions = pick_definition_source(term)
-            definitions.each { |defn| render_definition(defn, doc) }
+            definitions.each_with_index do |defn, index|
+              render_definition(defn, doc, lead: index.zero?)
+            end
           end
 
           # Definition paragraphs take the Definition style. Lists, tables,
           # formulas and other blocks go through normal dispatch, in order.
-          def render_definition(defn, doc)
+          def render_definition(defn, doc, lead:)
             blocks = definition_blocks(defn)
-            return render_inline_definition(defn, doc) if blocks.empty?
+            return render_inline_definition(defn, doc, lead) if blocks.empty?
 
             blocks.each_with_index do |block, index|
               if block.is_a?(DEFINITION_PARAGRAPH)
-                render_definition_paragraph(block, doc, index.zero? ? defn : nil)
-              elsif index.zero? && leading_list?(block)
+                render_definition_paragraph(block, doc, index.zero? ? defn : nil,
+                                            lead && index.zero?)
+              elsif lead && index.zero? && leading_list?(block)
                 render_leading_list(block, doc)
               else
                 @walker.dispatch(block, doc)
@@ -212,13 +220,13 @@ prefix: nil)
             return unless first
 
             builder = first.is_a?(Uniword::Builder::ParagraphBuilder) ? first : Uniword::Builder::ParagraphBuilder.new(first)
-            builder.spacing(before: 240)
+            builder.spacing(before: DESIGNATION_GAP)
           end
 
-          def render_definition_paragraph(paragraph, doc, owner)
+          def render_definition_paragraph(paragraph, doc, owner, lead)
             @context.with_note do
               para = build_paragraph(:definition)
-              apply_definition_spacing(para)
+              apply_definition_spacing(para, lead)
               @inline_renderer.render(paragraph, para)
               anchor_paragraph(paragraph, para)
               anchor_paragraph(owner, para) if owner
@@ -226,10 +234,10 @@ prefix: nil)
             end
           end
 
-          def render_inline_definition(defn, doc)
+          def render_inline_definition(defn, doc, lead)
             @context.with_note do
               para = build_paragraph(:definition)
-              apply_definition_spacing(para)
+              apply_definition_spacing(para, lead)
               @inline_renderer.render(defn, para)
               anchor_paragraph(defn, para)
               doc << para

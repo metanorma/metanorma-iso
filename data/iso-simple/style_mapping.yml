@@ -92,6 +92,11 @@ paragraph_styles:
   # Simple defines ListParagraph and has no BiblioEntry.
   biblio_entry: ListParagraph
 
+# Extra paragraph spacing, in twips, that the DOC chain sets on a style.
+# definition_after: gap after a Definition paragraph (DOC: 6pt).
+spacing:
+  definition_after: 120
+
 character_styles:
   hyperlink: Hyperlink
 

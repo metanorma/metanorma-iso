@@ -52,6 +52,11 @@ module IsoDoc
           @mapping.paragraph_style(key)
         end
 
+        # Extra paragraph spacing (twips) for +key+, or nil when unset.
+        def spacing_for(key)
+          @mapping.spacing_for(key)
+        end
+
         # Strict character-style lookup.
         def character_style!(key, role: key)
           value = @mapping.character_style(key)
