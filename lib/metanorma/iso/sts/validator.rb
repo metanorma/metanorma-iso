@@ -369,10 +369,10 @@ module Metanorma
 
           r.call("iso-gdg-4.4.2-1", "Guidelines 4.4.2", "sec",
                  lambda do |node, *_|
-                   # The unnumbered Foreword and Introduction (4.2) hold
-                   # numbered subclauses (0.1, ...) but carry no number.
-                   return nil if !node.xpath("./sec").any? ||
-                     at(node, "./label") ||
+                   # Unnumbered front-matter Foreword/Introduction (4.2) only:
+                   # direct <front> children, not typed body or nested sections.
+                   return nil if !node.xpath("./sec").any? || at(node, "./label")
+                   return nil if node.xpath("parent::front").any? &&
                      %w[foreword intro].include?(node["sec-type"])
 
                    "a clause containing subclauses carries its number in <label>"

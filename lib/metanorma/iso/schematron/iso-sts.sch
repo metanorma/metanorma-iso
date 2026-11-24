@@ -194,7 +194,7 @@
     </rule>
     <rule context="sec">
       <assert id="iso-gdg-4.4.2-1"
-              test="if (sec and not(@sec-type=('foreword','intro')))
+              test="if (sec and not(parent::front and @sec-type=('foreword','intro')))
                     then exists(label) else true()">
         Clauses are captured in &lt;sec&gt; with the clause number as
         &lt;label&gt; and the title as &lt;title&gt;; a clause containing
