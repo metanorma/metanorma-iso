@@ -90,6 +90,11 @@ RSpec.describe "Word cleanup edge cases" do # rubocop:disable RSpec/DescribeClas
       expect(cleaned(para)).to eq("[a] — list start")
     end
 
+    it "keeps the space when the list label is an element" do
+      para = "<p><span>a)</span><span style='mso-tab-count:1'>&#xa0;</span> list start</p>"
+      expect(cleaned(para)).to eq("[a] a) list start")
+    end
+
     it "leaves ordinary footnote text alone" do
       expect(cleaned("<p> plain text</p>")).to eq("[a] plain text")
     end
