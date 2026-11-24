@@ -1,0 +1,24 @@
+<metanorma xmlns="https://www.metanorma.org/ns/standoc" type="presentation">
+  <bibdata>
+    <title language="en">Theme parity sample</title>
+    <docidentifier>PARITY 1:2026</docidentifier>
+    <language>en</language>
+    <script>Latn</script>
+    <status><stage>60</stage><substage>60</substage></status>
+    <date type="published"><on>2026-01-01</on></date>
+    <copyright><from>2026</from><owner><organization><name>Parity publisher</name></organization></owner></copyright>
+  </bibdata>
+  <preface>
+    <foreword id="parity-foreword" displayorder="1"><title>Foreword</title><fmt-title>Foreword</fmt-title><p id="parity-foreword-p">This sample tests the same content in both renderers.</p></foreword>
+  </preface>
+  <sections>
+    <clause id="parity-scope" type="scope" displayorder="2">
+      <title>Scope</title><fmt-title>1<tab/>Scope</fmt-title>
+      <p id="parity-paragraph">This document checks <strong>strong</strong> and <em>emphasized</em> text.</p>
+      <clause id="parity-subclause">
+        <title>Details</title><fmt-title>1.1<tab/>Details</fmt-title>
+        <p id="parity-detail">Fonts, heading sizes, colours and spacing must be measured.</p>
+      </clause>
+    </clause>
+  </sections>
+</metanorma>
