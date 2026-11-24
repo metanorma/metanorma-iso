@@ -8,9 +8,9 @@ gem "canon"
 gem "isodoc", "~> 3.7.9" # carries the relaton-render range #846
 gem "metanorma-plugin-lutaml", "~> 0.7"
 gem "metanorma-utils", "~> 2.0" # GcBudget + the array-join table cell buffer
-# Declarative rules backend, pending release of Standoc PR #1398.
+# Declarative rules backend, pending release of Standoc PR #1408 (stacked on #1398).
 gem "metanorma-standoc", github: "metanorma/metanorma-standoc",
-    ref: "734d190f7b6c483fb6f2ffe5ab400311dc41cb0b"
+    ref: "4f7d3cce3bcfa3e5f7f9a8bb6d983e765e1c801b"
 gem "metanorma-document", "~> 0.5.3" # relaton 3.1 line; relaton-bib retired
 gem "rake"
 # relaton-bib is retired; its successors ship in the relaton 3.1 line.
