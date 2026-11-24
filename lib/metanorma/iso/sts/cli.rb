@@ -12,7 +12,7 @@ module Metanorma
       # Commands:
       #   convert <input.xml> [output.xml]      Convert one MN-XML to STS XML.
       #   convert-dir <input-dir> <output-dir>  Batch convert every presentation XML.
-      #   validate <sts.xml>                    Validate against OIML X 999 rules.
+      #   validate <sts.xml>                    Validate against the ISO NISO STS coding guidelines (ed 2.1).
       class Cli < Thor
         package_name "oiml-sts"
 
@@ -53,7 +53,7 @@ module Metanorma
           end
         end
 
-        desc "validate STS_XML", "Validate an OIML STS XML against OIML X 999 constraints"
+        desc "validate STS_XML", "Validate an ISO NISO STS XML against the coding guidelines ed 2.1"
         def validate(input)
           report = Sts.validate(read_input(input))
           $stdout.puts report.to_s
