@@ -199,7 +199,7 @@ RSpec.describe Metanorma::Iso::Sts::Validator do
     end
 
     it "still flags an intro nested below a front-matter section" do
-      xml = %(<front><sec><title>Front</title><sec sec-type="intro">) +
+      xml = %(<front><sec><label>1</label><title>Front</title><sec sec-type="intro">) +
         "<title>Intro</title><sec><title>Y</title></sec></sec></sec></front>"
       expect(ids(xml)).to include("iso-gdg-4.4.2-1")
     end
