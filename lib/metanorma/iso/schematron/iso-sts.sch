@@ -194,7 +194,8 @@
     </rule>
     <rule context="sec">
       <assert id="iso-gdg-4.4.2-1"
-              test="if (sec) then exists(label) else true()">
+              test="if (sec and not(@sec-type=('foreword','intro')))
+                    then exists(label) else true()">
         Clauses are captured in &lt;sec&gt; with the clause number as
         &lt;label&gt; and the title as &lt;title&gt;; a clause containing
         subclauses carries its number (Guidelines 4.4.2).
@@ -474,10 +475,11 @@
         file extension (Guidelines 5.10).
       </assert>
       <assert id="iso-gdg-5.10-3"
-              test="(not(//std-meta//originator[normalize-space()='ISO'])
+              test="starts-with(@xlink:href, 'data:')
+                   or ((not(//std-meta//originator[normalize-space()='ISO'])
                     or not(contains(@xlink:href, '/')))
                    and (not(//std-meta//originator[normalize-space()='IEC'])
-                    or contains(@xlink:href, '/'))">
+                    or contains(@xlink:href, '/')))">
         For formal figures the ISO graphic reference has no asset-folder
         prefix, while the IEC reference contains the asset folder name
         (Guidelines 5.10).
