@@ -52,6 +52,11 @@ RSpec.describe StsSiblingParity do # rubocop:disable RSpec/MultipleMemoizedHelpe
       iso = described_class.normalise("module Iso; iso ISO; end")
       expect(oiml).to eq(iso)
     end
+
+    it "ignores CRLF checkouts" do
+      expect(described_class.normalise("a\r\nb\r\n"))
+        .to eq(described_class.normalise("a\nb\n"))
+    end
   end
 
   describe ".drift" do # rubocop:disable RSpec/MultipleMemoizedHelpers

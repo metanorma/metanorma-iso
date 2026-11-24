@@ -35,7 +35,8 @@ module StsSiblingParity
   end
 
   def normalise(bytes)
-    bytes.b.gsub(/oiml|iso/i) do |m|
+    # Windows checkouts may convert LF to CRLF; the digest must not depend on it.
+    bytes.b.gsub("\r\n", "\n").gsub(/oiml|iso/i) do |m|
       case m
       when "oiml", "iso" then "flv"
       when "OIML", "ISO" then "FLV"
