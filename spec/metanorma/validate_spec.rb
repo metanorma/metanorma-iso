@@ -607,10 +607,10 @@ RSpec.describe Metanorma::Iso, type: :validation do
     end
 
     it "Warn if list more than four levels deep" do
-      expect(four_levels).not_to include("List more than four levels deep")
-      expect(five_levels_ordered).to include("List more than four levels deep")
-      expect(five_levels_unordered).to include("List more than four levels deep")
-      expect(five_levels_mixed).to include("List more than four levels deep")
+      expect(four_levels).not_to include("List more than 4 levels deep")
+      expect(five_levels_ordered).to include("List more than 4 levels deep")
+      expect(five_levels_unordered).to include("List more than 4 levels deep")
+      expect(five_levels_mixed).to include("List more than 4 levels deep")
     end
   end
 
