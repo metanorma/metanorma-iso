@@ -14,7 +14,7 @@ module IsoDoc
             include Base
             include ModelUtils
 
-            NESTED_BLOCKS = %w[ul ol dl table note example sourcecode figure formula quote].freeze
+            NESTED_BLOCKS = %w[ul ol dl table note termnote example termexample sourcecode figure formula quote].freeze
 
             def render(element, target)
               terms = Array(element.dt)
@@ -34,7 +34,11 @@ module IsoDoc
                   if type == :text
                     append_loose_text(child, target)
                   else
-                    dispatcher.call(child, target)
+                    if child.is_a?(Metanorma::Iso::Document::Terms::TermNote)
+                      term_note_renderer.render(child, target)
+                    else
+                      dispatcher.call(child, target)
+                    end
                     # A w:tc may not end in, or fuse, a w:tbl.
                     target << Uniword::Builder::ParagraphBuilder.new if table?(child)
                   end
@@ -42,6 +46,13 @@ module IsoDoc
               else
                 paragraphs_of(node).each { |part| append_paragraph(part, target) }
               end
+            end
+
+            def term_note_renderer
+              @term_note_renderer ||= NoteRenderer.new(
+                resolver: @resolver, context: @inline_renderer.context,
+                inline_renderer: @inline_renderer, walker: Walker.new(dispatcher)
+              )
             end
 
             def append_loose_text(text, target)

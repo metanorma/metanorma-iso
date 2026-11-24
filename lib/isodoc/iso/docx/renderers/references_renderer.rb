@@ -5,10 +5,10 @@ module IsoDoc
     module Docx
       module Renderers
         # Renders a normative references section (<references normative="true">)
-        # or informative bibliography section as a Heading1 paragraph followed
+        # or informative bibliography section as a heading paragraph followed
         # by an optional intro paragraph and the list of bibliographic items.
         #
-        # The section behaves like a clause (Heading1 from fmt-title) but
+        # The section follows clause heading depth from fmt-title but
         # contains <bibitem> children that are dispatched to
         # BibliographyRenderer. Without this renderer the section's
         # children were walked as anonymous mixed content — the title,
@@ -18,6 +18,7 @@ module IsoDoc
           include ModelUtils
 
           def render(section, doc)
+            @context.section_depth += 1
             @context.with_bibliography do
               is_normative = normative?(section)
               @context.with_normative(is_normative) do
@@ -27,6 +28,8 @@ module IsoDoc
                 render_admonitions(section, doc)
               end
             end
+          ensure
+            @context.section_depth -= 1
           end
 
           private
@@ -43,7 +46,7 @@ module IsoDoc
             return unless title
 
             para = build_unstyled_paragraph
-            style = @resolver.heading_style(1)
+            style = @resolver.heading_style([@context.section_depth, 6].min)
             para.style = style if style
             with_bookmark(section, para) do
               @inline_renderer.render_heading(title, para)

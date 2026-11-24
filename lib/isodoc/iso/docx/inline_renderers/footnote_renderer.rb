@@ -16,6 +16,9 @@ module IsoDoc
           include Base
 
           def render(element, para)
+            return if parent.heading_annotations_suppressed?
+            return render_nested(element, para) if parent.in_footnote_body?
+
             handler = context.formula_key_footnote_handler
             return handler.call(element, para) if handler && !element.reference.to_s.strip.empty?
 
@@ -27,11 +30,9 @@ module IsoDoc
             end
 
             text = parent.extract_footnote_text(element)
-            return if text.nil? || text.empty?
+            return if (text.nil? || text.empty?) && !has_bare_link?(element)
 
-            fn_run = parent.build_footnote_with_style(
-              text, closing: label_closing(element)
-            )
+            fn_run = parent.build_footnote_with_style(text, element: element)
             fn_id = fn_run.footnote_reference&.id
             parent.store_footnote_id(cache_key, fn_id) if cache_key && fn_id
             parent.apply_run_char_style(fn_run, :footnote_reference)
@@ -41,26 +42,41 @@ module IsoDoc
 
           private
 
-          # ISO labels a footnote "1)": the presentation XML carries the
-          # closing parenthesis in fmt-fn-label, in the text and in the
-          # footnote body alike (the PDF prints "1)" in both places).
-          def label_closing(element)
-            return unless element.fmt_fn_label
+          # ISO marks a body reference "1)", as the DOC output does. The
+          # presentation XML carries the parenthesis in fmt-fn-label. The
+          # mark in the footnote area stays a bare number, also as in DOC.
+          def label_closing?(element)
+            return false unless element.fmt_fn_label
 
-            parent.collect_all_text(element.fmt_fn_label).rstrip.end_with?(")") ? ")" : nil
+            parent.collect_all_text(element.fmt_fn_label).rstrip.end_with?(")")
           end
 
+          # Word supplies the number, so the parenthesis is its own run,
+          # placed before the separator that follows the fn element.
           def append_marker_suffix(element, para)
-            return unless label_closing(element)
+            return unless label_closing?(element)
 
-            # Word supplies the number. Add the presentation label's closing
-            # parenthesis before the separator that follows the fn element.
             properties = Uniword::Wordprocessingml::RunProperties.new(
               vertical_align: Uniword::Properties::VerticalAlign.new(value: "superscript"),
             )
             run = Uniword::Wordprocessingml::Run.new(text: ")", properties: properties)
             parent.apply_run_char_style(run, :footnote_reference)
             para << run
+          end
+
+          # Word cannot nest a footnote in a footnote body, so the inner
+          # footnote's content is kept inline in the outer body.
+          def render_nested(element, para)
+            Array(element.p).each_with_index do |body, index|
+              para << " " unless index.zero?
+              parent.render(body, para)
+            end
+          end
+
+          def has_bare_link?(element)
+            element.p&.any? do |paragraph|
+              Array(paragraph.link).any? { |link| !link.target.to_s.empty? }
+            end
           end
 
           def append_cached_reference(para, cache_key)

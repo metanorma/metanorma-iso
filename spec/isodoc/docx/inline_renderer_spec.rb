@@ -126,6 +126,27 @@ RSpec.describe IsoDoc::Iso::Docx::InlineRenderer do
     end
   end
 
+  describe "formatted mixed content" do
+    %w[strong em].each do |tag|
+      it "preserves links, math and text order inside #{tag}", :aggregate_failures do # rubocop:disable RSpec/ExampleLength
+        node = Metanorma::Document::Components::Paragraphs::ParagraphBlock.from_xml(
+          "<p><#{tag}>before <xref target=\"c1\">clause</xref> between " \
+          '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML"><mi>x</mi></math><asciimath>x</asciimath></stem> ' \
+          "then <link target=\"https://example.org\">web</link> after</#{tag}></p>",
+        )
+        para = build_para
+        renderer.render(node, para)
+        xml = Nokogiri::XML(para.model.to_xml)
+        expect(xml.xpath("//*[local-name()='t']").map(&:text))
+          .to eq(["before ", "clause", " between ", "x", " then ", "web", " after"])
+        expect(xml.xpath("//*[local-name()='hyperlink']").size).to eq(2)
+        expect(xml.xpath("//*[local-name()='oMath']").size).to eq(1)
+        property = tag == "strong" ? "b" : "i"
+        expect(xml.xpath("//*[local-name()='hyperlink']//*[local-name()='rPr']/*[local-name()='#{property}']").size).to eq(2)
+      end
+    end
+  end
+
   describe "InlineCode character styles" do
     it "renders <tt> as a run with InlineCode rStyle" do
       xml = minimal_iso_xml(<<~INNER)

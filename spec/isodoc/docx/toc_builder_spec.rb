@@ -176,7 +176,7 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
         "the type=toc Contents clause must not appear as a ToC entry"
     end
 
-    it "renders annex entries from the single-line toc variant-title" do
+    it "keeps the annex qualifier in the single-line cached entry" do
       xml = minimal_iso_xml(<<~INNER)
         <sections/>
         <annex id="a1" obligation="normative">
@@ -197,10 +197,10 @@ RSpec.describe IsoDoc::Iso::Docx::TocBuilder do
       end
       expect(annex_entry).not_to be_nil
 
-      # The entry carries the variant-title composition: label + tab +
-      # title, with no line breaks and no obligation line.
+      # The display heading carries the qualifier missing from the variant.
+      # Its soft breaks become spaces in the cached ToC.
       texts = entry_runs(annex_entry).map { |r| run_text(r) }
-      expect(texts).not_to include("(normative)")
+      expect(texts).to include("(normative)")
       expect(entry_runs(annex_entry).map(&:break).compact).to be_empty
       expect(entry_runs(annex_entry).any?(&:tab)).to be(true)
     end

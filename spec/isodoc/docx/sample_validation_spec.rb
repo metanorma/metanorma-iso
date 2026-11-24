@@ -18,6 +18,19 @@ require "tmpdir"
 RSpec.describe "DOCX sample validation" do
   FIXTURES = File.expand_path("../../fixtures/samples", __dir__)
 
+  # Word generates the DIS "Annex A" label from the ANNEX style's numbering.
+  def annex_label_numbering(path)
+    ns = { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" }
+    parts = Zip::File.open(path) do |zip|
+      %w[document styles numbering].map { |part| Nokogiri::XML(zip.read("word/#{part}.xml")) }
+    end
+    num_id = parts[1].at_xpath("//w:style[@w:styleId='ANNEX']/w:pPr/w:numPr/w:numId/@w:val", ns).value
+    abstract = parts[2].at_xpath("//w:num[@w:numId='#{num_id}']/w:abstractNumId/@w:val", ns).value
+    level = parts[2].at_xpath("//w:abstractNum[@w:abstractNumId='#{abstract}']/w:lvl[1]", ns)
+    [level.at_xpath("w:numFmt/@w:val", ns).value, level.at_xpath("w:lvlText/@w:val", ns).value,
+     parts[0].xpath("//w:body/w:p[w:pPr/w:pStyle/@w:val='ANNEX']", ns).size]
+  end
+
   def generate_adapter_output(pres_xml_path, template: :dis)
     adapter = build_adapter(template: template)
     Dir.mktmpdir do |dir|
@@ -134,13 +147,8 @@ RSpec.describe "DOCX sample validation" do
     it "contains annexes" do
       generate_adapter_output(pres_xml) do |output_path, _adapter|
         texts = extract_paragraph_texts(output_path)
-        expect_content_present(texts, [
-          "Annex A",
-          "Determination of defects",
-          "Annex B",
-          "Annex C",
-          "Annex D",
-        ])
+        expect_content_present(texts, ["Determination of defects"])
+        expect(annex_label_numbering(output_path)).to eq(["upperLetter", "Annex\u00a0%1", 5])
       end
     end
 

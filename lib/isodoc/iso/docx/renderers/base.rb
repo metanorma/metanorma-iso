@@ -45,6 +45,30 @@ module IsoDoc
             model.bookmark_ends <<
               Uniword::Wordprocessingml::BookmarkEnd.new(id: bm_id)
           end
+
+          # Run the block, which appends to +doc+, and return the first
+          # paragraph (model or builder) it added, or nil when it added
+          # none.
+          def first_paragraph_added(doc)
+            paragraphs = container_paragraphs(doc)
+            before = paragraphs&.size
+            yield
+            paragraphs&.drop(before)&.find do |element|
+              element.is_a?(Uniword::Wordprocessingml::Paragraph) ||
+                element.is_a?(Uniword::Builder::ParagraphBuilder)
+            end
+          end
+
+          # The paragraph list of +doc+: document body, table cell, or the
+          # table attachment buffer (which holds paragraphs and tables).
+          def container_paragraphs(doc)
+            return doc.paragraphs if doc.is_a?(TableAttachmentBuffer)
+
+            return unless doc.is_a?(Uniword::Builder::BaseBuilder)
+            return doc.model.body&.paragraphs if doc.is_a?(Uniword::Builder::DocumentBuilder)
+
+            doc.model.paragraphs
+          end
         end
 
         module Base

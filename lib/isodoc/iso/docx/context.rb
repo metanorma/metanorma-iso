@@ -16,7 +16,7 @@ module IsoDoc
                       :in_bibliography, :in_definition_dd, :in_formula,
                       :in_figure, :in_definitions, :list_depth,
                       :section_depth,
-                      :term_counter, :section_counter, :body_width,
+                      :term_counter, :section_counter, :body_width, :text_width,
                       :amend_zone, :in_amendment
         def initialize
           @footnote_counter = Counter.new
