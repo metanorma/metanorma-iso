@@ -125,8 +125,8 @@ module Metanorma
       end
 
       # Validate an ISO NISO STS XML string against the flavor constraints
-      # (Schematron + lutaml-model rules; the ruleset ships with the OIML
-      # X 999:2026 profile as the base).
+      # (IEC/ISO NISO STS Coding Guidelines ed 2.1; error findings fail
+      # +valid?+, warnings are report-only).
       #
       # @param xml [String, Pathname, #read] the STS XML.
       # @return [ValidationReport]
