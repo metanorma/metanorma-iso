@@ -1,7 +1,8 @@
 name: Full spec baseline probe
 
+# Diagnostic probe: run manually (workflow_dispatch) only. It reports known
+# baseline failures and must not gate pull requests.
 on:
-  pull_request:
   workflow_dispatch:
 
 permissions:
