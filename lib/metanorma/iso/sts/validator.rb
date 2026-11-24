@@ -21,6 +21,11 @@ module Metanorma
 
         SCHEMATRON_PATH = File.expand_path("../schematron/iso-sts.sch", __dir__).freeze
 
+        # @return [Array<String>] every implemented rule id.
+        def self.rule_ids
+          new.send(:rules).map(&:id)
+        end
+
         # @param xml [String, Pathname, #read] ISO STS XML.
         # @return [ValidationReport]
         def validate(xml)
@@ -28,12 +33,16 @@ module Metanorma
           report = ValidationReport.new
           rules.each do |rule|
             doc.xpath(absolute_context(rule.context), TBX_NS).each do |node|
-              msg = rule.check.call(node, doc)
-              next unless msg.is_a?(String) && !msg.empty?
+              # A check returns nil/true (pass), a message, or a list of
+              # messages (one per offending child, e.g. absence_check).
+              Array(rule.check.call(node, doc)).each do |msg|
+                next unless msg.is_a?(String) && !msg.empty?
 
-              report.add(rule_id: rule.id,
-                         message: "#{msg} (#{rule.guideline}).",
-                         xpath: node.path)
+                report.add(rule_id: rule.id,
+                           message: "#{msg} (#{rule.guideline}).",
+                           xpath: node.path,
+                           severity: rule.severity)
+              end
             end
           end
           report
@@ -128,7 +137,7 @@ module Metanorma
           @rules ||= begin
             list = []
             r = ->(id, guideline, context, check) do
-              list << Rule.new(id, guideline, context, check)
+              list << Rule.new(id, guideline, context, check, :error)
             end
 
             define_document_structure_rules(r)
@@ -1001,7 +1010,9 @@ module Metanorma
 
         # Tiny struct binding a rule id + guideline reference + context
         # xpath to its check lambda (nil passes, String reports).
-        Rule = Struct.new(:id, :guideline, :context, :check)
+        # +severity+ is :error (fails the gate) or :warning (report-only);
+        # the vendored schematron ships the 110 error-severity rules.
+        Rule = Struct.new(:id, :guideline, :context, :check, :severity)
       end
     end
   end
