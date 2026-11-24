@@ -30,7 +30,7 @@ RSpec.describe "DOCX annex ToC rebuild sources" do
 
       it "caches the qualifier on one line", :aggregate_failures do
         entry = document.at_xpath("//w:p[w:pPr/w:pStyle/@w:val='TOC1']", ns)
-        expect(entry.xpath(".//w:t", ns).map(&:text).join.split.join(" "))
+        expect(entry.xpath(".//w:t", ns).map(&:text).join)
           .to eq("Annex A (#{obligation}) Test methods1")
         expect(entry.xpath(".//w:br", ns)).to be_empty
       end

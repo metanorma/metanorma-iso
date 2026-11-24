@@ -382,25 +382,31 @@ module IsoDoc
 
         # Inline renderer sink for single-line ToC entry headings. Tabs
         # and soft breaks become spaces; only the page-number tab remains.
+        # A run of separators (the annex caption delimiter is two soft
+        # breaks) becomes one space, so the entry never shows a double gap.
         class HeadingTextSink
           SPACE = " "
 
           def initialize(para)
             @para = para
+            @after_separator = false
           end
 
           def <<(element)
-            @para << flatten_separator(element)
+            if separator?(element)
+              @para << Uniword::Wordprocessingml::Run.new(text: SPACE) unless @after_separator
+              @after_separator = true
+            else
+              @para << element
+              @after_separator = false
+            end
             self
           end
 
           private
 
-          def flatten_separator(element)
-            return element unless element.is_a?(Uniword::Wordprocessingml::Run)
-            return element unless element.tab || element.break
-
-            Uniword::Wordprocessingml::Run.new(text: SPACE)
+          def separator?(element)
+            element.is_a?(Uniword::Wordprocessingml::Run) && (element.tab || element.break)
           end
         end
 
