@@ -1,10 +1,14 @@
 # Declarative text_pattern forms of simple ISO prose-scan style rules
-# (metanorma-iso#1732, batch 1). SHADOW MODE: this ruleset is deliberately
+# (metanorma-iso#1732, batches 1 and 2). SHADOW MODE: this ruleset is deliberately
 # not listed in iso-catalog.yml, so nothing here runs during validation. The
 # retained StyleXxxRule classes stay the runtime implementation; parity specs
 # (spec/metanorma/validation/text_pattern_shadow_parity_spec.rb) run these rules
 # beside the classes and require the same codes, paragraphs and messages.
 # The finding is on the paragraph; the legacy rule reports on its parent.
+# Scope matches the retained classes: they walk only model nodes that declare
+# paragraphs, so each rule's context is a paragraph whose parent is one of those
+# containers (not notes, table cells, definition-list items, term notes, figure
+# notes or reference sections).
 schema: metanorma-validation-rules/1
 namespaces:
   m: https://www.metanorma.org/ns/standoc
@@ -12,7 +16,7 @@ rules:
   # StyleAOrAnRule
   - id: iso.style.a-before-vowel-sound
     code: ISO_62
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\ba\s+(?:hour(?:ly)?|honest(?:ly)?|honesty|hono(?:u)?r(?:ed)?|heir)\b'
@@ -21,7 +25,7 @@ rules:
     params: [{value: message}]
   - id: iso.style.an-before-consonant-sound
     code: ISO_62
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\ban\s+(?:europeans?|one(?:[-—][a-z]+)?|users?|useful(?:ness)?|utilisation|utilization|unique|universities|university|union|united|uniform|uniformity|units?|eula)'
@@ -31,7 +35,7 @@ rules:
   # StyleAbbrevPluralRule
   - id: iso.style.abbrev-plural
     code: ISO_64
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\bMSSs\b'
@@ -41,7 +45,7 @@ rules:
   # StyleAbbrevTablesOnlyRule
   - id: iso.style.abbrev-tables-only
     code: ISO_65
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\b(min|max|lab)\.'
@@ -50,7 +54,7 @@ rules:
   # StyleComplianceRule
   - id: iso.style.compliance
     code: ISO_76
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\b(compliance|compliant|non-compliance|noncompliance|non-compliant|noncompliant)\b'
@@ -60,7 +64,7 @@ rules:
   # StyleFamilySuiteRule
   - id: iso.style.family-suite
     code: ISO_89
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\b(famil(?:y|ies) of standards?|suites? of standards?)\b'
@@ -70,7 +74,7 @@ rules:
   # StyleFormulaeRule
   - id: iso.style.formulae
     code: ISO_91
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\bformulas\b'
@@ -81,7 +85,7 @@ rules:
   # StyleImpreciseRefsRule
   - id: iso.style.imprecise-refs
     code: ISO_94
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\b(the following clauses?|the following sections?|the preceding clauses?|the preceding sections?|the figures? above|the tables? below)'
@@ -91,7 +95,7 @@ rules:
   # StyleInformativeNormativeRule
   - id: iso.style.informative-normative
     code: ISO_97
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\b(?:normative|informative)\s+(?:annex|clause|figure|table)\s+[A-Z0-9]'
@@ -101,7 +105,7 @@ rules:
   # StyleInterlabRule
   - id: iso.style.interlab
     code: ISO_98
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\b(round robins?|ring tests?)\b'
@@ -111,7 +115,7 @@ rules:
   # StyleNoNosRule
   - id: iso.style.no-nos
     code: ISO_104
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\b[Nn]os\.(?=\s|$)'
@@ -120,7 +124,7 @@ rules:
   # StyleOrdinalsRule
   - id: iso.style.ordinals
     code: ISO_106
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\b(firstly|secondly|thirdly)\b'
@@ -130,7 +134,7 @@ rules:
   # StylePerCentRule
   - id: iso.style.per-cent
     code: ISO_109
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\b(percent)\b'
@@ -140,7 +144,7 @@ rules:
   # StylePluralSTermRule
   - id: iso.style.plural-s
     code: ISO_110
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '(?<=\w)(\(\s*s\s*\))'
@@ -149,7 +153,7 @@ rules:
   # StyleSelfReferenceRule
   - id: iso.style.self-reference
     code: ISO_113
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '\b(this International Standard|this Standard|this part of ISO)'
@@ -159,9 +163,480 @@ rules:
   # StyleUnitsRule
   - id: iso.style.percent-space
     code: ISO_116
-    context: //m:p
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
       pattern: '([0-9])%'
       message: "no space before %: %s%"
+    params: [{value: message}]
+  # StyleAbbrevArticlesRule
+  - id: iso.style.abbrev-articles
+    code: ISO_63
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\ba\s+(?:GPS|UN|URN|ERP|HR|SQL|API|ISO|HTML|XML|RGB|RPG|SAP|PDF|JPG|RPM|RSA|SLA|UML|URL)\b'
+      message: "wrong article '%s': this initialism is pronounced letter-wise — use 'an'"
+    params: [{value: message}]
+  # StyleAffectEffectRule
+  - id: iso.style.effect-as-verb
+    code: ISO_68
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\beffects?\s+the\s+(?:result|performance|value|measurement)\b'
+      flags: i
+      message: "style: '%s' (use 'affects': 'affect' is the verb of influence)"
+    params: [{value: message}]
+  - id: iso.style.affect-as-noun
+    code: ISO_68
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b(?:the|a|an)\s+affects?\b'
+      flags: i
+      message: "style: '%s' (use 'effect': 'effect' is the noun)"
+    params: [{value: message}]
+  # StyleAmbigWordsRule
+  - id: iso.style.ambig-and-or
+    code: ISO_69
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\band/or\b'
+      flags: i
+      report: once
+      message: "style: and/or"
+    params: [{value: message}]
+  - id: iso.style.ambig-on-line
+    code: ISO_69
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bon-line\b'
+      flags: i
+      report: once
+      message: "style: on-line (use 'online')"
+    params: [{value: message}]
+  - id: iso.style.ambig-cyber-underscore
+    code: ISO_69
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bcyber_security\b'
+      flags: i
+      report: once
+      message: "style: cyber_security (use 'cybersecurity')"
+    params: [{value: message}]
+  - id: iso.style.ambig-cyber-security
+    code: ISO_69
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bcyber-security\b'
+      flags: i
+      report: once
+      message: "style: cyber-security (use 'cybersecurity')"
+    params: [{value: message}]
+  - id: iso.style.ambig-need
+    code: ISO_69
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bneed\s+to\b'
+      flags: i
+      report: once
+      message: "style: need to (use 'shall' or 'should')"
+    params: [{value: message}]
+  - id: iso.style.ambig-might
+    code: ISO_69
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bmight\b'
+      flags: i
+      report: once
+      message: "style: might (ambiguous modal verb)"
+    params: [{value: message}]
+  - id: iso.style.ambig-could
+    code: ISO_69
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bcould\b'
+      flags: i
+      report: once
+      message: "style: could (ambiguous modal verb)"
+    params: [{value: message}]
+  # StyleApostrophePluralsRule
+  - id: iso.style.apostrophe-plural-digits
+    code: ISO_70
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b\d{2,4}''s\b'
+      message: "style: '%s' (do not form plurals with the apostrophe)"
+    params: [{value: message}]
+  - id: iso.style.apostrophe-plural-acronym
+    code: ISO_70
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '(?:\b\d+|\b(?:two|three|four|five|six|seven|eight|nine|ten))\s+([A-Z]{2,}''s)\b'
+      message: "style: '%s' (do not form plurals with the apostrophe)"
+    params: [{value: message}]
+  # StyleAssureEnsureRule
+  - id: iso.style.assure-that
+    code: ISO_71
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bassure[ds]?\s+that\b'
+      flags: i
+      message: "style: '%s' (use 'ensure that' for clauses)"
+    params: [{value: message}]
+  - id: iso.style.assured-noun
+    code: ISO_71
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bassured\s+(?:data|quality|accuracy|results?|performance|values?|operation|compliance)\b'
+      flags: i
+      message: "style: '%s' (use 'ensure' for things)"
+    params: [{value: message}]
+  - id: iso.style.assure-object
+    code: ISO_71
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bassure[ds]?\s+(?:the|a|an)\s+(?!(?:user|users|reader|readers|customer|customers|client|clients|person|persons|people|operator|operators|installer|installers|manufacturer|manufacturers|supplier|suppliers|purchaser|purchasers|buyer|buyers|owner|owners|everyone|anyone|somebody|staff|personnel|team|committees|committee|member|members|delegate|delegates|authority|authorities|regulator|regulators|public|consumer|consumers|subscriber|subscribers)\b)[a-z]+\b'
+      flags: i
+      message: "style: 'assure' with a thing as its object '%s' (use 'ensure')"
+    params: [{value: message}]
+  # StyleContractionsRule
+  - id: iso.style.contractions
+    code: ISO_77
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b(it''s|that''s|there''s|here''s|what''s|who''s|let''s|he''s|she''s |i''m|you''re|we''re|they''re |aren''t|isn''t|wasn''t|weren''t|don''t|doesn''t|didn''t |can''t|won''t|wouldn''t|shouldn''t|couldn''t|mustn''t|needn''t |hasn''t|haven''t|hadn''t |i''ll|you''ll|he''ll|she''ll|it''ll|we''ll|they''ll |i''ve|you''ve|we''ve|they''ve |i''d|you''d|he''d|she''d|we''d|they''d |shan''t)\b'
+      flags: ix
+      message: "style: contraction '%s' (use the full form)"
+    params: [{value: message}]
+  # StyleCvNotRsdRule
+  - id: iso.style.cv-not-rsd-words
+    code: ISO_81
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b(relative\ standard\ deviation)\b'
+      flags: ix
+      message: "style: '%s' (use 'coefficient of variation' (Cv))"
+    params: [{value: message}]
+  - id: iso.style.cv-not-rsd-acronym
+    code: ISO_81
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b(RSD)\b'
+      message: "style: '%s' (use 'coefficient of variation' (Cv))"
+    params: [{value: message}]
+  # StyleDateDurationRule
+  - id: iso.style.date-duration-day-range
+    code: ISO_82
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b\d{1,2}\s*[-–]\s*\d{1,2}\s+(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\b'
+      flags: ix
+      message: "date range: use 'to', e.g. '10 to 15 March', not '%s'"
+    params: [{value: message}]
+  - id: iso.style.date-duration-year-range
+    code: ISO_82
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b\d{4}\s*[-–]\s*\d{4}\b'
+      message: "year range: use 'to', e.g. '2020 to 2030', not '%s'"
+    params: [{value: message}]
+  - id: iso.style.date-duration-century-range
+    code: ISO_82
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b\d{1,2}(?:st|nd|rd|th)\s*[-–]\s*\d{1,2}(?:st|nd|rd|th)\s+centur'
+      flags: ix
+      message: "century range: use 'to', e.g. 'the 18th to 19th centuries', not '%s'"
+    params: [{value: message}]
+  - id: iso.style.date-duration-century-digits
+    code: ISO_82
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bthe\s+\d{1,2}(?:st|nd|rd|th)\s+centur'
+      flags: ix
+      message: "century in words: write 'the twentieth century', not '%s century'"
+    params: [{value: message}]
+  # StyleDateFormatsRule
+  - id: iso.style.date-format-day-first-ordinal
+    code: ISO_83
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b\d{1,2}(?:st|nd|rd|th)\s+(?:of\s+)?(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\b'
+      flags: ix
+      message: "ordinal date suffix: write '31 October 2026', not '%s'"
+    params: [{value: message}]
+  - id: iso.style.date-format-month-first-ordinal
+    code: ISO_83
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\s+\d{1,2}(?:st|nd|rd|th)\b'
+      flags: ix
+      message: "ordinal date suffix: write '31 October 2026', not '%s'"
+    params: [{value: message}]
+  - id: iso.style.date-format-us-order
+    code: ISO_83
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Sept|Oct|Nov|Dec)\.?\s+\d{1,2}(?![stndrdth])\s*,?\s+\d{4}\b'
+      flags: ix
+      message: "month-first date order: write day-month-year, e.g. '31 October 2026', not '%s'"
+    params: [{value: message}]
+  # StyleEnDashRangesRule
+  - id: iso.style.en-dash-spaced-unit-range
+    code: ISO_88
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b\d+(?:[.,]\d+)?(?-mix:\s+(?:mm|cm|km|m|um|nm|g|mg|kg|t|s|ms|us|ns|min|h|Hz|kHz|MHz|GHz|Pa|kPa|MPa|GPa|N|kN|MN|A|mA|V|mV|kV|W|mW|kW|MW|J|kJ|MJ|Wh|kWh|dB|dBm|mol|cd|lx|lm|Bq|Gy|Sv|kat|bar|%|°C)(?![a-zA-Z]))\s*[-–]\s*(?-mix:\d+(?:[.,]\d+)?(?-mix:\s+(?:mm|cm|km|m|um|nm|g|mg|kg|t|s|ms|us|ns|min|h|Hz|kHz|MHz|GHz|Pa|kPa|MPa|GPa|N|kN|MN|A|mA|V|mV|kV|W|mW|kW|MW|J|kJ|MJ|Wh|kWh|dB|dBm|mol|cd|lx|lm|Bq|Gy|Sv|kat|bar|%|°C)(?![a-zA-Z])))'
+      message: "quantity range: use 'to', e.g. '10 mm to 20 mm', not '%s'"
+    params: [{value: message}]
+  - id: iso.style.en-dash-closed-range
+    code: ISO_88
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b\d+(?:[.,]\d+)?\s*[-–]\s*(?-mix:\d+(?:[.,]\d+)?(?-mix:\s+(?:mm|cm|km|m|um|nm|g|mg|kg|t|s|ms|us|ns|min|h|Hz|kHz|MHz|GHz|Pa|kPa|MPa|GPa|N|kN|MN|A|mA|V|mV|kV|W|mW|kW|MW|J|kJ|MJ|Wh|kWh|dB|dBm|mol|cd|lx|lm|Bq|Gy|Sv|kat|bar|%|°C)(?![a-zA-Z])))'
+      message: "quantity range: use 'to', e.g. '10 mm to 20 mm', not '%s'"
+    params: [{value: message}]
+  # StyleFewerLessRule
+  - id: iso.style.fewer-less-count
+    code: ISO_90
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bless\s+(?!than\b)(?:samples|specimens|tests|trials|results|measurements|readings|errors|items|products|documents|examples|cases|steps|parameters|variables|requirements|clauses|subclauses|figures|tables|references|notes|terms|definitions|symbols|units|components|elements|parts|batches|votes|people)\b'
+      flags: i
+      message: "style: '%s' (use 'fewer' with countable nouns)"
+    params: [{value: message}]
+  - id: iso.style.fewer-less-than-count
+    code: ISO_90
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bless\s+than\s+\d+\s+(?:samples|specimens|tests|trials|results|measurements|readings|errors|items|products|documents|examples|cases|steps|parameters|variables|requirements|clauses|subclauses|figures|tables|references|notes|terms|definitions|symbols|units|components|elements|parts|batches|votes|people)\b'
+      flags: i
+      message: "style: '%s' (use 'fewer than' with countable nouns)"
+    params: [{value: message}]
+  # StyleImpersonalRule
+  - id: iso.style.impersonal-i
+    code: ISO_93
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b(I)\b'
+      message: "style: '%s' (use impersonal wording)"
+    params: [{value: message}]
+  - id: iso.style.impersonal-we-you
+    code: ISO_93
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b(we|our|you|your|yours)\b'
+      flags: i
+      message: "style: '%s' (use impersonal wording)"
+    params: [{value: message}]
+  # StyleLatinPluralsRule
+  - id: iso.style.latin-plural-criterias
+    code: ISO_100
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bcriterias\b'
+      flags: i
+      report: once
+      message: "style: criterias (use 'criteria')"
+    params: [{value: message}]
+  - id: iso.style.latin-plural-phenomenons
+    code: ISO_100
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bphenomenons\b'
+      flags: i
+      report: once
+      message: "style: phenomenons (use 'phenomena')"
+    params: [{value: message}]
+  - id: iso.style.latin-plural-curriculums
+    code: ISO_100
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bcurriculums\b'
+      flags: i
+      report: once
+      message: "style: curriculums (use 'curricula')"
+    params: [{value: message}]
+  - id: iso.style.latin-plural-memorandums
+    code: ISO_100
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bmemorandums\b'
+      flags: i
+      report: once
+      message: "style: memorandums (use 'memoranda')"
+    params: [{value: message}]
+  - id: iso.style.latin-plural-millenniums
+    code: ISO_100
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bmillenniums\b'
+      flags: i
+      report: once
+      message: "style: millenniums (use 'millennia')"
+    params: [{value: message}]
+  - id: iso.style.latin-plural-spectrums
+    code: ISO_100
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bspectrums\b'
+      flags: i
+      report: once
+      message: "style: spectrums (use 'spectra')"
+    params: [{value: message}]
+  - id: iso.style.latin-plural-stratums
+    code: ISO_100
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bstratums\b'
+      flags: i
+      report: once
+      message: "style: stratums (use 'strata')"
+    params: [{value: message}]
+  - id: iso.style.latin-plural-crisises
+    code: ISO_100
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bcrisises\b'
+      flags: i
+      report: once
+      message: "style: crisises (use 'crises')"
+    params: [{value: message}]
+  - id: iso.style.latin-plural-addendums
+    code: ISO_100
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\baddendums\b'
+      flags: i
+      report: once
+      message: "style: addendums (use 'addenda')"
+    params: [{value: message}]
+  - id: iso.style.latin-plural-data
+    code: ISO_100
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bdata\s+(is|was|has)\b'
+      flags: i
+      message: "style: 'data %s' (House Style: 'data' is plural — use 'data are', 'data were', 'data have')"
+    params: [{value: message}]
+  # StyleQuotationPunctuationRule
+  - id: iso.style.quotation-punctuation
+    code: ISO_111
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '["“] [a-z] [A-Za-z0-9 ,;:%()''’‐-―-]{0,48} [a-z] [.]["”]'
+      flags: x
+      report: once
+      message: "style: full stop inside the quotation marks after a partial quotation (place the stop outside)"
+    params: [{value: message}]
+  # StyleThatWhichRule
+  - id: iso.style.which-after-noun
+    code: ISO_115
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\b(?:those|products|documents|samples)\s+which\b'
+      flags: i
+      message: "style: '%s' (a defining clause takes 'that': 'products that comply')"
+    params: [{value: message}]
+  - id: iso.style.comma-that
+    code: ISO_115
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: ',\s+ (?!provided\s|given\s|except\s|such\s|so\s|now\s|assuming\s |seeing\s|in\s+order\s|in\s+that\s|that\s+is\b |and\s|or\s|but\s|nor\s|yet\s|if\s|as\s) that\b'
+      flags: ix
+      message: "style: ', that' (a comma marks a non-defining clause, which takes 'which')"
+    params: [{value: message}]
+  # StyleVagueTimeRule
+  - id: iso.style.vague-time-last-year
+    code: ISO_117
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\blast\s+year\b'
+      flags: i
+      report: once
+      message: "vague time reference 'last year': state the actual date; publications outlive the reference frame"
+    params: [{value: message}]
+  - id: iso.style.vague-time-recently
+    code: ISO_117
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\brecently\b'
+      flags: i
+      report: once
+      message: "vague time reference 'recently': state the actual date; publications outlive the reference frame"
+    params: [{value: message}]
+  - id: iso.style.vague-time-lately
+    code: ISO_117
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\blately\b'
+      flags: i
+      report: once
+      message: "vague time reference 'lately': state the actual date; publications outlive the reference frame"
+    params: [{value: message}]
+  - id: iso.style.vague-time-in-the-past
+    code: ISO_117
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bin\s+the\s+past\b'
+      flags: i
+      report: once
+      message: "vague time reference 'in the past': state the actual date; publications outlive the reference frame"
+    params: [{value: message}]
+  # StyleVerbalFormsRule
+  - id: iso.style.verbal-forms-will
+    code: ISO_118
+    context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
+    check: text_pattern
+    args:
+      pattern: '\bwill\s+(?:(?:not\s+)?be|apply|contain|consist)\b'
+      flags: i
+      message: "style: '%s' (verbal form: use 'shall' for requirements)"
     params: [{value: message}]

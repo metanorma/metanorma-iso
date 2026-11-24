@@ -95,9 +95,83 @@ RSpec.describe "text_pattern shadow parity (issue #1732)" do
       ["no space", clause.call("5% and 10%."), 2],
       ["space", clause.call("5 %"), 0],
     ],
+    ["ISO_63", "StyleAbbrevArticlesRule"] => [
+      ["a ISO", clause.call("It is a ISO standard and a XML file."), 2],
+      ["an ISO", clause.call("an ISO standard"), 0],
+    ],
+    ["ISO_68", "StyleAffectEffectRule"] => [
+      ["both directions", clause.call("It effects the result; the affect is small."), 2],
+      ["correct", clause.call("It affects the result; the effect is small."), 0],
+    ],
+    ["ISO_69", "StyleAmbigWordsRule"] => [
+      ["and/or twice reports once", clause.call("A and/or B, C and/or D."), 1],
+      ["misspellings", clause.call("An on-line cyber-security and cyber_security."), 3],
+      ["ambiguous", clause.call("You need to know it might or could work. Might again."), 3],
+      ["clean", clause.call("It shall work."), 0],
+    ],
+    ["ISO_70", "StyleApostrophePluralsRule"] => [
+      ["digits", clause.call("In the 1990's and 1980's."), 2],
+      ["acronyms", clause.call("two ISO's and 3 IEC's."), 2],
+      ["correct", clause.call("In the 1990s."), 0],
+    ],
+    ["ISO_71", "StyleAssureEnsureRule"] => [
+      ["that and noun", clause.call("It assures that it works with assured quality."), 2],
+      ["object", clause.call("Assure the accuracy and assure the users."), 1],
+      ["person", clause.call("Assure the customers."), 0],
+    ],
+    ["ISO_77", "StyleContractionsRule"] => [
+      ["contractions", clause.call("It's here and we can't go, don't."), 3],
+      ["full", clause.call("It is here."), 0],
+    ],
+    ["ISO_81", "StyleCvNotRsdRule"] => [
+      ["words and acronym", clause.call("The relative standard deviation (RSD) and RSD."), 2],
+      ["cv", clause.call("The coefficient of variation."), 0],
+    ],
+    ["ISO_82", "StyleDateDurationRule"] => [
+      ["ranges", clause.call("From 10-15 March, 2020-2030 and 18th-19th century and the 20th century."), 4],
+      ["to", clause.call("From 10 to 15 March."), 0],
+    ],
+    ["ISO_83", "StyleDateFormatsRule"] => [
+      ["ordinals and order", clause.call("On 31st of October, March 5th and October 31, 2026."), 3],
+      ["iso order", clause.call("On 31 October 2026."), 0],
+    ],
+    ["ISO_88", "StyleEnDashRangesRule"] => [
+      ["ranges", clause.call("10-20 mm and 5 mm - 10 mm."), 2],
+      ["to", clause.call("10 mm to 20 mm."), 0],
+    ],
+    ["ISO_90", "StyleFewerLessRule"] => [
+      ["less count nouns", clause.call("Less samples and less than 10 tests."), 2],
+      ["less time", clause.call("Less time and fewer samples."), 0],
+    ],
+    ["ISO_93", "StyleImpersonalRule"] => [
+      ["pronouns", clause.call("I think we and you can see our view."), 4],
+      ["impersonal", clause.call("It is clear."), 0],
+    ],
+    ["ISO_100", "StyleLatinPluralsRule"] => [
+      ["plurals and data", clause.call("Criterias, criterias and phenomenons; data is here."), 3],
+      ["correct", clause.call("Criteria; data are here."), 0],
+    ],
+    ["ISO_111", "StyleQuotationPunctuationRule"] => [
+      ["stop inside", clause.call("It is \u201Cpartly quoted.\u201D and \"also this one.\""), 1],
+      ["stop outside", clause.call("It is \u201Cpartly quoted\u201D."), 0],
+    ],
+    ["ISO_115", "StyleThatWhichRule"] => [
+      ["which and comma that", clause.call("Those which comply, that is a rule, and parts, that fail."), 2],
+      ["correct", clause.call("Products that comply, and that pass."), 0],
+    ],
+    ["ISO_117", "StyleVagueTimeRule"] => [
+      ["vague", clause.call("Recently, last year and in the past; recently again."), 3],
+      ["dated", clause.call("In 2020."), 0],
+    ],
+    ["ISO_118", "StyleVerbalFormsRule"] => [
+      ["will", clause.call("It will be so, will not be, will apply."), 3],
+      ["shall", clause.call("It shall be so."), 0],
+    ],
   }
 
   # Containers the retained rules reach: the findings must be identical.
+  # Not pinned: the retained rules report a paragraph of a preface clause
+  # twice (a legacy double-report); the shadow rules report it once.
   covered = {
     "clause" => ->(p) { %(<sections><clause id="x"><title>T</title>#{p}</clause></sections>) },
     "annex" => ->(p) { %(<annex id="x"><title>A</title>#{p}</annex>) },
@@ -110,19 +184,26 @@ RSpec.describe "text_pattern shadow parity (issue #1732)" do
     "foreword" => ->(p) { %(<preface><foreword id="x">#{p}</foreword></preface>) },
     "introduction" => ->(p) { %(<preface><introduction id="x">#{p}</introduction></preface>) },
     "abstract" => ->(p) { %(<preface><abstract id="x">#{p}</abstract></preface>) },
+    "nested clause" => ->(p) { %(<sections><clause id="c"><clause id="x">#{p}</clause></clause></sections>) },
+    "list item in note" => ->(p) { %(<sections><clause id="c"><note id="n"><ul id="u"><li id="x">#{p}</li></ul></note></clause></sections>) },
+    "list item in table cell" => ->(p) { %(<sections><clause id="c"><table id="t"><tbody><tr><td><ul id="u"><li id="x">#{p}</li></ul></td></tr></tbody></table></clause></sections>) },
+    "bibliography clause" => ->(p) { %(<bibliography><clause id="x"><title>B</title>#{p}</clause></bibliography>) },
     "no paragraphs" => ->(_) { "<sections/>" },
   }
 
   # Containers whose paragraphs the retained rules never reach (they walk
-  # only model nodes that declare +paragraphs+). The declarative rule scans
-  # every paragraph, so it also reports here: a coverage gain to be accepted
-  # before the retained classes are retired. Pinned so a change is noticed.
+  # only model nodes that declare +paragraphs+). The shadow rules' context
+  # XPath is restricted to match, so they report nothing here either. (Scanning
+  # these paragraphs too would be a coverage gain, listed as a proposal in the
+  # batch report; it is deliberately not pinned.)
   gaps = {
     "note" => ->(p) { %(<sections><clause id="c"><note id="x">#{p}</note></clause></sections>) },
     "table cell" => ->(p) { %(<sections><clause id="c"><table id="t"><tbody><tr><td id="x">#{p}</td></tr></tbody></table></clause></sections>) },
     "definition list" => ->(p) { %(<sections><clause id="c"><dl id="d"><dt>A</dt><dd id="x">#{p}</dd></dl></clause></sections>) },
     "term note" => ->(p) { %(<sections><terms id="t"><term id="x"><preferred><expression><name>a</name></expression></preferred><termnote id="n">#{p}</termnote></term></terms></sections>) },
     "figure note" => ->(p) { %(<sections><clause id="c"><figure id="f"><note id="x">#{p}</note></figure></clause></sections>) },
+    "terms" => ->(p) { %(<sections><terms id="x"><title>T</title>#{p}</terms></sections>) },
+    "sections level" => ->(p) { "<sections>#{p}</sections>" },
     "references" => ->(p) { %(<bibliography><references id="x" normative="true"><title>N</title>#{p}</references></bibliography>) },
   }
 
@@ -198,10 +279,10 @@ RSpec.describe "text_pattern shadow parity (issue #1732)" do
         end
 
         gaps.each do |container, wrap|
-          it "also reports in #{container}, which the retained rule skips: #{label}" do
+          it "reports nothing in #{container}, as the retained rule: #{label}" do
             context = context_for(document(wrap.call(body)))
             expect(legacy(klass, context)).to be_empty
-            expect(shadow(klass, context).size).to eq(count)
+            expect(shadow(klass, context)).to be_empty
           end
         end
       end
