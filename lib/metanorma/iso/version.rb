@@ -1,5 +1,5 @@
 module Metanorma
   module Iso
-    VERSION = "3.5.30".freeze
+    VERSION = "3.5.31".freeze
   end
 end
