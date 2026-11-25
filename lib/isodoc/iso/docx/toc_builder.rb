@@ -62,7 +62,7 @@ module IsoDoc
           return unless model
 
           # Render "Contents" heading
-          render_toc_heading(doc)
+          render_toc_heading(model, doc)
 
           # Collect entries by walking the model
           entries = collect_entries(model)
@@ -87,10 +87,16 @@ module IsoDoc
           doc.model.settings.update_fields = Uniword::Wordprocessingml::UpdateFields.new
         end
 
-        def render_toc_heading(doc)
+        def render_toc_heading(model, doc)
           para = Uniword::Builder::ParagraphBuilder.new
           para.style = @resolver.paragraph_style(:contents_title)
-          para << "Contents"
+          clause = model.preface && Array(model.preface.clause).find { |node| toc_clause?(node) }
+          title = clause && section_heading(clause)
+          if title
+            @inline.with_heading_annotations_suppressed { @inline.render(title, para) }
+          else
+            para << "Contents"
+          end
           doc << para
         end
 
@@ -130,13 +136,13 @@ module IsoDoc
         def add_preface_entries(entries, preface)
           if preface.foreword
             entries << build_entry(
-              preface.foreword, 1,
+              preface.foreword, 1
             )
           end
 
           if preface.introduction
             entries << build_entry(
-              preface.introduction, 1,
+              preface.introduction, 1
             )
           end
 
@@ -158,16 +164,7 @@ module IsoDoc
           top_level += Array(sections.definitions) if sections.class.attributes.key?(:definitions)
 
           top_level.sort_by { |node| display_order_of(node) }.each do |node|
-            case node
-            when Metanorma::Iso::Document::Sections::IsoClauseSection,
-                 Metanorma::Standoc::Document::Sections::StandardReferencesSection,
-                 Metanorma::Document::Components::Sections::ReferencesSection
-              add_clause_entries(entries, node, 1)
-            when Metanorma::Iso::Document::Sections::IsoTermsSection
-              entries << build_entry(node, 1)
-            else
-              entries << build_entry(node, 1)
-            end
+            add_clause_entries(entries, node, 1)
           end
         end
 
@@ -184,12 +181,26 @@ module IsoDoc
           title = section_heading(clause)
           entries << build_entry(clause, level) if title && !@inline.heading_body_empty?(title)
 
-          # Recurse into sub-clauses
-          if clause.class.attributes.key?(:clause)
-            Array(clause.clause).each do |sub|
-              add_clause_entries(entries, sub, level + 1)
-            end
+          section_children(clause).each do |sub|
+            add_clause_entries(entries, sub, level + 1)
           end
+        end
+
+        def section_children(node)
+          attrs = %i[clause terms definitions references]
+          children = []
+          each_ordered_element(node, allow_filter: attrs) do |type, child|
+            children << child if type == :element && !bibliographic_item?(child)
+          end
+          return children unless children.empty?
+
+          attrs.flat_map do |attr|
+            node.class.attributes.key?(attr) ? Array(node.public_send(attr)).reject { |child| bibliographic_item?(child) } : []
+          end.sort_by { |child| display_order_of(child) }
+        end
+
+        def bibliographic_item?(node)
+          node.is_a?(Metanorma::Document::Components::BibData::BibliographicItem)
         end
 
         def section_heading(node)
@@ -235,10 +246,8 @@ module IsoDoc
           # entry; skip the wrapper when it cannot render a title.
           entries << build_entry(bib, 1) if has_title?(bib)
 
-          if bib.class.attributes.key?(:references)
-            Array(bib.references).each do |refs|
-              entries << build_entry(refs, 1) if has_title?(refs)
-            end
+          section_children(bib).each do |child|
+            add_clause_entries(entries, child, has_title?(bib) ? 2 : 1)
           end
         end
 
@@ -317,36 +326,24 @@ module IsoDoc
           doc << para
         end
 
-        # Render the source node's title content inline. ToC entries use
-        # the single-line composition: the presentation XML carries
-        # variant-title[@type='toc'] (label + tab + title, with no line
-        # breaks), which is what the PDF engine consumes for its ToC.
-        # fmt-title carries the display form — for annexes it embeds
-        # <br/> breaks and the obligation line, which would render the
-        # ToC entry as a multi-line paragraph — so it is only a fallback
-        # for nodes that carry no ToC variant title.
-        #
-        # The composition is rendered through a HeadingTextSink: the
-        # label → title separator must not reach Word as a tab. The ToC
-        # styles carry a single tab stop (the right-hand page-number
-        # stop), and a tab with no stop ahead of the pen jumps to the
-        # next one in order — carrying the entire heading text to the
-        # right margin behind a dot leader (metanorma-pdfa#119). The
-        # separator is therefore flattened to a space, matching the
-        # inline flow the PDF ToC composes.
+        # Annex fmt-title includes the obligation omitted by the ToC
+        # variant. Flatten its soft breaks for the cached single-line
+        # entry; Word rebuilds from the same complete ANNEX heading.
+        # Other headings use the ToC variant when available. The label
+        # separator becomes a space, leaving only the page-number tab.
         def render_toc_heading_text(node, runs)
           sink = HeadingTextSink.new(runs)
           render_toc_heading_source(node, sink)
         end
 
         def render_toc_heading_source(node, sink)
-          if (variant = toc_variant_title(node))
-            @inline.render(variant, sink)
-          elsif node.class.attributes.key?(:fmt_title) && node.fmt_title
-            @inline.render(node.fmt_title, sink)
-          elsif node.class.attributes.key?(:title) && node.title
-            @inline.render(node.title, sink)
-          end
+          source = if node.is_a?(Metanorma::Iso::Document::Sections::IsoAnnexSection) && node.fmt_title &&
+              !@inline.heading_body_empty?(node.fmt_title)
+                     node.fmt_title
+                   else
+                     toc_variant_title(node) || section_heading(node)
+                   end
+          @inline.with_heading_annotations_suppressed { @inline.render(source, sink) } if source
         end
 
         # Collects an entry's runs into its hyperlink and appends the
@@ -383,28 +380,33 @@ module IsoDoc
           end
         end
 
-        # Inline renderer sink for ToC entry headings. Forwards runs to
-        # the entry paragraph, rewriting tab runs into a single space:
-        # the only tab in a ToC entry paragraph is the page-number tab.
+        # Inline renderer sink for single-line ToC entry headings. Tabs
+        # and soft breaks become spaces; only the page-number tab remains.
+        # A run of separators (the annex caption delimiter is two soft
+        # breaks) becomes one space, so the entry never shows a double gap.
         class HeadingTextSink
           SPACE = " "
 
           def initialize(para)
             @para = para
+            @after_separator = false
           end
 
           def <<(element)
-            @para << flatten_tab(element)
+            if separator?(element)
+              @para << Uniword::Wordprocessingml::Run.new(text: SPACE) unless @after_separator
+              @after_separator = true
+            else
+              @para << element
+              @after_separator = false
+            end
             self
           end
 
           private
 
-          def flatten_tab(element)
-            return element unless element.is_a?(Uniword::Wordprocessingml::Run)
-            return element unless element.tab
-
-            Uniword::Wordprocessingml::Run.new(text: SPACE)
+          def separator?(element)
+            element.is_a?(Uniword::Wordprocessingml::Run) && (element.tab || element.break)
           end
         end
 

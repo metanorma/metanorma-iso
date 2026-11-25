@@ -3,10 +3,8 @@
 require_relative "spec_helper"
 require "metanorma-iso"
 
-# P1-009 / P2-004: every ToC entry is a clickable w:hyperlink to a
-# Word-style _Toc bookmark on its heading, and each annex heading is
-# followed by the hidden variant-title-toc paragraph the reference
-# carries ("Annex C" + tab + "Gelatinization").
+# Every ToC entry links its full text to the heading bookmark. Annex
+# headings must not be followed by an extra variant-title paragraph.
 RSpec.describe "DOCX ToC hyperlinks and annex variant-title-toc",
                type: :feature do
   let(:ns) { { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" } }
@@ -36,6 +34,8 @@ RSpec.describe "DOCX ToC hyperlinks and annex variant-title-toc",
       expect(link.at_xpath(".//w:instrText", ns).text).to include("PAGEREF #{anchor} ")
       expect(bookmark_names.count(anchor)).to eq(1)
       expect(link.xpath(".//w:t", ns).map(&:text).join).not_to be_empty
+      expect(entry.xpath(".//w:t[not(ancestor::w:hyperlink)]", ns)).to be_empty
+      expect(link.at_xpath(".//w:tab", ns)).not_to be_nil
     end
   end
 
@@ -43,17 +43,7 @@ RSpec.describe "DOCX ToC hyperlinks and annex variant-title-toc",
     expect(bookmark_names).to eq(bookmark_names.uniq)
   end
 
-  it "puts a hidden variant-title-toc paragraph after each annex heading",
-     :aggregate_failures do
-    hidden = document.xpath("//w:p[w:pPr/w:pStyle/@w:val='variant-title-toc']", ns)
-    texts = hidden.map { |p| p.xpath(".//w:t", ns).map(&:text) }
-    expect(texts).to include(["Annex C", "Gelatinization"])
-    expect(texts.size).to eq(
-      document.xpath("//w:p[w:pPr/w:pStyle/@w:val='ANNEX']", ns).size,
-    )
-    hidden.each do |p|
-      expect(p.xpath(".//w:r", ns).all? { |r| r.at_xpath("./w:rPr/w:vanish", ns) }).to be true
-      expect(p.at_xpath(".//w:tab", ns)).not_to be_nil
-    end
+  it "omits the duplicate annex variant-title paragraphs" do
+    expect(document.xpath("//w:p[w:pPr/w:pStyle/@w:val='variant-title-toc']", ns)).to be_empty
   end
 end

@@ -851,6 +851,7 @@ p.zzCopyright, li.zzCopyright, div.zzCopyright {
   font-family: {{bodyfont}};
   mso-fareast-font-family: "SimSun", serif;
   mso-bidi-font-family: {{bodyfont}};
+  color: blue;
   mso-ansi-language: EN-GB;
 }
 
@@ -871,6 +872,7 @@ p.zzCopyright1 {
   font-family: {{bodyfont}};
   mso-fareast-font-family: "SimSun", serif;
   mso-bidi-font-family: {{bodyfont}};
+  color: blue;
   mso-ansi-language: EN-GB;
 }
 
@@ -888,6 +890,7 @@ p.zzAddress {
   text-autospace: none;
   padding: 0cm;
   mso-padding-alt: 0cm 4pt 0cm 4pt;
+  color: blue;
   font-size: 10pt;
   font-family: {{bodyfont}};
 }

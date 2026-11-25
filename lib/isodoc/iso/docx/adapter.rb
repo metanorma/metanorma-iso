@@ -173,6 +173,7 @@ module IsoDoc
         def build_zone_renderers
           @middle_title_renderer = MiddleTitleRenderer.new(
             resolver: @resolver, inline_renderer: @inline_renderer,
+            color: @template == :dis ? MiddleTitleRenderer::DIS_COLOR : nil,
           )
           @preface_renderer = new_renderer(PrefaceRenderer)
           @indexsect_renderer = IndexsectRenderer.new(
@@ -295,7 +296,8 @@ module IsoDoc
         def save_mhtml(model, output_path)
           mhtml_doc = Uniword::Transformation::OoxmlToMhtmlConverter
             .document_to_mht(model, model.core_properties,
-                             merged_document_relationships(model))
+                             with_footnote_relationships(model,
+                                                         merged_document_relationships(model)))
           Uniword::Infrastructure::MimePackager
             .from_document(mhtml_doc).package(output_path)
         end
@@ -332,6 +334,36 @@ module IsoDoc
           Uniword::Ooxml::Relationships::PackageRelationships.new(relationships: rels)
         end
 
+        # MHTML resolves every hyperlink against one relationships part,
+        # while DOCX keeps footnote links in word/_rels/footnotes.xml.rels,
+        # whose ids restart at rId1. Give each footnote hyperlink a fresh id
+        # that is unique across both parts and register its relationship.
+        def with_footnote_relationships(model, rels)
+          fn_rels = model.footnotes_rels&.relationships
+          links = footnote_hyperlinks(model)
+          return rels if Array(fn_rels).empty? || links.empty?
+
+          merged = Array(rels&.relationships).dup
+          links.each_with_index do |link, index|
+            rel = Array(fn_rels).find { |r| r.id == link.id }
+            next unless rel
+
+            link.id = "rIdFn#{index + 1}"
+            merged << Uniword::Ooxml::Relationships::PackageRelationship.new(
+              id: link.id, type: rel.type, target: rel.target,
+              target_mode: rel.target_mode
+            )
+          end
+          Uniword::Ooxml::Relationships::PackageRelationships.new(relationships: merged)
+        end
+
+        def footnote_hyperlinks(model)
+          entries = model.footnotes&.footnote_entries
+          Array(entries).flat_map do |entry|
+            Array(entry.paragraphs).flat_map { |p| Array(p.hyperlinks) }
+          end.select(&:id)
+        end
+
         def mhtml_output?(path)
           MHTML_EXTENSIONS.include?(File.extname(path).downcase)
         end
@@ -352,6 +384,21 @@ module IsoDoc
                                     flatten_number_stems(xml))
         end
 
+        # TtElement models only text and semx, so bold, italic, links,
+        # footnotes and stems inside <tt> would be dropped. A SemxElement
+        # models them, so moving the content into one keeps it, and
+        # MonospaceRenderer styles it as InlineCode.
+        def wrap_rich_monospace(document)
+          document.xpath("//*[local-name()='tt']" \
+                         "[*[not(local-name()='semx')]]").each do |tt|
+            semx = Nokogiri::XML::Node.new("semx", document)
+            semx.namespace = tt.namespace
+            semx["element"] = "tt"
+            semx.children = tt.children
+            tt.children = semx
+          end
+        end
+
         # Numeric table cells need a Stem run, not a tree of MathML models.
         # Keep block formulas intact: their renderer emits OMML, not text.
         def flatten_number_stems(xml)
@@ -359,6 +406,7 @@ module IsoDoc
           return xml if document.errors.any? { |e| e.error? || e.fatal? }
 
           prune_stem_twins(document)
+          wrap_rich_monospace(document)
           document.xpath("//*[local-name()='stem' or local-name()='fmt-stem']" \
                          "[not(ancestor::*[local-name()='formula'])]").each do |stem|
             container = number_stem_container(stem)
@@ -493,6 +541,7 @@ module IsoDoc
             @template_root ||= Uniword.load(@template_path)
             root = @template_root
             @template_margins ||= SectionManager.template_margins(root)
+            @template_references ||= SectionManager.template_references(root)
             if root.body
               root.body.paragraphs.clear
               root.body.tables.clear
@@ -502,6 +551,7 @@ module IsoDoc
               root.body.element_order = [] if root.body.element_order
               root.body.section_properties = nil
             end
+            reset_footnotes_rels(root)
             clear_user_footnotes(root)
             clear_user_endnotes(root)
             root.custom_properties = nil
@@ -528,6 +578,20 @@ module IsoDoc
             allocator.seed_from_rels(root.document_rels.relationships)
           end
           root.allocator = allocator
+        end
+
+        # The loaded template is reused across conversions, so the footnotes
+        # relationships (which footnote hyperlinks add to) restart from the
+        # template's own on every conversion.
+        def reset_footnotes_rels(root)
+          @template_footnotes_rels ||= Array(root.footnotes_rels&.relationships).dup
+          root.footnotes_rels = if @template_footnotes_rels.empty?
+                                  nil
+                                else
+                                  Uniword::Ooxml::Relationships::PackageRelationships.new(
+                                    relationships: @template_footnotes_rels.dup,
+                                  )
+                                end
         end
 
         def clear_user_footnotes(root)
@@ -611,6 +675,13 @@ module IsoDoc
         #   Index
         #   [SECTPR — body section, arabic page numbers]
 
+        def start_front_matter(doc)
+          @section_manager.template_margins = @template_margins || {}
+          @section_manager.template_references = @template_references || {}
+          @section_manager.insert_cover_section(doc)
+          @context.text_width = @section_manager.text_width(:front)
+        end
+
         def visit_root(model, doc)
           @context.in_amendment = AmendmentDoctype.amendment?(model)
 
@@ -623,8 +694,7 @@ module IsoDoc
           # ── Section 1: Cover page ──
           @cover_renderer.render(model.bibdata, doc)
           @boilerplate_renderer.render_license(model.boilerplate, doc)
-          @section_manager.template_margins = @template_margins || {}
-          @section_manager.insert_cover_section(doc)
+          start_front_matter(doc)
 
           # ── Copyright page (still cover section's next page) ──
           @boilerplate_renderer.render_copyright(model.boilerplate, doc)
@@ -651,6 +721,7 @@ module IsoDoc
           # separate page between front matter and body, using the
           # MainTitle1 (intro+main) and MainTitle2 (title-part) paragraph
           # styles. Delegated to MiddleTitleRenderer.
+          @context.text_width = @section_manager.text_width(:body)
           @middle_title_renderer.render(model, doc)
           visit_sections(model.sections, doc) if model.sections
           model.annex&.each { |a| dispatch(a, doc) }
@@ -776,26 +847,12 @@ module IsoDoc
         ].freeze
 
         def render_anchored(renderer, node, doc)
-          paragraphs = container_paragraphs(doc)
-          before = paragraphs&.size
-          result = renderer.render(node, doc)
-          first = paragraphs && paragraphs.drop(before).find do |element|
-            element.is_a?(Uniword::Wordprocessingml::Paragraph) ||
-              element.is_a?(Uniword::Builder::ParagraphBuilder)
+          result = nil
+          first = Renderers::Anchoring.first_paragraph_added(doc) do
+            result = renderer.render(node, doc)
           end
           Renderers::Anchoring.anchor(@context, node, first) if first
           result
-        end
-
-        # The paragraph list of +doc+: document body, table cell, or the
-        # table attachment buffer (which holds paragraphs and tables).
-        def container_paragraphs(doc)
-          return doc.paragraphs if doc.is_a?(Renderers::TableAttachmentBuffer)
-
-          return unless doc.is_a?(Uniword::Builder::BaseBuilder)
-          return doc.model.body&.paragraphs if doc.is_a?(Uniword::Builder::DocumentBuilder)
-
-          doc.model.paragraphs
         end
 
         # ── Tree walking ───────────────────────────────────────────────

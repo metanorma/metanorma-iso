@@ -24,12 +24,6 @@ module IsoDoc
       module BoxWrapper
         include ModelUtils
 
-        # Gap between the label and the body. The XSL reserves
-        # padding-right on the label inline (6mm for notes, 5mm for
-        # examples); a single space keeps the ragged inline flow —
-        # wrapped lines return to the left margin, as in the PDF.
-        LABEL_GAP = " "
-
         # Model classes whose presence anywhere in a block forces the
         # XSL "block" mode for EXAMPLES (.//table or .//dl) and makes a
         # paragraph unsuitable for inline-label merging. Sourcecode as
@@ -38,6 +32,8 @@ module IsoDoc
           Metanorma::Document::Components::Tables::TableBlock,
           Metanorma::Document::Components::Lists::DefinitionList,
         ].freeze
+
+        QUOTE_CLASS = Metanorma::Document::Components::MultiParagraph::QuoteBlock
 
         PLAIN_PARAGRAPH_CLASS =
           Metanorma::Document::Components::Paragraphs::ParagraphBlock
@@ -70,9 +66,10 @@ module IsoDoc
 
           if inline_label_paragraph?(children)
             para = build_paragraph(style_key)
-            append_label(para, label_text(node))
+            append_label(para, label_text(node), inline: true, spaced: term_note?(node))
             @inline_renderer.render(first, para)
             anchor_paragraph(first, para)
+            anchor_paragraph(node, para)
             @context.mark_zone_paragraph
             doc << para
             children.drop(1).each { |child| @walker.dispatch(child, doc) }
@@ -81,6 +78,7 @@ module IsoDoc
             # body content follows (indented via the zone body styles).
             label_para = build_paragraph(style_key)
             append_label(label_para, label_text(node))
+            anchor_paragraph(node, label_para)
             label_para.keep_next
             doc << label_para
             children.each { |child| @walker.dispatch(child, doc) }
@@ -109,6 +107,7 @@ module IsoDoc
         def inline_label_paragraph?(children)
           first = children.first
           return false unless first.is_a?(PLAIN_PARAGRAPH_CLASS)
+          return false if first.is_a?(QUOTE_CLASS)
           return false if embedded_block_child?(first)
           return false if block_forcing_child?(children)
 
@@ -144,10 +143,21 @@ module IsoDoc
           text.empty? ? nil : text
         end
 
-        def append_label(para, text)
+        # Term notes take a space after "Note 1 to entry:", as DOC and the
+        # published ISO documents do; notes and examples take a tab.
+        def append_label(para, text, inline: false, spaced: false)
           return unless text
 
-          para << (text + LABEL_GAP)
+          para << (spaced ? "#{text} " : text)
+          return if spaced || !inline
+
+          para << Uniword::Wordprocessingml::Run.new(
+            tab: Uniword::Wordprocessingml::Tab.new,
+          )
+        end
+
+        def term_note?(node)
+          node.is_a?(Metanorma::Iso::Document::Terms::TermNote)
         end
 
         # Element children of +node+ in document order (text nodes and

@@ -58,7 +58,7 @@ module IsoDoc
     # Callers that need a hard guarantee wrap the lookup in StyleResolver,
     # which raises UnknownStyleError on miss.
     class DocxStyleMapping
-      attr_reader :paragraph_styles, :character_styles, :numbering,
+      attr_reader :paragraph_styles, :character_styles, :numbering, :spacing,
                   :auto_numbered_styles, :excluded_styles
 
       # @param template [Symbol] :dis or :simple
@@ -71,10 +71,16 @@ module IsoDoc
         @numbering            = symbolize_keys(data.fetch("numbering", {}))
         @auto_numbered_styles = Set.new(data.fetch("auto_numbered_styles", []))
         @excluded_styles      = data.fetch("excluded_styles", {})
+        @spacing              = symbolize_keys(data.fetch("spacing", {}))
       end
 
       def paragraph_style(key)
         @paragraph_styles[key.to_sym]
+      end
+
+      # Extra spacing (twips) for +key+, or nil when unset.
+      def spacing_for(key)
+        @spacing[key.to_sym]
       end
 
       def character_style(key)

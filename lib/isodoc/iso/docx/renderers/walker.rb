@@ -32,6 +32,7 @@ module IsoDoc
           # in ordered mode), falls back to attribute-based traversal.
           def walk(node, doc)
             return unless node
+            return if title_node?(node)
 
             walked = false
             each_ordered_element(node) do |type, obj|
@@ -68,6 +69,14 @@ module IsoDoc
 
           private
 
+          # Titles are consumed by heading renderers. Walking them again
+          # would emit their footnote paragraphs as stray body content.
+          def title_node?(node)
+            node.is_a?(Metanorma::Document::Components::Inline::TitleWithAnnotationElement) ||
+              node.is_a?(Metanorma::Document::Components::Inline::FmtTitleElement) ||
+              node.is_a?(Metanorma::Document::Components::Inline::VariantTitleElement)
+          end
+
           # Attribute-based fallback for nodes without element_order.
           # Visits any collection-valued attribute that holds block content.
           # Plain strings are skipped: some models (e.g. TextElement) carry
@@ -98,7 +107,7 @@ module IsoDoc
             admonitions sourcecode_blocks quote_blocks
             definition_lists unordered_lists ordered_lists
             clause terms definitions references term
-            p annex content
+            p annex content ul ol dl formula quote semx table figure example
           ].freeze
           private_constant :BLOCK_ATTRS
         end
