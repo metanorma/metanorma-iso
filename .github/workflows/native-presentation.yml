@@ -1,0 +1,43 @@
+name: Native ISO presentation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  native-presentation:
+    name: Native ISO Ruby ${{ matrix.ruby }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+        ruby: ["3.4", "4.0"]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@be3c7df29b3349ec6bcfc6b4792f1cf9f5237d18 # v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Exercise the native ISO presenter and real renderer
+        run: >-
+          bundle exec rspec spec/metanorma/iso/presentation/transformer_spec.rb
+          --format progress
+          --format json --out native-presentation-results.json
+      - name: Require all native examples without skips
+        run: >-
+          bundle exec ruby -rjson -e
+          's = JSON.parse(File.read("native-presentation-results.json")).fetch("summary");
+          abort("Expected at least 11 passing native examples without skips") unless
+          s.fetch("example_count") >= 11 && s.fetch("failure_count").zero? && s.fetch("pending_count").zero?;
+          puts JSON.generate(s)'

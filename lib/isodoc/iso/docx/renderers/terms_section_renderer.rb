@@ -5,15 +5,14 @@ module IsoDoc
     module Docx
       module Renderers
         # Renders a Terms section (clause containing term entries). The
-        # title uses Heading1 style regardless of nested depth because
-        # terms sections are always top-level document sections.
+        # title follows clause depth, including nested terms sections.
         #
         # The presentation XML emits the terms intro boilerplate twice
         # (once from localization, once from source) with slightly
         # different wording. The renderer deduplicates paragraphs whose
         # text starts with known boilerplate prefixes so the intro
         # appears once.
-        class TermsSectionRenderer < SectionRenderer
+        class TermsSectionRenderer < ClauseRenderer
           include ModelUtils
 
           # Boilerplate prefixes whose owning <p> should be deduped.
@@ -23,10 +22,6 @@ module IsoDoc
             "For the purposes of this document",
             "ISO and IEC maintain terminolog",
           ].freeze
-
-          def title_style_for(_section)
-            @resolver.heading_style(1)
-          end
 
           private
 
@@ -41,6 +36,7 @@ module IsoDoc
                 if block_follows_intro?(obj)
                   next
                 end
+
                 skipping_until_next = false
               end
 

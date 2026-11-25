@@ -31,6 +31,7 @@ module IsoDoc
           def render(figure, doc)
             @context.with_figure do
               render_image(figure, doc)
+              render_literal(figure, doc)
               render_subfigures(figure, doc)
               render_name(figure, doc)
               render_notes(figure, doc)
@@ -45,6 +46,25 @@ module IsoDoc
             return unless figure.image
 
             @image_renderer.call(figure.image, doc)
+          end
+
+          # A figure whose content is a literal block (<pre>) prints its
+          # text in the Code style, line breaks kept.
+          def render_literal(figure, doc)
+            return unless figure.class.attributes.key?(:pre)
+
+            Array(figure.pre).each do |literal|
+              para = build_paragraph(:sourcecode)
+              with_preserved_whitespace { @inline_renderer.render(literal, para) }
+              doc << para
+            end
+          end
+
+          def with_preserved_whitespace
+            @inline_renderer.preserve_whitespace = true
+            yield
+          ensure
+            @inline_renderer.preserve_whitespace = false
           end
 
           def render_subfigures(figure, doc)
@@ -90,7 +110,7 @@ module IsoDoc
             return unless figure.class.attributes.key?(:dl)
             return unless figure.dl
 
-            @walker.walk(figure.dl, doc)
+            @walker.dispatch(figure.dl, doc)
           end
 
           def render_key_element(figure, doc)

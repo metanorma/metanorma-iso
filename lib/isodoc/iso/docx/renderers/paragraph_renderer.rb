@@ -48,6 +48,12 @@ module IsoDoc
             end
           end
 
+          # List renderers supply the numbered first paragraph; subsequent
+          # inline segments still use the normal paragraph split path.
+          def render_with_leading_paragraph(paragraph, doc, para)
+            render_split(paragraph, doc, leading: para)
+          end
+
           private
 
           def render_simple(paragraph, doc)
@@ -66,9 +72,9 @@ module IsoDoc
           # flush the current paragraph (if non-empty) and dispatch the
           # block as a sibling. Each contiguous inline run picks up the
           # same paragraph style and alignment as the original <p>.
-          def render_split(paragraph, doc)
-            state = { current: nil, paragraph: paragraph, bookmark: nil,
-                      first: true, lead: nil,
+          def render_split(paragraph, doc, leading: nil)
+            state = { current: leading, paragraph: paragraph, bookmark: nil,
+                      first: leading.nil?, lead: leading,
                       block_only: block_only?(paragraph) }
             twins = @inline_renderer.fmt_stem_source_ids(paragraph)
             each_ordered_element(paragraph) do |type, obj|

@@ -2,9 +2,8 @@
 
 require_relative "spec_helper"
 
-# The hidden variant-title-toc paragraph after an annex heading must hide
-# every run, including runs inside an inline link (a w:hyperlink child).
-RSpec.describe "DOCX annex hidden ToC variant title with an inline link" do
+# Annex headings supply the rebuilt ToC without a duplicate paragraph.
+RSpec.describe "DOCX annex ToC source with an inline link" do
   let(:ns) { { "w" => "http://schemas.openxmlformats.org/wordprocessingml/2006/main" } }
   let(:document) do
     xml = minimal_iso_xml(<<~INNER)
@@ -26,21 +25,14 @@ RSpec.describe "DOCX annex hidden ToC variant title with an inline link" do
     end
   end
 
-  it "vanishes every run of the hidden paragraph, linked ones included", :aggregate_failures do
-    hidden = document.at_xpath("//w:p[w:pPr/w:pStyle/@w:val='variant-title-toc']", ns)
-    expect(hidden).not_to be_nil
-    expect(hidden.at_xpath(".//w:hyperlink//w:r", ns)).not_to be_nil
-    visible = hidden.xpath(".//w:r[not(w:rPr/w:vanish)]", ns)
-    expect(visible.map(&:text)).to eq([])
+  it "emits no duplicate variant paragraph or paragraph mark", :aggregate_failures do
+    expect(document.xpath("//w:p[w:pPr/w:pStyle/@w:val='variant-title-toc']", ns)).to be_empty
+    heading = document.xpath("//w:p[w:pPr/w:pStyle/@w:val='ANNEX']", ns)
+    expect(heading.size).to eq(1)
+    expect(heading.first.xpath(".//w:t", ns).map(&:text).join).to eq("Annex  text")
   end
 
-  it "keeps the linked run between the text around it" do
-    hidden = document.at_xpath("//w:p[w:pPr/w:pStyle/@w:val='variant-title-toc']", ns)
-    order = hidden.xpath("./w:r | ./w:hyperlink", ns).map(&:text)
-    expect(order.join).to include("Annex linked text")
-  end
-
-  context "when the annex has no title" do
+  context "when the annex has an empty title" do
     let(:untitled) do
       xml = minimal_iso_xml(<<~INNER)
         <bibdata>
@@ -49,6 +41,7 @@ RSpec.describe "DOCX annex hidden ToC variant title with an inline link" do
         </bibdata>
         <sections/>
         <annex id="a1" obligation="normative">
+          <fmt-title/>
           <variant-title type="toc"><span class="fmt-caption-label"><semx element="autonum" source="a1">A</semx></span><span class="fmt-caption-delim"><tab/></span>Gelatin</variant-title>
           <p>Body.</p>
         </annex>
@@ -60,9 +53,12 @@ RSpec.describe "DOCX annex hidden ToC variant title with an inline link" do
       end
     end
 
-    it "keeps the hidden ToC paragraph" do
-      hidden = untitled.at_xpath("//w:p[w:pPr/w:pStyle/@w:val='variant-title-toc']", ns)
-      expect(hidden&.text).to include("Gelatin")
+    it "uses one ANNEX heading as the rebuild source without a duplicate paragraph", :aggregate_failures do
+      headings = untitled.xpath("//w:p[w:pPr/w:pStyle/@w:val='ANNEX']", ns)
+      expect(headings.size).to eq(1)
+      expect(headings.first.text).to include("Gelatin")
+      entry = untitled.at_xpath("//w:p[w:pPr/w:pStyle/@w:val='TOC1']", ns)
+      expect(entry.text).to include("Gelatin")
     end
 
     it "keeps the annex id bookmark" do
@@ -70,9 +66,7 @@ RSpec.describe "DOCX annex hidden ToC variant title with an inline link" do
     end
   end
 
-  # A unit stem in an annex title renders as OMML (#1728). The hidden
-  # variant-title-toc paragraph must not show it: only runs can carry
-  # w:vanish, so an equation there would print the title's unit twice.
+  # A unit stem stays in the heading without printing a duplicate title.
   context "when the annex title carries a unit stem" do
     let(:stem) do
       '<stem type="MathML"><math xmlns="http://www.w3.org/1998/Math/MathML">' \
@@ -102,11 +96,8 @@ RSpec.describe "DOCX annex hidden ToC variant title with an inline link" do
     end
     let(:math_ns) { ns.merge("m" => "http://schemas.openxmlformats.org/officeDocument/2006/math") }
 
-    it "keeps the equation out of the hidden paragraph", :aggregate_failures do
-      hidden = with_stem.at_xpath("//w:p[w:pPr/w:pStyle/@w:val='variant-title-toc']", math_ns)
-      expect(hidden).not_to be_nil
-      expect(hidden.xpath(".//m:oMath", math_ns)).to be_empty
-      expect(hidden.xpath(".//w:r[not(w:rPr/w:vanish)]", math_ns)).to be_empty
+    it "emits no duplicate paragraph for the equation" do
+      expect(with_stem.xpath("//w:p[w:pPr/w:pStyle/@w:val='variant-title-toc']", math_ns)).to be_empty
     end
 
     it "still renders the equation in the heading" do

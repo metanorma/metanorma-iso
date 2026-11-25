@@ -173,6 +173,11 @@ paragraph_styles:
   amend_newcontent: a3
   amend_heading: a2
 
+# Extra paragraph spacing, in twips, that the DOC chain sets on a style.
+# definition_after: gap after a Definition paragraph (DOC: 12pt).
+spacing:
+  definition_after: 240
+
 character_styles:
   hyperlink: Hyperlink
   footnote_reference: FootnoteReference

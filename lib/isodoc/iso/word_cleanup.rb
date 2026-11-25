@@ -157,8 +157,73 @@ module IsoDoc
       def word_cleanup(docxml)
         authority_hdr_cleanup(docxml)
         super
+        remove_toc_variants(docxml)
+        definition_spacing(docxml)
         style_cleanup(docxml)
         docxml
+      end
+
+      # The HTML TOC has already consumed these variants. Word ignores
+      # display:none on the paragraphs and prints them above annex titles.
+      def remove_toc_variants(docxml)
+        docxml.xpath("//p[@class = 'variant-title-toc']").each(&:remove)
+      end
+
+      DESIGNATION_XPATH =
+        "preceding-sibling::*[1][self::p[@class = 'Terms' or " \
+        "@class = 'AltTerms' or @class = 'AdmittedTerm' or " \
+        "@class = 'DeprecatedTerms']]".freeze
+
+      # Matches the 12pt gap the DOCX term renderer puts before a definition.
+      def definition_spacing(docxml)
+        docxml.xpath(".//p[@class = 'Definition'][#{DESIGNATION_XPATH}]")
+          .each { |para| add_definition_gap(para) }
+        docxml.xpath(".//div[@class = 'ol_wrap' or @class = 'ul_wrap']" \
+                     "[#{DESIGNATION_XPATH}]").each do |wrap|
+          item = wrap.at(".//li") or next
+          add_definition_gap(item.at("./p") || item)
+        end
+      end
+
+      def add_definition_gap(node)
+        style = node["style"].to_s.strip
+        return if style.include?("margin-top:12.0pt")
+
+        style += ";" unless style.empty? || style.end_with?(";")
+        node["style"] = "#{style}margin-top:12.0pt;"
+      end
+
+      def word_fn_cleanup(docxml)
+        super
+        footnote_anchor_space(docxml)
+      end
+
+      # Html2Doc inserts the footnote anchor directly before this content.
+      def footnote_anchor_space(docxml)
+        targets = docxml.xpath("//*[@id]")
+          .each_with_object({}) { |node, ids| ids[node["id"]] ||= node }
+        docxml.xpath("//a[@class = 'FootnoteRef']/@href").each do |href|
+          id = href.value.delete_prefix("#")
+          note = !id.empty? && targets[id] or next
+          para = note.at(".//p") || note
+          next if footnote_starts_with_space?(para)
+
+          para.prepend_child(Nokogiri::XML::Text.new(" ", docxml))
+        end
+      end
+
+      # Whitespace inside MathML (m:oMath once converted) is markup, not text
+      # before the math.
+      FOOTNOTE_FIRST_CONTENT = <<~XPATH.gsub(/\s+/, " ").strip.freeze
+        (.//text()[not(ancestor::*[local-name() = 'math' or
+        local-name() = 'oMath'])] | .//img |
+        .//*[local-name() = 'math' or local-name() = 'oMath'])[1]
+      XPATH
+      private_constant :FOOTNOTE_FIRST_CONTENT
+
+      def footnote_starts_with_space?(para)
+        first = para.at_xpath(FOOTNOTE_FIRST_CONTENT)
+        first&.text? && first.text.match?(/\A[[:space:]]/)
       end
 
       # supply missing annex title

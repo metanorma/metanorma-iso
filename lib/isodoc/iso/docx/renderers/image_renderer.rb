@@ -32,7 +32,7 @@ module IsoDoc
           def render_image_with_path(image, doc, _src, path)
             width, height = resolved_image_dimensions(path, image.width, image.height)
             para = build_paragraph(image_paragraph_style(width))
-            add_run_to_paragraph(para, doc, path,
+            add_run_to_paragraph(para, @inline_renderer.doc, path,
                                  width: width,
                                  height: height,
                                  alt_text: image.alt)
@@ -143,7 +143,7 @@ module IsoDoc
           end
 
           def add_run_to_paragraph(para, doc, path, attributes)
-            run = Uniword::Builder::ImageBuilder.create_run(doc, path, 
+            run = Uniword::Builder::ImageBuilder.create_run(doc, path,
                                                             **attributes)
             para << run
           end
