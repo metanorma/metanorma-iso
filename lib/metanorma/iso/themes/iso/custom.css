@@ -1,0 +1,261 @@
+/* ==========================================================================
+   ISO default HTML: document body in the house style of the consolidated
+   ISO/IEC Directives online edition. Scoped to .main-section so the reader
+   chrome (header, sidebar, cover) keeps the shared component styles.
+   Sizes are in em so the reader's font-size control still scales the body.
+   ========================================================================== */
+
+/* Body tokens follow the theme palette, so the reader's light, sepia and
+   dark modes recolour the body; only the accents need dark-mode values. */
+:root {
+  --iso-ink: var(--color-text);
+  --iso-ink-soft: var(--color-text-light);
+  --iso-muted: var(--color-text-muted);
+  --iso-line: var(--color-border);
+  --iso-line-soft: var(--color-bg-light);
+  --iso-link: var(--mn-primary);
+  --iso-link-soft: var(--mn-primary-light);
+  --iso-marker: var(--mn-warm);
+  --iso-table-bg: var(--color-bg);
+}
+[data-theme="dark"], [data-theme="oled"] {
+  --iso-link: #6fb3f0;
+  --iso-marker: #ff7a8a;
+}
+
+/* --- Body text --- */
+.main-section {
+  font-family: var(--font-body);
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 1.62;
+  color: var(--iso-ink);
+}
+.main-section p { margin: 0 0 0.875em; }
+.main-section a { color: var(--iso-link); text-decoration: none; }
+.main-section a:hover { text-decoration: underline; }
+.main-section a.xref {
+  border-bottom: 1px dotted currentColor;
+  text-decoration: none;
+}
+.main-section a.xref:hover { background: var(--iso-link-soft); border-bottom-style: solid; }
+
+/* --- Clause headings: number in the accent colour, then the title --- */
+.main-section h1, .main-section h2, .main-section h3,
+.main-section h4, .main-section h5, .main-section h6,
+.main-section .foreword-title, .main-section .intro-title {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  color: var(--iso-ink);
+  padding: 0;
+  border: 0;
+  letter-spacing: normal;
+  scroll-margin-top: calc(var(--header-height) + 20px);
+}
+.main-section h1, .main-section .foreword-title, .main-section .intro-title {
+  font-size: 1.5em;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin: 3.25rem 0 1rem;
+}
+.main-section h1::after { content: none; }
+.main-section h2 { font-size: 1.15625em; line-height: 1.3; margin: 2.125rem 0 0.75rem; }
+.main-section h3, .main-section h4, .main-section h5, .main-section h6 {
+  font-size: 0.96875em;
+  line-height: 1.4;
+  margin: 1.5rem 0 0.625rem;
+  color: var(--iso-ink-soft);
+}
+.main-section :is(h1, h2, h3, h4, h5, h6) > .caption-label {
+  color: var(--iso-link);
+  font-variant-numeric: tabular-nums;
+  margin-right: 0.5em;
+}
+
+/* --- Annexes: "Annex A", obligation and title on separate lines --- */
+.main-section .annex-title {
+  font-size: 1.5em;
+  line-height: 1.3;
+  color: var(--iso-link);
+  border-top: 1px solid var(--iso-line);
+  padding-top: 2.5rem;
+  margin-top: 3.75rem;
+}
+.main-section .annex-title .obligation-text { font-weight: 400; font-size: 0.75em; }
+
+/* --- Captions: "Table 1 — Title", "Figure 1 — Title" with a visible dash --- */
+.main-section .caption-delim { opacity: 1; }
+.main-section .caption-label,
+.main-section .element-label { font-weight: 700; font-variant: normal; text-transform: none; }
+.main-section :is(figcaption, .table-caption) :is(.caption-label, .element-label) { color: inherit; }
+
+/* --- Terms: entry number on its own line, preferred term in bold --- */
+.main-section div[id^="term-"] {
+  margin: 1.125em 0 0.125em;
+  padding: 0;
+  border: 0;
+}
+.main-section div[id^="term-"] + div[id^="term-"] { margin-top: 1.125em; }
+.main-section .TermNum {
+  font-family: var(--font-sans);
+  font-variant: normal;
+  font-size: 1em;
+  font-weight: 700;
+  line-height: 1.62;
+  color: var(--iso-link);
+  font-variant-numeric: tabular-nums;
+  margin: 0;
+}
+.main-section .TermNum > .caption-label { margin-right: 0; }
+.main-section div[id^="term-"] > p { margin: 0 0 0.25em; }
+.main-section div[id^="term-"] > p > strong:only-child { color: var(--iso-ink); }
+.main-section .term-name { font-size: 1em; color: var(--iso-ink); font-weight: 700; }
+.main-section .term-domain { color: var(--iso-ink-soft); font-size: 1em; }
+.main-section p.term-source {
+  font-size: 1em;
+  color: var(--iso-ink);
+  line-height: 1.62;
+  margin: 0.375em 0 0.75em;
+}
+
+/* --- Notes and examples: small muted text, label in capitals --- */
+.main-section .note-block,
+.main-section .example,
+.main-section div[id^="term-"] .note-block,
+.main-section div[id^="term-"] .example {
+  background: none;
+  border: 0;
+  border-radius: 0;
+  padding: 0;
+  margin: 0.125rem 0 0.375rem;
+  font-size: 0.78125em;
+  line-height: 1.5;
+  color: var(--iso-muted);
+}
+.main-section .note-block::before,
+.main-section .example::before { content: none; }
+.main-section .note-block p,
+.main-section .example p { margin: 0 0 0.375em; }
+.main-section .note-label,
+.main-section .term-note-label,
+.main-section .example-label {
+  font-family: inherit;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--iso-muted);
+  margin-right: 0.5em;
+}
+
+/* --- Lists: dash and a) 1) labels in the marker colour --- */
+.main-section .mn-labeled-list { padding-left: 2.2em; margin: 0.25em 0 1em; }
+.main-section .mn-labeled-list .li-label {
+  float: left;
+  width: 2.2em;
+  margin-left: -2.2em;
+  color: var(--iso-marker);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.main-section li { margin: 0 0 0.375em; }
+.main-section li::marker { color: var(--iso-marker); }
+
+/* --- Tables: title above, centred; notes and footnotes inside the frame --- */
+.main-section .table-scroll-wrapper { margin: 1em auto 1.25em; overflow-x: auto; text-align: center; }
+.main-section .table-caption {
+  position: static;
+  display: block;
+  background: none;
+  border: 0;
+  padding: 0 0 0.5em;
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: 1em;
+  font-weight: 700;
+  color: var(--iso-ink);
+}
+.main-section table.table-block {
+  border-collapse: collapse;
+  width: auto;
+  min-width: 60%;
+  margin: 0 auto;
+  font-size: 0.90625em;
+  background: var(--iso-table-bg);
+  text-align: left;
+}
+.main-section table.table-block th,
+.main-section table.table-block td {
+  border: 1px solid var(--iso-line);
+  padding: 0.4375em 0.75em;
+  text-align: left;
+  vertical-align: top;
+}
+.main-section table.table-block thead th {
+  background: var(--iso-link-soft);
+  color: var(--iso-ink);
+  font-weight: 700;
+}
+.main-section td.table-footnotes {
+  font-size: 0.9em;
+  color: var(--iso-ink-soft);
+}
+.main-section .TableFootnoteRef {
+  vertical-align: super;
+  font-size: 0.75em;
+  line-height: 0;
+  margin-right: 0.35em;
+}
+
+/* --- Figures: title below the figure, bold and centred --- */
+.main-section figure { margin: 1.5em 0; padding: 0; text-align: center; }
+.main-section figure img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--iso-line);
+  border-radius: 6px;
+  background: #fff;
+  padding: 8px;
+}
+.main-section figcaption {
+  margin-top: 0.5em;
+  font-family: var(--font-sans);
+  font-size: 1em;
+  font-style: normal;
+  font-weight: 700;
+  color: var(--iso-ink);
+}
+
+/* --- Formulae: number in parentheses at the right margin --- */
+.main-section .formula-number { color: var(--iso-ink); font-weight: 400; font-family: inherit; }
+
+/* --- Footnotes and bibliography --- */
+.main-section .fn-marker .fn-link,
+.main-section a.fn-link { color: var(--iso-link); }
+.main-section .footnotes .footnote {
+  font-size: 0.8125em;
+  color: var(--iso-ink-soft);
+  border-top: 1px solid var(--iso-line-soft);
+  padding-top: 0.5em;
+}
+.main-section .biblio-entry {
+  border: 0;
+  font-size: 1em;
+  line-height: 1.62;
+  margin: 0 0 0.75em;
+  padding: 0 0 0 2.6em;
+  text-indent: -2.6em;
+}
+.main-section .biblio-ordinal {
+  display: inline-block;
+  min-width: 2.6em;
+  text-indent: 0;
+  color: var(--iso-link);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 760px) {
+  .main-section table.table-block { min-width: 0; font-size: 0.84375em; }
+  .main-section table.table-block th,
+  .main-section table.table-block td { padding: 0.375em 0.5625em; }
+  .main-section .mn-labeled-list { padding-left: 1.4em; }
+}
