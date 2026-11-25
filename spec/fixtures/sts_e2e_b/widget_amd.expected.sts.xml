@@ -33,8 +33,7 @@
   <body>
     <sec id="_scope" sec-type="scope">
       <title>Scope</title>
-      <p id="_scope_p1">This document specifies the socket sizes of invented gadgets.<fn><label>1</label><p>1)The sizes are fictional and apply to no real product.</p></fn>
-</p>
+      <p id="_scope_p1">This document specifies the socket sizes of invented gadgets.<fn><label>1</label><p>1)The sizes are fictional and apply to no real product.</p></fn></p>
     </sec>
     <sec id="sec_terms" sec-type="terms">
       <title>Terms and definitions</title>

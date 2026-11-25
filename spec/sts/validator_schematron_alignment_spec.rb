@@ -139,9 +139,21 @@ RSpec.describe Metanorma::Iso::Sts::Validator do
       "<front><std-meta><originator>#{originator}</originator></std-meta></front>"
     end
 
-    it "applies the ISO no-slash rule to data: references" do
-      xml = "#{front('ISO')}<graphic xlink:href=\"data:image/png;base64,AAAA\"/>"
+    # Base64 payloads contain "/", but an embedded data: URI names no asset
+    # folder (the ISO 19135 submission output embeds its figures this way).
+    it "accepts an embedded data: reference whose payload contains a slash" do
+      xml = "#{front('ISO')}<graphic xlink:href=\"data:image/png;base64,iVBOR/AAAA\"/>"
+      expect(ids(xml)).not_to include("iso-gdg-5.10-3")
+    end
+
+    it "still fails an ISO reference carrying an asset folder" do
+      xml = "#{front('ISO')}<graphic xlink:href=\"images/img01\"/>"
       expect(ids(xml)).to include("iso-gdg-5.10-3")
+    end
+
+    it "accepts an IEC data: reference" do
+      xml = "#{front('IEC')}<graphic xlink:href=\"data:image/png;base64,AAAA\"/>"
+      expect(ids(xml)).not_to include("iso-gdg-5.10-3")
     end
 
     it "fails an empty IEC reference" do
@@ -156,9 +168,39 @@ RSpec.describe Metanorma::Iso::Sts::Validator do
   end
 
   describe "subclause label (4.4.2-1)" do
-    it "does not exempt an unlabelled intro section with subclauses" do
+    it "exempts the unnumbered Introduction holding numbered subclauses" do
       xml = %(<front><sec sec-type="intro"><title>Introduction</title>) +
+        "<sec><label>0.1</label><title>X</title></sec></sec></front>"
+      expect(ids(xml)).not_to include("iso-gdg-4.4.2-1")
+    end
+
+    it "exempts the unnumbered Foreword holding subclauses" do
+      xml = %(<front><sec sec-type="foreword"><title>Foreword</title>) +
         "<sec><title>X</title></sec></sec></front>"
+      expect(ids(xml)).not_to include("iso-gdg-4.4.2-1")
+    end
+
+    it "still flags an unlabelled body clause with subclauses" do
+      xml = %(<body><sec><title>X</title>) +
+        "<sec><label>4.1</label><title>Y</title></sec></sec></body>"
+      expect(ids(xml)).to include("iso-gdg-4.4.2-1")
+    end
+
+    it "still flags a body section typed intro with unlabelled subclauses" do
+      xml = %(<body><sec sec-type="intro"><title>X</title>) +
+        "<sec><title>Y</title></sec></sec></body>"
+      expect(ids(xml)).to include("iso-gdg-4.4.2-1")
+    end
+
+    it "still flags a body section typed foreword with unlabelled subclauses" do
+      xml = %(<body><sec sec-type="foreword"><title>X</title>) +
+        "<sec><title>Y</title></sec></sec></body>"
+      expect(ids(xml)).to include("iso-gdg-4.4.2-1")
+    end
+
+    it "still flags an intro nested below a front-matter section" do
+      xml = %(<front><sec><label>1</label><title>Front</title><sec sec-type="intro">) +
+        "<title>Intro</title><sec><title>Y</title></sec></sec></sec></front>"
       expect(ids(xml)).to include("iso-gdg-4.4.2-1")
     end
   end
