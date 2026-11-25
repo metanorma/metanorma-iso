@@ -32,7 +32,9 @@ module IsoDoc
             link_model.anchor = context.bookmark_name(target)
 
             temp = Uniword::Builder::ParagraphBuilder.new
-            parent.render_mixed_inline_fallback(element, temp)
+            parent.without_autonum_stripping do
+              parent.render_mixed_inline_fallback(element, temp)
+            end
             temp.model.runs.each { |r| link_model.runs << r }
 
             if link_model.runs.empty?

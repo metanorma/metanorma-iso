@@ -100,6 +100,16 @@ module IsoDoc
           @resolver.auto_numbered_style?(style.value)
         end
 
+        # Runs the block with autonum stripping off. A cross-reference's
+        # label ("Clause 1") is its own content, not the heading's number.
+        def without_autonum_stripping
+          was_stripping = @strip_autonum
+          @strip_autonum = false
+          yield
+        ensure
+          @strip_autonum = was_stripping
+        end
+
         # Whether the renderer is currently stripping autonum carriers
         # (i.e., inside a heading render where the paragraph style
         # carries numPr). Handlers consult this to skip autonum content.
@@ -227,16 +237,7 @@ module IsoDoc
         # MixedInlineFallbackRenderer, FmtXrefRenderer).
         def render_mixed_inline_fallback(element, para)
           if ordered?(element)
-            twins = fmt_stem_source_ids(element)
-            element.each_mixed_content do |child|
-              case child
-              when String then add_text(para, child)
-              else
-                next if fmt_twin_of_stem?(child, twins)
-
-                dispatch_inline(child, para)
-              end
-            end
+            render_ordered_inline(element, para)
           else
             text = collect_text(element)
             add_text(para, text) if text && !text.empty?
@@ -250,20 +251,32 @@ module IsoDoc
         def render_with_run_format(element, para)
           temp = Uniword::Builder::ParagraphBuilder.new
           render_mixed_inline_fallback(element, temp)
-          temp.model.runs.each do |run|
-            run.properties ||= Uniword::Wordprocessingml::RunProperties.new
-            yield run
-            para << run
-          end
-          temp.model.o_maths.each do |omath|
-            para << omath
-          end
-          temp.model.hyperlinks.each do |link|
-            link.runs.each do |run|
+          each_ordered_element(temp.model) do |type, child|
+            next unless type == :element
+
+            runs = child.is_a?(Uniword::Wordprocessingml::Hyperlink) ? child.runs : [child]
+            runs.each do |run|
+              next unless run.is_a?(Uniword::Wordprocessingml::Run)
+
               run.properties ||= Uniword::Wordprocessingml::RunProperties.new
               yield run
             end
-            para << link
+            append_formatted_child(para, child)
+          end
+        end
+
+        # Uniword merges a new run with its last run even when a hyperlink
+        # or equation intervenes. Keep that boundary in the mixed sequence.
+        def append_formatted_child(para, child)
+          if child.is_a?(Uniword::Wordprocessingml::Run) &&
+              !child.tab && !child.break &&
+              para.is_a?(Uniword::Builder::ParagraphBuilder) &&
+              para.model.element_order&.last &&
+              para.model.element_order.last.name != "r"
+            para.model.runs << child
+            para.model.element_order << Lutaml::Xml::Element.new("Element", "r")
+          else
+            para << child
           end
         end
 
@@ -429,16 +442,16 @@ module IsoDoc
         # TextElements::Asciiml carries :value, the presentation
         # Inline::AsciimathElement carries :text. Prefer whichever the
         # model declares.
-        def stem_asciimath_content(am)
-          return am if am.is_a?(String)
+        def stem_asciimath_content(asciimath)
+          return asciimath if asciimath.is_a?(String)
 
-          return nil unless am.is_a?(Lutaml::Model::Serializable)
+          return nil unless asciimath.is_a?(Lutaml::Model::Serializable)
 
-          if am.class.attributes.key?(:value)
-            value = attribute_value(am, :value)
+          if asciimath.class.attributes.key?(:value)
+            value = attribute_value(asciimath, :value)
             return value if value.is_a?(String) && !value.empty?
           end
-          return attribute_value(am, :text) if am.class.attributes.key?(:text)
+          return attribute_value(asciimath, :text) if asciimath.class.attributes.key?(:text)
 
           nil
         end
@@ -536,14 +549,31 @@ module IsoDoc
           segments.join
         end
 
-        # Cache key is the source footnote identity (target → id → reference),
-        # NOT the text. Two footnotes with the same text but different source
-        # identities are distinct footnotes in OOXML.
+        # Presentation targets can be reused across numbering scopes. Include
+        # the body to distinguish collisions while repeated references still
+        # share one definition. Ignore source IDs, which differ between copies.
         def footnote_cache_key(element)
-          return element.target if element.class.attributes.key?(:target) && element.target
-          return element.id if element.class.attributes.key?(:id) && element.id
+          identity = element.target || element.id
+          return unless identity
 
-          nil
+          bodies = Array(element.p).map do |paragraph|
+            xml = Nokogiri::XML(paragraph.to_xml)
+            xml.xpath("//@id | //@semx-id | //@original-id | //@source").remove
+            xml.root.to_xml
+          end
+          [identity, bodies]
+        end
+
+        def with_heading_annotations_suppressed
+          previous = @heading_annotations_suppressed
+          @heading_annotations_suppressed = true
+          yield
+        ensure
+          @heading_annotations_suppressed = previous
+        end
+
+        def heading_annotations_suppressed?
+          @heading_annotations_suppressed
         end
 
         def cached_footnote_id(cache_key)
@@ -598,25 +628,79 @@ module IsoDoc
         # FootnoteText style, so the body text matches the Era C
         # template's footnote typography rather than the document
         # default.
-        # +closing+ is the presentation label's closing delimiter (the ")" of
-        # ISO's "1)" footnote label). Word supplies the number through the
-        # footnoteRef marker; the delimiter follows it in the same
-        # superscript style, as the PDF lays the label out.
-        def build_footnote_with_style(text, closing: nil)
+        # DOCX uses Word's bare number marker and a space before the text.
+        # +element+ is the footnote, whose body paragraphs are rendered
+        # with their inline markup when they carry any.
+        def build_footnote_with_style(text, element: nil)
           style = @resolver.paragraph_style(:footnote_text)
           run = @doc.footnote do |p|
             p.style = style if style
-            p << text
+            if element && Array(element.p).any? { |body| has_rich_children?(body) }
+              with_footnote_body do
+                Array(element.p).each_with_index do |body, index|
+                  p << " " unless index.zero?
+                  render(body, p)
+                end
+              end
+            else
+              p << text
+            end
           end
-          finish_footnote_body(@doc.model.footnotes.footnote_entries.last, closing)
+          finish_footnote_body(@doc.model.footnotes.footnote_entries.last)
           run
+        end
+
+        # True while a footnote body is being rendered: its hyperlinks live
+        # in word/footnotes.xml, so their rIds belong to the footnotes part.
+        def in_footnote_body?
+          @in_footnote_body ? true : false
+        end
+
+        def with_footnote_body
+          previous = @in_footnote_body
+          @in_footnote_body = true
+          yield
+        ensure
+          @in_footnote_body = previous
+        end
+
+        # The rId of an external hyperlink for +url+ in
+        # word/_rels/footnotes.xml.rels, registered once per target.
+        # Ids are allocated in their own allocator scope, seeded from any
+        # relationships the footnotes part already carries.
+        def footnote_hyperlink_rid(url)
+          rels = footnote_rels
+          type = Uniword::Docx::IdAllocator::HYPERLINK_REL_TYPE
+          rid = @doc.allocator.alloc_rid(target: url, type: type,
+                                         target_mode: "External",
+                                         scope: :footnotes)
+          unless rels.relationships.any? { |r| r.id == rid }
+            rels.relationships << Uniword::Ooxml::Relationships::PackageRelationship.new(
+              id: rid, type: type, target: url, target_mode: "External",
+            )
+          end
+          rid
+        end
+
+        # The footnotes relationships part being built (the adapter resets
+        # it per conversion), seeded once into the allocator so new ids
+        # cannot collide with relationships it already carries.
+        def footnote_rels
+          model = @doc.model
+          rels = (model.footnotes_rels ||=
+                    Uniword::Ooxml::Relationships::PackageRelationships.new)
+          unless @seeded_footnote_rels.equal?(rels)
+            @doc.allocator.seed_from_rels(rels.relationships, scope: :footnotes)
+            @seeded_footnote_rels = rels
+          end
+          rels
         end
 
         # The builder prepends the number marker as the paragraph's first
         # run, ahead of w:pPr, and leaves it in the body style. Put w:pPr
         # first (CT_P order), superscript the marker with the template's
-        # FootnoteReference style, and append the label delimiter.
-        def finish_footnote_body(entry, closing)
+        # FootnoteReference style, and separate it from the body text.
+        def finish_footnote_body(entry)
           para = entry.paragraphs.first
           order = para.element_order
           if order.is_a?(Array) && (ppr = order.find { |e| e.name == "pPr" })
@@ -625,18 +709,12 @@ module IsoDoc
           end
           marker = para.runs.first
           apply_run_char_style(marker, :footnote_reference)
-          add_footnote_closing(para, order, closing) if closing
-        end
-
-        def add_footnote_closing(para, order, closing)
-          closing_run = Uniword::Wordprocessingml::Run.new(text: closing)
-          apply_run_char_style(closing_run, :footnote_reference)
           gap = Uniword::Wordprocessingml::Run.new(text: " ")
-          para.runs.insert(1, closing_run, gap)
+          para.runs.insert(1, gap)
           return unless order.is_a?(Array)
 
           at = order.index { |e| e.name == "r" }.to_i + 1
-          2.times { order.insert(at, Lutaml::Xml::Element.new("Element", "r")) }
+          order.insert(at, Lutaml::Xml::Element.new("Element", "r"))
         end
 
         def lookup_comment_id(annotation_target_id)
@@ -700,7 +778,8 @@ module IsoDoc
           return if walked
 
           node.each_mixed_content do |child|
-            case child when String then add_text(para, child)
+            case child
+            when String then add_text(para, child)
             else dispatch_inline(child, para)
             end
           end
@@ -822,8 +901,25 @@ module IsoDoc
             when :element
               next if autonum_carrier?(obj)
 
-              segments << collect_text(obj).to_s
+              segments << collect_heading_element_text(obj)
             end
+          end
+          segments.join
+        end
+
+        # Text of a heading child at any depth. collect_text reads only an
+        # element's own strings, so a title holding only <tt> read empty.
+        # A cross-reference's label is its own content, so its autonum
+        # spans count.
+        def collect_heading_element_text(element)
+          return collect_all_text(element) if element.is_a?(Metanorma::Document::Components::Inline::FmtXrefElement)
+          return collect_text(element).to_s unless ordered?(element)
+
+          segments = []
+          each_ordered_element(element) do |type, obj|
+            next if type == :element && autonum_carrier?(obj)
+
+            segments << (type == :text ? obj.to_s : collect_heading_element_text(obj))
           end
           segments.join
         end

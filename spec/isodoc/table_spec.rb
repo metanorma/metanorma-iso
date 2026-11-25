@@ -570,11 +570,6 @@ RSpec.describe IsoDoc do
           <br/>
           <b>Annex</b>
         </p>
-           <p style="display:none;" class="variant-title-toc">
-         Annex A
-        <span style="mso-tab-count:1">  </span>
-        Annex
-        </p>
         <p class='AnnexTableTitle' style='text-align:center;'>Table A.1&#xA0;&#x2014; Another table</p>
         <div align='center' class='table_container'>
           <table class='MsoISOTable' style='mso-table-anchor-horizontal:column;mso-table-overlap:never;border-spacing:0;border-width:1px;'>

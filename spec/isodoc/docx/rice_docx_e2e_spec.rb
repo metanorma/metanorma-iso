@@ -248,13 +248,14 @@ RSpec.describe "Rice DOCX end-to-end" do
   end
 
   describe "headers and footers" do
-    def default_footer_styles
+    def default_footer_page_weights
       rels = rel_targets("word/document.xml")
       document.xpath("//w:sectPr", RiceDocxE2E::NS).map do |sect|
         ref = sect.at_xpath("w:footerReference[@w:type='default']/@r:id", RiceDocxE2E::NS)
         next unless ref
 
-        part("word/#{rels.fetch(ref.value)['Target']}").xpath("//w:pStyle/@w:val", RiceDocxE2E::NS).map(&:value).grep(/\AFooterPage/).first
+        field = part("word/#{rels.fetch(ref.value)['Target']}").at_xpath("//w:r[w:instrText]", RiceDocxE2E::NS)
+        field&.at_xpath("w:rPr/w:b", RiceDocxE2E::NS) ? :arabic : :roman
       end
     end
 
@@ -266,10 +267,9 @@ RSpec.describe "Rice DOCX end-to-end" do
     end
 
     it "numbers front matter in roman and the body in arabic, in that order" do
-      styles = default_footer_styles.compact
-      expect(styles.uniq - %w[FooterPageRomanNumber FooterPageNumber]).to be_empty
-      expect(styles.last).to eq("FooterPageNumber")
-      expect(styles).to eq(styles.sort_by { |s| s == "FooterPageNumber" ? 1 : 0 })
+      weights = default_footer_page_weights.compact
+      expect(weights.last).to eq(:arabic)
+      expect(weights).to eq(weights.sort_by { |weight| weight == :arabic ? 1 : 0 })
     end
   end
 end

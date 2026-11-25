@@ -92,6 +92,37 @@ RSpec.describe "TOC styles in the DIS template" do
     expect(ind["w:hanging"]).to eq("360")
   end
 
+  describe "Simple-template generated output" do
+    let(:generated_simple_toc_indents) do
+      fixture = File.expand_path("../../fixtures/iso/is/document-en.dis.presentation.xml", __dir__)
+      Dir.mktmpdir("toc-simple-") do |dir|
+        output = File.join(dir, "output.docx")
+        IsoDoc::Iso::Docx::Adapter.new(template: :simple).convert(fixture, output)
+        generated_styles = Zip::File.open(output) do |zip|
+          Nokogiri::XML(zip.find_entry("word/styles.xml").get_input_stream.read)
+        end
+        simple_styles = IsoDoc::Iso::Docx::StyleLibrary.load_default(template: :simple)
+        %w[TOC1 TOC2 TOC3].to_h do |style_id|
+          ind = generated_styles.at_xpath(
+            "//w:style[@w:styleId='#{style_id}']/w:pPr/w:ind", w_ns
+          )
+          yaml_indent = simple_styles.definition_for(style_id)
+            .dig("paragraph_properties", "indent")
+          [style_id, [ind&.[]("w:left"), ind&.[]("w:hanging"),
+                      yaml_indent["left"], yaml_indent["hanging"]]]
+        end
+      end
+    end
+
+    it "preserves stepped TOC indents and matches styles.yml" do
+      expect(generated_simple_toc_indents).to eq(
+        "TOC1" => ["720", "720", "1.27", "1.27"],
+        "TOC2" => ["1080", "360", "1.905", "0.635"],
+        "TOC3" => ["1440", "360", "2.54", "0.635"],
+      )
+    end
+  end
+
   it "carries no bold anywhere in the TOC1-TOC3 style cascade" do
     %w[TOC1 TOC2 TOC3].each do |style_id|
       expect(style(style_id).at_xpath(".//w:b", w_ns)).to be_nil,

@@ -34,8 +34,15 @@ paragraph_styles:
   bibliography: BiblioTitle
 
   # Content blocks
+  # Simple has no continuation or indent variants of Note and Example;
+  # every paragraph of a note or example, nested or not, uses the base style.
   note: Note
+  note_continued: Note
+  note_indent: Note
+  note_indent_continued: Note
   example: Example
+  example_indent: Example
+  example_indent_continued: Example
   sourcecode: Code
   formula: Formula
   figure_title: FigureTitle
@@ -73,6 +80,9 @@ paragraph_styles:
 
   # Colophon
   colophon: zzCopyright
+  copyright: zzCopyright
+  copyright_hdr: zzCopyright
+  copyright_address: zzCopyright
   std_title: zzSTDTitle
 
   # Body text
@@ -81,6 +91,11 @@ paragraph_styles:
   # The accepted output uses ListParagraph for bibliography entries.
   # Simple defines ListParagraph and has no BiblioEntry.
   biblio_entry: ListParagraph
+
+# Extra paragraph spacing, in twips, that the DOC chain sets on a style.
+# definition_after: gap after a Definition paragraph (DOC: 6pt).
+spacing:
+  definition_after: 120
 
 character_styles:
   hyperlink: Hyperlink
