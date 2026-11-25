@@ -369,8 +369,11 @@ module Metanorma
 
           r.call("iso-gdg-4.4.2-1", "Guidelines 4.4.2", "sec",
                  lambda do |node, *_|
-                   return nil if !node.xpath("./sec").any? ||
-                     at(node, "./label")
+                   # Unnumbered front-matter Foreword/Introduction (4.2) only:
+                   # direct <front> children, not typed body or nested sections.
+                   return nil if !node.xpath("./sec").any? || at(node, "./label")
+                   return nil if node.xpath("parent::front").any? &&
+                     %w[foreword intro].include?(node["sec-type"])
 
                    "a clause containing subclauses carries its number in <label>"
                  end)
@@ -649,6 +652,9 @@ module Metanorma
           r.call("iso-gdg-5.10-3", "Guidelines 5.10", "graphic | inline-graphic",
                  lambda do |node, doc|
                    href = xlink_href(node)
+                   # An embedded data: URI has no asset folder either way.
+                   return nil if href.start_with?("data:")
+
                    if doc.xpath("//std-meta//originator[normalize-space()='ISO']").any? &&
                      href.include?("/")
                      "ISO graphic references carry no asset-folder prefix: '#{href}'"

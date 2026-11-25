@@ -130,6 +130,20 @@ RSpec.describe "TOC styles in the DIS template" do
     end
   end
 
+  # The ToC field collects outline levels 1-3 (\o "1-3"), so an outline
+  # level on the part-title styles lists "Part 1: ..." above Scope once
+  # Word updates the field (metanorma-iso#1842).
+  %w[MainTitle1 MainTitle2 MainTitle3].each do |style_id|
+    it "keeps #{style_id} out of the document outline" do
+      expect(style(style_id).at_xpath("./w:pPr/w:outlineLvl", w_ns)).to be_nil
+    end
+
+    it "keeps #{style_id} out of the outline in styles.yml" do
+      expect(IsoDoc::Iso::Docx::StyleLibrary.load_default.definition_for(style_id)
+        .dig("paragraph_properties", "outline_level")).to be_nil
+    end
+  end
+
   describe "page-number tab stop" do
     %w[TOC1 TOC2 TOC3].each do |style_id|
       it "#{style_id} carries a single right tab stop with a dot leader" do
