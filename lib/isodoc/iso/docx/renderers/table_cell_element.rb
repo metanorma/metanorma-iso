@@ -21,7 +21,10 @@ module IsoDoc
           autoload :ParagraphHandler, "#{ROOT}/paragraph_handler"
           autoload :NoteHandler, "#{ROOT}/note_handler"
           autoload :ListHandler, "#{ROOT}/list_handler"
+          autoload :SourcecodeHandler, "#{ROOT}/sourcecode_handler"
           autoload :DefinitionListHandler, "#{ROOT}/definition_list_handler"
+          autoload :ExampleHandler, "#{ROOT}/example_handler"
+          autoload :FigureHandler, "#{ROOT}/figure_handler"
         end
       end
     end

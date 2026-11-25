@@ -66,6 +66,36 @@ module IsoDoc
               register_note_handler
               register_list_handlers
               register_definition_list_handler
+              register_sourcecode_handler
+              register_example_handler
+              register_figure_handler
+            end
+
+            def register_figure_handler
+              register(
+                Metanorma::Document::Components::AncillaryBlocks::FigureBlock,
+                FigureHandler.new(
+                  resolver: @resolver, inline_renderer: @inline_renderer,
+                  dispatcher: @dispatcher
+                ),
+              )
+            end
+
+            def register_sourcecode_handler
+              register(
+                Metanorma::Document::Components::AncillaryBlocks::SourcecodeBlock,
+                SourcecodeHandler.new(resolver: @resolver, inline_renderer: @inline_renderer),
+              )
+            end
+
+            def register_example_handler
+              register(
+                Metanorma::Document::Components::AncillaryBlocks::ExampleBlock,
+                ExampleHandler.new(
+                  resolver: @resolver, inline_renderer: @inline_renderer,
+                  dispatcher: @dispatcher
+                ),
+              )
             end
 
             def register_definition_list_handler
@@ -94,6 +124,7 @@ module IsoDoc
                 Metanorma::Document::Components::Blocks::NoteBlock,
                 NoteHandler.new(
                   resolver: @resolver, inline_renderer: @inline_renderer,
+                  dispatcher: @dispatcher
                 ),
               )
             end
@@ -114,6 +145,7 @@ module IsoDoc
                 resolver: @resolver,
                 inline_renderer: @inline_renderer,
                 num_id_key: num_id_key,
+                dispatcher: @dispatcher,
               )
             end
           end

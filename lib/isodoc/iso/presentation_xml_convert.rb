@@ -264,6 +264,7 @@ module IsoDoc
       # (no designation) are left as the base renders them.
       # https://github.com/metanorma/iso-10303/issues/717
       def biblio_ref_entry_code(ordinal, ids, _standard, datefn, _bib)
+        datefn = trim_footnote_gap(datefn)
         ret = esc(ids[:ordinal]) || esc(ids[:content]) || esc(ids[:metanorma]) ||
           "[#{esc ordinal.to_s}]"
         if ids[:sdo] && !ids[:sdo].empty?
@@ -271,6 +272,15 @@ module IsoDoc
         else
           prefix_bracketed_ref("#{ret}#{datefn}")
         end
+      end
+
+      def norm_ref_entry_code(ordinal, ids, standard, datefn, bib)
+        super(ordinal, ids, standard, trim_footnote_gap(datefn), bib)
+      end
+
+      # Footnote templates end in a newline, which renders before the comma.
+      def trim_footnote_gap(datefn)
+        datefn.to_s.gsub(%r{</fn>\s+}, "</fn>")
       end
 
       include Init

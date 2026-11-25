@@ -12,6 +12,8 @@ module IsoDoc
           # The name is claimed like every other id bookmark, so an id
           # already bookmarked (a clause, a block) is not emitted twice.
           def render(element, para)
+            return if parent.heading_annotations_suppressed?
+
             name = context.claim_bookmark_name(bookmark_name(element))
             return unless name
 

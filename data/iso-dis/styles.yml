@@ -2700,10 +2700,12 @@ style_library:
         spacing:
           line: '240'
           line_rule: 'auto'
+        alignment: left
         keep_next: false
         keep_lines: false
         page_break_before: false
       run_properties:
+        color: 0000FF
         font_size: '20'
         bold: false
         italic: false

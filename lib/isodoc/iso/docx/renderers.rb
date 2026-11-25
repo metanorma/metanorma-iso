@@ -10,6 +10,7 @@ module IsoDoc
         autoload :Base,                  "isodoc/iso/docx/renderers/base"
         autoload :Walker,                "isodoc/iso/docx/renderers/walker"
         autoload :Registry,              "isodoc/iso/docx/renderers/registry"
+        autoload :NoteContent, "isodoc/iso/docx/renderers/note_content"
         autoload :NoteRenderer,          "isodoc/iso/docx/renderers/note_renderer"
         autoload :ExampleRenderer,       "isodoc/iso/docx/renderers/example_renderer"
         autoload :AdmonitionRenderer,    "isodoc/iso/docx/renderers/admonition_renderer"
@@ -18,7 +19,7 @@ module IsoDoc
                  "isodoc/iso/docx/renderers/definition_list_renderer"
         autoload :DefinitionSectionRenderer,
                  "isodoc/iso/docx/renderers/definition_section_renderer"
-        autoload :FigureRenderer,        "isodoc/iso/docx/renderers/figure_renderer"
+        autoload :FigureRenderer, "isodoc/iso/docx/renderers/figure_renderer"
         autoload :ParagraphRenderer,    "isodoc/iso/docx/renderers/paragraph_renderer"
         autoload :OrderedListRenderer,  "isodoc/iso/docx/renderers/ordered_list_renderer"
         autoload :UnorderedListRenderer,
@@ -31,7 +32,7 @@ module IsoDoc
                  "isodoc/iso/docx/renderers/table_attachment_buffer"
         autoload :ListItemContent, "isodoc/iso/docx/renderers/list_item_content"
         autoload :ListAttachments, "isodoc/iso/docx/renderers/list_attachments"
-        autoload :TableCellElement,    "isodoc/iso/docx/renderers/table_cell_element"
+        autoload :TableCellElement, "isodoc/iso/docx/renderers/table_cell_element"
         autoload :ImageRenderer,        "isodoc/iso/docx/renderers/image_renderer"
         autoload :SectionRenderer,      "isodoc/iso/docx/renderers/section_renderer"
         autoload :ClauseRenderer,       "isodoc/iso/docx/renderers/clause_renderer"
@@ -40,11 +41,11 @@ module IsoDoc
         autoload :TermRenderer,         "isodoc/iso/docx/renderers/term_renderer"
         autoload :BibliographyRenderer, "isodoc/iso/docx/renderers/bibliography_renderer"
         autoload :ReferencesRenderer, "isodoc/iso/docx/renderers/references_renderer"
-        autoload :AmendRenderer,        "isodoc/iso/docx/renderers/amend_renderer"
-        autoload :PageBreakRenderer,   "isodoc/iso/docx/renderers/page_break_renderer"
+        autoload :AmendRenderer, "isodoc/iso/docx/renderers/amend_renderer"
+        autoload :PageBreakRenderer, "isodoc/iso/docx/renderers/page_break_renderer"
         autoload :HorizontalRuleRenderer,
                  "isodoc/iso/docx/renderers/horizontal_rule_renderer"
-        autoload :NullRenderer,        "isodoc/iso/docx/renderers/null_renderer"
+        autoload :NullRenderer, "isodoc/iso/docx/renderers/null_renderer"
       end
     end
   end

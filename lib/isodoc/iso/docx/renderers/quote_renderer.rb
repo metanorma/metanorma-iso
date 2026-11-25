@@ -34,6 +34,7 @@ module IsoDoc
             para = build_paragraph(:quote)
             @inline_renderer.render(quote, para)
             doc << para
+            @walker.walk_attribute(quote, :note, doc)
           end
 
           def render_quote_paragraph(paragraph, doc)
@@ -41,6 +42,7 @@ module IsoDoc
             @inline_renderer.render(paragraph, para)
             anchor_paragraph(paragraph, para)
             doc << para
+            @walker.walk_attribute(paragraph, :note, doc)
           end
 
           def render_attribution(quote, doc)
