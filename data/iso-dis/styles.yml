@@ -2298,7 +2298,6 @@ style_library:
         spacing:
           line: '240'
           line_rule: 'auto'
-        outline_level: '1'
         keep_next: false
         keep_lines: false
         page_break_before: false
@@ -2320,7 +2319,6 @@ style_library:
         spacing:
           line: '240'
           line_rule: 'auto'
-        outline_level: '2'
         keep_next: false
         keep_lines: false
         page_break_before: false

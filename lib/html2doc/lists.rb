@@ -183,8 +183,7 @@ class Html2Doc
       return unless text&.text? && text.content.start_with?(" ")
 
       text.content = text.content.delete_prefix(" ")
-      label = anchor.next_sibling
-      label.content = " #{label.content}" if label.text?
+      anchor.add_next_sibling(Nokogiri::XML::Text.new(" ", anchor.document))
     end
 
     def cleanup(docxml)

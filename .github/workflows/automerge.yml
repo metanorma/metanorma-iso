@@ -31,5 +31,5 @@ permissions:
 
 jobs:
   automerge:
-    uses: metanorma/ci/.github/workflows/generic-automerge.yml@main
+    uses: metanorma/ci/.github/workflows/generic-automerge.yml@v1
     secrets: inherit
