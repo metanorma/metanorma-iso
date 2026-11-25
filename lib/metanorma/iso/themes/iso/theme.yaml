@@ -1,26 +1,72 @@
-primary: "#b3000c"
-accent: "#e3000f"
-accent_deep: "#b3000c"
-gradient: "linear-gradient(135deg, #8a0009 0%, #b3000c 50%, #e3000f 100%)"
-primary_light: "#fef0f1"
-accent_light: "#fde8ea"
-warm: "#1a1a1a"
-warm_light: "#f5f5f5"
-header_background: "linear-gradient(135deg, #8a0009 0%, #b3000c 40%, #e3000f 100%)"
-cover_background: "linear-gradient(175deg, #5a0006 0%, #8a0009 25%, #b3000c 50%, #e3000f 80%, #ff4d4d 100%)"
-cover_before_bg: "background: radial-gradient(ellipse at 25% 20%, rgba(255,77,77,0.15) 0%, transparent 50%), radial-gradient(ellipse at 75% 80%, rgba(26,26,26,0.1) 0%, transparent 40%)"
-cover_after_bg: "height: 3px; background: linear-gradient(90deg, transparent, #e3000f, #1a1a1a, transparent)"
-progress_bar_color: "#e3000f"
-note_border: "#e3000f"
-note_bg: "#fde8ea"
-note_color: "#e3000f"
-example_border: "#b3000c"
-example_bg: "#fef0f1"
-example_color: "#b3000c"
-admonition_border: "#1a1a1a"
-admonition_color: "#1a1a1a"
-footer_border_color: "#e3000f"
-cover_separator_color: "rgba(227,0,15,0.25)"
+# Default ISO HTML theme: the house style of the consolidated ISO/IEC
+# Directives online edition (iso.org/sites/directives). ISO/IEC Directives,
+# Part 2, Clause 1 leaves typography and layout to the publisher's house
+# style; the structural rules (numbering, labels, caption placement) come
+# from the presentation XML. Element styles for the document body are in
+# custom.css next to this file. The previous default is ../iso-legacy.
+
+# Palette
+primary: "#0b5aa2"
+accent: "#0b5aa2"
+accent_deep: "#094a86"
+gradient: "linear-gradient(135deg, #094a86 0%, #0b5aa2 100%)"
+primary_light: "#eaf2f9"
+accent_light: "#eaf2f9"
+primary_dark: "#094a86"
+warm: "#c8102e"
+warm_light: "#fdf3f4"
+
+# Text and backgrounds
+text_color: "#1a1d21"
+text_light: "#454b52"
+text_muted: "#6b7280"
+bg: "#ffffff"
+bg_light: "#f6f8fa"
+border: "#e3e6ea"
+sidebar_bg: "#fbfcfd"
+
+# Typography: one sans-serif stack for body and headings, as on the
+# Directives site. Roboto is loaded as the fallback where Segoe UI is absent.
+font_body: '"Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif'
+font_sans: '"Segoe UI", -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif'
+font_url: "https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,700;1,400;1,700&family=JetBrains+Mono:wght@400;500&display=swap"
+
+# Layout
+content_max_width: "60em"
+sidebar_width: "340px"
+
+# Blocks: notes and examples are plain small text (see custom.css)
+note_color: "#6b7280"
+note_bg: "transparent"
+note_border: "transparent"
+example_color: "#6b7280"
+example_bg: "transparent"
+example_border: "transparent"
+admonition_color: "#c8102e"
+admonition_bg: "#fdf3f4"
+admonition_border: "#c8102e"
+
+# Reader chrome and cover
+header_background: "linear-gradient(135deg, #094a86 0%, #0b5aa2 100%)"
+cover_background: "linear-gradient(175deg, #073a6b 0%, #094a86 45%, #0b5aa2 100%)"
+cover_after_bg: "height: 3px; background: #c8102e"
+progress_bar_color: "#0b5aa2"
+footer_border_color: "#0b5aa2"
+cover_separator_color: "rgba(255,255,255,0.25)"
+
+# Dark mode (Directives site dark palette)
+dark_bg: "#15181d"
+dark_bg_light: "#1a1e24"
+dark_border: "#333a44"
+dark_sidebar: "#1a1e24"
+dark_text: "#e6e9ee"
+dark_text_light: "#c2c8d0"
+dark_text_muted: "#9aa3ae"
+dark_primary_light: "#21303f"
+dark_accent_light: "#21303f"
+dark_note_bg: "transparent"
+dark_example_bg: "transparent"
+dark_admonition_bg: "#2a1d21"
 
 # Publisher metadata
 publishers:
@@ -38,28 +84,3 @@ preface_order:
   - acknowledgements
   - executivesummary
 toc_filter_types: []
-
-# Reading-body typography follows the legacy default (non-alt) HTML output.
-# Reader chrome and publisher cover branding retain the theme palette.
-extra_css: |
-  .main-section {
-    font-family: Cambria, serif;
-    font-weight: 300;
-    line-height: 1.3;
-  }
-  :root:not([data-theme="dark"]) .main-section { color: #000; }
-  .main-section p { margin: 1em 0; }
-  .main-section h1, .main-section h2, .main-section h3,
-  .main-section h4, .main-section h5, .main-section h6 {
-    font-family: Cambria, serif;
-    font-weight: 700;
-    line-height: 1.2;
-    color: inherit;
-    margin: 2em 0 1em;
-    padding: 0;
-    border: 0;
-    letter-spacing: normal;
-  }
-  .main-section h1 { font-size: 1.5em; }
-  .main-section h2 { font-size: 1.2em; }
-  .main-section h1::after { content: none; }

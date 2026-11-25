@@ -15,7 +15,7 @@ RSpec.describe Metanorma::Iso::Html::Renderer do
 
   let(:fixture) { File.expand_path("../../../fixtures/html-theme-parity/document.xml", __dir__) }
   let(:browser_script) { File.expand_path("../../../support/html_theme_parity.mjs", __dir__) }
-  let(:theme_dir) { File.expand_path("../../../../lib/metanorma/iso/themes/iso", __dir__) }
+  let(:theme_dir) { File.expand_path("../../../../lib/metanorma/iso/themes/iso-legacy", __dir__) }
   let(:properties) do
     %w[font-family font-size font-weight font-style line-height color
        background-color margin-top margin-bottom padding-top padding-bottom letter-spacing]
@@ -47,8 +47,8 @@ RSpec.describe Metanorma::Iso::Html::Renderer do
       require "metanorma/iso/document"
       require "metanorma/iso/html"
       document = Metanorma::Iso::Document::Root.from_xml(File.read(ARGV.fetch(0)))
-      theme = Metanorma::Html::Theme.load(:iso)
-      abort "ISO theme registration was bypassed" unless theme.theme_dir == ARGV.fetch(1)
+      theme = Metanorma::Html::Theme.load("iso-legacy")
+      abort "ISO legacy theme registration was bypassed" unless theme.theme_dir == ARGV.fetch(1)
       print Metanorma::Iso::Html::Renderer.new.generate_full_document(document, theme: theme)
     RUBY
     lib = File.expand_path("../../../../lib", __dir__)
@@ -84,8 +84,8 @@ RSpec.describe Metanorma::Iso::Html::Renderer do
     end
   end
 
-  it "loads the ISO theme registered by this gem" do
-    expect(Metanorma::Html::Theme.load(:iso).theme_dir).to eq(theme_dir)
+  it "loads the ISO legacy theme registered by this gem" do
+    expect(Metanorma::Html::Theme.load("iso-legacy").theme_dir).to eq(theme_dir)
   end
 
   it "matches legacy structure and computed key styles", :browser do

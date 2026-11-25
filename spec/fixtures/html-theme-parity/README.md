@@ -1,6 +1,8 @@
 The presentation XML fixture and Chromium comparison harness reuse the
 metanorma-document ISO/IEC body-parity sample. This spec compares default
-(non-alt) legacy ISO HTML with this gem's normally registered ISO theme.
+(non-alt) legacy ISO HTML with this gem's registered iso-legacy theme. The
+default ISO theme follows the ISO/IEC Directives house style instead and is
+covered by renderer_dir2_theme_spec.rb.
 It checks the five sampled headings/paragraphs for order, tags, text, inline
 emphasis and 12 computed font, colour and spacing properties at 1440×1000.
 
