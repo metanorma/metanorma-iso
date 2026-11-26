@@ -252,11 +252,23 @@
 						<xsl:variable name="doctype"><xsl:call-template name="getDoctype"/></xsl:variable>
 						<doctype><xsl:value-of select="$doctype"/></doctype>
 
-						<xsl:variable name="doctype_localized_" select="$contextNode/mn:ext/mn:doctype[@language = $lang]"/>
+						<xsl:variable name="doctype_localized_" select="normalize-space($contextNode/mn:ext/mn:doctype[@language = $lang])"/>
+						<!-- https://github.com/metanorma/mn-native-pdf/issues/1136 -->
+						<xsl:variable name="doctype_localized__">
+							<xsl:if test="$doctype_localized_ = '' and count($contextNode/mn:ext/mn:doctype) = 1 and normalize-space($contextNode/mn:ext/mn:doctype[not(@language)]) != ''">
+								<!-- example: <localized-string key="doctype_dict.international-standard" language="en">International Standard</localized-string> -->
+								<xsl:variable name="key"><xsl:value-of select="concat('doctype_dict.', $doctype)"/></xsl:variable>
+								<xsl:value-of select="/mn:metanorma/mn:localized-strings/mn:localized-string[@key = $key]"/>
+							</xsl:if>
+						</xsl:variable>
+
 						<xsl:variable name="doctype_localized">
 							<xsl:choose>
 								<xsl:when test="$doctype_localized_ != ''">
 									<xsl:value-of select="translate(normalize-space($doctype_localized_),'-',' ')"/>
+								</xsl:when>
+								<xsl:when test="$doctype_localized__ != ''">
+									<xsl:value-of select="$doctype_localized__"/>
 								</xsl:when>
 								<xsl:otherwise>
 									<xsl:value-of select="translate(normalize-space($doctype),'-',' ')"/>
@@ -273,7 +285,22 @@
 						<xsl:variable name="stagename_abbreviation" select="normalize-space($contextNode/mn:ext/mn:stagename/@abbreviation)"/>
 						<stagename_abbreviation><xsl:value-of select="$stagename_abbreviation"/></stagename_abbreviation>
 
-						<xsl:variable name="stagename_localized" select="normalize-space($contextNode/mn:status/mn:stage[@language = $lang])"/>
+						<xsl:variable name="stagename_localized_" select="normalize-space($contextNode/mn:status/mn:stage[@language = $lang])"/>
+						<!-- https://github.com/metanorma/mn-native-pdf/issues/1136 -->
+						<xsl:variable name="stagename_localized__">
+							<xsl:if test="$stagename_localized_ = '' and count($contextNode/mn:status/mn:stage) = 1">
+								<!-- example: <localized-string key="60.international-standard" language="en">International Standard</localized-string> -->
+								<xsl:variable name="key"><xsl:value-of select="concat(normalize-space($contextNode/mn:status/mn:stage[not(@language)]), '.', $doctype)"/></xsl:variable>
+								<xsl:value-of select="/mn:metanorma/mn:localized-strings/mn:localized-string[@key = $key]"/>
+							</xsl:if>
+						</xsl:variable>
+						<xsl:variable name="stagename_localized___">
+							<xsl:choose>
+								<xsl:when test="$stagename_localized_ != ''"><xsl:value-of select="$stagename_localized_"/></xsl:when>
+								<xsl:otherwise><xsl:value-of select="$stagename_localized__"/></xsl:otherwise>
+							</xsl:choose>
+						</xsl:variable>
+						<xsl:variable name="stagename_localized" select="normalize-space($stagename_localized___)"/>
 						<stagename_localized><xsl:value-of select="$stagename_localized"/></stagename_localized>
 
 						<stagename_localized_coverpage><xsl:copy-of select="$contextNode/mn:status/mn:stage[@language = $lang and @type = 'coverpage']/node()"/></stagename_localized_coverpage>
@@ -536,8 +563,6 @@
 		</xsl:for-each>
 	</xsl:variable> <!-- END: contents_ -->
 	<xsl:variable name="contents" select="xalan:nodeset($contents_)"/>
-
-	<xsl:variable name="XML" select="/"/>
 
 	<xsl:template name="layout-master-set">
 		<fo:layout-master-set>
@@ -1108,7 +1133,7 @@
 										</fo:inline>
 									</fo:block>
 
-									<xsl:if test="$contextNode/mn:keyword">
+									<xsl:if test="normalize-space($contextNode/mn:keyword) != ''">
 										<fo:block margin-top="6pt">
 											<fo:inline font-weight="bold"><xsl:value-of select="$i18n_descriptors"/> : </fo:inline>
 											<xsl:call-template name="insertKeywords">
@@ -1204,6 +1229,7 @@
 													<!-- Example: title-intro fr -->
 													<xsl:call-template name="insertTitlesLangOther">
 														<xsl:with-param name="num" select="$num"/>
+														<xsl:with-param name="contextNode" select="$contextNode"/>
 														<xsl:with-param name="lang_other" select="$lang_other_"/>
 													</xsl:call-template>
 												</fo:block>
@@ -1749,7 +1775,7 @@
 								</fo:inline>
 							</fo:block>
 
-							<xsl:if test="$contextNode/mn:keyword">
+							<xsl:if test="normalize-space($contextNode/mn:keyword) != ''">
 								<fo:block margin-top="10pt">
 									<fo:inline font-weight="bold"><xsl:value-of select="$i18n_descriptors"/> : </fo:inline>
 									<xsl:call-template name="insertKeywords">
@@ -1858,6 +1884,7 @@
 									<!-- Example: title-intro fr -->
 									<xsl:call-template name="insertTitlesLangOther">
 										<xsl:with-param name="num" select="$num"/>
+										<xsl:with-param name="contextNode" select="$contextNode"/>
 										<xsl:with-param name="lang_other" select="$lang_other_"/>
 									</xsl:call-template>
 								</fo:block>
@@ -1946,6 +1973,7 @@
 												<!-- Example: title-intro fr -->
 												<xsl:call-template name="insertTitlesLangOther">
 													<xsl:with-param name="num" select="$num"/>
+													<xsl:with-param name="contextNode" select="$contextNode"/>
 													<xsl:with-param name="lang_other" select="$lang_other_"/>
 												</xsl:call-template>
 											</fo:block>
@@ -2101,6 +2129,7 @@
 											<fo:block-container font-family="Cambria" line-height="1.1" role="SKIP" height="110mm" id="{concat('__internal_layout__coverpage_p_title_', $num , '_', generate-id())}">
 												<!-- for role see coment https://github.com/pdf-association/extension-brotli/issues/5#issuecomment-3931742869 -->
 												<fo:block margin-right="3.5mm" role="P/Title"> <!-- role="SKIP" -->
+
 													<fo:block font-size="18pt" font-weight="bold" margin-top="2.5mm" role="SKIP"> <!-- role="H1" -->
 														<xsl:call-template name="insertTitlesLangMain"><xsl:with-param name="num" select="$num"/></xsl:call-template>
 													</fo:block>
@@ -2113,6 +2142,7 @@
 																<!-- Example: title-intro fr -->
 																<xsl:call-template name="insertTitlesLangOther">
 																	<xsl:with-param name="num" select="$num"/>
+																	<xsl:with-param name="contextNode" select="$contextNode"/>
 																	<xsl:with-param name="lang_other" select="$lang_other_"/>
 																</xsl:call-template>
 															</fo:block>
@@ -2161,7 +2191,7 @@
 																<!-- </xsl:if>
 															
 																<xsl:if test="$doctype = 'amendment' and not($stage-abbreviation = 'FDAMD' or $stage-abbreviation = 'FDAM')"> -->
-																	<xsl:if test="$contextNode/mn:date[@type = 'updated']">
+																	<xsl:if test="normalize-space($contextNode/mn:date[@type = 'updated']) != ''">
 																		<fo:block font-size="18pt" font-weight="bold" margin-bottom="3mm">
 																			<xsl:value-of select="$contextNode/mn:date[@type = 'updated']"/>
 																		</fo:block>
@@ -2555,6 +2585,7 @@
 														<!-- Example: title-intro fr -->
 														<xsl:call-template name="insertTitlesLangOther">
 															<xsl:with-param name="num" select="$num"/>
+															<xsl:with-param name="contextNode" select="$contextNode"/>
 															<xsl:with-param name="lang_other" select="$lang_other_"/>
 														</xsl:call-template>
 													</fo:block>
@@ -2818,6 +2849,7 @@
 																					<!-- Example: title-intro fr -->
 																					<xsl:call-template name="insertTitlesLangOther">
 																						<xsl:with-param name="num" select="$num"/>
+																						<xsl:with-param name="contextNode" select="$contextNode"/>
 																						<xsl:with-param name="lang_other" select="$lang_other_"/>
 																					</xsl:call-template>
 																				</fo:block>
@@ -2949,6 +2981,7 @@
 												<!-- Example: title-intro fr -->
 												<xsl:call-template name="insertTitlesLangOther">
 													<xsl:with-param name="num" select="$num"/>
+													<xsl:with-param name="contextNode" select="$contextNode"/>
 													<xsl:with-param name="lang_other" select="$lang_other_"/>
 												</xsl:call-template>
 											</fo:block>
@@ -2974,7 +3007,7 @@
 
 							<fo:block-container text-align="right" role="SKIP">
 								<xsl:choose>
-									<xsl:when test="$contextNode/mn:docidentifier[@type = 'iso-tc']">
+									<xsl:when test="normalize-space($contextNode/mn:docidentifier[@type = 'iso-tc']) != ''">
 										<!-- 17301  -->
 										<fo:block font-size="14pt" font-weight="bold" margin-bottom="12pt">
 											<xsl:value-of select="$contextNode/mn:docidentifier[@type = 'iso-tc']"/>
@@ -3026,6 +3059,7 @@
 											<!-- Example: title-intro fr -->
 											<xsl:call-template name="insertTitlesLangOther">
 												<xsl:with-param name="num" select="$num"/>
+												<xsl:with-param name="contextNode" select="$contextNode"/>
 												<xsl:with-param name="lang_other" select="$lang_other_"/>
 											</xsl:call-template>
 										</fo:block>
@@ -3229,7 +3263,7 @@
 		<xsl:param name="content-height"/>
 		<xsl:variable name="contextNode" select="xalan:evaluate($bibdataContextNode)"/>
 		<xsl:choose>
-			<xsl:when test="$contextNode/mn:contributor[mn:role[@type = 'author']/mn:description = 'committee']/mn:organization">
+			<xsl:when test="normalize-space($contextNode/mn:contributor[mn:role[@type = 'author']/mn:description = 'committee']/mn:organization) != ''">
 				<xsl:for-each select="$contextNode/mn:contributor[mn:role[@type = 'author']/mn:description = 'committee']/mn:organization">
 
 					<xsl:variable name="items">
@@ -3337,7 +3371,7 @@
 		<xsl:variable name="content-height">20</xsl:variable>
 		<xsl:variable name="contextNode" select="xalan:evaluate($bibdataContextNode)"/>
 		<xsl:choose>
-			<xsl:when test="$contextNode/mn:contributor[mn:role[@type = 'author']/mn:description = 'committee']/mn:organization[mn:abbreviation]">
+			<xsl:when test="normalize-space($contextNode/mn:contributor[mn:role[@type = 'author']/mn:description = 'committee']/mn:organization[mn:abbreviation]) != ''">
 				<xsl:for-each select="$contextNode/mn:contributor[mn:role[@type = 'author']/mn:description = 'committee']/mn:organization[mn:abbreviation]">
 					<xsl:variable name="items">
 						<xsl:call-template name="split_abbreviation"/>
@@ -3475,15 +3509,16 @@
 
 	<xsl:template name="insertTitlesLangOther">
 		<xsl:param name="num"/>
+		<xsl:param name="contextNode"/>
 		<xsl:param name="lang_other"/>
-		<xsl:apply-templates select="$XML/mn:metanorma/mn:bibdata/mn:title[@language = $lang_other and @type = 'title-intro']"/>
-		<xsl:apply-templates select="$XML/mn:metanorma/mn:bibdata/mn:title[@language = $lang_other and @type = 'title-main']"/>
-		<xsl:apply-templates select="$XML/mn:metanorma/mn:bibdata/mn:title[@language = $lang_other and @type = 'title-complementary']"/>
-		<xsl:apply-templates select="$XML/mn:metanorma/mn:bibdata/mn:title[@language = $lang_other and @type = 'title-part']">
+		<xsl:apply-templates select="$contextNode/mn:title[@language = $lang_other and @type = 'title-intro']"/>
+		<xsl:apply-templates select="$contextNode/mn:title[@language = $lang_other and @type = 'title-main']"/>
+		<xsl:apply-templates select="$contextNode/mn:title[@language = $lang_other and @type = 'title-complementary']"/>
+		<xsl:apply-templates select="$contextNode/mn:title[@language = $lang_other and @type = 'title-part']">
 			<xsl:with-param name="num" select="$num"/>
 			<xsl:with-param name="curr_lang" select="$lang_other"/>
 		</xsl:apply-templates>
-		<xsl:apply-templates select="$XML/mn:metanorma/mn:bibdata/mn:title[@language = $lang_other and @type = 'title-amd']">
+		<xsl:apply-templates select="$contextNode/mn:title[@language = $lang_other and @type = 'title-amd']">
 			<xsl:with-param name="num" select="$num"/>
 			<xsl:with-param name="curr_lang" select="$lang_other"/>
 		</xsl:apply-templates>
@@ -3514,13 +3549,13 @@
 		<xsl:value-of select="$edition"/>
 		<xsl:variable name="date">
 			<xsl:choose>
-				<xsl:when test="($stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS' or $stagename_abbreviation = 'FDIS') and $contextNode/mn:version/mn:revision-date">
+				<xsl:when test="($stage-abbreviation = 'NWIP' or $stage-abbreviation = 'NP' or $stage-abbreviation = 'PWI' or $stage-abbreviation = 'AWI' or $stage-abbreviation = 'WD' or $stage-abbreviation = 'CD' or $stage-abbreviation = 'FDIS' or $stagename_abbreviation = 'FDIS') and normalize-space($contextNode/mn:version/mn:revision-date) != ''">
 					<xsl:value-of select="$contextNode/mn:version/mn:revision-date"/>
 				</xsl:when>
-				<xsl:when test="$stage-abbreviation = 'IS' and /mn:metanorma/mn:bibdata/mn:date[@type = 'published']">
+				<xsl:when test="$stage-abbreviation = 'IS' and normalize-space($contextNode/mn:date[@type = 'published']) != ''">
 					<xsl:value-of select="$contextNode/mn:date[@type = 'published']"/>
 				</xsl:when>
-				<xsl:when test="($stage-abbreviation = 'IS' or $stage-abbreviation = 'D') and $contextNode/mn:date[@type = 'created']">
+				<xsl:when test="($stage-abbreviation = 'IS' or $stage-abbreviation = 'D') and normalize-space($contextNode/mn:date[@type = 'created']) != ''">
 					<xsl:value-of select="$contextNode/mn:date[@type = 'created']"/>
 				</xsl:when>
 				<xsl:when test="$stage-abbreviation = 'IS' or $stage-abbreviation = 'PRF' or $stage_published = 'true'">
@@ -4016,7 +4051,7 @@
 	<!-- ==================== -->
 	<!-- display titles       -->
 	<!-- ==================== -->
-	<xsl:template match="mn:bibdata/mn:title[@type = 'title-intro']">
+	<xsl:template match="mn:bibdata/mn:title[@type = 'title-intro'] | mn:bibdata//mn:relation/mn:bibitem/mn:title[@type = 'title-intro']">
 		<xsl:variable name="layoutVersion">
 			<xsl:call-template name="getVariable"><xsl:with-param name="variable">layoutVersion</xsl:with-param></xsl:call-template>
 		</xsl:variable>
@@ -4031,7 +4066,7 @@
 		</xsl:choose>
 	</xsl:template>
 
-	<xsl:template match="mn:bibdata/mn:title[@type = 'title-main']">
+	<xsl:template match="mn:bibdata/mn:title[@type = 'title-main'] | mn:bibdata//mn:relation/mn:bibitem/mn:title[@type = 'title-main']">
 		<xsl:param name="body">false</xsl:param>
 		<xsl:variable name="layoutVersion">
 			<xsl:call-template name="getVariable"><xsl:with-param name="variable">layoutVersion</xsl:with-param></xsl:call-template>
@@ -4060,13 +4095,13 @@
 		</xsl:choose>
 	</xsl:template>
 
-	<xsl:template match="mn:bibdata/mn:title[@type = 'title-complementary']">
+	<xsl:template match="mn:bibdata/mn:title[@type = 'title-complementary'] | mn:bibdata//mn:relation/mn:bibitem/mn:title[@type = 'title-complementary']">
 		<xsl:param name="body">false</xsl:param>
 		<xsl:value-of select="$nonbreak_space_em_dash_space"/>
 		<xsl:apply-templates/>
 	</xsl:template>
 
-	<xsl:template match="mn:bibdata/mn:title[@type = 'title-part']">
+	<xsl:template match="mn:bibdata/mn:title[@type = 'title-part'] | mn:bibdata//mn:relation/mn:bibitem/mn:title[@type = 'title-part']">
 		<xsl:param name="num"/>
 		<xsl:param name="curr_lang" select="$lang"/>
 		<xsl:param name="isMainLang">false</xsl:param>
@@ -4154,7 +4189,7 @@
 		</xsl:choose>
 	</xsl:template>
 
-	<xsl:template match="mn:bibdata/mn:title[@type = 'title-amd']">
+	<xsl:template match="mn:bibdata/mn:title[@type = 'title-amd'] | mn:bibdata//mn:relation/mn:bibitem/mn:title[@type = 'title-amd']">
 		<xsl:param name="num"/>
 		<xsl:param name="isMainLang">false</xsl:param>
 		<xsl:param name="curr_lang" select="$lang"/>
@@ -6027,7 +6062,7 @@
 							</xsl:choose> -->
 						</fo:block>
 						<xsl:variable name="font-size_footer_copyright"><xsl:call-template name="get_font-size_footer_copyright"><xsl:with-param name="num" select="$num"/></xsl:call-template></xsl:variable>
-						<xsl:if test="$contextNode/mn:keyword">
+						<xsl:if test="normalize-space($contextNode/mn:keyword) != ''">
 							<fo:block font-size="{$font-size_footer_copyright}" margin-bottom="6pt">
 								<fo:inline font-weight="bold"><xsl:value-of select="$i18n_descriptors"/>: </fo:inline>
 								<xsl:call-template name="insertKeywords">
@@ -21948,13 +21983,23 @@
 		<xsl:param name="letter-spacing" select="'0.15'"/>
 		<xsl:if test="string-length($text) &gt; 0">
 			<xsl:variable name="char" select="substring($text, 1, 1)"/>
-			<fo:inline padding-right="{$letter-spacing}mm">
-				<xsl:if test="$char = '®'">
-					<xsl:attribute name="font-size">58%</xsl:attribute>
-					<xsl:attribute name="baseline-shift">30%</xsl:attribute>
-				</xsl:if>
-				<xsl:value-of select="$char"/>
-			</fo:inline>
+			<xsl:choose>
+				<xsl:when test="contains($letter-spacing, 'em') or contains($letter-spacing, 'mm')">
+					<!-- for negative letter spacing (in em) -->
+					<fo:inline letter-spacing="{$letter-spacing}">
+						<xsl:value-of select="$char"/>
+					</fo:inline>
+				</xsl:when>
+				<xsl:otherwise>
+					<fo:inline padding-right="{$letter-spacing}mm">
+						<xsl:if test="$char = '®'">
+							<xsl:attribute name="font-size">58%</xsl:attribute>
+							<xsl:attribute name="baseline-shift">30%</xsl:attribute>
+						</xsl:if>
+						<xsl:value-of select="$char"/>
+					</fo:inline>
+				</xsl:otherwise>
+			</xsl:choose>
 			<xsl:call-template name="add-letter-spacing">
 				<xsl:with-param name="text" select="substring($text, 2)"/>
 				<xsl:with-param name="letter-spacing" select="$letter-spacing"/>
