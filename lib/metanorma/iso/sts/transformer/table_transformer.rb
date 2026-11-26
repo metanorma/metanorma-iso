@@ -4,7 +4,14 @@ module Metanorma
     module Sts
       module Transformer
         class TableTransformer < Base
-          LEGACY_DESIGNATION = /\A(Table[[:space:]]\d+)[[:space:]]+[\u2014\u2013-][[:space:]]+(.+)\z/m
+          # A hyphen or en dash between digits with no spaces ("Table 1-2") marks
+          # a range or compound number, so a dash separates only with whitespace
+          # on both sides or with a non-digit directly after it.
+          LEGACY_DESIGNATION = /
+            \A((?i:table)[[:space:]]+(?:[A-Z]\.)?\d+(?:\.\d+)*)
+            (?:[[:space:]]+[\u2012-\u2015\u2212-][[:space:]]+|[[:space:]]*[\u2012-\u2015\u2212](?!\d))
+            (.+)\z
+          /mx
 
           # +opts+: provision-table overrides passed by
           # RequirementTransformer — the table-wrap id (the requirement's
