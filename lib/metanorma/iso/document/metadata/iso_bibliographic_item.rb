@@ -57,9 +57,15 @@ module Metanorma
           ext&.stagename&.abbreviation.to_s
         end
 
+        # isodoc parity: the cover "Date:" is the version revision-date,
+        # else the "updated" date; the published/created dates are only a
+        # fallback when neither is given.
         def cover_published_date
-          published = date.find { |d| d.type == "published" } ||
-                      date.find { |d| d.type == "updated" } ||
+          revision = version&.revision_date.to_s
+          return revision unless revision.empty?
+
+          published = date.find { |d| d.type == "updated" } ||
+                      date.find { |d| d.type == "published" } ||
                       date.find { |d| d.type == "created" }
           return nil unless published
 
