@@ -232,7 +232,11 @@ module IsoDoc
           draft = extract_draft(bib)
           return nil unless draft
 
-          " (draft #{draft})"
+          " (#{draft_word(bib)} #{draft})"
+        end
+
+        def draft_word(bib)
+          bib.respond_to?(:draft_label) ? bib.draft_label : "draft"
         end
 
         def extract_draft(bib)
@@ -410,7 +414,7 @@ module IsoDoc
           return nil if id_text.nil? || id_text.empty?
 
           draft_date = extract_draft_date(bib)
-          id_text + (draft_date ? " (draft #{draft_date})" : "")
+          id_text + (draft_date ? " (#{draft_word(bib)} #{draft_date})" : "")
         end
 
         # Cover-large line: primary identifier with language tag, e.g.

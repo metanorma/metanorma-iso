@@ -83,10 +83,21 @@ module Metanorma
           draft = version&.content.to_s
           return nil if draft.empty?
 
-          info = " (draft #{draft}"
+          info = " (#{draft_label} #{draft}"
           revdate = cover_published_date.to_s
           info += ", #{revdate}" if !revdate.empty? && revdate != draft
           "#{info})"
+        end
+
+        # The "draft" word is the document language's i18n label
+        # (isodoc draft_label: "brouillon" in French), not fixed English.
+        def draft_label
+          langs = Array(language)
+          lang = (langs.find { |l| l.current.to_s == "true" } || langs.first)&.value.to_s
+          lang = "en" if lang.empty?
+          IsoDoc::Iso::I18n.new(lang, "Latn").get["draft_label"] || "draft"
+        rescue StandardError
+          "draft"
         end
 
         def cover_edition_display
