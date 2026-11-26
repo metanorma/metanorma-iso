@@ -73,7 +73,11 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::InlineTransformer do
       expect(Nokogiri::XML(target.to_xml).root.text).to eq("Just words.")
     end
 
-    it "degrades entries the target model cannot carry (footnotes) to their text" do
+    # sts 0.6.15 grew TbxIsoTml::Definition's :value slot, so the fn run
+    # no longer hits the no-slot path; per the #122 contract the run the
+    # target cannot slot survives as its text ("label body"), never
+    # vanishes. The fn MARKUP itself is still not carried (no <fn>).
+    it "carries the footnote run as text, without fn markup (TBX targets)" do
       transformer, para = paragraph_in(%(Before<fn reference="1"><p id="fnp">NOTE-BODY</p></fn> after.))
       xml = transformer.apply_inline_content(para, Sts::TbxIsoTml::Definition.new).to_xml
 

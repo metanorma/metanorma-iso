@@ -16,7 +16,7 @@ module Metanorma
         # string), so the pipeline output matches the standalone
         # {Metanorma::Iso::Sts::Transformer.convert}. Returning the raw
         # +#transform+ model instead would drop that post-processing.
-        class Standard
+        class Standard < Metanorma::Document::Sts::Transformer::Standard
           def initialize(model, options = {})
             @model = model
             @options = options

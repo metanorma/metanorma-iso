@@ -4,7 +4,7 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        class BlockDispatcher < Base
+        class BlockDispatcher < Metanorma::Document::Sts::Transformer::BlockDispatcher
           HANDLERS = {
             "IsoClauseSection"             => :dispatch_via_section,
             "ClauseSection"                => :dispatch_via_section,

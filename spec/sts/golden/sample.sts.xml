@@ -1,0 +1,46 @@
+<standard xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en" dtd-version="1.0">
+  <processing-meta tagset-family="sts" base-tagset="interchange" table-model="xhtml" mathml-version="3.0" math-representation="mathml" terminology-model="tbx"><custom-meta-group><custom-meta><meta-name>iec_iso_coding_guidelines_edition</meta-name><meta-value>2.1</meta-value></custom-meta></custom-meta-group></processing-meta>
+  <front>
+    <std-meta>
+      <title-wrap xml:lang="en">
+        <main>Clinical thermometers (mercury-in-glass, with maximum device)</main>
+        <full>Clinical thermometers (mercury-in-glass, with maximum device)</full>
+      </title-wrap>
+      <release-version>IS</release-version>
+      <std-ident>
+        <originator>ISO</originator>
+        <doc-type>international-recommendation</doc-type>
+        <doc-number>7</doc-number>
+      </std-ident>
+      <std-org std-org-type="sdo">
+        <std-org-abbrev>ISO</std-org-abbrev>
+      </std-org>
+      <content-language>en</content-language>
+      <std-ref type="dated">OIML R 7</std-ref>
+      <doc-ref>OIML R 7(E)</doc-ref>
+      <permissions>
+        <copyright-statement>© 1979 International Organization of Legal Metrology</copyright-statement>
+        <copyright-year>1979</copyright-year>
+        <copyright-holder>International Organization of Legal Metrology</copyright-holder>
+      </permissions>
+    </std-meta>
+    <sec sec-type="foreword">
+      <title>Foreword</title>
+      <p id="foreword-p1">This is the foreword.</p>
+    </sec>
+  </front>
+  <body>
+    <sec id="s_scope" sec-type="scope">
+      <title>Scope</title>
+      <p id="scope-p1">This Recommendation applies to clinical thermometers.</p>
+      <list list-type="bullet">
+        <list-item>
+          <p>First bullet.</p>
+        </list-item>
+        <list-item>
+          <p>Second bullet.</p>
+        </list-item>
+      </list>
+    </sec>
+  </body>
+</standard>

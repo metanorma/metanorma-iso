@@ -3,7 +3,7 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        class ReferenceTransformer < Base
+        class ReferenceTransformer < Metanorma::Document::Sts::Transformer::ReferenceTransformer
           # The sts gem's ReferenceStandard maps the URN only inside
           # <std-id-group>; Guidelines 4.4.2 (iso-gdg-4.4.2-5) want a direct
           # <std-id @std-id-link-type="urn" @std-id-type="dated|undated">

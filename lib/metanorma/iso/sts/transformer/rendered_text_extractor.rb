@@ -8,7 +8,7 @@ module Metanorma
         # (titles, labels, list items, xref visible text). Stems are NEVER
         # text-extracted — the paragraph transformer routes them through
         # MathML passthrough via InlineFormula + Mml::V3::Math.
-        class RenderedTextExtractor
+        class RenderedTextExtractor < Metanorma::Document::Sts::Transformer::RenderedTextExtractor
           STEM_TYPES = [
             Metanorma::Document::Components::Inline::StemInlineElement,
             Metanorma::Document::Components::Inline::FmtStemElement,

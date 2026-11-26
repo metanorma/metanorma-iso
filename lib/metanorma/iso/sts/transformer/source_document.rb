@@ -7,7 +7,7 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        class SourceDocument
+        class SourceDocument < Metanorma::Document::Sts::Transformer::SourceDocument
           attr_reader :typed_root
 
           def self.parse(input)
