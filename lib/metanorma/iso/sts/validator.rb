@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 require "moxml"
+require "pathname"
 require "set"
+require "metanorma/iso/sts/validation_report"
 
 module Metanorma
   module Iso
