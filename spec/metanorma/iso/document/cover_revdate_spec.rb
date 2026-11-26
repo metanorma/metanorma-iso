@@ -44,4 +44,31 @@ RSpec.describe Metanorma::Iso::Document::Metadata::IsoBibliographicItem do
     expect(bibdata(dates: dates, version: version).cover_draftinfo)
       .to eq(" (draft 2019-10-15)")
   end
+
+  describe "draft label" do
+    def localised(lang, current: true)
+      described_class.from_xml(<<~XML)
+        <bibdata xmlns="http://riboseinc.com/isoxml" type="standard">
+          <title language="#{lang}" type="main">T</title>
+          <version>2016-05-01</version>
+          <language#{current ? ' current="true"' : ''}>#{lang}</language>
+        </bibdata>
+      XML
+    end
+
+    it "uses the French label for a French document" do
+      expect(localised("fr").cover_draftinfo)
+        .to eq(" (brouillon 2016-05-01)")
+    end
+
+    it "keeps the English label for an English document" do
+      expect(localised("en").cover_draftinfo)
+        .to eq(" (draft 2016-05-01)")
+    end
+
+    it "falls back to the first language when none is marked current" do
+      expect(localised("fr", current: false).cover_draftinfo)
+        .to start_with(" (brouillon")
+    end
+  end
 end
