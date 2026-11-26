@@ -501,8 +501,11 @@ module Metanorma
 
         if doc.sections
           section_children = collect_ordered_children(doc.sections)
+          title_rendered = !render_doc_title(doc).to_s.empty?
           section_children.reject! do |node|
-            node.is_a?(Metanorma::Document::Components::Paragraphs::ParagraphBlock)
+            next false unless node.is_a?(Metanorma::Document::Components::Paragraphs::ParagraphBlock)
+
+            title_rendered || !title_paragraph?(node)
           end
           items.concat(section_children)
         end
@@ -512,6 +515,10 @@ module Metanorma
 
         items.compact!
         sort_by_displayorder(items)
+      end
+
+      def title_paragraph?(node)
+        safe_attr(node, :class_attr).to_s.start_with?("zzSTDTitle")
       end
 
       def publisher_logos_html(_doc)
