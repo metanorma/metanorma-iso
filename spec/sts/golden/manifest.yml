@@ -1,0 +1,11 @@
+sample: spec/fixtures/sample.xml
+rice-amendment: spec/examples/rice.presentation.xml
+is: spec/fixtures/iso/is/document-en.presentation.xml
+dis: spec/fixtures/iso/is/document-en.dis.presentation.xml
+amd-final: spec/fixtures/iso/amd/document-en.final.presentation.xml
+guide: spec/fixtures/samples/guide/document.presentation.xml
+technical-report: spec/fixtures/samples/technical-report/document.presentation.xml
+technical-specification: spec/fixtures/samples/technical-specification/document.presentation.xml
+iwa: spec/fixtures/samples/international-workshop-agreement/document.presentation.xml
+pas: spec/fixtures/samples/publicly-available-specification/document.presentation.xml
+international-standard: spec/fixtures/samples/international-standard/document-en.presentation.xml
