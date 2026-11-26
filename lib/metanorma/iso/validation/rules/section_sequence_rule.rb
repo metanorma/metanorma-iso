@@ -41,7 +41,7 @@ module Metanorma
           SectionItem = Struct.new(:kind, :node, keyword_init: true)
 
           def applicable?(context)
-            !context.root.nil?
+            !context.root.nil? && !context.state.amd
           end
 
           def legacy_check(context)

@@ -18,7 +18,7 @@ module Metanorma
                  mn_category: :structure
 
           def applicable?(context)
-            !context.root.nil?
+            !context.root.nil? && !context.state.amd
           end
 
           private

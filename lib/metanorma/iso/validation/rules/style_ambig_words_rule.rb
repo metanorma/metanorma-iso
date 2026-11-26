@@ -24,7 +24,7 @@ module Metanorma
           AND_OR_REGEX = /\band\/or\b/i.freeze
           MISSPELLED = {
             /\bon-line\b/i => "on-line (use 'online')",
-            /\bcyber_security\b/i => "cyber_security (use 'cybersecurity')",
+            /\bcyber[\s_]security\b/i => "cyber_security (use 'cybersecurity')",
             /\bcyber-security\b/i => "cyber-security (use 'cybersecurity')"
           }.freeze
           AMBIG = {

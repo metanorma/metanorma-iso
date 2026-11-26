@@ -477,10 +477,11 @@ RSpec.describe Metanorma::Iso, type: :validation do
     errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
+      == Clause
       [align=mid-air]
       Para
     INPUT
-    expect(errors).to include('value of attribute "align" is invalid; must be equal to')
+    expect(errors).to include("Invalid attribute align for element p")
   end
 
   it "Warn if an undated reference has no associated footnote" do
@@ -607,10 +608,10 @@ RSpec.describe Metanorma::Iso, type: :validation do
     end
 
     it "Warn if list more than four levels deep" do
-      expect(four_levels).not_to include("List more than four levels deep")
-      expect(five_levels_ordered).to include("List more than four levels deep")
-      expect(five_levels_unordered).to include("List more than four levels deep")
-      expect(five_levels_mixed).to include("List more than four levels deep")
+      expect(four_levels).not_to include("List more than 4 levels deep")
+      expect(five_levels_ordered).to include("List more than 4 levels deep")
+      expect(five_levels_unordered).to include("List more than 4 levels deep")
+      expect(five_levels_mixed).to include("List more than 4 levels deep")
     end
   end
 
