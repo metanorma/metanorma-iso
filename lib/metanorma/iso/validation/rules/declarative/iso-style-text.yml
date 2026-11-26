@@ -1,0 +1,167 @@
+# Declarative text_pattern forms of simple ISO prose-scan style rules
+# (metanorma-iso#1732, batch 1). SHADOW MODE: this ruleset is deliberately
+# not listed in iso-catalog.yml, so nothing here runs during validation. The
+# retained StyleXxxRule classes stay the runtime implementation; parity specs
+# (spec/metanorma/validation/text_pattern_shadow_parity_spec.rb) run these rules
+# beside the classes and require the same codes, paragraphs and messages.
+# The finding is on the paragraph; the legacy rule reports on its parent.
+schema: metanorma-validation-rules/1
+namespaces:
+  m: https://www.metanorma.org/ns/standoc
+rules:
+  # StyleAOrAnRule
+  - id: iso.style.a-before-vowel-sound
+    code: ISO_62
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\ba\s+(?:hour(?:ly)?|honest(?:ly)?|honesty|hono(?:u)?r(?:ed)?|heir)\b'
+      flags: i
+      message: "wrong article '%s' (use 'an' before a vowel sound)"
+    params: [{value: message}]
+  - id: iso.style.an-before-consonant-sound
+    code: ISO_62
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\ban\s+(?:europeans?|one(?:[-—][a-z]+)?|users?|useful(?:ness)?|utilisation|utilization|unique|universities|university|union|united|uniform|uniformity|units?|eula)'
+      flags: i
+      message: "wrong article '%s' (use 'a' before a consonant sound)"
+    params: [{value: message}]
+  # StyleAbbrevPluralRule
+  - id: iso.style.abbrev-plural
+    code: ISO_64
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\bMSSs\b'
+      report: once
+      message: "style: 'MSSs' (abbreviated terms are invariant — 'MSS' is not pluralized)"
+    params: [{value: message}]
+  # StyleAbbrevTablesOnlyRule
+  - id: iso.style.abbrev-tables-only
+    code: ISO_65
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\b(min|max|lab)\.'
+      message: "style: '%s.' (write the word in full in text; abbreviations are for tables and figures)"
+    params: [{value: message}]
+  # StyleComplianceRule
+  - id: iso.style.compliance
+    code: ISO_76
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\b(compliance|compliant|non-compliance|noncompliance|non-compliant|noncompliant)\b'
+      flags: i
+      message: "style: '%s' (use 'conformity'/'conforming'; House Style reserves 'compliance' for legislation)"
+    params: [{value: message}]
+  # StyleFamilySuiteRule
+  - id: iso.style.family-suite
+    code: ISO_89
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\b(famil(?:y|ies) of standards?|suites? of standards?)\b'
+      flags: i
+      message: "style: '%s' (use 'documents on [subject] developed by [committee]')"
+    params: [{value: message}]
+  # StyleFormulaeRule
+  - id: iso.style.formulae
+    code: ISO_91
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\bformulas\b'
+      flags: i
+      report: once
+      message: "style: 'formulas' (House Style: use 'formulae' for all mathematical forms)"
+    params: [{value: message}]
+  # StyleImpreciseRefsRule
+  - id: iso.style.imprecise-refs
+    code: ISO_94
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\b(the following clauses?|the following sections?|the preceding clauses?|the preceding sections?|the figures? above|the tables? below)'
+      flags: i
+      message: "style: '%s' (cite the element by its identifier)"
+    params: [{value: message}]
+  # StyleInformativeNormativeRule
+  - id: iso.style.informative-normative
+    code: ISO_97
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\b(?:normative|informative)\s+(?:annex|clause|figure|table)\s+[A-Z0-9]'
+      flags: i
+      message: "style: '%s' (do not name the normative/informative status of a cross-referenced element; the verbal form of the requirement states it)"
+    params: [{value: message}]
+  # StyleInterlabRule
+  - id: iso.style.interlab
+    code: ISO_98
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\b(round robins?|ring tests?)\b'
+      flags: i
+      message: "style: '%s' (use 'interlaboratory comparison')"
+    params: [{value: message}]
+  # StyleNoNosRule
+  - id: iso.style.no-nos
+    code: ISO_104
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\b[Nn]os\.(?=\s|$)'
+      message: "style: '%s' (House Style: the plural of 'no.' is 'nos', without the full stop)"
+    params: [{value: message}]
+  # StyleOrdinalsRule
+  - id: iso.style.ordinals
+    code: ISO_106
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\b(firstly|secondly|thirdly)\b'
+      flags: i
+      message: "style: '%s' (use 'first', 'second', 'third')"
+    params: [{value: message}]
+  # StylePerCentRule
+  - id: iso.style.per-cent
+    code: ISO_109
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\b(percent)\b'
+      flags: i
+      message: "style: 'percent' (use 'per cent' as two words, or 'percentage')"
+    params: [{value: message}]
+  # StylePluralSTermRule
+  - id: iso.style.plural-s
+    code: ISO_110
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '(?<=\w)(\(\s*s\s*\))'
+      message: "style: '%s' pluralization (use the plural, or 'one or more')"
+    params: [{value: message}]
+  # StyleSelfReferenceRule
+  - id: iso.style.self-reference
+    code: ISO_113
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '\b(this International Standard|this Standard|this part of ISO)'
+      flags: i
+      message: "style: '%s' (use 'this document')"
+    params: [{value: message}]
+  # StyleUnitsRule
+  - id: iso.style.percent-space
+    code: ISO_116
+    context: //m:p
+    check: text_pattern
+    args:
+      pattern: '([0-9])%'
+      message: "no space before %: %s%"
+    params: [{value: message}]
