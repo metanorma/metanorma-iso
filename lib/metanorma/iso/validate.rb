@@ -168,8 +168,24 @@ module Metanorma
         node.xpath(".//sub[not(ancestor::sub)]").each do |x|
           depth = calculate_subscript_depth(x)
           next if depth < 2
-          style_warning(node, depth >= 3 ? "no more than 3 levels of subscript nesting allowed" : "may contain nested subscripts", x.to_xml, code: "ISO_133")
+          style_warning(node, depth > 3 ? "no more than 3 levels of subscript nesting allowed" : "may contain nested subscripts", x.to_xml, code: "ISO_133")
         end
+        style_subscript_mathml(node)
+      end
+
+      # MathML subscripts: only topmost msub (dropped in be0fded3)
+      def style_subscript_mathml(node)
+        node.xpath(".//m:msub[not(ancestor::m:msub)]", "m" => "http://www.w3.org/1998/Math/MathML").each do |x|
+          depth = calculate_mathml_subscript_depth(x)
+          next if depth < 2
+          style_warning(node, depth > 3 ? "no more than 3 levels of subscript nesting allowed" : "may contain nested subscripts", x.to_xml, code: "ISO_133")
+        end
+      end
+
+      def calculate_mathml_subscript_depth(msub)
+        nested = msub.xpath(".//m:msub", "m" => "http://www.w3.org/1998/Math/MathML")
+        nested.empty? and return 1
+        nested.map { |n| 1 + calculate_mathml_subscript_depth(n) }.max
       end
 
       def style_number(node, text)
@@ -181,13 +197,14 @@ module Metanorma
       end
 
       def style_number_grouping(node, text, code:)
-        regex = @validate_year ? /^(?<num>-?[0-9]{4,}[,0-9]*)\Z/ : /^(?<num>-?(?:[0-9]{5,}[,0-9]*|[03-9]\d\d\d|1[0-8]\d\d|2[1-9]\d\d|20[5-9]\d))\Z/
-        prev = @validate_year ? %r{\b(ISO|IEC|IEEE|(in|January|February|March|April|May|June|August|September|October|November|December)\b)\Z} : %r{\b(ISO|IEC|IEEE|\b)\Z}
+        regex = @validate_years ? /^(?<num>-?[0-9]{4,}[,0-9]*)\Z/ : /^(?<num>-?(?:[0-9]{5,}[,0-9]*|[03-9]\d\d\d|1[0-8]\d\d|2[1-9]\d\d|20[5-9]\d))\Z/
+        prev = @validate_years ? %r{\b(ISO|IEC|IEEE|(in|January|February|March|April|May|June|August|September|October|November|December)\b)\Z} : %r{\b(ISO|IEC|IEEE|\b)\Z}
         style_two_regex_not_prev(node, text, regex, prev, "number not broken up in threes: mark up numbers with stem:[]", code: code)
       end
 
       def style_percent(node, text)
         style_regex(/\b(?<num>[0-9.,]+%)/, "no space before percent sign", node, text, code: "ISO_136")
+        style_regex(/\b(?<num>[0-9.,]+ \u00b1 [0-9,.]+ %)/, "unbracketed tolerance before percent sign", node, text, code: "ISO_136")
       end
 
       def style_units(node, text)
@@ -318,9 +335,19 @@ module Metanorma
         )
       end
 
+      # ISO/IEC DIR 2: an undated reference needs an unpublished-status note
+      # (dropped with the RNG removal, b1efa539).
+      def bibitem_validate(xmldoc)
+        xmldoc.xpath("//bibitem[date/on = '–']").each do |b|
+          n = b.xpath("./note/@type").map { |t| t.text.split(",").map(&:strip) }.flatten
+          n.include?("Unpublished-Status") or @log.add("ISO_8", b)
+        end
+      end
+
       def content_validate(doc)
         super
         root = doc.root
+        bibitem_validate(doc)
         normref_validate(root)
         section_style(root)
         subclause_validate(root)

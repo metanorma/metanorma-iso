@@ -205,7 +205,8 @@ RSpec.describe Metanorma::Iso, type: :validation do
       8.1
     INPUT
     expect(errors1).to include("possible decimal point")
-    expect(errors1.scan("possible decimal point").length).to be 1
+    # once from the legacy ISO_134 check, once from StyleNumberRule (ISO_105)
+    expect(errors1.scan("possible decimal point").length).to be 2
 
     errors2 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
@@ -698,7 +699,7 @@ RSpec.describe Metanorma::Iso, type: :validation do
       == Clause
       This is not a suite of standards, but a series.
     INPUT
-    expect(errors3).to include("may contain ambiguous provision")
+    expect(errors3).to include("'suite of standards'")
   end
 
   it "warns of misppelled term" do
@@ -717,7 +718,7 @@ RSpec.describe Metanorma::Iso, type: :validation do
       Cyber
       security is important
     INPUT
-    expect(errors2).to include("dispreferred spelling")
+    expect(errors2).to include("use 'cybersecurity'")
 
     errors3 = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}

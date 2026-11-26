@@ -92,6 +92,14 @@ module Metanorma
           source: [:directives], directives: "3.1.8, 7.2",
           mn_category: :style,
         },
+        "bibitem_validate" => {
+          code: "ISO_8",
+          category: "Referencing > Undated references",
+          section: "Referencing > Undated references",
+          rule: "an undated reference carries an unpublished-status note",
+          source: [:house_style],
+          mn_category: :references,
+        },
         "style_problem_words" => {
           code: "ISO_130",
           category: "Numbers, values and dates > Numbers",

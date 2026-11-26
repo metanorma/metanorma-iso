@@ -477,10 +477,11 @@ RSpec.describe Metanorma::Iso, type: :validation do
     errors = convert_and_capture_errors(<<~"INPUT")
       #{VALIDATING_BLANK_HDR}
 
+      == Clause
       [align=mid-air]
       Para
     INPUT
-    expect(errors).to include('value of attribute "align" is invalid; must be equal to')
+    expect(errors).to include("Invalid attribute align for element p")
   end
 
   it "Warn if an undated reference has no associated footnote" do

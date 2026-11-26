@@ -223,7 +223,7 @@ rules:
     context: //m:p[parent::*[self::m:clause or self::m:annex or self::m:appendix or self::m:li or self::m:admonition or self::m:example or self::m:quote or self::m:definitions or self::m:foreword or self::m:introduction or self::m:abstract]]
     check: text_pattern
     args:
-      pattern: '\bcyber_security\b'
+      pattern: '\bcyber[\s_]security\b'
       flags: i
       report: once
       message: "style: cyber_security (use 'cybersecurity')"
