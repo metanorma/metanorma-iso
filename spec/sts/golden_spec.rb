@@ -17,6 +17,7 @@ RSpec.describe "STS golden parity" do
     it "reproduces the golden output for #{slug}" do
       golden = File.read("spec/sts/golden/#{slug}.sts.xml")
       current = Metanorma::Iso::Sts.convert(File.read(input))
+      File.write("/tmp/rspec-#{slug}.xml", current) if ENV["RSPEC_DUMP"]
 
       expect(current).to eq(golden)
     end

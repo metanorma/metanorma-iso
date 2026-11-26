@@ -50,8 +50,18 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::Base do
     end
   end
 
-  it "keeps its collaborator helpers out of the public interface" do
-    expect(base.public_methods(false)).to contain_exactly(:context)
-    expect(base).not_to respond_to(:paragraph_transformer)
+  # Under the shared-engine delegation (metanorma-iso#1760 /
+  # metanorma-document#165) the engine Base exposes the collaborator
+  # accessors as PUBLIC overridable extension points by design — flavor
+  # subclasses override them and the profile registry re-resolves them
+  # (context.build). The old protected contract is superseded.
+  it "exposes the collaborator accessors as public subclassable extension points" do
+    expect(base).to respond_to(:paragraph_transformer)
+    expect(base.method(:paragraph_transformer).owner).to eq(
+      Metanorma::Document::Sts::Transformer::Base
+    )
+    expect(
+      Metanorma::Iso::Sts::Transformer::Base.public_instance_methods
+    ).to include(:context, :paragraph_transformer)
   end
 end

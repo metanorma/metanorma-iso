@@ -19,7 +19,7 @@ module Metanorma
         # retains only the provision <table> fragments, parsed as typed
         # TableBlocks. Keyed by requirement anchor; RequirementTransformer
         # looks its table up by +requirement.anchor+.
-        class ProvisionIndex
+        class ProvisionIndex < Metanorma::Document::Sts::Transformer::ProvisionIndex
           REQ_ELEMENTS = %w[requirement recommendation permission].freeze
 
           def initialize(tables)

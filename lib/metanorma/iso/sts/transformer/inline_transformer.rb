@@ -4,7 +4,7 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        class InlineTransformer < Base
+        class InlineTransformer < Metanorma::Document::Sts::Transformer::InlineTransformer
           include Transformer::ContentText
 
           # Appends a source element's inline content onto an already
@@ -73,6 +73,7 @@ module Metanorma
             else
               append_text(target, inline_value_text(value))
             end
+
           end
 
           # Visible text of a built STS inline value on the degrade

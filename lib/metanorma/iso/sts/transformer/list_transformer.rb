@@ -3,7 +3,7 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        class ListTransformer < Base
+        class ListTransformer < Metanorma::Document::Sts::Transformer::ListTransformer
           # MN ol @type → NISO STS list-type + the item marker the ISO
           # renderer would paint (Guidelines 5.7.2: list-type reflects the
           # actual numbering — "alphabet" renders "a)", "arabic" "1)").
