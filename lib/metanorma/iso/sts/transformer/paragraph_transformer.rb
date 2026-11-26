@@ -302,7 +302,7 @@ module Metanorma
           # the container. NisoSts stores text on a different attribute
           # per class (Paragraph#text, TbxIsoTml::Bold/Italic#value,
           # everything else has #content). Sub/Sup only declare content,
-          # so non-string children degrade to their #to_s form.
+          # so non-string children degrade to their visible text.
           def attach_inline_child(container, child)
             case container
             when ::Sts::NisoSts::Paragraph
@@ -310,7 +310,10 @@ module Metanorma
             when ::Sts::TbxIsoTml::Bold, ::Sts::TbxIsoTml::Italic
               attach_to_rich_inline(container, child)
             else
-              container.content child.to_s
+              # Serializable#to_s is #inspect: degrading a model child
+              # (e.g. a nested Xref inside a <sup>) through to_s leaked
+              # object addresses into the output.
+              container.content RenderedTextExtractor.text_of(child).to_s
             end
           end
 

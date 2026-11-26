@@ -19,3 +19,5 @@ end
 # Main spec suite blocked by rfcxml/lutaml-model version conflict upstream.
 # Run sts_spec until resolved.
 task default: %i[sts_spec docx_e2e_spec]
+
+Dir.glob('tasks/*.rake').each { |t| load t }
