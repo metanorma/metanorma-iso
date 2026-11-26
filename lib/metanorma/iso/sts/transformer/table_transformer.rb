@@ -3,7 +3,7 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        class TableTransformer < Base
+        class TableTransformer < Metanorma::Document::Sts::Transformer::TableTransformer
           # +opts+: provision-table overrides passed by
           # RequirementTransformer — the table-wrap id (the requirement's
           # anchor, what xrefs target), the mnconvert content-type /
