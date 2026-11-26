@@ -19,6 +19,8 @@ module Metanorma
           NAMESPACES = { "m" => NAMESPACE }.freeze
           PROJECTION_NAMESPACE = "urn:metanorma:iso:validation-projection:1"
           PROJECTION_NAMESPACES = NAMESPACES.merge("v" => PROJECTION_NAMESPACE).freeze
+          # Shadow rulesets are loaded only by parity checks, never by validation.
+          SHADOW_PATHS = [File.expand_path("declarative/iso-style-text.yml", __dir__)].freeze
           SEQUENCE_PATH = File.expand_path("declarative/iso-sequence.yml", __dir__)
           ROOT_NAME = "metanorma"
 
@@ -85,6 +87,20 @@ module Metanorma
                 path = File.join(File.dirname(REGISTRATIONS_PATH), file)
                 base.merge(api::RuleSet.load_file(path, registry: check_registry))
               end
+            end
+
+            # Rules that mirror a retained code rule without replacing it
+            # (shadow mode, metanorma-iso#1732). Not part of the catalog.
+            def shadow_rule_set
+              @shadow_rule_set ||= SHADOW_PATHS.reduce(api::RuleSet.new([])) do |base, path|
+                base.merge(api::RuleSet.load_file(path, registry: check_registry))
+              end
+            end
+
+            # Findings of the shadow rules whose code is +code+.
+            def shadow_findings_for(code, context)
+              rules = shadow_rule_set.rules.select { |rule| rule.code == code }
+              findings_for_set(api::RuleSet.new(rules, namespaces: shadow_rule_set.namespaces), context)
             end
 
             # The subset of the catalog owned by +classes+, in catalog order.
