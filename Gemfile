@@ -9,7 +9,10 @@ gem "isodoc", "~> 3.7.9" # carries the relaton-render range #846
 gem "metanorma-plugin-lutaml", "~> 0.7"
 gem "metanorma-utils", "~> 2.0" # GcBudget + the array-join table cell buffer
 gem "metanorma-standoc", "~> 3.5.7" # Standoc::Document split + the pubid-dispatch refs world
-gem "metanorma-document", "~> 0.5.3" # relaton 3.1 line; relaton-bib retired
+# Dev pin: golden capture and the engine-delegation parity runs execute
+# against the released engine (metanorma-document#165); the gemspec
+# floor is raised in the engine-delegation wave.
+gem "metanorma-document", "~> 0.5.15"
 gem "rake"
 # relaton-bib is retired; its successors ship in the relaton 3.1 line.
 gem "rspec"
