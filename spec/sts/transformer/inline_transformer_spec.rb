@@ -73,13 +73,14 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::InlineTransformer do
       expect(Nokogiri::XML(target.to_xml).root.text).to eq("Just words.")
     end
 
-    it "skips entries the target model cannot carry (footnotes)" do
+    it "degrades entries the target model cannot carry (footnotes) to their text" do
       transformer, para = paragraph_in(%(Before<fn reference="1"><p id="fnp">NOTE-BODY</p></fn> after.))
       xml = transformer.apply_inline_content(para, Sts::TbxIsoTml::Definition.new).to_xml
 
       expect(xml).not_to include("<fn")
-      expect(xml).not_to include("NOTE-BODY")
       expect(xml).to include("Before")
+      expect(xml).to include("NOTE-BODY")
+      expect(xml).to include("after.")
     end
   end
 
