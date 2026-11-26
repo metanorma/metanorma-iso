@@ -24,7 +24,7 @@ module Metanorma
         # id already sits in the registry. The walk mirrors
         # BlockDispatcher::TYPED_ATTR_DISPATCH (shared constant), so new
         # dispatched block attributes are walked automatically.
-        class IdGenerator
+        class IdGenerator < Metanorma::Document::Sts::Transformer::IdGenerator
           def initialize
             @registry = {}
             @kinds = {}

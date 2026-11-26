@@ -3,7 +3,7 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        class BackTransformer < Base
+        class BackTransformer < Metanorma::Document::Sts::Transformer::BackTransformer
           def transform(source)
             app_group = build_app_group(source)
             ref_lists = build_bibliography(source)

@@ -1,0 +1,80 @@
+<standard xmlns:mml="http://www.w3.org/1998/Math/MathML" xmlns:xlink="http://www.w3.org/1999/xlink" xml:lang="en" dtd-version="1.0">
+  <processing-meta tagset-family="sts" base-tagset="interchange" table-model="xhtml" mathml-version="3.0" math-representation="mathml" terminology-model="tbx"><custom-meta-group><custom-meta><meta-name>iec_iso_coding_guidelines_edition</meta-name><meta-value>2.1</meta-value></custom-meta></custom-meta-group></processing-meta>
+  <front>
+    <std-meta>
+      <title-wrap xml:lang="en">
+        <intro>Cereals and pulses</intro>
+        <main>Specification and test methods</main>
+        <compl>Rice (final)</compl>
+        <full>Cereals and pulses — Specification and test methods — Rice (final)</full>
+      </title-wrap>
+      <proj-id>17301</proj-id>
+      <release-version>IS</release-version>
+      <std-ident>
+        <originator>ISO</originator>
+        <doc-type>Amd</doc-type>
+        <doc-number>17301</doc-number>
+        <edition>2</edition>
+        <part-number>1</part-number>
+      </std-ident>
+      <std-org std-org-type="sdo">
+        <std-org-abbrev>ISO</std-org-abbrev>
+      </std-org>
+      <content-language>en</content-language>
+      <std-ref type="dated">ISO 17301-1:2016/Amd 1:2017</std-ref>
+      <std-ref type="undated">ISO 17301-1:2016/Amd 1</std-ref>
+      <doc-ref>ISO 17301-1:2016/Amd 1:2017(E)</doc-ref>
+      <ics>67.060</ics>
+      <permissions>
+        <copyright-statement>© 2017 International Organization for Standardization</copyright-statement>
+        <copyright-year>2017</copyright-year>
+        <copyright-holder>International Organization for Standardization</copyright-holder>
+      </permissions>
+    </std-meta>
+    <sec sec-type="foreword">
+      <title>Foreword</title>
+      <p id="_fb666896-6223-7e03-ac2f-512f1314cc92">ISO (the International Organization for Standardization) is a worldwide federation of national standards bodies (ISO member bodies). The work of preparing International Standards is normally carried out through ISO technical committees. Each member body interested in a subject for which a technical committee has been established has the right to be represented on that committee. International organizations, governmental and non-governmental, in liaison with ISO, also take part in the work. ISO collaborates closely with the International Electrotechnical Commission (IEC) on all matters of electrotechnical standardization.</p>
+      <p id="_afeb2cad-f849-eee5-3e7e-1f824a3c987b">The procedures used to develop this document and those intended for its further maintenance are described in the ISO/IEC Directives, Part 1. In particular the different approval criteria needed for the different types of ISO documents should be noted. This document was drafted in accordance with the editorial rules of the ISO/IEC Directives, Part 2 (see www.iso.org/directives).</p>
+      <p id="_51ac9d86-1831-a38e-0195-1aece8a9418a">Attention is drawn to the possibility that some of the elements of this document may be the subject of patent rights. ISO shall not be held responsible for identifying any or all such patent rights. Details of any patent rights identified during the development of the document will be in the Introduction and/or on the ISO list of patent declarations received (see www.iso.org/patents).</p>
+      <p id="_53c3d577-039b-c4b5-9501-d397ca719bff">Any trade name used in this document is information given for the convenience of users and does not constitute an endorsement.</p>
+      <p id="_0fef840f-1954-8758-f0ac-cc166dcae91d">For an explanation on the voluntary nature of standards, the meaning of ISO specific terms and expressions related to conformity assessment, as well as information about ISO’s adherence to the World Trade Organization (WTO) principles in the Technical Barriers to Trade (TBT) see the following URL: www.iso.org/iso/foreword.html.</p>
+      <p id="_06c8bf3b-c4c5-b7f0-6049-013c970b29e3">This document was prepared by Technical Committee ISO/{technical-committee-type} 34, <italic>Food products</italic>, Subcommittee SC 4, <italic>Cereals and pulses</italic>.</p>
+      <p id="_93c0c497-962b-04f3-6c33-88d008177308">A list of all parts in the ISO 17301 series can be found on the ISO website.</p>
+    </sec>
+  </front>
+  <body>
+    <sec id="_4d4fb29c-7a90-e3d3-2a5d-152f822f2198" sec-type="intro">
+      <title>Introduction</title>
+    </sec>
+    <sec id="_2308aea9-389d-4146-4b45-cf28ec13f87a" sec-type="norm-refs">
+      <title>Normative references</title>
+    </sec>
+    <sec id="_1ea6eabb-bd71-267c-fd03-078a60843213">
+      <title>4.1, second paragraph</title>
+    </sec>
+    <sec id="_02788c94-9ec5-97cf-a073-74f7fe855b4b">
+      <title>4.2.1</title>
+    </sec>
+    <sec id="_8d433ad8-48c7-4899-3a59-5dcf44a64029">
+      <title>4.2.2, Table 1</title>
+    </sec>
+    <sec id="_20031c59-6a7b-0c63-02e2-921466830485">
+      <title>6.3, first paragraph</title>
+    </sec>
+    <sec id="_3ce3837f-e402-71ef-37cc-0aac7326916d">
+      <title>Clause 8</title>
+    </sec>
+    <sec id="_774e31ae-3a61-9b5d-92de-db7413177fc7">
+      <title>Clause 9</title>
+    </sec>
+    <sec id="_4a95b9c8-cb6a-3095-d6ed-d37747273d21">
+      <title>A.2.1</title>
+    </sec>
+    <sec id="_0c2dd8ec-8051-caed-c293-9f790b94dc21">
+      <title>Figure A.1</title>
+    </sec>
+    <sec id="_2f5cf99d-73f9-571d-4982-657cc639f8d5">
+      <title>Annex E</title>
+    </sec>
+  </body>
+</standard>

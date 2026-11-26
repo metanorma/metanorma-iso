@@ -3,7 +3,7 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        class FrontTransformer < Base
+        class FrontTransformer < Metanorma::Document::Sts::Transformer::FrontTransformer
           def transform(source)
             iso_meta = build_iso_meta(source)
             ModelBuilder.front(std_meta: iso_meta, sec: front_sections(source))
