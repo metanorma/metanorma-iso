@@ -10,7 +10,7 @@ gem "metanorma-plugin-lutaml", "~> 0.7"
 gem "metanorma-utils", "~> 2.0" # GcBudget + the array-join table cell buffer
 # Declarative rules backend, pending release of Standoc PR #1408 (stacked on #1398).
 gem "metanorma-standoc", git: "https://github.com/metanorma/metanorma-standoc.git",
-    ref: "4f7d3cce3bcfa3e5f7f9a8bb6d983e765e1c801b"
+    ref: "0238ae06847d8754186d4ed8db10fa4bc0128036"
 gem "metanorma-core", git: "https://github.com/metanorma/metanorma-core.git",
     ref: "231ea6e236a6ccb199ff236df675b6a1edc0240a"
 gem "metanorma-taste", git: "https://github.com/metanorma/metanorma-taste.git",
