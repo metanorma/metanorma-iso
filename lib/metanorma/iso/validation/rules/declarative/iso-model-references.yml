@@ -1,0 +1,66 @@
+# These assertions require typed model identity/placement facts. Their check
+# names intentionally have no raw semantic XML Schematron mapping.
+schema: metanorma-validation-rules/1
+namespaces:
+  m: https://www.metanorma.org/ns/standoc
+  v: urn:metanorma:iso:validation-projection:1
+rules:
+  - id: iso.identity.unique
+    code: ISO_122
+    context: "/m:metanorma/v:identities/v:identity[@kind='id'][@value = preceding-sibling::v:identity[@kind='id']/@value] | /m:metanorma/v:identities/v:identity[@kind='anchor'][@value = preceding-sibling::v:identity[@kind='anchor']/@value]"
+    target: .
+    check: iso.model_forbidden
+    params: [{attribute: value}, duplicate]
+  - id: iso.asset.referenced
+    code: ISO_21
+    context: "/m:metanorma/v:assets/v:asset[not(@name='Formula')][string-length(@anchor)>0][not(@unnumbered='true')][not(@anchor = /m:metanorma/v:xrefs/v:xref/@target)]"
+    target: .
+    check: iso.model_forbidden
+    params: [{attribute: name}, {attribute: anchor}]
+  - id: iso.formula.referenced
+    code: ISO_22
+    context: "/m:metanorma/v:assets/v:asset[@name='Formula'][string-length(@anchor)>0][not(@unnumbered='true')][not(@anchor = /m:metanorma/v:xrefs/v:xref/@target)]"
+    target: .
+    check: iso.model_forbidden
+    params: [{attribute: name}, {attribute: anchor}]
+  - id: iso.asset.cited-before-placement
+    code: ISO_54
+    context: "/m:metanorma/v:asset-order/v:asset[string-length(@anchor)>0][not(@unnumbered='true')][not(@anchor = preceding-sibling::v:asset[not(@unnumbered='true')]/@anchor)][v:citation[not(@target = v:within/@anchor)]][not(v:citation[not(@target = v:within/@anchor)][number(@position) <= number(../@position)])]"
+    target: .
+    check: iso.model_forbidden
+    params: [{attribute: name}, {attribute: anchor}]
+  - id: iso.term-source.origin
+    code: ISO_55
+    context: "/m:metanorma/v:term-sources/v:term/v:source[@origin='false'][not(preceding-sibling::v:source[@origin='false'])]"
+    target: .
+    check: iso.model_forbidden
+  - id: iso.term-source.identifier
+    code: ISO_55
+    context: "/m:metanorma/v:term-sources/v:term/v:source[@origin='true'][@bibitemid=''][not(preceding-sibling::v:source[@origin='true'][@bibitemid=''])]"
+    target: .
+    check: iso.model_forbidden
+  - id: iso.term-source.listed
+    code: ISO_55
+    context: "/m:metanorma/v:term-sources/v:term/v:source[@origin='true'][string-length(@bibitemid)>0][not(@bibitemid = /m:metanorma/v:bibliography-identities/v:identifier/@value)][not(@bibitemid = preceding-sibling::v:source[@origin='true']/@bibitemid)]"
+    target: .
+    check: iso.model_forbidden
+  - id: iso.term-xref.from-terms
+    code: ISO_50
+    context: "/m:metanorma/v:term-xrefs/v:xref[@in-terms='false'][@target = /m:metanorma/v:terms-identities/v:identifier/@value]"
+    target: .
+    check: iso.model_forbidden
+    params: [{attribute: target}]
+  - id: iso.term-xref.to-terms
+    code: ISO_51
+    context: "/m:metanorma/v:term-xrefs/v:xref[@in-terms='true'][not(@target = /m:metanorma/v:terms-identities/v:identifier/@value)]"
+    target: .
+    check: iso.model_forbidden
+    params: [{attribute: target}]
+  - id: iso.state.doctype
+    code: ISO_5
+    context: "/m:metanorma/v:state[string-length(@doctype)>0][not(@amd='true')]"
+    check: iso.model_attribute_in
+    args:
+      attribute: doctype
+      values: [international-standard, technical-specification, technical-report, publicly-available-specification, international-workshop-agreement, guide, amendment, technical-corrigendum, committee-document, addendum, supplement, extract, recommendation]
+    params: [{attribute: doctype}]

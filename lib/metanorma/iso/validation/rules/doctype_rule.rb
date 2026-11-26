@@ -9,7 +9,9 @@ module Metanorma
         # the validator's content_validate which sets @doctype from
         # //bibdata/ext/doctype).
         class DoctypeRule < Base
+          include DeclarativeDispatch
           code "ISO_5"
+          declarative_rule "iso.state.doctype"
 
           policy category: "Document structure",
                  rule: "doctype must be a recognised ISO document type",
@@ -36,12 +38,17 @@ module Metanorma
             context.state && !context.state.amd
           end
 
-          def check(context)
+          def legacy_check(context)
             doctype = context.state.doctype
             return [] if doctype.nil? || doctype.to_s.empty?
             return [] if ALLOWED_DOCTYPES.include?(doctype)
 
             [build_issue(location: nil, params: [doctype])]
+          end
+          private
+
+          def declarative_issue(finding, _context)
+            build_issue(location: nil, params: finding.params)
           end
         end
       end

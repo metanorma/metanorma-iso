@@ -38,6 +38,15 @@ RSpec.describe Metanorma::Iso::Validation::Report do
   end
 
   describe "serialization" do
+    it "serializes warning-only findings through JSON and YAML" do
+      report.add_issue(code: "ISO_56", location: "XrefElement", params: ["missing"])
+      expect(report).to be_valid
+      [JSON.parse(report.to_json), YAML.safe_load(report.to_yaml)].each do |serialized|
+        expect(serialized.fetch("issues").map { |issue| issue.fetch("code") }).to eq(["ISO_56"])
+        expect(serialized.fetch("issues").first.fetch("params")).to eq(["missing"])
+      end
+    end
+
     it "round-trips through JSON with all issues" do
       report.add_issue(code: "ISO_5", location: nil, params: ["pizza"])
       json = report.to_json

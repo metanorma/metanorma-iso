@@ -9,7 +9,9 @@ module Metanorma
         # Unreferenced assets clutter the document. ISO_22 fires for
         # formulas; ISO_21 for the others.
         class UnreferencedAssetsRule < Base
+          include DeclarativeDispatch
           code "ISO_21"
+          declarative_rule "iso.asset.referenced", "iso.formula.referenced"
 
           policy category: "Referencing",
                  rule: "every numbered annex, table, figure and formula must be cross-referenced in the text",
@@ -34,7 +36,7 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             referenced = collect_xref_targets(context.walk_cache, context.root)
             issues = []
 
@@ -48,7 +50,26 @@ module Metanorma
             issues
           end
 
+          def self.declarative_codes
+            %w[ISO_21 ISO_22]
+          end
+
+          # Typed asset identity/numbering facts; no reference requirement is
+          # applied by this extraction.
+          def projection_assets(root)
+            records = []
+            collect_assets(root) do |name, anchor, node|
+              records << [name, anchor, model_location(node), unnumbered?(node)]
+            end
+            records
+          end
+
           private
+
+          def declarative_issue(finding, _context)
+            Issue.from_finding(code: finding.code, location: finding.node["location"],
+              params: finding.params)
+          end
 
           def collect_xref_targets(cache, root)
             targets = Set.new

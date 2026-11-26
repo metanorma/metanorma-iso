@@ -7,7 +7,10 @@ module Metanorma
         # ISO_31: document must contain a Terms & definitions section
         # (sections/terms).
         class TermsPresenceRule < Base
+          include DeclarativeDispatch
+
           code "ISO_31"
+          declarative_rule "iso.terms.presence"
 
           policy category: "Document structure",
                  rule: "the document must contain a Terms and definitions clause",
@@ -18,7 +21,13 @@ module Metanorma
             !context.root.nil? && !context.state.amd
           end
 
-          def check(context)
+          private
+
+          def declarative_issue(_finding, _context)
+            build_issue(location: "IsoSections", params: [])
+          end
+
+          def legacy_check(context)
             return [] unless context.root.sections
             return [] unless context.root.sections.terms.nil?
 

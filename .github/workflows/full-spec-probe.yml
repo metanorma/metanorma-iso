@@ -1,0 +1,52 @@
+name: Full spec baseline probe
+
+# Diagnostic probe: run manually (workflow_dispatch) only. It reports known
+# baseline failures and must not gate pull requests.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  full-spec:
+    name: Full rake spec (quarantine probe)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: ruby/setup-ruby@be3c7df29b3349ec6bcfc6b4792f1cf9f5237d18 # v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+      # Rakefile's default quarantine remains unchanged. Failure here is
+      # visible, independent of the required validation-component matrix.
+      - name: Probe the normal full repository task
+        run: bundle exec rake spec
+
+  legacy-validation-frontends:
+    name: Legacy validation frontends (baseline)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: ruby/setup-ruby@be3c7df29b3349ec6bcfc6b4792f1cf9f5237d18 # v1
+        with:
+          ruby-version: '3.4'
+          bundler-cache: true
+      - name: Run all legacy conversion validation frontends visibly
+        run: |
+          mkdir -p test-results
+          bundle exec rspec spec/metanorma/validate_spec.rb spec/metanorma/validate_section_spec.rb spec/metanorma/validate_style_spec.rb --format json --out test-results/legacy-validation.json
+      - name: Report legacy baseline without masking failures
+        if: always()
+        run: |
+          ruby -rjson -e 'report=JSON.parse(File.read("test-results/legacy-validation.json")); puts JSON.pretty_generate(report.fetch("summary")); abort "Legacy cases missing" if report.fetch("examples").size < 120'

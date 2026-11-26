@@ -12,7 +12,9 @@ module Metanorma
         # each_node_with_id_or_anchor rather than depending on
         # SharedState ordering (which varies by rule discovery order).
         class BrokenXrefRule < Base
+          include DeclarativeDispatch
           code "ISO_56"
+          declarative_rule "iso.xref.target"
 
           policy category: "Referencing > References within the document",
                  rule: "every cross-reference must resolve to an existing element identifier",
@@ -22,7 +24,7 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             targets = collect_all_targets(context.root)
             issues = []
             context.walk_cache.xrefs(context.root).each do |xref|
@@ -37,6 +39,12 @@ module Metanorma
           end
 
           private
+
+          def declarative_issue(finding, _context)
+            id = finding.node["id"]
+            location = id.nil? || id.empty? ? "XrefElement" : "XrefElement##{id}"
+            build_issue(location: location, params: [finding.node["target"].to_s])
+          end
 
           def collect_all_targets(root)
             targets = Set.new

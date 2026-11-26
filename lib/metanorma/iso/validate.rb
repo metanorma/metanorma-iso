@@ -149,6 +149,7 @@ module Metanorma
       end
 
       def asset_style(root)
+        asset_title_style(root)
         root.xpath("//example | //termexample").each { |e| example_style(e) }
         root.xpath("//definition/verbal-definition").each { |e| definition_style(e) }
         root.xpath("//note").each { |e| note_style(e) }
@@ -309,6 +310,12 @@ module Metanorma
       def validate(doc)
         @log.add_error_ranges(doc)
         content_validate(doc)
+        return if @novalid || validation_flavor != "iso"
+
+        shared_schema_validate(
+          to_xml(formattedstr_strip(doc.dup)),
+          flavor: "iso", representation: doc.root["type"]
+        )
       end
 
       def content_validate(doc)

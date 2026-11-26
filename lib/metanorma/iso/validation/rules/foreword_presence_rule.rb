@@ -14,7 +14,10 @@ module Metanorma
         # the foreword has subsections. This rule fires when the foreword
         # is entirely absent.
         class ForewordPresenceRule < Base
+          include DeclarativeDispatch
+
           code "ISO_57"
+          declarative_rule "iso.foreword.presence"
 
           policy category: "Document structure",
                  rule: "the Foreword is a mandatory element",
@@ -25,7 +28,14 @@ module Metanorma
             !context.root.nil? && !context.root.preface.nil?
           end
 
-          def check(context)
+          private
+
+          def declarative_issue(_finding, _context)
+            build_issue(location: "IsoPreface",
+                        params: ["foreword element is required in preface"])
+          end
+
+          def legacy_check(context)
             foreword = context.root.preface.foreword
             return [] unless foreword.nil?
 

@@ -8,7 +8,9 @@ module Metanorma
         # a definition list (and title). Flags when other block content
         # (paragraphs, tables, examples) is present.
         class SymbolsSectionContentRule < Base
+          include DeclarativeDispatch
           code "ISO_26"
+          declarative_rule "iso.symbols.content"
 
           policy category: "Document structure",
                  rule: "a Symbols and Abbreviated Terms section may only contain a definition list",
@@ -19,7 +21,7 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             issues = []
             each_definitions_section(context.root) do |definitions, _parent|
               next if content_valid?(definitions)
@@ -29,6 +31,15 @@ module Metanorma
           end
 
           private
+
+          def declarative_issue(finding, _context)
+            # The context is the definitions container; Engine reports its
+            # first forbidden child as the subject.
+            node = finding.node.parent
+            id = node["id"]
+            location = id.nil? || id.empty? ? "definitions" : "definitions##{id}"
+            build_issue(location: location, params: [])
+          end
 
           # DefinitionSection exposes :paragraphs, :unordered_lists, :tables,
           # :examples in addition to :definition_lists. Only the latter (plus

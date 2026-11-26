@@ -17,6 +17,11 @@ module Metanorma
           3 => "info"
         }.freeze
 
+        # Per-run composition metadata; deliberately outside serialized Issue
+        # fields so the logger can preserve its native abort severity when no
+        # import override was requested.
+        attr_accessor :composition_severity
+
         attribute :code, :string
         attribute :severity, :string
         attribute :category, :string

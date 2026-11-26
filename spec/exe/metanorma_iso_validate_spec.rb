@@ -15,9 +15,9 @@ RSpec.describe "metanorma-iso-validate CLI" do
           <foreword id="fw"><p>foreword</p></foreword>
         </preface>
         <sections>
-          <clause type="scope" id="scope"><title>Scope</title></clause>
+          <clause type="scope" id="scope"><title>Scope</title><p id="scope-p">This document specifies a useful method.</p></clause>
           <terms id="terms"><title>Terms</title></terms>
-          <clause id="c1"><title>Body</title></clause>
+          <clause id="c1"><title>Body</title><p id="body-p">The method applies to the complete sample.</p></clause>
         </sections>
         <bibliography>
           <references normative="true"><title>Norm Refs</title></references>
@@ -44,6 +44,20 @@ RSpec.describe "metanorma-iso-validate CLI" do
   it "exits 0 for a valid document" do
     _out, status = run_cli
     expect(status.exitstatus).to eq(0)
+  end
+
+  it "retains warning findings in JSON without making the default profile fatal" do
+    File.write(@file, minimal_xml.sub("The method applies to the complete sample.", 'See <xref target="missing"/>.'))
+    out, status = run_cli("--format", "json")
+    expect(status.exitstatus).to eq(0)
+    expect(JSON.parse(out).fetch("issues").map { |issue| issue.fetch("code") }).to include("ISO_56")
+  end
+
+  it "makes the same warning fatal under the strict profile" do
+    File.write(@file, minimal_xml.sub("The method applies to the complete sample.", 'See <xref target="missing"/>.'))
+    out, status = run_cli("--profile", "strict", "--format", "json")
+    expect(status.exitstatus).to eq(1)
+    expect(JSON.parse(out).fetch("issues").map { |issue| issue.fetch("code") }).to include("ISO_56")
   end
 
   it "prints text output by default" do

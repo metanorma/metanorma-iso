@@ -39,6 +39,37 @@ module Metanorma
           @texts = Hash.new { |hash, node| hash[node] = {} }.compare_by_identity
           @xrefs = {}.compare_by_identity
           @terms = {}.compare_by_identity
+          @projections = {}.compare_by_identity
+          @model_nodes = {}.compare_by_identity
+          @model_projections = {}.compare_by_identity
+        end
+
+        # The declarative engine's XML projection of +root+, built once per
+        # run by the block. Projection failure raises; a failed document
+        # never becomes an empty, apparently successful validation.
+        def document_projection(root, &block)
+          cached_projection(@projections, root, &block)
+        end
+
+        def model_projection(root, &block)
+          cached_projection(@model_projections, root, &block)
+        end
+
+        def cached_projection(cache, root)
+          if cache.key?(root)
+            value = cache[root]
+            raise value if value.is_a?(StandardError)
+
+            return value
+          end
+          cache[root] = yield
+        rescue StandardError => e
+          cache[root] = e
+          raise
+        end
+
+        def model_nodes(root)
+          @model_nodes[root] ||= each_instance_of(root, Lutaml::Model::Serializable).to_a.freeze
         end
 
         # Every (paragraph, immediate container) pair in the document, in

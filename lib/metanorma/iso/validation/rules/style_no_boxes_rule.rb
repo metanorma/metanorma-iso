@@ -14,7 +14,9 @@ module Metanorma
         # is "note" is exempt as well. This rule flags the admonition
         # element only — wherever it appears in the document.
         class StyleNoBoxesRule < StyleRule
+          include DeclarativeDispatch
           code "ISO_103"
+          declarative_rule "iso.boxes.discouraged"
 
           policy category: "Additional elements > Boxes",
                  rule: "boxes are discouraged — they cannot be cross-referenced; use a figure, a table or a separate subclause",
@@ -26,7 +28,7 @@ module Metanorma
           LABEL = "admonition box: boxes cannot be cross-referenced; " \
                   "use a figure, a table, or a separate subclause".freeze
 
-          def check(context)
+          def legacy_check(context)
             issues = []
             each_instance_of(context.root, ADMONITION_CLASS) do |admonition|
               next if exempt_type?(admonition)
@@ -37,6 +39,10 @@ module Metanorma
           end
 
           private
+
+          def declarative_issue(finding, context)
+            build_issue(location: projected_location(finding.node, context), params: [LABEL])
+          end
 
           def exempt_type?(admonition)
             return false unless admonition.class.method_defined?(:type)

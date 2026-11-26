@@ -9,7 +9,9 @@ module Metanorma
         # Source: contributor[role/description='committee']/organization/
         # subdivision[@type='Technical committee']/@subtype.
         class TechnicalCommitteeTypeRule < Base
+          include DeclarativeDispatch
           code "ISO_2"
+          declarative_rule "iso.committee.technical-type"
 
           policy category: "Document structure",
                  rule: "technical committee subdivisions use subtypes TC, PC, JTC, JPC",
@@ -22,7 +24,7 @@ module Metanorma
             !context.root.nil? && !context.root.bibdata.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             issues = []
             each_contributor_subdivision(context.root.bibdata, "committee") do |subdivision, type|
               next unless type == "Technical committee"
@@ -35,6 +37,10 @@ module Metanorma
           end
 
           private
+
+          def declarative_issue(finding, _context)
+            build_issue(location: nil, params: [finding.node["subtype"].to_s])
+          end
 
           def subtype_text(subdivision)
             subdivision.subtype.to_s

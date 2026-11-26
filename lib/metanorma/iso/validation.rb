@@ -5,6 +5,7 @@
 # internal-library path — the gem does not autoload the framework from its
 # main entry, so consumers must require it explicitly.
 require "lutaml/model/validation_framework"
+require "metanorma/validate/rules"
 
 module Metanorma
   module Iso

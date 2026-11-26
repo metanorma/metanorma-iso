@@ -20,7 +20,9 @@ module Metanorma
         # within the asset itself (captions, cells) do not count: a figure
         # cannot cite itself into existence.
         class AssetCitedFirstRule < Base
+          include DeclarativeDispatch
           code "ISO_54"
+          declarative_rule "iso.asset.cited-before-placement"
 
           policy category: "Referencing > References within the document",
                  rule: "cite figures and tables in the text before the place where they appear in the document",
@@ -43,7 +45,7 @@ module Metanorma
             !context.root.nil?
           end
 
-          def check(context)
+          def legacy_check(context)
             root = context.root
             asset_at = {} # anchor → [node, walk position]
             cited_at = {} # anchor → earliest citing position
@@ -79,7 +81,32 @@ module Metanorma
             issues
           end
 
+          # Raw placement and citation facts, including repeated identities
+          # and self-citations. YAML chooses the first numbered placement and
+          # decides whether an external citation precedes it.
+          def projection_asset_order(root)
+            assets = []
+            citations = []
+            each_document_node_with_position(root) do |node, ancestors, position|
+              if asset?(node)
+                klass = ASSET_CLASSES.find { |candidate| node.is_a?(candidate) }
+                assets << [ASSET_NAME.fetch(klass), read_anchor_attr(node) || read_id_attr(node),
+                           model_location(node), unnumbered?(node), position]
+              elsif node.is_a?(XREF_CLASS)
+                citations << [node.target.to_s, position, enclosing_asset_anchors(ancestors)]
+              end
+              inline_xrefs(node).each do |xref|
+                citations << [xref.target.to_s, position, enclosing_asset_anchors(ancestors + [node])]
+              end
+            end
+            [assets, citations]
+          end
+
           private
+
+          def declarative_issue(finding, _context)
+            build_issue(location: finding.node["location"], params: finding.params)
+          end
 
           def asset?(node)
             ASSET_CLASSES.any? { |klass| node.is_a?(klass) }

@@ -7,7 +7,10 @@ module Metanorma
         # ISO_23: foreword must not contain subclauses.
         # Source: preface/foreword/clause.
         class ForewordStructureRule < Base
+          include DeclarativeDispatch
+
           code "ISO_23"
+          declarative_rule "iso.foreword.no-subclauses"
 
           policy category: "Document structure",
                  rule: "the Foreword must not contain subclauses",
@@ -18,7 +21,14 @@ module Metanorma
             !context.root.nil? && !context.root.preface.nil?
           end
 
-          def check(context)
+          private
+
+          def declarative_issue(_finding, context)
+            build_issue(location: model_location(context.root.preface.foreword),
+                        params: [])
+          end
+
+          def legacy_check(context)
             foreword = context.root.preface.foreword
             return [] unless foreword
 
@@ -29,8 +39,6 @@ module Metanorma
 
             [build_issue(location: model_location(foreword), params: [])]
           end
-
-          private
 
           # Read a possibly-absent collection attribute without using
           # respond_to?. Returns [] when the attribute doesn't exist on the
