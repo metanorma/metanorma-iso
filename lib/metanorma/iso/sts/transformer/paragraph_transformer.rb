@@ -3,7 +3,7 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        class ParagraphTransformer < Base
+        class ParagraphTransformer < Metanorma::Document::Sts::Transformer::ParagraphTransformer
           PRESENTATION_CLASSES = %w[
             FmtTitleElement FmtXrefLabelElement FmtNameElement FmtFnLabelElement
             FmtAnnotationStartElement FmtAnnotationEndElement FmtConceptElement

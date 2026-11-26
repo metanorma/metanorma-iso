@@ -11,7 +11,7 @@ module Metanorma
         # forbids duplicates, so the section takes the sec_ prefix and
         # the entry the term_ prefix (the split mnconvert emits:
         # sec_3.1.2 / term_3.1.2).
-        class TermTransformer < Base
+        class TermTransformer < Metanorma::Document::Sts::Transformer::TermTransformer
           def transform(source_term)
             sec_id, entry_id = id_generator.term_ids(source_term)
 

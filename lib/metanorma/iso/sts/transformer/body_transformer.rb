@@ -3,7 +3,7 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        class BodyTransformer < Base
+        class BodyTransformer < Metanorma::Document::Sts::Transformer::BodyTransformer
           def transform(source)
             sections = []
 

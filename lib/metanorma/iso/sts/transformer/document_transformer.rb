@@ -4,7 +4,7 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        class DocumentTransformer < Base
+        class DocumentTransformer < Metanorma::Document::Sts::Transformer::DocumentTransformer
           def transform(source)
             pre_register_reference_ids(source)
             front_model = build_front(source)

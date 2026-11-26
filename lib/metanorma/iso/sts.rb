@@ -53,6 +53,17 @@ module Metanorma
       # @param input [String, Pathname, #read] the source XML.
       # @return [String] ISO NISO STS XML.
       def self.convert(input)
+        Lutaml::Model::Config.with_adapter(xml: :leptris) do
+          convert_inner(input)
+        end
+      end
+
+      # The STS serialization is deterministic only under the leptris XML
+      # adapter: the Nokogiri adapter's serialization normalizes U+00A0
+      # and collapses provision-table indentation, which breaks golden
+      # parity (metanorma-iso#1760 / metanorma-document#165). The scoped
+      # override keeps the process-global adapter untouched.
+      def self.convert_inner(input)
         model = convert_to_model(input)
         xml = model.to_xml
         # processing-meta is valid per the delivery-gate schema (NISO STS

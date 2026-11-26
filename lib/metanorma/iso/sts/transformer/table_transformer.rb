@@ -3,13 +3,13 @@ module Metanorma
   module Iso
     module Sts
       module Transformer
-        class TableTransformer < Base
+        class TableTransformer < Metanorma::Document::Sts::Transformer::TableTransformer
           # A hyphen or en dash between digits with no spaces ("Table 1-2") marks
           # a range or compound number, so a dash separates only with whitespace
           # on both sides or with a non-digit directly after it.
           LEGACY_DESIGNATION = /
             \A((?i:table)[[:space:]]+(?:[A-Z]\.)?\d+(?:\.\d+)*)
-            (?:[[:space:]]+[\u2012-\u2015\u2212-][[:space:]]+|[[:space:]]*[\u2012-\u2015\u2212](?!\d))
+            (?:[[:space:]]+[‒-―−-][[:space:]]+|[[:space:]]*[‒-―−](?!\d))
             (.+)\z
           /mx
 
