@@ -4,6 +4,8 @@ module Metanorma
     module Sts
       module Transformer
         class TableTransformer < Base
+          LEGACY_DESIGNATION = /\A(Table[[:space:]]\d+)[[:space:]]+[\u2014\u2013-][[:space:]]+(.+)\z/m
+
           # +opts+: provision-table overrides passed by
           # RequirementTransformer — the table-wrap id (the requirement's
           # anchor, what xrefs target), the mnconvert content-type /
@@ -32,17 +34,31 @@ module Metanorma
             source_table.id
           end
 
-          # "Table 2" from the presentation XML autonum attribute.
+          # "Table 2" from the presentation XML autonum attribute; a legacy
+          # presentation table with no autonum names itself "Table 2 — …".
           def table_label(source_table)
-            return nil unless source_table.autonum
+            return "Table #{source_table.autonum}" if source_table.autonum
 
-            "Table #{source_table.autonum}"
+            legacy_split(caption_text(source_table)).first
           end
 
           # Provision-table captions prefer the fully-rendered fmt-name
           # (it carries the "Table N — Requirement M: …" composition);
           # data tables use the semantic <name>.
           def table_caption(source_table)
+            text = if source_table.autonum
+                     caption_text(source_table)
+                   else
+                     legacy_split(caption_text(source_table)).last
+                   end
+            return nil if text.nil? || text.empty?
+
+            ::Sts::NisoSts::Caption.new(
+              title: ::Sts::NisoSts::Title.new(content: [text.strip])
+            )
+          end
+
+          def caption_text(source_table)
             text = nil
             if source_table.fmt_name
               text = RenderedTextExtractor.text_of(source_table.fmt_name)
@@ -50,11 +66,12 @@ module Metanorma
             if (text.nil? || text.empty?) && source_table.name
               text = RenderedTextExtractor.text_of(source_table.name)
             end
-            return nil if text.nil? || text.empty?
+            text
+          end
 
-            ::Sts::NisoSts::Caption.new(
-              title: ::Sts::NisoSts::Title.new(content: [text.strip])
-            )
+          def legacy_split(text)
+            match = text&.match(LEGACY_DESIGNATION)
+            match ? [match[1], match[2]] : [nil, text]
           end
 
           def build_table(source_table, bold_header: false)
