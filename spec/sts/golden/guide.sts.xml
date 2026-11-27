@@ -44,13 +44,13 @@
       <title>Introduction</title>
       <p id="_b4c68caf-2810-e4ca-b252-d1ae2403d10b">This document is intended for developers of ISO standards and other deliverables to encourage the inclusion of provisions in standards to address climate change impacts, risks and opportunities, and aims to:</p>
       <list list-type="bullet">
-        <list-item>
+        <list-item id="_80ef709f-a75c-ed41-bf06-e36d0f005822">
           <p id="_8ff7122f-e11f-3280-def5-1fc5adff0145">enable standards committees to determine if the standard under consideration should take into account aspects, issues, impacts, risks and/or opportunities associated with climate change;</p>
         </list-item>
-        <list-item>
+        <list-item id="_a63d4035-8dde-d241-4e3c-967663c58163">
           <p id="_d4af4b78-268e-222c-8269-a9530489aced">provide standards developers with a systematic approach to address climate change impacts, risks and opportunities in a coherent and consistent manner, with regard to both new and revised standards, and in a manner related to the objective and scope of the standard being developed;</p>
         </list-item>
-        <list-item>
+        <list-item id="_d3ac58c3-0918-665a-186f-ccacc0006d8b">
           <p id="_da205241-b0c6-2a61-e2e7-7b5e128f91a3">promote consistency and compatibility to the extent practical among standards that directly or indirectly address climate change and their wider uptake in support of sustainability.</p>
         </list-item>
       </list>

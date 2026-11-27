@@ -59,19 +59,15 @@ files:
     oiml: 5c412d2b5e4d3f02bd58cd0c5c9d9b98499d13efd8b1f622016c53b05e35d8b4
     iso: 0c6e626d82c64f5f13c7acf81063944c188147ab9ac1564bd5f0ee70db3cca19
   output_sanitizer.rb:
-    oiml: 
     iso: b6837f44907c93aca5569a55ba5f60e87e8b465b04520016d41899bf6bc5e718
   output_sanitizer/front_leak_sanitizer.rb:
-    oiml: 
     iso: 55424551b8a94ab791f7cd3f3e15135fda4e2861e7003dea9349f25e5b6d0fd9
   output_sanitizer/inline_identifier_sanitizer.rb:
-    oiml: 
     iso: 892c234de57b034201e6412d03190645218f168274792db10d5d766a9c0cd8cf
   output_sanitizer/unique_id_sanitizer.rb:
-    oiml: 
     iso: 38906094666303a9b1a7159a88588945e2203b96f14729f579756395a9e6b193
   parity_validator.rb:
-    oiml: 2cc3413c9b4a434300c855aac25532e91026ba645795f41813ac908c2697a0ca
+    oiml: d4918533fe9923b9deca419fa0bfbb52f862cb28d09679bb3ded29834f7efa98
     iso: 2cc3413c9b4a434300c855aac25532e91026ba645795f41813ac908c2697a0ca
   parity_validator/normaliser.rb:
     oiml: 46aec8dad8245a6d3f367419d86be7b66b3da45ee6c02d6d70c9b8d84530d463
@@ -98,7 +94,6 @@ files:
     oiml: 7dc5fbcdc8bc787141c1e2cc8cc8694863daa7f04cf97a45a88550c40374d2f5
     iso: 817b13817054d37c37e9d67576b2e63276b3d89de37de510e478e4af953a30e4
   transformer/content_text.rb:
-    oiml: 
     iso: 6ac15405ecf871283acfbda4cfcb7b03646e5de9e7cf33b52dfe005bf3ce1adb
   transformer/context.rb:
     oiml: 892f8318eddf4b571abc26b3149edb8276777e385044b0dea38fa2830b2c32c4
@@ -122,17 +117,16 @@ files:
     oiml: 406d7e61c4d9ba31def269765a8214e6e01afa5c2f6a4c249cb2a219e506a1e6
     iso: e419ddfcec7a9cb6b61b9c56bf527e2d3b3c1a432ff6f7d983a2ce150cdda0ab
   transformer/id_generator.rb:
-    oiml: 4030171faa9e000492281b69d702db499e788cadd819ffa4fbea31d47dc8945e
+    oiml: 15d7c51a5d8d37dfcf4613fc81188a1bf26d01830a2e0ae5a9a18b6ec0b1b026
     iso: c7cd9e395b291923074c8cac2ab0483169ff9f619303463e83a169211e76ee62
   transformer/inline_transformer.rb:
     oiml: f0ea6c24e217f1f4167cd71ade5adb0a654abed80482e44fe7cb360800ccce2d
     iso: 42ac2c6e103dfedfc449c5b7d03d4bddff69f2a1c4fc33c4b910d3567d99ad26
   transformer/iso_meta_transformer.rb:
-    oiml: 
     iso: 549eb73c452884e95c6906e69734242f0252cdc430af580d1bfca3f1cbdeeaca
   transformer/list_transformer.rb:
-    oiml: 2b31f2b9b80e4e6f9e27e8d214548d76e68699bf0e3c143072a8379fcf495bb9
-    iso: '0893ac4c62f8f1175302b03891f74b6e8299e82e055916b3b735a04ae5b2734e'
+    oiml: 918df15e9a89aaef7017047cef41f425f8d19c79d3b9e6844bba6d808ed34c8e
+    iso: 561f47888e259bbc02dc575ea9b4b87bac9d6826f40802d827e8b4bb0aef27e9
   transformer/model_builder.rb:
     oiml: b56111554b7c6a96a6d054f876f8cd57031b2d9bafe57394c3181844de276436
     iso: 8cf9ff4a443d5e1a57d3a953bef982883a4a92e4831e206f81bd2388032b5247
@@ -146,10 +140,8 @@ files:
     oiml: ef5ffbe7e4ec7d282ee1e462ab024a9857eb58a8ab8f902438235d773d325f00
     iso: e06fe34c4cc5e63da5f5fdbd15b7e7256460fe2e0fb24dbdaa4eb54407cdd981
   transformer/provision_index.rb:
-    oiml: 
     iso: 7bee866ce428b1c47222b364d308ac8486c41dcb8ccd66079faba90c1b0a9036
   transformer/quote_transformer.rb:
-    oiml: 
     iso: e1986880b648912b5a200e376aedff32073f6944ff7e6070d0fb0c40b9342112
   transformer/reference_transformer.rb:
     oiml: '038b9ce4081ab9cae6630e40112500d4cc48b47b494905f55cfd3babff68712f'
@@ -167,7 +159,6 @@ files:
     oiml: f347a70c76cbf3975b330159856baca9f7b6693b6a5b6d6b7fd712ab294079d2
     iso: 5f2bfc8152f5b9747c8f4ee252dd334722b0d002f6ce551de940fb361fcaad21
   transformer/source_order.rb:
-    oiml: 
     iso: 95b76c6d99e05f327002906758a1889361ff960cee042088a247ba7cbf276708
   transformer/standard.rb:
     oiml: 5855a4907038f0993d101b811c203a412a29d4b6f60fcc76d6bd43e82c25ac1f
@@ -182,8 +173,7 @@ files:
     oiml: 4a924b2301509ef55f3b663f362373d9b4abcab356265b2c285ab1a42b1e0397
     iso: 4a924b2301509ef55f3b663f362373d9b4abcab356265b2c285ab1a42b1e0397
   validator.rb:
-    oiml: 5afdd86bd94369192cd8874cb0288bef37c720ad62f0859dbaea3178090f9047
+    oiml: 1631ccc7fb2344050a6ec3fa18e1d10e205cbf54a45c032842946bae1b0de41e
     iso: da0209af0136d93591d4d6b6056c28735e5bd11542e254800d23f596cf1fafca
   version.rb:
-    oiml: 4d739a75b2b444962567746b33f29c42704252cde0ce2689f0ce6bfcca2c7a5a
-    iso: 
+    oiml: 8d816f94237cbf5a471b5378afca7faf078712f297e3e722a6270d17f5d5ec6d

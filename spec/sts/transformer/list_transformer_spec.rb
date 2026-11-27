@@ -39,6 +39,13 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::ListTransformer do
       expect(doc.xpath("/list/list-item/p").map(&:text)).to eq(%w[First Second])
     end
 
+    it "keeps the source id on list items so xrefs to them resolve" do
+      doc = list_xml("o-alpha")
+
+      expect(doc.xpath("/list/list-item/@id").map(&:value)).to eq(%w[a1 a2])
+      expect(doc.xpath("//list-item[@id='n1']")).not_to be_empty
+    end
+
     it "maps a roman ol to roman-lower with i) ii) labels" do
       doc = list_xml("o-roman")
 

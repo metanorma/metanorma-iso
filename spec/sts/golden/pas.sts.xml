@@ -71,10 +71,10 @@
       <p id="_dcc01114-4d03-3550-1347-4ba901bda94c">For the purposes of this document, the following terms and definitions apply.</p>
       <p id="_1df4aedb-297d-0c69-967f-f6a60db009d2">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
       <list list-type="bullet">
-        <list-item>
+        <list-item id="_01c42259-6512-2b50-0a8b-163e53dacc2d">
           <p id="_93880b15-0e52-9141-f887-d290dce89ffd">ISO Online browsing platform: available at <ext-link ext-link-type="uri" xlink:href="https://www.iso.org/obp"></ext-link></p>
         </list-item>
-        <list-item>
+        <list-item id="_67773aa8-9043-8351-657b-25ca152b61c0">
           <p id="_8a7ecb99-412c-1138-ae9d-76c4ac7b7d43">IEC Electropedia: available at <ext-link ext-link-type="uri" xlink:href="https://www.electropedia.org"></ext-link></p>
         </list-item>
       </list>

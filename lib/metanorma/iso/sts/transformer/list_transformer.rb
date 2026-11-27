@@ -46,7 +46,21 @@ module Metanorma
             source_list.type
           end
 
+          # Items are cited by id from xrefs elsewhere in the document, so
+          # the item keeps its source id (claimed against the document's ids)
+          # for the xref rid to resolve.
           def build_list_item(li, ordered, fallback_marker = nil)
+            item = build_list_item_content(li, ordered, fallback_marker)
+            source_id = li.respond_to?(:id) ? li.id : nil
+            return item if source_id.nil? || source_id.to_s.empty?
+
+            id = id_generator.claim(source_id)
+            id_generator.register(source_id, id)
+            item.id = id
+            item
+          end
+
+          def build_list_item_content(li, ordered, fallback_marker)
             nested_lists = build_nested_lists(li)
 
             ::Sts::NisoSts::ListItem.new do |item|
