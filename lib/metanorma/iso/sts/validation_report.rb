@@ -3,6 +3,8 @@
 # Delegates to the shared engine (metanorma-document 0.5.15, Metanorma::Document::Sts)
 # per metanorma-iso#1760 / metanorma-document#165.
 
+require "metanorma/document"
+
 module Metanorma
   module Iso
     module Sts
