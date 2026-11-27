@@ -78,7 +78,7 @@ module StsSiblingParity
   def build(roots)
     paths = roots.flat_map { |f, r| digests(r, f).keys }.uniq.sort
     files = paths.to_h do |p|
-      [p, roots.to_h { |f, r| [f, digests(r, f)[p]] }]
+      [p, roots.to_h { |f, r| [f, digests(r, f)[p]] }.compact]
     end
     { "files" => files }
   end

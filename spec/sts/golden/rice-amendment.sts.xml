@@ -45,10 +45,10 @@
       <p id="_faa2c804-54e3-a95b-a31c-70787832cbef">A list of all parts in the ISO 17301 series can be found on the ISO website.</p>
       <p id="_25266336-b935-3444-f4f9-44fcf3be17ad">Any feedback or questions on this document should be directed to the user’s national standards body. A complete listing of these bodies can be found at <ext-link ext-link-type="uri" xlink:href="https://www.iso.org/members.html">www.iso.org/members.html</ext-link>.</p>
       <list list-type="bullet">
-        <list-item>
+        <list-item id="_dfb22bf7-0672-2d60-6378-d7d38617ca72">
           <p id="_22a3101d-1a17-3bfc-12f8-c9e8687c4b24">updating of normative references;</p>
         </list-item>
-        <list-item>
+        <list-item id="_ca298d85-979c-7f44-7b79-f8f35a0c3d84">
           <p id="_d4578805-3428-5b19-9bbc-7eaf47874021">revision of Clause 9.</p>
         </list-item>
       </list>
@@ -137,10 +137,10 @@
       <p id="_dcc01114-4d03-3550-1347-4ba901bda94c">For the purposes of this document, the following terms and definitions apply.</p>
       <p id="_1df4aedb-297d-0c69-967f-f6a60db009d2">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
       <list list-type="bullet">
-        <list-item>
+        <list-item id="_b26c7434-491f-56af-d67f-dcd10ea0b740">
           <p id="_93880b15-0e52-9141-f887-d290dce89ffd">ISO Online browsing platform: available at <ext-link ext-link-type="uri" xlink:href="https://www.iso.org/obp"></ext-link></p>
         </list-item>
-        <list-item>
+        <list-item id="_0825b0eb-0958-a1e7-32dc-d603e7788628">
           <p id="_8a7ecb99-412c-1138-ae9d-76c4ac7b7d43">IEC Electropedia: available at <ext-link ext-link-type="uri" xlink:href="https://www.electropedia.org"></ext-link></p>
         </list-item>
       </list>
@@ -422,10 +422,10 @@ shall not be greater than the values specified in <xref ref-type="table" rid="ta
                   <td>
                     <p id="_bbadbbf7-507b-46e1-30f8-c134e9212bf5">Extraneous matter:</p>
                     <list list-type="bullet">
-                      <list-item>
+                      <list-item id="_abb7e758-c537-a699-d45f-805b30122484">
                         <p id="_62136ba5-f3b4-cb51-59e4-48d80820d63b">organic<fn id="_4837d53b-d208-78e8-d97d-0d5b41f333f1"><label>a</label><p>a)Organic extraneous matter includes foreign seeds, husks, bran and parts of straw.</p></fn></p>
                       </list-item>
-                      <list-item>
+                      <list-item id="_991be52c-a6c1-0912-071f-58b84e8216aa">
                         <p id="_7cfe7a1b-dfbd-f305-055f-72b0925c8b00">inorganic<fn id="_cceb25b7-fbe4-a8e8-5f79-53e0818f7533"><label>b</label><p>b)Inorganic extraneous matter includes stones, sand and dust.</p></fn></p>
                       </list-item>
                     </list>
@@ -611,19 +611,19 @@ shall not be greater than the values specified in <xref ref-type="table" rid="ta
             <p id="_6146bf27-9b9c-23ef-47bc-228881606cbf">The results of an interlaboratory test are given in <xref ref-type="app" rid="sec_D">Annex D</xref> for information.</p>
             <p id="_975f8fe8-9e6b-d075-23c8-04852983e2bc">The results of the repeatability and reproducibility tests (see <xref ref-type="sec" rid="cls-6.5.2.2">6.5.2.2</xref> and  <xref ref-type="sec" rid="cls-6.5.2.3">6.5.2.3</xref>) shall be obtained within a short interval of time, using the same:</p>
             <list list-type="bullet">
-              <list-item>
+              <list-item id="_f9fdadeb-819b-9985-ec3c-83c2366b2ae2">
                 <p id="_f89fcae1-0464-5376-bbf7-ee33b9aa4565">method;</p>
               </list-item>
-              <list-item>
+              <list-item id="_20cd7543-867b-513f-06fc-21bf85d6ce71">
                 <p id="_29bdf4a6-d8c7-1fdc-a949-e41fe735793e">test material;</p>
               </list-item>
-              <list-item>
+              <list-item id="_c3dfece2-6b48-0660-afd7-1ac25ec7c759">
                 <p id="_481a7fdb-1893-0e86-9811-c61676a0e1d2">laboratory;</p>
               </list-item>
-              <list-item>
+              <list-item id="_5fc23bb2-4053-72c2-93b6-6d1166fd1e97">
                 <p id="_a61837b5-7831-7e15-4b92-229fd6142fa7">operator;</p>
               </list-item>
-              <list-item>
+              <list-item id="_b0165cdb-682e-c704-46b7-720d9a9f2f4f">
                 <p id="_1401cc0f-caf2-cb54-d866-ec9651c5cb5a">equipment.</p>
               </list-item>
             </list>
@@ -668,39 +668,39 @@ arithmetic mean of the values for the reproducibility limit, <inline-formula><mm
       <title>Test report</title>
       <p id="_4769478e-e607-a5a9-e382-8bed770bb5ec">For each test method, the test report shall specify the following:</p>
       <list list-type="alpha-lower">
-        <list-item>
+        <list-item id="_cbf7e5bb-b27c-8f1d-6ed3-3b851cf59765">
           <label>a)</label>
           <p id="_c6fea1a8-9ffd-6847-c478-af58d8b4203f">all information necessary for the complete identification of the sample;</p>
         </list-item>
-        <list-item>
+        <list-item id="_cdd93ccf-0872-e6d8-393a-6119a9a6304f">
           <label>b)</label>
           <p id="_893decdd-345d-6636-c453-a1cd17ee4943">a reference to this document (i.e. ISO 17301-1:2023);</p>
         </list-item>
-        <list-item>
+        <list-item id="_514f127b-5c48-64cd-2a1b-4bef4d87f33c">
           <label>c)</label>
           <p id="_7c5b8b23-4a40-85fc-5b0d-4b5358b84608">the sampling method used;</p>
         </list-item>
-        <list-item>
+        <list-item id="_399a0887-fde7-d95d-3a55-1de9b1e5fc99">
           <label>d)</label>
           <p id="_37ae48eb-68bc-16a6-acc6-ead30ea4c801">the test method used;</p>
         </list-item>
-        <list-item>
+        <list-item id="_e77f5efd-c0af-3a38-9837-0a21c00dc578">
           <label>e)</label>
           <p id="_52eb5767-23dd-56dc-189a-a7f7b77fdf3b">the test result(s) obtained or, if the repeatability has been checked, the final quoted result obtained;</p>
         </list-item>
-        <list-item>
+        <list-item id="_a536972b-207e-f998-92b6-f125639e42e2">
           <label>f)</label>
           <p id="_d992eaac-8164-ae9b-62b8-09e6d0d4b3e6">all operating details not specified in this document, or regarded as optional, together with details of any incidents which could have influenced the test result(s);</p>
         </list-item>
-        <list-item>
+        <list-item id="_cb26445b-7975-4c5a-cbdd-5678029fb2ea">
           <label>g)</label>
           <p id="_c36f6f0b-45a5-12b5-07b8-ee3124a4c278">any deviations from the procedure;</p>
         </list-item>
-        <list-item>
+        <list-item id="_c36d0af4-a341-c5b7-4d31-18e52bba9d29">
           <label>h)</label>
           <p id="_0ffaced0-f96b-58f8-ed15-d57cce48d0c2">any unusual features (anomalies) observed during the test;</p>
         </list-item>
-        <list-item>
+        <list-item id="_d05518fa-7dd9-52f4-ec0d-5ed37f1d8972">
           <label>i)</label>
           <p id="_fee75f51-50c2-c73a-e111-ee8c8b0d085f">the date of the test.</p>
         </list-item>
@@ -978,13 +978,13 @@ moisture, waxy rice, nitrogen and crude protein.</p>
         <title>Gelatinization</title>
         <p id="_bdc79c6a-a59a-76c5-6f58-42552fbe2436"><xref ref-type="fig" rid="fig_2">Figure C.1</xref> gives an example of a typical gelatinization curve. <xref ref-type="fig" rid="fig_3">Figure C.2</xref> shows the three stages of gelatinization:</p>
         <list list-type="bullet">
-          <list-item>
+          <list-item id="_e0477939-1c0a-046b-bb3c-20fca9cae88a">
             <p id="_4ea12bca-a8c0-4b62-2e51-5ea070140afd">initial;</p>
           </list-item>
-          <list-item>
+          <list-item id="_2eda1286-a627-8c56-c65a-1038dcc8db4b">
             <p id="_bcc8fe04-cd0d-0a68-905b-6d3d48f95339">intermediate;</p>
           </list-item>
-          <list-item>
+          <list-item id="_d15d29c3-537c-4a8f-273b-0f38565d2080">
             <p id="_0143522b-6e5e-ff21-92f6-07983d8dbddc">final.</p>
           </list-item>
         </list>
