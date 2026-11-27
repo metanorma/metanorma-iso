@@ -72,6 +72,7 @@ module Metanorma
         inject_namespaces(xml)
           .then { |x| inject_processing_meta(x) }
           .then { |x| fix_lang_attribute(x) }
+          .then { |x| inject_term_entry_type(x) }
           .then { |x| Transformer::NbspProcessor.apply_to_text(x) }
       end
 
@@ -133,6 +134,14 @@ module Metanorma
 
       def self.fix_lang_attribute(xml)
         xml.gsub(/\slang="([a-z-]+)"/, ' xml:lang="\\1"')
+      end
+
+      # ref-type="custom" is emitted only for references to a term (see
+      # ParagraphTransformer#term_entry_xref); guidelines 9.2.6 require the
+      # custom-type to name the term entry.
+      def self.inject_term_entry_type(xml)
+        xml.gsub('<xref ref-type="custom" ',
+                 '<xref ref-type="custom" custom-type="term-entry" ')
       end
 
       # Validate an ISO NISO STS XML string against the flavor constraints
