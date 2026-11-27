@@ -3,8 +3,9 @@
 	<xsl:output method="xml" encoding="UTF-8" indent="no"/>
 
 	<xsl:key name="kfn" match="mn:fn[not(ancestor::*[self::mn:table or self::mn:figure or self::mn:localized-strings] and not(ancestor::mn:fmt-name))]" use="@reference"/>
-
 	<xsl:key name="kid" match="*" use="@id"/>
+	<xsl:key name="ktitle_caption_label" match="mn:fmt-title" use="translate(normalize-space(.//mn:span[@class = 'fmt-caption-label']), ' ()', '')"/>
+	<xsl:key name="kname_caption_label" match="mn:fmt-name" use="translate(normalize-space(.//mn:span[@class = 'fmt-caption-label']), ' ()', '')"/>
 
 	<xsl:key name="attachments" match="mn:fmt-eref[java:endsWith(java:java.lang.String.new(@bibitemid),'.exp')]" use="@bibitemid"/>
 	<xsl:key name="attachments2" match="mn:fmt-eref[contains(@bibitemid,'.exp_')]" use="@bibitemid"/>
@@ -7340,8 +7341,24 @@
 			<xsl:if test="$docnum != '1'">_<xsl:value-of select="$docnum"/></xsl:if>
 		</xsl:variable>
 		<xsl:variable name="named_dest_doc" select="normalize-space($named_dest_doc_)"/>
-		<xsl:if test="not(key('kid', $named_dest_doc))"> <!-- if element with id '$named_dest_doc' doesn't exist in the document -->
-			<xsl:attribute name="named_dest"><xsl:value-of select="normalize-space($named_dest_doc)"/></xsl:attribute>
+		<xsl:variable name="named_dest_unique_">
+			<xsl:choose>
+				<xsl:when test="normalize-space($caption_label) != '' and self::mn:fmt-name and count(key('kname_caption_label', $caption_label)) &gt; 1">
+				<!-- duplicate caption numbers across clauses (e.g. two "Table 1" in front matter): qualify with the owner element id so fo ids stay unique -->
+					<xsl:value-of select="concat(normalize-space($named_dest_doc), '_', ancestor::*[@id][1]/@id)"/>
+				</xsl:when>
+				<xsl:when test="normalize-space($caption_label) != '' and self::mn:fmt-title and count(key('ktitle_caption_label', $caption_label)) &gt; 1">
+					<!-- duplicate clauses's caption numbers: qualify with the owner element id so fo ids stay unique -->
+					<xsl:value-of select="concat(normalize-space($named_dest_doc), '_', ancestor::*[@id][1]/@id)"/>
+				</xsl:when>
+				<xsl:otherwise>
+					<xsl:value-of select="normalize-space($named_dest_doc)"/>
+				</xsl:otherwise>
+			</xsl:choose>
+		</xsl:variable>
+		<xsl:variable name="named_dest_unique" select="normalize-space($named_dest_unique_)"/>
+		<xsl:if test="$named_dest_unique != '' and not(key('kid', $named_dest_unique))"> <!-- if element with id '$named_dest_unique' doesn't exist in the document -->
+			<xsl:attribute name="named_dest"><xsl:value-of select="$named_dest_unique"/></xsl:attribute>
 		</xsl:if>
 	</xsl:if>
 	</xsl:template>
