@@ -48,15 +48,15 @@
       <title>Introduction</title>
       <p id="_2f7863ce-3a5b-5e8e-80a7-6758d08077cc"><xref ref-type="bibr" rid="isotr17755">ISO/TR 17755:2014</xref> has shown that experts involved in fire safety who work on international and national fire statistics databases face three main issues:</p>
       <list list-type="alpha-lower">
-        <list-item>
+        <list-item id="_9ccf5d83-b91f-868f-ccc5-9b71e050dd53">
           <label>a)</label>
           <p id="_e7802d6e-abd8-cf08-b700-39e89ac8af11">a lack of common terminology (many terms have different definitions),</p>
         </list-item>
-        <list-item>
+        <list-item id="_17bb2308-c642-18f9-fcaa-71ada2f7da1c">
           <label>b)</label>
           <p id="_095687de-da42-77c0-6763-96c94da56134">a lack of common methodology,</p>
         </list-item>
-        <list-item>
+        <list-item id="_2bde1d71-c61f-699c-cbd6-442d64a242aa">
           <label>c)</label>
           <p id="_f133c4ad-a788-8e88-f100-39637ffb270d">some weaknesses in the training and qualification of fire investigators.</p>
         </list-item>
@@ -83,10 +83,10 @@
       <p id="_dcc01114-4d03-3550-1347-4ba901bda94c">For the purposes of this document, the following terms and definitions apply.</p>
       <p id="_1df4aedb-297d-0c69-967f-f6a60db009d2">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
       <list list-type="bullet">
-        <list-item>
+        <list-item id="_01c42259-6512-2b50-0a8b-163e53dacc2d">
           <p id="_93880b15-0e52-9141-f887-d290dce89ffd">ISO Online browsing platform: available at <ext-link ext-link-type="uri" xlink:href="https://www.iso.org/obp"></ext-link></p>
         </list-item>
-        <list-item>
+        <list-item id="_67773aa8-9043-8351-657b-25ca152b61c0">
           <p id="_8a7ecb99-412c-1138-ae9d-76c4ac7b7d43">IEC Electropedia: available at <ext-link ext-link-type="uri" xlink:href="https://www.electropedia.org"></ext-link></p>
         </list-item>
       </list>

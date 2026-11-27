@@ -57,10 +57,13 @@ module Metanorma
           ext&.stagename&.abbreviation.to_s
         end
 
+        # isodoc parity: the cover "Date:" is the version revision-date,
+        # else the "updated" date. Published/created dates are not used.
         def cover_published_date
-          published = date.find { |d| d.type == "published" } ||
-                      date.find { |d| d.type == "updated" } ||
-                      date.find { |d| d.type == "created" }
+          revision = version&.revision_date.to_s
+          return revision unless revision.empty?
+
+          published = date.find { |d| d.type == "updated" }
           return nil unless published
 
           raw = published.on || published.text
@@ -77,10 +80,23 @@ module Metanorma
           draft = version&.content.to_s
           return nil if draft.empty?
 
-          info = " (draft #{draft}"
+          info = " (#{draft_label} #{draft}"
           revdate = cover_published_date.to_s
           info += ", #{revdate}" if !revdate.empty? && revdate != draft
           "#{info})"
+        end
+
+        # The "draft" word is the document language's i18n label
+        # (isodoc draft_label: "brouillon" in French), not fixed English.
+        def draft_label
+          langs = Array(language)
+          lang = (langs.find { |l| l.current.to_s == "true" } || langs.first)&.value.to_s
+          lang = "en" if lang.empty?
+          (@draft_labels ||= {})[lang] ||= begin
+            IsoDoc::Iso::I18n.new(lang, "Latn").get["draft_label"] || "draft"
+          rescue LoadError, NameError, Errno::ENOENT
+            "draft"
+          end
         end
 
         def cover_edition_display

@@ -28,7 +28,8 @@ Gem::Specification.new do |spec|
   spec.executables   = %w[metanorma-iso-validate]
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features|bin|.github)/}) \
-    || f.match(%r{Rakefile|bin/rspec})
+    || f.match(%r{Rakefile|bin/rspec}) \
+    || f == "CLAUDE.md"
   end
   spec.required_ruby_version = Gem::Requirement.new(">= 3.3.0")
 

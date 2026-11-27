@@ -44,38 +44,38 @@
       <p id="_10a2ab67-45e2-311e-4012-c8c983c9b978">OASIS Open Document Format ODF 1.0 (<std type="dated"><std-ref type="dated">ISO/IEC 26300:2006</std-ref><std-id std-id-link-type="urn" std-id-type="dated">urn:iso:std:iso-iec:26300:stage-90.93</std-id></std>) and Office Open XML (ISO/IEC 29500) are both open document formats for saving and exchanging word processing documents, spreadsheets and presentations. Both formats are XML based but differ in design and scope.</p>
       <p id="_5fadfd3a-c841-fdaa-0413-fad7913b2f0b">The following abbreviations are used throughout this Technical Report:</p>
       <list list-type="bullet">
-        <list-item>
+        <list-item id="_ef06a396-09b9-db97-bdf4-7e41572b889b">
           <p id="_b1ea2b48-be3c-dd2d-0152-f7883b36becd">ODF, which stands for OpenDocument Format (<std type="dated"><std-ref type="dated">ISO/IEC 26300:2006</std-ref><std-id std-id-link-type="urn" std-id-type="dated">urn:iso:std:iso-iec:26300:stage-90.93</std-id></std>);</p>
         </list-item>
-        <list-item>
+        <list-item id="_97f79392-031c-3a29-43bd-9c9b8dd25870">
           <p id="_7cb40076-e0f6-4298-8414-37cf2e6d1231">OOXML, which stands for Office Open XML (ISO/IEC 29500:2008).</p>
         </list-item>
       </list>
       <p id="_701f98ec-f239-ba6a-90b6-c26e37bfea18">ISO/IEC 29500 is structured into four parts, each of which contains normative as well as informative material: Fundamentals and Markup Language Reference, Open Packaging Conventions, Markup Compatibility and Extensibility, and Transitional Migration Features.</p>
       <p id="_9605687d-c646-a8d1-82d9-97781c28d369">At the time of writing (June 2011) the following corrigenda and amendments have been published:</p>
       <list list-type="bullet">
-        <list-item>
+        <list-item id="_44c911b7-94b9-fc65-3a6a-109c95a185e5">
           <p id="_4cbbc6a3-3550-f236-f22c-33c934e253e7">ISO/IEC 29500-1:2008/Cor.1:2010, ISO/IEC 29500-2:2008/Cor.1:2010, ISO/IEC 29500-3:2008/Cor.1:2010 and ISO/IEC 29500-4:2008/Cor.1:2010, containing minor technical corrections and editorial modifications;</p>
         </list-item>
-        <list-item>
+        <list-item id="_e4cabedb-407d-4b6c-e8b3-67119116283d">
           <p id="_a877d2d6-ee7c-0f77-149d-eef16ee03650">ISO/IEC 29500-1:2008/Amd.1:2010 and ISO/IEC 29500-4:2008/Amd.1:2010, containing namespace changes and modifications concerning the usage of percentage (%) values;</p>
         </list-item>
-        <list-item>
+        <list-item id="_2e43c47f-5202-ae97-0b56-d10debc080b2">
           <p id="_8f09aad9-badd-54a5-1983-6ef4b468a134">ISO/IEC 29500:2011 (ECMA 376 3rd edition) as a consolidated version of OOXML containing the above-mentioned corrigenda and amendments;</p>
         </list-item>
-        <list-item>
+        <list-item id="_a6ebd2da-ef40-7d4a-4fe8-e19fcc386970">
           <p id="_88b93eb6-fdc8-d51a-260a-88f10ecaecc5">ISO/IEC 26300:2006/Cor.1:2010, containing editorial modifications;</p>
         </list-item>
-        <list-item>
+        <list-item id="_b4bc6f11-e249-d5c2-aa67-21995e335d3a">
           <p id="_4f68aad3-505e-cbbe-073d-5cfbc2582554">ISO/IEC 26300:2006/Cor.2:2011, fixing editorial errors.</p>
         </list-item>
       </list>
       <p id="_a893b08f-59cf-f002-3e84-fc1166229f13">In addition, the following Amendments are under preparation:</p>
       <list list-type="bullet">
-        <list-item>
+        <list-item id="_10e9f7e2-ef55-7cdc-b29f-01248367986f">
           <p id="_c48482cb-52f5-8f72-df1c-6df69bee4dfc">Amendment 1 to ISO/IEC 29500-1:2011 and Amendment 1 to ISO/IEC 29500-4:2011 about ISO 8601 dates;</p>
         </list-item>
-        <list-item>
+        <list-item id="_8e76e2a9-b29d-a6ae-311c-6d61a7e7ebe8">
           <p id="_c8666d4e-9007-5001-ea7d-eb94c33509f9">Amendment 1 to ISO/IEC 26300:2006 introducing ODF 1.1.</p>
         </list-item>
       </list>
@@ -156,10 +156,10 @@
       <p id="_dcc01114-4d03-3550-1347-4ba901bda94c">For the purposes of this document, the following terms and definitions apply.</p>
       <p id="_1df4aedb-297d-0c69-967f-f6a60db009d2">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
       <list list-type="bullet">
-        <list-item>
+        <list-item id="_01c42259-6512-2b50-0a8b-163e53dacc2d">
           <p id="_93880b15-0e52-9141-f887-d290dce89ffd">ISO Online browsing platform: available at <ext-link ext-link-type="uri" xlink:href="https://www.iso.org/obp"></ext-link></p>
         </list-item>
-        <list-item>
+        <list-item id="_67773aa8-9043-8351-657b-25ca152b61c0">
           <p id="_8a7ecb99-412c-1138-ae9d-76c4ac7b7d43">IEC Electropedia: available at <ext-link ext-link-type="uri" xlink:href="https://www.electropedia.org"></ext-link></p>
         </list-item>
       </list>

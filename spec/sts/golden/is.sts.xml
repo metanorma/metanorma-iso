@@ -44,10 +44,10 @@
       <p id="_8229bce3-fe75-ce75-1abc-fc425f8237f0">The main changes compared to the previous edition are:</p>
       <p id="_faa2c804-54e3-a95b-a31c-70787832cbef">A list of all parts in the ISO 17301 series can be found on the ISO website.</p>
       <list list-type="bullet">
-        <list-item>
+        <list-item id="_19947be4-be70-9a95-0ac1-02fbd7745134">
           <p id="_67e3e514-6a83-258f-9bc7-8737259caa15">updated normative references;</p>
         </list-item>
-        <list-item>
+        <list-item id="_66e508d5-fd9f-5916-4a82-1fc704b8d960">
           <p id="_5e94da1e-2ae0-0930-36a0-53cc5c801fd3">deletion of 4.3.</p>
         </list-item>
       </list>
@@ -140,10 +140,10 @@
       <p id="_dcc01114-4d03-3550-1347-4ba901bda94c">For the purposes of this document, the following terms and definitions apply.</p>
       <p id="_1df4aedb-297d-0c69-967f-f6a60db009d2">ISO and IEC maintain terminology databases for use in standardization at the following addresses:</p>
       <list list-type="bullet">
-        <list-item>
+        <list-item id="_01c42259-6512-2b50-0a8b-163e53dacc2d">
           <p id="_93880b15-0e52-9141-f887-d290dce89ffd">ISO Online browsing platform: available at <ext-link ext-link-type="uri" xlink:href="https://www.iso.org/obp"></ext-link></p>
         </list-item>
-        <list-item>
+        <list-item id="_67773aa8-9043-8351-657b-25ca152b61c0">
           <p id="_8a7ecb99-412c-1138-ae9d-76c4ac7b7d43">IEC Electropedia: available at <ext-link ext-link-type="uri" xlink:href="https://www.electropedia.org"></ext-link></p>
         </list-item>
       </list>
@@ -641,35 +641,35 @@ values for <inline-formula><mml:math><mml:mstyle displaystyle="false"><mml:mi>R<
       <title>Test report</title>
       <p id="_4769478e-e607-a5a9-e382-8bed770bb5ec">For each test method, the test report shall specify the following:</p>
       <list list-type="alpha-lower">
-        <list-item>
+        <list-item id="_f1b44050-3999-bff4-deb5-f827e36a12f1">
           <label>a)</label>
           <p id="_c6fea1a8-9ffd-6847-c478-af58d8b4203f">all information necessary for the complete identification of the sample;</p>
         </list-item>
-        <list-item>
+        <list-item id="_fc6cacf6-7c89-2ae3-6727-25f0fc05a630">
           <label>b)</label>
           <p id="_380f8a13-ccbe-b928-e8eb-3a9be412fe12">a reference to this document (i.e. ISO 17301-1);</p>
         </list-item>
-        <list-item>
+        <list-item id="_0c89970b-1c9c-0317-c461-e2968169adf6">
           <label>c)</label>
           <p id="_7c5b8b23-4a40-85fc-5b0d-4b5358b84608">the sampling method used;</p>
         </list-item>
-        <list-item>
+        <list-item id="_b19d05dc-8034-c75e-5792-71417a0e1c0f">
           <label>d)</label>
           <p id="_37ae48eb-68bc-16a6-acc6-ead30ea4c801">the test method used;</p>
         </list-item>
-        <list-item>
+        <list-item id="_ed21b3c8-1906-487d-3143-10062c10e618">
           <label>e)</label>
           <p id="_52eb5767-23dd-56dc-189a-a7f7b77fdf3b">the test result(s) obtained or, if the repeatability has been checked, the final quoted result obtained;</p>
         </list-item>
-        <list-item>
+        <list-item id="_2398e21f-7755-6e51-3fe2-1c4f3e0ddbd3">
           <label>f)</label>
           <p id="_278c159f-e1d3-f358-c677-4b0c38b978e1">all operating details not specified in this document, or regarded as optional, together with details of any incidents which may have influenced the test result(s);</p>
         </list-item>
-        <list-item>
+        <list-item id="_0ed1e56c-5139-e847-7ef2-88f66c0b2e40">
           <label>g)</label>
           <p id="_d173bc21-c02a-bff9-2689-9b948e4d212d">any unusual features (anomalies) observed during the test;</p>
         </list-item>
-        <list-item>
+        <list-item id="_bb8fc32f-79a7-f88e-aa16-04e0f0ecfe28">
           <label>h)</label>
           <p id="_b4d0d862-48f8-6cbc-b4d9-bdd568844524">the date of the test.</p>
         </list-item>
