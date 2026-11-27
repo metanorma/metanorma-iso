@@ -83,6 +83,33 @@ RSpec.describe IsoDoc do
       .to eq(2)
   end
 
+  # <processing-meta> is required per the IEC/ISO Coding Guidelines ed. 2.1
+  # 4.3.2 for every NISO STS document. The IEC and ISO +:sts+ leg runs
+  # through this converter, not the native driver, so the declaration
+  # must be written here as well.
+  it "declares the coding profile in processing-meta (guidelines 4.3.2)" do
+    converter.convert("/tmp/fake.adoc", "<adoc/>", false, out_path)
+    expect(processing_meta_profile).to eq(expected_coding_profile)
+  end
+
+  def expected_coding_profile
+    { "tagset-family" => "sts", "base-tagset" => "interchange",
+      "table-model" => "xhtml", "mathml-version" => "3.0",
+      "math-representation" => "mathml", "terminology-model" => "tbx",
+      "edition" => "2.1" }
+  end
+
+  def processing_meta_profile
+    meta = sanitized_document.at_xpath("/standard/processing-meta")
+    return nil unless meta
+
+    edition = meta.at_xpath(
+      "custom-meta-group/custom-meta" \
+      "[meta-name='iec_iso_coding_guidelines_edition']/meta-value",
+    )&.text
+    meta.attributes.transform_values(&:value).merge("edition" => edition)
+  end
+
   it "re-raises when mnconvert produced no usable artifact" do
     stub_crash_before_writing
     expect do
