@@ -56,6 +56,7 @@ module Metanorma
               Metanorma::Iso::Sts.inject_namespaces(xml)
                 .then { |x| Metanorma::Iso::Sts.inject_processing_meta(x) }
                 .then { |x| Metanorma::Iso::Sts.fix_lang_attribute(x) }
+                .then { |x| Metanorma::Iso::Sts.inject_term_entry_type(x) }
             end,
           },
         }
