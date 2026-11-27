@@ -16,7 +16,7 @@ module Metanorma
       # findings are traceable to the guidelines section that mandates
       # them. Warning-level rules live in the catalog only and are not
       # encoded here.
-      class Validator
+      class Validator < Metanorma::Document::Sts::Validator
         # Prefixes used in the rule selectors, bound to the namespace URIs the
         # schematron declares, so documents are matched by URI whatever
         # prefixes they choose.

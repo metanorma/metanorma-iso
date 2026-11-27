@@ -22,7 +22,7 @@ module Metanorma
         #
         # Nested requirements (tests inside conformance classes) render
         # after the parent's table, as their own table-wraps.
-        class RequirementTransformer < Base
+        class RequirementTransformer < Metanorma::Document::Sts::Transformer::RequirementTransformer
           # Component attribute → row label, mirroring the HTML renderer.
           REQ_COMPONENTS = {
             description: "Description",

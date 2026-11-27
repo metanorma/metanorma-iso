@@ -6,7 +6,7 @@ module Metanorma
       module Transformer
         # Collects footnotes during conversion so they can be flushed to the
         # right location in the STS output.
-        class FootnoteCollector
+        class FootnoteCollector < Metanorma::Document::Sts::Transformer::FootnoteCollector
           def initialize
             @seen = {}
             @counter = 0
