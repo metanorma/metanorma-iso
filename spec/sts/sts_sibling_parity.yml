@@ -32,7 +32,7 @@ files:
     oiml: bb93fe179b014bfa87d29f5a186136a8d966e6bcccce8b21bff7ff4082cff2f0
     iso: bb93fe179b014bfa87d29f5a186136a8d966e6bcccce8b21bff7ff4082cff2f0
   html_renderer/ruby.rb:
-    oiml: 187d6f7151dc14df12402b2f84bdbf544877eaed2fe1b1aa66361d8f54697ad2
+    oiml: 82aff6d6f80144a9fb23b8577d0d44852f51e9d77039b87fd52ed32d5bca4280
     iso: 13bc84f22919e788b3010b0fa7f42a2d01c55947386ec143377471d547089222
   html_renderer/templates/_element.html.liquid:
     oiml: ce2508dd8dd74f9084a9c0917577722a509041a0029ea0045218d269849e718b
@@ -71,119 +71,119 @@ files:
     oiml:
     iso: 38906094666303a9b1a7159a88588945e2203b96f14729f579756395a9e6b193
   parity_validator.rb:
-    oiml: d4918533fe9923b9deca419fa0bfbb52f862cb28d09679bb3ded29834f7efa98
+    oiml: 2cc3413c9b4a434300c855aac25532e91026ba645795f41813ac908c2697a0ca
     iso: 2cc3413c9b4a434300c855aac25532e91026ba645795f41813ac908c2697a0ca
   parity_validator/normaliser.rb:
-    oiml: 46aec8dad8245a6d3f367419d86be7b66b3da45ee6c02d6d70c9b8d84530d463
+    oiml: 2eea8be2ba9b2b20d7a819808af4d96dd06f2dfd466e960b543d441e19952d5e
     iso: 46aec8dad8245a6d3f367419d86be7b66b3da45ee6c02d6d70c9b8d84530d463
   parity_validator/report.rb:
-    oiml: 9478fa50c38635d41c46b56ba2aa0f3a4f25a9bec312d6fc77df5e7f86ae7275
+    oiml: e1af34749492ea48fb304f99c33abd1246ebc7d2a29c6820ddd5694f80974357
     iso: 9478fa50c38635d41c46b56ba2aa0f3a4f25a9bec312d6fc77df5e7f86ae7275
   profile.rb:
-    oiml: 6968e55152e771402a3e4318e53e679f87889366b39f42b7602421e1c3a534e8
+    oiml:
     iso: 1d501b467b044345acadbeef56346a552064f1ee977dd8931e32bd5a1642f3a5
   transformer.rb:
-    oiml: d559a875c902ff43cd2573fa54c52ac029fcac456f3afebee8a0ceb8b21bf330
+    oiml: abdd2051ee0afda47dce0de362957dc2072b183a443409867736b7168226ca8d
     iso: 938fa77419a8bab4ed21e0bde4d5933fd9abd3d08aca7f5ccce2d47d5d0ba768
   transformer/back_transformer.rb:
-    oiml: c911b111858f0a8a3851b30b3d5e664a9d51aece2fa4f5a41d3d8acf27548667
+    oiml: 52621c24d5377084a0ed94efb0f6d220ab5d6e65dd4cca913cf3325ca5782fce
     iso: 4e1fee9bca36305bd1709f0c0b20feb3a382263e3aa2ed6ce8d207bc87194971
   transformer/base.rb:
-    oiml: f84db6cf1adc51f64e64926a78beb900b1a9c66fda6a1b9279d370bc91ca8211
+    oiml: 378d4d75df3f24713dfaad2cb632ee06bde021af2e30ce907e3a19d9b1c7de9e
     iso: e82e9a7309c15e3ee255a621be5f8b9d33f3c65beadcf1cdccbacdaf7ef011e5
   transformer/block_dispatcher.rb:
-    oiml: 561446723d6445d5a52c51be0e39e835dd5749077eef0cf6fe6e467077245288
+    oiml: 30a9565a3290be2d510e3a01c560634d3dcac5ce1734c38bd9c8417163a021c4
     iso: 7c8f0b62756333b1c219c91036ded1f1d9bbcf6f7b133013d72bbfa5caa485a1
   transformer/body_transformer.rb:
-    oiml: 7dc5fbcdc8bc787141c1e2cc8cc8694863daa7f04cf97a45a88550c40374d2f5
+    oiml: b17ee74e60a6e318822c2ec08687fb0ff413947fce0d503844a89c36bec28bd2
     iso: 817b13817054d37c37e9d67576b2e63276b3d89de37de510e478e4af953a30e4
   transformer/content_text.rb:
     oiml:
     iso: 6ac15405ecf871283acfbda4cfcb7b03646e5de9e7cf33b52dfe005bf3ce1adb
   transformer/context.rb:
-    oiml: 892f8318eddf4b571abc26b3149edb8276777e385044b0dea38fa2830b2c32c4
+    oiml: bddf387d371398e7d77dcda29b83f78b79b8d96660ce83d8c68657c00b5e00f4
     iso: 4e6296b7eae37a83a7910c915ac904da7551789c9e099ecf9e8d2fccb4963963
   transformer/dl_transformer.rb:
-    oiml: d11a5f36c39a3b7892dca8fc9e0be43c08746ab94a3594503029f26dc8d139f8
+    oiml: 112e6ca9a062d2b9364832998a2649532f65e8566e86ee570b33e399bef0b344
     iso: f755bccd7d0a929a40689ef54bd7f423fb875577a06a409bc7b4950c07c5137b
   transformer/document_transformer.rb:
-    oiml: d850bf90547d778aea2cc6080fe998248182c8abcb02d6103a0bc7149d2d1e77
+    oiml: 23c3fae823128f3357f3f78a09fe5c73b7b8e6fbf839d313636027c8848dd09c
     iso: dce91fae0426d01522e182e4e84c77325d8aa497ccd9220e676a10130a8cb948
   transformer/figure_transformer.rb:
-    oiml: 4eae03f7b3aeddbfe5889e2658488e6ce6211dc24a7ec16126d3447464907936
+    oiml: 16a3d57d23c979d617a566f9ff79d25ba5fd1d378b802fb139f9edafe600af18
     iso: e00bffc12db0ed9c927c0eff441d09bf4fd468599bea42e5c2b48b1d058389b8
   transformer/footnote_collector.rb:
-    oiml: 4566055abfaaf28eb7352d6e7fb48783d1a9fa96ab3d08fcafe6675ca60b6f19
+    oiml: 17dff3433d2e5954a9b4d5cbee4fc5c844a26bf8c2b8a91c90353c5765515eb7
     iso: a0d45c0f66e86d6034e9f09bffcb91c3fdb2dede178861adc978d0a47dca66f4
   transformer/formula_transformer.rb:
-    oiml: ea4f663487b0b8e58ab821e5ba55276f485c396a8b8f76d4d29fea846d8d1436
+    oiml: 61873fd2b3bee4e6ffd9500910e81afdb74ee3f5a48ca8e5b5e73a02c21aecf2
     iso: 645ce53b0f96c7e661c85fb5cec34e9a4f8308c86370ee1925c7514566bc46b5
   transformer/front_transformer.rb:
-    oiml: 406d7e61c4d9ba31def269765a8214e6e01afa5c2f6a4c249cb2a219e506a1e6
+    oiml: 6166cb1bbef43a98e258f135b07f6d0e6c0960f5ce399ed02e17ff621df8ea4d
     iso: e419ddfcec7a9cb6b61b9c56bf527e2d3b3c1a432ff6f7d983a2ce150cdda0ab
   transformer/id_generator.rb:
-    oiml: e6a254295c2abc5c925d8b1eaed518e6c3e01c98a4d21e9535014c1ca3a55641
+    oiml: 30d4d571fb3de3e87ae5cafd0be31484a5b7001d3289ad6fa0c507717735d2f8
     iso: c7cd9e395b291923074c8cac2ab0483169ff9f619303463e83a169211e76ee62
   transformer/inline_transformer.rb:
-    oiml: f0ea6c24e217f1f4167cd71ade5adb0a654abed80482e44fe7cb360800ccce2d
+    oiml: a15a1a5966f0190878f79bd16aa8b4729af8c93630f1d10df112d1bfdb299dd7
     iso: 42ac2c6e103dfedfc449c5b7d03d4bddff69f2a1c4fc33c4b910d3567d99ad26
   transformer/iso_meta_transformer.rb:
     oiml:
     iso: 549eb73c452884e95c6906e69734242f0252cdc430af580d1bfca3f1cbdeeaca
   transformer/list_transformer.rb:
-    oiml: 2b31f2b9b80e4e6f9e27e8d214548d76e68699bf0e3c143072a8379fcf495bb9
+    oiml: 8e225fbae7aaac33a59e1f040dc40569bb1e5ba58ec17cc1a498c46583e7227e
     iso: '0893ac4c62f8f1175302b03891f74b6e8299e82e055916b3b735a04ae5b2734e'
   transformer/model_builder.rb:
-    oiml: b56111554b7c6a96a6d054f876f8cd57031b2d9bafe57394c3181844de276436
+    oiml: cc19046f041afbadabcddef1e99e1c8f4002d2c11564f27a0860e93b2303fc0e
     iso: 8cf9ff4a443d5e1a57d3a953bef982883a4a92e4831e206f81bd2388032b5247
   transformer/nbsp_processor.rb:
-    oiml:
+    oiml: ee0b00a078be0d5f8bf16caa949024a12b1a4e93d2eeeebcd711268314f6c36a
     iso: 16ba873c890fc12e5a5e7d097bf2b3b58a1300afee503d9ccc25af9b3597406b
   transformer/note_transformer.rb:
-    oiml: 207d0d676db4d1884f60e46fe0f886cb8817c5b5b620feb8c7986e23e3fe76ac
+    oiml: 82a9828859530a07858752d7c0c25bf6513715e05a391c14df9e62c00337585f
     iso: b2d07699de1642e868d7dd1ab3b542a259aca400a2cd49fc5b63e98242c488cb
   transformer/paragraph_transformer.rb:
-    oiml: 0b68929d89c5ce8c6c18e76b98470a8224f5c0b474d5193d7c5d8d92a98f16cb
+    oiml: d2a86fa8f23bf91b3b453939c666603c4b0a7250447de98a2bed6ce05bdee261
     iso: e06fe34c4cc5e63da5f5fdbd15b7e7256460fe2e0fb24dbdaa4eb54407cdd981
   transformer/provision_index.rb:
-    oiml:
+    oiml: a27e91af462bbc1e3d07f8ce0d3a50f1545d47e7b31ad786af920daea964f043
     iso: 7bee866ce428b1c47222b364d308ac8486c41dcb8ccd66079faba90c1b0a9036
   transformer/quote_transformer.rb:
-    oiml:
+    oiml: da2bb2c720baa0cd0d43a2a14074d6cecf29bfc4fa5cd518cfec5336365273f9
     iso: e1986880b648912b5a200e376aedff32073f6944ff7e6070d0fb0c40b9342112
   transformer/reference_transformer.rb:
-    oiml: '038b9ce4081ab9cae6630e40112500d4cc48b47b494905f55cfd3babff68712f'
+    oiml: 289c1e1dfdf08cbde0c2919c7921d412db4e35a867721e00cfa6dbeadc84591e
     iso: d8b1201bb13e225085184f4eb6a7903f11a4eef66121db2e5ddbb4e7137d5872
   transformer/rendered_text_extractor.rb:
-    oiml: 1e1cf4f2b8fc2b5afc411e8fe26757573853c3a079be182be6eac48b875bc187
+    oiml: 49266e2cdd1b480a1db9d95cb382aceccc09a49b69e35b40052c8edf717cffc5
     iso: 5d12de400eb69a3a6a96c32018e8ef970c6d205ef5d394654569c103a40fb2ad
   transformer/requirement_transformer.rb:
-    oiml:
+    oiml: 8ffc5e3fc2c7895b902dca4814b40451115d27967cdb58e5d072a67743660c63
     iso: 7d05b7a7354d57ecb0ac7319ba9a7dee0875ee0b201925971634d94f02bfa0ea
   transformer/section_transformer.rb:
-    oiml: e61ee0ddcfdc4e67fe6b08747be8cc8c93d677eb30507ad4abef786547ec40ef
+    oiml: d7e6ccfd218dee7d084eb781995a2e689b31e35f474817d1defb02b8c8cba418
     iso: 2034aab54a74b9480d0629c79262098c727444ffcc3fc9c30df64d9730e03f76
   transformer/source_document.rb:
-    oiml: 3c0b8b92ac1cdc2c108d1b7afe6a5504c92598c8b13af0cef64a51a81888554c
+    oiml: f7c89f0c9ca2911f70fc444a03285ecf537fa7b96cad697cef632499a40f890a
     iso: 5f2bfc8152f5b9747c8f4ee252dd334722b0d002f6ce551de940fb361fcaad21
   transformer/source_order.rb:
-    oiml:
+    oiml: 95b76c6d99e05f327002906758a1889361ff960cee042088a247ba7cbf276708
     iso: 95b76c6d99e05f327002906758a1889361ff960cee042088a247ba7cbf276708
   transformer/standard.rb:
-    oiml: c834234da3a5626255c763970e15b3d68bcf657e0b12d795fc40ba180407787b
+    oiml: d60d8dda34a4e126207a64579672a93ac1f33bcbb527aefaaf2671ce36cfc9f4
     iso: 4b2fe34fed0698a680bc5c667ef575cb76ea7d5529c48d311ca68cbfc368f2f1
   transformer/table_transformer.rb:
-    oiml: 3d701643db560356db1dc5f324a4a96c8e2c1195bc79107c097239a21cd2e9bb
+    oiml: 9d8fe2bd704ce6ad93fcb41e9e85f397b5752c57d9b1a6368ffd355c4857adf6
     iso: e67461d4b187d79652893f0191e3bd9a3355aec6155a9dd58a71406a4f95d347
   transformer/term_transformer.rb:
-    oiml: e49b7117ad950360a366ff58d2752e025ab3f50938c04cc0a813efa46bc9d3bc
+    oiml: aa7a9516b7141493d0891ccb72f114ff8cb05c7898bfd1c5f1037cbe95141aeb
     iso: 0bdbb22653eb4eb85c60ace4cd768b8b713eba08f6bb6f92dd89638a67719c9a
   validation_report.rb:
-    oiml: 4a924b2301509ef55f3b663f362373d9b4abcab356265b2c285ab1a42b1e0397
+    oiml: 75da0f0a1100cba5021f85dd4dff32400f4e42c55d884ee99c379ebd203479fa
     iso: 4a924b2301509ef55f3b663f362373d9b4abcab356265b2c285ab1a42b1e0397
   validator.rb:
-    oiml: 1631ccc7fb2344050a6ec3fa18e1d10e205cbf54a45c032842946bae1b0de41e
+    oiml: 9667100c6e01019497a57a4c1b6ea4a22b425bd5c530cfd8f55bfe32df6ab43c
     iso: da0209af0136d93591d4d6b6056c28735e5bd11542e254800d23f596cf1fafca
   version.rb:
-    oiml: 4d739a75b2b444962567746b33f29c42704252cde0ce2689f0ce6bfcca2c7a5a
+    oiml: 65f124b4897ff968b81fe1104bd479cb3629a2d17a24981f0e027630fb33bb18
     iso:
