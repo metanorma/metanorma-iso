@@ -583,8 +583,8 @@ Reference <xref ref-type="bibr" rid="ref10">[15]</xref> and Reference <xref ref-
         <sec id="_4df15db5-f815-3fd8-6922-2a930087c60c">
           <label>6.5.1</label>
           <title>Determination</title>
-          <non-normative-note>
-            <label>CAUTION</label>
+          <non-normative-note content-type="warning">
+            <label>WARNING</label>
             <p id="_8d79b732-f261-f21c-77cd-8eb78889b594">Only use paddy or parboiled rice for the determination of husked rice yield.</p>
           </non-normative-note>
           <p id="_20dd0870-2ac3-cf23-fca7-96786831041b">Determine the husked rice yield in accordance with <std type="undated"><std-ref type="undated">ISO 6646</std-ref><std-id std-id-link-type="urn" std-id-type="undated">urn:iso:std:iso:6646:stage-90.93</std-id></std>.</p>
