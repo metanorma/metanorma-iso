@@ -115,6 +115,20 @@ module Metanorma
           end
         end
 
+        # Guidelines 7.1 and B.2.15: a numbered formula carries its number in
+        # <label> and its ID matches that label (for-1, formula_1). IEC 7.1
+        # (ed 2.1): "Generally, <disp-formula> is used for unnumbered block
+        # formulae", with IDs for-informal-X-Y; those carry no <label>.
+        def numbered_formula_label_check
+          lambda do |node, *_|
+            numbered = node["id"].to_s.match?(/\A(?:for-|formula)[A-Z]?[-_]?\d/)
+            return nil if !numbered || at(node, "./label")
+
+            "the formula number in <label> is required for a numbered " \
+              "formula (id '#{node['id']}')"
+          end
+        end
+
         def absence_check(selector, what)
           lambda do |node, *_|
             node.xpath(selector, NS).map do |bad|
@@ -803,7 +817,7 @@ module Metanorma
                      "<mml:math>; got #{c}"
                  end)
           r.call("iso-gdg-7.1-2", "Guidelines 7.1", "disp-formula",
-                 presence_check("./label", "the formula number in <label>"))
+                 numbered_formula_label_check)
           r.call("iso-gdg-7.3-1", "Guidelines 7.3", "disp-formula",
                  lambda do |node, *_|
                    c = node.xpath("./legend").size

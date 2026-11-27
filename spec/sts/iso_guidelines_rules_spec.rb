@@ -364,8 +364,18 @@ RSpec.describe Metanorma::Iso::Sts::Validator do
     [inline.call("<label>(1)</label>"), inline.call("")]
   end
   rule("iso-gdg-7.1-2") do
-    [sec("<disp-formula>#{mml}</disp-formula>"), sec(disp_formula(mml))]
+    [sec(%(<disp-formula id="formula_1">#{mml}</disp-formula>)), sec(disp_formula(mml))]
   end
+  # IEC Guidelines 7.1 (ed 2.1, the unnumbered-formula annotation): "Generally,
+  # <disp-formula> is used for unnumbered block formulae" and their IDs take the
+  # form for-informal-X-Y. A block formula without a <label> is unnumbered.
+
+  it "leaves an unnumbered block formula without a <label> alone (Guidelines 7.1)" do
+    unnumbered = [sec(%(<disp-formula id="for-informal-5.1.3-1">#{mml}</disp-formula>)),
+                  sec("<disp-formula>#{mml}</disp-formula>")]
+    expect(unnumbered.flat_map { |xml| ids_for(xml) }).not_to include("iso-gdg-7.1-2")
+  end
+
   rule("iso-gdg-7.2-1") do
     [sec(disp_formula(note + mml)), sec(disp_formula(mml + note))]
   end

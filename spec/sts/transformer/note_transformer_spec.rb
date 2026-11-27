@@ -35,8 +35,14 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::NoteTransformer do
       expect(doc.at_xpath("//p[@id='ap1']").text).to eq("Careful")
     end
 
-    it "labels the note by the admonition type" do
-      expect(doc.at_xpath("//label").text).to eq("CAUTION")
+    # Guidelines 5.6 allow only NOTE, EXAMPLE and WARNING designations; a
+    # caution is coded as a warning (content-type "warning", label WARNING).
+    it "codes a caution as a warning designation (Guidelines 5.6)" do
+      expect(doc.at_xpath("//label").text).to eq("WARNING")
+    end
+
+    it "marks a caution coded as a warning with content-type warning" do
+      expect(doc.root["content-type"]).to eq("warning")
     end
 
     it "keeps trailing title digits out of the label" do
