@@ -86,17 +86,6 @@ RSpec.describe Metanorma::Iso::Sts::Transformer::InlineTransformer do
       expect(xml).to include("NOTE-BODY")
       expect(xml).to include("after.")
     end
-      transformer, para = paragraph_in(%(Before<fn reference="1"><p id="fnp">NOTE-BODY</p></fn> after.))
-      xml = transformer.apply_inline_content(para, Sts::TbxIsoTml::Definition.new).to_xml
-
-      expect(xml).not_to include("<fn")
-      expect(xml).to include("Before")
-      expect(xml).to include("NOTE-BODY")
-<<<<<<< HEAD
-=======
-      expect(xml).to include("after.")
->>>>>>> origin/integration/mn-1.19
-    end
   end
 
   describe "#transform" do
