@@ -15994,8 +15994,30 @@
 		<xsl:choose>
 			<xsl:when test=".//*[local-name() = 'a'][*[local-name() = 'rect'] or *[local-name() = 'polygon'] or *[local-name() = 'circle'] or *[local-name() = 'ellipse']]">
 				<fo:block>
-					<xsl:variable name="width" select="@width"/>
-					<xsl:variable name="height" select="@height"/>
+					<!-- fallback for a size that is not a positive finite px number (missing, %, em, NaN, negative, huge):
+					     the svg_update default, i.e. the viewBox dimension, else 400 -->
+					<xsl:variable name="vb" select="normalize-space(@viewBox)"/>
+					<xsl:variable name="vb_width" select="number(substring-before(concat(substring-after(substring-after($vb, ' '), ' '), ' '), ' '))"/>
+					<xsl:variable name="vb_height" select="number(substring-before(concat(substring-after(substring-after(substring-after($vb, ' '), ' '), ' '), ' '), ' '))"/>
+
+					<!-- strip a case-insensitive px suffix, trim NBSP, accept only a positive finite number -->
+					<xsl:variable name="width_num" select="number(normalize-space(java:replaceAll(java:java.lang.String.new(normalize-space(translate(@width, ' ', ' '))), '(?i)px$', '')))"/>
+					<xsl:variable name="height_num" select="number(normalize-space(java:replaceAll(java:java.lang.String.new(normalize-space(translate(@height, ' ', ' '))), '(?i)px$', '')))"/>
+
+					<xsl:variable name="width">
+						<xsl:choose>
+							<xsl:when test="$width_num &gt; 0 and $width_num - $width_num = 0"><xsl:value-of select="$width_num"/></xsl:when>
+							<xsl:when test="$vb_width &gt; 0 and $vb_width - $vb_width = 0"><xsl:value-of select="round($vb_width)"/></xsl:when>
+							<xsl:otherwise>400</xsl:otherwise>
+						</xsl:choose>
+					</xsl:variable>
+					<xsl:variable name="height">
+						<xsl:choose>
+							<xsl:when test="$height_num &gt; 0 and $height_num - $height_num = 0"><xsl:value-of select="$height_num"/></xsl:when>
+							<xsl:when test="$vb_height &gt; 0 and $vb_height - $vb_height = 0"><xsl:value-of select="round($vb_height)"/></xsl:when>
+							<xsl:otherwise>400</xsl:otherwise>
+						</xsl:choose>
+					</xsl:variable>
 
 					<xsl:variable name="scale_x">
 						<xsl:choose>
@@ -16243,13 +16265,26 @@
 		</xsl:copy>
 	</xsl:template>
 
+	<!-- embedded svg length: keep a valid unitless or lowercase px value as written; write a positive finite
+	     px value without its unit (no NBSP/case/space residue); otherwise the svg_update default 400 (Batik rejects raw px/%/NBSP/negative) -->
+	<xsl:template name="svg_length">
+		<xsl:variable name="raw" select="normalize-space(translate(., ' ', ' '))"/>
+		<xsl:variable name="num" select="number(normalize-space(java:replaceAll(java:java.lang.String.new($raw), '(?i)px$', '')))"/>
+		<xsl:choose>
+			<xsl:when test="number($raw) &gt; 0 and number($raw) - number($raw) = 0"><xsl:value-of select="$raw"/></xsl:when>
+			<xsl:when test="$num &gt; 0 and $num - $num = 0 and substring($raw, string-length($raw) - 1) = 'px'"><xsl:value-of select="$raw"/></xsl:when>
+			<xsl:when test="$num &gt; 0 and $num - $num = 0"><xsl:value-of select="$num"/></xsl:when>
+			<xsl:otherwise>400</xsl:otherwise>
+		</xsl:choose>
+	</xsl:template>
+
 	<xsl:template match="*[local-name() = 'svg']/@width" mode="svg_update">
 		<!-- image[@width]/svg -->
 		<xsl:variable name="parent_image_width" select="normalize-space(ancestor::*[2][self::mn:image]/@width)"/>
 		<xsl:attribute name="width">
 			<xsl:choose>
 				<xsl:when test="$parent_image_width != '' and normalize-space(java:matches(java:java.lang.String.new($parent_image_width), $regex_starts_with_digit)) = 'true'"><xsl:value-of select="$parent_image_width"/></xsl:when>
-				<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+				<xsl:otherwise><xsl:call-template name="svg_length"/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:attribute>
 	</xsl:template>
@@ -16260,7 +16295,7 @@
 		<xsl:attribute name="height">
 			<xsl:choose>
 				<xsl:when test="$parent_image_height != '' and normalize-space(java:matches(java:java.lang.String.new($parent_image_height), $regex_starts_with_digit)) = 'true'"><xsl:value-of select="$parent_image_height"/></xsl:when>
-				<xsl:otherwise><xsl:value-of select="."/></xsl:otherwise>
+				<xsl:otherwise><xsl:call-template name="svg_length"/></xsl:otherwise>
 			</xsl:choose>
 		</xsl:attribute>
 	</xsl:template>
