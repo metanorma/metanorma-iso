@@ -604,8 +604,22 @@ module Metanorma
             # through unchanged.
             rid = id_generator.remap(rid)
 
+            if (entry_id = id_generator.term_entry_id_for(rid))
+              return term_entry_xref(node, entry_id)
+            end
+
             visible = xref_visible_text(node, rid)
             ModelBuilder.xref(rid: rid, ref_type: ref_type_for(node, rid), value: visible)
+          end
+
+          # A reference to a term: ref-type "custom" aimed at the termEntry.
+          # The custom-type="term-entry" attribute is added in
+          # Metanorma::Iso::Sts.inject_term_entry_type, as the xref model
+          # carries no custom-type.
+          def term_entry_xref(node, entry_id)
+            explicit = text_of(node)
+            visible = explicit.empty? ? entry_id.delete_prefix("term_") : explicit
+            ModelBuilder.xref(rid: entry_id, ref_type: "custom", value: visible)
           end
 
           def xref_visible_text(node, rid)

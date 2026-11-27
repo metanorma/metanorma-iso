@@ -30,6 +30,7 @@ module Metanorma
             @kinds = {}
             @normative_refs = {}
             @entry_ids = {}
+            @term_entry_by_sec = {}
             @issued_ids = {}
             @annex_count = 0
             @figure_count = 0
@@ -58,6 +59,13 @@ module Metanorma
 
           def normative_ref_for(source_id)
             @normative_refs[source_id]
+          end
+
+          # The <tbx:termEntry> id of a term whose <term-sec> carries +sec_id+;
+          # nil when +sec_id+ is not a term section. A reference to a term
+          # names the entry (guidelines 9.2.6), not the section.
+          def term_entry_id_for(sec_id)
+            @term_entry_by_sec[sec_id]
           end
 
           # Records the kind of a block that keeps its source id
@@ -135,6 +143,7 @@ module Metanorma
             entry_id = claim("term_#{suffix}")
             register(term.id, sec_id, "clause") if term.id
             @entry_ids[term.id] = entry_id if term.id
+            @term_entry_by_sec[sec_id] = entry_id
             [sec_id, entry_id]
           end
 

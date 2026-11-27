@@ -122,7 +122,7 @@ files:
     iso: e419ddfcec7a9cb6b61b9c56bf527e2d3b3c1a432ff6f7d983a2ce150cdda0ab
     oiml: 406d7e61c4d9ba31def269765a8214e6e01afa5c2f6a4c249cb2a219e506a1e6
   transformer/id_generator.rb:
-    iso: c7cd9e395b291923074c8cac2ab0483169ff9f619303463e83a169211e76ee62
+    iso: f3c99eb721f7456e7ed3d28946170ccce1d585994450d008294481e0c9034c66
     oiml: e6a254295c2abc5c925d8b1eaed518e6c3e01c98a4d21e9535014c1ca3a55641
   transformer/inline_transformer.rb:
     iso: 42ac2c6e103dfedfc449c5b7d03d4bddff69f2a1c4fc33c4b910d3567d99ad26
@@ -143,7 +143,7 @@ files:
     iso: b2d07699de1642e868d7dd1ab3b542a259aca400a2cd49fc5b63e98242c488cb
     oiml: 207d0d676db4d1884f60e46fe0f886cb8817c5b5b620feb8c7986e23e3fe76ac
   transformer/paragraph_transformer.rb:
-    iso: e06fe34c4cc5e63da5f5fdbd15b7e7256460fe2e0fb24dbdaa4eb54407cdd981
+    iso: 58ab70d36a589138b5f090f83286ae3c1d56c8a5e43627a7f570dd597b2c72ef
     oiml: 0b68929d89c5ce8c6c18e76b98470a8224f5c0b474d5193d7c5d8d92a98f16cb
   transformer/provision_index.rb:
     iso: 7bee866ce428b1c47222b364d308ac8486c41dcb8ccd66079faba90c1b0a9036
