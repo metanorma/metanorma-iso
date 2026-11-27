@@ -1,10 +1,12 @@
 // Run with node html_theme_parity.mjs INPUT.json. Stdout contains JSON only.
-// PUPPETEER_MODULE may point at a session-local installation.
+// PUPPETEER_MODULE is required: the path (or specifier) of a puppeteer install.
 import {readFile} from 'node:fs/promises';
 import {pathToFileURL} from 'node:url';
-import {createRequire} from 'node:module';
-const frontendRequire = createRequire(new URL('../../frontend/package.json', import.meta.url));
-const {default: puppeteer} = await import(process.env.PUPPETEER_MODULE || pathToFileURL(frontendRequire.resolve('puppeteer')).href);
+if (!process.env.PUPPETEER_MODULE) {
+  console.error('PUPPETEER_MODULE must point at a puppeteer installation (path to its entry file or a module specifier).');
+  process.exit(2);
+}
+const {default: puppeteer} = await import(process.env.PUPPETEER_MODULE);
 const input = JSON.parse(await readFile(process.argv[2], 'utf8'));
 const browser = await puppeteer.launch({headless: true, args: ['--no-sandbox']});
 try {

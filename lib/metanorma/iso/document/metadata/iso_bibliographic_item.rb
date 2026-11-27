@@ -58,15 +58,12 @@ module Metanorma
         end
 
         # isodoc parity: the cover "Date:" is the version revision-date,
-        # else the "updated" date; the published/created dates are only a
-        # fallback when neither is given.
+        # else the "updated" date. Published/created dates are not used.
         def cover_published_date
           revision = version&.revision_date.to_s
           return revision unless revision.empty?
 
-          published = date.find { |d| d.type == "updated" } ||
-                      date.find { |d| d.type == "published" } ||
-                      date.find { |d| d.type == "created" }
+          published = date.find { |d| d.type == "updated" }
           return nil unless published
 
           raw = published.on || published.text
@@ -95,9 +92,11 @@ module Metanorma
           langs = Array(language)
           lang = (langs.find { |l| l.current.to_s == "true" } || langs.first)&.value.to_s
           lang = "en" if lang.empty?
-          IsoDoc::Iso::I18n.new(lang, "Latn").get["draft_label"] || "draft"
-        rescue StandardError
-          "draft"
+          (@draft_labels ||= {})[lang] ||= begin
+            IsoDoc::Iso::I18n.new(lang, "Latn").get["draft_label"] || "draft"
+          rescue LoadError, NameError, Errno::ENOENT
+            "draft"
+          end
         end
 
         def cover_edition_display
