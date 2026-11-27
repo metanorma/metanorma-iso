@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features|bin|.github)/}) \
     || f.match(%r{Rakefile|bin/rspec}) \
-    || f.match(%r{(?:\A|/)(?:AGENTS\.md|CLAUDE\.md|\.codex-context|\.claude|\.codex)(?:/|\z)})
+    || f == "CLAUDE.md"
   end
   spec.required_ruby_version = Gem::Requirement.new(">= 3.3.0")
 

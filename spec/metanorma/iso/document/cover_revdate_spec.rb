@@ -34,9 +34,12 @@ RSpec.describe Metanorma::Iso::Document::Metadata::IsoBibliographicItem do
       .to eq("2020-01-02")
   end
 
-  it "falls back to the published date" do
-    expect(bibdata(dates: '<date type="published"><on>2019-08-19</on></date>')
-             .cover_published_date).to eq("2019-08-19")
+  it "ignores published and created dates, as isodoc does" do
+    published = '<date type="published"><on>2019-08-19</on></date>' \
+                '<date type="created"><on>2019-01-01</on></date>'
+    item = bibdata(dates: published)
+    expect(item.cover_published_date).to be_nil
+    expect(item.cover_draftinfo).to be_nil
   end
 
   it "does not repeat the date in the draft info when it is the draft" do
