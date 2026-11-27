@@ -16,7 +16,9 @@ RSpec.describe "STS golden parity" do
   manifest.each do |slug, input|
     it "reproduces the golden output for #{slug}" do
       golden = File.read("spec/sts/golden/#{slug}.sts.xml")
-      current = Metanorma::Iso::Sts.convert(File.read(input))
+      current = Lutaml::Model::AdapterScope.with(xml: :leptris) do
+        Metanorma::Iso::Sts.convert(File.read(input))
+      end
       File.write("/tmp/rspec-#{slug}.xml", current) if ENV["RSPEC_DUMP"]
 
       expect(current).to eq(golden)
