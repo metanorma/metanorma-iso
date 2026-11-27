@@ -26,12 +26,23 @@ module IsoDoc
         FileUtils.rm_rf dir
         output_file = out_fname || "#{filename}.#{@suffix}"
         run_mnconvert(in_fname, output_file)
+        declare_processing_meta(output_file)
         # mnconvert passes Metanorma-internal constructs through verbatim;
         # repair the result into schema-valid NISO STS before delivery.
         Metanorma::Iso::Sts::OutputSanitizer.sanitize_file(output_file)
       end
 
       private
+
+      # The native driver (Metanorma::Iso::Sts.convert_inner) declares the
+      # coding profile; mnconvert does not, so this leg adds it. Shared
+      # with the native driver so both emit the same declaration.
+      def declare_processing_meta(output_file)
+        xml = File.read(output_file, encoding: "utf-8")
+        File.write(output_file,
+                   Metanorma::Iso::Sts.inject_processing_meta(xml),
+                   encoding: "utf-8")
+      end
 
       # The mnconvert binary writes its output before self-validating it
       # against the NISO STS XSD, and legacy Metanorma constructs (flavor
