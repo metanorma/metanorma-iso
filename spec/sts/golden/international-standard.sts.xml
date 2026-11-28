@@ -385,7 +385,7 @@ deterioration.</p>
         <title>Physical and chemical characteristics</title>
         <sec id="_b45d9e31-7acd-58e8-00ab-e22cd68e5c69">
           <label>4.2.1</label>
-          <p id="_8f0289ca-5789-9bf6-46f5-f91daf2a502d">The mass fraction of moisture, determined in accordance with <std type="undated"><std-ref type="undated">ISO 712</std-ref><std-id std-id-link-type="urn" std-id-type="undated">urn:iso:std:iso:712:stage-95.99</std-id></std><fn id="_6af25882-eb61-b947-56ed-74b126c4deab"><label>2</label><p>2)Withdrawn.</p></fn>, shall
+          <p id="_8f0289ca-5789-9bf6-46f5-f91daf2a502d">The mass fraction of moisture, determined in accordance with <std type="undated"><std-ref type="undated">ISO 712</std-ref><std-id std-id-link-type="urn" std-id-type="undated">urn:iso:std:iso:712:stage-95.99</std-id></std><fn id="_6af25882-eb61-b947-56ed-74b126c4deab"><label>2</label><p>2) Withdrawn.</p></fn>, shall
 not be greater than 15 %.</p>
           <p id="_991cce82-3cb4-fe85-959a-50bad3ecc60f">The mass fraction of extraneous matter and defective kernels in husked and
 milled rice, whether or not parboiled, determined in accordance with <xref ref-type="app" rid="sec_A">Annex A</xref>,
@@ -423,10 +423,10 @@ shall not be greater than the values specified in <xref ref-type="table" rid="ta
                     <p id="_bbadbbf7-507b-46e1-30f8-c134e9212bf5">Extraneous matter:</p>
                     <list list-type="bullet">
                       <list-item>
-                        <p id="_62136ba5-f3b4-cb51-59e4-48d80820d63b">organic<fn id="_4837d53b-d208-78e8-d97d-0d5b41f333f1"><label>a</label><p>a)Organic extraneous matter includes foreign seeds, husks, bran and parts of straw.</p></fn></p>
+                        <p id="_62136ba5-f3b4-cb51-59e4-48d80820d63b">organic<fn id="_4837d53b-d208-78e8-d97d-0d5b41f333f1"><label>a</label><p>a) Organic extraneous matter includes foreign seeds, husks, bran and parts of straw.</p></fn></p>
                       </list-item>
                       <list-item>
-                        <p id="_7cfe7a1b-dfbd-f305-055f-72b0925c8b00">inorganic<fn id="_cceb25b7-fbe4-a8e8-5f79-53e0818f7533"><label>b</label><p>b)Inorganic extraneous matter includes stones, sand and dust.</p></fn></p>
+                        <p id="_7cfe7a1b-dfbd-f305-055f-72b0925c8b00">inorganic<fn id="_cceb25b7-fbe4-a8e8-5f79-53e0818f7533"><label>b</label><p>b) Inorganic extraneous matter includes stones, sand and dust.</p></fn></p>
                       </list-item>
                     </list>
                   </td>

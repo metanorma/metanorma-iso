@@ -379,9 +379,9 @@
         <title>Physical and chemical characteristics</title>
         <sec id="_592e91aa-a089-81a8-6163-8e77ca3fde03">
           <label>4.2.1</label>
-          <p id="_7876e27a-5159-e101-acc8-7f6c03a55d6e">The mass fraction of moisture, determined in accordance with <std type="undated"><std-ref type="undated">ISO 712</std-ref><std-id std-id-link-type="urn" std-id-type="undated">urn:iso:std:iso:712:stage-95.99</std-id></std><fn id="_fca169d9-b476-fa24-319c-a00fa1269c15"><label>3</label><p>3)Cancelled and replaced by ISO 712-1:2024.</p></fn>, using
+          <p id="_7876e27a-5159-e101-acc8-7f6c03a55d6e">The mass fraction of moisture, determined in accordance with <std type="undated"><std-ref type="undated">ISO 712</std-ref><std-id std-id-link-type="urn" std-id-type="undated">urn:iso:std:iso:712:stage-95.99</std-id></std><fn id="_fca169d9-b476-fa24-319c-a00fa1269c15"><label>3</label><p>3) Cancelled and replaced by ISO 712-1:2024.</p></fn>, using
 an oven complying with the requirements of <xref ref-type="bibr" rid="IEC61010-2">IEC 61010-2:1998</xref>, shall not be greater
-than 15 %.<fn id="_78c9e484-c90d-a200-d5dd-1a0766edae4c"><label>4</label><p>4)Formerly denoted as 15 % (m/m).</p></fn></p>
+than 15 %.<fn id="_78c9e484-c90d-a200-d5dd-1a0766edae4c"><label>4</label><p>4) Formerly denoted as 15 % (m/m).</p></fn></p>
           <p id="_991cce82-3cb4-fe85-959a-50bad3ecc60f">The mass fraction of extraneous matter and defective kernels in husked and
 milled rice, whether or not parboiled, determined in accordance with <xref ref-type="app" rid="sec_A">Annex A</xref>,
 shall not be greater than the values specified in <xref ref-type="table" rid="table1">Table 1</xref>.</p>
@@ -530,7 +530,7 @@ shall not be greater than the values specified in <xref ref-type="table" rid="ta
           </table-wrap>
           <non-normative-note>
             <label>NOTE 1</label>
-            <p id="_6bba12ea-502b-11f4-6536-3bd460afdcde">This table is based on <xref ref-type="bibr" rid="ISO7301">ISO 7301:2011,  Table 1</xref><fn id="_e4add615-cc40-e4bf-a5e1-f4ef118efd4e"><label>d</label><p>d)Cancelled and replaced by ISO 7301:2021.</p></fn>.</p>
+            <p id="_6bba12ea-502b-11f4-6536-3bd460afdcde">This table is based on <xref ref-type="bibr" rid="ISO7301">ISO 7301:2011,  Table 1</xref><fn id="_e4add615-cc40-e4bf-a5e1-f4ef118efd4e"><label>d</label><p>d) Cancelled and replaced by ISO 7301:2021.</p></fn>.</p>
           </non-normative-note>
           <non-normative-note>
             <label>NOTE 2</label>
@@ -565,7 +565,7 @@ shall not be greater than the values specified in <xref ref-type="table" rid="ta
         <label>6.3</label>
         <title>Nitrogen content and crude protein content</title>
         <p id="_7d1db01f-cb34-bf46-2cb3-445302fec83e">Determine the nitrogen content and crude protein content in accordance with
-either <xref ref-type="bibr" rid="ISO16634">ISO 16634:—,  Clause 9</xref><fn id="_13c135e9-7240-1bc4-0c68-d76353a2d84f"><label>5</label><p>5)Under preparation. (Stage at the time of publication ISO/DIS 16634)</p></fn>, or <std type="dated"><std-ref type="dated">ISO 20483:2013</std-ref><std-id std-id-link-type="urn" std-id-type="dated">urn:iso:std:iso:20483:stage-90.60</std-id></std>. For details on the determination
+either <xref ref-type="bibr" rid="ISO16634">ISO 16634:—,  Clause 9</xref><fn id="_13c135e9-7240-1bc4-0c68-d76353a2d84f"><label>5</label><p>5) Under preparation. (Stage at the time of publication ISO/DIS 16634)</p></fn>, or <std type="dated"><std-ref type="dated">ISO 20483:2013</std-ref><std-id std-id-link-type="urn" std-id-type="dated">urn:iso:std:iso:20483:stage-90.60</std-id></std>. For details on the determination
 of protein content using the Kjeldahl method, see Reference Reference <xref ref-type="bibr" rid="ref12">[10]</xref> in the
 Bibliography. For details concerning the use of the Dumas method, see References
 Reference <xref ref-type="bibr" rid="ref10">[15]</xref> and Reference <xref ref-type="bibr" rid="ref16">[16]</xref>.</p>
@@ -853,7 +853,7 @@ values for <inline-formula><mml:math><mml:mstyle displaystyle="false"><mml:mi>R<
             <label>B.3.2</label>
             <title>Iodine stock solution,</title>
             <p id="_dab08b48-5db4-d2d9-9230-1f9f64265d0b">containing a mass fraction of 4,1 % iodine and 6,3 % potassium iodide in
-deionized water such as Lugols.<fn id="_24c2c962-296c-05c0-8989-5839d32bc379"><label>6</label><p>6)Lugols is an example of a suitable product available commercially. This information is given for the convenience of users of this document and does not constitute an endorsement by ISO of this product.</p></fn></p>
+deionized water such as Lugols.<fn id="_24c2c962-296c-05c0-8989-5839d32bc379"><label>6</label><p>6) Lugols is an example of a suitable product available commercially. This information is given for the convenience of users of this document and does not constitute an endorsement by ISO of this product.</p></fn></p>
           </sec>
           <sec id="AnnexB-3-3">
             <label>B.3.3</label>

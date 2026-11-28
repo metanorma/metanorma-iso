@@ -109,7 +109,6 @@ RSpec.describe "Amendment document end-to-end STS conversion" do
     end
 
     it "renders cross-reference text as the target label, not the raw id" do
-      pending "xref text is the target id (non-presentation input)"
       expect(doc.xpath("//xref").map(&:text)).not_to include("_tab1")
     end
 
@@ -119,7 +118,6 @@ RSpec.describe "Amendment document end-to-end STS conversion" do
     end
 
     it "separates the footnote number from its text" do
-      pending "footnote paragraph reads '1)The sizes' with no space"
       expect(doc.at_xpath("//fn/p")&.text).to start_with("1) ")
     end
   end

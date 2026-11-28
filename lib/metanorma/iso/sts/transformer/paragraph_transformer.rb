@@ -453,25 +453,6 @@ module Metanorma
           # transformer; the result is flattened to text because
           # Sts::TbxIsoTml::Fn#p is typed as NisoSts::Paragraph (uses
           # :text, not :content) and the math roundtrip drops msub.
-          def build_fn(fn_element)
-            paragraphs = Array(fn_element.p).map.with_index do |p, i|
-              build_fn_paragraph_text(p, fn_element, first: i.zero?)
-            end
-            return nil if paragraphs.empty?
-
-            attrs = { id: fn_element.id, paragraph: paragraphs }
-            label = fn_element.reference if fn_element.is_a?(Metanorma::Document::Components::Inline::FnElement)
-            attrs[:label] = ::Sts::NisoSts::Label.new(content: [label]) if label && !label.to_s.empty?
-            ::Sts::NisoSts::Fn.new(attrs)
-          end
-
-          def build_fn_paragraph_text(mn_p, fn_element, first:)
-            text = RenderedTextExtractor.text_of(mn_p)
-            label = fn_element.reference if fn_element.is_a?(Metanorma::Document::Components::Inline::FnElement)
-            text = "#{label})#{text}" if first && label && !label.to_s.empty? && !text.empty?
-            ::Sts::NisoSts::Paragraph.new(text: [text])
-          end
-
           # Builds a map of stem_id → FmtStemElement mirror by scanning
           # the paragraph's descendant fmt-stem elements. Each fmt-stem's
           # inner semx carries a `source` matching the original stem's id.
@@ -620,18 +601,6 @@ module Metanorma
             explicit = text_of(node)
             visible = explicit.empty? ? entry_id.delete_prefix("term_") : explicit
             ModelBuilder.xref(rid: entry_id, ref_type: "custom", value: visible)
-          end
-
-          def xref_visible_text(node, rid)
-            explicit = text_of(node)
-            return explicit unless explicit.empty?
-            raw = node.target.to_s
-            case raw
-            when /\Asec-(.+)\z/, /\Afig-(.+)\z/, /\Atable-(.+)\z/, /\Afn-(.+)\z/
-              "#{Regexp.last_match(1)} "
-            else
-              explicit.empty? ? rid : explicit
-            end
           end
 
           # @ref-type per the guidelines 10.1.1 enumeration, derived from
