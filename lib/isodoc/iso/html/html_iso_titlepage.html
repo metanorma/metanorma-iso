@@ -1,10 +1,11 @@
+{%- assign undated = bibdata.docidentifier | where: "type", "iso-undated" | first -%}
 <div id='toggle'> <span>•</span> </div>
 {% if tc_docnumber.size > 0 %}
     {% for num in tc_docnumber %}
 <p class="coverpage_docnumber">{{ num }}</p>
     {% endfor %}
     {% else %}
-<p class="coverpage_docnumber">{{ docnumber_undated }} {{ draftinfo }}</p>
+<p class="coverpage_docnumber">{{ undated.content }} {{ draftinfo }}</p>
     {% endif %}
 
 {% if edition_display %}
@@ -20,7 +21,7 @@
 {% endif %}
 
 {% if tc_docnumber.size > 0 %}
-<p class="coverpage_docnumber">{{ docnumber_undated }} {{ draftinfo }}</p>
+<p class="coverpage_docnumber">{{ undated.content }} {{ draftinfo }}</p>
 {% endif %}
 
 <p class="coverpage_techcommittee">{{ editorialgroup }}</p>
@@ -91,15 +92,15 @@
 {% endif %}
 <div class="coverpage_warning" id="coverpage-note-destination"/>
 
-{% if ics %}
-<p><b>ICS:</b> {{ ics }}</p>
+{% assign ics_codes = bibdata.ext.ics | map: "code" | compact %}{% if ics_codes.size > 0 %}
+<p><b>ICS:</b> {{ ics_codes | join: ", " }}</p>
 {% endif %}
 
 {% if keywords.size > 0 %}
 <p><b>Descriptors:</b> {{ keywords | join: ", " }}
 {% endif %}
 
-{%if fast_track == "true" %}
+{% if bibdata.ext.fast_track == true %}
 <div><span class="subtitle">{{ labels["fast-track-procedure"] }}</span></div>
 {% endif %}
 

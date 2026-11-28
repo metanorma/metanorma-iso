@@ -1,3 +1,4 @@
+{%- assign undated = bibdata.docidentifier | where: "type", "iso-undated" | first -%}
 {% if tc_docnumber.size > 0 %}
 {% for num in tc_docnumber %}
 <p class="MsoNormal" align="right" style='text-align:right'><b style='mso-bidi-font-weight:
@@ -6,12 +7,12 @@ style='mso-bidi-font-weight:normal'><span lang="EN-GB" style='font-size:14.0pt'>
 {% endfor %}
 {% else %}
 <p class="MsoNormal" align="right" style='text-align:right'><b style='mso-bidi-font-weight:
-normal'><span lang="EN-GB" style='font-size:14.0pt;mso-no-proof:yes'>{{ docnumber_undated }} {{ draftinfo }}</span></b><b
+normal'><span lang="EN-GB" style='font-size:14.0pt;mso-no-proof:yes'>{{ undated.content }} {{ draftinfo }}</span></b><b
 style='mso-bidi-font-weight:normal'><span lang="EN-GB" style='font-size:14.0pt'><o:p></o:p></span></b></p>
 {% endif %}
 
 {% if tc_docnumber.size > 0 %}
-<p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB" style='mso-no-proof:yes'>{{ docnumber_undated }} {{ draftinfo }}</span></p>
+<p class="MsoNormal" align="right" style='text-align:right'><span lang="EN-GB" style='mso-no-proof:yes'>{{ undated.content }} {{ draftinfo }}</span></p>
 {% endif %}
 
 {% if doctitleamdlabel %}
@@ -157,7 +158,7 @@ documentation.</span><span lang="EN-GB" style='font-size:10.0pt;mso-bidi-font-si
 
 <div class="coverpage-warning" id="coverpage-note-destination"/>
 
-{%if fast_track == "true" %}
+{% if bibdata.ext.fast_track == true %}
 <div><p class="zzCover">{{ labels["fast-track-procedure"] }}</p></div>
 {% endif %}
 
