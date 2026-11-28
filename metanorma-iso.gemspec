@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
   end
   spec.required_ruby_version = Gem::Requirement.new(">= 3.3.0")
 
-  spec.add_dependency "metanorma-document", "~> 0.5.15" # the shared STS engine (metanorma-iso#1760)
+  spec.add_dependency "metanorma-document", "~> 0.5.17" # the shared STS engine; 0.5.17 = fn-spacing + xref-label fixes (metanorma-document#202)
   spec.add_dependency "metanorma-standoc", ">= 3.4.2" # relaxed until standoc#1232 releases
   spec.add_dependency "mnconvert", "~> 1.14"
   spec.add_dependency "pubid", "~> 2.0.3"
