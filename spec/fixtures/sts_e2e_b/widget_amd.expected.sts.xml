@@ -33,7 +33,7 @@
   <body>
     <sec id="_scope" sec-type="scope">
       <title>Scope</title>
-      <p id="_scope_p1">This document specifies the socket sizes of invented gadgets.<fn><label>1</label><p>1)The sizes are fictional and apply to no real product.</p></fn></p>
+      <p id="_scope_p1">This document specifies the socket sizes of invented gadgets.<fn><label>1</label><p>1) The sizes are fictional and apply to no real product.</p></fn></p>
     </sec>
     <sec id="sec_terms" sec-type="terms">
       <title>Terms and definitions</title>
@@ -43,7 +43,7 @@
       <title>Requirements</title>
       <sec id="_req_gen">
         <title>General</title>
-        <p id="_req_p1">A socket shall meet the dimensions in <xref ref-type="table" rid="_tab1">_tab1</xref> and the layout in <xref ref-type="fig" rid="fig_2">fig_2</xref>. Test methods are in <xref ref-type="app" rid="sec_A">sec_A</xref>; the informative sizing notes are in <xref ref-type="app" rid="sec_B">sec_B</xref>.</p>
+        <p id="_req_p1">A socket shall meet the dimensions in <xref ref-type="table" rid="_tab1">1 </xref> and the layout in <xref ref-type="fig" rid="fig_2">2 </xref>. Test methods are in <xref ref-type="app" rid="sec_A">A </xref>; the informative sizing notes are in <xref ref-type="app" rid="sec_B">B </xref>.</p>
         <list list-type="arabic">
           <list-item>
             <p id="_ol1_1">Material requirements:</p>
@@ -123,7 +123,7 @@
         <title>Test methods</title>
         <sec id="_annA1">
           <title>Torque test</title>
-          <p id="_annA1_p">Apply the torque given in <xref ref-type="table" rid="_tab1">_tab1</xref> and check <xref ref-type="sec" rid="_req_gen">_req_gen</xref>.</p>
+          <p id="_annA1_p">Apply the torque given in <xref ref-type="table" rid="_tab1">1 </xref> and check <xref ref-type="sec" rid="_req_gen">req_gen</xref>.</p>
         </sec>
         <sec id="_annA2">
           <title>Visual test</title>
